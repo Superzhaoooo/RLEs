@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Models/Electric.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Models/Electric - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Models/Electric.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#overview">Overview</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#defining_electric_vehicles" class="nav-link">• Defining Electric Vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#charging_stations" class="nav-link">• Charging Stations</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#stopping_at_a_charging_station" class="nav-link">&rarr; Stopping at a Charging Station</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#charging_station_output" class="nav-link">&rarr; Charging Station output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#battery-output" class="nav-link">• battery-output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#emission_output" class="nav-link">• Emission Output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traci" class="nav-link">• TraCI</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#model_details" class="nav-link">• Model Details</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#publications" class="nav-link">&rarr; Publications</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Models/Electric<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h1>
+<p>Since version 0.24.0 SUMO includes a model for electric vehicles. It was
+implemented by Tamás Kurczveil and Pablo Álvarez López from the
+<a href="https://www.tu-braunschweig.de/">TU-Braunschweig</a>. The core of the
+model is implemented in the <a href="../Developer/How_To/Device.html">vehicle
+device</a> <em>device.battery</em>. Additional
+features are a charging station (which can be placed on any lane in the
+network) and a new output option <strong>--battery-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>.</p>
+<p>You can find a test case for these implementations at
+<a href="http://sumo.dlr.de/trac.wsgi/browser/trunk/sumo/tests/sumo/extended/electric/braunschweig">[1]</a></p>
+<h2 id="defining_electric_vehicles">Defining Electric Vehicles<a class="headerlink" href="#defining_electric_vehicles" title="Permanent link">#</a></h2>
+<p>To define an electric vehicle, it must be equipped with a battery
+device. This may be done using the option <strong>--device.battery.explicit &lt;vehID1,vehID2,...></strong> or simply setting <strong>--device.battery.probability 1</strong> to equip
+all vehicles. Alternatively, the device may be specified using <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#devices">Generic
+vehicle
+parameters</a>.</p>
+<p>Additional properties of the vehicle and its electrical components must
+then be defined via <a href="../Simulation/GenericParameters.html">parameters of the vehicle or its
+type</a>.</p>
+<p>These values have the following meanings:</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>Value Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>maximumBatteryCapacity</td>
+<td>float</td>
+<td>0 (Wh)</td>
+<td>Maximum battery capacity <em>E<sub>max</sub></em></td>
+</tr>
+<tr>
+<td>maximumPower</td>
+<td>float</td>
+<td>0 (W)</td>
+<td>Maximum power which the vehicle can reach</td>
+</tr>
+<tr>
+<td>vehicleMass</td>
+<td>float</td>
+<td>0 (kg)</td>
+<td>Vehicle mass <em>m<sub>veh</sub></em></td>
+</tr>
+<tr>
+<td>frontSurfaceArea</td>
+<td>float</td>
+<td>0 (m2)</td>
+<td>Front surface area <em>A<sub>veh</sub></em></td>
+</tr>
+<tr>
+<td>airDragCoefficient</td>
+<td>float</td>
+<td>0</td>
+<td>Air drag coefficient <em>c<sub>w</sub></em></td>
+</tr>
+<tr>
+<td>internalMomentOfInertia</td>
+<td>float</td>
+<td>0 (kg·m2)</td>
+<td>Mom. of inertia of int. rot. elements <em>J<sub>int</sub></em></td>
+</tr>
+<tr>
+<td>radialDragCoefficient</td>
+<td>float</td>
+<td>0</td>
+<td>Radial drag coefficient c<sub>rad</sub></td>
+</tr>
+<tr>
+<td>rollDragCoefficient</td>
+<td>float</td>
+<td>0</td>
+<td>Rolling resistance coefficient <em>c<sub>roll</sub></em></td>
+</tr>
+<tr>
+<td>constantPowerIntake</td>
+<td>float</td>
+<td>0 (W)</td>
+<td>Avg. (constant) power of consumers <em>P<sub>const</sub></em></td>
+</tr>
+<tr>
+<td>propulsionEfficiency</td>
+<td>float</td>
+<td>0</td>
+<td>Drive efficiency <em>η<sub>prop</sub></em></td>
+</tr>
+<tr>
+<td>recuperationEfficiency</td>
+<td>float</td>
+<td>0</td>
+<td>Recuperation efficiency <em>η<sub>recup</sub></em></td>
+</tr>
+<tr>
+<td>stoppingTreshold</td>
+<td>float</td>
+<td>0.1 (km/h)</td>
+<td>Minimum velocity to start charging</td>
+</tr>
+</tbody>
+</table>
+<p>An example of a vehicle with electric attribute:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vType id=&quot;ElectricBus&quot; accel=&quot;1.0&quot; decel=&quot;1.0&quot; lenght=&quot;12&quot; maxSpeed=&quot;100.0&quot; sigma=&quot;0.0&quot; minGap=&quot;2.5&quot; color=&quot;1,1,1&quot;&gt;
+        &lt;param key=&quot;has.battery.device&quot; value=&quot;true&quot;/&gt;
+        &lt;param key=&quot;maximumBatteryCapacity&quot; value=&quot;2000&quot;/&gt;
+        &lt;param key=&quot;maximumPower&quot; value=&quot;1000&quot;/&gt;
+        &lt;param key=&quot;vehicleMass&quot; value=&quot;10000&quot;/&gt;
+        &lt;param key=&quot;frontSurfaceArea&quot; value=&quot;5&quot;/&gt;
+        &lt;param key=&quot;airDragCoefficient&quot; value=&quot;0.6&quot;/&gt;
+        &lt;param key=&quot;internalMomentOfInertia&quot; value=&quot;0.01&quot;/&gt;
+        &lt;param key=&quot;radialDragCoefficient&quot; value=&quot;0.5&quot;/&gt;
+        &lt;param key=&quot;rollDragCoefficient&quot; value=&quot;0.01&quot;/&gt;
+        &lt;param key=&quot;constantPowerIntake&quot; value=&quot;100&quot;/&gt;
+        &lt;param key=&quot;propulsionEfficiency&quot; value=&quot;0.9&quot;/&gt;
+        &lt;param key=&quot;recuperationEfficiency&quot; value=&quot;0.9&quot;/&gt;
+        &lt;param key=&quot;stoppingTreshold&quot; value=&quot;0.1&quot;/&gt;
+    &lt;/vType&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>The initial energy content of the battery (by default MaxBatKap/2) can
+be set in the vehicle definitions</p>
+<pre><code>&lt;routes&gt;
+    &lt;vehicle id=&quot;0&quot; type=&quot;type1&quot; depart=&quot;0&quot; color=&quot;1,0,0&quot;&gt;
+        &lt;param key=&quot;actualBatteryCapacity&quot; value=&quot;500&quot;/&gt;
+    &lt;/vehicle&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<h2 id="charging_stations">Charging Stations<a class="headerlink" href="#charging_stations" title="Permanent link">#</a></h2>
+<p>A charging station is a surface defined on a lane in which the vehicles
+equipped with a battery are charged. The basic structure and parameters
+of bus stops were used for the implementation of charging stations.</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>Value Type</th>
+<th>Value range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>id</td>
+<td></td>
+<td>Charging station ID (Must be unique)</td>
+</tr>
+<tr>
+<td><strong>lane</strong></td>
+<td>string</td>
+<td>valid lane id</td>
+<td></td>
+<td>Lane of the charging station location</td>
+</tr>
+<tr>
+<td><strong>startPos</strong></td>
+<td>float</td>
+<td>lane.length &lt; x &lt; lane.length (negative values count backwards from the end of the lane)</td>
+<td>0</td>
+<td>Begin position in the specified lane</td>
+</tr>
+<tr>
+<td><strong>endPos</strong></td>
+<td>float</td>
+<td>lane.length &lt; x &lt; lane.length (negative values count backwards from the end of the lane)</td>
+<td></td>
+<td>End position in the specified lane</td>
+</tr>
+<tr>
+<td><strong>power</strong></td>
+<td>float</td>
+<td>power > 0</td>
+<td>22000(W)</td>
+<td>Charging power <em>P<sub>chrg</sub></em></td>
+</tr>
+<tr>
+<td><strong>efficiency</strong></td>
+<td>float</td>
+<td>0 &lt;= efficiency &lt;= 1</td>
+<td>0.95</td>
+<td>Charging efficiency <em>η<sub>chrg</sub></em></td>
+</tr>
+<tr>
+<td><strong>chargeInTransit</strong></td>
+<td>bool</td>
+<td>0 or 1</td>
+<td>0</td>
+<td>Enable or disable charge in transit, i.e. vehicle is forced/not forced to stop for charging</td>
+</tr>
+<tr>
+<td><strong>chargeDelay</strong></td>
+<td>float</td>
+<td>chargeDelay > 0</td>
+<td>0</td>
+<td>Time delay after the vehicles have reached / stopped on the charging station, before the energy transfer (charging) is starting</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>simple String</td>
+<td></td>
+<td>Charging station name. This is only used for visualization purposes.</td>
+</tr>
+</tbody>
+</table>
+<p>Charging stations are defined in additional using the following format:</p>
+<pre><code>&lt;additional&gt;
+    &lt;chargingStation chargeDelay=&quot;2&quot; chargeInTransit=&quot;0&quot; chrgpower=&quot;200000&quot; efficiency=&quot;0.95&quot; endPos=&quot;25&quot; id=&quot;cS_2to19_0a&quot; lane=&quot;2to19_0&quot; startPos=&quot;10&quot;/&gt;
+&lt;/additional&gt;
+</code></pre>
+
+<p>And are represented in the simulation as shown:</p>
+<p><img alt="" src="../images/ChargingStation.png" title="Representation of chargingStation in GUI" />
+Representation of chargingStation in GUI</p>
+<p><img alt="" src="../images/ChargingStationCharging.png" title="Color of chargingStation during charge" />
+Color of chargingStation during charge</p>
+<h3 id="stopping_at_a_charging_station">Stopping at a Charging Station<a class="headerlink" href="#stopping_at_a_charging_station" title="Permanent link">#</a></h3>
+<p>A stop at a charging station may occur due to traffic conditions,
+stopping at a defined location or stopping at an explicit
+chargingStation as defined below:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vehicle id=&quot;v0&quot; route=&quot;route0&quot; depart=&quot;0&quot;&gt;
+        &lt;stop chargingStation=&quot;myChargingStationID&quot; until=&quot;50&quot;/&gt;
+    &lt;/vehicle&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<h3 id="charging_station_output">Charging Station output<a class="headerlink" href="#charging_station_output" title="Permanent link">#</a></h3>
+<p>Option --chargingstations-output "nameOfFile.xml" generates a full
+report of energy charged by charging stations:</p>
+<pre><code>&lt;output&gt;
+    &lt;battery-output value=&quot;battery.xml&quot;/&gt;
+    &lt;chargingstations-output value=&quot;chargingstations.xml&quot;/&gt;
+&lt;/output&gt;
+</code></pre>
+
+<p>File chargingstations.xml has the following structure:</p>
+<pre><code>&lt;chargingstations-export&gt;
+    &lt;chargingStation id=&quot;CS1&quot; totalEnergyCharged=&quot;71.25&quot; chargingSteps=&quot;27&quot;&gt;
+        &lt;vehicle id=&quot;veh0&quot; type=&quot;ElectricVehicle1&quot; totalEnergyChargedIntoVehicle=&quot;15.83&quot; chargingBegin=&quot;12.00&quot; chargingEnd=&quot;17.00&quot;&gt;
+            &lt;step time=&quot;12.00&quot; chargingStatus=&quot;chargingStopped&quot; energyCharged=&quot;2.64&quot; partialCharge=&quot;2.64&quot; power=&quot;10000.00&quot; efficiency=&quot;0.95&quot; actualBatteryCapacity=&quot;12962.97&quot; maximumBatteryCapacity=&quot;35000.00&quot;/&gt;
+            &lt;step time=&quot;13.00&quot; chargingStatus=&quot;chargingStopped&quot; energyCharged=&quot;2.64&quot; partialCharge=&quot;5.28&quot; power=&quot;10000.00&quot; efficiency=&quot;0.95&quot; actualBatteryCapacity=&quot;12965.59&quot; maximumBatteryCapacity=&quot;35000.00&quot;/&gt;
+            &lt;step time=&quot;14.00&quot; chargingStatus=&quot;chargingStopped&quot; energyCharged=&quot;2.64&quot; partialCharge=&quot;7.92&quot; power=&quot;10000.00&quot; efficiency=&quot;0.95&quot; actualBatteryCapacity=&quot;12968.22&quot; maximumBatteryCapacity=&quot;35000.00&quot;/&gt;
+        &lt;/vehicle&gt;
+        &lt;vehicle id=&quot;veh1&quot; type=&quot;ElectricVehicle2&quot; totalEnergyChargedIntoVehicle=&quot;5.28&quot; chargingBegin=&quot;17000&quot; chargingEnd=&quot;18000&quot;&gt;
+            &lt;step time=&quot;17.00&quot; chargingStatus=&quot;chargingStopped&quot; energyCharged=&quot;2.64&quot; partialCharge=&quot;18.47&quot; power=&quot;10000.00&quot; efficiency=&quot;0.95&quot; actualBatteryCapacity=&quot;11967.35&quot; maximumBatteryCapacity=&quot;35000.00&quot;/&gt;
+            &lt;step time=&quot;18.00&quot; chargingStatus=&quot;chargingStopped&quot; energyCharged=&quot;2.64&quot; partialCharge=&quot;21.11&quot; power=&quot;10000.00&quot; efficiency=&quot;0.95&quot; actualBatteryCapacity=&quot;12978.72&quot; maximumBatteryCapacity=&quot;35000.00&quot;/&gt;
+        &lt;/vehicle&gt;
+        ...
+    &lt;/chargingStation&gt;
+        ...
+
+    ...
+&lt;/chargingstations-export&gt;
+</code></pre>
+
+<p>For the entire ChargingStation:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>ChargingStation ID</td>
+</tr>
+<tr>
+<td>totalEnergyCharged</td>
+<td>float</td>
+<td>Total energy charged in W during the entire simulation</td>
+</tr>
+<tr>
+<td>chargingSteps</td>
+<td>int</td>
+<td>Number of steps in which charginStation was charging energy</td>
+</tr>
+</tbody>
+</table>
+<p>For the current charging vehicle</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>ID of vehicle that is charging in these charging stop</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>type of vehicle</td>
+</tr>
+<tr>
+<td>totalEnergyChargedIntoVehicle</td>
+<td>double</td>
+<td>Energy charged during these charging stop</td>
+</tr>
+<tr>
+<td>chargingBegin</td>
+<td>float</td>
+<td>TimeStep in which vehicle starts with the charge (in seconds)</td>
+</tr>
+<tr>
+<td>chargingEnd</td>
+<td>float</td>
+<td>TimeStep in which vehicle ends with the charge (in seconds)</td>
+</tr>
+</tbody>
+</table>
+<p>For every charging timeStep:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time</td>
+<td>float</td>
+<td>Current timestep (s)</td>
+</tr>
+<tr>
+<td>chargingStatus</td>
+<td>string</td>
+<td>Current charging status (Charging, waiting to charge o not charging)</td>
+</tr>
+<tr>
+<td>energyCharged</td>
+<td>float</td>
+<td>Energy charged in current timeStep</td>
+</tr>
+<tr>
+<td>partialCharge</td>
+<td>float</td>
+<td>Energy charged by ChargingStation from begin of simulation to this timeStep</td>
+</tr>
+<tr>
+<td>power</td>
+<td>float</td>
+<td>Current power of ChargingStation</td>
+</tr>
+<tr>
+<td>efficiency</td>
+<td>float</td>
+<td>Current efficiency of ChargingStation</td>
+</tr>
+<tr>
+<td>actualBatteryCapacity</td>
+<td>string</td>
+<td>Current battery capacity of vehicle</td>
+</tr>
+<tr>
+<td>maximumBatteryCapacity</td>
+<td>string</td>
+<td>Current maximum battery capacity of vehicle</td>
+</tr>
+</tbody>
+</table>
+<h2 id="battery-output">battery-output<a class="headerlink" href="#battery-output" title="Permanent link">#</a></h2>
+<p>There are three output parameters to be set in the SUMO configuration to
+use the battery device:</p>
+<pre><code>&lt;configuration&gt;
+    &lt;input&gt;
+        &lt;net-file value=&quot;netFile.xml&quot;/&gt;
+        &lt;route-files value=&quot;routeFile.xml&quot;/&gt;
+        &lt;additional-files value=&quot;additionalFile.xml&quot;/&gt;
+    &lt;/input&gt;
+    &lt;output&gt;
+        &lt;battery-output value=&quot;Battery.out.xml&quot;/&gt;
+        &lt;battery-output.precision value=&quot;4&quot;/&gt;
+        &lt;device.battery.probability value=&quot;1&quot;/&gt;
+        &lt;summary-output value=&quot;summary_100.xml&quot;/&gt;
+    &lt;/output&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<p>The battery-output generates a file with this structure:</p>
+<pre><code>&lt;battery-export&gt;
+    &lt;timestep time=&quot;0.00&quot;&gt;
+        &lt;vehicle id=&quot;vehicle01&quot; Consum=&quot;0.00&quot; actualBatteryCapacity=&quot;17500.00&quot; maximumBatteryCapacity=&quot;35000.00&quot;
+            chargingStationId=&quot;NULL&quot; energyCharge=&quot;0.00&quot; energyChargedInTransit=&quot;0.00&quot; energyChargedStopped=&quot;0.00&quot;
+            speed=&quot;12.92&quot; acceleration=&quot;0.00&quot; x=&quot;1428.27&quot; y=&quot;25.57&quot; lane=&quot;01to02_0&quot;
+            posOnLane=&quot;0.00&quot; timeStopped=&quot;0&quot;/&gt;
+        &lt;vehicle id=..... */
+    &lt;/timestep&gt;
+    &lt;timestep time=&quot;1.00&quot;&gt;
+        &lt;vehicle id=.....
+    &lt;/timestep&gt;
+    &lt;timestep time=...
+    ...
+    &lt;/timestep&gt;
+&lt;/battery-export&gt;
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time</td>
+<td>int</td>
+<td>Current timestep</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>id of vehicle</td>
+</tr>
+<tr>
+<td>energyConsumed</td>
+<td>double</td>
+<td>energy consumption in this timestep in <strong>Wh</strong></td>
+</tr>
+<tr>
+<td>actualBatteryCapacity</td>
+<td>double</td>
+<td>energy content of the battery in this timestep</td>
+</tr>
+<tr>
+<td>maximumBatteryCapacity</td>
+<td>double</td>
+<td>Max energy capacity of the battery</td>
+</tr>
+<tr>
+<td>chargingStationId</td>
+<td>string</td>
+<td>If vehicle is exactly at a charging station, this value is the id of the charging station, in other case, is NULL</td>
+</tr>
+<tr>
+<td>energyCharged</td>
+<td>double</td>
+<td>Charge received in the current time step from a charging station (Only != 0 if vehicle is exactly at a charging station)</td>
+</tr>
+<tr>
+<td>energyChargedInTransit</td>
+<td>double</td>
+<td>Charge that a vehicle in transit received in the current time step from a charging station</td>
+</tr>
+<tr>
+<td>energyChargedStopped</td>
+<td>double</td>
+<td>Charge that a stopped vehicle received in the current time step from a charging station</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>double</td>
+<td>Speed of vehicle in this timestep</td>
+</tr>
+<tr>
+<td>acceleration</td>
+<td>double</td>
+<td>Acceleration of vehicle in this timestep</td>
+</tr>
+<tr>
+<td>x</td>
+<td>double</td>
+<td>absolute position x of vehicle in the map</td>
+</tr>
+<tr>
+<td>y</td>
+<td>double</td>
+<td>absolute position y of vehicle in the map</td>
+</tr>
+<tr>
+<td>lane</td>
+<td>string</td>
+<td>id of the lane that the vehicle is currently on</td>
+</tr>
+<tr>
+<td>posOnLane</td>
+<td>double</td>
+<td>Position of vehicle on its current lane</td>
+</tr>
+<tr>
+<td>timeStopped</td>
+<td>int</td>
+<td>Counter with the number of timesteps that the vehicle has remained standing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="emission_output">Emission Output<a class="headerlink" href="#emission_output" title="Permanent link">#</a></h2>
+<p>The <a href="Emissions.html#outputs">Emission model</a>-outputs of
+SUMO can be used together with the battery device when setting the
+<code>&lt;vType&gt;</code>-parameter <code>emissionClass="Energy/unknown"</code>.</p>
+<h2 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h2>
+<p>The internal state of the battery device can be accessed directly using
+<a href="../TraCI/Vehicle_Value_Retrieval.html#supported_device_parameters"><em>traci.vehicle.getParameter</em></a>
+and
+<a href="../TraCI/Change_Vehicle_State.html#supported_device_parameters"><em>traci.vehicle.setParameter</em></a>.</p>
+<p>Furthermore, the function
+<a href="../TraCI/Vehicle_Value_Retrieval.html#command_0xa4_get_vehicle_variable"><em>traci.vehicle.getElectricityConsumption()</em></a>
+can be used to access the consumption of the vehicle if the <code>emissionClass="Energy/unknown"</code> <a href="#emission_output">is
+declared</a>.</p>
+<h2 id="model_details">Model Details<a class="headerlink" href="#model_details" title="Permanent link">#</a></h2>
+<p>All information about the implemented device (including details on the
+vehicle energy consumption and charging model) can be found in the
+following publication.</p>
+<h3 id="publications">Publications<a class="headerlink" href="#publications" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="http://elib.dlr.de/93885/1/Proceeding_SUMO2013_15-17May%202013_Berlin-Adlershof.pdf">Kurczveil, T., López, P.A., Schnieder, E., Implementation of an
+Energy Model and a Charging Infrastructure in SUMO. In: Behrisch,
+M., Krajzewicz, D., Weber, M. (eds.) Simulation of Urban Mobility.
+Lecture Notes in Computer Science, vol. 8594 , pp. 33--43. Springer,
+Heidelberg
+(2014)</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 26 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

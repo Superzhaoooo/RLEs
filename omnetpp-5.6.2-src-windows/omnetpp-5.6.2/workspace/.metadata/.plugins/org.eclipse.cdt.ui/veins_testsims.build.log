@@ -1,0 +1,15 @@
+21:29:56 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+
+21:29:57 Build Failed. 2 errors, 0 warnings. (took 886ms)
+

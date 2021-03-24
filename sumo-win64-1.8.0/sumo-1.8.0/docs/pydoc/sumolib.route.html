@@ -1,0 +1,56 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module sumolib.route</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="sumolib.html"><font color="#ffffff">sumolib</font></a>.route</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/delphi/gcc/sumo/tools/sumolib/route.py">/home/delphi/gcc/sumo/tools/sumolib/route.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;Eclipse&nbsp;SUMO,&nbsp;Simulation&nbsp;of&nbsp;Urban&nbsp;MObility;&nbsp;see&nbsp;https://eclipse.org/sumo<br>
+#&nbsp;Copyright&nbsp;(C)&nbsp;2009-2020&nbsp;German&nbsp;Aerospace&nbsp;Center&nbsp;(DLR)&nbsp;and&nbsp;others.<br>
+#&nbsp;This&nbsp;program&nbsp;and&nbsp;the&nbsp;accompanying&nbsp;materials&nbsp;are&nbsp;made&nbsp;available&nbsp;under&nbsp;the<br>
+#&nbsp;terms&nbsp;of&nbsp;the&nbsp;Eclipse&nbsp;Public&nbsp;License&nbsp;2.0&nbsp;which&nbsp;is&nbsp;available&nbsp;at<br>
+#&nbsp;https://www.eclipse.org/legal/epl-2.0/<br>
+#&nbsp;This&nbsp;Source&nbsp;Code&nbsp;may&nbsp;also&nbsp;be&nbsp;made&nbsp;available&nbsp;under&nbsp;the&nbsp;following&nbsp;Secondary<br>
+#&nbsp;Licenses&nbsp;when&nbsp;the&nbsp;conditions&nbsp;for&nbsp;such&nbsp;availability&nbsp;set&nbsp;forth&nbsp;in&nbsp;the&nbsp;Eclipse<br>
+#&nbsp;Public&nbsp;License&nbsp;2.0&nbsp;are&nbsp;satisfied:&nbsp;GNU&nbsp;General&nbsp;Public&nbsp;License,&nbsp;version&nbsp;2<br>
+#&nbsp;or&nbsp;later&nbsp;which&nbsp;is&nbsp;available&nbsp;at<br>
+#&nbsp;https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html<br>
+#&nbsp;SPDX-License-Identifier:&nbsp;EPL-2.0&nbsp;OR&nbsp;GPL-2.0-or-later</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-getLength"><strong>getLength</strong></a>(net, edges)</dt><dd><tt>Calculates&nbsp;the&nbsp;length&nbsp;of&nbsp;a&nbsp;route&nbsp;including&nbsp;internal&nbsp;edges.<br>
+The&nbsp;input&nbsp;network&nbsp;has&nbsp;to&nbsp;contain&nbsp;internal&nbsp;edges&nbsp;(withInternal&nbsp;needs&nbsp;to&nbsp;be&nbsp;set&nbsp;when&nbsp;parsing).<br>
+The&nbsp;list&nbsp;of&nbsp;edges&nbsp;can&nbsp;either&nbsp;contain&nbsp;edge&nbsp;objects&nbsp;or&nbsp;edge&nbsp;ids&nbsp;as&nbsp;strings.<br>
+If&nbsp;there&nbsp;is&nbsp;no&nbsp;connection&nbsp;between&nbsp;two&nbsp;consecutive&nbsp;edges,&nbsp;length&nbsp;0&nbsp;is&nbsp;assumed&nbsp;(no&nbsp;error&nbsp;is&nbsp;thrown).<br>
+If&nbsp;there&nbsp;are&nbsp;multiple&nbsp;connections&nbsp;of&nbsp;different&nbsp;length,&nbsp;the&nbsp;shortest&nbsp;is&nbsp;used.</tt></dd></dl>
+ <dl><dt><a name="-mapTrace"><strong>mapTrace</strong></a>(trace, net, delta, verbose<font color="#909090">=False</font>, airDistFactor<font color="#909090">=2</font>, fillGaps<font color="#909090">=0</font>, gapPenalty<font color="#909090">=-1</font>, debug<font color="#909090">=False</font>)</dt><dd><tt>matching&nbsp;a&nbsp;list&nbsp;of&nbsp;2D&nbsp;positions&nbsp;to&nbsp;consecutive&nbsp;edges&nbsp;in&nbsp;a&nbsp;network.<br>
+The&nbsp;positions&nbsp;are&nbsp;assumed&nbsp;to&nbsp;be&nbsp;dense&nbsp;(i.e.&nbsp;covering&nbsp;each&nbsp;edge&nbsp;of&nbsp;the&nbsp;route)&nbsp;and&nbsp;in&nbsp;the&nbsp;correct&nbsp;order.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>SUMO_HOME</strong> = '/home/delphi/gcc/sumo'<br>
+<strong>print_function</strong> = _Feature((2, 6, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 65536)</td></tr></table>
+</body></html>

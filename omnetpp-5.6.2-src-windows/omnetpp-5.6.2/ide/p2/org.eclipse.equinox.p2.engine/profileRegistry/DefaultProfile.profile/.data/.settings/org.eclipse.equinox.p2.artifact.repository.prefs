@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+repositories/http\:__download.eclipse.org_eclipse_updates_4.14/count=1
+repositories/http\:__download.eclipse.org_eclipse_updates_4.14/enabled=true
+repositories/http\:__download.eclipse.org_eclipse_updates_4.14/nickname=The Eclipse Project Updates
+repositories/http\:__download.eclipse.org_eclipse_updates_4.14/uri=http\://download.eclipse.org/eclipse/updates/4.14
+repositories/http\:__download.eclipse.org_linuxtools_update/count=2
+repositories/http\:__download.eclipse.org_linuxtools_update/enabled=false
+repositories/http\:__download.eclipse.org_linuxtools_update/nickname=Linux Tools
+repositories/http\:__download.eclipse.org_linuxtools_update/uri=http\://download.eclipse.org/linuxtools/update
+repositories/http\:__download.eclipse.org_releases_latest/count=1
+repositories/http\:__download.eclipse.org_releases_latest/enabled=true
+repositories/http\:__download.eclipse.org_releases_latest/nickname=Eclipse Latest
+repositories/http\:__download.eclipse.org_releases_latest/uri=http\://download.eclipse.org/releases/latest
+repositories/http\:__download.eclipse.org_tools_cdt_releases_9.10/count=2
+repositories/http\:__download.eclipse.org_tools_cdt_releases_9.10/enabled=true
+repositories/http\:__download.eclipse.org_tools_cdt_releases_9.10/nickname=CDT
+repositories/http\:__download.eclipse.org_tools_cdt_releases_9.10/uri=http\://download.eclipse.org/tools/cdt/releases/9.10

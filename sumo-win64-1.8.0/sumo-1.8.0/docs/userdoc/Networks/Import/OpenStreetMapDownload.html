@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Networks/Import/OpenStreetMapDownload.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Networks/Import/OpenStreetMapDownload - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Networks/Import/OpenStreetMapDownload.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#downloading_a_small_rectangular_area">Downloading a small rectangular area</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#using_the_osmwebwizard" class="nav-link">• Using the osmWebWizard</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#directly_from_the_browser" class="nav-link">• Directly from the Browser</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#with_the_java_openstreetmap_editor_josm" class="nav-link">• With the Java OpenStreetMap Editor (JOSM)</a>
+                </li>
+            <li class="nav-item main"><a href="#downloading_a_larger_rectangular_area_using_the_openstreetmap_api">Downloading a Larger Rectangular Area Using the OpenStreetMap API</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#obtain_the_geo-coordinates" class="nav-link">• Obtain the geo-coordinates</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#download_the_area" class="nav-link">• Download the area</a>
+                </li>
+            <li class="nav-item main"><a href="#downloading_a_city">Downloading a City</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#obtaining_an_area_id" class="nav-link">• Obtaining an area Id</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#downloading_an_area_by_id" class="nav-link">• Downloading an area by Id</a>
+                </li>
+            <li class="nav-item main"><a href="#downloading_a_very_large_area">Downloading a very large area</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#pre-packaged_areas" class="nav-link">• Pre-packaged Areas</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#custom_areas" class="nav-link">• Custom Areas</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Networks/Import/OpenStreetMapDownload<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>From <a href="http://www.openstreetmap.org/">http://www.openstreetmap.org/</a>:</p>
+<blockquote>
+<p><em>"<a href="http://www.openstreetmap.org/">OpenStreetMap</a> is a free editable
+map of the whole world. It is made by people like you."</em></p>
+<p><em>"<a href="http://www.openstreetmap.org/">OpenStreetMap</a> creates and provides
+free geographic data such as street maps to anyone who wants them. The
+project was started because most maps you think of as free actually
+have legal or technical restrictions on their use, holding back people
+from using them in creative, productive, or unexpected ways."</em></p>
+</blockquote>
+<p>The amount of data contained within
+<a href="http://www.openstreetmap.org/">OpenStreetMap</a>, and their quality, is
+really amazing. Even though no demand data is available, the quality of
+the road networks makes it worth to regard
+<a href="http://www.openstreetmap.org/">OpenStreetMap</a> as a data source for
+traffic simulations, especially if one is interested in multi- or
+inter-modal simulations.</p>
+<p>This page describes how OpenStreetMap data can be obtained. OSM data
+must be converted before it can be used with Sumo (see
+<a href="OpenStreetMap.html">Networks/Import/OpenStreetMap</a>).
+The page <a href="../../OpenStreetMap_file.html">OpenStreetMap file</a> gives
+further general information on the data format.</p>
+<h1 id="downloading_a_small_rectangular_area">Downloading a small rectangular area<a class="headerlink" href="#downloading_a_small_rectangular_area" title="Permanent link">#</a></h1>
+<h2 id="using_the_osmwebwizard">Using the <a href="../../Tools/Import/OSM.html">osmWebWizard</a><a class="headerlink" href="#using_the_osmwebwizard" title="Permanent link">#</a></h2>
+<p>Data can be downloaded by selecting an area in the browser. In addition
+to downloading and building the network, demand for various traffic
+modes can be generated automatically.</p>
+<h2 id="directly_from_the_browser">Directly from the Browser<a class="headerlink" href="#directly_from_the_browser" title="Permanent link">#</a></h2>
+<p>Data can be downloaded comfortably at
+<a href="http://www.openstreetmap.org/export">http://www.openstreetmap.org/export</a> by selecting a rectangular area.
+However, this page limits the amount of data that can be downloaded.
+Depending on the data-density in the selected area this may limit the
+downloadable area to less than a square kilometer (although downloading
+a whole city may be possible).</p>
+<h2 id="with_the_java_openstreetmap_editor_josm">With the <a href="http://josm.openstreetmap.de/">Java OpenStreetMap Editor (JOSM)</a><a class="headerlink" href="#with_the_java_openstreetmap_editor_josm" title="Permanent link">#</a></h2>
+<p>The <a href="http://josm.openstreetmap.de/">Java OpenStreetMap Editor (JOSM)</a> is
+a mature tool for handling OSM-data. It allows for comfortable
+downloading of rectangular areas using an interactive map. It even
+supports searching for an area by name (i.e. Berlin). It also supports
+filtering and editing of OSM Data.</p>
+<h1 id="downloading_a_larger_rectangular_area_using_the_openstreetmap_api">Downloading a Larger Rectangular Area Using the OpenStreetMap API<a class="headerlink" href="#downloading_a_larger_rectangular_area_using_the_openstreetmap_api" title="Permanent link">#</a></h1>
+<p>Larger amounts of OSM-data can be downloaded using a web browser or
+preferably with a program such as
+<a href="http://wget.addictivecode.org/">wget</a>. For detailed information refer
+to the <a href="http://wiki.openstreetmap.org/wiki/API">API overview</a></p>
+<p>Downloading OSM-data via the API is a two step process: First you must
+determine the geo-coordinates for your area. Then you can download
+OSM-data using those coordinates.</p>
+<h2 id="obtain_the_geo-coordinates">Obtain the geo-coordinates<a class="headerlink" href="#obtain_the_geo-coordinates" title="Permanent link">#</a></h2>
+<p>You need the (longitude, latitude)-numbers for the south-west corner and
+for the north-east corner of your chosen area. You can get them at <a href="http://www.openstreetmap.de/karte.html">this
+page</a> by pointing your mouse at
+the appropriate map location and observing the coordinates in the status
+bar. The inner city of Berlin lies within the following coordinates:</p>
+<pre><code>SW-corner: 13.278 52.473
+NE-corner: 13.471 52.552
+</code></pre>
+
+<h2 id="download_the_area">Download the area<a class="headerlink" href="#download_the_area" title="Permanent link">#</a></h2>
+<p>Construct an <a href="http://en.wikipedia.org/wiki/Uniform_Resource_Identifier">URI (web
+adress)</a> from
+the geo-coordinates and download the data from that URI. The URI takes
+the following form:</p>
+<pre><code>http://api.openstreetmap.org/api/0.6/map?bbox=&lt;SW-longitude,SW-latitude,NE-longitude,NE-latitude&gt;
+</code></pre>
+
+<p>for the above example this becomes</p>
+<pre><code>http://api.openstreetmap.org/api/0.6/map?bbox=13.278,52.473,13.471,52.552
+</code></pre>
+
+<p>you can download your data by entering the URI in a web-browers or by
+using another program such as <a href="http://wget.addictivecode.org/">wget</a>.</p>
+<pre><code>wget.exe &quot;http://api.openstreetmap.org/api/0.6/map?bbox=13.278,52.473,13.471,52.552&quot; -O berlin.osm.xml
+</code></pre>
+
+<p><strong>Important:</strong> the API version number <em>0.6</em> will eventually be outdated.
+Refer to the <a href="http://wiki.openstreetmap.org/wiki/API">openstreetmap API
+page</a> for the latest version.</p>
+<h1 id="downloading_a_city">Downloading a City<a class="headerlink" href="#downloading_a_city" title="Permanent link">#</a></h1>
+<p>Modelling a single city is a common simulation use case. <a href="http://www.overpass-api.de/">OSM Overpass
+API</a> provides a comfortable interface to
+obtain the road network and infrastructure within a city boundary (or
+other administrative region).</p>
+<p>This is two step Process: First you must obtain the Id (Identification
+Number) of the area you want to download. Then you can use that Id to
+download the area.</p>
+<h2 id="obtaining_an_area_id">Obtaining an area Id<a class="headerlink" href="#obtaining_an_area_id" title="Permanent link">#</a></h2>
+<p>Copy the following query into the input box on the the <a href="http://www.overpass-api.de/query_form.html">OSM Overpass API
+query page</a>. Replace
+<em>Berlin</em> by the city name of your choice and click the accompanying
+button "Explore".</p>
+<pre><code> &lt;query type=&quot;relation&quot;&gt;
+ &lt;has-kv k=&quot;boundary&quot; v=&quot;administrative&quot;/&gt;
+ &lt;has-kv k=&quot;name&quot; v=&quot;Berlin&quot;/&gt;
+ &lt;/query&gt;
+ &lt;print mode=&quot;body&quot;/&gt;
+</code></pre>
+
+<p>This will prompt you to download or open a file containing the answer to
+your query.</p>
+<pre><code> &lt;relation id=&quot;62422&quot;&gt;
+   &lt;member type=&quot;way&quot; ref=&quot;36991886&quot; role=&quot;outer&quot;/&gt;
+   ...
+   &lt;member type=&quot;way&quot; ref=&quot;44020341&quot; role=&quot;outer&quot;/&gt;
+   &lt;tag k=&quot;de:amtlicher_gemeindeschluessel&quot; v=&quot;11&quot;/&gt;
+   &lt;tag k=&quot;TMC:cid_58:tabcd_1:LocationCode&quot; v=&quot;266&quot;/&gt;
+   &lt;tag k=&quot;type&quot; v=&quot;multipolygon&quot;/&gt;
+   &lt;tag k=&quot;boundary&quot; v=&quot;administrative&quot;/&gt;
+   &lt;tag k=&quot;admin_level&quot; v=&quot;4&quot;/&gt;
+   &lt;tag k=&quot;TMC:cid_58:tabcd_1:Class&quot; v=&quot;Area&quot;/&gt;
+   &lt;tag k=&quot;name&quot; v=&quot;Berlin&quot;/&gt;
+   &lt;tag k=&quot;source&quot; v=&quot;http://wiki.openstreetmap.org/wiki/Import/Catalogue/Kreisgrenzen_Deutschland_2005&quot;/&gt;
+   &lt;tag k=&quot;TMC:cid_58:tabcd_1:LCLversion&quot; v=&quot;9.00&quot;/&gt;
+ &lt;/relation&gt;
+ &lt;relation id=&quot;119876&quot;&gt;
+   &lt;member type=&quot;way&quot; ref=&quot;33628254&quot; role=&quot;outer&quot;/&gt;
+   &lt;tag k=&quot;tiger:PLACEFP&quot; v=&quot;07304&quot;/&gt;
+   &lt;tag k=&quot;tiger:PLACENS&quot; v=&quot;02403860&quot;/&gt;
+   &lt;tag k=&quot;tiger:PLCIDFP&quot; v=&quot;1307304&quot;/&gt;
+   &lt;tag k=&quot;wikipedia&quot; v=&quot;Berlin,_Georgia&quot;/&gt;
+   &lt;tag k=&quot;type&quot; v=&quot;multipolygon&quot;/&gt;
+   &lt;tag k=&quot;place&quot; v=&quot;city&quot;/&gt;
+   &lt;tag k=&quot;boundary&quot; v=&quot;administrative&quot;/&gt;
+   &lt;tag k=&quot;admin_level&quot; v=&quot;8&quot;/&gt;
+   &lt;tag k=&quot;name&quot; v=&quot;Berlin&quot;/&gt;
+   &lt;tag k=&quot;border_type&quot; v=&quot;city&quot;/&gt;
+   &lt;tag k=&quot;created_by&quot; v=&quot;polyshp2osm-multipoly&quot;/&gt;
+   &lt;tag k=&quot;source&quot; v=&quot;TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)&quot;/&gt;
+   &lt;tag k=&quot;tiger:reviewed&quot; v=&quot;no&quot;/&gt;
+   &lt;tag k=&quot;is_in:country&quot; v=&quot;USA&quot;/&gt;
+   ...
+ &lt;/relation&gt;
+</code></pre>
+
+<p>The important parts of result data are the <code>&lt;relation id="..."&gt;</code> elements.
+This <code>id</code> attribute will be used to download the OSM-data for your
+chosen city.</p>
+<p><strong>Important:</strong> as in the <em>Berlin</em>-query above, there may be multiple
+results. Usually the accompanying tags will be sufficiently helpful to
+distinguish between <em>Berlin,Germany</em> and <em>Berlin,USA/Georgia</em>. If the
+output does not contain the region you were looking for, it might be
+helpful to add the type of region e.g. <em>Berlin, city</em>. If problems
+persist read on at the <a href="http://www.overpass-api.de/">OSM Overpass API</a>
+site.</p>
+<h2 id="downloading_an_area_by_id">Downloading an area by Id<a class="headerlink" href="#downloading_an_area_by_id" title="Permanent link">#</a></h2>
+<p>The Id obtained in the previous step for the city of <em>Berlin</em> was 62422.
+Technically this is only the Id of the <em>border</em> of Berlin and we must
+add the number 3,600,000,000 to obtain the Id of the area of berlin.
+<code>3,600,000,000 + 62,422 = 3,600,062,422</code></p>
+<p>Using this number we construct another query for an input box on the
+<a href="http://www.overpass-api.de/query_form.html">OSM Overpass API query
+page</a>.</p>
+<pre><code> &lt;osm-script timeout=&quot;180&quot; element-limit=&quot;20000000&quot;&gt;
+ &lt;union&gt;
+   &lt;area-query ref=&quot;3600062422&quot;/&gt;
+   &lt;recurse type=&quot;node-relation&quot; into=&quot;rels&quot;/&gt;
+   &lt;recurse type=&quot;node-way&quot;/&gt;
+   &lt;recurse type=&quot;way-relation&quot;/&gt;
+ &lt;/union&gt;
+ &lt;union&gt;
+   &lt;item/&gt;
+   &lt;recurse type=&quot;way-node&quot;/&gt;
+ &lt;/union&gt;
+ &lt;print mode=&quot;body&quot;/&gt;
+ &lt;/osm-script&gt;
+</code></pre>
+
+<p>Replace the number for the <code>&lt;area-query ref="..."&gt;</code> by the number from
+above and click the accompanying button "Download". This will prompt you
+to download or open a file containing the OSM-data for your city.</p>
+<p><strong>Important:</strong> For large cities you may have to adapt the values for
+<code>timeout</code> and <code>element-limit</code>.</p>
+<h1 id="downloading_a_very_large_area">Downloading a very large area<a class="headerlink" href="#downloading_a_very_large_area" title="Permanent link">#</a></h1>
+<h2 id="pre-packaged_areas">Pre-packaged Areas<a class="headerlink" href="#pre-packaged_areas" title="Permanent link">#</a></h2>
+<p>A large amount of pre-packaged areas are available at
+<a href="http://www.geofabrik.de/data/download.html">http://www.geofabrik.de/data/download.html</a>. Many of these are quite
+large and will probably require filtering before they can be reasonably
+processed. Importing the whole of Germany with [netconvert] takes
+about 60GB of RAM!</p>
+<h2 id="custom_areas">Custom Areas<a class="headerlink" href="#custom_areas" title="Permanent link">#</a></h2>
+<p>The OpenStreetMap-API still limits the size of an area to extract. The
+help script <em>osmGet.py</em> located within <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/import/osm allows to
+extract a larger area by splitting the requests. The call is:</p>
+<pre><code>osmGet.py &lt;PREFIX&gt; &lt;BOUNDING_BOX&gt; &lt;TILES_NUMBER&gt;
+</code></pre>
+
+<p>The bounding box must be given as
+&lt;LAT_MIN>,&lt;LONG_MIN>,&lt;LAT_MAX>,&lt;LONG_MAX>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>"wget" must be installed and located in the execution path.</p>
+</div>
+<p>This script will extract OSM-data as <em>n</em> files with <em>n</em> =&lt;TILES_NUMBER>,
+named "&lt;PREFIX>&lt;INDEX>_&lt;TILES_NUMBER>.osm.xml". These files can be
+imported by the scripts <em>osmBuild.Py</em> and <em>osmBuildPolys.py</em>, also
+located in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/import/osm. This is described in
+<a href="OpenStreetMap.html#import_scripts">Networks/Import/OpenStreetMap#Import
+Scripts</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

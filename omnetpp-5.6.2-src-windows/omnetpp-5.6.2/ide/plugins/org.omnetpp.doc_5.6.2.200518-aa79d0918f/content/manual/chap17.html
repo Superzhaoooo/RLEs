@@ -1,0 +1,653 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap16.html">[Prev]</A>&nbsp;<a href="chap18.html">[Next]</A>&nbsp;<a href="toc.html#toc_17.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:plugin-exts"/>17 Customizing and Extending OMNeT++<a class="headerlink" href="#cha:plugin-exts" title="Permalink to this headline">¶</a></h1>
+
+<p><h2><a name="sec:plugin-exts:overview"/>17.1 Overview<a class="headerlink" href="#sec:plugin-exts:overview" title="Permalink to this headline">¶</a></h2>
+
+<p>OMNeT++ is an open system, and several details of its operation can be
+customized and extended by writing C++ code. Some extension interfaces
+have already been covered in other chapters:
+
+<p><ul>
+   <li> <i>Defining new NED functions</i> was described in
+     <a href="chap7.html#sec:sim-lib:defining-ned-functions">[7.11]</a>
+   <li> <i>Defining new result filters and recorders</i> was described
+     in <a href="chap4.html#sec:simple-modules:writing-result-filters">[4.15.6]</a>
+</ul>
+
+<p>This chapter will begin by introducing some infrastructure features that
+are useful for extensions:
+
+<p><ul>
+   <li> <i>Config options</i>. This facility lets other extensions classes
+     define their own configuration options.
+   <li> <i>Simulation lifecycle listeners</i> allow extensions to get
+     notified when a network is set up, simulation is started, paused or resumed,
+     the simulation ended successfully or with an error, and so on.
+   <li> <tt><a href="../api/classomnetpp_1_1cEvent.html">cEvent</a></tt> lets extensions schedule actions for certain simulation
+     times. This is especially useful for custom event schedulers that we'll
+     cover later in this chapter.
+</ul>
+
+<p>Then we will continue with the descriptions of the following extension
+interfaces:
+
+<p><ul>
+   <li> <tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt> lets one add new random number generator algorithms.
+   <li> <tt><a href="../api/classomnetpp_1_1cScheduler.html">cScheduler</a></tt> is an interface for event schedulers.
+     This extension interface allows for implementing real-time,
+     hardware-in-the-loop, distributed and distributed parallel simulation.
+   <li> <tt><a href="../api/classomnetpp_1_1cFutureEventSet.html">cFutureEventSet</a></tt>. This extension interface allows one to
+     replace the data structure used for storing future events during
+     simulation, i.e. the FES. This may make sense for specialized
+     workloads.
+   <li> <tt><a href="../api/classomnetpp_1_1cFingerprintCalculator.html">cFingerprintCalculator</a></tt>. This extension interface allows one
+     to replace or extend the fingerprint computation algorithm.
+   <li> <tt><a href="../api/classomnetpp_1_1cIOutputScalarManager.html">cIOutputScalarManager</a></tt>. This extension interface allows
+     one to create additional means of saving scalar results, for example
+     database or CSV output.
+   <li> <tt><a href="../api/classomnetpp_1_1cIOutputVectorManager.html">cIOutputVectorManager</a></tt>. This extension interface allows
+     one to create additional means of saving vector results, for example
+     database or CSV output.
+   <li> <tt><a href="../api/classomnetpp_1_1cIEventlogManager.html">cIEventlogManager</a></tt>. This extension interface allows one
+     to customize event log recording.
+   <li> <tt><a href="../api/classomnetpp_1_1cISnapshotManager.html">cISnapshotManager</a></tt>. It provides an output stream to which
+     snapshots are written.
+   <li> <tt><a href="../api/classomnetpp_1_1cConfigurationEx.html">cConfigurationEx</a></tt>. Configuration provider extension.
+     This extension interface lets one replace <tt>omnetpp.ini</tt>
+     with some other implementation, for example a database.
+   <li> <i>User interfaces</i>. When existing runtime user interfaces
+     (Cmdenv, Tkenv, Qtenv) don't suffice, one can create a new one,
+     reusing the infrastructure provided by the common base of the three.
+</ul>
+
+<p>Many extension interfaces follow a common pattern: one needs to implement a
+given interface class (e.g. <tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt> for random number generators),
+let OMNeT++ know about it by registering the class with the
+<tt>Register_Class()</tt> macro, and finally activate it by the appropriate
+configuration option (e.g. <tt>rng-class=MyRNG</tt>). The interface classes
+(<tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt>, <tt><a href="../api/classomnetpp_1_1cScheduler.html">cScheduler</a></tt>, etc.) are documented in the API
+Reference.
+
+<p><ul class="note"><b>NOTE</b><br>
+A common error is that OMNeT++ cannot find the class at runtime. When that
+happens, make sure the executable actually contains the code of the class.
+When linking with a library, over-optimizing linkers (esp. on Unix) tend to
+leave out code which seems to be unreferenced by other parts of the
+program.
+</ul>
+
+<p>The following sections elaborate on the various extension interfaces.
+
+<p>
+<h2><a name="sec:plugin-exts:configoption"/>17.2 Adding a New Configuration Option<a class="headerlink" href="#sec:plugin-exts:configoption" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:plugin-exts:configoption:registration"/>17.2.1 Registration<a class="headerlink" href="#sec:plugin-exts:configoption:registration" title="Permalink to this headline">¶</a></h3>
+
+<p>New configuration options need to be declared with one of the appropriate
+registration macros. These macros are:
+
+<pre class="cpp">
+Register_GlobalConfigOption(ID, NAME, TYPE, DEFAULTVALUE, DESCRIPTION)
+Register_PerRunConfigOption(ID, NAME, TYPE, DEFAULTVALUE, DESCRIPTION)
+Register_GlobalConfigOptionU(ID, NAME, UNIT, DEFAULTVALUE, DESCRIPTION)
+Register_PerRunConfigOptionU(ID, NAME, UNIT, DEFAULTVALUE, DESCRIPTION)
+Register_PerObjectConfigOption(ID, NAME, KIND, TYPE, DEFAULTVALUE, DESCRIPTION)
+Register_PerObjectConfigOptionU(ID, NAME, KIND, UNIT, DEFAULTVALUE, DESCRIPTION)
+</pre>
+<p>
+Config options come in three flavors, as indicated by the macro names:
+
+<p><ul>
+  <li> <i>Global</i> options affect all configurations (i.e. they are
+      only accepted in the <tt>[General]</tt> section but not in
+      <tt>[Config &lt;name&gt;]</tt> sections)
+  <li> <i>Per-Run</i> options can be specified in any section
+      (i.e. both in <tt>[General]</tt> and in <tt>[Config &lt;name&gt;]</tt> sections).
+      They affect the configuration they occur in.
+  <li> <i>Per-Object</i> options can be specified in any section
+      (i.e. both in <tt>[General]</tt> and in <tt>[Config &lt;name&gt;]</tt> sections).
+      They are specific to an object or group of objects. Their names
+      must always contain a hyphen (-) character so that they can be
+      distinguished from module/channel parameter assignments when they
+      occur in ini files.
+</ul>
+
+<p>The macro arguments are as follows:
+<ul>
+  <li> <i>ID</i> is a C++ identifier that becomes the name of a global
+        variable, a pointer to a <tt><a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a></tt> object that the
+        macro creates. It lets you refer to the configuration option, 
+        e.g. when querying its value using <tt><a href="../api/classomnetpp_1_1cConfiguration.html">cConfiguration</a></tt>'s member 
+        functions.
+  <li> <i>NAME</i> is the name of the option (a string).
+  <li> <i>KIND</i> applies to per-object configuration options, and 
+        clarifies what kind of objects the option applies to. Its value 
+        must be one of: <tt>KIND_COMPONENT</tt> (module or channel),
+        <tt>KIND_CHANNEL</tt>, <tt>KIND_MODULE</tt> (simple or compound module),
+        <tt>KIND_SIMPLE_MODULE</tt>, <tt>KIND_PARAMETER</tt> (module or channel
+        parameter), <tt>KIND_STATISTIC</tt> (statistic declared in NED
+        via <b><tt>@statistic</tt></b>), <tt>KIND_SCALAR</tt> (output scalar),
+        <tt>KIND_VECTOR</tt> (output vector), <tt>KIND_UNSPECIFIED_TYPE</tt>
+        (only used for the <b><tt>typename</tt></b> option), <tt>KIND_OTHER</tt>
+        (anything else).
+  <li> <i>TYPE</i> is the data type of the config option; it must be one of:
+        <tt>CFG_BOOL</tt>, <tt>CFG_INT</tt>, <tt>CFG_DOUBLE</tt>, <tt>CFG_STRING</tt>,
+        <tt>CFG_FILENAME</tt>, <tt>CFG_FILENAMES</tt>, <tt>CFG_PATH</tt>, <tt>CFG_CUSTOM</tt>.
+        The most significant difference between filesystem-related types
+        (filename, filenames, path) and plain strings is that relative
+        filenames and paths are automatically converted to absolute
+        when the configuration is read, with the base directory being the
+        location of the ini file where the configuration entry was read from.
+  <li> <i>UNIT</i> is a string that names the measurement unit in which
+        the option's value is to be interpreted; it implies type <tt>CFG_DOUBLE</tt>.
+  <li> <i>DEFAULTVALUE</i> is the default value in textual form (string);
+        this should be <tt>nullptr</tt> if the option has no default value.
+  <li> <i>DESCRIPTION</i> is an arbitrarily long string that describes
+        the purpose and and operation of the option. It will be used in
+        help texts etc.
+</ul>
+
+<p>For example, the <tt>debug-on-errors</tt> option is declared in the following way:
+
+<pre class="cpp">
+Register_GlobalConfigOption(CFGID_DEBUG_ON_ERRORS, "debug-on-errors",
+    CFG_BOOL, "false", "When enabled, runtime errors will cause...");
+</pre>
+<p>
+The macro will register the option, and also declare the
+<tt>CFGID_DEBUG_ON_ERRORS</tt> variable as pointer to a
+<tt><a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a></tt>. The variable can be used later as a &#8220;handle&#8221; when
+reading the option value from the configuration database.
+
+<p><h3><a name="sec:plugin-exts:configoption:reading-values"/>17.2.2 Reading the Value<a class="headerlink" href="#sec:plugin-exts:configoption:reading-values" title="Permalink to this headline">¶</a></h3>
+
+<p>The configuration is accessible via the <tt>getConfig()</tt> method of <tt><a href="../api/classomnetpp_1_1cEnvir.html">cEnvir</a></tt>.
+It returns a pointer to the configuration object (<tt><a href="../api/classomnetpp_1_1cConfiguration.html">cConfiguration</a></tt>):
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cConfiguration.html">cConfiguration</a> *config = getEnvir()-&gt;getConfig();
+</pre>
+<p>
+<tt><a href="../api/classomnetpp_1_1cConfiguration.html">cConfiguration</a></tt> provides several methods for querying the configuration.
+
+<p><ul class="note"><b>NOTE</b><br>
+The configuration object provides a flattened view of the ini file. Sections
+inheriting from each other are merged. Configuration options provided
+on the command line in the form <tt>--option=value</tt> are added first to the object.
+This ensures that the command line options take precedence over the values specified
+in the INI file.
+</ul>
+
+<pre class="cpp">
+const char *getAsCustom(<a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a> *entry, const char *fallbackValue=nullptr);
+bool getAsBool(<a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a> *entry, bool fallbackValue=false);
+long getAsInt(<a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a> *entry, long fallbackValue=0);
+double getAsDouble(<a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a> *entry, double fallbackValue=0);
+std::string getAsString(<a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a> *entry, const char *fallbackValue="");
+std::string getAsFilename(<a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a> *entry);
+std::vector&lt;std::string&gt; getAsFilenames(<a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a> *entry);
+std::string getAsPath(<a href="../api/classomnetpp_1_1cConfigOption.html">cConfigOption</a> *entry);
+</pre>
+<p>
+<i>fallbackValue</i> is returned if the value is not specified in the configuration,
+and there is no default value.
+
+<pre class="cpp">
+bool debug = getEnvir()-&gt;getConfig()-&gt;getAsBool(CFGID_PARSIM_DEBUG);
+</pre>
+<p>
+
+<p><h2><a name="sec:plugin-exts:simulation-lifetime-listeners"/>17.3 Simulation Lifetime Listeners<a class="headerlink" href="#sec:plugin-exts:simulation-lifetime-listeners" title="Permalink to this headline">¶</a></h2>
+
+<p><tt><a href="../api/classomnetpp_1_1cISimulationLifecycleListener.html">cISimulationLifecycleListener</a></tt> is a callback interface for
+receiving notifications at various stages of simulations: setting up,
+running, tearing down, etc. Extension classes such as custom event
+schedulers often need this functionality for performing initalization
+and various other tasks.
+
+<p>Listeners of the type <tt><a href="../api/classomnetpp_1_1cISimulationLifecycleListener.html">cISimulationLifecycleListener</a></tt> need to be
+added to <tt><a href="../api/classomnetpp_1_1cEnvir.html">cEnvir</a></tt> with its <tt>addLifecycleListener()</tt> method,
+and removed with <tt>removeLifecycleListener()</tt>.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cISimulationLifecycleListener.html">cISimulationLifecycleListener</a> *listener = ...;
+getEnvir()-&gt;addLifecycleListener(listener);
+// and finally:
+getEnvir()-&gt;removeLifecycleListener(listener);
+</pre>
+<p>
+To implement a simulation lifecycle listener, subclass from
+<tt><a href="../api/classomnetpp_1_1cISimulationLifecycleListener.html">cISimulationLifecycleListener</a></tt>, and override its
+<tt>lifecycleEvent()</tt> method. It has the following signature:
+
+<pre class="cpp">
+virtual void lifecycleEvent(SimulationLifecycleEventType eventType, <a href="../api/classomnetpp_1_1cObject.html">cObject</a> *details) = 0;
+</pre>
+<p>
+
+Event type is one of the following. Their names are fairly self-describing,
+but the API documentation contains more precise information.
+
+<p><ul>
+  <li> <tt>LF_ON_STARTUP</tt>
+  <li> <tt>LF_PRE_NETWORK_SETUP</tt>, <tt>LF_POST_NETWORK_SETUP</tt>
+  <li> <tt>LF_PRE_NETWORK_INITIALIZE</tt>, <tt>LF_POST_NETWORK_INITIALIZE</tt>
+  <li> <tt>LF_ON_SIMULATION_START</tt>
+  <li> <tt>LF_ON_SIMULATION_PAUSE</tt>, <tt>LF_ON_SIMULATION_RESUME</tt>
+  <li> <tt>LF_ON_SIMULATION_SUCCESS</tt>, <tt>LF_ON_SIMULATION_ERROR</tt>
+  <li> <tt>LF_PRE_NETWORK_FINISH</tt>, <tt>LF_POST_NETWORK_FINISH</tt>
+  <li> <tt>LF_ON_RUN_END</tt>
+  <li> <tt>LF_PRE_NETWORK_DELETE</tt>, <tt>LF_POST_NETWORK_DELETE</tt>
+  <li> <tt>LF_ON_SHUTDOWN</tt>
+</ul>
+
+<p>The <i>details</i> argument is currently <tt>nullptr</tt>; further OMNeT++
+versions may pass extra information in it. Notifications always refer to
+the active simulation in case there're more (see <tt><a href="../api/classomnetpp_1_1cSimulation.html">cSimulation</a></tt>'s
+<tt>getActiveSimulation()</tt>).
+
+<p>Simulation lifecycle listeners are mainly intended for use by classes that
+extend the simulator's functionality, for example custom event schedulers
+and output vector/scalar managers. The lifecycle of such an extension
+object is managed by OMNeT++, so one can use their constructor to create and
+add the listener object to <tt><a href="../api/classomnetpp_1_1cEnvir.html">cEnvir</a></tt>, and the destructor to remove
+and delete it. The code is further simplified if the extension object
+itself implements <tt><a href="../api/classomnetpp_1_1cISimulationLifecycleListener.html">cISimulationLifecycleListener</a></tt>:
+
+
+<pre class="cpp">
+class CustomScheduler : public <a href="../api/classomnetpp_1_1cScheduler.html">cScheduler</a>, public <a href="../api/classomnetpp_1_1cISimulationLifecycleListener.html">cISimulationLifecycleListener</a>
+{
+  public:
+    CustomScheduler() { getEnvir()-&gt;addLifecycleListener(this); }
+    ~CustomScheduler() { getEnvir()-&gt;removeLifecycleListener(this); }
+    //...
+};
+</pre>
+<p>
+
+<p><h2><a name="sec:plugin-exts:cevent"/>17.4 <a href="../api/classomnetpp_1_1cEvent.html">cEvent</a><a class="headerlink" href="#sec:plugin-exts:cevent" title="Permalink to this headline">¶</a></h2>
+
+<p><tt><a href="../api/classomnetpp_1_1cEvent.html">cEvent</a></tt> represents an event in the discrete event simulator. When
+events are scheduled, they are inserted into the future events set (FES).
+During the simulation, events are removed from the FES and executed one by
+one in timestamp order. A <tt><a href="../api/classomnetpp_1_1cEvent.html">cEvent</a></tt> is executed by invoking its
+<tt>execute()</tt> member function. <tt>execute()</tt> should be overridden
+in subclasses to carry out the actions associated with the event.
+
+<p><ul class="note"><b>NOTE</b><br>
+<tt><a href="../api/classomnetpp_1_1cMessage.html">cMessage</a></tt> is also a subclass of <tt><a href="../api/classomnetpp_1_1cEvent.html">cEvent</a></tt>. Its
+<tt>execute()</tt> method calls the <tt>handleMessage()</tt> method of the
+message's destination module, or switches to the coroutine of its
+<tt>activity()</tt> method.
+</ul>
+
+<p><tt>execute()</tt> has the following signature:
+
+<pre class="cpp">
+virtual void execute() = 0;
+</pre>
+<p>
+Raw (non-message) event objects are an internal mechanism of the OMNeT++
+simulation kernel, and should not used in programming simulation models.
+However, they can be very useful when implementing custom event schedulers.
+For example, in co-simulation, events that occur in the other simulator may
+be represented with a <tt><a href="../api/classomnetpp_1_1cEvent.html">cEvent</a></tt> in OMNeT++. Simulation time limit
+is also implemented with a custom <tt><a href="../api/classomnetpp_1_1cEvent.html">cEvent</a></tt>.
+
+<p>
+<h2><a name="sec:plugin-exts:rng"/>17.5 Defining a New Random Number Generator<a class="headerlink" href="#sec:plugin-exts:rng" title="Permalink to this headline">¶</a></h2>
+
+<p>This interface lets one add new RNG implementations (see section
+<a href="chap7.html#sec:sim-lib:random-number-generators">[7.3]</a>) to OMNeT++.
+The motivation might be achieving integration with external software (for
+example something like Akaroa), or exactly replicating the trajectory of a
+simulation ported from another simulation framework that uses a different
+RNG.
+
+<p>The new RNG C++ class must implement the <tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt> interface,
+and can be activated with the <b><tt>rng-class</tt></b> configuration option.
+
+<p>
+<h2><a name="sec:plugin-exts:scheduler"/>17.6 Defining a New Event Scheduler<a class="headerlink" href="#sec:plugin-exts:scheduler" title="Permalink to this headline">¶</a></h2>
+
+<p>This extension interface lets one replace the event scheduler class with a
+custom one, which is the key for implementing many features including
+cosimulation, real-time simulation, network or device emulation, and
+distributed simulation.
+
+<p>The job of the event scheduler is to always return the next event to be
+processed by the simulator. The default implementation returns the first
+event in the future events list. Other variants:
+
+<p><ul>
+<li> For real-time simulation, this scheduler is replaced with one augmented
+    with <i>wait</i> calls (e.g. <tt>usleep()</tt>) that synchronize the
+    simulation time to the system clock. There are several options on what
+    should happen if the simulation time has already fallen behind: one may
+    re-adjust the reference time, leave it unchanged in the hope of catching up
+    later, or stop with an error message.
+
+<p><li> For emulation, the real-time scheduler is augmented with code that captures
+    packets from real network devices, and inserts them into the simulation.
+    INET Framework, the main protocol simulation package for OMNeT++, contains
+    an emulation scheduler. It uses the <i>pcap</i> library to capture
+    packets, and raw sockets to send packets to a real network device.
+    Emulation in INET also involves <i>header serializer</i> classes that
+    convert between protocol headers and their C++ object representations used
+    within the simulation.
+
+<p><li> For parallel simulation (see chapter <a href="chap16.html#cha:parallel-exec">[16]</a>), the
+    scheduler is modified to listen for messages arriving from other logical
+    processes (LPs), and inserts them into the simulation. The scheduler also
+    blocks the simulation when it is not safe to execute the next event due to
+    potential causality violation, until clearance arrives from other LPs to
+    continue in the form of a null message.
+
+<p><li> OMNeT++ supports distributed simulation using HLA (IEEE 1516) <br><ul><font size=-1>[The
+    source code for the HLA and SystemC integration features are not open
+    source, but they are available to researchers on request free of charge.]</font></ul>
+    as well. The scheduler plays the role of the HLA Federate Ambassador, is
+    responsible for exchanging messages (interactions, change notifications,
+    etc.) with other federates, and performs time regulation.
+
+<p><li> OMNeT++ also supports mixing SystemC (IEEE 1666-2005) modules with OMNeT++
+    modules in the simulation. When this feature is enabled, there are two
+    future event lists in the simulation, OMNeT++'s and SystemC's, and a
+    special scheduler takes care that events are consumed from both lists in
+    increasing timestamp order. This method of performing mixed simulations is
+    orders of magnitude faster and also more flexible than letting the two
+    simulators execute in separate processes and communicate over a pipe or
+    socket connection.
+</ul>
+
+<p>The scheduler C++ class must implement the <tt><a href="../api/classomnetpp_1_1cScheduler.html">cScheduler</a></tt> interface,
+and can be activated with the <b><tt>scheduler-class</tt></b> configuration option.
+
+<p>Simulation lifetime listeners and the <tt><a href="../api/classomnetpp_1_1cEvent.html">cEvent</a></tt> class can be extremely
+useful when implementing certain types of event schedulers.
+
+<p>To see examples of scheduler classes, check the
+<tt><a href="../api/classomnetpp_1_1cSequentialScheduler.html">cSequentialScheduler</a></tt> and <tt><a href="../api/classomnetpp_1_1cRealTimeScheduler.html">cRealTimeScheduler</a></tt> classes in
+the simulation kernel, <tt>cSocketRTScheduler</tt> which is part of the
+<i>Sockets</i> sample simulation, or <tt>cParsimSynchronizer</tt> and its
+subclasses that are part of the parallel simulation support of OMNeT++.
+
+<p>
+<h2><a name="sec:plugin-exts:fes"/>17.7 Defining a New FES Data Structure<a class="headerlink" href="#sec:plugin-exts:fes" title="Permalink to this headline">¶</a></h2>
+
+<p>This extension interface allows one to replace the data structure used for
+storing future events during simulation, i.e. the FES. Replacing the FES
+may make sense for specialized workloads, or for the purpose of performance
+comparison of various FES algorithms. (The default, binary heap based FES
+implementation is a good choice for general workloads.)
+
+<p>The FES C++ class must implement the <tt><a href="../api/classomnetpp_1_1cFutureEventSet.html">cFutureEventSet</a></tt> interface,
+and can be activated with the <b><tt>futureeventset-class</tt></b> configuration option.
+
+<p>
+<h2><a name="sec:plugin-exts:fingerprint"/>17.8 Defining a New Fingerprint Algorithm<a class="headerlink" href="#sec:plugin-exts:fingerprint" title="Permalink to this headline">¶</a></h2>
+
+<p>This extension interface allows one to replace or extend the fingerprint
+computation algorithm (see section <a href="chap15.html#sec:testing:fingerprint-tests">[15.4]</a>).
+
+<p>
+The fingerprint computation class must implement the <tt><a href="../api/classomnetpp_1_1cFingerprintCalculator.html">cFingerprintCalculator</a></tt> interface,
+and can be activated with the <b><tt>fingerprintcalculator-class</tt></b> configuration option.
+
+<p>
+<h2><a name="sec:plugin-exts:outputscalarmanager"/>17.9 Defining a New Output Scalar Manager<a class="headerlink" href="#sec:plugin-exts:outputscalarmanager" title="Permalink to this headline">¶</a></h2>
+
+<p>An output scalar manager handles the recording the scalar and histogram
+output data. The default output scalar manager is
+<tt>cFileOutputScalarManager</tt> that saves data into <tt>.sca</tt> files.
+This extension interface allows one to create additional means of saving
+scalar and histogram results, for example database or CSV output.
+
+<p>The new class must implement <tt><a href="../api/classomnetpp_1_1cIOutputScalarManager.html">cIOutputScalarManager</a></tt>, and can be
+activated with the <b><tt>outputscalarmanager-class</tt></b> configuration
+option.
+
+<p>
+<h2><a name="sec:plugin-exts:outputvectormanager"/>17.10 Defining a New Output Vector Manager<a class="headerlink" href="#sec:plugin-exts:outputvectormanager" title="Permalink to this headline">¶</a></h2>
+
+<p>An output vector manager handles the recording output vectors, produced
+for example by <tt><a href="../api/classomnetpp_1_1cOutVector.html">cOutVector</a></tt> objects. The default output vector
+manager is <tt>cIndexedFileOutputVectorManager</tt> that saves data into
+<tt>.vec</tt> files, indexed in separate <tt>.vci</tt> files. This extension
+interface allows one to create additional means of saving vector results,
+for example database or CSV output.
+
+<p>The new class must implement the <tt><a href="../api/classomnetpp_1_1cIOutputVectorManager.html">cIOutputVectorManager</a></tt> interface,
+and can be activated with the <b><tt>outputvectormanager-class</tt></b>
+configuration option.
+
+<p>
+<h2><a name="sec:plugin-exts:eventlogmanager"/>17.11 Defining a New Eventlog Manager<a class="headerlink" href="#sec:plugin-exts:eventlogmanager" title="Permalink to this headline">¶</a></h2>
+
+<p>An eventlog manager handles the recording of simulation history into an
+event log (see <a href="chap13.html#cha:eventlog">[13]</a>). The default eventlog manager is
+<tt>EventlogFileManager</tt>, which records into file, and also allows for
+some filtering. By replacing the default eventlog manager class, one can
+introduce additional filtering, record into a different file format or
+to different storage (e.g. to a database or a remote vizualizer).
+
+<p>The new class must implement the <tt><a href="../api/classomnetpp_1_1cIEventlogManager.html">cIEventlogManager</a></tt> interface,
+and can be activated with the <b><tt>eventlogmanager-class</tt></b> configuration
+option.
+
+<p>
+<h2><a name="sec:plugin-exts:snapshotmanager"/>17.12 Defining a New Snapshot Manager<a class="headerlink" href="#sec:plugin-exts:snapshotmanager" title="Permalink to this headline">¶</a></h2>
+
+<p>A snapshot manager provides an output stream to which snapshots are written
+(see section <a href="chap7.html#sec:sim-lib:snapshots">[7.10.5]</a>). The default snapshot manager
+is <tt>cFileSnapshotManager</tt>.
+
+<p>The new class must implement the <tt><a href="../api/classomnetpp_1_1cISnapshotManager.html">cISnapshotManager</a></tt> interface, and
+can be activated with the <b><tt>snapshotmanager-class</tt></b> configuration
+option.
+
+<p>
+<h2><a name="sec:plugin-exts:configuration-providers"/>17.13 Defining a New Configuration Provider<a class="headerlink" href="#sec:plugin-exts:configuration-providers" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:plugin-exts:configprovider-overview"/>17.13.1 Overview<a class="headerlink" href="#sec:plugin-exts:configprovider-overview" title="Permalink to this headline">¶</a></h3>
+
+<p>The configuration provider extension lets one replace ini files
+with some other storage implementation, for example a database.
+The configuration provider C++ class must implement the
+<tt><a href="../api/classomnetpp_1_1cConfigurationEx.html">cConfigurationEx</a></tt> interface, and can be activated with
+the <b><tt>configuration-class</tt></b> configuration option.
+
+<p>The <tt><a href="../api/classomnetpp_1_1cConfigurationEx.html">cConfigurationEx</a></tt> interface abstracts the inifile-based
+data model to some degree. It assumes that the configuration data
+consists of several <i>named configurations</i>. Before every
+simulation run, one of the <i>named configurations</i> is
+activated, and from then on, all queries into the configuration
+operate on the <i>active named configuration</i> only.
+
+<p>It practice, you will probably use the <tt>SectionBasedConfiguration</tt>
+class (in <tt>src/envir</tt>) or subclass from it, because it already
+implements a lot of functionality that you would otherwise have to.
+
+<p><tt>SectionBasedConfiguration</tt> does not assume ini files or
+any other particular storage format; instead, it accepts
+an object that implements the <tt><a href="../api/classomnetpp_1_1cConfigurationReader.html">cConfigurationReader</a></tt>
+interface to provide the data in raw form to it.
+The default implementation of <tt><a href="../api/classomnetpp_1_1cConfigurationReader.html">cConfigurationReader</a></tt> is
+<tt>InifileReader</tt>.
+
+<p><h3><a name="sec:plugin-exts:configprovider-startup-sequence"/>17.13.2 The Startup Sequence<a class="headerlink" href="#sec:plugin-exts:configprovider-startup-sequence" title="Permalink to this headline">¶</a></h3>
+
+<p>From the configuration extension's point of view, the startup sequence
+looks like the following (see <tt>src/envir/startup.cc</tt> in the source code):
+
+<p><ol>
+  <li> First, ini files specified on the command-line are read into a
+     <i>boot-time configuration object</i>. The boot-time configuration
+     is always a <tt>SectionBasedConfiguration</tt> with
+     <tt>InifileReader</tt>.
+  <li> Shared libraries are loaded (see the <tt>-l</tt> command-line option,
+     and the <b><tt>load-libs</tt></b> configuration option). This allows
+     configuration classes to come from shared libraries.
+  <li> The <b><tt>configuration-class</tt></b> configuration option is examined.
+     If it is present, a configuration object of the given class
+     is instantiated, and replaces the boot-time configuration.
+     The new configuration object is initialized from the boot-time
+     configuration, so that it can read parameters (e.g. database
+     connection parameters, XML file name, etc) from it.
+     Then the boot-time configuration object is deallocated.
+  <li> The <b><tt>load-libs</tt></b> option from the new configuration object is
+     processed.
+  <li> Then everything goes on as normally, using the new configuration
+     object.
+</ol>
+
+<p><h3><a name="sec:plugin-exts:configprovider:custom-class"/>17.13.3 Providing a Custom Configuration Class<a class="headerlink" href="#sec:plugin-exts:configprovider:custom-class" title="Permalink to this headline">¶</a></h3>
+
+<p>To replace the configuration object with a custom implementation,
+one needs to subclass <tt><a href="../api/classomnetpp_1_1cConfigurationEx.html">cConfigurationEx</a></tt>, register the new class,
+
+<pre class="cpp">
+#include "cconfiguration.h"
+
+class CustomConfiguration : public <a href="../api/classomnetpp_1_1cConfigurationEx.html">cConfigurationEx</a>
+{
+   ...
+};
+
+Register_Class(CustomConfiguration);
+</pre>
+<p>
+and then activate it in the boot-time configuration:
+
+<pre class="inifile">
+[General]
+configuration-class = CustomConfiguration
+</pre>
+<p>
+
+<p><h3><a name="sec:plugin-exts:custom-reader-for-sectionbasedconfiguration"/>17.13.4 Providing a Custom Reader for SectionBasedConfiguration<a class="headerlink" href="#sec:plugin-exts:custom-reader-for-sectionbasedconfiguration" title="Permalink to this headline">¶</a></h3>
+
+<p>As said already, writing a configuration class from scratch can
+be a lot of work, and it may be more practical to reuse
+<tt>SectionBasedConfiguration</tt> with a different configuration
+reader class. This can be done with <b><tt>sectionbasedconfig-configreader-class</tt></b>
+config option, which is interpreted by <tt>SectionBasedConfiguration</tt>.
+Specify the following in the boot-time ini file:
+
+<pre class="inifile">
+[General]
+configuration-class = SectionBasedConfiguration
+sectionbasedconfig-configreader-class = &lt;new-reader-class&gt;
+</pre>
+<p>
+The configuration reader class should look like this:
+
+<pre class="cpp">
+#include "cconfigreader.h"
+
+class DatabaseConfigurationReader : public <a href="../api/classomnetpp_1_1cConfigurationReader.html">cConfigurationReader</a>
+{
+   ...
+};
+
+Register_Class(DatabaseConfigurationReader);
+</pre>
+<p>
+
+<p><h2><a name="sec:plugin-exts:user-interface"/>17.14 Implementing a New User Interface<a class="headerlink" href="#sec:plugin-exts:user-interface" title="Permalink to this headline">¶</a></h2>
+
+<p>It is possible to extend OMNeT++ with a new user interface. The new
+user interface will have fully equal rights to Cmdenv, Tkenv and Qtenv;
+that is, it can be activated by starting the simulation executable with the
+<tt>-u</tt> <i>&lt;name&gt;</i> command-line or the <b><tt>user-interface</tt></b>
+configuration option, it can be made the default user interface,
+it can define new command-line options and configuration options,
+and so on.
+
+<p>User interfaces must implement (i.e. subclass from) <tt><a href="../api/classomnetpp_1_1cRunnableEnvir.html">cRunnableEnvir</a></tt>,
+and must be registered to OMNeT++ with the <tt>Register_OmnetApp()</tt> macro.
+In practice, you will almost always want to subclass <tt>EnvirBase</tt>
+instead of <tt><a href="../api/classomnetpp_1_1cRunnableEnvir.html">cRunnableEnvir</a></tt>, because <tt>EnvirBase</tt> already
+implements lots of functionality that otherwise you'd have to.
+
+<p><ul class="note"><b>NOTE</b><br>
+If you want something completely different from what <tt>EnvirBase</tt>
+provides, such as embedding the simulation kernel into another
+application, then you should be reading section <a href="chap18.html#sec:embedding:embedding">[18.2]</a>,
+not this one.
+</ul>
+
+<p>An example user interface:
+
+<pre class="cpp">
+#include "envirbase.h"
+
+class FooEnv : public EnvirBase
+{
+    ...
+};
+
+Register_OmnetApp("FooEnv", FooEnv, 30, "an experimental user interface");
+</pre>
+<p>
+The <tt>envirbase.h</tt> header comes from the <tt>src/envir</tt> directory,
+so it is necessary to add it to the include path (<tt>-I</tt>).
+
+<p>The arguments to <tt>Register_OmnetApp()</tt> include the user interface name
+(for use with the <tt>-u</tt> and <b><tt>user-interface</tt></b> options),
+the C++ class that implements it, a weight for default user interface selection
+(if <tt>-u</tt> is missing, the user interface with the largest weight will be
+activated), and a description string (for help and other purposes).
+
+<p>The C++ class should implement all methods left pure virtual in
+<tt>EnvirBase</tt>, and possibly others if you want to customize
+their behavior. One method that you will surely want to reimplement is
+<tt>run()</tt> -- this is where your user interface runs. When this method
+exits, the simulation program exits.
+
+<p><ul class="note"><b>NOTE</b><br>
+A good starting point for implementing your own user interface is
+Cmdenv -- just copy and modify its source code to quickly get going.
+</ul>
+
+<p>
+<hr class='pgbr'><p><hr><b><a href="chap16.html">[Prev]</A>&nbsp;<a href="chap18.html">[Next]</A>&nbsp;<a href="toc.html#toc_17.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

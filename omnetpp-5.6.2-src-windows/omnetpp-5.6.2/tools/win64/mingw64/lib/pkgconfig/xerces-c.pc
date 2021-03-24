@@ -1,0 +1,11 @@
+prefix=/mingw64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Xerces-C++
+Description: Validating XML parser library for C++
+Version: 3.1.4
+Libs: -L${libdir} -lxerces-c
+Libs.private: -L/mingw64/lib -lcurl -lnghttp2 -lrtmp -lssh2 -lssl -lcrypto -lssl -lcrypto -lgdi32 -lwldap32 -lz -lws2_32
+Cflags: -I${includedir}

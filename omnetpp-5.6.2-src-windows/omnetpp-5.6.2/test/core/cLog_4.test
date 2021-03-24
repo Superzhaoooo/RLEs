@@ -1,0 +1,89 @@
+%description:
+
+Test per module runtime log level setting.
+
+%inifile: test.ini
+[General]
+network = TestNetwork
+cmdenv-log-prefix = "[%l]%9"
+**.off.cmdenv-log-level    = off
+**.fatal.cmdenv-log-level  = fatal
+**.error.cmdenv-log-level  = error
+**.warn.cmdenv-log-level   = warn
+**.info.cmdenv-log-level   = info
+**.detail.cmdenv-log-level = detail
+**.debug.cmdenv-log-level  = debug
+**.trace.cmdenv-log-level  = trace
+
+%file: test.ned
+
+simple Test
+{
+}
+
+network TestNetwork
+{
+    submodules:
+        off:    Test;
+        fatal:  Test;
+        error:  Test;
+        warn:   Test;
+        info:   Test;
+        detail: Test;
+        debug:  Test;
+        trace:  Test;
+}
+
+%activity:
+
+#undef COMPILETIME_LOGLEVEL
+#define COMPILETIME_LOGLEVEL LOGLEVEL_TRACE
+cLog::logLevel = LOGLEVEL_TRACE;
+
+EV_FATAL  << "Hello" << endl;
+EV_ERROR  << "Hello" << endl;
+EV_WARN   << "Hello" << endl;
+EV_INFO   << "Hello" << endl;
+EV_DETAIL << "Hello" << endl;
+EV_DEBUG  << "Hello" << endl;
+EV_TRACE  << "Hello" << endl;
+
+%not-contains-regex: stdout
+.*OFF
+
+%contains: stdout
+** Event #2  t=0   TestNetwork.fatal (Test, id=3)
+[FATAL]  Hello
+** Event #3  t=0   TestNetwork.error (Test, id=4)
+[FATAL]  Hello
+[ERROR]  Hello
+** Event #4  t=0   TestNetwork.warn (Test, id=5)
+[FATAL]  Hello
+[ERROR]  Hello
+[WARN]   Hello
+** Event #5  t=0   TestNetwork.info (Test, id=6)
+[FATAL]  Hello
+[ERROR]  Hello
+[WARN]   Hello
+[INFO]   Hello
+** Event #6  t=0   TestNetwork.detail (Test, id=7)
+[FATAL]  Hello
+[ERROR]  Hello
+[WARN]   Hello
+[INFO]   Hello
+[DETAIL] Hello
+** Event #7  t=0   TestNetwork.debug (Test, id=8)
+[FATAL]  Hello
+[ERROR]  Hello
+[WARN]   Hello
+[INFO]   Hello
+[DETAIL] Hello
+[DEBUG]  Hello
+** Event #8  t=0   TestNetwork.trace (Test, id=9)
+[FATAL]  Hello
+[ERROR]  Hello
+[WARN]   Hello
+[INFO]   Hello
+[DETAIL] Hello
+[DEBUG]  Hello
+[TRACE]  Hello

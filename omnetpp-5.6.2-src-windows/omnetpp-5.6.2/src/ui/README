@@ -1,0 +1,7 @@
+The IDE sources are available in the ide/plugins directory packaged as
+Eclipse source plug-ins. The IDE build system is not included in this distribution,
+but it is available on request under the same license as OMNeT++/OMNEST.
+
+Please contact us if you need it.
+
+-- The OMNeT++ Team

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/GSoC.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>GSoC - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/GSoC.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#gsoc_2015">GSoC 2015</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#why_do_we_apply" class="nav-link">• Why do we apply</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#ideas_list" class="nav-link">• Ideas list</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#implementing_macroscopic_assignment_models" class="nav-link">&rarr; Implementing macroscopic assignment models</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#vissim_importer" class="nav-link">&rarr; VISSIM importer</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#application_launcher" class="nav-link">&rarr; Application Launcher</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#intersection_analysis" class="nav-link">&rarr; Intersection analysis</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#left-hand_traffic" class="nav-link">&rarr; Left-hand traffic</a>
+                </li>
+            <li class="nav-item main"><a href="#gsoc_2012_application">GSoC 2012 Application</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#describe_your_organization" class="nav-link">• Describe your organization.</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#why_is_your_organization_applying_to_participate_in_google_summer_of_code_2012_what_do_you_hope_to_gain_by_participating" class="nav-link">• Why is your organization applying to participate in Google Summer of Code 2012? What do you hope to gain by participating?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#did_your_organization_participate_in_past_google_summer_of_codes_if_so_please_summarize_your_involvement_and_the_successes_and_challenges_of_your_participation" class="nav-link">• Did your organization participate in past Google Summer of Codes? If so, please summarize your involvement and the successes and challenges of your participation.</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_licenses_does_your_project_use" class="nav-link">• What license(s) does your project use?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_is_the_url_for_your_ideas_page" class="nav-link">• What is the URL for your Ideas page?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_is_the_main_development_mailing_list_for_your_organization" class="nav-link">• What is the main development mailing list for your organization?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_is_the_main_irc_channel_for_your_organization" class="nav-link">• What is the main IRC channel for your organization?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#does_your_organization_have_an_application_template_you_would_like_to_see_students_use_if_so_please_provide_it_now" class="nav-link">• Does your organization have an application template you would like to see students use? If so, please provide it now.</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#who_will_be_your_backup_organization_administrator" class="nav-link">• Who will be your backup organization administrator?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_criteria_did_you_use_to_select_the_individuals_who_will_act_as_mentors_for_your_organization_please_be_as_specific_as_possible" class="nav-link">• What criteria did you use to select the individuals who will act as mentors for your organization? Please be as specific as possible.</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_is_your_plan_for_dealing_with_disappearing_students" class="nav-link">• What is your plan for dealing with disappearing students?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_is_your_plan_for_dealing_with_disappearing_mentors" class="nav-link">• What is your plan for dealing with disappearing mentors?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_steps_will_you_take_to_encourage_students_to_interact_with_your_projects_community_before_during_and_after_the_program" class="nav-link">• What steps will you take to encourage students to interact with your project's community before, during and after the program?</a>
+                </li>
+            <li class="nav-item main"><a href="#project_ideas_for_google_summer_of_code_2012">Project Ideas for Google Summer of Code 2012</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#implement_left-hand_traffic" class="nav-link">• Implement left-hand traffic</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#implement_gui-frontends_for_some_of_the_command-line-only_applications" class="nav-link">• Implement GUI-frontends for some of the command-line-only applications</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#enhance_capabilities_of_the_simulation_viewer" class="nav-link">• Enhance Capabilities of the Simulation Viewer</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#implement_a_movement_model_for_pedestrians" class="nav-link">• Implement a movement model for pedestrians</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#open_for_your_ideas" class="nav-link">• Open for your Ideas</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>GSoC<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="gsoc_2015">GSoC 2015<a class="headerlink" href="#gsoc_2015" title="Permanent link">#</a></h1>
+<p><a href="https://www.google-melange.com/gsoc/document/show/gsoc_program/google/gsoc2015/help_page#1._How_does_a_mentoring_organization">Here is the list of steps for the application.</a>
+This page should answer all the questions on the list which need more
+than yes/no or a list of names</p>
+<h2 id="why_do_we_apply">Why do we apply<a class="headerlink" href="#why_do_we_apply" title="Permanent link">#</a></h2>
+<ul>
+<li>outreach</li>
+<li>gain more developers</li>
+</ul>
+<h2 id="ideas_list">Ideas list<a class="headerlink" href="#ideas_list" title="Permanent link">#</a></h2>
+<p><em>At a minimum, all the ideas on your Ideas List should include the
+expected outcome of the project, a potential mentor, the skills and/or
+languages required to complete the project, and a general "difficulty"
+level.</em></p>
+<h3 id="implementing_macroscopic_assignment_models">Implementing macroscopic assignment models<a class="headerlink" href="#implementing_macroscopic_assignment_models" title="Permanent link">#</a></h3>
+<ul>
+<li>Goal: Have more than just iterative assignment (At least Lohse etc.)</li>
+<li>Mentor: <a class="gh-link gh-mention" href="https://github.com/behrisch" title="GitHub User: @behrisch">@behrisch</a></li>
+<li>Skills: C++, some math</li>
+<li>Difficulty: medium</li>
+</ul>
+<h3 id="vissim_importer">VISSIM importer<a class="headerlink" href="#vissim_importer" title="Permanent link">#</a></h3>
+<ul>
+<li>Convert at least basic VISSIM networks from recent versions into the
+  SUMO format</li>
+<li>Mentor: <a class="gh-link gh-mention" href="https://github.com/behrisch" title="GitHub User: @behrisch">@behrisch</a></li>
+<li>Skills: C++, XML</li>
+<li>Difficulty: medium</li>
+</ul>
+<h3 id="application_launcher">Application Launcher<a class="headerlink" href="#application_launcher" title="Permanent link">#</a></h3>
+<ul>
+<li>Currently, the command line must be used frequently when preparing a
+  simulation. To make life easier for many users, a launcher
+  application for setting options and selecting input files via
+  dialogs should be created. A wizard-type interface should be added
+  to streamline common tasks.</li>
+<li>Mentor: <a class="gh-link gh-mention" href="https://github.com/namdre" title="GitHub User: @namdre">@namdre</a></li>
+<li>Skills: python</li>
+<li>Difficulty: medium (easy, if experience with GUI frameworks exists)</li>
+</ul>
+<h3 id="intersection_analysis">Intersection analysis<a class="headerlink" href="#intersection_analysis" title="Permanent link">#</a></h3>
+<p>Smartphone app (android, of course!) that can, from the position of the
+phone, compute the corresponding intersection geometry by using
+openstreetmap data, supported eventually by measurements from the phone
+itself (distances e.g.). It then writes these data to a SUMO simulation
+file, and has eventually the ability to collect additional traffic data.
+Can be done e.g. as a simple counting app, via the video-camera, the
+microphone, the magnetic field sensor,... (not all of these make sense,
+of course, other sensors might be more suitable)</p>
+<p>In addition to that, it runs a truly fast queueing model on the phone
+itself to determine the optimal cycle time, green splits, delays, and
+the like. This, too, can be supported by measurements from the
+intersection, i.e. the saturation flows for the various connections.</p>
+<ul>
+<li>Mentor: <a class="gh-link gh-mention" href="https://github.com/behrisch" title="GitHub User: @behrisch">@behrisch</a>, Peter Wagner</li>
+<li>Skills: Android development</li>
+<li>Difficulty: medium (easy, if only a frontend to sumo is built)</li>
+</ul>
+<h3 id="left-hand_traffic">Left-hand traffic<a class="headerlink" href="#left-hand_traffic" title="Permanent link">#</a></h3>
+<p>Currently, SUMO only simulates right-hand traffic and therefore cannot
+simulate some parts of the world.</p>
+<ul>
+<li>Mentor: <a class="gh-link gh-mention" href="https://github.com/namdre" title="GitHub User: @namdre">@namdre</a></li>
+<li>Skills: C++</li>
+<li>Difficulty: medium (need to be able to read and comprehend quite a
+  bit of existing code)</li>
+</ul>
+<h1 id="gsoc_2012_application">GSoC 2012 Application<a class="headerlink" href="#gsoc_2012_application" title="Permanent link">#</a></h1>
+<p>This is the Application for the SUMO project by the Core Development
+team of the DLR.</p>
+<h2 id="describe_your_organization">Describe your organization.<a class="headerlink" href="#describe_your_organization" title="Permanent link">#</a></h2>
+<p>SUMO is a highly portable, microscopic road traffic simulation package
+designed to handle large road networks. It is mainly developed by
+employees of the Institute of Transportation Systems at the German
+Aerospace Center. SUMO is open source, licensed under the GNU GPL.</p>
+<p>Using SUMO you can simulate how a given traffic demand which consists of
+single vehicles moves through a given road network. The Application
+suite consists of tool for preparing the road network, computing route
+choices and managing various simulation outputs. Thus, a large set of
+traffic management topics can be addressed <a href="https://sumo.dlr.de/docs/SUMO_at_a_Glance.html">(see our one-page
+overview)</a>.</p>
+<p>Designed to be easy to use, yet powerful and flexible, GnuCash allows
+you to track bank accounts, stocks, income and expenses. As quick and
+intuitive to use as a checkbook register, it is based on professional
+accounting principles to ensure balanced books and accurate reports.</p>
+<h2 id="why_is_your_organization_applying_to_participate_in_google_summer_of_code_2012_what_do_you_hope_to_gain_by_participating">Why is your organization applying to participate in Google Summer of Code 2012? What do you hope to gain by participating?<a class="headerlink" href="#why_is_your_organization_applying_to_participate_in_google_summer_of_code_2012_what_do_you_hope_to_gain_by_participating" title="Permanent link">#</a></h2>
+<p>The aim of the SUMO project lies in strengthening the microscop-traffic
+simulation community. Instead of multiple short-lived projects with low
+comparability we wish to establish a standard simulation package for
+everyone to use and improve. While the first goal has been met and SUMO
+is now widely used, the second goal remains open. There have been only a
+few contributions to the code base. In participating in the Google
+Summer of Code, we hope to engage new developers to the benefit of all
+our users.</p>
+<h2 id="did_your_organization_participate_in_past_google_summer_of_codes_if_so_please_summarize_your_involvement_and_the_successes_and_challenges_of_your_participation">Did your organization participate in past Google Summer of Codes? If so, please summarize your involvement and the successes and challenges of your participation.<a class="headerlink" href="#did_your_organization_participate_in_past_google_summer_of_codes_if_so_please_summarize_your_involvement_and_the_successes_and_challenges_of_your_participation" title="Permanent link">#</a></h2>
+<p>No.</p>
+<h2 id="what_licenses_does_your_project_use">What license(s) does your project use?<a class="headerlink" href="#what_licenses_does_your_project_use" title="Permanent link">#</a></h2>
+<p>GNU GPLv3</p>
+<h2 id="what_is_the_url_for_your_ideas_page">What is the URL for your Ideas page?<a class="headerlink" href="#what_is_the_url_for_your_ideas_page" title="Permanent link">#</a></h2>
+<p><a href="#project_ideas_for_google_summer_of_code_2012">GSOC2012_ProjectIdeas</a></p>
+<h2 id="what_is_the_main_development_mailing_list_for_your_organization">What is the main development mailing list for your organization?<a class="headerlink" href="#what_is_the_main_development_mailing_list_for_your_organization" title="Permanent link">#</a></h2>
+<p>The main development mailing list is
+[<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#111;&#45;&#100;&#101;&#118;&#101;&#108;&#64;&#108;&#105;&#115;&#116;&#115;&#46;&#115;&#111;&#117;&#114;&#99;&#101;&#102;&#111;&#114;&#103;&#101;&#46;&#110;&#101;&#116;">&#115;&#117;&#109;&#111;&#45;&#100;&#101;&#118;&#101;&#108;&#64;&#108;&#105;&#115;&#116;&#115;&#46;&#115;&#111;&#117;&#114;&#99;&#101;&#102;&#111;&#114;&#103;&#101;&#46;&#110;&#101;&#116;</a>] For details see <a href="https://sumo.dlr.de/docs/Contact.html">our contact
+page</a></p>
+<h2 id="what_is_the_main_irc_channel_for_your_organization">What is the main IRC channel for your organization?<a class="headerlink" href="#what_is_the_main_irc_channel_for_your_organization" title="Permanent link">#</a></h2>
+<p>We do not have an IRC channel</p>
+<h2 id="does_your_organization_have_an_application_template_you_would_like_to_see_students_use_if_so_please_provide_it_now">Does your organization have an application template you would like to see students use? If so, please provide it now.<a class="headerlink" href="#does_your_organization_have_an_application_template_you_would_like_to_see_students_use_if_so_please_provide_it_now" title="Permanent link">#</a></h2>
+<pre><code>Contact
+-------
+Student name:
+Location (Home town, country):
+Email:
+Phone number:
+
+Background/Programming Information
+-----------------------------------
+What programming experience do you have so far (languages, operating systems, compilers)?
+Have you worked on an open source project(s) before, and which one(s)?
+What is your connection the the traffic simulation community
+Have you ever built SUMO from source?
+</code></pre>
+<h2 id="who_will_be_your_backup_organization_administrator">Who will be your backup organization administrator?<a class="headerlink" href="#who_will_be_your_backup_organization_administrator" title="Permanent link">#</a></h2>
+<p>Daniel Krajzewicz</p>
+<h2 id="what_criteria_did_you_use_to_select_the_individuals_who_will_act_as_mentors_for_your_organization_please_be_as_specific_as_possible">What criteria did you use to select the individuals who will act as mentors for your organization? Please be as specific as possible.<a class="headerlink" href="#what_criteria_did_you_use_to_select_the_individuals_who_will_act_as_mentors_for_your_organization_please_be_as_specific_as_possible" title="Permanent link">#</a></h2>
+<p>Our mentors are members of the core development team. They have in-depth
+knowledge of the code base and our processes. As experienced developers
+they all have mentoring experiences. Since the core team is small our
+mentors are self-selected.</p>
+<h2 id="what_is_your_plan_for_dealing_with_disappearing_students">What is your plan for dealing with disappearing students?<a class="headerlink" href="#what_is_your_plan_for_dealing_with_disappearing_students" title="Permanent link">#</a></h2>
+<p>We are confident that careful initial selection and close communication
+will prevent students from disappearing.</p>
+<h2 id="what_is_your_plan_for_dealing_with_disappearing_mentors">What is your plan for dealing with disappearing mentors?<a class="headerlink" href="#what_is_your_plan_for_dealing_with_disappearing_mentors" title="Permanent link">#</a></h2>
+<p>Our mentors have been given clearance from their employer to mentor
+during their work hours, thus we expect no disappearances. In case of
+sickness or other emergencies we have backup mentors.</p>
+<h2 id="what_steps_will_you_take_to_encourage_students_to_interact_with_your_projects_community_before_during_and_after_the_program">What steps will you take to encourage students to interact with your project's community before, during and after the program?<a class="headerlink" href="#what_steps_will_you_take_to_encourage_students_to_interact_with_your_projects_community_before_during_and_after_the_program" title="Permanent link">#</a></h2>
+<p>We assume that our students already have some connections to the the
+traffic simulation community. Before the program we will encourage
+interested parties to discuss and refine project ideas via our mailing
+list, blog and personal communication. During the program we will seek
+to build a relationship based on our common interests which continues
+after the program.</p>
+<h1 id="project_ideas_for_google_summer_of_code_2012">Project Ideas for Google Summer of Code 2012<a class="headerlink" href="#project_ideas_for_google_summer_of_code_2012" title="Permanent link">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prerequisites for all projects: C++ coding on Linux or Windows</p>
+</div>
+<h2 id="implement_left-hand_traffic">Implement <a href="https://en.wikipedia.org/wiki/Left-hand_traffic">left-hand traffic</a><a class="headerlink" href="#implement_left-hand_traffic" title="Permanent link">#</a></h2>
+<p>SUMO uses right-hand traffic and therefore presents obstacles when
+simulating traffic in many parts of the world.</p>
+<h2 id="implement_gui-frontends_for_some_of_the_command-line-only_applications">Implement GUI-frontends for some of the command-line-only applications<a class="headerlink" href="#implement_gui-frontends_for_some_of_the_command-line-only_applications" title="Permanent link">#</a></h2>
+<p>The use of command-line applications presents a steep learning curve to
+many users. Even a generic tool for setting options may be of great
+help.</p>
+<h2 id="enhance_capabilities_of_the_simulation_viewer">Enhance Capabilities of the Simulation Viewer<a class="headerlink" href="#enhance_capabilities_of_the_simulation_viewer" title="Permanent link">#</a></h2>
+<p>The <a href="sumo-gui.html">sumo-gui</a> application depends on configuration
+files. Since editing configuration files is difficult for many users,
+<a href="sumo-gui.html">sumo-gui</a> should provide for a mechanism to load
+the required files via menus.</p>
+<h2 id="implement_a_movement_model_for_pedestrians">Implement a movement model for pedestrians<a class="headerlink" href="#implement_a_movement_model_for_pedestrians" title="Permanent link">#</a></h2>
+<p>Right now, SUMO can account for pedestrians when simulating inter-modal
+traffic. However, the model is quite coarse. The time for crossing roads
+is not modelled. Also, there is no flow model for crowded side walks.</p>
+<h2 id="open_for_your_ideas">Open for your Ideas<a class="headerlink" href="#open_for_your_ideas" title="Permanent link">#</a></h2>
+<p>If you are planning to work with SUMO in your bachelor or masters
+thesis, what extra feature do you need to get started?</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 25 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

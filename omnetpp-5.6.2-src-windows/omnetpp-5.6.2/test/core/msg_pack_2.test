@@ -1,0 +1,65 @@
+%description:
+Tests parsimPack/parsimUnpack for generated classes
+
+%file: test.msg
+
+namespace @TESTNAME@;
+
+struct Struct {
+    int i;
+    string s;
+};
+
+message TestMessage {
+    Struct s;
+    Struct sv[];
+}
+
+
+%includes:
+#include <string.h>
+#include <sim/parsim/cfilecommbuffer.h> // from src/sim/parsim
+#include <envir/objectprinter.h>   // from src/envir
+#include "test_m.h"
+using omnetpp::envir::ObjectPrinter;
+
+%activity:
+
+// create and pack
+TestMessage msg("msg");
+msg.setSvArraySize(2);
+msg.getSForUpdate().i = 53;
+msg.getSForUpdate().s = "Hello";
+msg.getSvForUpdate(0).i = 17;
+msg.getSvForUpdate(0).s = "first";
+msg.getSvForUpdate(1).i = 26;
+msg.getSvForUpdate(1).s = "second";
+
+cFileCommBuffer *buffer = new cFileCommBuffer();
+msg.parsimPack(buffer);
+
+// unpack and print
+TestMessage msg2("tmp");
+msg2.parsimUnpack(buffer);
+EV << "isBufferEmpty:" << buffer->isBufferEmpty() << endl;
+
+EV << ObjectPrinter(nullptr, "*:declaredOn(@TESTNAME@::TestMessage)",4).printObjectToString(&msg2);
+
+%subst: /omnetpp:://
+%contains: stdout
+isBufferEmpty:1
+class @TESTNAME@::TestMessage {
+    @TESTNAME@::Struct s = struct @TESTNAME@::Struct {
+        int i = 53
+        string s = Hello
+    }
+    @TESTNAME@::Struct sv[0] = struct @TESTNAME@::Struct {
+        int i = 17
+        string s = first
+    }
+    @TESTNAME@::Struct sv[1] = struct @TESTNAME@::Struct {
+        int i = 26
+        string s = second
+    }
+}
+

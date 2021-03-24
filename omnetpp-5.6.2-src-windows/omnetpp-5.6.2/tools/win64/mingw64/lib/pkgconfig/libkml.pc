@@ -1,0 +1,15 @@
+# pkg-config source file
+
+prefix=/mingw64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: LibKML
+Description: Reference implementation of OGC KML 2.2
+Version: 1.3.0
+##Requires: expat zlib boost
+##minizip 
+Conflicts:
+Libs: -L${libdir} -lkmlbase -lkmldom -lkmlengine -lkmlxsd -lkmlregionator
+Cflags: -I${includedir}

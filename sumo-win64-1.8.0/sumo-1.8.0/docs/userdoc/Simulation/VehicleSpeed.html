@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/VehicleSpeed.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/VehicleSpeed - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/VehicleSpeed.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#maxspeed">maxSpeed</a></li>
+            <li class="nav-item main"><a href="#edgelane_speed_and_speedfactor">edge/lane speed and speedFactor</a></li>
+            <li class="nav-item main"><a href="#car_following_model">Car Following Model</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#acceleration_and_deceleration" class="nav-link">• Acceleration and Deceleration</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#dawdling" class="nav-link">• Dawdling</a>
+                </li>
+            <li class="nav-item main"><a href="#intersections">Intersections</a></li>
+            <li class="nav-item main"><a href="#lane_changing">Lane Changing</a></li>
+            <li class="nav-item main"><a href="#stops">Stops</a></li>
+            <li class="nav-item main"><a href="#acceleration_deceleration_constraints">Acceleration / Deceleration constraints</a></li>
+            <li class="nav-item main"><a href="#departspeed_arrivalspeed">departSpeed / arrivalSpeed</a></li>
+            <li class="nav-item main"><a href="#variable_speed_signs">Variable Speed Signs</a></li>
+            <li class="nav-item main"><a href="#calibrators">Calibrators</a></li>
+            <li class="nav-item main"><a href="#traci">TraCI</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/VehicleSpeed<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>There are a wide range of influences on vehicle speed. They are
+described in the following. Each of these influences sets an upper bound
+on the vehicle speed. The actual speed in any given situation is the
+minimum speed of all influences.</p>
+<h1 id="maxspeed">maxSpeed<a class="headerlink" href="#maxspeed" title="Permanent link">#</a></h1>
+<p>The
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types"><code>&lt;vType&gt;-attribute maxSpeed</code></a>
+models the maximum speed that a vehicle will travel. It can be thought
+of as the maximum speed of the engine or the maximum speed desired by
+the driver under any circumstances (possibly these two aspects will be
+modelled with separate attributes in the future).</p>
+<h1 id="edgelane_speed_and_speedfactor">edge/lane speed and speedFactor<a class="headerlink" href="#edgelane_speed_and_speedfactor" title="Permanent link">#</a></h1>
+<p>The <code>speed</code>-attribute is usually <a href="../Networks/PlainXML.html#edge_descriptions">defined for edges</a>
+but may also <a href="../Networks/PlainXML.html#lane-specific_definitions">differ among the lanes</a>
+of the same edge. It models the legal speed limit.</p>
+<p>When approaching an edge with a lower speed limit than the current one,
+a vehicle will slow down so as to stay within the new limit at the time
+of reaching the new edge.</p>
+<p>Each vehicle can be <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#speed_distributions">assigned an individual speed multiplier (speedFactor)</a>
+which then lets it exceed this limit. Since version 1.0.0, vehicles will
+have a random speedFactor with a deviation of 0.1 and mean of 1.0 which
+means there will be different desired speeds in the vehicle population
+by default.</p>
+<p>When vehicles are driving freely (unconstrained by other vehicles) they will accelerate until reaching the speed </p>
+<pre><code>min(maxSpeed, speedFactor * speedLimit)
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Legacy behavior can be achieved by setting option <strong>--default.speeddev 0</strong></p>
+</div>
+<p>Since version 0.24.0 it is also possible to define <a href="../Networks/PlainXML.html#vehicle-class_specific_speed_limits">vClass-specific speed limits for every edge</a>.</p>
+<h1 id="car_following_model">Car Following Model<a class="headerlink" href="#car_following_model" title="Permanent link">#</a></h1>
+<p>The <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#car-following_models">car following model</a>
+of a vehicle defines its speed in relation the vehicle ahead. The
+default model always selects the maximum speed which is <em>safe</em> in the
+sense of being able to stop in time to avoid a collision.</p>
+<h2 id="acceleration_and_deceleration">Acceleration and Deceleration<a class="headerlink" href="#acceleration_and_deceleration" title="Permanent link">#</a></h2>
+<p>All models are subject to constraints in their <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#car-following_models">acceleration an deceleration</a>.
+By default they will not accelerate stronger then the <em>accel</em> value. The
+default model plans it's maneuvers so as to stay within the <em>decel</em>
+value (per second) but other models may interpret this value
+differently. All models will never brake harder than the
+<em>emergencyDecel</em> value (which defaults to the same value as <em>decel</em> but
+may be set independently).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is just a convention which the available models obey but which could be ignored by custom models.</p>
+</div>
+<h2 id="dawdling">Dawdling<a class="headerlink" href="#dawdling" title="Permanent link">#</a></h2>
+<p>Most car-following models support the <code>sigma</code>-attribute which models driver
+imperfection. For values above <strong>0</strong>, drivers with the default
+car-following model will drive <em>slower</em> than would be safe by a random
+amount (between [0, <code>accel</code>]).</p>
+<h1 id="intersections">Intersections<a class="headerlink" href="#intersections" title="Permanent link">#</a></h1>
+<p>Vehicles approaching an intersection without the right-of-way have to
+slow down. If the intersection is used by other vehicles which have the
+right of way, stopping may be necessary until a safe time-window is
+found. That time windows is based on the same safety assumptions as the
+car-following model. For the default <em>Krauss</em>-model this means that each
+vehicle must be able to stop safely even if it's lead vehicle brakes
+hard to a full stop.</p>
+<p>Even if a vehicle has the right-of-way it may need to slow down due to
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#impatience">impatient</a>
+drivers which drive across the intersection. The <a href="../Networks/PlainXML.html#right-of-way">right-of-way rules</a>
+at an intersection are <a href="../Networks/PlainXML.html#node_descriptions">defined by the node type-attribute</a>
+and by <a href="Traffic_Lights.html">traffic lights</a>.</p>
+<p>The visibility of intersections can be controlled by the visibility
+attribute for the corresponding connections, see <a href="../Networks/PlainXML.html#connection_descriptions">Connection Descriptions</a>.
+Per default, a vehicle approaching from a minor road slows down until it
+is 4.5m away from the intersection (even if no prioritized vehicle is
+nearby). After that it may start to accelerate again if there is a safe
+gap in traffic.</p>
+<h1 id="lane_changing">Lane Changing<a class="headerlink" href="#lane_changing" title="Permanent link">#</a></h1>
+<p>Vehicles may decide to slow down in order to execute a lane-change
+maneuver. They may also slow down in order to aid other vehicles with
+lane-changing. If the lane a vehicle is on does not have a connection to
+the next edge on a vehicles route, the vehicle will decelerate and stop.</p>
+<h1 id="stops">Stops<a class="headerlink" href="#stops" title="Permanent link">#</a></h1>
+<p>Vehicles will decelerate when approaching the position of a
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#stops"><code>stop</code>-definition</a>.</p>
+<h1 id="acceleration_deceleration_constraints">Acceleration / Deceleration constraints<a class="headerlink" href="#acceleration_deceleration_constraints" title="Permanent link">#</a></h1>
+<p>Vehicles can only change their speed by a certain amount each time step.
+This is defined by the
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types"><code>&lt;vType&gt;</code>-attributes <code>accel</code> and <code>decel</code></a></p>
+<h1 id="departspeed_arrivalspeed">departSpeed / arrivalSpeed<a class="headerlink" href="#departspeed_arrivalspeed" title="Permanent link">#</a></h1>
+<p>Vehicles enter the network using their <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicles_and_routes">defined <code>departSpeed</code></a>.
+When approaching the end of their route they will adapt their speed to
+match their <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicles_and_routes">defined <code>arrivalSpeed</code></a></p>
+<h1 id="variable_speed_signs">Variable Speed Signs<a class="headerlink" href="#variable_speed_signs" title="Permanent link">#</a></h1>
+<p><a href="Variable_Speed_Signs.html">Variable speed signs</a> are
+used to modify the speed limit of an edge for a defined time interval.</p>
+<h1 id="calibrators">Calibrators<a class="headerlink" href="#calibrators" title="Permanent link">#</a></h1>
+<p><a href="Calibrator.html">Calibrators</a> are used to adapt the
+flow on an edge for a defined time interval but may also be used to
+modify the speed limit of an edge.</p>
+<h1 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h1>
+<p>Vehicles can forced to adapt their speed using <a href="../TraCI/Change_Vehicle_State.html">TraCI commands</a>. When using the command
+<em>slow down</em> stochastic influences on speed are not applied. By using
+<a href="../TraCI/Change_Vehicle_State.html#speed_mode_0xb3">the <em>speed mode</em> command, various safety related influences can be selectively disabled</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 20 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

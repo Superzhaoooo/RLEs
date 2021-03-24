@@ -1,0 +1,39 @@
+%NAME%
+mingw-w64-x86_64-crypto++
+
+%VERSION%
+5.6.5-1
+
+%BASE%
+mingw-w64-crypto++
+
+%DESC%
+Crypto++ Library is a free C++ class library of cryptographic schemes (mingw-w64)
+
+%URL%
+https://www.cryptopp.com/
+
+%ARCH%
+any
+
+%BUILDDATE%
+1485881518
+
+%INSTALLDATE%
+1499949955
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+32374784
+
+%LICENSE%
+Boost Software License 1.0
+
+%VALIDATION%
+pgp
+
+%DEPENDS%
+mingw-w64-x86_64-gcc-libs
+

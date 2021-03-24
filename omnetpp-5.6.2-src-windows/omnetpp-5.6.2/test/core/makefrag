@@ -1,0 +1,2 @@
+OMNETPP_LIBS += -loppcommon$D
+MSGC += --msg6

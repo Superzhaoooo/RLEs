@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tutorials/FundamentalDiagram.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tutorials/FundamentalDiagram - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tutorials/FundamentalDiagram.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+            <li class="nav-item main"><a href="#fundamental_diagram_of_a_closed_circular_route">Fundamental diagram of a closed circular route</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#reducing_the_speed_evenly" class="nav-link">• Reducing the speed evenly</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#reducing_the_speed_locally" class="nav-link">• Reducing the speed locally</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tutorials/FundamentalDiagram<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<p>The <a href="https://en.wikipedia.org/wiki/Fundamental_diagram_of_traffic_flow">Fundamental diagram of traffic
+flow</a>
+describes the relationship between flow (vehicles per hour) and density
+(vehicles per km).</p>
+<p>Both measures can be obtained from
+<a href="../Simulation/Output/Lane-_or_Edge-based_Traffic_Measures.html">edgeData-output</a>.
+The <em>density</em> value measures vehicles per km and the flow can be
+computed from <em>entered</em> * 3600 / <em>freq</em> where <em>freq</em> is the specified
+aggregation interval of the output.</p>
+<p>Generally, this can be computed for any kind of scenario as long as this
+scenario covers the desired range of traffic densities.</p>
+<h1 id="fundamental_diagram_of_a_closed_circular_route">Fundamental diagram of a closed circular route<a class="headerlink" href="#fundamental_diagram_of_a_closed_circular_route" title="Permanent link">#</a></h1>
+<p>A common scenario that is used to generate the fundamental diagram is a
+circular route where the density is increased over time. Such a scenario
+can be found at <a href="https://github.com/eclipse/sumo/blob/master/tests/sumo/cf_model/drive_in_circles"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/sumo/cf_model/drive_in_circles</a>.</p>
+<p>There are different ways for increasing the density. The key problem
+that must be solved is, that density can only be increased when there is
+sufficient space to insert additional vehicles. In a closed system all
+the space is eventually taken up by the existing vehicles and the safety
+gaps between them. Additional space can only be obtained by lowering the
+speed in some parts of the circle to reduce these gaps.</p>
+<h2 id="reducing_the_speed_evenly">Reducing the speed evenly<a class="headerlink" href="#reducing_the_speed_evenly" title="Permanent link">#</a></h2>
+<p>An elegant way to reduce the speed is to initialize the network with
+evenly spaced vehicles at a predefined density. For the circle scenario
+this can be accomplished by the following demand definition:</p>
+<pre><code>&lt;routeDistribution id=&quot;startAnywhere&quot;&gt;
+    &lt;route edges=&quot;6/1to7/1 7/1to8/1 8/1to9/1 9/1to10/1 10/1to1/1 1/1to2/1 2/1to3/1 3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;7/1to8/1 8/1to9/1 9/1to10/1 10/1to1/1 1/1to2/1 2/1to3/1 3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;8/1to9/1 9/1to10/1 10/1to1/1 1/1to2/1 2/1to3/1 3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;9/1to10/1 10/1to1/1 1/1to2/1 2/1to3/1 3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;10/1to1/1 1/1to2/1 2/1to3/1 3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;1/1to2/1 2/1to3/1 3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;2/1to3/1 3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;4/1to5/1 5/1to6/1&quot;/&gt;
+    &lt;route edges=&quot;5/1to6/1&quot;/&gt;
+ &lt;/routeDistribution&gt;
+&lt;flow id=&quot;0&quot; type=&quot;default&quot; route=&quot;startAnywhere&quot; begin=&quot;0&quot; end=&quot;3&quot; period=&quot;0.001&quot; departPos=&quot;last&quot; departSpeed=&quot;15&quot; departLane=&quot;free&quot;/&gt;
+</code></pre>
+
+<p>The routeDistribution ensures that all vehicles reach the edge where the
+<code>&lt;rerouter&gt;</code> takes effect to repeat the circle. The disadvantage of this approach is
+the need to run the simulation multiple times with different values of
+<strong>departSpeed</strong> to achieve different densities.</p>
+<h2 id="reducing_the_speed_locally">Reducing the speed locally<a class="headerlink" href="#reducing_the_speed_locally" title="Permanent link">#</a></h2>
+<p>An alternative approach is to reduce the speed at some part of the
+circle repeatedly and insert vehicles upstream of the speed reduction
+where the local density is reduced for a time. This can be accomplished
+with the following definition (to be placed in an <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a>)</p>
+<pre><code>&lt;variableSpeedSign id=&quot;disturbance&quot; lanes=&quot;10/1to1/1_0&quot;&gt;
+    &lt;step time=&quot;2000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;2100&quot;/&gt;
+    &lt;step time=&quot;3000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;3100&quot;/&gt;
+    &lt;step time=&quot;4000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;4100&quot;/&gt;
+    &lt;step time=&quot;5000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;5200&quot;/&gt;
+    &lt;step time=&quot;6000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;6200&quot;/&gt;
+    &lt;step time=&quot;7000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;7200&quot;/&gt;
+    &lt;step time=&quot;8000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;8300&quot;/&gt;
+    &lt;step time=&quot;9000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;9300&quot;/&gt;
+    &lt;step time=&quot;10000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;10300&quot;/&gt;
+    &lt;step time=&quot;11000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;11400&quot;/&gt;
+    &lt;step time=&quot;12000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;12400&quot;/&gt;
+    &lt;step time=&quot;13000&quot; speed=&quot;1&quot;/&gt;
+    &lt;step time=&quot;13400&quot;/&gt;
+&lt;/variableSpeedSign&gt;
+</code></pre>
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>This speed reduction will introduce some small artefacts into the resulting fundamental diagram.</p>
+</div>
+<p>And a flow that continuously tries to add vehicles:</p>
+<pre><code>&lt;flow id=&quot;0&quot; type=&quot;default&quot; begin=&quot;0&quot; end=&quot;60000&quot; period=&quot;3&quot; departPos=&quot;last&quot; departSpeed=&quot;max&quot; departLane=&quot;free&quot;&gt;
+  &lt;route edges=&quot;1/1to2/1 2/1to3/1 3/1to4/1 4/1to5/1 5/1to6/1&quot;/&gt;
+&lt;/flow&gt;
+</code></pre>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 02 September 2019</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/TraCI/Traffic_Lights_Value_Retrieval.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>TraCI/Traffic Lights Value Retrieval - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/TraCI/Traffic_Lights_Value_Retrieval.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#command_0xa2_get_traffic_lights_variable">Command 0xa2: Get Traffic Lights Variable</a></li>
+            <li class="nav-item main"><a href="#response_0xb2_traffic_lights_variable">Response 0xb2: Traffic Lights Variable</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#structure_of_compound_object_traffic_light_program_both_0x25_and_0x2b" class="nav-link">• Structure of compound object traffic light program (both 0x25 and 0x2b)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#structure_of_compound_object_controlled_links" class="nav-link">• Structure of compound object controlled links</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>TraCI/Traffic Lights Value Retrieval<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="command_0xa2_get_traffic_lights_variable">Command 0xa2: Get Traffic Lights Variable<a class="headerlink" href="#command_0xa2_get_traffic_lights_variable" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">ubyte</th>
+<th align="center">string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Variable</td>
+<td align="center">Traffic Lights ID</td>
+</tr>
+</tbody>
+</table>
+<p>Asks for the value of a certain variable of the named traffic light. The
+value returned is the state of the asked variable/value within the last
+simulation step. The following variable values can be retrieved, the
+type of the return value is also shown in the table.</p>
+<p><strong>Overview Retrievable Traffic Lights Variables</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>ValueType</th>
+<th>Description</th>
+<th><a href="Interfacing_TraCI_from_Python.html">Python Method</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id list (0x00)</td>
+<td>stringList</td>
+<td>Returns a list of ids of all traffic lights within the scenario (the given Traffic Lights ID is ignored)</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getIDList">getIDList</a></td>
+</tr>
+<tr>
+<td>count (0x01)</td>
+<td>int</td>
+<td>Returns the number of traffic lights within the scenario (the given Traffic Lights ID is ignored)</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getIDCount">getIDCount</a></td>
+</tr>
+<tr>
+<td>state (light/priority tuple) (0x20)</td>
+<td>string</td>
+<td>Returns the named tl's state as a tuple of light definitions from rRgGyYoO, for red, green, yellow, off, where lower case letters mean that the stream has to decelerate</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getRedYellowGreenState">getRedYellowGreenState</a></td>
+</tr>
+<tr>
+<td>default current phase duration (0x24)</td>
+<td>double</td>
+<td>Returns the default total duration of the currently active phase in seconds; To obtain the remaining duration use <em>(getNextSwitch() - simulation.getTime())</em>; to obtain the spent duration subtract the remaining from the total duration</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getPhaseDuration">getPhaseDuration</a></td>
+</tr>
+<tr>
+<td>controlled lanes (0x26)</td>
+<td>stringList</td>
+<td>Returns the list of lanes which are controlled by the named traffic light. Returns at least one entry for every element of the phase state (signal index)<sup>(1)(2)</sup>.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getControlledLanes">getControlledLanes</a></td>
+</tr>
+<tr>
+<td>controlled links (0x27)</td>
+<td>compound object</td>
+<td>Returns the links controlled by the traffic light, the index in the returned list corresponds to the tls link index of the connection. Each index maps to a list of link objects that share the same link index. Each link object is described by giving the incoming, outgoing, and via lane.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getControlledLinks">getControlledLinks</a></td>
+</tr>
+<tr>
+<td>current phase (0x28)</td>
+<td>int</td>
+<td>Returns the index of the current phase in the current program</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getPhase">getPhase</a></td>
+</tr>
+<tr>
+<td>current program (0x29)</td>
+<td>string</td>
+<td>Returns the id of the current program</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getProgram">getProgram</a></td>
+</tr>
+<tr>
+<td>complete definition (light/priority tuple) (0x2b)</td>
+<td>compound object</td>
+<td>Returns the complete traffic light program, structure described under data types</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getCompleteRedYellowGreenDefinition">getCompleteRedYellowGreenDefinition</a></td>
+</tr>
+<tr>
+<td>assumed time of next switch (0x2d)</td>
+<td>double</td>
+<td>Returns the assumed time (in seconds) at which the tls changes the phase. Please note that the time to switch is not relative to current simulation step (the result returned by the query will be absolute time, counting from simulation start); to obtain relative time, one needs to subtract current simulation time from the result returned by this query. Please also note that the time may vary in the case of actuated/adaptive traffic lights</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getNextSwitch">getNextSwitch</a></td>
+</tr>
+<tr>
+<td>blocking vehicles (0x25)</td>
+<td>stringList</td>
+<td>Returns the ids of vehicles that occupy the subsequent rail signal block</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getBlockingVehicles">getBlockingVehicles</a></td>
+</tr>
+<tr>
+<td>rival vehicles (0x30)</td>
+<td>stringList</td>
+<td>Returns the ids of vehicles that are approaching the same rail signal block</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getRivalVehicles">getRivalVehicles</a></td>
+</tr>
+<tr>
+<td>priority vehicles (0x31)</td>
+<td>stringList</td>
+<td>Returns the ids of vehicles that are approaching the same rail signal block with higher priority</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getPriorityVehicles">getPriorityVehicles</a></td>
+</tr>
+</tbody>
+</table>
+<p>Please note:</p>
+<ol>
+<li>Each lane may be the start of multiple links (connections across the
+    intersection). Thus a lane may occur multiple times in the output</li>
+</ol>
+<h2 id="response_0xb2_traffic_lights_variable">Response 0xb2: Traffic Lights Variable<a class="headerlink" href="#response_0xb2_traffic_lights_variable" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">ubyte</th>
+<th align="center">string</th>
+<th align="center">ubyte</th>
+<th align="center">&lt;return_type></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Variable</td>
+<td align="center">Traffic Light ID</td>
+<td align="center">Return type of the variable</td>
+<td align="center">&lt;RETURN_VALUE></td>
+</tr>
+</tbody>
+</table>
+<p>The respond to a <strong>"Command Get Traffic Lights Variable"</strong>.</p>
+<h3 id="structure_of_compound_object_traffic_light_program_both_0x25_and_0x2b">Structure of compound object traffic light program (both 0x25 and 0x2b)<a class="headerlink" href="#structure_of_compound_object_traffic_light_program_both_0x25_and_0x2b" title="Permanent link">#</a></h3>
+<p>If you request a complete traffic light program, the compound object is
+structured as following. Attention, each part is preceded by a byte
+which represents its data type, except "length".</p>
+<table>
+<thead>
+<tr>
+<th align="center">integer</th>
+<th align="center">type + integer</th>
+<th align="center">logic</th>
+<th align="center">...</th>
+<th align="center">logic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Length</td>
+<td align="center">Number of logics</td>
+<td align="center">logic 1</td>
+<td align="center">...</td>
+<td align="center">logic n</td>
+</tr>
+</tbody>
+</table>
+<p>where <strong>logic</strong> is described by:</p>
+<table>
+<thead>
+<tr>
+<th align="center">type + string</th>
+<th align="center">type + integer</th>
+<th align="center">type + compound</th>
+<th align="center">type + integer</th>
+<th align="center">type + integer</th>
+<th align="center">phase</th>
+<th align="center">...</th>
+<th align="center">phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">SubID</td>
+<td align="center">Type</td>
+<td align="center">SubParameter</td>
+<td align="center">Current phase index</td>
+<td align="center">Number of phases</td>
+<td align="center">Phase 1</td>
+<td align="center">...</td>
+<td align="center">Phase n</td>
+</tr>
+</tbody>
+</table>
+<p>Type and SubParameter aren't currently implemented therefore they are 0.</p>
+<p>where <strong>phase</strong> is described by:</p>
+<table>
+<thead>
+<tr>
+<th align="center">type + double</th>
+<th align="center">type + double</th>
+<th align="center">type + double</th>
+<th align="center">type + string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Duration (in seconds)</td>
+<td align="center">MinDuration (in seconds)</td>
+<td align="center">MaxDuration (in seconds)</td>
+<td align="center">Phase definition</td>
+</tr>
+</tbody>
+</table>
+<p>MinDuration and MaxDuration are only relevant in the context of actuated
+traffic lights. The phase definition differs for 0x25 and 0x2b. The
+first (0x25) contains the old, deprecated definition which uses three
+strings that describe the tl's state, the first green y/n, the second
+for brake y/n, the third for yellow y/n. The second (0x2b) contains a
+single string representing the lights. Note, that the first (0x25) is
+also reversed.</p>
+<h3 id="structure_of_compound_object_controlled_links">Structure of compound object controlled links<a class="headerlink" href="#structure_of_compound_object_controlled_links" title="Permanent link">#</a></h3>
+<p>If you request the list of links, the compound object is structured as
+following. Attention, each part is preceded by a byte which represents
+its data type, except "length".</p>
+<table>
+<thead>
+<tr>
+<th align="center">integer</th>
+<th align="center">controlled links</th>
+<th align="center">...</th>
+<th align="center">controlled links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Length (number of signals)</td>
+<td align="center">links controlled by signal 0</td>
+<td align="center">...</td>
+<td align="center">links controlled by signal n-1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Controlled links:</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">int</th>
+<th align="center">stringlist</th>
+<th align="center">...</th>
+<th align="center">stringlist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">number of controlled links</td>
+<td align="center">link 0</td>
+<td align="center">...</td>
+<td align="center">link n-1</td>
+</tr>
+</tbody>
+</table>
+<p>Each link is described by a string list with three entries: the lane
+which is incoming into the junction, the lane which is outgoing from the
+junction, and the lane across the junction (junction-internal). Empty
+strings indicate missing lanes.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 03 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

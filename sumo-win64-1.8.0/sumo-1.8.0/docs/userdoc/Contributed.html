@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Contributed.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Contributed - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Contributed.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#within_sumo">Within SUMO</a></li>
+            <li class="nav-item main"><a href="#included_in_the_distribution">Included in the Distribution</a></li>
+            <li class="nav-item main"><a href="#external_extensions">External extensions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#demand_generators" class="nav-link">• Demand Generators</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#scenario_and_network_editors" class="nav-link">• Scenario and Network Editors</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#connections_to_network_simulators" class="nav-link">• Connections to Network Simulators</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#other" class="nav-link">• Other</a>
+                </li>
+            <li class="nav-item main"><a href="#purgatory">Purgatory</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Contributed<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>Some people extended SUMO or built tools to make it more usable. Not all
+of these extensions have found its way to what we would call "SUMO
+core".</p>
+<h1 id="within_sumo">Within SUMO<a class="headerlink" href="#within_sumo" title="Permanent link">#</a></h1>
+<p>The following extensions became a core part of the SUMO package.</p>
+<ul>
+<li><a href="TraCI.html">TraCI</a><p>online interaction with the simulation</p>
+</li>
+</ul>
+<h1 id="included_in_the_distribution">Included in the Distribution<a class="headerlink" href="#included_in_the_distribution" title="Permanent link">#</a></h1>
+<p>The following contributions are included in the package, but are less
+supported.</p>
+<ul>
+<li><a href="Contributed/Cadyts.html">Contributed/Cadyts</a><p>a tool by Gunnar Flötteröd which adapts the simulate flows to the
+  real flows in a known net</p>
+</li>
+</ul>
+<ul>
+<li><a href="Contributed/SUMOPy.html">SUMOPy</a><p>a tool by Joerg Schweizer supporting the whole SUMO toolchain with a
+  GUI especially for demand modelling</p>
+</li>
+</ul>
+<ul>
+<li><a href="Tools/LiSuM.html">LiSuM</a><p>a middleware that couples <a href="https://www.schlothauer.de/en/software-systems/lisa/">LISA+</a> and SUMO to simulate real-world
+  traffic light controllers and execute real-world traffic control software within SUMO.</p>
+</li>
+</ul>
+<ul>
+<li><a href="https://github.com/lcodeca/SUMOActivityGen/blob/master/docs/SUMOActivityGen.md">SAGA</a><p>a scriptable and user-defined activity-based mobility scenario generator for SUMO. <a href="https://github.com/eclipse/sumo/tree/master/tools/contributed">Generate intermodal traffic demand from OSM input</a> <a href="https://github.com/lcodeca/SUMOActivityGen/blob/master/docs/HOWTO.md">howto</a></p>
+</li>
+</ul>
+<ul>
+<li><del><a href="Contributed/SUMO_Traffic_Modeler.html">Contributed/SUMO Traffic
+Modeler</a></del><p><del>a graphical user interface for defining high-level traffic for
+  SUMO</del> (obsolete)</p>
+</li>
+</ul>
+<h1 id="external_extensions">External extensions<a class="headerlink" href="#external_extensions" title="Permanent link">#</a></h1>
+<p>The following extensions are managed and supported by other parties.</p>
+<h2 id="demand_generators">Demand Generators<a class="headerlink" href="#demand_generators" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="http://www.grc.upv.es/Software/c4r.html">Citymob for Roadmaps</a><p>mobility pattern generator for vehicular networks (VANet focus)</p>
+</li>
+</ul>
+<h2 id="scenario_and_network_editors">Scenario and Network Editors<a class="headerlink" href="#scenario_and_network_editors" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="http://eworld.sourceforge.net/">eWorld</a><p>an application that allows to convert and enrich roads networks</p>
+</li>
+</ul>
+<ul>
+<li><a href="https://github.com/AugmentedDesignLab/Sumo2Unreal">Sumo2Unreal</a><p>an importer for SUMO's .net.xml road network files into the Unreal
+  Engine 4 environment.</p>
+</li>
+</ul>
+<h2 id="connections_to_network_simulators">Connections to Network Simulators<a class="headerlink" href="#connections_to_network_simulators" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="https://veins.car2x.org/">Veins</a><p>connects SUMO to OMNeT++</p>
+</li>
+</ul>
+<ul>
+<li><a href="https://www.ict-itetris.eu/">iTetris</a><p>connects SUMO to ns-3</p>
+</li>
+</ul>
+<ul>
+<li><a href="http://trans.epfl.ch/"><font color="#0174DF">Tra</font><font color="#FF0000">NS</font></a><p>connects SUMO to ns-2</p>
+</li>
+</ul>
+<ul>
+<li><a href="http://lens1.csie.ncku.edu.tw/wiki/doku.php?id=%E2%80%A7realistic_mobility_generator_for_vehicular_networks">MOVE</a><p>connects SUMO to ns-2</p>
+</li>
+</ul>
+<ul>
+<li><a href="http://www.dcaiti.tu-berlin.de/research/simulation/">VSimRTI</a><p>C2X environment connecting SUMO to different network and application simulators (OMNeT++ and JiST/SWANS)</p>
+</li>
+</ul>
+<h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="http://de.mathworks.com/matlabcentral/fileexchange/44805-traci4matlab">TraCI4Matlab</a><p>A Matlab interface for connecting and extending information via <a href="TraCI.html">TraCI</a></p>
+</li>
+</ul>
+<ul>
+<li><a href="TraCI/TraaS.html">TraaS</a> <p>A SOAP(webservice) interface for connecting and extending information via <a href="TraCI.html">TraCI</a>. Also a Java TraCI client library</p>
+</li>
+</ul>
+<ul>
+<li><a href="https://github.com/DLR-TS/sumo-ocit">ocit2SUMO</a><p>Generate traffic light signal plans from OCIT® data</p>
+</li>
+</ul>
+<ul>
+<li><a href="https://flow-project.github.io/">FLOW</a><p>a framework for applying reinforcement learning and custom controllers to SUMO, developed at the University of California, Berkeley
+  <a href="https://github.com/flow-project/flow">[1]</a></p>
+</li>
+</ul>
+<ul>
+<li><a href="https://www.cyberbotics.com/doc/automobile/sumo-interface">Webots</a><p>coupling with a robot simulator</p>
+</li>
+</ul>
+<ul>
+<li><a href="https://www.tetcos.com/vanets.html">TETCOS NetSim</a><p>supports VANET simulations by interfacing with SUMO</p>
+</li>
+</ul>
+<h1 id="purgatory">Purgatory<a class="headerlink" href="#purgatory" title="Permanent link">#</a></h1>
+<p>The following extensions exist or have existed, but their state is
+unclear.</p>
+<ul>
+<li><a href="Contributed/iTranSIM.html">Contributed/iTranSIM</a><p>extension by online-calibration using induction loop data by Tino
+  Morenz</p>
+</li>
+</ul>
+<ul>
+<li><a href="Contributed/SmallMaps.html">Contributed/SmallMaps</a><p>prunes road networks to a given boundary; by Andreas Florides</p>
+</li>
+</ul>
+<ul>
+<li><a href="Contributed/SUMOPlayer.html">Contributed/SUMOPlayer</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SUMOPlayer was removed in release 0.24.0. You should be able to use <a href="Tools/TraceExporter.html">traceExporter.py</a> for the same task.</p>
+</div>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 24 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,1 @@
+-g -Wall -MMD -MP -MF .d    -isystem /usr/include -isystem /mingw64/include -Wno-deprecated-register -Wno-unused-function -fno-omit-frame-pointer  -DXMLPARSER=libxml -DPREFER_QTENV -DWITH_QTENV -DWITH_PARSIM -DWITH_NETBUILDER -DWITH_OSG -DWITH_OSGEARTH   -I../queueinglib -I/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/include

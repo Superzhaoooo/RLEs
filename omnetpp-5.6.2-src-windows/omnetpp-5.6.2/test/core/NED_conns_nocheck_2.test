@@ -1,0 +1,23 @@
+%description:
+Test that check for unconnected gates can be turned off
+
+%file: test.ned
+
+module Compound
+{
+    gates:
+        output out;
+        input in;  // these gates not connected internally
+    connections allowunconnected:
+}
+
+network Test
+{
+    submodules:
+        a: Compound;
+    connections allowunconnected:
+}
+
+%contains-regex: stdout
+No more events
+

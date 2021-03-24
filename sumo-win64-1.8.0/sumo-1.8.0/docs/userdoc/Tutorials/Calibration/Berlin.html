@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tutorials/Calibration/Berlin.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Tutorials/Calibration/Berlin - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tutorials/Calibration/Berlin.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#validation_of_a_small_inner-urban_scenario_simulated_within_the_sumo-package">Validation of a small inner-urban scenario simulated within the SUMO-package</a></li>
+            <li class="nav-item main"><a href="#the_study_area">THE STUDY AREA</a></li>
+            <li class="nav-item main"><a href="#modelling_within_the_sumo-package">MODELLING WITHIN THE SUMO-Package</a></li>
+            <li class="nav-item main"><a href="#results">RESULTS</a></li>
+            <li class="nav-item main"><a href="#summary_and_outlook">SUMMARY AND OUTLOOK</a></li>
+            <li class="nav-item main"><a href="#references">REFERENCES</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tutorials/Calibration/Berlin<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="validation_of_a_small_inner-urban_scenario_simulated_within_the_sumo-package">Validation of a small inner-urban scenario simulated within the SUMO-package<a class="headerlink" href="#validation_of_a_small_inner-urban_scenario_simulated_within_the_sumo-package" title="Permanent link">#</a></h2>
+<p>This article describes how a detailed traffic scenario was modelled
+using the SUMO simulation package and demonstrates how the simulation
+results are matching to measurements of the real world traffic.</p>
+<h2 id="the_study_area">THE STUDY AREA<a class="headerlink" href="#the_study_area" title="Permanent link">#</a></h2>
+<p>The UTRaLab (Urban Traffic Research Laboratory) is a test track with a
+length of 1.2 kilometres along a small river called “Ernst-Ruska-Ufer”
+in Berlin [1]. It’s a multilane road with about 30.000 vehicles
+passing each day between the federal motorway on workdays. Besides other
+measurement technology the UTRaLab is equipped with 45 double induction
+loops, that supply vehicle data classified into 5+1 vehicle types
+according to TLS[2]. An Overview about the test track and the position
+of the induction loops is given in Fig. 1.</p>
+<p><img alt="Berlin.png" src="../../images/Berlin.png" title="Berlin.png" /></p>
+<h2 id="modelling_within_the_sumo-package">MODELLING WITHIN THE SUMO-Package<a class="headerlink" href="#modelling_within_the_sumo-package" title="Permanent link">#</a></h2>
+<p>Preparing a traffic simulation includes to model the road network as
+well as to model the traffic demand within the traffic network. Traffic
+Net Modelling The simulation net includes the section between
+“Wegedornstraße” and “Adlergestell”. It represents the exact number of
+lanes, turn lanes and links to all side roads. Within the considered
+section there are two traffic lights, one at the junction “Altglinicker
+Brücke” and one at the junction “Am Studio”. Both are modelled with
+fixed time schedules according to the time of the day. The main
+challenge in modelling was a spill-back into the study area caused
+outside at the junction Adlergestell. As there was no sensor data
+available to model the bottleneck itself Variable Speed Signs (VSS)
+[3] were placed in the model at the outbound of the junction
+“Altglinicker Brücke” towards Adlergestell. The VSS supplies all
+vehicles crossing with a new maximum speed, derived from the single
+value data from the detectors. Traffic Demand Modelling Due to find a
+work day, outside holidays, where considerable congestion occurred,
+Tuesday the 11 January 2011 was chosen. The traffic data from this day
+was aggregated to intervals of one minute. This minor simplification
+enabled the use of the module dfrouter [4]. After defining the
+location of the detectors the routes were calculated for all vehicles
+within the simulation automatically by the module. The vehicle
+distribution [5], including different vehicle classes characterized by
+different vehicle parameters, was added into the resulting routes- and
+emitters-file manually. Regarding the loops at the minor streets some
+inconsistency within the typing occurred. Therefore a distribution
+including only one vehicle type for passenger cars was defined for all
+vehicles starting or ending on minor roads. For all vehicles passing the
+study area only along main roads a vehicle distribution including 6
+different vehicle types were defined as the induction loops detect 5+1
+different vehicle classes. The split into the different vehicle types
+was deduced from the measured data. From the vehicle parameters only the
+vehicle length, could be measured directly. For all other ones
+assumptions in order to receive a good match of the congestion in the
+simulation to the real queue length were done. Framework conditions like
+plausibility and difference between the vehicle classes were considered
+such as passenger cars having a higher acceleration and deceleration
+than trucks.</p>
+<h2 id="results">RESULTS<a class="headerlink" href="#results" title="Permanent link">#</a></h2>
+<p>In order to obtain the same measurements from simulation than from
+reality “Induction loops” [6] were instantiated at the same positions
+within the simulation net as in reality. To assess if the congestion
+within the simulation has the same extension and duration as in reality
+the data for eastbound traffic at MQ 22 and MQ32 was analyzed. Figure 2
+shows the speed at the observation points, aggregated to intervals of
+one minute.</p>
+<p><img alt="&lt;File:Results1.jpg&gt;" src="../../images/Results1.jpg" title="File:Results1.jpg" />
+<img alt="&lt;File:Results2.jpg&gt;" src="../../images/Results2.jpg" title="File:Results2.jpg" /></p>
+<p>Fig. 2:Speeds measured at observation points MQ 22 and MQ 32</p>
+<p><img alt="&lt;File:Results3.jpg&gt;" src="../../images/Results3.jpg" title="File:Results3.jpg" />
+<img alt="&lt;File:Results4.jpg&gt;" src="../../images/Results4.jpg" title="File:Results4.jpg" /></p>
+<p>Fig. 3: Difference between measured and simulated speeds at observation
+points MQ 22 and MQ 32</p>
+<p>The measurements at MQ 32 show a high analogy for the duration of the
+congestion. One can see a slightly earlier start and a later end of the
+congestion in the simulation only at the diagram for the differences in
+speed. As can be seen from the diagrams of MQ 22 there was a decrease in
+speed of about 5km/h between 3 and 7 pm at the UTRaLab. So it may be
+supposed that the congestion ends close before the measuring section. In
+contrast to this a short spill-back can be recognized at MQ 22 in the
+simulation data. Nevertheless, in view of the distance of about 600m
+between observation point and stop line the congestion length within the
+simulation matches well to reality. Due to the stochastic of traffic
+flow and taken into account that no simulation is able to model all
+effects of reality, the diagrams demonstrate a high similarity of
+congestion length and duration.</p>
+<h2 id="summary_and_outlook">SUMMARY AND OUTLOOK<a class="headerlink" href="#summary_and_outlook" title="Permanent link">#</a></h2>
+<p>It was demonstrated that Variable Speed Signs allow to model congestion
+effects caused outside the simulated net. The resulting duration and
+length of the vehicle-queue in the simulation matches to measurements at
+the UTRaLab. Currently further verification of the simulation
+reliability is done by more detailed analyses of the simulation results.
+Therefore the datasets received for each vehicle from the test track
+sensors and from the simulation are compared.</p>
+<h2 id="references">REFERENCES<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<ul>
+<li>[1]
+  <a href="http://www.dlr.de/fs/en/desktopdefault.aspx/tabid-1237/5441_read-11863/">http://www.dlr.de/fs/en/desktopdefault.aspx/tabid-1237/5441_read-11863/</a>
+  last visited 07 February 2012</li>
+<li>[2] Bundesanstalt für Straßenverkehrswesen (2002): Technische
+  Lieferbedingungen für Streckenstationen. Bundesministerium für
+  Verkehr, Bau-, und Wohnungswesen. Wirtschaftsverlag NW</li>
+<li>[3]
+  <a href="https://sumo.dlr.de/docs/Simulation/Variable_Speed_Signs.html">https://sumo.dlr.de/docs/Simulation/Variable_Speed_Signs.html</a>,
+  last visited 21 February 2012</li>
+<li>[4]
+  <a href="https://sumo.dlr.de/docs/dfrouter.html">https://sumo.dlr.de/docs/dfrouter.html</a>,
+  last visited 21 February 2012</li>
+<li>[5]
+  <a href="https://sumo.dlr.de/docs/Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">https://sumo.dlr.de/docs/Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html</a>,
+  last visited 21 February 2012</li>
+<li>[6]
+  <a href="https://sumo.dlr.de/docs/Simulation/Output/Induction_Loops_Detectors_(E1).html">https://sumo.dlr.de/docs/Simulation/Output/Induction_Loops_Detectors_(E1).html</a>,
+  last visited 21 February 2012</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

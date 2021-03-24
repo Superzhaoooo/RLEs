@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Installing.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Installing - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Installing.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#windows">Windows</a></li>
+            <li class="nav-item main"><a href="#linux">Linux</a></li>
+            <li class="nav-item main"><a href="#macos">macOS</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#macos_troubleshooting" class="nav-link">• MacOS Troubleshooting</a>
+                </li>
+            <li class="nav-item main"><a href="#via_docker">via Docker</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Installing<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">#</a></h1>
+<p>There are four different binary packages for Windows depending on the
+platform (32 vs. 64 bit) you have and what you want to do with SUMO. If
+you want to install it locally and have administrator rights on your
+machine you should download and execute one of the installers
+(preferably 64 bit). If you need a "portable" version or do not have
+admin rights, use the correct zip, extract it into a desired folder
+using <a href="https://7-zip.de/">7Zip</a>,
+<a href="https://www.winzip.com/win/de/prod_down.html">Winzip</a>, or a similar tool. Every
+package contains the binaries, all dlls needed, the examples, tools, and
+documentation in HTML format.</p>
+<ul>
+<li>Download 64 bit installer: <a href="http://prdownloads.sourceforge.net/sumo/sumo-win64-1.8.0.msi?download">sumo-win64-1.8.0.msi</a></li>
+<li>Download 64 bit zip: <a href="http://prdownloads.sourceforge.net/sumo/sumo-win64-1.8.0.zip?download">sumo-win64-1.8.0.zip</a></li>
+<li>Download 32 bit installer: <a href="http://prdownloads.sourceforge.net/sumo/sumo-win32-1.8.0.msi?download">sumo-win32-1.8.0.msi</a></li>
+<li>Download 32 bit zip: <a href="http://prdownloads.sourceforge.net/sumo/sumo-win32-1.8.0.zip?download">sumo-win32-1.8.0.zip</a></li>
+</ul>
+<p>Within the installation folder, you will find a folder named "<strong>bin</strong>".
+Here, you can find the executables (programs). You may double click on
+<a href="sumo-gui.html">sumo-gui</a> and take a look at the examples located
+in <strong>docs/examples</strong>. All other applications
+(<a href="duarouter.html">duarouter</a>, <a href="dfrouter.html">dfrouter</a>,
+etc.) have to be run from the command line. To facilitate this there is
+also a start-commandline.bat which sets up the whole environment for
+you. If you feel unsure about the command line, please read
+<a href="Basics/Basic_Computer_Skills.html#running_programs_from_the_command_line">Basics/Basic_Computer_Skills#Running_Programs_from_the_Command_Line</a>.</p>
+<p>If you want a bleeding edge nightly build or need tests or source files,
+you can download them from the <a href="Downloads.html">Download</a> page.</p>
+<p>For building SUMO from source see <a href="Installing/Windows_Build.html">building SUMO under Windows</a>.</p>
+<h1 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">#</a></h1>
+<p>If you run debian or ubuntu, SUMO is part of the regular distribution
+and can be installed like this:</p>
+<pre><code>sudo apt-get install sumo sumo-tools sumo-doc
+</code></pre>
+
+<p>If you need a more up-to-date ubuntu version, it may be found in a
+separate ppa, which is added like this:</p>
+<pre><code>sudo add-apt-repository ppa:sumo/stable
+sudo apt-get update
+</code></pre>
+
+<p>and then again</p>
+<pre><code>sudo apt-get install sumo sumo-tools sumo-doc
+</code></pre>
+
+<p>Precompiled binaries for different distributions like openSUSE and
+Fedora can be found at these <a href="http://download.opensuse.org/repositories/home:/behrisch/">repositories for binary Linux versions</a>.
+These repositories contain nightly builds as well. In the case your
+system is not listed here or you need to modify the sources, <a href="Installing/Linux_Build.html">you have to build SUMO from sources</a>.</p>
+<h1 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">#</a></h1>
+<p>SUMO can be easily installed on macOS by using <a href="http://brew.sh">Homebrew</a>. If you did not already install homebrew, you can do so by invoking</p>
+<pre><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)&quot;
+</code></pre>
+
+<p>Please make sure your homebrew installation is up-to-date:</p>
+<pre><code>brew update
+</code></pre>
+
+<p>You can then install the latest stable release of SUMO with the following commands:</p>
+<pre><code>brew tap dlr-ts/sumo
+brew install sumo
+</code></pre>
+
+<p>To finalize your setup, please make sure to set the <strong>SUMO_HOME</strong> environment variable and have it point to the directory of your SUMO installation. Depending on your shell, you may set this variable either in <code>.bash_profile</code> or <code>.zshrc</code>. To set this variable in <code>.bash_profile</code> you can use the following commands. </p>
+<pre><code>touch ~/.bash_profile; open ~/.bash_profile
+</code></pre>
+
+<p>Just insert the following new line at the end of the file: </p>
+<pre><code>export SUMO_HOME=/your/path/to/sumo
+</code></pre>
+
+<p>where <code>/your/path/to/sumo</code> is the path stated in the caveats section of the <code>brew install sumo</code> command. Restart the Terminal and test the newly added variable:</p>
+<pre><code>echo $SUMO_HOME
+</code></pre>
+
+<p>After the installation you need to log out/in in order to let X11 start automatically, when calling a gui-based application like <code>sumo-gui</code>. (Alternatively, you may start X11 manually by pressing <em>cmd-space</em> and entering <code>XQuartz</code>).</p>
+<p>SUMO provides native <strong>macOS application bundles</strong> for its graphical applications, so they can be added to the macOS dock or moved to the <code>Applications</code> folder. The brew installation will copy these bundles to <code>Applications</code> as part of the installation process. </p>
+<p>In case this process fails, it can also be manually achieved by copying these application bundles from <code>$SUMO_HOME/build/osx/sumo-gui</code>, <code>$SUMO_HOME/build/osx/netedit</code> and <code>$SUMO_HOME/build/osx/osm-web-wizard</code> to the <code>/Applications</code> folder. </p>
+<p>These application bundles determine the location of your SUMO installation by evaluating your <code>$SUMO_HOME</code> variable setting and start the programs accordingly. Multiple SUMO installations may be used by changing the <code>$SUMO_HOME</code> variable.</p>
+<h2 id="macos_troubleshooting">MacOS Troubleshooting<a class="headerlink" href="#macos_troubleshooting" title="Permanent link">#</a></h2>
+<p>If you encounter segmentation faults on MacOS Catalina, please follow the following steps (see <a href="https://github.com/eclipse/sumo/issues/6242#issuecomment-553458710">Issue 6242</a>).</p>
+<ol>
+<li>
+<p>Uninstall Catalina bottle of fox:
+<code>$ brew uninstall --ignore-dependencies fox</code></p>
+</li>
+<li>
+<p>Edit brew Formula of fox:
+<code>$ brew edit fox</code></p>
+</li>
+<li>
+<p>Comment out or delete the following line:
+<code>sha256 "c6697be294c9a0458580564d59f8db32791beb5e67a05a6246e0b969ffc068bc" =&gt; :catalina</code></p>
+</li>
+<li>
+<p>Install Mojave bottle of fox:
+<code>$ brew install fox</code></p>
+</li>
+</ol>
+<h1 id="via_docker">via Docker<a class="headerlink" href="#via_docker" title="Permanent link">#</a></h1>
+<p>Building and installing SUMO from source is not an easy task for
+beginner users. Docker is a popular tool to solve this issue. Searching
+"SUMO" at <a href="https://hub.docker.com">Docker Hub</a> will give several results
+from existing attempts at Dockerising SUMO.</p>
+<p>The solution given at
+<a href="https://github.com/bogaotory/docker-sumo">docker-sumo</a> demonstrates how
+to Dockerise SUMO version 0.30.0 on top of Ubuntu 16.04. As well as
+<strong>sumo</strong> and <strong>traci</strong>, the use of <strong>sumo-gui</strong> is also demonstrated by
+<a href="https://github.com/bogaotory/docker-sumo">docker-sumo</a> so that the
+users have access to the graphical interface of a Dockerised SUMO.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 09 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

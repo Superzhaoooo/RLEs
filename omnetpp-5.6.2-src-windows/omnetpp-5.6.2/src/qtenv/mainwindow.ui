@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>939</width>
+    <height>673</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>OMNeT++ Qtenv</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/logo/logo128m</normaloff>:/logo/logo128m</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>6</number>
+    </property>
+    <property name="leftMargin">
+     <number>6</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>6</number>
+    </property>
+    <property name="bottomMargin">
+     <number>6</number>
+    </property>
+    <item>
+     <widget class="QWidget" name="toolBarArea" native="true">
+      <property name="whatsThis">
+       <string>The mainToolBar will be moved into this widget at runtime, along with a layout containing the animation speed slider and the event labels.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="topStatusRow">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="nextEventLabel">
+        <property name="styleSheet">
+         <string notr="true">QLabel { border: 1px solid palette(mid); }</string>
+        </property>
+        <property name="text">
+         <string>Next: n/a</string>
+        </property>
+        <property name="margin">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="nextModuleLabel">
+        <property name="styleSheet">
+         <string notr="true">QLabel { border: 1px solid palette(mid); }</string>
+        </property>
+        <property name="text">
+         <string>In: n/a</string>
+        </property>
+        <property name="margin">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="nextTimeLabel">
+        <property name="styleSheet">
+         <string notr="true">QLabel { border: 1px solid palette(mid); }</string>
+        </property>
+        <property name="text">
+         <string>At: n/a</string>
+        </property>
+        <property name="margin">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QSplitter" name="mainSplitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QWidget" name="timeLine" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+      <widget class="QSplitter" name="splitter_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QSplitter" name="splitter">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <widget class="QWidget" name="treeView" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
+        </widget>
+        <widget class="QWidget" name="objectInspector" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QSplitter" name="splitter_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <widget class="QWidget" name="mainArea" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
+        <widget class="QWidget" name="logInspector" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="statusBar">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="labelConfigName">
+        <property name="toolTip">
+         <string>Current inifile configuration, run number, network name, and potential scheduler information</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel { border: 1px solid palette(mid); }</string>
+        </property>
+        <property name="text">
+         <string>(No network set up)</string>
+        </property>
+        <property name="margin">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelMessageStats">
+        <property name="toolTip">
+         <string>Number of events (messages) currently scheduled /
+Number of existing message objects, including scheduled ones /
+Total number of messages created since start of the simulation</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel { border: 1px solid palette(mid); }</string>
+        </property>
+        <property name="text">
+         <string>Msg stats: 0 scheduled / 0 existing / 0 created</string>
+        </property>
+        <property name="margin">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>939</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionSetUpConfiguration"/>
+    <addaction name="separator"/>
+    <addaction name="actionLoadNedFile"/>
+    <addaction name="actionSetUpUnconfiguredNetwork"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpenPrimaryIniFile"/>
+    <addaction name="separator"/>
+    <addaction name="actionCreate_Snapshot"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuSimulate">
+    <property name="title">
+     <string>&amp;Simulate</string>
+    </property>
+    <addaction name="actionOneStep"/>
+    <addaction name="separator"/>
+    <addaction name="actionRun"/>
+    <addaction name="actionFastRun"/>
+    <addaction name="actionExpressRun"/>
+    <addaction name="actionRunUntil"/>
+    <addaction name="separator"/>
+    <addaction name="actionDebugNow"/>
+    <addaction name="actionDebugNextEvent"/>
+    <addaction name="actionDebugOnErrors"/>
+    <addaction name="separator"/>
+    <addaction name="actionStop"/>
+    <addaction name="separator"/>
+    <addaction name="actionEventlogRecording"/>
+    <addaction name="actionRecordVideo"/>
+    <addaction name="separator"/>
+    <addaction name="actionConcludeSimulation"/>
+    <addaction name="actionRebuildNetwork"/>
+   </widget>
+   <widget class="QMenu" name="menuInspect">
+    <property name="title">
+     <string>&amp;Inspect</string>
+    </property>
+    <widget class="QMenu" name="menuAvailable_Components">
+     <property name="title">
+      <string>Available &amp;Components</string>
+     </property>
+     <addaction name="actionNedComponentTypes"/>
+     <addaction name="actionRegisteredClasses"/>
+     <addaction name="actionClassDescriptors"/>
+     <addaction name="actionNED_Functions"/>
+     <addaction name="actionRegistered_Enums"/>
+     <addaction name="actionSupportedConfigurationOption"/>
+     <addaction name="actionResultFilters"/>
+     <addaction name="actionResultRecorders"/>
+     <addaction name="actionMessagePrinters"/>
+    </widget>
+    <addaction name="actionNetwork"/>
+    <addaction name="actionScheduledEvents"/>
+    <addaction name="actionSimulation"/>
+    <addaction name="separator"/>
+    <addaction name="menuAvailable_Components"/>
+    <addaction name="separator"/>
+    <addaction name="actionFindInspectObjects"/>
+    <addaction name="actionInspectByPointer"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionStatusDetails"/>
+    <addaction name="actionTimeline"/>
+    <addaction name="actionShowAnimationParams"/>
+    <addaction name="separator"/>
+    <addaction name="actionFlipWindowLayout"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout_OMNeT_Qtenv"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSimulate"/>
+   <addaction name="menuInspect"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="windowTitle">
+    <string>Qtenv toolbar</string>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::TopToolBarArea</set>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>19</height>
+    </size>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSetUpConfiguration"/>
+   <addaction name="actionLoadNedFile"/>
+   <addaction name="separator"/>
+   <addaction name="actionOneStep"/>
+   <addaction name="actionRun"/>
+   <addaction name="actionFastRun"/>
+   <addaction name="actionExpressRun"/>
+   <addaction name="actionRunUntil"/>
+   <addaction name="actionStop"/>
+   <addaction name="separator"/>
+   <addaction name="actionConcludeSimulation"/>
+   <addaction name="actionRebuildNetwork"/>
+   <addaction name="separator"/>
+   <addaction name="actionEventlogRecording"/>
+   <addaction name="separator"/>
+   <addaction name="actionFindInspectObjects"/>
+   <addaction name="separator"/>
+   <addaction name="actionVerticalLayout"/>
+   <addaction name="actionHorizontalLayout"/>
+   <addaction name="actionTimeline"/>
+   <addaction name="separator"/>
+   <addaction name="actionPreferences"/>
+   <addaction name="separator"/>
+   <addaction name="actionRecordVideo"/>
+  </widget>
+  <action name="actionQuit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionOneStep">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/step</normaloff>:/tools/step</iconset>
+   </property>
+   <property name="text">
+    <string>One &amp;Step</string>
+   </property>
+   <property name="toolTip">
+    <string>Execute one event (F4)</string>
+   </property>
+   <property name="shortcut">
+    <string>F4</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/run</normaloff>:/tools/run</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Run</string>
+   </property>
+   <property name="toolTip">
+    <string>Run with full animation (F5)</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionSetUpConfiguration">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/newrun</normaloff>:/tools/newrun</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Set Up a Configuration...</string>
+   </property>
+   <property name="toolTip">
+    <string>Set up an inifile configuration</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/stop</normaloff>:/tools/stop</iconset>
+   </property>
+   <property name="text">
+    <string>S&amp;top Execution</string>
+   </property>
+   <property name="toolTip">
+    <string>Stop running simulation (F8)</string>
+   </property>
+   <property name="shortcut">
+    <string>F8</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionFastRun">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/fast</normaloff>:/tools/fast</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Fast Run (rare display updates)</string>
+   </property>
+   <property name="toolTip">
+    <string>Run faster: no animation and rare inspector updates (F6)</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionExpressRun">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/express</normaloff>:/tools/express</iconset>
+   </property>
+   <property name="text">
+    <string>E&amp;xpress Run (tracing off)</string>
+   </property>
+   <property name="toolTip">
+    <string>Run at full speed: no text output, animation or inspector updates (F7)</string>
+   </property>
+   <property name="shortcut">
+    <string>F7</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionRunUntil">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/until</normaloff>:/tools/until</iconset>
+   </property>
+   <property name="text">
+    <string>Run &amp;Until...</string>
+   </property>
+   <property name="toolTip">
+    <string>Run until time or event number (Ctrl+F5)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F5</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionLoadNedFile">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/loadned</normaloff>:/tools/loadned</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Load NED File...</string>
+   </property>
+   <property name="toolTip">
+    <string>Load NED file for compound module definitions</string>
+   </property>
+  </action>
+  <action name="actionConcludeSimulation">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/finish</normaloff>:/tools/finish</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Conclude Simulation</string>
+   </property>
+   <property name="toolTip">
+    <string>Conclude simulation</string>
+   </property>
+  </action>
+  <action name="actionEventlogRecording">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/recordeventlog</normaloff>:/tools/recordeventlog</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Eventlog Recording</string>
+   </property>
+   <property name="toolTip">
+    <string>Eventlog recording on/off (Ctrl+G)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionFindInspectObjects">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/findobj</normaloff>:/tools/findobj</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Find/Inspect Objects...</string>
+   </property>
+   <property name="toolTip">
+    <string>Find and inspect modules, messages, queues and other objects (Ctrl+S)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionVerticalLayout">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/vertical</normaloff>:/tools/vertical</iconset>
+   </property>
+   <property name="text">
+    <string>Vertical Main Window Layout</string>
+   </property>
+   <property name="toolTip">
+    <string>Vertical main window layout</string>
+   </property>
+  </action>
+  <action name="actionHorizontalLayout">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/horizontal</normaloff>:/tools/horizontal</iconset>
+   </property>
+   <property name="text">
+    <string>Horizontal Main Window Layout</string>
+   </property>
+  </action>
+  <action name="actionTimeline">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/objects/fes</normaloff>:/objects/fes</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Timeline</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/hide timeline (Ctrl+T)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/config</normaloff>:/tools/config</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Preferences...</string>
+   </property>
+  </action>
+  <action name="actionSetUpUnconfiguredNetwork">
+   <property name="text">
+    <string>Set Up an &amp;Unconfigured Network...</string>
+   </property>
+  </action>
+  <action name="actionOpenPrimaryIniFile">
+   <property name="text">
+    <string>Open Primary &amp;Ini File</string>
+   </property>
+  </action>
+  <action name="actionCreate_Snapshot">
+   <property name="text">
+    <string>&amp;Create Snapshot...</string>
+   </property>
+  </action>
+  <action name="actionDebugNextEvent">
+   <property name="text">
+    <string>&amp;Debug Next Event</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F9</string>
+   </property>
+  </action>
+  <action name="actionRebuildNetwork">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/rebuild</normaloff>:/tools/rebuild</iconset>
+   </property>
+   <property name="text">
+    <string>Re&amp;build Network</string>
+   </property>
+   <property name="toolTip">
+    <string>Rebuild network</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionNetwork">
+   <property name="text">
+    <string>&amp;Network</string>
+   </property>
+  </action>
+  <action name="actionScheduledEvents">
+   <property name="text">
+    <string>Scheduled &amp;Events (FES)</string>
+   </property>
+  </action>
+  <action name="actionSimulation">
+   <property name="text">
+    <string>&amp;Simulation</string>
+   </property>
+  </action>
+  <action name="actionNedComponentTypes">
+   <property name="text">
+    <string>NED Component &amp;Types</string>
+   </property>
+  </action>
+  <action name="actionRegisteredClasses">
+   <property name="text">
+    <string>Registered &amp;Classes</string>
+   </property>
+  </action>
+  <action name="actionNED_Functions">
+   <property name="text">
+    <string>NED &amp;Functions</string>
+   </property>
+  </action>
+  <action name="actionRegistered_Enums">
+   <property name="text">
+    <string>Registered &amp;Enums</string>
+   </property>
+  </action>
+  <action name="actionSupportedConfigurationOption">
+   <property name="text">
+    <string>Supported Configuration &amp;Options</string>
+   </property>
+  </action>
+  <action name="actionInspectByPointer">
+   <property name="text">
+    <string>Inspect by &amp;Pointer...</string>
+   </property>
+  </action>
+  <action name="actionStatusDetails">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Status Details</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionFlipWindowLayout">
+   <property name="text">
+    <string>&amp;Flip Window Layout</string>
+   </property>
+  </action>
+  <action name="actionAbout_OMNeT_Qtenv">
+   <property name="text">
+    <string>&amp;About OMNeT++/Qtenv</string>
+   </property>
+  </action>
+  <action name="actionRecordVideo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/recordvideo</normaloff>:/tools/recordvideo</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Video Recording</string>
+   </property>
+   <property name="toolTip">
+    <string>Record Video (Ctrl+M)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="actionShowAnimationParams">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/tools/props</normaloff>:/tools/props</iconset>
+   </property>
+   <property name="text">
+    <string>Animation Parameters</string>
+   </property>
+   <property name="toolTip">
+    <string>Show Animation Parameters (Ctrl+N)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionDebugOnErrors">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Debug On Errors</string>
+   </property>
+   <property name="toolTip">
+    <string>Break into the debugger upon runtime errors</string>
+   </property>
+  </action>
+  <action name="actionClassDescriptors">
+   <property name="text">
+    <string>Class &amp;Descriptors</string>
+   </property>
+   <property name="toolTip">
+    <string>Class Descriptors</string>
+   </property>
+  </action>
+  <action name="actionResultFilters">
+   <property name="text">
+    <string>Result Fi&amp;lters</string>
+   </property>
+   <property name="toolTip">
+    <string>Result Filters</string>
+   </property>
+  </action>
+  <action name="actionResultRecorders">
+   <property name="text">
+    <string>Result &amp;Recorders</string>
+   </property>
+   <property name="toolTip">
+    <string>Result Recorders</string>
+   </property>
+  </action>
+  <action name="actionMessagePrinters">
+   <property name="text">
+    <string>Message &amp;Printers</string>
+   </property>
+   <property name="toolTip">
+    <string>Message Printers</string>
+   </property>
+  </action>
+  <action name="actionDebugNow">
+   <property name="text">
+    <string>Debug Now</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

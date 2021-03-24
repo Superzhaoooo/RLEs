@@ -1,0 +1,83 @@
+<routes>
+
+
+
+  <vType accel="3.0" decel="6.0" id="CarA" length="5.0" minGap="2.5" maxSpeed="50.0" sigma="0.5" color="1,0,0" lcStrategic="0.5" lcCooperative="0.0" departPos="last" departLane="best" />
+  <vType accel="2.0" decel="6.0" id="CarB" length="5.0" minGap="2.5" maxSpeed="50.0" sigma="0.5" color="0,1,0" lcStrategic="0.5" lcCooperative="0.0" departPos="last" departLane="best" />
+  <vType accel="1.0" decel="5.0" id="CarC" length="5.0" minGap="2.5" maxSpeed="40.0" sigma="0.5" color="0,0,1" lcStrategic="0.5" lcCooperative="0.0" departPos="last" departLane="best" />
+  <vType accel="1.0" decel="5.0" id="CarD" length="5.0" minGap="2.5" maxSpeed="30.0" sigma="0.5" color="1,0,1" lcStrategic="0.5" lcCooperative="0.0" departPos="last" departLane="best" />
+  <vType id="CarE" length="5.0" maxSpeed="44.0" carFollowModel= "Krauss" actionStepLength="0.01" tau="1.4" speedDev="0.0" accel="1.0" decel="2" speedFactor="1.0" minGap="2" delta="4" stepping="1.5" departPos="last" departLane="best" lcSpeedGain="10" color="1,1,1" lcStrategic="0.5" lcCooperative="0.0" />
+  
+  <vType id="normal_car" vClass="passenger" maxSpeed="50" speedFactor="0.9" speedDev="0.2" sigma="0.5" color="1,0,0"/>
+  <vType id="sporty_car" vClass="passenger" maxSpeed="80" speedFactor="1.3" speedDev="0.1" sigma="0.1" color="1,1,0"/>
+  <vType id="trailer" vClass="trailer"  maxSpeed="50" speedFactor="1.1" speedDev="0.1" color="1,1,1"/>
+  <vType id="truck" vClass="truck"  maxSpeed="50" speedFactor="1." speedDev="0.1" color="1,0,1"/>
+    
+	<vType id="vtypeauto" accel="2.5" decel="8" sigma="0.5" length="4"
+		   minGap="0" maxSpeed="36" color="1,0,0" probability="1"
+		   carFollowModel="CC" tauEngine="0.5" omegaN="0.2" xi="1" c1="0.5"
+		   lanesCount="4" ccAccel="1.5" ploegKp="0.2" ploegKd="0.7"
+		   ploegH="0.5" />
+	<vType id="passenger" accel="1.5" decel="4.5" sigma="0.5" length="4"
+		   minGap="0" maxSpeed="36.11" color="0.16,0.33,0.42" vClass="passenger"
+		   guiShape="passenger" speedFactor="1" departSpeed="max"
+		   carFollowModel="IDM" />
+	<vType id="passenger2" accel="1.5" decel="4.5" sigma="0.5" length="4"
+		   minGap="0" maxSpeed="20" color="0.16,0.33,0.42" vClass="passenger"
+		   guiShape="passenger" speedFactor="1" departSpeed="max"
+	       carFollowModel="IDM" />
+		   
+  <route id="platoon_route" edges="r1 r2 r3 r4 r5 r6 r7 r8 r9 r11"/>
+  
+  <route id="route01" edges="r1 r2 r3 r4 r5 r6 r7 r8 r9 r11"/>
+  <route id="route02" edges="r1 r2 r3 r4 r5 r6 r7 r8 r9 r12"/>
+  <route id="route03" edges="l1 l4 l5 l6 l7 l8 l9 l10 l11 l12 l14"/>
+  <route id="route04" edges="l1 l4 l5 l6 l7 l8 l9 l10 l11 l12 l15"/>
+  <route id="route05" edges="l2 l4 l5 l6 l7 l8 l9 l10 l11 l12 l14"/>
+  <route id="route06" edges="l2 l4 l5 l6 l7 l8 l9 l10 l11 l12 l15"/>
+  
+  <flow id="normal" type="normal_car" begin="0" end="1000" number="200" from="r1" to="r11" departPos="0" departLane="best" />
+  <flow id="sporty" type="sporty_car" begin="0" end="1000" number="200" from="l2" to="l15" departPos="0" departLane="best" />
+  <flow id="truck" type="truck" begin="0" end="1000" number="100" from="l1" to="l14" departPos="0" departLane="best" />
+  <flow id="trailer" type="trailer" begin="0" end="1000" number="100" from="l2" to="l14" departPos="0" departLane="best" />
+  
+  <flow id="carFollow1" type="CarE" begin="0" end="1000" number="700" from="r1" to="r11" departPos="0" departLane="best" />
+  <flow id="carFollow2" type="CarE" begin="0" end="1000" number="700" from="l1" to="l15" departPos="0" departLane="best" />
+  
+  <vehicle depart="0" id="veh1" route="route01" type="CarA" /> 
+  <vehicle depart="0" id="veh2" route="route02" type="CarA" /> 
+  <vehicle depart="0" id="veh3" route="route03" type="CarA" /> 
+  <vehicle depart="0" id="veh4" route="route04" type="CarA" /> 
+  <vehicle depart="0" id="veh5" route="route05" type="CarA" /> 
+  <vehicle depart="0" id="veh6" route="route06" type="CarA" /> 
+  
+  <vehicle depart="50" id="veh7" route="route01" type="CarB" /> 
+  <vehicle depart="50" id="veh8" route="route02" type="CarB" /> 
+  <vehicle depart="50" id="veh9" route="route03" type="CarB" /> 
+  <vehicle depart="50" id="veh10" route="route04" type="CarB" /> 
+  <vehicle depart="50" id="veh11" route="route05" type="CarB" /> 
+  <vehicle depart="50" id="veh12" route="route06" type="CarB" /> 
+  
+  <vehicle depart="100" id="veh13" route="route01" type="CarC" /> 
+  <vehicle depart="100" id="veh14" route="route02" type="CarC" /> 
+  <vehicle depart="100" id="veh15" route="route03" type="CarC" /> 
+  <vehicle depart="100" id="veh16" route="route04" type="CarC" /> 
+  <vehicle depart="100" id="veh17" route="route05" type="CarC" /> 
+  <vehicle depart="100" id="veh18" route="route06" type="CarC" /> 
+  
+  <vehicle depart="150" id="veh19" route="route01" type="CarD" /> 
+  <vehicle depart="150" id="veh20" route="route02" type="CarD" /> 
+  <vehicle depart="150" id="veh21" route="route03" type="CarD" /> 
+  <vehicle depart="150" id="veh22" route="route04" type="CarD" /> 
+  <vehicle depart="150" id="veh23" route="route05" type="CarD" /> 
+  <vehicle depart="150" id="veh24" route="route06" type="CarD" /> 
+  
+  <vehicle depart="200" id="veh25" route="route01" type="CarE" /> 
+  <vehicle depart="200" id="veh26" route="route02" type="CarE" /> 
+  <vehicle depart="200" id="veh27" route="route03" type="CarE" /> 
+  <vehicle depart="200" id="veh28" route="route04" type="CarE" /> 
+  <vehicle depart="200" id="veh29" route="route05" type="CarE" /> 
+  <vehicle depart="200" id="veh30" route="route06" type="CarE" />
+	
+    
+</routes>

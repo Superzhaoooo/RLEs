@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap12.html">[Prev]</A>&nbsp;<a href="chap14.html">[Next]</A>&nbsp;<a href="toc.html#toc_13.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:eventlog"/>13 Eventlog<a class="headerlink" href="#cha:eventlog" title="Permalink to this headline">¶</a></h1>
+
+<p><h2><a name="sec:eventlog:introduction"/>13.1 Introduction<a class="headerlink" href="#sec:eventlog:introduction" title="Permalink to this headline">¶</a></h2>
+
+<p>The eventlog feature and related tools have been added to OMNeT++ with the aim of
+helping the user understand complex simulation models and correctly implement the
+desired component behaviors. Using these tools, one can examine details of recorded
+history of a simulation, focusing on the behavior instead of the statistical results.
+
+<p>The eventlog file is created automatically during a simulation run upon explicit request
+configurable in the ini file. The resulting file can be viewed in the OMNeT++ IDE using
+the Sequence Chart and the Eventlog Table or can be processed by the command line Eventlog
+Tool. These tools support filtering the collected data to allow you to focus on events
+relevant to what you are looking for. They allow examining causality relationships and
+provide filtering based on simulation times, event numbers, modules and messages.
+
+<p>The simulation kernel records into the eventlog among others: user level messages,
+creation and deletion of modules, gates and connections, scheduling of self messages,
+sending of messages to other modules either through gates or directly, and processing of
+messages (that is events). Optionally, detailed message data can also be automatically
+recorded based on a message filter. The result is an eventlog file which contains detailed
+information of the simulation run and later can be used for various purposes.
+
+<p><ul class="note"><b>NOTE</b><br>
+    The eventlog file may become quite large for long-running simulations
+    (often hundreds of megabytes, but occasionally several gigabytes), especially
+    when message detail recording is turned on.
+</ul>
+
+<p><h2><a name="sec:eventlog:configuration"/>13.2 Configuration<a class="headerlink" href="#sec:eventlog:configuration" title="Permalink to this headline">¶</a></h2>
+
+<p>To record an eventlog file during the simulation, insert the following line into
+the ini file:
+
+<pre class="inifile">
+record-eventlog = true
+</pre>
+<p>
+<ul class="note"><b>NOTE</b><br>
+    Eventlog recording is turned off by default, because creating the eventlog file
+    might significantly decrease the overall simulation performance.
+</ul>
+
+<p><h3><a name="sec:eventlog:file-name"/>13.2.1 File Name<a class="headerlink" href="#sec:eventlog:file-name" title="Permalink to this headline">¶</a></h3>
+
+<p>The simulation kernel will write the eventlog file during the simulation into the file
+specified by the following ini file configuration entry (showing the default file name
+pattern here):
+
+<pre class="inifile">
+eventlog-file = ${resultdir}/${configname}-${runnumber}.elog
+</pre>
+<p>
+<h3><a name="sec:eventlog:recording-intervals"/>13.2.2 Recording Intervals<a class="headerlink" href="#sec:eventlog:recording-intervals" title="Permalink to this headline">¶</a></h3>
+
+<p>The size of an eventlog file is approximately proportional to the number of
+events it contains. To reduce the file size and speed up the simulation, it
+might be useful to record only certain events. The
+<tt>eventlog-recording-intervals</tt> configuration option instructs the
+kernel to record events only in the specified intervals. The syntax is
+similar to that of <tt>vector-recording-intervals</tt>.
+
+<p>An example:
+
+<pre class="inifile">
+eventlog-recording-intervals = ..10.2, 22.2..100, 233.3..
+</pre>
+<p>
+<h3><a name="sec:eventlog:recording-modules"/>13.2.3 Recording Modules<a class="headerlink" href="#sec:eventlog:recording-modules" title="Permalink to this headline">¶</a></h3>
+
+<p>Another factor that affects the size of an eventlog file is the number of
+modules for which the simulation kernel records events during the
+simulation. The <tt>module-eventlog-recording</tt> per-module configuration
+option instructs the kernel to record only the events that occurred in the
+matching modules. The default is to record events from all modules. This
+configuration option only applies to simple modules.
+
+<p>The following example records events from any of the routers whose index is
+between 10 and 20, and turns off recording for all other modules.
+
+<pre class="inifile">
+**.router[10..20].**.module-eventlog-recording = true
+**.module-eventlog-recording = false
+</pre>
+<p>
+<h3><a name="sec:eventlog:recording-messages"/>13.2.4 Recording Message Data<a class="headerlink" href="#sec:eventlog:recording-messages" title="Permalink to this headline">¶</a></h3>
+
+<p>Since recording message data dramatically increases the size of the
+eventlog file and also slows down the simulation, it is turned off by
+default, even if writing the eventlog is enabled. To turn on message data
+recording, supply a value for the <tt>eventlog-message-detail-pattern</tt>
+option in the ini file.
+
+<p>
+
+An example configuration for an IEEE 80211 model that records the <tt>encapsulationMsg</tt> field
+and all other fields whose name ends in <tt>Address</tt>, from messages whose class name ends in
+<tt>Frame</tt> looks like this:
+
+<pre class="inifile">
+eventlog-message-detail-pattern = *Frame:encapsulatedMsg,*Address
+</pre>
+<p>
+An example configuration for a TCP/IP model that records the port and address
+fields in all network packets looks like the following:
+
+<pre class="inifile">
+eventlog-message-detail-pattern =
+ PPPFrame:encapsulatedPacket|IPDatagram:encapsulatedPacket,*Address|TCPSegment:*Port
+</pre>
+<p>
+% <pre class="inifile">
+% eventlog-message-detail-pattern = WirelessFrame:declaredOn(WirelessFrame) or bitLength
+%</pre>
+
+<p>
+<h2><a name="sec:eventlog:eventlog-tool"/>13.3 Eventlog Tool<a class="headerlink" href="#sec:eventlog:eventlog-tool" title="Permalink to this headline">¶</a></h2>
+
+<p>The Eventlog Tool is a command line tool to process eventlog files. Invoking it without
+parameters will display usage information. The following are the most useful commands for users.
+
+<p><h3><a name="sec:eventlog:filter"/>13.3.1 Filter<a class="headerlink" href="#sec:eventlog:filter" title="Permalink to this headline">¶</a></h3>
+
+<p>The eventlog tool provides off line filtering that is usually applied to the eventlog file
+after the simulation has been finished and before actually opening it in the OMNeT++ IDE
+or processing it by any other means. Use the filter command and its various options to
+specify what should be present in the result file.
+
+<p><h3><a name="sec:eventlog:echo"/>13.3.2 Echo<a class="headerlink" href="#sec:eventlog:echo" title="Permalink to this headline">¶</a></h3>
+
+<p>Since the eventlog file format is text based and users are encouraged to implement their
+own filters, a way is needed to check whether an eventlog file is
+correct. The echo command provides a way to check this and help users creating custom
+filters. Anything not echoed back by the eventlog tool will not be taken into
+consideration by the other tools found in the OMNeT++ IDE.
+
+<p><ul class="note"><b>NOTE</b><br>
+    Custom filter tools should filter out whole events only, otherwise the
+    consequences are undefined.
+</ul>
+
+<hr class='pgbr'><p><hr><b><a href="chap12.html">[Prev]</A>&nbsp;<a href="chap14.html">[Next]</A>&nbsp;<a href="toc.html#toc_13.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

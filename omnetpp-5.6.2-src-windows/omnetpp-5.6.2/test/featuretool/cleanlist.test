@@ -1,0 +1,29 @@
+%description:
+Testing opp_feature with a clean project: exists .oppfeatures and .nedfolders only
+Lists features
+
+%prerun-command: ../../lib/createSrcFolders
+%prerun-command: cp ../../.nedfolders ../../.oppfeatures .
+%prerun-command: rm -f .oppfeaturestate .nedexclusions
+
+%testprog: opp_featuretool -v list
+
+%postrun-command: ../../lib/fileExistingCheck
+
+%contains: postrun-command(1).out
+'.oppfeatures' found.
+'.oppfeaturestate' not found.
+'.nedfolders' found.
+'.nedexclusions' not found.
+
+%contains: stdout
+List of all features:
+    + F_A
+    - F_B
+    - F_C
+    - F_D
+    + F_E
+5 feature(s) found.
+
+%not-contains-regex: test.err
+[a-zA-Z0-9]

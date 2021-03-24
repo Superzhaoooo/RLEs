@@ -1,0 +1,49 @@
+%description:
+Verify that values set via pattern assignments CANNOT be overridden in subclasses.
+
+
+%file: test.ned
+
+import testlib.Dump;
+
+module Sub
+{
+    parameters:
+        int p;
+}
+
+module Base
+{
+    parameters:
+        *.p = 0;
+    submodules:
+        sub: Sub;
+}
+
+module Extended extends Base
+{
+    parameters:
+        *.p = 1; // should be a no-op (value set in Base cannot be changed in subclasses)
+}
+
+network Test
+{
+    submodules:
+        e: Extended;
+        dump: Dump;
+}
+
+%contains: stdout
+module Test: Test {
+    parameters:
+        @isNetwork
+    submodules:
+        module Test.e: Extended {
+            submodules:
+                module Test.e.sub: Sub {
+                    parameters:
+                        p = 0
+                }
+        }
+}
+

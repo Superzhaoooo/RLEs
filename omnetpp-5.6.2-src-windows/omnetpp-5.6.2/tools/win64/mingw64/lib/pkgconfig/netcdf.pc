@@ -1,0 +1,13 @@
+prefix=/mingw64
+exec_prefix=/mingw64
+libdir=/mingw64/lib
+includedir=/mingw64/include
+ccompiler=/mingw64/bin/gcc.exe
+
+Name: netCDF
+Description: NetCDF Client Library for C
+URL: http://www.unidata.ucar.edu/netcdf
+Version: 4.4.1.1
+Libs: -L${libdir} -lnetcdf -lhdf5_hl -lhdf5 -lz
+Cflags: -I${includedir}
+

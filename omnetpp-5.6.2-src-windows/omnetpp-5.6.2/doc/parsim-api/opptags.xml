@@ -1,0 +1,1310 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<tagfile>
+  <compound kind="class">
+    <name>omnetpp::cAdvancedLinkDelayLookahead</name>
+    <filename>classomnetpp_1_1cAdvancedLinkDelayLookahead.html</filename>
+    <base>omnetpp::cNMPLookahead</base>
+    <member kind="function">
+      <type></type>
+      <name>cAdvancedLinkDelayLookahead</name>
+      <anchorfile>classomnetpp_1_1cAdvancedLinkDelayLookahead.html</anchorfile>
+      <anchor>a9cc29f05b7b8755345d946ea60016fd9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cAdvancedLinkDelayLookahead</name>
+      <anchorfile>classomnetpp_1_1cAdvancedLinkDelayLookahead.html</anchorfile>
+      <anchor>a9d3ddf56539f09fecaba75a1f3d15225</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cAdvancedLinkDelayLookahead.html</anchorfile>
+      <anchor>a05415f31c5ab57917c2937ce21534ff2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cAdvancedLinkDelayLookahead.html</anchorfile>
+      <anchor>a80bd6066e28414004fb7dac180a4dd4f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual simtime_t</type>
+      <name>getCurrentLookahead</name>
+      <anchorfile>classomnetpp_1_1cAdvancedLinkDelayLookahead.html</anchorfile>
+      <anchor>a3afc3dbad8fb9befb54a883bdbdab5db</anchor>
+      <arglist>(cMessage *msg, int procId, void *data)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual simtime_t</type>
+      <name>getCurrentLookahead</name>
+      <anchorfile>classomnetpp_1_1cAdvancedLinkDelayLookahead.html</anchorfile>
+      <anchor>abf0ca92d2008b4d7102aabf660df01aa</anchor>
+      <arglist>(int procId)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cCommBufferBase</name>
+    <filename>classomnetpp_1_1cCommBufferBase.html</filename>
+    <base>omnetpp::cCommBuffer</base>
+    <member kind="function">
+      <type></type>
+      <name>cCommBufferBase</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a2f9c880455d56a1c0e237809061dfe7f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cCommBufferBase</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a96b60f2d176518e3d3f3dbadbd7703de</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>char *</type>
+      <name>getBuffer</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a5c88983da0686395362c58e3341fa5af</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getBufferLength</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>aee7aa6bc317bf848d7602154242dd5e7</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>allocateAtLeast</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a1b879499f97c8367d3a6300e3bb3d42d</anchor>
+      <arglist>(int size)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setMessageSize</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a9451f3b9281e19e30d380585ffa20733</anchor>
+      <arglist>(int size)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getMessageSize</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a7deb0e06337ad8bc334571fbba91d60a</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>ad20897c5c8bd47f5d4005989bead0e55</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>isBufferEmpty</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>abd1398af6bbcb3b0b35ad4e35d3cd459</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>assertBufferEmpty</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>acb4b86fceda6c119934e14ae879b0e1f</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function">
+      <type>char *</type>
+      <name>getBuffer</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a5c88983da0686395362c58e3341fa5af</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getBufferLength</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>aee7aa6bc317bf848d7602154242dd5e7</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>allocateAtLeast</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a1b879499f97c8367d3a6300e3bb3d42d</anchor>
+      <arglist>(int size)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setMessageSize</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a9451f3b9281e19e30d380585ffa20733</anchor>
+      <arglist>(int size)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getMessageSize</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>a7deb0e06337ad8bc334571fbba91d60a</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>ad20897c5c8bd47f5d4005989bead0e55</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>isBufferEmpty</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>abd1398af6bbcb3b0b35ad4e35d3cd459</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>assertBufferEmpty</name>
+      <anchorfile>classomnetpp_1_1cCommBufferBase.html</anchorfile>
+      <anchor>acb4b86fceda6c119934e14ae879b0e1f</anchor>
+      <arglist>() override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cFileCommBuffer</name>
+    <filename>classomnetpp_1_1cFileCommBuffer.html</filename>
+    <base>omnetpp::cCommBufferBase</base>
+    <member kind="function">
+      <type></type>
+      <name>cFileCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cFileCommBuffer.html</anchorfile>
+      <anchor>a833c5db1873eee40a138b31c00023ffd</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cFileCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cFileCommBuffer.html</anchorfile>
+      <anchor>a202b7e502c19073f3e562135b2763b8c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setMessageSize</name>
+      <anchorfile>classomnetpp_1_1cFileCommBuffer.html</anchorfile>
+      <anchor>a9451f3b9281e19e30d380585ffa20733</anchor>
+      <arglist>(int size)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cFileCommunications</name>
+    <filename>classomnetpp_1_1cFileCommunications.html</filename>
+    <base>omnetpp::cParsimCommunications</base>
+    <member kind="function">
+      <type></type>
+      <name>cFileCommunications</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a284e7f11cc6a30bfdc3e8a208fc0cbf8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cFileCommunications</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a35b244cb7373f30292dd9220d022fad4</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>init</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a3da1ea04621afe7a3714f78b3dddd07e</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>shutdown</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a66ab4bb8705bfafcfa67e25f74f8565b</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>getNumPartitions</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a5b7867e4aa116510e699a0a07dabd400</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>getProcId</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>af4b479c1c4c2bbf8c596e9f3c677fa10</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cCommBuffer *</type>
+      <name>createCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>ad0843c19cd241fe4c8b8936ec34fbf86</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>recycleCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>ab3505a567b1c78c7a0af40337d3b1c26</anchor>
+      <arglist>(cCommBuffer *buffer) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>send</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a8f4f00bb489c5beb98f4fac73d1fb99f</anchor>
+      <arglist>(cCommBuffer *buffer, int tag, int destination) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>receiveBlocking</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a380ad482fcab51fd33c646c74c6131bd</anchor>
+      <arglist>(int filtTag, cCommBuffer *buffer, int &amp;receivedTag, int &amp;sourceProcId) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>receiveNonblocking</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>af7adcafbf9f3272ff2ec2a59c9b76a73</anchor>
+      <arglist>(int filtTag, cCommBuffer *buffer, int &amp;receivedTag, int &amp;sourceProcId) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>init</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a3da1ea04621afe7a3714f78b3dddd07e</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>shutdown</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a66ab4bb8705bfafcfa67e25f74f8565b</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>getNumPartitions</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a5b7867e4aa116510e699a0a07dabd400</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>getProcId</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>af4b479c1c4c2bbf8c596e9f3c677fa10</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cCommBuffer *</type>
+      <name>createCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>ad0843c19cd241fe4c8b8936ec34fbf86</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>recycleCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>ab3505a567b1c78c7a0af40337d3b1c26</anchor>
+      <arglist>(cCommBuffer *buffer) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>send</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a8f4f00bb489c5beb98f4fac73d1fb99f</anchor>
+      <arglist>(cCommBuffer *buffer, int tag, int destination) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>receiveBlocking</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>a380ad482fcab51fd33c646c74c6131bd</anchor>
+      <arglist>(int filtTag, cCommBuffer *buffer, int &amp;receivedTag, int &amp;sourceProcId) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>receiveNonblocking</name>
+      <anchorfile>classomnetpp_1_1cFileCommunications.html</anchorfile>
+      <anchor>af7adcafbf9f3272ff2ec2a59c9b76a73</anchor>
+      <arglist>(int filtTag, cCommBuffer *buffer, int &amp;receivedTag, int &amp;sourceProcId) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cIdealSimulationProtocol</name>
+    <filename>classomnetpp_1_1cIdealSimulationProtocol.html</filename>
+    <base>omnetpp::cParsimProtocolBase</base>
+    <member kind="function">
+      <type></type>
+      <name>cIdealSimulationProtocol</name>
+      <anchorfile>classomnetpp_1_1cIdealSimulationProtocol.html</anchorfile>
+      <anchor>af6a8cc367a6f0ea04c52be1a48762254</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cIdealSimulationProtocol</name>
+      <anchorfile>classomnetpp_1_1cIdealSimulationProtocol.html</anchorfile>
+      <anchor>a457787766dcf1163d8bcd89447ae5ae6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cIdealSimulationProtocol.html</anchorfile>
+      <anchor>a98bb4a1ac78e4f433a4824f9d48aaa07</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cIdealSimulationProtocol.html</anchorfile>
+      <anchor>a0948ea0c535fb6d24f31fb3716407286</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cEvent *</type>
+      <name>takeNextEvent</name>
+      <anchorfile>classomnetpp_1_1cIdealSimulationProtocol.html</anchorfile>
+      <anchor>a837fffa44eee49feed07981cf2417eaf</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>putBackEvent</name>
+      <anchorfile>classomnetpp_1_1cIdealSimulationProtocol.html</anchorfile>
+      <anchor>a98a257214face2b52750b3d0c3a88901</anchor>
+      <arglist>(cEvent *event) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cISPEventLogger</name>
+    <filename>classomnetpp_1_1cISPEventLogger.html</filename>
+    <base>omnetpp::cNullMessageProtocol</base>
+    <member kind="function">
+      <type></type>
+      <name>cISPEventLogger</name>
+      <anchorfile>classomnetpp_1_1cISPEventLogger.html</anchorfile>
+      <anchor>ac2e24377c1df940fa7d270e85bc084aa</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cISPEventLogger</name>
+      <anchorfile>classomnetpp_1_1cISPEventLogger.html</anchorfile>
+      <anchor>afea7a14c6a291174457491ea3604aa66</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cISPEventLogger.html</anchorfile>
+      <anchor>a98bb4a1ac78e4f433a4824f9d48aaa07</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cISPEventLogger.html</anchorfile>
+      <anchor>a0948ea0c535fb6d24f31fb3716407286</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>processOutgoingMessage</name>
+      <anchorfile>classomnetpp_1_1cISPEventLogger.html</anchorfile>
+      <anchor>a15f0288f5fd2b1453ea71fcb1e5a8275</anchor>
+      <arglist>(cMessage *msg, int procId, int moduleId, int gateId, void *data) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cEvent *</type>
+      <name>takeNextEvent</name>
+      <anchorfile>classomnetpp_1_1cISPEventLogger.html</anchorfile>
+      <anchor>a837fffa44eee49feed07981cf2417eaf</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>putBackEvent</name>
+      <anchorfile>classomnetpp_1_1cISPEventLogger.html</anchorfile>
+      <anchor>a98a257214face2b52750b3d0c3a88901</anchor>
+      <arglist>(cEvent *event) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cLinkDelayLookahead</name>
+    <filename>classomnetpp_1_1cLinkDelayLookahead.html</filename>
+    <base>omnetpp::cNMPLookahead</base>
+    <member kind="function">
+      <type></type>
+      <name>cLinkDelayLookahead</name>
+      <anchorfile>classomnetpp_1_1cLinkDelayLookahead.html</anchorfile>
+      <anchor>a2090558247f35c2e1238d40c397960c0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cLinkDelayLookahead</name>
+      <anchorfile>classomnetpp_1_1cLinkDelayLookahead.html</anchorfile>
+      <anchor>aac1832fc7b11333280d6fbab9d386dc9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cLinkDelayLookahead.html</anchorfile>
+      <anchor>a98bb4a1ac78e4f433a4824f9d48aaa07</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cLinkDelayLookahead.html</anchorfile>
+      <anchor>a0948ea0c535fb6d24f31fb3716407286</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual simtime_t</type>
+      <name>getCurrentLookahead</name>
+      <anchorfile>classomnetpp_1_1cLinkDelayLookahead.html</anchorfile>
+      <anchor>a256a47701bc03557a5e64e11f99c4942</anchor>
+      <arglist>(cMessage *msg, int procId, void *data) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual simtime_t</type>
+      <name>getCurrentLookahead</name>
+      <anchorfile>classomnetpp_1_1cLinkDelayLookahead.html</anchorfile>
+      <anchor>aa243ad4602402f046ec7e0e75219dd52</anchor>
+      <arglist>(int procId) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cMemCommBuffer</name>
+    <filename>classomnetpp_1_1cMemCommBuffer.html</filename>
+    <base>omnetpp::cCommBufferBase</base>
+    <member kind="function">
+      <type></type>
+      <name>cMemCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cMemCommBuffer.html</anchorfile>
+      <anchor>a8ece8a4dcc4466ac29343dc27636c7a9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cMemCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cMemCommBuffer.html</anchorfile>
+      <anchor>ab66f3b40990e4c9a352624b00caeba5b</anchor>
+      <arglist>()</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cNamedPipeCommunications</name>
+    <filename>classomnetpp_1_1cNamedPipeCommunications.html</filename>
+    <base>omnetpp::cParsimCommunications</base>
+    <member kind="function">
+      <type></type>
+      <name>cNamedPipeCommunications</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a089da32c7992e85ce59d0507d57f68ee</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cNamedPipeCommunications</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a94216a900cf9a576b7a144cc6c65ff3a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>init</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a3da1ea04621afe7a3714f78b3dddd07e</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>shutdown</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a66ab4bb8705bfafcfa67e25f74f8565b</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>getNumPartitions</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a5b7867e4aa116510e699a0a07dabd400</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>getProcId</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>af4b479c1c4c2bbf8c596e9f3c677fa10</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cCommBuffer *</type>
+      <name>createCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>ad0843c19cd241fe4c8b8936ec34fbf86</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>recycleCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>ab3505a567b1c78c7a0af40337d3b1c26</anchor>
+      <arglist>(cCommBuffer *buffer) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>send</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a8f4f00bb489c5beb98f4fac73d1fb99f</anchor>
+      <arglist>(cCommBuffer *buffer, int tag, int destination) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>receiveBlocking</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a380ad482fcab51fd33c646c74c6131bd</anchor>
+      <arglist>(int filtTag, cCommBuffer *buffer, int &amp;receivedTag, int &amp;sourceProcId) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>receiveNonblocking</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>af7adcafbf9f3272ff2ec2a59c9b76a73</anchor>
+      <arglist>(int filtTag, cCommBuffer *buffer, int &amp;receivedTag, int &amp;sourceProcId) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>init</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a3da1ea04621afe7a3714f78b3dddd07e</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>shutdown</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a66ab4bb8705bfafcfa67e25f74f8565b</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>getNumPartitions</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a5b7867e4aa116510e699a0a07dabd400</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>getProcId</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>af4b479c1c4c2bbf8c596e9f3c677fa10</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cCommBuffer *</type>
+      <name>createCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>ad0843c19cd241fe4c8b8936ec34fbf86</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>recycleCommBuffer</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>ab3505a567b1c78c7a0af40337d3b1c26</anchor>
+      <arglist>(cCommBuffer *buffer) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>send</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a8f4f00bb489c5beb98f4fac73d1fb99f</anchor>
+      <arglist>(cCommBuffer *buffer, int tag, int destination) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>receiveBlocking</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>a380ad482fcab51fd33c646c74c6131bd</anchor>
+      <arglist>(int filtTag, cCommBuffer *buffer, int &amp;receivedTag, int &amp;sourceProcId) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>receiveNonblocking</name>
+      <anchorfile>classomnetpp_1_1cNamedPipeCommunications.html</anchorfile>
+      <anchor>af7adcafbf9f3272ff2ec2a59c9b76a73</anchor>
+      <arglist>(int filtTag, cCommBuffer *buffer, int &amp;receivedTag, int &amp;sourceProcId) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cNMPLookahead</name>
+    <filename>classomnetpp_1_1cNMPLookahead.html</filename>
+    <base>omnetpp::cObject</base>
+    <member kind="function">
+      <type></type>
+      <name>cNMPLookahead</name>
+      <anchorfile>classomnetpp_1_1cNMPLookahead.html</anchorfile>
+      <anchor>a11a573c08c4f735302319e3036a315af</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cNMPLookahead</name>
+      <anchorfile>classomnetpp_1_1cNMPLookahead.html</anchorfile>
+      <anchor>a2c607a444a48bbe69563fe5faab3569a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setContext</name>
+      <anchorfile>classomnetpp_1_1cNMPLookahead.html</anchorfile>
+      <anchor>a789baef1b1c192302f6d10d9456dcc10</anchor>
+      <arglist>(cSimulation *simul, cParsimPartition *seg, cParsimCommunications *co)</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cNMPLookahead.html</anchorfile>
+      <anchor>a945f0ee7e688a845f6126df7fb3bbf1f</anchor>
+      <arglist>()=0</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cNMPLookahead.html</anchorfile>
+      <anchor>afc14f15d79c65a7ac5dc13d4861f8845</anchor>
+      <arglist>()=0</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual simtime_t</type>
+      <name>getCurrentLookahead</name>
+      <anchorfile>classomnetpp_1_1cNMPLookahead.html</anchorfile>
+      <anchor>a8f8afbd2dc409e751834476b87f5ba5c</anchor>
+      <arglist>(cMessage *msg, int procId, void *data)=0</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual simtime_t</type>
+      <name>getCurrentLookahead</name>
+      <anchorfile>classomnetpp_1_1cNMPLookahead.html</anchorfile>
+      <anchor>acd69ce4a0cf72c208be68103c78397e9</anchor>
+      <arglist>(int procId)=0</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cNoSynchronization</name>
+    <filename>classomnetpp_1_1cNoSynchronization.html</filename>
+    <base>omnetpp::cParsimProtocolBase</base>
+    <member kind="function">
+      <type></type>
+      <name>cNoSynchronization</name>
+      <anchorfile>classomnetpp_1_1cNoSynchronization.html</anchorfile>
+      <anchor>a5de3249c19668fe8cd067b6771c232d4</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cNoSynchronization</name>
+      <anchorfile>classomnetpp_1_1cNoSynchronization.html</anchorfile>
+      <anchor>a75638bca705ff7ce4fc7447e2f4cad6b</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cNoSynchronization.html</anchorfile>
+      <anchor>a98bb4a1ac78e4f433a4824f9d48aaa07</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cNoSynchronization.html</anchorfile>
+      <anchor>a0948ea0c535fb6d24f31fb3716407286</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cEvent *</type>
+      <name>takeNextEvent</name>
+      <anchorfile>classomnetpp_1_1cNoSynchronization.html</anchorfile>
+      <anchor>a837fffa44eee49feed07981cf2417eaf</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>putBackEvent</name>
+      <anchorfile>classomnetpp_1_1cNoSynchronization.html</anchorfile>
+      <anchor>a98a257214face2b52750b3d0c3a88901</anchor>
+      <arglist>(cEvent *event) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cNullMessageProtocol</name>
+    <filename>classomnetpp_1_1cNullMessageProtocol.html</filename>
+    <base>omnetpp::cParsimProtocolBase</base>
+    <member kind="function">
+      <type></type>
+      <name>cNullMessageProtocol</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>af14bafefe604d3c9cc23e608f753b99d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cNullMessageProtocol</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>a84b965f4dbf17d7eb178985fe767d9a2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>setContext</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>a31f5f52d716013079fd3aa659c27362c</anchor>
+      <arglist>(cSimulation *sim, cParsimPartition *seg, cParsimCommunications *co) override</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setLaziness</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>ac84023b20ae82d35b32d4974d9e68607</anchor>
+      <arglist>(double d)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>getLaziness</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>a23ef7abf089f34e754655ca76f956da8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>a98bb4a1ac78e4f433a4824f9d48aaa07</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>a0948ea0c535fb6d24f31fb3716407286</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cEvent *</type>
+      <name>takeNextEvent</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>a837fffa44eee49feed07981cf2417eaf</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>putBackEvent</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>a98a257214face2b52750b3d0c3a88901</anchor>
+      <arglist>(cEvent *event) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>processOutgoingMessage</name>
+      <anchorfile>classomnetpp_1_1cNullMessageProtocol.html</anchorfile>
+      <anchor>a9b9716f57b0894c6809c45aa8e80b13d</anchor>
+      <arglist>(cMessage *msg, int procId, int moduleId, int gateId, void *data) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cParsimPartition</name>
+    <filename>classomnetpp_1_1cParsimPartition.html</filename>
+    <base>omnetpp::cObject</base>
+    <base>omnetpp::cISimulationLifecycleListener</base>
+    <member kind="function">
+      <type></type>
+      <name>cParsimPartition</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>a303014fcdac32b34878c344c9efb2631</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cParsimPartition</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>a7cf91476e5d1549455d7617011d627ea</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setContext</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>af06629d940084c6bc933cb6f3581a807</anchor>
+      <arglist>(cSimulation *sim, cParsimCommunications *comm, cParsimSynchronizer *synch)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>aef58691096273aa1b820c1bd74f8ef44</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>a7613d34411574188b7054e5290fe92b0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>shutdown</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>a7861ee1569802186a619778efc85af13</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>processOutgoingMessage</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>acd557c64f2198c302fd126a15d2df0cc</anchor>
+      <arglist>(cMessage *msg, int procId, int moduleId, int gateId, void *data)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>processReceivedBuffer</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>af652968c9571acb6f4636431f64de407</anchor>
+      <arglist>(cCommBuffer *buffer, int tag, int sourceProcId)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>processReceivedMessage</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>ae125a192c5be5e1c268124a72648584f</anchor>
+      <arglist>(cMessage *msg, int destModuleId, int destGateId, int sourceProcId)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>broadcastTerminationException</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>a7d243469c35f8ec0eeb9434dd88fd977</anchor>
+      <arglist>(cTerminationException &amp;e)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>broadcastException</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>a348d8f5ee655d2e380328d3ebabad0c9</anchor>
+      <arglist>(std::exception &amp;e)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>lifecycleEvent</name>
+      <anchorfile>classomnetpp_1_1cParsimPartition.html</anchorfile>
+      <anchor>ac3f8273ae98126597b2235425d17ceb1</anchor>
+      <arglist>(SimulationLifecycleEventType eventType, cObject *details) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cParsimProtocolBase</name>
+    <filename>classomnetpp_1_1cParsimProtocolBase.html</filename>
+    <base>omnetpp::cParsimSynchronizer</base>
+    <member kind="function">
+      <type></type>
+      <name>cParsimProtocolBase</name>
+      <anchorfile>classomnetpp_1_1cParsimProtocolBase.html</anchorfile>
+      <anchor>af254903dc1900e7b5b35b98986f59013</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cParsimProtocolBase</name>
+      <anchorfile>classomnetpp_1_1cParsimProtocolBase.html</anchorfile>
+      <anchor>afb90083e65c35f19b22525a6ca5ff0ff</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>processOutgoingMessage</name>
+      <anchorfile>classomnetpp_1_1cParsimProtocolBase.html</anchorfile>
+      <anchor>a9b9716f57b0894c6809c45aa8e80b13d</anchor>
+      <arglist>(cMessage *msg, int procId, int moduleId, int gateId, void *data) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cParsimSynchronizer</name>
+    <filename>classomnetpp_1_1cParsimSynchronizer.html</filename>
+    <base>omnetpp::cScheduler</base>
+    <member kind="function">
+      <type></type>
+      <name>cParsimSynchronizer</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>a05cf3abdc0fa12a71bb451a939de67a6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cParsimSynchronizer</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>afd77758ef2eb2101e73eceefc985bd79</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual std::string</type>
+      <name>str</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>acd0363984c7005246e42e9a6c178e22a</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>setContext</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>ac76c48419ed63a358aae35910ec00115</anchor>
+      <arglist>(cSimulation *sim, cParsimPartition *seg, cParsimCommunications *co)</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual void</type>
+      <name>startRun</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>afc89ebde38f0990c76e1f85c10e95d8d</anchor>
+      <arglist>() override=0</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual void</type>
+      <name>endRun</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>a563caf643fe2d3409e3586b03c7be3b8</anchor>
+      <arglist>() override=0</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual cEvent *</type>
+      <name>guessNextEvent</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>aad61920dbceba3b87d6f519b03eda684</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual cEvent *</type>
+      <name>takeNextEvent</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>a89ed91bec3c80c1528915e76562cbac8</anchor>
+      <arglist>() override=0</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual void</type>
+      <name>processOutgoingMessage</name>
+      <anchorfile>classomnetpp_1_1cParsimSynchronizer.html</anchorfile>
+      <anchor>ab1c8f4964a4463fe95f572a1675e6f77</anchor>
+      <arglist>(cMessage *msg, int procId, int moduleId, int gateId, void *data)=0</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cPlaceholderModule</name>
+    <filename>classomnetpp_1_1cPlaceholderModule.html</filename>
+    <base>omnetpp::cModule</base>
+    <member kind="function">
+      <type></type>
+      <name>cPlaceholderModule</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>aad2c0eeec122cce6baa033cc609ba586</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cPlaceholderModule</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>a6a946dac695543b93b581a9f20a09c74</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual std::string</type>
+      <name>str</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>acd0363984c7005246e42e9a6c178e22a</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>isPlaceholder</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>ab14a41d06aaba7c72faa4e87fb852a12</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>arrived</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>a1ff07b694abcff2b2da1f99b079149fe</anchor>
+      <arglist>(cMessage *msg, cGate *ongate, simtime_t t) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>scheduleStart</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>a06fb2597bbb81e0a49bca4ea61e29f53</anchor>
+      <arglist>(simtime_t t) override</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>cPlaceholderModule</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>aad2c0eeec122cce6baa033cc609ba586</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~cPlaceholderModule</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>a6a946dac695543b93b581a9f20a09c74</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual std::string</type>
+      <name>str</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>acd0363984c7005246e42e9a6c178e22a</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>isPlaceholder</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>ab14a41d06aaba7c72faa4e87fb852a12</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>arrived</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>a1ff07b694abcff2b2da1f99b079149fe</anchor>
+      <arglist>(cMessage *msg, cGate *ongate, simtime_t t) override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>scheduleStart</name>
+      <anchorfile>classomnetpp_1_1cPlaceholderModule.html</anchorfile>
+      <anchor>a06fb2597bbb81e0a49bca4ea61e29f53</anchor>
+      <arglist>(simtime_t t) override</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cProxyGate</name>
+    <filename>classomnetpp_1_1cProxyGate.html</filename>
+    <base>omnetpp::cGate</base>
+    <member kind="function" virtualness="virtual">
+      <type>virtual std::string</type>
+      <name>str</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>acd0363984c7005246e42e9a6c178e22a</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>deliver</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a0878de48fcb985f3df38622d3bf6392d</anchor>
+      <arglist>(cMessage *msg, simtime_t at) override</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setRemoteGate</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>ab96a50cfd4f8a36e407a06c4be97c4b7</anchor>
+      <arglist>(short procId, int moduleId, int gateId)</arglist>
+    </member>
+    <member kind="function">
+      <type>short</type>
+      <name>getRemoteProcId</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>ab7302d6c3471d3c00181885d7b14846f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getRemoteModuleId</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a99667e3f77795789bf2649391b6b858a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getRemoteGateId</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>ace54ae201da4a8ba0d847b5673e77c91</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setPartition</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a29b98b2c0ba0bd91a8f2d3303621549c</anchor>
+      <arglist>(cParsimPartition *seg)</arglist>
+    </member>
+    <member kind="function">
+      <type>cParsimPartition *</type>
+      <name>getPartition</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a3cfbe6e0d1d2d090c5268bb154b256dd</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setSynchData</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a789cd5fc939633dd8a4d7cfa97709297</anchor>
+      <arglist>(void *data)</arglist>
+    </member>
+    <member kind="function">
+      <type>void *</type>
+      <name>getSynchData</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a0090418440a1b181f7dcb23728c07cd9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual std::string</type>
+      <name>str</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>acd0363984c7005246e42e9a6c178e22a</anchor>
+      <arglist>() const override</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>deliver</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a0878de48fcb985f3df38622d3bf6392d</anchor>
+      <arglist>(cMessage *msg, simtime_t at) override</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setRemoteGate</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>ab96a50cfd4f8a36e407a06c4be97c4b7</anchor>
+      <arglist>(short procId, int moduleId, int gateId)</arglist>
+    </member>
+    <member kind="function">
+      <type>short</type>
+      <name>getRemoteProcId</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>ab7302d6c3471d3c00181885d7b14846f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getRemoteModuleId</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a99667e3f77795789bf2649391b6b858a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>getRemoteGateId</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>ace54ae201da4a8ba0d847b5673e77c91</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setPartition</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a29b98b2c0ba0bd91a8f2d3303621549c</anchor>
+      <arglist>(cParsimPartition *seg)</arglist>
+    </member>
+    <member kind="function">
+      <type>cParsimPartition *</type>
+      <name>getPartition</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a3cfbe6e0d1d2d090c5268bb154b256dd</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setSynchData</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a789cd5fc939633dd8a4d7cfa97709297</anchor>
+      <arglist>(void *data)</arglist>
+    </member>
+    <member kind="function">
+      <type>void *</type>
+      <name>getSynchData</name>
+      <anchorfile>classomnetpp_1_1cProxyGate.html</anchorfile>
+      <anchor>a0090418440a1b181f7dcb23728c07cd9</anchor>
+      <arglist>()</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cReceivedException</name>
+    <filename>classomnetpp_1_1cReceivedException.html</filename>
+    <base>omnetpp::cException</base>
+    <member kind="function">
+      <type></type>
+      <name>cReceivedException</name>
+      <anchorfile>classomnetpp_1_1cReceivedException.html</anchorfile>
+      <anchor>a9268d32e1076b9faa7fc37290004f8ba</anchor>
+      <arglist>(int sourceProcId, const char *msg)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>omnetpp::cReceivedTerminationException</name>
+    <filename>classomnetpp_1_1cReceivedTerminationException.html</filename>
+    <base>omnetpp::cTerminationException</base>
+    <member kind="function">
+      <type></type>
+      <name>cReceivedTerminationException</name>
+      <anchorfile>classomnetpp_1_1cReceivedTerminationException.html</anchorfile>
+      <anchor>a161642ecce1e151fa81f5b82ba7a2e52</anchor>
+      <arglist>(int sourceProcId, const char *msg)</arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>Parsim</name>
+    <title>Parallel simulation support</title>
+    <filename>group__Parsim.html</filename>
+    <class kind="class">omnetpp::cAdvancedLinkDelayLookahead</class>
+    <class kind="class">omnetpp::cFileCommunications</class>
+    <class kind="class">omnetpp::cFileCommBuffer</class>
+    <class kind="class">omnetpp::cIdealSimulationProtocol</class>
+    <class kind="class">omnetpp::cISPEventLogger</class>
+    <class kind="class">omnetpp::cLinkDelayLookahead</class>
+    <class kind="class">omnetpp::cMemCommBuffer</class>
+    <class kind="class">omnetpp::cNamedPipeCommunications</class>
+    <class kind="class">omnetpp::cNMPLookahead</class>
+    <class kind="class">omnetpp::cNoSynchronization</class>
+    <class kind="class">omnetpp::cNullMessageProtocol</class>
+    <class kind="class">omnetpp::cParsimPartition</class>
+    <class kind="class">omnetpp::cParsimProtocolBase</class>
+    <class kind="class">omnetpp::cParsimSynchronizer</class>
+    <class kind="class">omnetpp::cPlaceholderModule</class>
+    <class kind="class">omnetpp::cProxyGate</class>
+    <class kind="class">omnetpp::cReceivedException</class>
+    <class kind="class">omnetpp::cReceivedTerminationException</class>
+  </compound>
+  <compound kind="page">
+    <name>index</name>
+    <title>OMNeT++ Parallel simulation support</title>
+    <filename>index</filename>
+  </compound>
+</tagfile>

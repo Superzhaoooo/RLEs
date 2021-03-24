@@ -1,0 +1,50 @@
+%description:
+Namespace lookup of class names in @signal type attr
+
+%file: test.msg
+
+message Foo {}  // ::Foo
+
+namespace @TESTNAME@;
+
+message Foo {} // @TESTNAME@::Foo
+
+%file: test.ned
+
+simple Test extends testlib.SignalSource
+{
+    @isNetwork(true);
+    @signal[m0](type="Foo"); // should be understood as @TESTNAME@::Foo
+    @signal[m1](type="@TESTNAME@::Foo"); // ditto
+    @signal[m2](type="::Foo"); // the global Foo
+
+    script = xml("<root>\
+       <e at='init' name='m0' type='@TESTNAME@::Foo' value=''/> \
+       <e at='init' name='m1' type='@TESTNAME@::Foo' value=''/> \
+       <e at='init' name='m2' type='Foo' value=''/> \
+       <!-- bad: --> \
+       <e at='init' name='m0' type='Foo' value=''/> \
+       <e at='init' name='m1' type='Foo' value=''/> \
+       <e at='init' name='m2' type='@TESTNAME@::Foo' value=''/> \
+    </root>");
+}
+
+%inifile: omnetpp.ini
+network = Test
+cmdenv-express-mode = false
+check-signals = true
+
+%contains: stdout
+t=0s: emit "m0" type=signals_decl_2::Foo value=
+t=0s: emit "m1" type=signals_decl_2::Foo value=
+t=0s: emit "m2" type=Foo value=
+t=0s: emit "m0" type=Foo value=
+ERROR: Signal "m0" emitted with wrong class (Foo does not subclass from signals_decl_2::Foo as declared)
+t=0s: emit "m1" type=Foo value=
+ERROR: Signal "m1" emitted with wrong class (Foo does not subclass from signals_decl_2::Foo as declared)
+t=0s: emit "m2" type=signals_decl_2::Foo value=
+ERROR: Signal "m2" emitted with wrong class (signals_decl_2::Foo does not subclass from Foo as declared)
+
+%contains: stdout
+emitted 6 signals with 3 errors
+

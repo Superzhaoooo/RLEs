@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Demand/Automatic_Routing.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Demand/Automatic Routing - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Demand/Automatic_Routing.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+            <li class="nav-item main"><a href="#options">Options</a></li>
+            <li class="nav-item main"><a href="#edge_weights">Edge weights</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#adapting_by_exponential_average" class="nav-link">• Adapting by exponential average</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#adapting_by_moving_average" class="nav-link">• Adapting by moving average</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#investigating_edge_weights" class="nav-link">• Investigating edge weights</a>
+                </li>
+            <li class="nav-item main"><a href="#incomplete_trips_and_flows">Incomplete trips and flows</a></li>
+            <li class="nav-item main"><a href="#alternative_declaration_via_parameters">Alternative Declaration via Parameters</a></li>
+            <li class="nav-item main"><a href="#traci">TraCI</a></li>
+            <li class="nav-item main"><a href="#randomness">Randomness</a></li>
+            <li class="nav-item main"><a href="#parallelization">Parallelization</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Demand/Automatic Routing<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<p>Routing dynamically in the running simulation may be adequate in the
+following situations:</p>
+<ul>
+<li>there is not enough time / computing power to wait for the dynamic
+  user equilibrium</li>
+<li>changes to the net occur while the simulation is running</li>
+<li>vehicles need to adapt their route while running</li>
+</ul>
+<p>In this case <a href="../sumo.html">sumo</a> may be used directly for routing
+with either routes or trip files (or a mix) as input.</p>
+<p>This routing approach works by giving some or all vehicles the
+capability to re-compute their route periodically. This routing takes
+into account the current and recent state of traffic in the network and
+thus adapts to jams and other changes in the network.</p>
+<p>The options listed below allow configuring which of the vehicles shall
+be equipped, how often rerouting decisions shall be made and how the
+estimation of travel times is computed from current and recent
+knowledge.</p>
+<h1 id="options">Options<a class="headerlink" href="#options" title="Permanent link">#</a></h1>
+<p>The options related to this routing are:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.rerouting.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>-1</td>
+<td>The probability for a vehicle to have a routing device (-1 is equivalent to 0 here)</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.explicit</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td></td>
+<td>Assign a device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.deterministic</strong></td>
+<td>false</td>
+<td>The devices are set deterministic using a fraction of 1000 (with the defined <strong>probability</strong>)</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>0</td>
+<td>The period with which the vehicle shall be rerouted</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.pre-period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>60</td>
+<td>The rerouting period before insertion/depart</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.adaptation-interval</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>1</td>
+<td>The interval for updating the edge weights.</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.adaptation-weight</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>0.0 (disabled)</td>
+<td>The weight of prior edge weights for exponential averaging from [0, 1].</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.adaptation-steps</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>180</td>
+<td>The number of adaptation steps for averaging (enable for values &gt; 0).</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.with-taz</strong></td>
+<td>false</td>
+<td>Use <a href="Importing_O/D_Matrices.html#describing_the_taz">traffic assignment zones (TAZ/districts)</a> as routing end points</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.init-with-loaded-weights</strong></td>
+<td>false</td>
+<td>Use option <strong>--weight-files</strong> for initializing the edge weights at simulation start</td>
+</tr>
+</tbody>
+</table>
+<p>Please note that if a vehicle gets a routing device only rerouting <em>before insertion</em> is active by default.
+In order to activate periodic rerouting en route set <strong>--device.rerouting.period</strong>.</p>
+<h1 id="edge_weights">Edge weights<a class="headerlink" href="#edge_weights" title="Permanent link">#</a></h1>
+<p>If the routing is enabled for any vehicles, the average travel times in
+the net are collected for all edges. If a vehicle needs to be routed
+(either because it gets inserted or because a repeated route choice was
+enabled via the ".period" option) it chooses the fastest route to its
+destination edge (or district) according to the present edge weights
+(travel speeds and hence travel times). The update of the edge weights
+does not simply overwrite the old value but is computed as a weighted
+average as described below. Since updating the weights of all edges in
+each simulation step means a major slowdown for the simulation this
+interval may be altered using the ".adaptation-interval" option.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>these weights are also used when using <a href="../TraCI.html">TraCI</a> functions <em>vehicle.rerouteTraveltime</em> and <em>vehicle.changeTarget</em> if the routing mode was set to <em>ROUTING_MODE_AGGREGATED</em> using <em>vehicle.setRoutingMode</em>. Likewise, the function <em>simulation.findRoute</em> can be switched to using these weights by setting the argument routingMode=<em>ROUTING_MODE_AGGREGATED</em>.</p>
+</div>
+<h2 id="adapting_by_exponential_average">Adapting by exponential average<a class="headerlink" href="#adapting_by_exponential_average" title="Permanent link">#</a></h2>
+<p>By setting the option <strong>--device.rerouting.adaptation-weight</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> the travel speed of each edge is computed as</p>
+<pre><code>FLOAT * priorValue + (1 - FLOAT) * currentMeanSpeed
+</code></pre>
+
+<p>This averaging takes place with the period set by <strong>--device.rerouting.adaptation-interval</strong>.</p>
+<h2 id="adapting_by_moving_average">Adapting by moving average<a class="headerlink" href="#adapting_by_moving_average" title="Permanent link">#</a></h2>
+<p>By setting the option <strong>--device.rerouting.adaptation-steps</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> the travel speed of each edge is computed as the
+average of the INT latest meanSpeed values. This averaging takes place
+with the period set by <strong>--device.rerouting.adaptation-interval</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>speed values in a time interval going back as far as the multiple of <strong>adaptation-interval</strong> and <strong>adaptation-steps</strong> take part in the averaging.</p>
+</div>
+<h2 id="investigating_edge_weights">Investigating edge weights<a class="headerlink" href="#investigating_edge_weights" title="Permanent link">#</a></h2>
+<p>To understand the evolution of edge weights during the simulation it can
+be helpful to look at the values in detail:</p>
+<ul>
+<li>used road coloring <em>by routing device assumed speed</em> in
+  <a href="../sumo-gui.html#changing_the_appearance.2Fvisualisation_of_the_simulation">sumo-gui</a></li>
+<li>use option <strong>--device.rerouting.output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> to get the raw numbers</li>
+<li>use <a href="../TraCI/Vehicle_Value_Retrieval.html#supported_device_parameters">TraCI function
+  ''vehicle.getParameter("device.rerouting.edge:EDGEID")</a>
+  to retrieve the averaged traveltime value for individual edges</li>
+</ul>
+<h1 id="incomplete_trips_and_flows">Incomplete trips and flows<a class="headerlink" href="#incomplete_trips_and_flows" title="Permanent link">#</a></h1>
+<p>All vehicles which are created using a trip as input (or a flow with
+"from" and "to" attributes) get automatically routed at insertion
+without the need to instantiate the device for them explicitly. Whenever
+an error occurs on routing because no route can be found which includes
+all mandatory edges ("from", "to", and all stop edges in the correct
+order) and is connected (also respecting the vehicle class permissions)
+this is a fatal error and stops th simulation. This can be switched off
+by using <strong>--ignore-route-errors</strong> which will leave the route untouched in the error case. If the
+vehicle did not have a route yet (because it was defined using a trip)
+and cannot find one and <strong>--ignore-route-errors</strong> is used, it will not be inserted.</p>
+<p>Alternatively to using attributes "from" and "to" it is also possible to
+use "fromTaz" and "toTaz", if a <a href="Importing_O/D_Matrices.html#describing_the_taz">district file is
+loaded</a>.</p>
+<h1 id="alternative_declaration_via_parameters">Alternative Declaration via Parameters<a class="headerlink" href="#alternative_declaration_via_parameters" title="Permanent link">#</a></h1>
+<p>Another way for defining the set of vehicles that are equipped with a
+rerouting device is via <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#devices">generic
+parameters</a>.</p>
+<h1 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h1>
+<p>The device can be accessed using the TraCI function
+<em>vehicle.getParameter</em> and <em>vehicle.setParameter</em>:</p>
+<p><strong>getParameter</strong></p>
+<ul>
+<li>device.rerouting.period (returns individual rerouting period in
+  seconds)</li>
+<li>device.rerouting.edge:EDGE_ID (returns assumed travel time for
+  rerouting where EDGE_ID is the id of a network edge)</li>
+<li>has.rerouting.device (returns "true" or "false" depending on whether
+  the device is equipped)</li>
+</ul>
+<p><strong>setParameter</strong></p>
+<ul>
+<li>device.rerouting.period (double literal, set rerouting period in
+  seconds)</li>
+<li>device.rerouting.edge:EDGE_ID (double literal, set assumed travel
+  time for rerouting for all vehicles (where EDGE_ID is the id if a
+  network edge). This value is overwritten at the next update interval
+  (--device.rerouting.adaptation-interval).</li>
+<li>has.rerouting.device ("true"): can be used to dynamically enable
+  automatic rerouting</li>
+</ul>
+<h1 id="randomness">Randomness<a class="headerlink" href="#randomness" title="Permanent link">#</a></h1>
+<p>When setting the option <strong>--weights.random-factor</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>, edge weights for routing are dynamically
+distorted by a random factor drawn uniformly from [1,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>]. This
+randomization is performed every time an edge weight is used so the same
+vehicle could select a different route when rerouted on different time
+steps. The route generated this way may be longer than the fastest route
+by the given factor (in the worst case). This randomness is a good way
+to achieve a reasonable route distribution in grid networks an in other
+cases where many similar route alternatives are available.</p>
+<h1 id="parallelization">Parallelization<a class="headerlink" href="#parallelization" title="Permanent link">#</a></h1>
+<p>Routing in the simulation can be parallelized. This is particular
+helpful when periodic rerouting is active as it may consume large
+amounts of processing time. To perform routing in parallel, set the
+option <strong>--device.rerouting.threads</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> to the number of parallel threads desired.</p>
+<p>It may also help to set the option <strong>--device.rerouting.synchronize</strong> which ensures that all vehicles are
+rerouted at the same time (by default the rerouting period is aligned
+with vehicle insertion time).</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 31 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

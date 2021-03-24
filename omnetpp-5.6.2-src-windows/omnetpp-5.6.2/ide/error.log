@@ -1,0 +1,6 @@
+2021-03-17 16:53:52.287:INFO::Start Help Server: Logging initialized @775430ms to org.eclipse.jetty.util.log.StdErrLog
+2021-03-17 16:53:52.819:INFO:oejs.session:Start Help Server: DefaultSessionIdManager workerName=node0
+2021-03-17 16:53:52.819:INFO:oejs.session:Start Help Server: No SessionScavenger set, using defaults
+2021-03-17 16:53:52.819:INFO:oejs.session:Start Help Server: node0 Scavenging every 600000ms
+2021-03-17 16:53:53.024:INFO:oejs.session:Start Help Server: node0 Scavenging every 660000ms
+2021-03-18 21:42:35.643:INFO:oejs.session:Stop Help Server: node0 Stopped scavenging

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Demand/Importing_O/D_Matrices.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Demand/Importing O/D Matrices - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Demand/Importing_O/D_Matrices.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#describing_the_taz">Describing the TAZ</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#simple_definition" class="nav-link">• Simple Definition</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#differentiated_probabilities" class="nav-link">• Differentiated Probabilities</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#creating_taz_files" class="nav-link">• Creating TAZ files</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#further_usage_for_taz" class="nav-link">• Further Usage for TAZ</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#optional_attributes" class="nav-link">• Optional Attributes</a>
+                </li>
+            <li class="nav-item main"><a href="#describing_the_matrix_cells">Describing the Matrix Cells</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_v_format_visumvissim" class="nav-link">• The V format (VISUM/VISSIM)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_o-format_visumvissim" class="nav-link">• The O-format (VISUM/VISSIM)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_amitran_format" class="nav-link">• The Amitran format</a>
+                </li>
+            <li class="nav-item main"><a href="#splitting_large_matrices">Splitting large Matrices</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#free_range_definitions" class="nav-link">• Free Range Definitions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#daily_time_lines" class="nav-link">• Daily Time Lines</a>
+                </li>
+            <li class="nav-item main"><a href="#generated_traffic_modes">Generated traffic modes</a></li>
+            <li class="nav-item main"><a href="#combining_trips_from_multiple_calls">Combining trips from multiple calls</a></li>
+            <li class="nav-item main"><a href="#dealing_with_broken_data">Dealing with broken Data</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Demand/Importing O/D Matrices<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p><a href="../../od2trips.html">od2trips</a> computes trip tables from O/D
+(origin/destination) matrices. <a href="../../od2trips.html">od2trips</a> assumes
+the matrix / the matrices to be coded as amounts of vehicles that drive
+from one district or traffic assignment zone (TAZ) to another within a
+certain time period. Because the generated trips must start and end at
+edges, <a href="../../od2trips.html">od2trips</a> requires a mapping of TAZ to
+edges. During conversion of VISUM networks with
+<a href="../../netconvert.html">netconvert</a> districts stored in the VISUM input
+file are parsed and stored within the generated SUMO network file. If
+you do not use VISUM as input, you must build a TAZ file by your own.
+The format is given in
+<a href="#describing_the_taz">#Describing_the_TAZ</a> below. You have
+to pass the file containing the TAZ definitions to
+<a href="../../od2trips.html">od2trips</a> using the <strong>--net-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> (<strong>--net</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> or <strong>-n</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> for short) option. TAZ
+can be created by drawing polygons in <a href="../../netedit.html">netedit</a> and
+processing them with the tool
+<a href="../../Tools/District.html#edgesindistrictspy">Tools/District#edgesInDistricts.py</a>.</p>
+<p>All supported OD-formats are described in
+<a href="#describing_the_matrix_cells">#Describing_the_Matrix_Cells</a>
+below. You may either give a list of matrices to
+<a href="../../od2trips.html">od2trips</a> using the <strong>--od-matrix-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>]* (<strong>-d</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>]* for short) option followed
+by the list of files separated using a ','.</p>
+<p><a href="../../od2trips.html">od2trips</a> reads all matrices and generates trip
+definitions. The generated trip definitions are numbered starting at
+zero. You can also add a prefix to the generated trip definition names
+using (<strong>--prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>). As usual, they are written to the output file named using the
+<strong>--output-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> (<strong>-o</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> for short). You can specify a vehicle type to be added to the trip
+definitions using <strong>--vtype</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>. Please remark that vehicles will have no type unless
+not given in the O/D-matrices or defined using this option. The command
+line option overrides type names given in the O/D-matrices. The type
+itself will not be generated. Vehicles will be generated for the time
+period between <strong>--begin</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> (<strong>-b</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>) and -<strong>-end</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> (<strong>-e</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>), having 0 and 86400 as default values,
+respectively. The meaning is the simulation step in seconds, as usual.</p>
+<p>Because each O/D-matrix cell describes the amount of vehicles to be
+inserted into the network within a certain time period,
+<a href="../../od2trips.html">od2trips</a> has to compute the vehicle's explicit
+departure times. Normally, this is done by using a random time within
+the time interval a O/D-matrix cell describes. It still is possible to
+insert a cell's vehicles with an uniform time between their insertion.
+Use the option <strong>--spread.uniform</strong> to enable this.</p>
+<p>You can scale the amounts stored in the O/D-matrices using the <strong>--scale</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> option
+which assumes a float as parameter. All read flows will be multiplied
+with this value, the default is 1. When importing O/D-matrices that
+cover a whole day, you maybe want to apply a curve which resembles the
+spread of the trip begins found in reality. Please read the subchapter
+<a href="#splitting_large_matrices">#Splitting_large_Matrices</a> on
+this.</p>
+<h1 id="describing_the_taz">Describing the TAZ<a class="headerlink" href="#describing_the_taz" title="Permanent link">#</a></h1>
+<p>A traffic assignment zone (or traffic analysis zone), short TAZ is
+described by its id (an arbitrary name) and lists of source and
+destination edges.</p>
+<h2 id="simple_definition">Simple Definition<a class="headerlink" href="#simple_definition" title="Permanent link">#</a></h2>
+<p>If you do not want to distinguish between source and sink edges and give
+all edges the same probability you can use the following abbreviated
+form:</p>
+<pre><code>&lt;tazs&gt;
+    &lt;taz id=&quot;&lt;TAZ_ID&gt;&quot; edges=&quot;&lt;EDGE_ID&gt; &lt;EDGE_ID&gt; ...&quot;/&gt;
+
+    ... further traffic assignment zones (districts) ...
+
+&lt;/tazs&gt;
+</code></pre>
+
+<h2 id="differentiated_probabilities">Differentiated Probabilities<a class="headerlink" href="#differentiated_probabilities" title="Permanent link">#</a></h2>
+<p>To distinguish the set of source and sink edges (or their probabilities
+respectively) use the following definition:</p>
+<pre><code>&lt;tazs&gt;
+    &lt;taz id=&quot;&lt;TAZ_ID&gt;&quot;&gt;
+      &lt;tazSource id=&quot;&lt;EDGE_ID&gt;&quot; weight=&quot;&lt;PROBABILITY_TO_USE&gt;&quot;/&gt;
+      ... further source edges ...
+
+      &lt;tazSink id=&quot;&lt;EDGE_ID&gt;&quot; weight=&quot;&lt;PROBABILITY_TO_USE&gt;&quot;/&gt;
+      ... further destination edges ...
+    &lt;/taz&gt;
+
+    ... further traffic assignment zones (districts) ...
+
+&lt;/tazs&gt;
+</code></pre>
+
+<p>A TAZ should have at least one source and one destination edge, each
+described by its id and use probability called weight herein. These
+edges are used to insert and remove vehicles into/from the network
+respectively. The probability sums of each the source and the
+destination lists are normalized after loading.</p>
+<h2 id="creating_taz_files">Creating TAZ files<a class="headerlink" href="#creating_taz_files" title="Permanent link">#</a></h2>
+<ul>
+<li>TAZ definitions can be created directly in
+  <a href="../../netedit.html#taz_traffic_analysis_zones">netedit</a></li>
+<li>TAZ definitions can be created by drawing polygons in
+  <a href="../../netedit.html#pois_and_polygons">netedit</a>, then using the tool
+  <a href="../../Tools/District.html#edgesindistrictspy">edgesInDistricts.py</a>
+  for converting polygons to TAZ.</li>
+</ul>
+<h2 id="further_usage_for_taz">Further Usage for TAZ<a class="headerlink" href="#further_usage_for_taz" title="Permanent link">#</a></h2>
+<ul>
+<li>TAZ can be used with <a href="../Shortest_or_Optimal_Path_Routing.html#trip_definitions">route input for
+  duarouter</a></li>
+<li>TAZ can be used with trips and flows <a href="../../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#incomplete_routes_trips_and_flows">for
+  SUMO</a>.</li>
+<li>TAZ edges appear in the simulation as special edges with the IDs
+  <em>tazID-source</em> and <em>tazID-sink</em>. This can be used when specifying
+  vehicle routes via <a href="../../TraCI/Change_Route_State.html">TraCI</a>.</li>
+</ul>
+<h2 id="optional_attributes">Optional Attributes<a class="headerlink" href="#optional_attributes" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shape</td>
+<td>Position list</td>
+<td>The boundary shape for visualizing the TAZ</td>
+</tr>
+<tr>
+<td>color</td>
+<td>color</td>
+<td>Color for drawing the shape and for coloring edges (<em>color by TAZ</em>)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="describing_the_matrix_cells">Describing the Matrix Cells<a class="headerlink" href="#describing_the_matrix_cells" title="Permanent link">#</a></h1>
+<p>To understand how an O/D-matrix is stored, we should remind the meanings
+of the values stored herein. Each matrix describes a certain time
+period. The indices within the matrix are names of the
+origin/destination districts (normally they are equivalent, both lists
+are the same). The values stored within the matrix are amounts of
+vehicles driving from the according origin district to the according
+destination district within the described time period.</p>
+<p>The formats used by PTV are described in the VISUM-documentation more
+detailed. All start with a line where the type of the O/D-matrix is
+given, appended to a '$'. The first following character tells in which
+format the table is stored. Then, further characters follow which
+describe which values are supplied additionally within the matrix. For
+further information we ask you to consult the documentation supported by
+PTV. Herein, only the supported variants are described.</p>
+<p>The vehicle type information is used by <a href="../../od2trips.html">od2trips</a>
+by passing it to the generated vehicles. The type definition itself will
+not be generated, but the vehicle will have set the attribute <code>type="&lt;TYPE&gt;"</code>. The time informations are
+assumed to be in the form &lt;HOURS>.&lt;MINUTES>. Please note that the end is
+exclusive; for example, if</p>
+<pre><code>0.00 1.00
+</code></pre>
+
+<p>is given, the generated vehicles' depart times will be second 0 to
+second 3599.</p>
+<h2 id="the_v_format_visumvissim">The V format (VISUM/VISSIM)<a class="headerlink" href="#the_v_format_visumvissim" title="Permanent link">#</a></h2>
+<p>The V-format stores the O/D matrix by giving the number of districts
+(TAZ) first and then naming them. After this, for each of the named
+districts, a list of vehicle amounts that leave this district is given,
+sorted by the destination district names as given in the district name
+list. An example may look like this:</p>
+<pre><code>$VMR
+* vehicle type
+4
+* From-Time  To-Time
+7.00 8.00
+* Factor
+1.00
+*
+* some
+* additional
+* comments
+* District number
+3
+* names:
+         1          2          3
+*
+* District 1 Sum = 6
+         1          2          3
+* District 2 Sum = 15
+         4          5          6
+* District 2 Sum = 24
+         7          8          9 
+</code></pre>
+
+<p>The 'M' in the type name indicates that a vehicle type is used, the "R"
+that the values shall be rounded randomly. The second information is not
+processed by od2trips what means that you can parse both V-, VR-, VMR,
+and VM-matrices. Please remark that both the names list and the lists
+containing the amounts are written in a way that no more than 10 fields
+are stored in the same line. Each of the entries they contain seem to be
+left-aligned to a boundary of 11 characters (possibly 10 for the name
+and one space character). Both constraints are not mandatory for the
+importer used in od2trips.</p>
+<h2 id="the_o-format_visumvissim">The O-format (VISUM/VISSIM)<a class="headerlink" href="#the_o-format_visumvissim" title="Permanent link">#</a></h2>
+<p>The O-format instead simply lists each origin and each destination
+together with the amount in one line (please remark that we currently
+ignore the string after the ';' that occurs after the type identifier
+"$OR" in the first line):</p>
+<pre><code>$OR;D2
+* From-Time  To-Time
+7.00 8.00
+* Factor
+1.00
+* some
+* additional
+* comments
+         1          1       1.00
+         1          2       2.00
+         1          3       3.00
+         2          1       4.00
+         2          2       5.00
+         2          3       6.00
+         3          1       7.00
+         3          2       8.00
+         3          3       9.00
+</code></pre>
+
+<ul>
+<li>The first line is a format specifier that must be included verbatim.</li>
+<li>The lines starting with '*' are comments and can be omitted</li>
+<li>The second non-comment line determines the time range given as
+  HOUR.MINUTE HOUR.MINUTE</li>
+<li>The third line is a global scaling factor for the number of vehicles
+  for each cell</li>
+<li>All other lines describe matrix cells in the form FROM TO
+  NUMVEHICLES</li>
+</ul>
+<h2 id="the_amitran_format">The Amitran format<a class="headerlink" href="#the_amitran_format" title="Permanent link">#</a></h2>
+<p>The Amitran format defines the demand per OD pair in time slices for
+every vehicle type as follows:</p>
+<pre><code>&lt;demand xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sumo.dlr.de/xsd/amitran/od.xsd&quot;&gt;
+   &lt;actorConfig id=&quot;0&quot;&gt;
+       &lt;timeSlice duration=&quot;86400000&quot; startTime=&quot;0&quot;&gt;
+           &lt;odPair amount=&quot;100&quot; destination=&quot;2&quot; origin=&quot;1&quot;/&gt;
+       &lt;/timeSlice&gt;
+   &lt;/actorConfig&gt;
+&lt;/demand&gt;
+</code></pre>
+
+<p>For details on the types and units see the schema at
+<a href="https://sumo.dlr.de/xsd/amitran/od.xsd">https://sumo.dlr.de/xsd/amitran/od.xsd</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The "id" value of "actorConfig" is used as the vehicle type. The Amitran schema limits this to integer values whereas SUMO allows alphanumerical type ids. To overcome this limitation, set option <strong>--xml-validation</strong> never when running <a href="../../od2trips.html">od2trips</a> or remove the schema definition and begin your Amitran file with <code>&lt;demand&gt;</code>.</p>
+</div>
+<h1 id="splitting_large_matrices">Splitting large Matrices<a class="headerlink" href="#splitting_large_matrices" title="Permanent link">#</a></h1>
+<p><a href="../../od2trips.html">od2trips</a> allows splitting matrices which define a
+long time period into smaller parts which contain definite percentages
+of the whole. There are two ways of defining the amounts the matrix
+shall be split into. In both cases, the probabilities are automatically
+normed.</p>
+<h2 id="free_range_definitions">Free Range Definitions<a class="headerlink" href="#free_range_definitions" title="Permanent link">#</a></h2>
+<p>The first possibility is to use the option <strong>--timeline</strong> directly. In this
+case, it should be followed by a list of times and probabilities,
+separated by ','. Each time and probability field is made up of two
+values, an integer time being the simulation time in seconds and a
+floating point number describing the probability. These two values are
+separated using a ':'. At least two values must be supplied making the
+definition of a timeline in this case being describable by the following
+BNF-formula:</p>
+<pre><code> &lt;TIME&gt;:&lt;AMOUNT&gt;[,&lt;TIME&gt;:&lt;AMOUNT&gt;]+
+</code></pre>
+
+<p>In this case, the matrix will be split into (fields-1) parts and each
+part will have the amount described by the integral within the field.
+(This means the amount specified after the last time entry will be
+discarded.)</p>
+<h2 id="daily_time_lines">Daily Time Lines<a class="headerlink" href="#daily_time_lines" title="Permanent link">#</a></h2>
+<p>The second case is rather common in transportation science. It allows to
+split the matrix into 24 subparts - this means the number of fields is
+fixed to 24 - allowing to spread an O/D-matrix over a day describing it
+by hours. To use this, give additionally the option
+--timeline.day-in-hours to <a href="../../od2trips.html">od2trips</a>. It the
+assumes the values from the <strong>--timeline</strong> - option being a list of 24
+floats, divided by ',', each describing the probability of inserting a
+vehicle within the according hour.</p>
+<p>Some common daily time lines from Germany may be retrieved from:
+Schmidt, Gerhard; Thomas, Bernd: Hochrechnungsfaktoren für manuelle und
+automatische Kurzzeitzählungen im Innerortsbereich. Hrsg.:
+Bundesministerium für Verkehr, Abteilung Straßenbau: Forschung
+Straßenbau und Straßenverkehrstechnik. Heft 732, Bonn-Bad Godesberg,
+1996</p>
+<p><strong>Applicability of generic Time Lines</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TGw2_PKW.txt</td>
+<td>passenger vehicles, Tuesday-Thursday, cities in West Germany, type#2 = ~streets at inner city border</td>
+<td>S.95</td>
+</tr>
+<tr>
+<td>TGw3_PKW.txt</td>
+<td>passenger vehicles, Tuesday-Thursday, cities in West Germany, type#3 = ~streets at city border</td>
+<td>S.95</td>
+</tr>
+<tr>
+<td>TGs1_PKW.txt</td>
+<td>passenger vehicles, Saturday/Sunday, cities in West Germany, group#1 = ~inner city streets, large amount of trips to/back work, freeways with no connection to recreation areas</td>
+<td>S.100 - 103</td>
+</tr>
+<tr>
+<td>TGw_LKW.txt</td>
+<td>transport vehicles, Monday-Thursday, cities in West Germany</td>
+<td>S.98</td>
+</tr>
+<tr>
+<td>TGs_LKW.txt</td>
+<td>transport vehicles, Sunday, type: ~long distance roads, strong heavy duty vehicle numbers</td>
+<td>S.102, 105</td>
+</tr>
+</tbody>
+</table>
+<p>So, in dependence to the week day and the type of traffic, one could
+assume using the following time-lines:</p>
+<table>
+<thead>
+<tr>
+<th>vehicle type</th>
+<th>Monday</th>
+<th>Tuesday-Thursday</th>
+<th>Friday</th>
+<th>Saturday</th>
+<th>Sunday</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HDV</td>
+<td>TGw_LKW.txt</td>
+<td>TGw_LKW.txt</td>
+<td>X</td>
+<td>X</td>
+<td>TGs_LKW.txt</td>
+</tr>
+<tr>
+<td>passenger, far-distance</td>
+<td>X</td>
+<td>TGw3_PKW.txt</td>
+<td>X</td>
+<td>TGs1_PKW.txt</td>
+<td>TGs1_PKW.txt</td>
+</tr>
+<tr>
+<td>passenger, near-distance</td>
+<td>X</td>
+<td>TGw2_PKW.txt</td>
+<td>X</td>
+<td>TGs1_PKW.txt</td>
+<td>TGs1_PKW.txt</td>
+</tr>
+</tbody>
+</table>
+<p>One may note, that no time lines are given for passenger trips on
+Mondays.</p>
+<p>The time lines as such are given below, they can be directly copied into
+the command line</p>
+<p><strong>Generic Time Lines</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Time Line</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TGw_LKW</td>
+<td>0.3,0.4,0.4,0.6,0.8,2.0,4.8,7.5,9.0,8.7,9.0,9.0,7.5,8.4,7.8,6.9,5.4,4.0,2.7,1.8,1.2,0.9,0.6,0.3</td>
+</tr>
+<tr>
+<td>TGw3_PKW</td>
+<td>0.9,0.5,0.2,0.2,0.5,1.3,7.0,9.3,6.7,4.2,4.0,3.8,4.1,4.6,5.0,6.7,9.6,9.2,7.1,4.8,3.5,2.7,2.2,1.9</td>
+</tr>
+<tr>
+<td>TGw2_PKW</td>
+<td>0.8,0.5,0.4,0.3,0.4,1.2,4.5,7.4,6.6,5.2,5.0,5.0,5.2,5.3,5.6,6.7,8.4,8.6,7.4,5.0,3.9,3.0,2.1,1.6</td>
+</tr>
+<tr>
+<td>TGs(1)_PKW</td>
+<td>3.3,2.8,2.0,1.5,1.2,1.3,1.2,1.5,2.5,3.7,4.8,5.5,6.0,6.7,7.0,7.1,6.9,7.4,7.0,6.0,4.7,4.1,3.5,2.3</td>
+</tr>
+<tr>
+<td>TGs_LKW</td>
+<td>1.3,1.1,0.6,0.8,0.9,1.5,2.6,3.1,3.5,3.8,4.5,4.9,5.0,5.3,5.6,5.7,5.9,6.0,5.7,5.3,4.8,4.6,10.0,7.6</td>
+</tr>
+</tbody>
+</table>
+<p>Remarks:</p>
+<ul>
+<li>All time lines describe the hourly percentage of the complete
+  traffic</li>
+<li>values are normalized to 100% (so they don't need to add up to any
+  specific value)</li>
+<li>It is not possible to derive time-lines for all week days</li>
+</ul>
+<p>The time lines describe how the traffic (100%) spreads over the whole
+day. In order to have proper demands for week-end days, one can scale
+down the week day traffic. The same reference as above gives the
+following scaling factors at page 31.</p>
+<p><strong>Daily time-line scale factors</strong></p>
+<table>
+<thead>
+<tr>
+<th>area</th>
+<th>Sat1992</th>
+<th>Sun1992</th>
+<th>Sat1993</th>
+<th>Sun1993</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NRW highways</td>
+<td>76,1%</td>
+<td>72,7%</td>
+<td>72,8%</td>
+<td>69,4%</td>
+</tr>
+<tr>
+<td>NRW other streets</td>
+<td>82,6%</td>
+<td>74%</td>
+<td>78,3%</td>
+<td>71,6%</td>
+</tr>
+<tr>
+<td>Bavaria</td>
+<td>75%</td>
+<td>67,2%</td>
+<td>73,9%</td>
+<td>64,7%</td>
+</tr>
+</tbody>
+</table>
+<p>One may note that this information is 15 years old. Additionally, no
+information about the type of vehicles is given.</p>
+<p>A 24h time line a given O/D-matrix shall be split by may be given to
+<a href="../../od2trips.html">od2trips</a> using the following options:
+<strong>--timeline.day-in-hours --timeline &lt;TIME_LINE></strong> where <em>&lt;TIME_LINE></em>
+is a list of 24 percentages as given above. The amount of traffic
+defined within the O/D-matrix may be scaled via <strong>--scale &lt;SCALE></strong>.
+Example call to <a href="../../od2trips.html">od2trips</a>:</p>
+<pre><code>od2trips -n &lt;NET&gt; -d &lt;MATRIX&gt; -o &lt;OUTPUT&gt; --scale &lt;SKALIERUNG&gt; \
+   --timeline.day-in-hours --timeline &lt;TIME_LINE&gt;
+</code></pre>
+
+<h1 id="generated_traffic_modes">Generated traffic modes<a class="headerlink" href="#generated_traffic_modes" title="Permanent link">#</a></h1>
+<p>By default <a href="../../od2trips.html">od2trips</a> generates vehicular traffic.
+Different types of traffic (passanger cars, trucks,...) can be created by using the option
+<strong>--vtype</strong> and <strong>--prefix</strong> (the latter is needed so that different types use distinct vehicle ids).</p>
+<p>By setting one of the options <strong>--pedestrians</strong> or <strong>--persontrips</strong>, other modes can be generated.</p>
+<h1 id="combining_trips_from_multiple_calls">Combining trips from multiple calls<a class="headerlink" href="#combining_trips_from_multiple_calls" title="Permanent link">#</a></h1>
+<p>Sometimes it is necessary to call <a href="../../od2trips.html">od2trips</a>
+multiple times to generated all the traffic for a given scenario:</p>
+<ul>
+<li>to model different vehicle types which differ in their demand levels</li>
+<li>to model time-varying demand that is heterogeneous between the
+  OD-pairs (and therefore cannot be modelled by applying a time-line)</li>
+</ul>
+<p>In this case the option <strong>--prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a> must be used with a distinct value for each
+call to <a href="../../od2trips.html">od2trips</a> in order to make avoid duplicate
+trip ids.</p>
+<h1 id="dealing_with_broken_data">Dealing with broken Data<a class="headerlink" href="#dealing_with_broken_data" title="Permanent link">#</a></h1>
+<p><a href="../../od2trips.html">od2trips</a> behaves here as following:</p>
+<p><strong>incomplete districts</strong></p>
+<ul>
+<li>missing origin OR destination district: error</li>
+<li>missing origin AND destination district: warning</li>
+</ul>
+<p><strong>incomplete connections</strong></p>
+<ul>
+<li>missing connection to an origin OR a destination district: error</li>
+<li>missing connection to an origin AND a destination district: error</li>
+</ul>
+<div style="border:1px solid #909090; min-height: 35px;" align="right">
+<span style="float: right; margin-top: -5px;"><a href="https://wayback.archive-it.org/12090/20191127213419/https:/ec.europa.eu/research/fp7/index_en.cfm"><img src="../../images/FP7-small.gif" alt="Seventh Framework Programme"></a>
+<a href="https://trimis.ec.europa.eu/project/assessment-methodologies-ict-multimodal-transport-user-behaviour-co2-reduction"><img src="../../images/AMITRAN-small.png" alt="AMITRAN project"></a></span>
+<span style="">This part of SUMO was developed, reworked, or extended within the project 
+<a href="https://trimis.ec.europa.eu/project/assessment-methodologies-ict-multimodal-transport-user-behaviour-co2-reduction">"AMITRAN"</a>, co-funded by the European Commission within the <a href="https://cordis.europa.eu/about/archives">Seventh Framework Programme</a>.</span></div>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 11 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

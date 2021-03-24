@@ -1,0 +1,238 @@
+%description:
+Test cModule::getModuleByPath()
+
+%file: test.ned
+simple Tester {
+}
+
+module Box {
+}
+
+module NetworkLayer {
+    submodules:
+        ip: Box;
+        arp: Box;
+}
+
+module Host {
+    submodules:
+        tcpApp[1]: Box;
+        tcp: Box;
+        networkLayer: NetworkLayer;
+        nic[3]: Box;
+}
+
+network Test {
+    submodules:
+        server: Host;
+        host[3]: Host;
+        tester: Tester;
+}
+
+%file: tester.cc
+#include <omnetpp.h>
+
+using namespace omnetpp;
+namespace @TESTNAME@ {
+
+class Tester : public cSimpleModule
+{
+  public:
+    Tester() : cSimpleModule(16384) { }
+    void test(cModule *base, const char *path);
+    void sep() {EV << "---\n";}
+    void activity() override;
+};
+
+Define_Module(Tester);
+
+void Tester::test(cModule *base, const char *path)
+{
+    EV << base->getFullPath() << " + " << (path ? path : "nullptr") << " = ";
+    try {
+        cModule *result = base->getModuleByPath(path);
+        EV << (result ? result->getFullPath() : "nullptr") << endl;
+    } catch (std::exception& e) {
+        EV << "ERROR: " << e.what() << endl;
+    }
+}
+
+void Tester::activity()
+{
+    cModule *root = getSimulation()->getSystemModule();
+    cModule *host0 = root->getSubmodule("host",0);
+
+    // absolute
+    test(root, "server");
+    test(root, "host[2]");
+    test(root, "server.tcp");
+    test(root, "host[2].nic[2]");
+    test(root, "missing");
+    test(root, "host[2].missing");
+    sep();
+
+    // absolute w/ concrete network name
+    test(root, "Test");
+    test(root, "Test.server");
+    test(root, "Test.host[2]");
+    test(root, "Test.server.tcp");
+    test(root, "Test.host[2].nic[2]");
+    test(root, "Test.missing");
+    test(root, "Test.host[2].missing");
+    sep();
+
+    // absolute w/ "<root>"
+    test(root, "<root>");
+    test(root, "<root>.server");
+    test(root, "<root>.host[2]");
+    test(root, "<root>.server.tcp");
+    test(root, "<root>.host[2].nic[2]");
+    test(root, "<root>.missing");
+    test(root, "<root>.host[2].missing");
+    sep();
+
+    // relative to root
+    test(root, ".server");
+    test(root, ".host[2]");
+    test(root, ".server.tcp");
+    test(root, ".host[2].nic[2]");
+    test(root, ".missing");
+    test(root, ".host[2].missing");
+    sep();
+
+    // absolute from host0
+    test(host0, "server.tcp");
+    test(host0, "Test.server.tcp");
+    test(host0, "<root>");
+    test(host0, "<root>.server.tcp");
+    sep();
+
+    // relative to host0
+    test(host0, ".tcp");
+    test(host0, ".networkLayer.ip");
+    test(host0, "^");
+    test(host0, "^.host[1]");
+    test(host0, "^.host[1].tcp");
+    test(host0, ".^");
+    test(host0, ".^.host[1]");
+    test(host0, ".^.host[1].tcp");
+    test(host0, ".missing");
+    test(host0, ".^.missing");
+    test(host0, ".^.host[1].missing");
+    sep();
+
+    // corner cases at root
+    test(root, nullptr);
+    test(root, "");
+    test(root, ".");
+    test(root, "^");
+    test(root, "^.");
+    test(root, ".^");
+    test(root, "^.^");
+    test(root, ".^.^");
+    sep();
+
+    // corner cases at host0
+    test(host0, nullptr);
+    test(host0, "");
+    test(host0, ".");
+    test(host0, "^.");
+    test(host0, ".tcp.");
+    test(host0, "Test.");
+    test(host0, ".^.");
+    test(host0, "^...host[1]...tcp..");
+    sep();
+
+    // errors
+    test(host0, "^.host[1.tcp");
+    test(host0, "^.host[1.]tcp");
+    test(host0, "^.host.[1].tcp");
+    test(host0, ".<root>");
+    test(host0, ".<root>.host[0]");
+    test(host0, ".<root>[3]");
+    test(host0, ".<root>[3].host[0]");
+    sep();
+}
+
+};
+
+%inifile: test.ini
+[General]
+network = Test
+cmdenv-express-mode = false
+
+%contains: stdout
+Test + server = Test.server
+Test + host[2] = Test.host[2]
+Test + server.tcp = Test.server.tcp
+Test + host[2].nic[2] = Test.host[2].nic[2]
+Test + missing = nullptr
+Test + host[2].missing = nullptr
+---
+Test + Test = Test
+Test + Test.server = Test.server
+Test + Test.host[2] = Test.host[2]
+Test + Test.server.tcp = Test.server.tcp
+Test + Test.host[2].nic[2] = Test.host[2].nic[2]
+Test + Test.missing = nullptr
+Test + Test.host[2].missing = nullptr
+---
+Test + <root> = Test
+Test + <root>.server = Test.server
+Test + <root>.host[2] = Test.host[2]
+Test + <root>.server.tcp = Test.server.tcp
+Test + <root>.host[2].nic[2] = Test.host[2].nic[2]
+Test + <root>.missing = nullptr
+Test + <root>.host[2].missing = nullptr
+---
+Test + .server = Test.server
+Test + .host[2] = Test.host[2]
+Test + .server.tcp = Test.server.tcp
+Test + .host[2].nic[2] = Test.host[2].nic[2]
+Test + .missing = nullptr
+Test + .host[2].missing = nullptr
+---
+Test.host[0] + server.tcp = Test.server.tcp
+Test.host[0] + Test.server.tcp = Test.server.tcp
+Test.host[0] + <root> = Test
+Test.host[0] + <root>.server.tcp = Test.server.tcp
+---
+Test.host[0] + .tcp = Test.host[0].tcp
+Test.host[0] + .networkLayer.ip = Test.host[0].networkLayer.ip
+Test.host[0] + ^ = Test
+Test.host[0] + ^.host[1] = Test.host[1]
+Test.host[0] + ^.host[1].tcp = Test.host[1].tcp
+Test.host[0] + .^ = Test
+Test.host[0] + .^.host[1] = Test.host[1]
+Test.host[0] + .^.host[1].tcp = Test.host[1].tcp
+Test.host[0] + .missing = nullptr
+Test.host[0] + .^.missing = nullptr
+Test.host[0] + .^.host[1].missing = nullptr
+---
+Test + nullptr = nullptr
+Test +  = nullptr
+Test + . = Test
+Test + ^ = nullptr
+Test + ^. = nullptr
+Test + .^ = nullptr
+Test + ^.^ = nullptr
+Test + .^.^ = nullptr
+---
+Test.host[0] + nullptr = nullptr
+Test.host[0] +  = nullptr
+Test.host[0] + . = Test.host[0]
+Test.host[0] + ^. = Test
+Test.host[0] + .tcp. = Test.host[0].tcp
+Test.host[0] + Test. = Test
+Test.host[0] + .^. = Test
+Test.host[0] + ^...host[1]...tcp.. = Test.host[1].tcp
+---
+Test.host[0] + ^.host[1.tcp = ERROR: (omnetpp::cModule)Test.host[0]: getModuleByPath(): Syntax error (unmatched bracket?) in path '^.host[1.tcp'
+Test.host[0] + ^.host[1.]tcp = ERROR: (omnetpp::cModule)Test.host[0]: getModuleByPath(): Syntax error (unmatched bracket?) in path '^.host[1.]tcp'
+Test.host[0] + ^.host.[1].tcp = nullptr
+Test.host[0] + .<root> = ERROR: (omnetpp::cModule)Test.host[0]: getModuleByPath(): Wrong path '.<root>', '<root>' may only occur as the first component
+Test.host[0] + .<root>.host[0] = ERROR: (omnetpp::cModule)Test.host[0]: getModuleByPath(): Wrong path '.<root>.host[0]', '<root>' may only occur as the first component
+Test.host[0] + .<root>[3] = ERROR: (omnetpp::cModule)Test.host[0]: getModuleByPath(): Wrong path '.<root>[3]', '<root>' may only occur as the first component
+Test.host[0] + .<root>[3].host[0] = ERROR: (omnetpp::cModule)Test.host[0]: getModuleByPath(): Wrong path '.<root>[3].host[0]', '<root>' may only occur as the first component
+---
+

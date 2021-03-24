@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Z/Changes_from_Version_0.30.0_to_Version_0.31.0.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Z/Changes from Version 0.30.0 to Version 0.31.0 - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Z/Changes_from_Version_0.30.0_to_Version_0.31.0.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#version_0310_14092017">Version 0.31.0 (14.09.2017)</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#bugfixes" class="nav-link">• Bugfixes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#enhancements" class="nav-link">• Enhancements</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#other" class="nav-link">• Other</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Z/Changes from Version 0.30.0 to Version 0.31.0<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="version_0310_14092017">Version 0.31.0 (14.09.2017)<a class="headerlink" href="#version_0310_14092017" title="Permanent link">#</a></h2>
+<h3 id="bugfixes">Bugfixes<a class="headerlink" href="#bugfixes" title="Permanent link">#</a></h3>
+<ul>
+<li>
+<p>Simulation</p>
+<ul>
+<li><a href="../Simulation/SublaneModel.html">Sublane-model</a><ul>
+<li>Lane changing to clear the overtaking lane (<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#lane-changing_models">motivation
+  <em>keepRight</em></a>)
+  is now working properly. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3106" title="GitHub Issue eclipse/sumo #3106">#3106</a></li>
+<li>Fixed error that prevented violating right-of-way rules in
+  the sublane-model. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3140" title="GitHub Issue eclipse/sumo #3140">#3140</a></li>
+<li>Fixed bug that was preventing speed adaptations for
+  strategic changing. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3183" title="GitHub Issue eclipse/sumo #3183">#3183</a></li>
+<li>Fixed error that prevented changing for speed gain <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3107" title="GitHub Issue eclipse/sumo #3107">#3107</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3186" title="GitHub Issue eclipse/sumo #3186">#3186</a></li>
+<li>Insertion with <code>departPosLat="random" departPos="last"</code> is now working. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3191" title="GitHub Issue eclipse/sumo #3191">#3191</a></li>
+<li>Fixed bug that could cause deadlocks on an intersection <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3189" title="GitHub Issue eclipse/sumo #3189">#3189</a></li>
+<li>Fixed collisions <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3195" title="GitHub Issue eclipse/sumo #3195">#3195</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3213" title="GitHub Issue eclipse/sumo #3213">#3213</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3050" title="GitHub Issue eclipse/sumo #3050">#3050</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2837" title="GitHub Issue eclipse/sumo #2837">#2837</a></li>
+<li>Fixed invalid angles when lane-changing at low speeds or low
+  step-length. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3220" title="GitHub Issue eclipse/sumo #3220">#3220</a></li>
+<li>Fixed oscillation. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3333" title="GitHub Issue eclipse/sumo #3333">#3333</a></li>
+<li>Fixed too-late changing for speed gain when approaching a
+  slow leader. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3375" title="GitHub Issue eclipse/sumo #3375">#3375</a></li>
+<li>Fixed bug that was causing sublane-changing despite speed
+  loss. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3372" title="GitHub Issue eclipse/sumo #3372">#3372</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Lane-changing<ul>
+<li>Fixed behavior problems in regard to the rule that prohibits
+  overtaking on the right under some circumstances (by default
+  this is prohibited in free-flowing motorway traffic).
+  Vehicles now avoid overtaking whenever braking is possible
+  and they overtake on the left instead if there is a third
+  lane. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1214" title="GitHub Issue eclipse/sumo #1214">#1214</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2547" title="GitHub Issue eclipse/sumo #2547">#2547</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3115" title="GitHub Issue eclipse/sumo #3115">#3115</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3379" title="GitHub Issue eclipse/sumo #3379">#3379</a></li>
+<li>Fixed time loss due to late overtaking in some situations. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2126" title="GitHub Issue eclipse/sumo #2126">#2126</a></li>
+<li>Fixed invalid overtaking to the left. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3337" title="GitHub Issue eclipse/sumo #3337">#3337</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Persons<ul>
+<li>Attribute <em>arrivalPos</em> is no longer ignored for person <code>&lt;ride&gt;</code>
+  elements. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2811" title="GitHub Issue eclipse/sumo #2811">#2811</a></li>
+<li>Fixed crash when pedestrian routes contain disallowed edges <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3248" title="GitHub Issue eclipse/sumo #3248">#3248</a> <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3381" title="GitHub Issue eclipse/sumo #3381">#3381</a></li>
+<li>Fixed collision at prioritized crossings because pedestrians
+  ignored some vehicles <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3393" title="GitHub Issue eclipse/sumo #3393">#3393</a></li>
+</ul>
+</li>
+<li>Calibrators now respect the option <strong>--ignore-route-errors</strong>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3089" title="GitHub Issue eclipse/sumo #3089">#3089</a></li>
+<li><code>departLane="allowed"</code> no longer selects an invalid departLane on multimodal edge. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3065" title="GitHub Issue eclipse/sumo #3065">#3065</a></li>
+<li>Acquired waiting time of vehicles is now properly loaded from a
+  simulation state. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2314" title="GitHub Issue eclipse/sumo #2314">#2314</a></li>
+<li>Fixed output of meso calibrator (regression in 0.30.0). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3132" title="GitHub Issue eclipse/sumo #3132">#3132</a></li>
+<li>Modified meanTimeLoss output of <a href="../Simulation/Output/Lanearea_Detectors_(E2).html#generated_output">lane area (e2)
+  detector</a>.
+  Semantics is now average time loss *per vehicle* <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3110" title="GitHub Issue eclipse/sumo #3110">#3110</a></li>
+<li>Fixed invalid stop state and invalid position of vehicles that
+  cannot resume from parking due to blocking traffic. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3153" title="GitHub Issue eclipse/sumo #3153">#3153</a></li>
+<li>Fixed erroneous calculation of occupancy in meandata output for
+  vehicles being only partially on the corresponding lane. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/153" title="GitHub Issue eclipse/sumo #153">#153</a></li>
+<li>Fixed collision detection of junctions (some collisions were not
+  registered). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3171" title="GitHub Issue eclipse/sumo #3171">#3171</a></li>
+<li>Options <strong>--collision.stoptime</strong> is now working when collisions are detected on a
+  junction (using Option <strong>--collision.check-junctions</strong>). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3172" title="GitHub Issue eclipse/sumo #3172">#3172</a></li>
+<li>FCD-output now contains z-data if the network includes elevation
+  information. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3191" title="GitHub Issue eclipse/sumo #3191">#3191</a></li>
+<li>Fixed crash when loading invalid <code>&lt;busStop&gt;</code> definition with <code>&lt;access&gt;</code> element. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3214" title="GitHub Issue eclipse/sumo #3214">#3214</a></li>
+<li>Fixed invalid errors on loading stops on looped routes. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3231" title="GitHub Issue eclipse/sumo #3231">#3231</a></li>
+<li>Fixed crash on invalid <code>&lt;e2Detector&gt;</code> definition. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3233" title="GitHub Issue eclipse/sumo #3233">#3233</a></li>
+<li>Fixed crash on saving and loading simulation state in
+  conjunction with vehroute-output. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3237" title="GitHub Issue eclipse/sumo #3237">#3237</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3238" title="GitHub Issue eclipse/sumo #3238">#3238</a></li>
+<li>Fixed too high density values in meandata output. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3265" title="GitHub Issue eclipse/sumo #3265">#3265</a></li>
+<li>Fixed invalid <em>routeLength</em> in tripinfo-output. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3355" title="GitHub Issue eclipse/sumo #3355">#3355</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>sumo-gui<ul>
+<li>Fixed visual glitch when drawing vehicles with multiple
+  carriages as raster images. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3049" title="GitHub Issue eclipse/sumo #3049">#3049</a></li>
+<li>Fixed crash when reloading a simulation after editing the
+  network. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3059" title="GitHub Issue eclipse/sumo #3059">#3059</a></li>
+<li>Fixed crash when using invalid routes in calibrator. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3060" title="GitHub Issue eclipse/sumo #3060">#3060</a></li>
+<li>The number of nodes listed in the network parameter dialog no
+  longer includes internal nodes. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3118" title="GitHub Issue eclipse/sumo #3118">#3118</a></li>
+<li>Fixed crash when multiple vehicles start and end parking on the
+  same edge <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3152" title="GitHub Issue eclipse/sumo #3152">#3152</a></li>
+<li>All parking vehicles and empty parking spaces of a <code>&lt;parkingArea&gt;</code> are now
+  accessible via right-click. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3169" title="GitHub Issue eclipse/sumo #3169">#3169</a></li>
+<li>Fixed rendering position of <code>&lt;busStop&gt;, &lt;containerStop&gt;, &lt;chargingStation&gt;, &lt;parkingArea&gt;</code> on curved roads. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3200" title="GitHub Issue eclipse/sumo #3200">#3200</a></li>
+<li>Fixed drawing position of vehicles with lateral offset and of
+  passengers if a vehicle is on a very short lane (also affects
+  fcd-output). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3249" title="GitHub Issue eclipse/sumo #3249">#3249</a></li>
+<li>Corrected drawing of sublane borders in case the lane width is
+  not a multiple of the lateral-resolution.</li>
+<li>Fixed wrong occupancy values in Parameter Window for short
+  lanes.</li>
+<li><a href="../sumo-gui.html#screenshots">Pre-configured screenshots</a>
+  are now taken at the correct time regardless of simulation
+  speed. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1340" title="GitHub Issue eclipse/sumo #1340">#1340</a></li>
+<li>Fixed visual glitches when drawing waiting pedestrians, parking
+  vehicles and parkingAreas in left-hand networks. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3382" title="GitHub Issue eclipse/sumo #3382">#3382</a></li>
+<li>The list of additional simulation objects no longer includes
+  POIs and polygons (they have their own locator lists). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3384" title="GitHub Issue eclipse/sumo #3384">#3384</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>netconvert<ul>
+<li><strong>--ptstop-output</strong> now exports stop lanes with the appropriate vClass. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3075" title="GitHub Issue eclipse/sumo #3075">#3075</a></li>
+<li><strong>--ptstop-output</strong> now exports stop lanes in the correct road direction <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3101" title="GitHub Issue eclipse/sumo #3101">#3101</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3212" title="GitHub Issue eclipse/sumo #3212">#3212</a></li>
+<li>Fixed invalid geo-reference when loading lefthand <em>.net.xml</em>
+  files <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3198" title="GitHub Issue eclipse/sumo #3198">#3198</a></li>
+<li>Fixed bug that was causing an error when patching a <em>.net.xml</em>
+  file with a <em>.tll.xml</em> file along with other
+  connection-affecting patches. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2868" title="GitHub Issue eclipse/sumo #2868">#2868</a></li>
+<li>Fixed insufficient precision of internal lane elevation in
+  OpenDrive output.</li>
+<li>Fixed overly long yellow duration in generated tls plans. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3239" title="GitHub Issue eclipse/sumo #3239">#3239</a></li>
+<li>Fixed invalid lengths of internal turning lanes. As a side
+  effect lane-changing is not possible any more while on these
+  lanes. The old behavior can be enabled by setting option <strong>--junctions.join-turns</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2082" title="GitHub Issue eclipse/sumo #2082">#2082</a>.</li>
+<li>Variable phase durations are no longer lost when importing from
+  <em>.net.xml</em> or <em>.tll.xml</em> files.</li>
+<li>Information about edges without connections is no longer lost
+  when exporting with option <strong>--plain-output-prefix</strong>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3332" title="GitHub Issue eclipse/sumo #3332">#3332</a></li>
+<li>Fixed invalid edge shape after importing a <em>.net.xml</em> file with
+  custom node shape. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3385" title="GitHub Issue eclipse/sumo #3385">#3385</a></li>
+<li>Fixes related to importing OpenDRIVE networks<ul>
+<li>Fixed error when loading <code>&lt;roadMark&gt;&lt;type&gt;</code>-data. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3163" title="GitHub Issue eclipse/sumo #3163">#3163</a></li>
+<li>Fixed crash when loading OpenDRIVE networks with attribute
+  <em>pRange</em>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3164" title="GitHub Issue eclipse/sumo #3164">#3164</a></li>
+<li>Fixed invalid traffic lights. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3203" title="GitHub Issue eclipse/sumo #3203">#3203</a></li>
+<li>Fixed invalid connections when importing OpenDRIVE networks</li>
+<li>Fixed invalid internal-lane speed when importing OpenDRIVE
+  networks or setting lane-specific speeds. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3240" title="GitHub Issue eclipse/sumo #3240">#3240</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>netedit<ul>
+<li>Fixed rendering slowdown (regression in 0.30.0) <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3167" title="GitHub Issue eclipse/sumo #3167">#3167</a></li>
+<li>Fixed error when loading pois with attributes <em>lane</em> and <em>pos</em>
+  (regression in 0.30.0) <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3199" title="GitHub Issue eclipse/sumo #3199">#3199</a></li>
+<li>Fixed crash when trying to filter selection of additionals by ID
+  (regression in 0.30.0). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3068" title="GitHub Issue eclipse/sumo #3068">#3068</a></li>
+<li>The z-Coordinate of junctions is now properly displayed again in
+  inspect mode (regression in 0.30.00). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3134" title="GitHub Issue eclipse/sumo #3134">#3134</a></li>
+<li>The z-Coordinate of junctions is no longer reset to 0 when
+  moving them with <em>move mode</em>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3134" title="GitHub Issue eclipse/sumo #3134">#3134</a></li>
+<li>busStop and chargingStation elements with negative <em>startPos</em> or
+  <em>endPos</em> can now be loaded.</li>
+<li>Undo now restores the selection status of deleted additionals. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3073" title="GitHub Issue eclipse/sumo #3073">#3073</a></li>
+<li>Loading color schemes is now working (only schemes saved by
+  netedit are valid). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2936" title="GitHub Issue eclipse/sumo #2936">#2936</a></li>
+<li>Fixed invalid geo-reference when editing lefthand networks <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3198" title="GitHub Issue eclipse/sumo #3198">#3198</a></li>
+<li>The cycle time is now always shown for selected traffic lights
+  in tls-mode. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3206" title="GitHub Issue eclipse/sumo #3206">#3206</a></li>
+<li>Output precision set in the Options dialog now take effect. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3219" title="GitHub Issue eclipse/sumo #3219">#3219</a></li>
+<li>When selecting edges (or lanes) that allow a specific vehicle
+  class, edges (and lanes) with <code>allow="all"</code> are now matched. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3168" title="GitHub Issue eclipse/sumo #3168">#3168</a></li>
+<li>Fixed crash when &lt;ctrl>-clicking on invalid lanes in
+  connection-mode.</li>
+<li>Fixed invalid edge shape after setting a custom node shape. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3276" title="GitHub Issue eclipse/sumo #3276">#3276</a></li>
+<li>Function <em>replace by geometry node</em> now preserves connections,
+  crossings and custom geometry endpoints. If the function is
+  disabled, the reason is shown in the menu. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3287" title="GitHub Issue eclipse/sumo #3287">#3287</a></li>
+<li>Joining junctions now always preserves edge endpoints. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3257" title="GitHub Issue eclipse/sumo #3257">#3257</a></li>
+<li>Fixed invalid network after deleting traffic light and a
+  junction with pedestrian crossings. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3346" title="GitHub Issue eclipse/sumo #3346">#3346</a></li>
+<li>Fixed crash when joining tls. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3365" title="GitHub Issue eclipse/sumo #3365">#3365</a></li>
+<li>The junction visualization option <em>Show lane to lane
+  connections</em> now takes effect.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>duarouter<ul>
+<li>Fixed bugs that were causing intermodal routing failures. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3119" title="GitHub Issue eclipse/sumo #3119">#3119</a>, <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3226" title="GitHub Issue eclipse/sumo #3226">#3226</a></li>
+<li>Fixed invalid <code>speedFactor</code> output when specifying both <code>speedFactor</code> and <code>speedDev</code> in the input
+  files. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3121" title="GitHub Issue eclipse/sumo #3121">#3121</a></li>
+<li>Fixed (almost) infinite loop when specifying <code>&lt;flow&gt;</code> without <em>end</em>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3225" title="GitHub Issue eclipse/sumo #3225">#3225</a></li>
+<li>Fixed handling of <em>departPos</em> and <em>arrivalPos</em> for persons. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3246" title="GitHub Issue eclipse/sumo #3246">#3246</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>marouter<ul>
+<li>Fixed crash due to error in matrix parsing. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3366" title="GitHub Issue eclipse/sumo #3366">#3366</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>TraCI<ul>
+<li>After sending command <em>traci.load()</em> the simulation now keeps
+  running until sending <em>traci.close()</em> instead of terminating
+  when there are no more vehicles or the end time is reached. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3048" title="GitHub Issue eclipse/sumo #3048">#3048</a></li>
+<li>Vehicle state change retrieval (<em>simulation.getDepartedIDList,
+  simulation.getArrivedNumber, ...</em>) are now working after sending
+  command <em>traci.load()</em>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3051" title="GitHub Issue eclipse/sumo #3051">#3051</a></li>
+<li>Vehicle commands <em>getDistance</em> and <em>getDrivingDistance</em> now
+  return correct values when the current vehicle edge or the
+  target edge are junction-internal edges. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2321" title="GitHub Issue eclipse/sumo #2321">#2321</a></li>
+<li>Fixed invalid lane occupancy values when calling moveToXY. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3185" title="GitHub Issue eclipse/sumo #3185">#3185</a></li>
+<li><em>traci.load()</em> is now working if the previous simulation had
+  errors. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3204" title="GitHub Issue eclipse/sumo #3204">#3204</a></li>
+<li>Invalid edge ids in <em>traci.vehicle.setRoute()</em> no longer cause
+  crashing. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3205" title="GitHub Issue eclipse/sumo #3205">#3205</a></li>
+<li>Fixed <em>moveToXY</em> mapping failures. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3263" title="GitHub Issue eclipse/sumo #3263">#3263</a></li>
+<li>Person context subscriptions are now working. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3304" title="GitHub Issue eclipse/sumo #3304">#3304</a></li>
+<li>Fixed invalid behavior after canceling stop. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3348" title="GitHub Issue eclipse/sumo #3348">#3348</a></li>
+<li>Fixed freeze when calling <em>gui.screenshot</em> <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3362" title="GitHub Issue eclipse/sumo #3362">#3362</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Tools<ul>
+<li><a href="../Tools/Net.html#netdiffpy">netdiff.py</a> now correctly
+  handles junctions that had their <em>radius</em> or <em>z</em> attributes
+  changed to the (unwritten) default value.</li>
+<li><a href="../Tools/Trip.html#randomtripspy">randomTrips.py</a> now
+  correctly handles <strong>--trip-attributes</strong> that contain a space in the value (i.e.
+  <em>modes</em>). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3117" title="GitHub Issue eclipse/sumo #3117">#3117</a></li>
+<li>Fixed bug that was causing insufficient flow when using
+  <a href="../Tools/Detector.html#flowrouterpy">flowrouter.py</a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3285" title="GitHub Issue eclipse/sumo #3285">#3285</a></li>
+<li>Fixed <a href="../Tools/Detector.html#flowrouterpy">flowrouter.py</a>
+  crash. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3356" title="GitHub Issue eclipse/sumo #3356">#3356</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="enhancements">Enhancements<a class="headerlink" href="#enhancements" title="Permanent link">#</a></h3>
+<ul>
+<li>Simulation<ul>
+<li>Behavior at intersections can now be configured with new
+  <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#junction_model_parameters">junction model
+  parameters</a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3148" title="GitHub Issue eclipse/sumo #3148">#3148</a></li>
+<li>Emergency vehicles (<code>vClass="emergency"</code>) may always overtake on the right.</li>
+<li>The default car following model can now be specified on the
+  command line with <strong>--carfollow.model</strong>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3142" title="GitHub Issue eclipse/sumo #3142">#3142</a></li>
+<li>Routing with <strong>--routing-algorithm astar</strong> is now working efficiently when using <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#traffic_assignement_zones_taz">traffic assignment zones</a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3144" title="GitHub Issue eclipse/sumo #3144">#3144</a></li>
+<li><a href="../Simulation/Output/Lanechange.html">Lanechange-output</a> now
+  includes the <em>type</em> of the changing and the longitudinal gaps on
+  the target lane. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3156" title="GitHub Issue eclipse/sumo #3156">#3156</a></li>
+<li>Stops on internal lanes may now be defined.</li>
+<li>Aggregate trip information generated via option <strong>--duration-log.statistics</strong> now includes
+  vehicles that were still running at simulation end if the option
+  <strong>--tripinfo-output.write-unfinished</strong> is also set. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3209" title="GitHub Issue eclipse/sumo #3209">#3209</a></li>
+<li>Vehicles now react to pedestrians on the same lane. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3242" title="GitHub Issue eclipse/sumo #3242">#3242</a></li>
+<li>Pedestrians now react to vehicles that are blocking their path. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3138" title="GitHub Issue eclipse/sumo #3138">#3138</a></li>
+<li>Collisions between vehicles and pedestrians are now detected
+  when setting the option <strong>--collision.check-junctions</strong>.</li>
+<li>Pedestrian <code>&lt;walk&gt;</code>s may now be defined using attribute <em>route</em>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3302" title="GitHub Issue eclipse/sumo #3302">#3302</a></li>
+<li>Summary-output now includes mean vehicle speed (absolute and
+  relative) as well as the number of halting vehicles. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3312" title="GitHub Issue eclipse/sumo #3312">#3312</a></li>
+<li>Pedestrian statistics are now included in the <a href="../Simulation/Output.html#aggregated_traffic_measures">aggregated traffic measures</a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3306" title="GitHub Issue eclipse/sumo #3306">#3306</a></li>
+<li>Tripinfo-output now includes additional attributes for persons
+  and containers stages (<em>depart, waitingTime, duration, vehicle,
+  arrivalPos, actType</em>). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3305" title="GitHub Issue eclipse/sumo #3305">#3305</a></li>
+<li>Added new lanechangeModel parameter <em>lcAccelLat</em> to model
+  lateral acceleration in the sublane model. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3371" title="GitHub Issue eclipse/sumo #3371">#3371</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>sumo-gui</p>
+<ul>
+<li>All <code>&lt;param&gt;</code> values of simulation objects (i.e. TLS) can now be
+  inspected. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3098" title="GitHub Issue eclipse/sumo #3098">#3098</a></li>
+<li>
+<p>Calibrators can now be defined for specific lanes not just for
+  the whole edge. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2434" title="GitHub Issue eclipse/sumo #2434">#2434</a></p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>To obtain the old behavior, calibrators must use the attribute <code>edge</code>. When using the attribute <code>lane</code> the new behavior is activated.</p>
+</div>
+</li>
+</ul>
+<ul>
+<li>When using the <a href="../Simulation/SublaneModel.html">Sublane model</a>, the lateral offset
+  of left and right vehicle side as well as the rightmost and
+  leftmost sublane are listed in the vehicle parameter dialog.</li>
+<li>Added button for calibrating lane/edge colors to the current
+  value range. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2464" title="GitHub Issue eclipse/sumo #2464">#2464</a></li>
+<li><a href="../Simulation/Shapes.html#poi_point_of_interest_definitions">POIs</a>
+  which are defined using attributes <em>lane</em> and <em>pos</em> now accept
+  the optional attribute <em>posLat</em> for specifying lateral offset
+  relative to the lane. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3339" title="GitHub Issue eclipse/sumo #3339">#3339</a>. These attributes are automatically added
+  as <a href="../Simulation/GenericParameters.html">generic parameters</a>
+  retrievable via TraCI.</li>
+<li>Added option <strong>--tracker-interval</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> to configure the aggregation interval of value
+  tracker windows. Previously this was fixed at 1s. Now it
+  defaults to the <strong>--step-length</strong> value.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>netconvert<ul>
+<li><a href="../Networks/PlainXML.html#road_segment_refining">&lt;split>-definitions</a>
+  now support the attribute <em>id</em> to specify the id of the newly
+  created node. Two-way roads can be split with the same node by
+  using the same id in two split definitions. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3192" title="GitHub Issue eclipse/sumo #3192">#3192</a></li>
+<li>Variable lane widths are now taken into account when importing
+  OpenDrive networks. The new option <strong>--opendrive.min-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> is used to determine which
+  parts of a lane are not usable by the vehicles (<em>default 1.8m</em>). <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3196" title="GitHub Issue eclipse/sumo #3196">#3196</a></li>
+<li>Added option <strong>--tls.red.time</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> for building a red phase at traffic lights that do
+  not have a conflicting stream (i.e. roads with a a pedestrian
+  crossing in a network that is not meant for pedestrian
+  simulation). The new default value is 5 seconds. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1748" title="GitHub Issue eclipse/sumo #1748">#1748</a></li>
+<li>Added option <strong>--tls.allred.time</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> for building all-red phases after every yellow
+  phase. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/573" title="GitHub Issue eclipse/sumo #573">#573</a></li>
+<li>Added option <strong>--walkingareas</strong> to allow <a href="../Simulation/Pedestrians.html#walkingareas">generation of walkingareas</a> in
+  networks without pedestrian crossings. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3253" title="GitHub Issue eclipse/sumo #3253">#3253</a></li>
+<li>Added option <strong>--opposites.guess.fix-lengths</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> to ensure that opposite lane information can be
+  set for curved roads. (see
+  <a href="../Simulation/OppositeDirectionDriving.html#limitations">Simulation/OppositeDirectionDriving#Limitations</a>).</li>
+<li>Custom lane shapes <a href="../Networks/PlainXML.html#lane-specific_definitions">can now be defined</a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2250" title="GitHub Issue eclipse/sumo #2250">#2250</a></li>
+<li>Added options <strong>--tls.min-dur</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> and <strong>--tls.max-dur</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> for defining the time range of non-static
+  traffic lights. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3329" title="GitHub Issue eclipse/sumo #3329">#3329</a></li>
+<li>The option <strong>--proj.scale</strong> now accepts arbitrary floats and can be used to
+  scale the output network. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3351" title="GitHub Issue eclipse/sumo #3351">#3351</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>netedit<ul>
+<li><a href="../netedit.html#pois_and_polygons">POIs and Polygons</a> can
+  now be defined with a new editing mode. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1667" title="GitHub Issue eclipse/sumo #1667">#1667</a></li>
+<li>Minimum and maximum phase duration for actuated traffic lights
+  can now be defined. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/831" title="GitHub Issue eclipse/sumo #831">#831</a></li>
+<li>Added button for calibrating lane/edge colors to the current
+  value range. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2464" title="GitHub Issue eclipse/sumo #2464">#2464</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>TraCI<ul>
+<li>Support for multiple clients. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3105" title="GitHub Issue eclipse/sumo #3105">#3105</a></li>
+<li>Added function <em>vehicle.getAccumulatedWaitingTime</em> to retrieve
+  the waiting time collected over the interval <strong>--waiting-time-memory</strong>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/999" title="GitHub Issue eclipse/sumo #999">#999</a></li>
+<li>Added many value retrieval functions to the C++ client. Thanks
+  to Raphael Riebl for the patch!</li>
+<li>New vehicle types can be created dynamically (by duplicating
+  existent). -> <em>traci.vehicletype.copy()</em> <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3211" title="GitHub Issue eclipse/sumo #3211">#3211</a></li>
+<li>Added function <em>person.rerouteTraveltime</em> to <a href="../TraCI/Change_Person_State.html#command_0xce_change_person_state">reroute pedestrians</a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3352" title="GitHub Issue eclipse/sumo #3352">#3352</a></li>
+<li>Rerouting-device <a href="../TraCI/Change_Vehicle_State.html#supported_device_parameters">period can now be set for individual vehicles.
+  assumed edge travel times can be set globally.</a> <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3097" title="GitHub Issue eclipse/sumo #3097">#3097</a></li>
+<li>Rerouting-device <a href="../TraCI/Vehicle_Value_Retrieval.html#supported_device_parameters">period and assumed edge travel times can now be retrieved.</a> <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3097" title="GitHub Issue eclipse/sumo #3097">#3097</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>duarouter<ul>
+<li>Routing with <strong>--routing-algorithm astar</strong> is now working efficiently when using <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#traffic_assignement_zones_taz">traffic
+  assignment zones</a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3144" title="GitHub Issue eclipse/sumo #3144">#3144</a></li>
+<li>Stops on internal lanes are now supported. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3174" title="GitHub Issue eclipse/sumo #3174">#3174</a></li>
+<li>Pedestrian <code>&lt;walk&gt;</code>s may now be defined using attribute <em>route</em>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3302" title="GitHub Issue eclipse/sumo #3302">#3302</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>dfrouter<ul>
+<li>Added option <strong>--randomize-flows</strong> for randomizing the departure times of generated
+  vehicles.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>od2trips<ul>
+<li>Added option <strong>--pedestrians</strong> for generating pedestrian demand rather than
+  vehicles. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3331" title="GitHub Issue eclipse/sumo #3331">#3331</a></li>
+<li>Added option <strong>--persontrips</strong> for generating <a href="../Specification/Persons.html#persontrips">intermodal traffic demand</a>. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3331" title="GitHub Issue eclipse/sumo #3331">#3331</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Tools<ul>
+<li><a href="../Tools/Import/OSM.html#osmwebwizardpy">osmWebWizard.py</a>
+  now supports location search. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2582" title="GitHub Issue eclipse/sumo #2582">#2582</a></li>
+<li><a href="../Tools/Import/OSM.html#osmwebwizardpy">osmWebWizard.py</a>
+  now generates scenarios with actuated traffic lights</li>
+<li><a href="../Tools/Import/OSM.html#osmwebwizardpy">osmWebWizard.py</a>
+  now generates traffic with more realistic speed distribution</li>
+<li>flowrouter.py now supports <a href="../Tools/Detector.html#ambiguity">specifying route restrictions to
+  resolve ambiguities</a>.</li>
+<li>When setting
+  <a href="../Tools/Trip.html#randomtripspy">randomTrips.py</a> option <strong>--vehicle-class</strong>,
+  vType attributes from option <strong>-t</strong> are recognized and written to the
+  generated vType. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3335" title="GitHub Issue eclipse/sumo #3335">#3335</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">#</a></h3>
+<ul>
+<li>SUMO now uses C++11</li>
+<li>specifying the car following model as nested element in a vType is
+now deprecated</li>
+<li>trips without ids are deprecated</li>
+<li>router options are now more consistent with simulation options<ul>
+<li>use -a for additional files</li>
+<li>use -r or --route-files for all kinds of route input (trips,
+  flows, routes, alternatives)</li>
+<li>the old options --flows, --trips, -- alternatives are deprecated</li>
+<li>The network argument for
+  <a href="../Tools/Routes.html#routestatspy">routeStats.py</a> is now
+  optional and set with option <strong>-n</strong>.</li>
+</ul>
+</li>
+<li>The option <strong>proj.shift</strong> which used to be an alias for <strong>--proj.scale</strong> is no longer supported.
+These option were used to set a scaling factor by negative powers of
+ten but now <strong>--proj.scale</strong> sets the scaling factor directly (the previous value
+<strong>5</strong> now corresponds to <strong>1e-5</strong>)</li>
+<li>default <em>detector-gap</em> for <a href="../Simulation/Traffic_Lights.html#based_on_time_gaps">actuated traffic
+lights</a> is
+now 2.0s. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/3340" title="GitHub Issue eclipse/sumo #3340">#3340</a></li>
+<li>default <em>minGapLat</em> value (used by the <a href="../Simulation/SublaneModel.html">sublane
+model</a> is now 0.6m (down from
+1.0m) to better match observations.</li>
+<li>Documentation<ul>
+<li>Added description of <a href="../Simulation/Traffic_Lights.html#automatically_generated_tls-programs">automatically generated traffic light
+  programs</a>.</li>
+<li>Added Tutorial for <a href="../Tutorials/PT_from_OpenStreetMap.html">importing public transport data from
+  OSM</a>.</li>
+<li>Extended page on <a href="../Simulation/Safety.html">Safety-related
+  topics</a></li>
+<li>Added overview page for
+  <a href="../Geo-Coordinates.html">Geo-Coordinates</a></li>
+</ul>
+</li>
+<li>TraCI<ul>
+<li>TraCI version is now 16</li>
+</ul>
+</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,24 @@
+%description:
+Test LCGRandom
+
+%includes:
+#include <common/lcgrandom.h>
+
+%activity:
+using namespace omnetpp::common;
+
+LCGRandom rng;
+
+for (int k=0; k<1000000; k++)
+    rng.next01();
+
+EV << rng.getSeed() << "\n";
+EV << ".\n";
+
+%exitcode: 0
+
+%contains: stdout
+1792147615
+.
+
+

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Networks/Further_Options.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Networks/Further Options - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Networks/Further_Options.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#setting_default_values">Setting default Values</a></li>
+            <li class="nav-item main"><a href="#adding_turnarounds">Adding Turnarounds</a></li>
+            <li class="nav-item main"><a href="#removing_geometry_nodes">Removing Geometry Nodes</a></li>
+            <li class="nav-item main"><a href="#using_edges_maximum_speed_definitions_in_kmh">Using Edges' maximum Speed Definitions in km/h</a></li>
+            <li class="nav-item main"><a href="#importing_networks_without_traffic_light_logic">Importing Networks without Traffic Light Logic</a></li>
+            <li class="nav-item main"><a href="#guessing_on-_and_off-ramps">Guessing On- and Off-Ramps</a></li>
+            <li class="nav-item main"><a href="#inner-junction_traffic">Inner-junction Traffic</a></li>
+            <li class="nav-item main"><a href="#pruning_the_imported_network">Pruning the imported network</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Networks/Further Options<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p><a href="../netconvert.html">netconvert</a>,
+<a href="../netgenerate.html">netgenerate</a>, and <a href="../netedit.html">netedit</a>
+offer some more options to describe how the network shall be imported.
+The scope of some options does not cover all import types.</p>
+<h2 id="setting_default_values">Setting default Values<a class="headerlink" href="#setting_default_values" title="Permanent link">#</a></h2>
+<p>It was mentioned, that edge parameter may be omitted and defaults will
+be used in this case. It is possible to set default values for the
+imported edges' number of lanes, allowed speed, and priority, using the
+options <strong>--default.lanenumber</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> (or <strong>-L</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> for short), <strong>--default.speed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (or <strong>-S</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> for short), <strong>--default.priority</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> (or <strong>-P</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> for short),
+respectively.</p>
+<h2 id="adding_turnarounds">Adding Turnarounds<a class="headerlink" href="#adding_turnarounds" title="Permanent link">#</a></h2>
+<p>Normally, turnarounds are added as a possible edge continuations and
+play an important role during network building (see
+<a href="../Publications.html#krajzewicz_et_al2005_2">Publications#Krajzewicz_et_al2005_2</a>).
+Still, one may want not to add them. In this cases, it is possible to
+disallow their appending using option <strong>--no-turnarounds</strong>.</p>
+<h2 id="removing_geometry_nodes">Removing Geometry Nodes<a class="headerlink" href="#removing_geometry_nodes" title="Permanent link">#</a></h2>
+<p>In most input networks one may find nodes where one street comes in and
+one with the same attributes goes out or where two parallel edges come
+in and two (with the same attributes) come out. Such nodes have mostly
+no meaning (maybe besides the additional possibility to make a U-turn)
+and may be removed. The removal of such nodes increases the simulation
+speed due to a smaller number of edges to process during each time step.
+To remove such nodes and join the incoming and outgoing edges use <strong>--geometry.remove</strong>. The
+removal of nodes preserves the geometry of edges by ading a further
+geometry point at the removed node's position.</p>
+<h2 id="using_edges_maximum_speed_definitions_in_kmh">Using Edges' maximum Speed Definitions in km/h<a class="headerlink" href="#using_edges_maximum_speed_definitions_in_kmh" title="Permanent link">#</a></h2>
+<p>Some people do not like to use speed definitions in m/s. If you want to
+define the speeds allowed on your edges in km/h instead, you should pass
+the option <strong>--speed-in-kmh</strong> to <a href="../netconvert.html">netconvert</a>.</p>
+<h2 id="importing_networks_without_traffic_light_logic">Importing Networks without Traffic Light Logic<a class="headerlink" href="#importing_networks_without_traffic_light_logic" title="Permanent link">#</a></h2>
+<p>Some of the supported network formats supply information about the logic
+of the traffic lights, other do not. Due to this, we have to compute the
+traffic lights on our own. Doing this, we not only have to compute the
+signal plans but also compute which junctions will have traffic lights.
+There are several options steering this procedure. At first, you have to
+tell
+<a href="../netconvert.html">netconvert</a>/<a href="../netgenerate.html">netgenerate</a>
+that you wish the program to guess positions of traffic lights. This is
+done using the <strong>--tls.guess</strong>-option.</p>
+<p>You may also set junctions as tls-controlled using <strong>--tls.set</strong> or as uncontrolled
+using <strong>--tls.unset</strong>. Both options assume to get a list of node names divided by ','
+as parameter. The behavior when a node is in both lists is undefined.</p>
+<p>During the computation of tls-logics among other information we have to
+guess the duration of the phases. The options <strong>--tls.greent.time</strong> and <strong>--tls.yellow.time</strong> allow you to give
+the durations of green and yellow lights. Both options assume the
+duration in seconds as an int. The duration of having red is dependent
+on the number of other phases and their green and yellow phase
+durations. The green phase length has a default of 31s, yellow lights
+are - if no value is set for this option - computed using the <strong>--tls.yellow.min-decel</strong> which is
+described below.</p>
+<p>There is yet no possibility to compute or estimate a "green wave"
+(synchronized traffic lights to allow continuous flow in one direction).
+You have only the options to shift the computed phases by half of their
+duration or by a quarter of their duration. The options for this are: <strong>--tls.half-offset</strong>
+and <strong>--tls.quarter-offset</strong>. Both options assume to get a list of node names divided by ',' as
+parameter. The behavior when a node is in both lists or if the node is
+not meant to be controlled by a tls is undefined. Of course you can also
+edit the offsets within the generated network file (see
+<a href="../Simulation/Traffic_Lights.html">Simulation/Traffic Lights</a>).</p>
+<h2 id="guessing_on-_and_off-ramps">Guessing On- and Off-Ramps<a class="headerlink" href="#guessing_on-_and_off-ramps" title="Permanent link">#</a></h2>
+<p>Most of the imported network descriptions do not have information about
+highway on- and off-ramps. This means ramps are connected to the highway
+without acceleration/deceleration lanes. You can force
+<a href="../netconvert.html">netconvert</a> to guess where on- and off-ramps
+shall be build. To enable this, use the option <strong>--ramps.guess</strong>. The algorithm ensures
+that acceleration lanes are added on highway junctions with one incoming
+and one outgoing highway edge and one incoming minor edge and that
+deceleration lanes are added on highway junctions with one incoming and
+one outgoing highway edge and one outgoing minor edge. Lanes are only
+added if the sum of incoming lanes differs from the sum of outgoing
+lanes. You can constrain the classification of highways by setting a
+minimum speed of this edge using <strong>--ramps.min-highway-speed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> and the classification of the minor
+edge is by setting its maximum speed using <strong>--ramps.max-ramp-speed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (both options assume a speed
+in m/s). Furthermore, <strong>--ramps.ramp-length</strong> tells <a href="../netconvert.html">netconvert</a> how
+long the added ramp shall be in meters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Normally, we keep <strong>--ramps.ramp-length</strong> unset and let the geometry computation do the rest.</p>
+</div>
+<h2 id="inner-junction_traffic">Inner-junction Traffic<a class="headerlink" href="#inner-junction_traffic" title="Permanent link">#</a></h2>
+<p>If you already know SUMO or if you have taken a look at some of the
+examples you may have noticed that vehicles used to "jump" over a
+junction instead of driving over them. This behavior was quite
+appropriate for simulating large scenarios as in these cases the
+simulation error could be neglected (at least we have neglected it).
+Since version 0.10.0 SUMO will by default simulate traffic over the
+junctions in a way you know it from reality. Because inserting inner
+lanes into a network dramatically increases the network's size, you may
+want to return to the old behavior using the option <strong>--no-internal-links</strong>.</p>
+<h2 id="pruning_the_imported_network">Pruning the imported network<a class="headerlink" href="#pruning_the_imported_network" title="Permanent link">#</a></h2>
+<p><a href="../netconvert.html">netconvert</a> offers you some possibilities to
+constrain the read edges what is quite needful if one has a large street
+network but only wants to simulate a part of it or only the major roads.
+The first possibility to constrain the input is to name all the edges
+you want to keep. You can either do this on the command line/within your
+configuration directly using <strong>--keep-edges.explicit</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;ID&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;ID&gt;</em></a>]* where each <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;ID&gt;</em></a> represents the id of an edge
+you want to keep separated by a ',' or you can save this list into a
+file where each id is stored in a separate line and then let
+<a href="../netconvert.html">netconvert</a> read this file using <strong>--keep-edges.input-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>. In the case
+you are joining edges using <strong>--geometry.remove</strong> (see "Removing Geometry Nodes"), you may
+also be interested in the option <strong>--keep-edges.postload</strong> which forces
+<a href="../netconvert.html">netconvert</a> to join the edges first and remove
+the unwished afterwards.</p>
+<p>It is also possible to constrain the imported edges by giving a minimum
+velocity that is allowed on an edge in order to include this edge into
+the generated network. Use <strong>--keep-edges.min-speed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> for this where <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> is the minimum velocity an
+edge must allow in order to be included in the output in m/s.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

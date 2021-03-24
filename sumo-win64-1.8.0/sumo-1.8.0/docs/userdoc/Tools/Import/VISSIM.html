@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tools/Import/VISSIM.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Tools/Import/VISSIM - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tools/Import/VISSIM.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#extension_tools_to_import_features_from_vissim_42inpx_files">Extension tools to import features from VISSIM *.inpx files</a></li>
+            <li class="nav-item main"><a href="#erweiterung_der_sumo_netzkonversion">Erweiterung der SUMO Netzkonversion</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#verwendung" class="nav-link">• Verwendung</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#beispiele" class="nav-link">• Beispiele</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#priorisierung_gema_vissim-konfliktflachen" class="nav-link">• Priorisierung gemäß VISSIM-Konfliktflächen</a>
+                </li>
+            <li class="nav-item main"><a href="#konversion_der_routen_und_zuflusse">Konversion der Routen und Zuflüsse</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routendefinition_vissim" class="nav-link">• Routendefinition VISSIM</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routendefinition_sumo" class="nav-link">• Routendefinition SUMO</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#umsetzung" class="nav-link">• Umsetzung</a>
+                </li>
+            <li class="nav-item main"><a href="#konversion_der_lichtsignalprogramme">Konversion der Lichtsignalprogramme</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lsa-definition_vissim" class="nav-link">• LSA-Definition: VISSIM</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#inpx-datei" class="nav-link">&rarr; .inpx-Datei</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#sig-datei" class="nav-link">&rarr; .sig-Datei</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lsa_definition_sumo" class="nav-link">• LSA Definition: SUMO</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#umsetzung_1" class="nav-link">• Umsetzung</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#beispiel" class="nav-link">• Beispiel</a>
+                </li>
+            <li class="nav-item main"><a href="#konversion_der_induktionsschleifen_und_reisezeitmessungen">Konversion der Induktionsschleifen und Reisezeitmessungen</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#detektor-definition_vissim" class="nav-link">• Detektor-Definition VISSIM</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#detektor-definition_sumo" class="nav-link">• Detektor-Definition SUMO</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#umsetzung_2" class="nav-link">• Umsetzung</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tools/Import/VISSIM<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="extension_tools_to_import_features_from_vissim_42inpx_files">Extension tools to import features from VISSIM *.inpx files<a class="headerlink" href="#extension_tools_to_import_features_from_vissim_42inpx_files" title="Permanent link">#</a></h1>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>documentation is WORK IN PROGRESS -- more doc to come...</p>
+</div>
+<p><strong>TODO:</strong></p>
+<ul>
+<li>translation to english</li>
+</ul>
+<h1 id="erweiterung_der_sumo_netzkonversion">Erweiterung der SUMO Netzkonversion<a class="headerlink" href="#erweiterung_der_sumo_netzkonversion" title="Permanent link">#</a></h1>
+<p>Mit Version 6 der kommerziellen Verkehrsmikrosimulation der Firma PTV,
+die nicht nur im deutschsprachigen Raum zur Visualisierung von
+Verkehrssachverhalten verwendet wird, wurde das Dateiformat auf ein
+XML-basiertes <code>.inpx-Format</code> geändert. Da jedoch das SUMO-Tool
+<code>netconvert</code>, welches zur Konversion von Netzen aus anderen
+Quellformaten in ein SUMO-Netz dient bis version 0.23.0 noch auf dem
+alten <code>.inp-Format</code> basiert, muss eine neuere version verwendet werden
+um auch aktuelle Netze im <code>.inpx-Format</code> konvertieren zu können. Da sich
+außer dem Einlesen der Netzinformationen am Programmablauf nichts
+geändert hat, bleibt die Bedienung des/der BenutzerIn von <code>netconvert</code>
+zur Konversion von VISSIM-Netzen identisch.</p>
+<p>Beim Konvertierungsvorgang von .inpx-Netzen werden jedoch zusätzlich die
+Priorisierungen innerhalb der SUMO-junctions durch das Einlesen der
+Konfliktflächendefinitionen aus VISSIM definiert.</p>
+<p>Des Weiteren wurden für das XML-basierte .inpx-Format zusätzliche Python
+Tools entwickelt, die nach der Konversion der rohen Netzinformationen
+das Einlesen von Routen, Zuflüssen, Lichtsignalanlagen sowie Detektoren
+ermöglichen.</p>
+<h2 id="verwendung">Verwendung<a class="headerlink" href="#verwendung" title="Permanent link">#</a></h2>
+<p>Der Aufruf von <code>netconvert</code> für VISSIM-Netze erfolgt über:</p>
+<pre><code>netconvert –vissim-file=&lt;VISSIM_FILE –output-file=MySUMOFile.net.xml
+</code></pre>
+
+<p>Die Unterscheidung, ob es sich um ein VISSIM-Netz im neuen <code>inpx</code>- oder
+alten <code>inp</code>-Format handelt wird während der Konversion geprüft. Somit
+muss sich der/die BenutzerIn nicht darum kümmern, in welcher Version das
+VISSIM-Netz vorliegt. Wollen jedoch außer der reinen Netzkonversion auch
+die zusätzlichen Python-Tools zur Konversion weiterer Daten verwendet
+werden, so muss das Netz im <code>.inpx-Format</code> vorliegen.</p>
+<h2 id="beispiele">Beispiele<a class="headerlink" href="#beispiele" title="Permanent link">#</a></h2>
+<p>Je nach Komplexität des vorliegenden Netzes kann es notwendig sein, noch
+weitere Anpassungen nach der Konversion vornehmen zu müssen. Die
+folgenden Abbildungen zeigen eine beispielhafte Konversion eines
+<code>.inpx-Netzes</code> in ein SUMO-Netz.</p>
+<p><img alt="Vissim_net.png" src="../../images/Vissim_net.png" title="Vissim_net.png" />
+<img alt="SUMO_net.png" src="../../images/SUMO_net.png" title="SUMO_net.png" /></p>
+<p>Abbildung "Junction conversion" zeigt eine komplexe Kreuzung, welche in
+VISSIM erstellt und anschließend in SUMO konvertiert wurde. Die
+Abbildung zeigt, dass die Geometrien (und Abbiegerelationen) korrekt
+übersetzt werden.</p>
+<p><img alt="TurningRelation_VISSIM.png" src="../../images/TurningRelation_VISSIM.png" title="TurningRelation_VISSIM.png" />
+<img alt="TurningRelation_SUMO.png" src="../../images/TurningRelation_SUMO.png" title="TurningRelation_SUMO.png" /></p>
+<h2 id="priorisierung_gema_vissim-konfliktflachen">Priorisierung gemäß VISSIM-Konfliktflächen<a class="headerlink" href="#priorisierung_gema_vissim-konfliktflachen" title="Permanent link">#</a></h2>
+<p>Zur Überprüfung der Konversion der Konfliktflächen wurde eine VISSIM
+Kreuzung erstellt, die den herkömmlichen Vorrangregeln des
+Rechtsverkehrs widerspricht. Anschließend wurde das VISSIM-Netz mittels
+<code>netconvert</code> in ein SUMO-Netz konvertiert. In den Abbildungen "Conflict
+areas" ist zu sehen, dass die Bevorrangung der Linksabbieger gegenüber
+den Geradeausfahrern korrekt übersetzt wurden.</p>
+<p><strong>Conflict areas</strong></p>
+<p><img alt="conflArea_vissim.png" src="../../images/ConflArea_vissim.png" title="conflArea_vissim.png" />
+<img alt="conflArea_sumo.png" src="../../images/ConflArea_sumo.png" title="conflArea_sumo.png" /></p>
+<p>Die Daten zur Dargestellten Situation finden sich im Verzeichnis der
+Testdaten unter <code>tests/netconvert/import/leftist_conflictarea-prio/</code>, wo
+sich auch ein entsprechendes <code>README.md</code> befindet.</p>
+<h1 id="konversion_der_routen_und_zuflusse">Konversion der Routen und Zuflüsse<a class="headerlink" href="#konversion_der_routen_und_zuflusse" title="Permanent link">#</a></h1>
+<p>Die Definition von Routen und Zuflüssen sind ein wesentlicher
+Bestandteil einer Simulation. Das Python Tool
+<code>convert_vissimXML_flows_statRoutes.py</code> ermöglicht es, VISSIM-Routen und
+-Zuflüsse zu parsen und anhand deren Information eine SUMO-Routendatei
+für das konvertierte Netz zu erstellen. Diese hat die Endung <code>.rou.xml</code>
+und wird bei der Simulation als Argument angegeben. Bei der Konversion
+werden <strong>nur statische Routendefinitionen</strong> unterstützt, die eine exakte
+Routenabfolge beinhalten. Der Aufruf erfolgt über:</p>
+<pre><code>convert_vissimXML_flows_statRoutes.py -V &lt;vissim-file&gt; -n &lt;sumo-net-file&gt; -o &lt;output-filename&gt;
+</code></pre>
+
+<h2 id="routendefinition_vissim">Routendefinition VISSIM<a class="headerlink" href="#routendefinition_vissim" title="Permanent link">#</a></h2>
+<p>Zuflüsse sind in der .inpx-Datei durch den XML-tag
+<code>&lt;timeIntervalVehVolume&gt;</code> gekennzeichnet. Ein Zufluss ist immer einer
+Strecke zugewiesen und durch einen Namen (der auch leer sein kann) und
+einer eindeutige ID definiert. Da sich der Fahrzeugzufluss mit der Zeit
+ändern kann, werden einem Zufluss Zeitintervalle hinzugefügt, die durch
+die Fahrzeugzusammensetzung und die Verkehrsstärke definiert sind. Die
+Beginnzeiten der Zeitintervalle sind in Millisekunden angegeben und die
+Verkehrsstärke hat die Einheit Fz/h. Eine Zuflussdefinition sieht in
+VISSIM wie folgt aus:</p>
+<pre><code>  &lt;vehicleInput anmFlag=&quot;false&quot; link=&quot;9&quot; name=&quot;Parkplatz 30221&quot; no=&quot;1&quot;&gt;
+     &lt;timeIntVehVols&gt;
+        &lt;timeIntervalVehVolume cont=&quot;false&quot; timeInt=&quot;1 0&quot; vehComp=&quot;6&quot; volType=&quot;STOCHASTIC&quot; volume=&quot;48.000000&quot;/&gt;
+        &lt;timeIntervalVehVolume cont=&quot;false&quot; timeInt=&quot;1 900000&quot; vehComp=&quot;6&quot; volType=&quot;STOCHASTIC&quot; volume=&quot;84.000000&quot;/&gt;
+        &lt;timeIntervalVehVolume cont=&quot;false&quot; timeInt=&quot;1 1800000&quot; vehComp=&quot;6&quot; volType=&quot;STOCHASTIC&quot; volume=&quot;120.040000&quot;/&gt;
+        &lt;timeIntervalVehVolume cont=&quot;false&quot; timeInt=&quot;1 2700000&quot; vehComp=&quot;6&quot; volType=&quot;STOCHASTIC&quot; volume=&quot;120.040000&quot;/&gt;
+     &lt;/timeIntVehVols&gt;
+  &lt;/vehicleInput&gt;
+</code></pre>
+
+<p>Routenentscheidungen werden in VISSIM durch ihre Startpunkte
+zusammengefasst. Von einer Strecke können mehrere statische Routen
+ausgehen, die zu unterschiedlichen Zielstrecken führen. Diese sind durch
+das Attribut <code>destLink</code> gegeben. Für jede Route werden wie bei den
+Zuflüssen Zeitintervalle festgelegt, für welche die relativen Anteile
+der Zuflüsse für die Routen definiert sind. Der Verlauf der Route ist
+durch die angeführte Streckenfolge gegeben, welche durch den XML-tag
+<code>&lt;linkSeq&gt;</code> eingeleitet wird. Eine Routendefinition zeigt folgendes
+Beispiel:</p>
+<pre><code>&lt;vehicleRoutingDecisionStatic allVehTypes=&quot;true&quot; anmFlag=&quot;false&quot; combineStaRoutDec=&quot;false&quot; link=&quot;9&quot; name=&quot;Parkplatz 30221&quot; no=&quot;1&quot; pos=&quot;1.000000&quot;&gt;
+     &lt;vehicleRouteStatic destLink=&quot;205&quot; destPos=&quot;20.916000&quot; name=&quot;&quot; no=&quot;113&quot; relFlow=&quot;2 0:4.000000, 2 900000:6.990000, 2 1800000:9.990000, 2 2700000:9.990000, 2 3600000:12.660000, 2 4500000:16.330000, 2 5400000:20.990000, 2 6300000:15.660000, 2 7200000:16.660000, 2 8100000:16.330000&quot;&gt;
+        &lt;linkSeq&gt;
+           &lt;intObjectRef key=&quot;10381&quot;/&gt;
+           &lt;intObjectRef key=&quot;269&quot;/&gt;
+           &lt;intObjectRef key=&quot;10154&quot;/&gt;
+           &lt;intObjectRef key=&quot;117&quot;/&gt;
+           &lt;intObjectRef key=&quot;10150&quot;/&gt;
+           &lt;intObjectRef key=&quot;76&quot;/&gt;
+           &lt;intObjectRef key=&quot;10145&quot;/&gt;
+        &lt;/linkSeq&gt;
+     &lt;/vehicleRouteStatic&gt;
+  &lt;/vehicleRoutingDecisionStatic&gt;
+</code></pre>
+
+<h2 id="routendefinition_sumo">Routendefinition SUMO<a class="headerlink" href="#routendefinition_sumo" title="Permanent link">#</a></h2>
+<p>In SUMO können definiert werden, bei denen wie in VISSIM mehrere Routen
+von einem gemeinsamen Startpunkt zusammengefasst werden. Jede Route in
+der Verteilung ist über ihre Streckenabfolge, sowie ihrer
+Wahrscheinlichkeit definiert. Die Summe der Wahrscheinlichkeiten aller
+Routen muss immer 1 ergeben und die Referenzierung auf eine
+Routen-Verteilung erfolgt über deren eindeutige ID:</p>
+<pre><code>  &lt;routeDistribution id=&quot;81_900.0&quot;&gt;
+     &lt;route edges=&quot;81 83 210 211 268 117 76 115 213 212 114 265 203 204 263 109 52 188 297 190 296 186 70 298 238 299 124&quot; id=&quot;163&quot; probability=&quot;0.372751499001&quot;/&gt;
+     &lt;route edges=&quot;81 83 210 211 268 117 76 115 213 212 114 265 203 204 263 109 52 188 297 190 296 186 70 298 238 299 239 72 &quot; id=&quot;181&quot; probability=&quot;0.125916055963&quot;/&gt;
+     &lt;route edges=&quot;81 83 210 211 268 117 76 115 213 212 114 265 203 204 263 109 52 188 297 190 296 186 181 184&quot; id=&quot;187&quot; probability=&quot;0.171219187209&quot;/&gt;
+     &lt;route edges=&quot;81 83 215 216 217 272 16&quot; id=&quot;193&quot; probability=&quot;0.211192538308&quot;/&gt;
+     &lt;route edges=&quot;81 83 210 211 268 13&quot; id=&quot;195&quot; probability=&quot;0.11892071952&quot;/&gt;
+  &lt;/routeDistribution&gt;
+</code></pre>
+
+<p>Des weiteren gehören zur Routendefinition auch Fahzeugtyp-Verteilungen .
+Diese geben die Eigenschaften und die Wahrscheinlichkeit der definierten
+Fahrzeugtypen an und müssen vorher definiert werden. Wie bei der
+Routen-Verteilung erfolgt die Referenzierung auch hier über die
+eindeutige ID:</p>
+<pre><code>&lt;vTypeDistribution id=&quot;6&quot;&gt;
+   &lt;vType accel=&quot;3.500000&quot; id=&quot;t1001_D6&quot; length=&quot;4.454081632653061&quot; maxSpeed=&quot;14.722222222222221&quot; probability=&quot;0.900000&quot;/&gt;
+   &lt;vType accel=&quot;7.300000&quot; id=&quot;t1002_D6&quot; length=&quot;10.086636363636364&quot; maxSpeed=&quot;14.722222222222221&quot; vClass=&quot;truck&quot; probability=&quot;0.100000&quot;/&gt;
+&lt;/vTypeDistribution&gt;
+</code></pre>
+
+<p>Auch die Fahrzeugzuflüsse werden in der Routen-Datei definiert. Diese
+werden wie in VISSIM für ein gewisses Zeitintervall festgelegt. Wichtig
+ist, dass die Zuflüsse <strong>aufsteigend nach der Zeit sortiert</strong> werden, da
+diese ansonsten nicht korrekt eingelesen werden können. Jedem Zufluss
+wird des Weiteren noch eine zuvor definierte Routen-Verteilung, eine
+Fahrzeugtypen-Verteilung sowie eine ID zugeordnet. Zuflüsse werden in
+SUMO wie folgt definiert:</p>
+<pre><code>&lt;flow begin=&quot;0.0&quot; color=&quot;1,1,0&quot; end=&quot;900.0&quot; id=&quot;fl81_st0.0&quot; route=&quot;81_0.0&quot; type=&quot;6&quot; vehsPerHour=&quot;94.56&quot;/&gt;
+&lt;flow begin=&quot;900.0&quot; color=&quot;1,1,0&quot; end=&quot;1800.0&quot; id=&quot;fl81_st900.0&quot; route=&quot;81_900.0&quot; type=&quot;6&quot; vehsPerHour=&quot;120.08&quot;/&gt;
+&lt;flow begin=&quot;1800.0&quot; color=&quot;1,1,0&quot; end=&quot;2700.0&quot; id=&quot;fl108_st1800.0&quot; route=&quot;108_1800.0&quot; type=&quot;6&quot; vehsPerHour=&quot;161.88&quot;/&gt;
+</code></pre>
+
+<p>Allgemeine Informationen zur Definition von Routen und Zuflüssen finden
+sich unter
+<a href="http://sumo.dlr.de/docs/Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">http://sumo.dlr.de/docs/Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html</a>
+(zuletzt geprüft am 28.07.2015).</p>
+<h2 id="umsetzung">Umsetzung<a class="headerlink" href="#umsetzung" title="Permanent link">#</a></h2>
+<p>Bei der Konversion durch das Tool
+<code>convert_vissimXML_flows_statRoutes.py</code> werden folgende VISSIM-Attribute
+übernommen:</p>
+<ul>
+<li>statische Routenentscheidungen</li>
+<li>Zuflüsse</li>
+<li>Fahrzeugtypen<ul>
+<li>Geschwindigkeit</li>
+<li>Länge</li>
+<li>maximale Beschleunigung</li>
+<li>Fahrzeugzusammensetzung</li>
+</ul>
+</li>
+</ul>
+<p>Da es sich in VISSIM bei Geschwindigkeit, Beschleunigung und Länge um
+Wahrscheinlichkeitsverteilungen handelt, müssen aus den Daten erst
+Mittelwerte berechnet werden. Des Weiteren ist zu beachten, dass die
+Zuflüsse nach der Zeit sortiert werden, um eine korrekte Umsetzung
+gewährleisten zu können. Die zeitliche Abfolge muss beim Editieren der
+Zuflüsse somit ebenfalls beachtet werden. Durch das Tool wird eine
+<code>.rou.xml</code> Datei erzeugt, die alle relevanten Routen-Informationen für
+die Simulation in SUMO beinhaltet. Diese muss anschließend in die
+SUMO-Konfigurationsdatei eingetragen werden.</p>
+<h1 id="konversion_der_lichtsignalprogramme">Konversion der Lichtsignalprogramme<a class="headerlink" href="#konversion_der_lichtsignalprogramme" title="Permanent link">#</a></h1>
+<p>Das zusätzliche Tool <code>tls_vissimXML2SUMO.py</code> ermöglicht es, VISSIM
+Lichtsignalanlagen zu parsen und das konvertierte SUMO-Netz mit diesen
+Informationen zu erweitern. Der Aufruf erfolgt über:</p>
+<pre><code>tls_vissimXML2SUMO.py -V &lt;vissim-file&gt; -S &lt;sumo-file&gt; -o &lt;output-filename&gt;
+</code></pre>
+
+<h2 id="lsa-definition_vissim">LSA-Definition: VISSIM<a class="headerlink" href="#lsa-definition_vissim" title="Permanent link">#</a></h2>
+<p>In VISSIM wird für jede erstellte Lichtsignalanlage eine zusätzliche
+<code>.sig-Datei</code> angelegt. Diese beinhaltet alle relevanten Informationen
+(wie z.B. Signalsequenz und Signalfolge) zu den definierten
+Signalprogrammen einer LSA. Die restlichen Definitionen der LSA befinden
+sich in der bestehenden <code>.inpx-Datei</code> des zugehörigen Netzes. Folgend
+wird an einem Beispiel gezeigt, wie die Struktur dieser Dateien
+aussieht.</p>
+<h3 id="inpx-datei">.inpx-Datei<a class="headerlink" href="#inpx-datei" title="Permanent link">#</a></h3>
+<p>In der <code>.inpx-Datei</code> sind die Lichtsignalanlagen durch den XML-tag
+<code>&lt;signalController&gt;</code> gekennzeichnet. Die benötigten Attribute für die
+Konversion in das SUMO-Format sind die zugehörige <code>.sig-Datei</code> sowie die
+Auflistung der definierten Signalgruppen. Signalgruppen können mehreren
+Fahrstreifen zugewiesen werden und sind durch eine Signalabfolge
+definiert. Diese sind als Attribut des Kindelementes
+<code>&lt;signalOutputConfigurationElement&gt;</code> vorzufinden. Eine
+Lichtsignalanlagen-Definition sieht in VISSIM wie folgt aus:</p>
+<pre><code>&lt;signalController active=&quot;true&quot; cycTm=&quot;0.000000&quot; cycTmIsVar=&quot;true&quot; debug=&quot;false&quot; guiFile=&quot;VISSIG_GUI.dll&quot; name=&quot;VLSA 301 (WienerStr./JudendorferStr.)&quot; no=&quot;301&quot; offset=&quot;0.000000&quot; progFile=&quot;VISSIG_Controller.dll&quot; progNo=&quot;1&quot; scDetRecFile=&quot;VISSIM_302.ldp&quot; scDetRecShortNam=&quot;false&quot; sigTmsTabAutoConfig=&quot;true&quot; supplyFile1=&quot;vissig.config&quot; supplyFile2=&quot;TestsiteGraz_v01301.sig&quot; supplyFile3=&quot;&quot; type=&quot;FIXEDTIME&quot;&gt;
+     &lt;sGs&gt;
+        &lt;signalGroup amber=&quot;0.000000&quot; greenFlsh=&quot;0.000000&quot; minGreen=&quot;0.000000&quot; minRed=&quot;0.000000&quot; name=&quot;11GR&quot; no=&quot;1&quot; redAmber=&quot;0.000000&quot; type=&quot;NORMAL&quot;/&gt;
+        &lt; ... &gt;
+        &lt;signalGroup amber=&quot;0.000000&quot; greenFlsh=&quot;0.000000&quot; minGreen=&quot;0.000000&quot; minRed=&quot;0.000000&quot; name=&quot;14R&quot; no=&quot;8&quot; redAmber=&quot;0.000000&quot; type=&quot;NORMAL&quot;/&gt;
+     &lt;/sGs&gt;
+     &lt;wttFiles&gt;
+        &lt;intObjectRef key=&quot;1&quot;/&gt;
+     &lt;/wttFiles&gt;
+     &lt;sigTmsTabConfig&gt;
+        &lt;signalOutputConfigurationElement configName=&quot;SIGGRP&quot; detPort=&quot;0&quot; sg=&quot;301 1&quot; title=&quot;&quot; varNo=&quot;1&quot; wttFilename=&quot;vissim&quot;/&gt;
+        &lt;signalOutputConfigurationElement configName=&quot;SIGGRP&quot; detPort=&quot;0&quot; sg=&quot;301 2&quot; title=&quot;&quot; varNo=&quot;2&quot; wttFilename=&quot;vissim&quot;/&gt;
+     &lt;/sigTmsTabConfig&gt;
+  &lt;/signalController&gt;
+</code></pre>
+
+<p>In der .inpx-Datei befinden sich ebenfalls die Definitionen der
+Lichtsignalgeber aller Lichtsignalanlagen. Diese sind einem Fahrstreifen
+einer Strecke zugewiesen und gehören zu einer zuvor definierten
+Signalgruppe:</p>
+<pre><code>&lt;signalHeads&gt;
+     &lt;signalHead allPedTypes=&quot;true&quot; allVehTypes=&quot;true&quot; complRate=&quot;1.000000&quot; dischRecAct=&quot;false&quot; isBlockSig=&quot;false&quot; lane=&quot;223 1&quot; localNo=&quot;6&quot; name=&quot;&quot; no=&quot;1&quot; pos=&quot;98.115000&quot; sg=&quot;305 6&quot; slowDownDist=&quot;3.000000&quot; type=&quot;CIRCULAR&quot; vAmberBlock=&quot;0.000000&quot;/&gt;
+     &lt;signalHead allPedTypes=&quot;true&quot; allVehTypes=&quot;true&quot; complRate=&quot;1.000000&quot; dischRecAct=&quot;false&quot; isBlockSig=&quot;false&quot; lane=&quot;276 3&quot; localNo=&quot;5&quot; name=&quot;&quot; no=&quot;2&quot; pos=&quot;82.377000&quot; sg=&quot;305 5&quot; slowDownDist=&quot;3.000000&quot; type=&quot;CIRCULAR&quot; vAmberBlock=&quot;0.000000&quot;/&gt;
+  &lt;/signalHeads&gt;
+</code></pre>
+
+<h3 id="sig-datei">.sig-Datei<a class="headerlink" href="#sig-datei" title="Permanent link">#</a></h3>
+<p>Die Signalphasen werden in der <code>.sig-Datei</code> über ihre ID referenziert.
+Welche ID zu welcher Phase gehört, wird am Anfang der Datei wie folgt
+definiert:</p>
+<pre><code> &lt;signaldisplays&gt;
+     &lt;display id=&quot;1&quot; name=&quot;Red&quot; state=&quot;RED&quot;/&gt;
+     &lt;display id=&quot;2&quot; name=&quot;Red/Amber&quot; state=&quot;REDAMBER&quot;/&gt;
+  &lt;/signaldisplays&gt;&lt;/source&gt;
+</code></pre>
+
+<p></source></p>
+<p>Des Weiteren werden in VISSIM für die Definition eines Signalprogrammes
+fixe Signalsequenzen verwendet, die ebenfalls am Anfang der <code>.sig-Datei</code>
+zu finden sind. Diese definieren die Abfolge der Phasen und die
+Referenzierung erfolgt über die jeweilige ID:</p>
+<pre><code> &lt;signalsequences&gt;
+     &lt;signalsequence id=&quot;5&quot; name=&quot;Red-Red/Amber-Green-Flashing Green-Amber&quot;&gt;
+        &lt;state display=&quot;1&quot; isFixedDuration=&quot;false&quot; isClosed=&quot;true&quot; defaultDuration=&quot;1000&quot; /&gt;
+        &lt;state display=&quot;2&quot; isFixedDuration=&quot;true&quot; isClosed=&quot;true&quot; defaultDuration=&quot;1000&quot; /&gt;
+        &lt;state display=&quot;3&quot; isFixedDuration=&quot;false&quot; isClosed=&quot;false&quot; defaultDuration=&quot;5000&quot; /&gt;
+        &lt;state display=&quot;5&quot; isFixedDuration=&quot;true&quot; isClosed=&quot;false&quot; defaultDuration=&quot;4000&quot; /&gt;
+        &lt;state display=&quot;4&quot; isFixedDuration=&quot;true&quot; isClosed=&quot;true&quot; defaultDuration=&quot;3000&quot; /&gt;
+     &lt;/signalsequence&gt;
+     &lt;signalsequence id=&quot;12&quot; name=&quot;Off-Green&quot;&gt;
+        &lt;state display=&quot;7&quot; isFixedDuration=&quot;false&quot; isClosed=&quot;true&quot; defaultDuration=&quot;1000&quot; /&gt;
+        &lt;state display=&quot;3&quot; isFixedDuration=&quot;false&quot; isClosed=&quot;false&quot; defaultDuration=&quot;5000&quot; /&gt;
+     &lt;/signalsequence&gt;
+  &lt;/signalsequences&gt;
+</code></pre>
+
+<p>Anschließend erfolgt die Definition aller Signalprogramme und deren
+Umlaufzeiten:</p>
+<pre><code>&lt;prog id=&quot;1&quot; cycletime=&quot;80000&quot; switchpoint=&quot;0&quot; offset=&quot;13000&quot; intergreens=&quot;0&quot; fitness=&quot;0.000000&quot; vehicleCount=&quot;0&quot; name=&quot;Morgenprogramm S 2.7&quot;/&gt;
+</code></pre>
+
+<p>Die Definition der Signalgruppen besteht aus den Beginnzeiten der Rot-
+und Grünphase und den Zeitdauern der restlichen Phasen, welche sich in
+der zugehörigen Signalsequenz befinden:</p>
+<pre><code>&lt;sg sg_id=&quot;1&quot; signal_sequence=&quot;5&quot;&gt;
+     &lt;cmds&gt;
+        &lt;cmd display=&quot;3&quot; begin=&quot;13000&quot; /&gt;
+        &lt;cmd display=&quot;1&quot; begin=&quot;46000&quot; /&gt;
+     &lt;/cmds&gt;
+     &lt;fixedstates&gt;
+        &lt;fixedstate display=&quot;2&quot; duration=&quot;2000&quot; /&gt;
+        &lt;fixedstate display=&quot;5&quot; duration=&quot;4000&quot; /&gt;
+        &lt;fixedstate display=&quot;4&quot; duration=&quot;3000&quot; /&gt;
+     &lt;/fixedstates&gt;
+  &lt;/sg&gt;
+</code></pre>
+
+<h2 id="lsa_definition_sumo">LSA Definition: SUMO<a class="headerlink" href="#lsa_definition_sumo" title="Permanent link">#</a></h2>
+<p>Im Gegensatz zu VISSIM benötigt SUMO nicht für jede Lichtsignalanlage
+eine zusätzliche Datei; es werden die Definitionen aller
+Lichtsignalanlagen sowie deren Programme in die bestehende Netzdatei
+geschrieben, in der auch alle Graphen-Informationen enthalten sind.
+Nachfolgend findet sich die Erklärung einer beispielhaften
+LSA-Definition in SUMO.</p>
+<p>Eine Lichtsignale ist in der SUMO-Netzdatei durch den XML Element Node
+<code>&lt;tlLogic&gt;</code> gekennzeichnet. Es können die Attribute <code>id</code>, <code>type</code>, <code>offset</code>
+und <code>programID</code> vergeben werden, wobei bei der Konversion nur die <code>id</code>
+und die <code>programID</code> definiert werden. Die ID der LSA muss identisch mit
+der ID der zugeordneten Kreuzung sein (junction id = tlLogic id) und die
+programID beschreibt den Namen des Schaltprogramms. Das Attribut <code>type</code>
+wird konstant auf “’static”’ gesetzt, was bedeuted, dass die Phasen eine
+fixe Zeitdauer aufweisen. Der zeitliche Versatz der LSA, welcher durch
+das Attribut <code>offset</code> festgelegt ist, wird ebenfalls konstant auf 0.00
+gesetzt. Als Kindelemente finden sich die einzelnen Phasen der
+Schaltung, welche durch eine Zeitspanne in Sekunden und einen Zustand
+gekennzeichnet sind. Jeder Buchstabe des <code>states</code> definiert den
+aktuellen Zustand eines Fahrstreifens:</p>
+<pre><code>&lt;tlLogic id=&quot;69&quot; type=&quot;static&quot; programID=&quot;Tagesprogramm S 5.3&quot; offset=&quot;0.00&quot;&gt;
+     &lt;phase duration=&quot;20.00&quot; state=&quot;Grrr&quot;/&gt;
+     &lt;phase duration=&quot;20.00&quot; state=&quot;yyyy&quot;/&gt;
+     &lt;phase duration=&quot;100.00&quot; state=&quot;rGGG&quot;/&gt;
+     &lt;phase duration=&quot;100.00&quot; state=&quot;yyyy&quot;/&gt;
+  &lt;/tlLogic&gt;
+</code></pre>
+
+<p>Welcher <code>state-Index</code> zu welchem Fahrstreifen zugeordnet wird, ist in
+der zugehörigen <em>Connection</em> durch deren <code>linkIndex</code> definiert.
+Zusätzlich muss jede <em>Connection</em>, die von einer Lichtsignalanlage
+beeinflusst wird, dieser auch zugewiesen werden. Hierfür wird dem
+Attribut <code>tl</code> die ID der jeweiligen LSA zugeteilt:</p>
+<pre><code> &lt;connection dir=&quot;r&quot; from=&quot;117&quot; fromLane=&quot;0&quot; to=&quot;88&quot; toLane=&quot;0&quot; via=&quot;:69_1_0&quot; tl=&quot;69&quot; linkIndex=&quot;2&quot; state=&quot;o&quot;/&gt;
+  &lt;connection dir=&quot;s&quot; from=&quot;117&quot; fromLane=&quot;0&quot; to=&quot;76&quot; toLane=&quot;0&quot; via=&quot;:69_2_0&quot; tl=&quot;69&quot; linkIndex=&quot;3&quot; state=&quot;o&quot;/&gt;
+  &lt;connection dir=&quot;s&quot; from=&quot;117&quot; fromLane=&quot;1&quot; to=&quot;76&quot; toLane=&quot;1&quot; via=&quot;:69_2_1&quot; tl=&quot;69&quot; linkIndex=&quot;1&quot; state=&quot;o&quot;/&gt;
+  &lt;connection dir=&quot;r&quot; from=&quot;89&quot; fromLane=&quot;0&quot; to=&quot;76&quot; toLane=&quot;0&quot; via=&quot;:69_0_0&quot; tl=&quot;69&quot; linkIndex=&quot;0&quot; state=&quot;o&quot;/&gt;
+</code></pre>
+
+<p>Auch die <em>junction</em>, auf der die Lichtsignalanlage platziert werden
+soll, muss als solche definiert werden. Dies geschieht über das Attribut
+<code>type</code>, welches die Regelungsart der Kreuzung festlegt. Wird einer
+<em>junction</em> eine LSA zugewiesen so muss der <code>type</code> auf “’traffic_light”’
+gesetzt werden:</p>
+<pre><code>&lt;junction id=&quot;69&quot; incLanes=&quot;89_0 117_0 117_1&quot; intLanes=&quot;:69_0_0 :69_1_0 :69_2_0 :69_2_1&quot; shape=&quot;3276.61,1952.22 3277.64,1946.15 3275.74,1944.30 3269.32,1943.27 3265.23,1952.29 3274.96,1953.43&quot; type=&quot;traffic_light&quot; x=&quot;3273.91&quot; y=&quot;1947.87&quot;&gt;
+     &lt;request cont=&quot;0&quot; foes=&quot;1100&quot; index=&quot;0&quot; response=&quot;1100&quot;/&gt;
+     &lt;request cont=&quot;0&quot; foes=&quot;0000&quot; index=&quot;1&quot; response=&quot;0000&quot;/&gt;
+     &lt;request cont=&quot;0&quot; foes=&quot;0001&quot; index=&quot;2&quot; response=&quot;0000&quot;/&gt;
+     &lt;request cont=&quot;0&quot; foes=&quot;0001&quot; index=&quot;3&quot; response=&quot;0000&quot;/&gt;
+  &lt;/junction&gt;
+</code></pre>
+
+<p>Zusätzlich ist es möglich in SUMO mehrere Programme für eine LSA zu
+definieren. Dies geschieht über die Definition einer
+Wochenschaltautomatik (kurz WAUT). Durch das Attribut <code>startProg</code> wird
+festgelegt, welches Programm am Anfang der Simulation ausgewählt werden
+soll. Dieses Startprogramm wird aus der VISSIM <code>.inpx-Datei</code> übernommen
+und die Zuordnung der Signalprogramme geschieht über deren ProgramID.
+Während der Simulation können die Signalprogramme entweder in dem GUI
+per Hand oder durch das Kindelement <code>&lt;wautSwitch&gt;</code> zu einem angegebenen
+Zeitpunkt verändert werden:</p>
+<pre><code>  &lt;WAUT refTime=&quot;0&quot; id=&quot;myWAUT&quot; startProg=&quot;weekday_night&quot;&gt;
+     &lt;wautSwitch time=&quot;21600&quot; to=&quot;weekday_day&quot;/&gt;
+     &lt;wautSwitch time=&quot;79200&quot; to=&quot;weekday_night&quot;/&gt;
+  &lt;/WAUT&gt;
+</code></pre>
+
+<p>Nähere Beschreibungen zur Definition von Lichtsignalanlagen befinden
+sich unter <a href="http://sumo.dlr.de/docs/Simulation/Traffic_Lights.html">http://sumo.dlr.de/docs/Simulation/Traffic_Lights.html</a> (zuletzt
+geprüft am 28.07.2015).</p>
+<h2 id="umsetzung_1">Umsetzung<a class="headerlink" href="#umsetzung_1" title="Permanent link">#</a></h2>
+<p>Im Gegensatz zu den anderen Tools müssen hierbei zusätzlich alle <code>.sig Files</code> ausgelesen werden, die für jede Lichtsignalanlage automatisch
+erzeugt worden sind. Diese müssen sich wie auch von VISSIM verlangt im
+selben Ordner wie die <code>.inpx-Datei</code> befinden. Nach der Konversion aller
+Signalschaltbilder wird die zuvor konvertierte SUMO <code>.net-Datei</code> mit den
+Informationen der Lichtsignalanlagen ergänzt. Es werden alle
+Signalprogramme ausgelesen, zwischen denen über die WAUT gewechselt
+werden kann. Das Standardprogramm, welches zu Beginn der Simulation
+ausgewählt wird, ist in der <code>.inpx-Datei</code> des VISSIM-Netzes definiert
+und wird aus dieser übernommen.</p>
+<h2 id="beispiel">Beispiel<a class="headerlink" href="#beispiel" title="Permanent link">#</a></h2>
+<p><img alt="311_vissim.png" src="../../images/311_vissim.png" title="311_vissim.png" />
+<img alt="311_sumo.png" src="../../images/311_sumo.png" title="311_sumo.png" /></p>
+<p>Hier ein Vergleich zweier Signalprogramme über die graphische Oberfläche
+von VISSIM und SUMO zu sehen. Die Abbildung zeigt, dass die umgesetzten
+Signalgruppen übereinstimmen. Da in VISSIM jedoch der Signalzustand
+grün-blinkend existiert, welcher in SUMO nicht definiert ist, musste
+dieser bei der Konversion vereinfacht als grün angenommen werden. Des
+Weiteren ist zu sehen, dass nicht alle Signalgruppen aus VISSIM bei der
+Konversion in SUMO übernommen worden sind. Diese wurden zwar in VISSIM
+definiert, jedoch keiner Strecke zugeordnet und somit haben diese keinen
+Einfluss auf die Simulation.</p>
+<h1 id="konversion_der_induktionsschleifen_und_reisezeitmessungen">Konversion der Induktionsschleifen und Reisezeitmessungen<a class="headerlink" href="#konversion_der_induktionsschleifen_und_reisezeitmessungen" title="Permanent link">#</a></h1>
+<p>Das Python Skript <code>convert_detectors2SUMO.py</code> ermöglicht es,
+Induktionsschleifen und Reisezeitmessungen aus einem VISSIM-Netz
+auszulesen und in das zuvor durch <code>netconvert</code> konvertierte SUMO-Netz zu
+übernehmen. Bei der Konversion entsteht eine zusätzliches
+<code>.add.xml-Datei</code>, welche anschließend der SUMO config-Datei für die
+Simulation hinzugefügt werden muss. Der Aufruf erfolgt über:</p>
+<pre><code>convert_detectors2SUMO.py -V &lt;vissim-file&gt; -S &lt;sumo-file&gt; -o &lt;output-filename&gt;
+</code></pre>
+
+<h2 id="detektor-definition_vissim">Detektor-Definition VISSIM<a class="headerlink" href="#detektor-definition_vissim" title="Permanent link">#</a></h2>
+<p>Querschnittsmessungen werden in VISSIM durch den XML-tag
+<code>&lt;dataCollectionPoint&gt;</code> gekennzeichnet. Die Position der einzelnen
+Detektoren ist durch den jeweiligen Fahrstreifen der Strecke sowie deren
+Laufmeter gegeben:</p>
+<pre><code>&lt;dataCollectionPoint lane=&quot;108 1&quot; name=&quot;301.41&quot; no=&quot;1&quot; pos=&quot;162.558473&quot;/&gt;
+&lt;dataCollectionPoint lane=&quot;262 4&quot; name=&quot;301.12&quot; no=&quot;10&quot; pos=&quot;32.960054&quot;/&gt;
+</code></pre>
+
+<p>Resezeitmessungen sind in VISSIM nicht fahrstreifen- sondern
+streckenbezogen. Hierfür wird die Strecke und der Laufmeter für den
+Start- und Endpunkt festgelegt:</p>
+<pre><code>  &lt;vehicleTravelTimeMeasurement name=&quot;Wienerstrasse_Sueden&quot; no=&quot;1&quot;&gt;
+     &lt;start link=&quot;207&quot; pos=&quot;239.836000&quot;/&gt;
+     &lt;end link=&quot;126&quot; pos=&quot;12.867000&quot;/&gt;
+  &lt;/vehicleTravelTimeMeasurement&gt;
+</code></pre>
+
+<h2 id="detektor-definition_sumo">Detektor-Definition SUMO<a class="headerlink" href="#detektor-definition_sumo" title="Permanent link">#</a></h2>
+<p>Induktionsschleifen werden in SUMO ähnlich definiert wie die
+Querschnittsmessungen in VISSIM. Zur Positionierung werden ebenfalls
+Fahrstreifen und Laufmeter angegeben. Es ist jedoch zusätzlich möglich
+das Zeitintervall zu definieren, in dem die Daten aggregiert werden.</p>
+<pre><code>  &lt;inductionLoop file=&quot;ind_out.xml&quot; freq=&quot;900&quot; id=&quot;1_301.41&quot; lane=&quot;108_0&quot; pos=&quot;162.554736186&quot;/&gt;
+  &lt;inductionLoop file=&quot;ind_out.xml&quot; freq=&quot;900&quot; id=&quot;33_359.21&quot; lane=&quot;123_0&quot; pos=&quot;28.1962390136&quot;/&gt;
+</code></pre>
+
+<p>Wie bei den Induktionsschleifen sind auch die Reisezeitmessungen durch
+das Zeitintervall der Aggregierung und deren Position definiert. In SUMO
+muss sich jedoch im Gegensatz zu VISSIM die Reisezeitmessung nicht auf
+die ganze Strecke beziehen, da definiert wird, welche Fahrstreifen
+berücksichtigt werden sollen.</p>
+<pre><code>  &lt;entryExitDetector file=&quot;time_out.xml&quot; freq=&quot;900&quot; id=&quot;1&quot;&gt;
+     &lt;detEntry lane=&quot;207_0&quot; pos=&quot;239.753789696&quot;/&gt;
+     &lt;detEntry lane=&quot;207_1&quot; pos=&quot;241.370532161&quot;/&gt;
+     &lt;detExit lane=&quot;126_0&quot; pos=&quot;23.2884507277&quot;/&gt;
+     &lt;detExit lane=&quot;126_1&quot; pos=&quot;23.2873152316&quot;/&gt;
+  &lt;/entryExitDetector&gt;
+</code></pre>
+
+<h2 id="umsetzung_2">Umsetzung<a class="headerlink" href="#umsetzung_2" title="Permanent link">#</a></h2>
+<p>Da bei der Netzkonversion die Verbindungsstrecken aus VISSIM zu
+SUMO-<em>junctions</em> zusammengefasst werden, bleiben die Streckenlängen
+nicht exakt erhalten. Dies hat zur Folge, dass auch die Laufmeterangabe
+nicht mehr übereinstimmt. Daher werden die Detektor-Koordinaten in
+VISSIM ermittelt und anschließend in SUMO-Koordinaten transformiert. Zur
+Ermittlung des Laufmeters in SUMO wird danach der Punkt auf der Strecke
+gesucht, der den geringsten Abstand zu den zuvor ermittelten Koordinaten
+aufweist.</p>
+<p>Ein weiteres Problem bei der Konversion der Reisezeitmessungen ergibt
+sich dadurch, dass die Messungen immer für einen geschlossenen Bereich
+definiert sein müssen, was in VISSIM nicht der Fall ist. Dadurch ergeben
+sich Fehlermeldungen während der Simulation, falls Fahrzeuge den
+Endpunkt einer Reisezeitmessung passieren, den Startpunkt jedoch nie
+erreicht haben.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 03 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

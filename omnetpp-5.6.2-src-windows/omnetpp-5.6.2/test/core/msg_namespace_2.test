@@ -1,0 +1,38 @@
+%description:
+Test nested namespace.
+
+%file: test.msg
+
+namespace @TESTNAME@::bar;
+
+class Foo extends cObject
+{
+};
+
+struct Struct
+{
+};
+
+%includes:
+#include "test_m.h"
+
+%activity:
+
+// checks that classes are in the correct namespace
+::@TESTNAME@::bar::Foo x;
+::@TESTNAME@::bar::Struct y;
+
+// check descriptor full name
+EV << x.getDescriptor()->getFullName() << "\n";
+
+// yet again
+EV << cClassDescriptor::getDescriptorFor("@TESTNAME@::bar::Foo")->getClassName() << "\n";
+EV << cClassDescriptor::getDescriptorFor("@TESTNAME@::bar::Struct")->getClassName() << "\n";
+EV << ".\n";
+
+%contains: stdout
+@TESTNAME@::bar::Foo
+@TESTNAME@::bar::FooDescriptor
+@TESTNAME@::bar::StructDescriptor
+.
+

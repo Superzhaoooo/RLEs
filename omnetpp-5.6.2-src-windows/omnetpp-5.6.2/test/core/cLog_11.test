@@ -1,0 +1,16 @@
+%description:
+
+Test all log macro variants.
+
+%inifile: test.ini
+[General]
+cmdenv-log-prefix = "[%l]%9%c "
+
+%activity:
+
+EV_DEBUG << "Hello World " << 1 << endl;
+EV_DEBUG_C("Test") << "Hello World " << 3 << endl;
+
+%contains: stdout
+[DEBUG]   Hello World 1
+[DEBUG]  Test Hello World 3

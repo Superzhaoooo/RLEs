@@ -1,0 +1,30 @@
+%description:
+Tests the following properties of cPacket:
+message kind, priority, length, bit error, timestamp, context pointer
+
+%activity:
+cPacket msg("msg");
+int dummy;
+
+msg.setKind(10);
+msg.setSchedulingPriority(3);
+msg.setBitLength(456);
+msg.setBitError(true);
+msg.setTimestamp(2.434);
+msg.setContextPointer(&dummy);
+
+EV << "kind: " << msg.getKind() << endl;
+EV << "priority: " << msg.getSchedulingPriority() << endl;
+EV << "length: " << msg.getBitLength() << endl;
+EV << "bitError: " << msg.hasBitError() << endl;
+EV << "timestamp: " << msg.getTimestamp() << endl;
+EV << "contextPointer ok: " << (msg.getContextPointer() == &dummy) << endl;
+
+%contains: stdout
+kind: 10
+priority: 3
+length: 456
+bitError: 1
+timestamp: 2.434
+contextPointer ok: 1
+

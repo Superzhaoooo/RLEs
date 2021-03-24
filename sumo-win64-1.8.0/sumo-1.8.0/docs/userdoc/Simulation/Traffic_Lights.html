@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Traffic Lights - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Traffic_Lights.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#automatically_generated_tls-programs">Automatically Generated TLS-Programs</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#default_4-arm_intersection_layout_opposites" class="nav-link">• Default 4-arm intersection (layout opposites)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#intersection_layout_incoming" class="nav-link">• Intersection layout incoming</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#intersection_layout_alternateoneway" class="nav-link">• Intersection layout alternateOneWay</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#other_intersections" class="nav-link">• Other Intersections</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#improving_generated_programs_with_knowledge_about_traffic_demand" class="nav-link">• Improving Generated programs with knowledge about traffic demand</a>
+                </li>
+            <li class="nav-item main"><a href="#defining_new_tls-programs">Defining New TLS-Programs</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#tllogic62_attributes" class="nav-link">• &lt;tlLogic> Attributes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#phase62_attributes" class="nav-link">• &lt;phase> Attributes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#signal_state_definitions" class="nav-link">• Signal state definitions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#default_link_indices" class="nav-link">&rarr; Default link indices</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#accessing_indices_programmatically" class="nav-link">&rarr; Accessing indices programmatically</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#viewing_tls-programs_graphically" class="nav-link">• Viewing TLS-Programs graphically</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#actuated_traffic_lights" class="nav-link">• Actuated Traffic Lights</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#based_on_time_gaps" class="nav-link">&rarr; Based on Time Gaps</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#based_on_time_loss" class="nav-link">&rarr; Based on Time Loss</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#interaction_between_signal_plans_and_right-of-way_rules" class="nav-link">• Interaction between signal plans and right-of-way rules</a>
+                </li>
+            <li class="nav-item main"><a href="#loading_a_new_program">Loading a new Program</a></li>
+            <li class="nav-item main"><a href="#tools_for_importing_tls_programs">Tools for Importing TLS Programs</a></li>
+            <li class="nav-item main"><a href="#modifying_existing_tls-programs">Modifying Existing TLS-Programs</a></li>
+            <li class="nav-item main"><a href="#controlling_multiple_junctions_with_the_same_controller">Controlling multiple Junctions with the same controller</a></li>
+            <li class="nav-item main"><a href="#defining_signal_groups">Defining Signal Groups</a></li>
+            <li class="nav-item main"><a href="#defining_program_switch_times_and_procedure">Defining Program Switch Times and Procedure</a></li>
+            <li class="nav-item main"><a href="#evaluation_of_traffic_lights_performance">Evaluation of Traffic Lights Performance</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#tools_for_automatic_detector_generation" class="nav-link">• Tools For Automatic Detector Generation</a>
+                </li>
+            <li class="nav-item main"><a href="#controlling_traffic_lights_via_traci">Controlling traffic lights via TraCI</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#setting_the_phase" class="nav-link">• Setting the phase</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#setting_the_duration" class="nav-link">• Setting the duration</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#setting_the_state" class="nav-link">• Setting the state</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#setting_the_complete_program" class="nav-link">• Setting the complete Program</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#switching_between_pre-defined_programs" class="nav-link">• Switching between pre-defined Programs</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Traffic Lights<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>Normally, <a href="../netconvert.html">netconvert</a> and
+<a href="../netgenerate.html">netgenerate</a> generate traffic lights and
+programs for junctions during the computation of the networks. Still,
+these computed programs quite often differ from those found in reality.
+To feed the simulation with real traffic light programs, it is possible
+to run <a href="../sumo.html">sumo</a>/<a href="../sumo-gui.html">sumo-gui</a> with
+additional program definitions. Also,
+<a href="../sumo.html">sumo</a>/<a href="../sumo-gui.html">sumo-gui</a> allow loading
+definitions which describe when and how a set of traffic lights can
+switch from one program to another. Both will be discussed in the
+following subchapters. Another possiblity is to edit traffic light plans
+visually in <a href="../netedit.html#traffic_lights">netedit</a>.</p>
+<h1 id="automatically_generated_tls-programs">Automatically Generated TLS-Programs<a class="headerlink" href="#automatically_generated_tls-programs" title="Permanent link">#</a></h1>
+<ul>
+<li>All traffic lights are generated with a fixed cycle and a default
+  cycle time of 90s. This can be changed with the option <strong>--tls.cycle.time</strong>.</li>
+<li>The green time is split equally between the main phases</li>
+<li>All green phases are followed by a yellow phase. The length of the
+  yellow phase is computed from the maximum speed of the incoming
+  roads but may be customized with the option <strong>--tls.yellow.time</strong></li>
+<li>If the speeds at the intersection are below the threshold of 70km/h
+  (configurable via option <strong>tls.minor-left.max-speed</strong>), left-turns are allowed at the same time
+  as oncoming straight traffic but have to yield. This is called
+  <em>green minor</em> and indicated with a lower-case <strong>g</strong> in the state
+  definition. Otherwise, the left-turning stream must use a protected
+  left-turn phase (see below). If no such phase can be built because
+  there is no dedicated turning lane, <em>green minor</em> is allowed anyway
+  but a warning is issued.</li>
+<li>If a green phase allows for partially conflicting streams (i.e.
+  straight going and left-turning from the opposite direction) and
+  there is a dedicated turning lane, it is succeeded by another green
+  phase with full priority to the partially conflicted streams (this
+  would typically be a left-turning phase). The duration of this phase
+  defaults to 6s and can be customized (or disabled) by setting the
+  option <strong>--tls.left-green.time</strong>.</li>
+<li>The generated cycle starts at time 0 by default with a green phase for the first main direction 
+  (sorted by road priority, lane count and speed). This can be influenced for a specified list of traffic light ids using the options <strong>--tls.half-offset TLS1,TLS2,..</strong> and <strong>--tls.quarter-offset TLS3,TLS4,...</strong>. (shifting the start of the first phase by the indicated fraction of the cycle time).</li>
+<li>In reality there are often phases where all streams have red to
+  allow clearing an intersection. SUMO does not build these phases by
+  default. To have each green phase preceded by an all-red phase, the
+  option <strong>--tls.allred.time</strong> can be used.</li>
+<li>It is also possible to generate
+  <a href="#actuated_traffic_lights">#Actuated_Traffic_Lights</a>
+  by setting the option <strong>--tls.default-type actuated</strong>. This will generated the same signal plans as
+  above but with green phases that have a variable length of 5s-50s
+  (both values can be set using the options <strong>--tls.min-dur, --tls.max-dur</strong>).</li>
+<li>The generated phase layout can be selected setting option <strong>--tls.layout</strong> to
+  <em>opposites</em> (default) or <em>incoming</em>.</li>
+<li>The generated phase layout is also influenced by the <a href="../Networks/PlainXML.html#node_types">node
+  type</a> which may be either
+  <em>traffic_light</em> or <em>traffic_light_right_on_red</em> (explained
+  below)</li>
+</ul>
+<h2 id="default_4-arm_intersection_layout_opposites">Default 4-arm intersection (layout <em>opposites</em>)<a class="headerlink" href="#default_4-arm_intersection_layout_opposites" title="Permanent link">#</a></h2>
+<p>By default, programs are generated with 4 green phases:</p>
+<ol>
+<li>a straight phase</li>
+<li>a left-turning phase (only if there is a dedicated left-turn lane)</li>
+<li>a straight phase for the direction orthogonal to the first one</li>
+<li>a left-turning phase for the direction direction orthogonal to the
+    first one (only if there is a dedicated left-turn lane)</li>
+</ol>
+<p>Due to the default timings explained above, the green phases usually
+have a duration of 31s.</p>
+<p>If the node type is set to <em>traffic_light_right_on_red</em> rather than
+<em>traffic_light</em>, then right turns from all sides are permitted in all
+phases (after coming to a stop before entering the traffic stream that
+currently has the green light.</p>
+<h2 id="intersection_layout_incoming">Intersection layout <em>incoming</em><a class="headerlink" href="#intersection_layout_incoming" title="Permanent link">#</a></h2>
+<ul>
+<li>each incoming edge of the intersection gets a separate green phase
+where all directions of movement are allowed</li>
+<li>If the node type is set to <em>traffic_light_right_on_red</em> rather
+than <em>traffic_light</em>, then compatible right-turns are allowed
+simultaneously</li>
+</ul>
+<h2 id="intersection_layout_alternateoneway">Intersection layout <em>alternateOneWay</em><a class="headerlink" href="#intersection_layout_alternateoneway" title="Permanent link">#</a></h2>
+<p>This layout can be used to model alternating access to a road section which can only be used by one direction at a time.
+To make use of this layout, a <a href="#controlling_multiple_junctions_with_the_same_controller">joint traffic light</a> must be defined for all junctions that border the restricted section. Alternating green phases are separated by an all-red phase that is long enough to clear the interior section.</p>
+<h2 id="other_intersections">Other Intersections<a class="headerlink" href="#other_intersections" title="Permanent link">#</a></h2>
+<ul>
+<li>If there are more than 4 roads meeting at an intersection,
+additional green phases are generated</li>
+<li>If the roads meeting at an intersection have the highest road
+priorities on a turning stream, then layout <em>incoming</em> may be
+generated instead of layout <em>opposites</em>.</li>
+<li>If a traffic-light junction does not have any conflicting roads
+(i.e. it models a pedestrian crossing) it will not get a red phase
+by default. A single red phase may be generated by setting the
+option <strong>--tls.red.time</strong>.</li>
+</ul>
+<h2 id="improving_generated_programs_with_knowledge_about_traffic_demand">Improving Generated programs with knowledge about traffic demand<a class="headerlink" href="#improving_generated_programs_with_knowledge_about_traffic_demand" title="Permanent link">#</a></h2>
+<ul>
+<li>To get traffic lights that adapt to demand dynamically, built the
+network with option <strong>--tls.default-type actuated</strong>. This will automatically generate <a href="#actuated_traffic_lights">actuated
+traffic lights</a>. To convert an
+existing .net.xml file so that all traffic lights are actuated,
+perform the following steps:<ul>
+<li>netconvert -s orig.net.xml --plain-output-prefix plain</li>
+<li>netconvert -e plain.edg.xml -n plain.nod.xml -x plain.con.xml -o
+  updated.net.xml --ignore-errors.edge-type --tls.default-type
+  actuated</li>
+</ul>
+</li>
+<li>The tool
+<a href="../Tools/tls.html#tlscycleadaptationpy">tlsCycleAdaptation.py</a>
+can be used to modify green phase durations to accommodate a given
+traffic demand.</li>
+<li>The tool <a href="../Tools/tls.html#tlscoordinatorpy">tlsCoordinator.py</a>
+can be used to modify program offsets to generated green waves for a
+given traffic demand.</li>
+</ul>
+<h1 id="defining_new_tls-programs">Defining New TLS-Programs<a class="headerlink" href="#defining_new_tls-programs" title="Permanent link">#</a></h1>
+<p>You can load new definitions for traffic lights as a part of an <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a>. When
+loaded, the last program will be used. Switching between programs is
+possible via WAUTs and/or TraCI. Also, one can switch between them using
+the GUI context menu. A definition of a traffic light program within an <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a>
+looks like this:</p>
+<pre><code>&lt;additional&gt;
+  &lt;tlLogic id=&quot;0&quot; programID=&quot;my_program&quot; offset=&quot;0&quot; type=&quot;static&quot;&gt;
+    &lt;phase duration=&quot;31&quot; state=&quot;GGggrrrrGGggrrrr&quot;/&gt;
+    &lt;phase duration=&quot;5&quot;  state=&quot;yyggrrrryyggrrrr&quot;/&gt;
+    &lt;phase duration=&quot;6&quot;  state=&quot;rrGGrrrrrrGGrrrr&quot;/&gt;
+    &lt;phase duration=&quot;5&quot;  state=&quot;rryyrrrrrryyrrrr&quot;/&gt;
+    &lt;phase duration=&quot;31&quot; state=&quot;rrrrGGggrrrrGGgg&quot;/&gt;
+    &lt;phase duration=&quot;5&quot;  state=&quot;rrrryyggrrrryygg&quot;/&gt;
+    &lt;phase duration=&quot;6&quot;  state=&quot;rrrrrrGGrrrrrrGG&quot;/&gt;
+    &lt;phase duration=&quot;5&quot;  state=&quot;rrrrrryyrrrrrryy&quot;/&gt;
+  &lt;/tlLogic&gt;
+&lt;/additional&gt;
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To get started you can copy the <strong>tlLogic</strong> elements for all traffic lights you wish to edit from a .net.xml file and put them into a new file. Then you only need to change the programID attribute and the program is ready to be modified and loaded</p>
+</div>
+<h2 id="tllogic62_attributes">&lt;tlLogic> Attributes<a class="headerlink" href="#tllogic62_attributes" title="Permanent link">#</a></h2>
+<p>The following attributes/elements are used within the tlLogic element:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>id (string)</td>
+<td>The id of the traffic light. This must be an existing traffic light id in the .net.xml file. Typically the id for a traffic light is identical with the junction id. The name may be obtained by right-clicking the red/green bars in front of a controlled intersection.</td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>enum (static, actuated, delay_based)</td>
+<td>The type of the traffic light (fixed phase durations, phase prolongation based on time gaps between vehicles (actuated), or on accumulated time loss of queued vehicles (delay_based) )</td>
+</tr>
+<tr>
+<td><strong>programID</strong></td>
+<td>id (string)</td>
+<td>The id of the traffic light program; This must be a new program name for the traffic light id. Please note that "off" is reserved, see below.</td>
+</tr>
+<tr>
+<td><strong>offset</strong></td>
+<td>int</td>
+<td>The initial time offset of the program</td>
+</tr>
+</tbody>
+</table>
+<h2 id="phase62_attributes">&lt;phase> Attributes<a class="headerlink" href="#phase62_attributes" title="Permanent link">#</a></h2>
+<p>Each phase is defined using the following attributes:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>duration</strong></td>
+<td>time (int)</td>
+<td>The duration of the phase</td>
+</tr>
+<tr>
+<td><strong>state</strong></td>
+<td>list of signal states</td>
+<td>The traffic light states for this phase, see below</td>
+</tr>
+<tr>
+<td>minDur</td>
+<td>time (int)</td>
+<td>The minimum duration of the phase when using type <strong>actuated</strong>. Optional, defaults to duration.</td>
+</tr>
+<tr>
+<td>maxDur</td>
+<td>time (int)</td>
+<td>The maximum duration of the phase when using type <strong>actuated</strong>. Optional, defaults to duration.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>An optional description for the phase. This can be used to establish the correspondence between SUMO-phase-indexing and traffic engineering phase names.</td>
+</tr>
+<tr>
+<td>next</td>
+<td>list of phase indices (int ...)</td>
+<td>The next phase in the cycle after the current. This is useful when adding extra transition phases to a traffic light plan which are not part of every cycle. Traffic lights of type 'actuated' can make use of a list of indices for selecting among alternative successor phases.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>In a SUMO-TLS definition, time is on the vertical axis and each phase describes all signal states that last for a fixed duration. This differs from typical traffic engineering diagrams where time is on the horizontal axis and each row describes the states for one signal. Another crucial difference is, that in SUMO a new phase is introduced whenever at least one signal changes its state. This means that transitions between green phases can be made up of multiple intermediate phases.</p>
+</div>
+<h2 id="signal_state_definitions">Signal state definitions<a class="headerlink" href="#signal_state_definitions" title="Permanent link">#</a></h2>
+<p>Each character within a phase's state describes the state of one signal
+of the traffic light. Please note, that a single lane may contain
+several signals - for example one for vehicles turning left and one for
+vehicles which move straight. This means that a signal does not control
+lanes, but links - each connecting a lane which is incoming into a
+junction and one which is outgoing from this junction. In SUMO, a
+one-to-n dependency between signals and links is implemented, this means
+each signal may control more than a single link - though networks
+generated by <a href="../netconvert.html">netconvert</a> or
+<a href="../netgenerate.html">netgenerate</a> usually use one signal per link.
+Please note also, that a traffic light may control lanes incoming into
+different junctions. The information about which link is controlled by
+which traffic light signal may be obtained using the "show link tls
+index" option within <a href="../sumo-gui.html">sumo-gui</a>'s visualisation
+settings or from the according <code>linkIndex</code>
+attribute of the <code>&lt;connection&gt;</code> elements in the <em>.net.xml</em> file.</p>
+<p>The following signal colors are used:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>GUI Color</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r</td>
+<td><span style="color:#FF0000; background:#FF0000">FOO</span></td>
+<td>'red light' for a signal - vehicles must stop</td>
+</tr>
+<tr>
+<td>y</td>
+<td><span style="color:#FFFF00; background:#FFFF00">FOO</span></td>
+<td>'amber (yellow) light' for a signal - vehicles will start to decelerate if far away from the junction, otherwise they pass</td>
+</tr>
+<tr>
+<td>g</td>
+<td><span style="color:#00B300; background:#00B300">FOO</span></td>
+<td>'green light' for a signal, no priority - vehicles may pass the junction if no vehicle uses a higher priorised foe stream, otherwise they decelerate for letting it pass. They always decelerate on approach until they are within the configured <a href="../Networks/PlainXML.html#explicitly_setting_which_edge_lane_is_connected_to_which">visibility distance</a></td>
+</tr>
+<tr>
+<td>G</td>
+<td><span style="color:#00FF00; background:#00FF00">FOO</span></td>
+<td>'green light' for a signal, priority - vehicles may pass the junction</td>
+</tr>
+<tr>
+<td>s</td>
+<td><span style="color:#800080; background:#800080">FOO</span></td>
+<td>'green right-turn arrow' requires stopping - vehicles may pass the junction if no vehicle uses a higher priorised foe stream. They always stop before passing. This is only generated for junction type <em>traffic_light_right_on_red</em>.</td>
+</tr>
+<tr>
+<td>u</td>
+<td><span style="color:#FF8000; background:#FF8000">FOO</span></td>
+<td>'red+yellow light' for a signal, may be used to indicate upcoming green phase but vehicles may not drive yet (shown as orange in the gui)</td>
+</tr>
+<tr>
+<td>o</td>
+<td><span style="color:#804000; background:#804000">FOO</span></td>
+<td>'off - blinking' signal is switched off, blinking light indicates vehicles have to yield</td>
+</tr>
+<tr>
+<td>O</td>
+<td><span style="color:#00FFFF; background:#00FFFF">FOO</span></td>
+<td>'off - no signal' signal is switched off, vehicles have the right of way</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="traci_tutorial_tls.png" src="../images/Traci_tutorial_tls.png" title="traci_tutorial_tls.png" /></p>
+<p>Example: traffic light with the current state
+<strong>"GrGr"</strong>. The leftmost letter "G" encodes the green light for link 0,
+followed by red for link 1, green for link 2 and red for link 3. The
+link numbers are enabled via <a href="../sumo-gui.html">sumo-gui settings</a> by
+activating <em>show link tls index</em>.</p>
+<h3 id="default_link_indices">Default link indices<a class="headerlink" href="#default_link_indices" title="Permanent link">#</a></h3>
+<p>For traffic lights that control a single intersection, the default
+<a href="../Networks/SUMO_Road_Networks.html#indices_of_a_connection">indices generated generated by
+netconvert</a>
+are numbered in a clockwise pattern starting with 0 at 12 o'clock with
+right-turns ordered before straight connections and left turns.
+<a href="../Networks/PlainXML.html#pedestrian_crossings">Pedestrian
+crossings</a> are always
+assigned at the very end, also in a clockwise manner.</p>
+<p>If traffic lights are joined so that a single program controls multiple
+intersections, the ordering for each intersection stays the same but the
+indices are increased according the order of the controlled junctions in
+the input file.</p>
+<h3 id="accessing_indices_programmatically">Accessing indices programmatically<a class="headerlink" href="#accessing_indices_programmatically" title="Permanent link">#</a></h3>
+<p>TLS Link indices can be access using either</p>
+<ul>
+<li><a href="../Tools/Sumolib.html">sumolib</a> using
+  <a href="http://sumo.dlr.de/daily/pydoc/sumolib.net.html#TLS">tls.getConnections()</a></li>
+<li>or <a href="../TraCI.html">TraCI</a> using
+  <a href="../TraCI/Traffic_Lights_Value_Retrieval.html#structure_of_compound_object_controlled_links">traci.trafficlight.getControlledLinks()</a></li>
+</ul>
+<h2 id="viewing_tls-programs_graphically">Viewing TLS-Programs graphically<a class="headerlink" href="#viewing_tls-programs_graphically" title="Permanent link">#</a></h2>
+<p>In the sumo-gui you can right-click on a red/green stop bar and select <em>show
+phases</em>.</p>
+<h2 id="actuated_traffic_lights">Actuated Traffic Lights<a class="headerlink" href="#actuated_traffic_lights" title="Permanent link">#</a></h2>
+<h3 id="based_on_time_gaps">Based on Time Gaps<a class="headerlink" href="#based_on_time_gaps" title="Permanent link">#</a></h3>
+<p>SUMO supports <em>gap-based</em> actuated traffic control. This control scheme
+is common in Germany and works by prolonging traffic phases whenever a
+continuous stream of traffic is detected. It switches to the next phase
+after detecting a sufficient time gap between successive vehicles. This
+allows for better distribution of green-time among phases and also
+affects cycle duration in response to dynamic traffic conditions.</p>
+<p>To use this type of control, the <code>&lt;tlLogic&gt;</code>-element needs to receive the attribute
+<code>type="actuated"</code>. It also requires the usage of the <code>phase</code>-attributes <code>minDur</code> and <code>maxDur</code> instead of <code>duration</code> to
+define the allowed range of time durations for each phase (if these
+values are equal or only <code>duration</code> is given, that phase will have constant
+duration). Additional parameters may be used to configure the control
+algorithm further. These may be given within the <code>&lt;tlLogic&gt;</code>-Element as follows:</p>
+<h4 id="detectors">Detectors<a class="headerlink" href="#detectors" title="Permanent link">#</a></h4>
+<p>The time gaps which determine the phase extensions are collected by induction loop detectors.
+These detectors are placed automatically at a configurable distance (see below). If the incoming lanes are too short and there is a sequence of unique predecessor lanes, the detector will be placed on a predecessor lane at the computed distance instead.</p>
+<p>Each lane incoming to the traffic light will receive a detector. However, not all detectors can be used in all phases.
+In the current implementation, detectors for actuation are only used if all connections from the detector lane gets the unconditional green light ('G') in a particular phase.
+This is done to prevent useless phase extensions when the first vehicle on a given lane is not allowed to drive.
+Sumo will issue a warning a phase or link index does not have usable detectors.</p>
+<h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h4>
+<pre><code>&lt;tlLogic id=&quot;0&quot; programID=&quot;my_program&quot; offset=&quot;0&quot; type=&quot;actuated&quot;&gt;
+  &lt;param key=&quot;max-gap&quot; value=&quot;3.0&quot;/&gt;
+  &lt;param key=&quot;detector-gap&quot; value=&quot;2.0&quot;/&gt;
+  &lt;param key=&quot;passing-time&quot; value=&quot;2.0&quot;/&gt;
+  &lt;param key=&quot;vTypes&quot; value=&quot;&quot;/&gt;
+  &lt;param key=&quot;show-detectors&quot; value=&quot;false&quot;/&gt;
+  &lt;param key=&quot;file&quot; value=&quot;NULL&quot;/&gt;
+  &lt;param key=&quot;freq&quot; value=&quot;300&quot;/&gt;
+
+  &lt;phase duration=&quot;31&quot; minDur=&quot;5&quot; maxDur=&quot;45&quot; state=&quot;GGggrrrrGGggrrrr&quot;/&gt;
+  ...
+&lt;/tlLogic&gt;
+</code></pre>
+
+<h4 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">#</a></h4>
+<p>Several optional parameters can be used to control the behavior of actuated traffic lights. The examples values in the previous section are the default values for these parameters and their meaning is given below:</p>
+<ul>
+<li><strong>max-gap</strong>: the maximum time gap between successive vehicles that will cause the current phase to be prolonged
+(within maxDur limit)</li>
+<li><strong>detector-gap</strong>: determines the time distance between the (automatically generated) detector and the stop line in seconds (at
+each lanes maximum speed). </li>
+<li><strong>passing-time</strong>: estimates the headway between vehicles when passing the stop line. This sets an upper bound on the distance between detector and stop line according to the formula <code>(minDur / passingTime + 0.5) / 7.5</code>. The intent of this bound is to allow all vehicles between the detector and the stop line to pass the intersection within the minDur time. A warning will be issued if the minDur gives insufficient clearing time.</li>
+<li><strong>linkMaxDur:X</strong> (where X is a traffic light index): This sets an additional maximum duration criterion based on individual signals rather than phase duration.</li>
+<li><strong>show-detectors</strong> controls whether generated detectors will be visible or hidden in <a href="../sumo-gui.html">sumo-gui</a>. The default for all traffic lights can be set with option <strong>--tls.actuated.show-detectors</strong>. It is also possible to toggle this value from within the GUI by right-clicking on a traffic light.</li>
+<li>parameters <strong>vTypes</strong>, <strong>file</strong> and <strong>freq</strong> have the same meaning as for <a href="Output/Induction_Loops_Detectors_(E1).html">regular
+induction loop detectors</a>.</li>
+</ul>
+<p>Some parameters are only used when a signal plan with <a href="#dynamic_phase_selection_phase_skipping">dynamic phase selection</a> is active:</p>
+<ul>
+<li><strong>inactive-threshold</strong> (default 180): The parameter sets the time in s after which an inactive phase will be entered preferentially.</li>
+<li><strong>linkMinDur:X</strong> (where X is a traffic light index): This sets an additional minimum duration criterion based on individual signals rather than phase duration</li>
+</ul>
+<h4 id="custom_detectors">Custom Detectors<a class="headerlink" href="#custom_detectors" title="Permanent link">#</a></h4>
+<p>To use custom detectors (i.e. for custom placement or output) additional parameters can be defined where KEY is a lane that is incoming to the traffic light and VALUE is a user-defined inductionLoop (that could also lie on another upstream lane).</p>
+<pre><code>   &lt;param key=&quot;gneE42_2&quot; value=&quot;customDetector1&quot;/&gt;
+</code></pre>
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Custom detectors only work when the 'tlLogic' is loaded from an additional file.</p>
+</div>
+<h4 id="dynamic_phase_selection_phase_skipping">Dynamic Phase Selection (Phase Skipping)<a class="headerlink" href="#dynamic_phase_selection_phase_skipping" title="Permanent link">#</a></h4>
+<p>When a phase uses attribute 'next' with a list of indices. The next phase is chosen dynamically based on the detector status of all candidate phases according to the following algorithm:</p>
+<ul>
+<li>compute the priority for each phase given in 'next'. Priority is primarily given by the number of active detectors for that phase. Active means either of:<ul>
+<li>with detection gap below threshold</li>
+<li>with a detection since the last time where the signal after this detector was green</li>
+</ul>
+</li>
+<li>the current phase is implicitly available for continuation as long as it's maxDur is not reached. Detectors of the current phase get a bonus priority</li>
+<li>the phase with the highest priority is used with phases coming earlier in the next list given precedence over those coming later</li>
+<li>if there is no traffic, the phases will run through a default cycle defined by the first value in the 'next' attribute</li>
+<li>if a particular phase should remain active indefinitely in the absence of traffic it must have its own index in the 'next' list as well as a high maxDur value</li>
+<li>if an active detector was not served for a given time threshold (param <strong>inactive-threshold</strong>), this detector receives bonus priority according the time it was not served. This can be used to prevent starvation if other phases are consistently preferred due to serving more traffic </li>
+</ul>
+<p>Examples for this type of traffic light logic can be found in <a href="https://github.com/eclipse/sumo/blob/master/tests/sumo/basic/tls/actuated/dualring_simple"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/sumo/basic/tls/actuated/dualring_simple</a>.</p>
+<p>The helper script [tls_buildTransitions.py] can be used to generate such logics from simplified definitions.</p>
+<h4 id="visualization">Visualization<a class="headerlink" href="#visualization" title="Permanent link">#</a></h4>
+<p>By setting the sumo option <strong>--tls.actuated.show-detectors</strong> the default visibility of detectors can be
+set. Also, in <a href="../sumo-gui.html">sumo-gui</a> detectors can be
+shown/hidden by right-clicking on an actuated traffic light and
+selecting the corresponding menu entry.</p>
+<p>The detectors used by an actuated traffic light will be colored to indicate their status:
+- green color indicates that the detector is used to determine the length of the current phase
+- white color indicates that the detector is not used in the current phase
+- red color indicates that a vehicle was detected since the last time at which the controlled links at that lane had a green light (only if these links are currently red)</p>
+<h3 id="based_on_time_loss">Based on Time Loss<a class="headerlink" href="#based_on_time_loss" title="Permanent link">#</a></h3>
+<p>Similar to the control by time gaps between vehicles, a phase
+prolongation can also be triggered by the presence of vehicles with time
+loss. A TLS with this actuation type can be defined as follows:</p>
+<pre><code>&lt;tlLogic id=&quot;0&quot; programID=&quot;my_program&quot; offset=&quot;0&quot; type=&quot;delay_based&quot;&gt;
+  &lt;param key=&quot;detectorRange&quot; value=&quot;100&quot; /&gt;
+  &lt;param key=&quot;minTimeLoss&quot; value=&quot;1&quot; /&gt;
+  &lt;param key=&quot;file&quot; value=&quot;NULL&quot;/&gt;
+  &lt;param key=&quot;freq&quot; value=&quot;300&quot;/&gt;
+  &lt;param key=&quot;show-detectors&quot; value=&quot;false&quot;/&gt;
+
+  &lt;phase duration=&quot;31&quot; minDur=&quot;5&quot; maxDur=&quot;45&quot; state=&quot;GGggrrrrGGggrrrr&quot;/&gt;
+  ...
+&lt;/tlLogic&gt;
+</code></pre>
+
+<p>Here, the <code>detectorRange</code> specifies the upstream detection range in meters measured
+from the stop line. Per default (if the parameter is left undefined) the
+underlying <a href="Output/Lanearea_Detectors_(E2).html">E2
+detector</a> is
+assumed to cover the first approaching lanes completely. The time loss
+for a vehicle is accumulated as soon as it enters the detector range. If
+its accumulated time loss exceeds the value of <code>minTimeLoss</code> (current default is one
+second) seconds a prolongation of the corresponding green phase is
+requested if it is active. The instantaneous time loss of a vehicle is
+defined as <code>1 - v/v_max</code>, where <code>v</code> is its current velocity and <code>v_max</code>
+the allowed maximal velocity. See [Oertel, Robert, and Peter Wagner.
+"Delay-time actuated traffic signal control for an isolated
+intersection." Transportation Research Board 2011 (90th Annual Meeting).
+2011.] for details.</p>
+<h4 id="custom_detectors_1">Custom Detectors<a class="headerlink" href="#custom_detectors_1" title="Permanent link">#</a></h4>
+<p>To use custom detectors (i.e. for custom placement or output) additional parameters can be defined where KEY is a lane that is incoming to the traffic light and VALUE is a user-defined laneAreaDetector.</p>
+<pre><code>   &lt;param key=&quot;gneE42_2&quot; value=&quot;customDetector1&quot;/&gt;
+</code></pre>
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Custom detectors only work when the 'tlLogic' is loaded from an additional file.</p>
+</div>
+<h2 id="interaction_between_signal_plans_and_right-of-way_rules">Interaction between signal plans and right-of-way rules<a class="headerlink" href="#interaction_between_signal_plans_and_right-of-way_rules" title="Permanent link">#</a></h2>
+<p>Every traffic light intersection has the right-of-way rules of a
+priority intersection underneath of it. This becomes obvious when
+switching a traffic light off (either in <a href="../sumo-gui.html">sumo-gui</a>
+with a right-click on the traffic light or by <a href="#loading_a_new_program">loading the "off"
+program</a>).</p>
+<p>The right-of-way rules of this priority intersection come into play when
+defining signal plans with simultaneous conflicting green streams (by
+using <em>g</em> and <em>G</em> states). These signal plans only work correctly if the
+right-of-way rules force vehicles from the <em>g</em> stream to yield to the
+<em>G</em> stream. In most cases, this relationship was set correctly by the
+default signal plan.</p>
+<p>However, when introducing new <em>g</em>/<em>G</em> relationships, correctness is only
+ensured by loading the network and the new signal plan into
+<a href="../netconvert.html">netconvert</a> and thus updating the right-of-way
+rules.</p>
+<h1 id="loading_a_new_program">Loading a new Program<a class="headerlink" href="#loading_a_new_program" title="Permanent link">#</a></h1>
+<p>After having defined a tls program as above, it can be loaded as an <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a>; of
+course, a single <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a> may contain several programs. It is possible to load
+several programs for a single tls into the simulation. The program
+loaded last will be used (unless not defined differently using a WAUT
+description). All subkeys of the additional programs must differ if they
+describe the same tls.</p>
+<p>Assuming the program as defined above is put in a file called
+<em>tls.add.xml</em> it can be loaded in
+<a href="../sumo.html">sumo</a>/<a href="../sumo-gui.html">sumo-gui</a> like this</p>
+<pre><code>sumo -a tls.add.xml ...&lt;other options for network and routes&gt;
+</code></pre>
+
+<p>It is also possible to load a program which switches the tls off by
+giving the <code>programID</code> the value
+"<code>off</code>".</p>
+<pre><code>&lt;tlLogic id=&quot;0&quot; type=&quot;static&quot; programID=&quot;off&quot;/&gt;
+</code></pre>
+
+<h1 id="tools_for_importing_tls_programs">Tools for Importing TLS Programs<a class="headerlink" href="#tools_for_importing_tls_programs" title="Permanent link">#</a></h1>
+<p>Description from real-world traffic light systems do not arrive in form
+of SUMO-traffic light descriptions normally. The main difference in
+presentation comes from the fact that SUMO defines a new <code>&lt;phase&gt;</code> whenever any
+of the controlled signals changes its state, whereas traffic engineers
+differentiate between phases and phase transitions.</p>
+<p>For an easier import than editing the XML by hand, some tools exists in
+<strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/tls.</p>
+<ul>
+<li><a href="../Tools/tls.html#tls_csv2sumopy">tls_csv2SUMO.py</a>: this tool
+  simplifies descriptions because it allows to define the duration of
+  phases for each controlled edge-to-edge connection. Splitting into
+  smaller SUMO-phases because other signals change is done
+  automatically.</li>
+<li><a href="../Tools/tls.html#tls_csvsignalgrouppy">tls_csvSignalGroup.py</a>:
+  this tool further simplifies descriptions because it allows to
+  define the start and end times of green-phases per signal group (up
+  to 2 green phases, actually) and the transitions (yellow,
+  red-yellow) are added automatically. The splitting into smaller
+  SUMO-phases is also done automatically.</li>
+</ul>
+<p>Alternatively <a href="../netedit.html">netedit</a> can be used to edit programs
+using a graphical user interface.</p>
+<h1 id="modifying_existing_tls-programs">Modifying Existing TLS-Programs<a class="headerlink" href="#modifying_existing_tls-programs" title="Permanent link">#</a></h1>
+<p>To modify the program of a traffic light it is generally necessary to
+<a href="#loading_new_tls-programs">load a new program</a>. However, in
+the special case that only the offset shall be modified it is also
+possible to specify a new offset for an existing traffic light id and
+programID:</p>
+<pre><code>&lt;additional&gt;
+  &lt;tlLogic id=&quot;0&quot; programID=&quot;0&quot; offset=&quot;42&quot;/&gt;
+&lt;/additional&gt;
+</code></pre>
+
+<h1 id="controlling_multiple_junctions_with_the_same_controller">Controlling multiple Junctions with the same controller<a class="headerlink" href="#controlling_multiple_junctions_with_the_same_controller" title="Permanent link">#</a></h1>
+<p>In SUMO, a traffic light controller can control an arbitrary number of
+junctions simultaneously. This is accomplished by one of the following
+methods:</p>
+<ul>
+<li>Defining the same <em>tl</em> attribute (the controller ID) for a set of
+  nodes in <em>.nod.xml</em> file when building the network with
+  <a href="../netconvert.html">netconvert</a></li>
+<li>Setting the same <em>tl</em> attribute for multiple nodes in
+  <a href="../netedit.html">netedit</a></li>
+<li>Setting the option <strong>--tls.join</strong> when building the network with
+  <a href="../netconvert.html">netconvert</a>. This will automatically join
+  the traffic lights of nodes in close proximity within a default
+  distance of 20m (customizable by setting option <strong>tls.join-dist</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>).</li>
+</ul>
+<p>Note, that in this case the state vector for each phase will be as long
+as the total number of controlled intersections. Also, the tls indices
+for the connections will differ from the link indices (as the latter
+starts with 0 for each intersection whereas the tls indices are unique
+within a controller).</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The generated TLS program will attempt to identify the main directions but usually this needs some manual corrections.</p>
+</div>
+<h1 id="defining_signal_groups">Defining Signal Groups<a class="headerlink" href="#defining_signal_groups" title="Permanent link">#</a></h1>
+<p>In SUMO every lane-to-lane connection at a controlled intersection is
+assigned an index called <em>link tls index</em>. This index is used to
+determine the state for each phase by looking up the character code at
+that index in the state vector. The link index can be shown in
+<a href="../sumo-gui.html">sumo-gui</a> by setting the junction visualization
+option <em>show link tls index</em>. By default link indices are unique for
+each connection and assigned in a clockwise manner starting at the north
+(the same as the junction link index which is used for defining
+right-of-way rules). When <a href="#controlling_multiple_junctions_with_the_same_controller">defining joint
+TLS</a>,
+the indices continue their numbering in the order of the controlled
+junctions.</p>
+<p>The tls index for each connection can be <a href="../Networks/PlainXML.html#controlled_connections">freely assigned in a
+<em>.tll.file</em></a>
+or by setting attribute <em>linkIndex</em> in <a href="../netedit.html">netedit</a>. By
+assigning the <strong>same</strong> index to multiple connection they form a signal
+group and always show the same state (simply because they reference the
+same state index). This allows shortening and thus simplifying the state
+vector.</p>
+<h1 id="defining_program_switch_times_and_procedure">Defining Program Switch Times and Procedure<a class="headerlink" href="#defining_program_switch_times_and_procedure" title="Permanent link">#</a></h1>
+<p>In practice, a tls often uses different programs during a day and maybe
+also for weekdays and for the weekend days. It is possible to load a
+definition of switch times between the programs using a WAUT (short for
+"Wochenschaltautomatik" ~ weekly switch automatism).</p>
+<p>Given a tls which knows four programs - two for weekdays and two for
+weekend days where from 22:00 till 6:00 the night plan shall be used and
+from 6:00 till 22:00 the day plan, and already defined programs, named
+"weekday_night", "weekday_day", "weekend_night", "weekend_day". To
+describe the switch process, we have to describe the switch at first,
+assuming our simulation runs from monday 0.00 (second 0) to monday 0.00
+(second 604800):</p>
+<pre><code>&lt;WAUT refTime=&quot;0&quot; id=&quot;myWAUT&quot; startProg=&quot;weekday_night&quot;&gt;
+    &lt;wautSwitch time=&quot;21600&quot; to=&quot;weekday_day&quot;/&gt;    &lt;!-- monday, 6.00 --&gt;
+    &lt;wautSwitch time=&quot;79200&quot; to=&quot;weekday_night&quot;/&gt;  &lt;!-- monday, 22.00 --&gt;
+    &lt;wautSwitch time=&quot;108000&quot; to=&quot;weekday_day&quot;/&gt;   &lt;!-- tuesday, 6.00 --&gt;
+... further weekdays ...
+    &lt;wautSwitch time=&quot;453600&quot; to=&quot;weekend_day&quot;/&gt;   &lt;!-- saturday, 6.00 --&gt;
+... the weekend days ...
+&lt;/WAUT&gt;
+</code></pre>
+
+<p>The fields in WAUT have the following meanings:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string id</td>
+<td>The name of the defined WAUT</td>
+</tr>
+<tr>
+<td><strong>startProg</strong></td>
+<td>string id</td>
+<td>The program that will be used at the simulation's begin</td>
+</tr>
+<tr>
+<td>refTime</td>
+<td>time</td>
+<td>A reference time which is used as offset to the switch times given later (in simulation seconds or D:H:M:S)</td>
+</tr>
+<tr>
+<td>period</td>
+<td>time</td>
+<td>The period for repeating switch times. Disabled when set to &lt;= 0, default 0</td>
+</tr>
+</tbody>
+</table>
+<p>and the fields in wautSwitch:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>time</strong></td>
+<td>int</td>
+<td>The time the switch will take place</td>
+</tr>
+<tr>
+<td><strong>to</strong></td>
+<td>string id</td>
+<td>The name of the program the assigned tls shall switch to</td>
+</tr>
+</tbody>
+</table>
+<p>Of course, programs with the used names must be defined before this
+definition is read. Also, the switch steps must be sorted by their
+execution time.</p>
+<p>Additionally, a definition about which tls shall be switched by the WAUT
+must be given, as following:</p>
+<pre><code>&lt;wautJunction wautID=&quot;myWAUT&quot; junctionID=&quot;RCAS&quot; [procedure=&quot;Stretch&quot;] [synchron=&quot;t&quot;]/&gt;
+</code></pre>
+
+<p>Here, the attributes have the following meaning:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>wautID</strong></td>
+<td>string id</td>
+<td>The id of the WAUT the tls shall be switched by</td>
+</tr>
+<tr>
+<td><strong>junctionID</strong></td>
+<td>string id</td>
+<td>The name of the tls to assign to the WAUT</td>
+</tr>
+<tr>
+<td><strong>procedure</strong></td>
+<td>string enum</td>
+<td>The switching algorithm to use ("GSP" or "Stretch"). If not set, the programs will switch immediately (default)</td>
+</tr>
+<tr>
+<td><strong>synchron</strong></td>
+<td>bool</td>
+<td>Additional information whether the switch shall be done synchron (default: false)</td>
+</tr>
+</tbody>
+</table>
+<p>It is possible to assign several tls to a single WAUT. It is also
+possible to assign several WAUTs to a single junction in theory, but
+this is not done in reality.</p>
+<p>A complete definition within an <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a> is shown below. It would trigger
+switching between programs <strong>S1</strong> and <strong>S2</strong> for traffic light logic
+<strong>X</strong> with an initial program called <strong>0</strong>.</p>
+<pre><code>&lt;additional&gt;
+
+  &lt;tlLogic id=&quot;X&quot; type=&quot;static&quot; programID=&quot;S1&quot; offset=&quot;0&quot;&gt;
+    &lt;phase duration=&quot;50&quot; state=&quot;Gr&quot;/&gt;
+    &lt;phase duration=&quot;50&quot; state=&quot;rG&quot;/&gt;
+  &lt;/tlLogic&gt;
+
+  &lt;tlLogic id=&quot;X&quot; type=&quot;static&quot; programID=&quot;S2&quot; offset=&quot;0&quot;&gt;
+    &lt;phase duration=&quot;30&quot; state=&quot;Gr&quot;/&gt;
+    &lt;phase duration=&quot;80&quot; state=&quot;rG&quot;/&gt;
+  &lt;/tlLogic&gt;
+
+
+  &lt;WAUT startProg=&quot;0&quot; refTime=&quot;100&quot; id=&quot;w1&quot;&gt;
+    &lt;wautSwitch to=&quot;S1&quot; time=&quot;300&quot;&gt;&lt;/wautSwitch&gt;
+    &lt;wautSwitch to=&quot;SS&quot; time=&quot;800&quot;&gt;&lt;/wautSwitch&gt;
+  &lt;/WAUT&gt;
+
+  &lt;wautJunction junctionID=&quot;X&quot; wautID=&quot;w1&quot;&gt;&lt;/wautJunction&gt;
+
+&lt;additional&gt;
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a traffic light program called "online" is loaded, this program will interrupt WAUT switching at that traffic light. This can be used to override WAUT behavior via TraCI.</p>
+</div>
+<h1 id="evaluation_of_traffic_lights_performance">Evaluation of Traffic Lights Performance<a class="headerlink" href="#evaluation_of_traffic_lights_performance" title="Permanent link">#</a></h1>
+<h2 id="tools_for_automatic_detector_generation">Tools For Automatic Detector Generation<a class="headerlink" href="#tools_for_automatic_detector_generation" title="Permanent link">#</a></h2>
+<p>Some tools are available which help generating detector definitions for
+the evaluation of traffic lights. All are located in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/output.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The actuated traffic lights do not require detector definitions to be added as they generate their own detectors for internal use.</p>
+</div>
+<ul>
+<li><strong><em>generateTLSE2Detectors.py</em></strong> generates a file which includes
+  areal detectors. All lanes incoming into an intersection are covered
+  with these detectors. The offset from the intersection may be given
+  using the option <strong>--distance-to-TLS</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (or <strong>-d</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>), the default is .1m. The generated detectors
+  end either after a given length, defined using <strong>--detector-length</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (or <strong>-l</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>) where the
+  default is 250m, or at the lane's end if the lane is shorter than
+  this length.</li>
+<li><strong><em>generateTLSE3Detectors.py</em></strong> generates a file which includes
+  multi-entry/multi-exit detectors. Detectors are built for each edge
+  incoming to the traffic light. All lanes of each of these edges are
+  covered with exit points. These point's offset from the intersection
+  may be given using the option <strong>--distance-to-TLS</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (or <strong>-d</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>), the default is .1m. The
+  incoming edges are followed upstream, either until a given length,
+  defined using <strong>--detector-length</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (or <strong>-l</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>) where the default is 250m, or another traffic
+  light is reached or no further upstream edge exists. Entry points
+  are generated at these points.</li>
+</ul>
+<p>In both cases, the network must be given using the option <strong>--net-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> (or <strong>-n</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>). The
+file including the detector definitions to generate may be given using
+the option <strong>--output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> (or <strong>-o</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>), default is "e2.add.xml" for areal detectors, and
+"e3.add.xml" for multi-entry/multi-exit detectors. Per default, the
+areal detectors generated by <strong><em>generateTLSE2Detectors.py</em></strong> are writing
+their measures to "e2output.xml", the multi-entry/multi-exit detectors
+generated by <strong><em>generateTLSE2Detectors.py</em></strong> to "e3output.xml". The
+output file name can be changed for both scripts using the option <strong>--results-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> (or <strong>-r</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>). The frequency of generated reports is 60s per default. It can be
+changed using the option <strong>--frequency</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> (or <strong>-f</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>).</p>
+<h1 id="controlling_traffic_lights_via_traci">Controlling traffic lights via TraCI<a class="headerlink" href="#controlling_traffic_lights_via_traci" title="Permanent link">#</a></h1>
+<p><a href="../TraCI/Change_Traffic_Lights_State.html">TraCI provides various functions for controlling traffic
+lights</a>. And the basic
+approaches are outline below</p>
+<h2 id="setting_the_phase">Setting the phase<a class="headerlink" href="#setting_the_phase" title="Permanent link">#</a></h2>
+<p>A common pattern for implementing adaptive control via TraCI is to load
+a program (usually from an
+<a href="#defining_new_tls-programs">additional-file</a>) where all
+green phases have a long duration (i.e. 1000s) to avoid switching by
+SUMO and then use the <strong>setPhase</strong> function to switch to the next phase
+(typically a yellow phase) whenever the green phase should end. The
+nice thing about this approach is, that yellow phase and all-red phases
+can still be handled automatically by SUMO and the control script simply
+determines the duration of the current green phase.</p>
+<p>To implement controllers with branching phase transitions, provide
+multiple transitions to subsequent green phases and when calling
+setPhase, select the yellow phase that starts the transition to the
+target green phase.</p>
+<p>These additional transition phases can be added to the end of the
+program and the optional phase attribute "next" can be used to indicated the
+next phase after the transition ends.</p>
+<p>Tutorials for controlling traffic lights in this way can be found at
+<a href="../Tutorials.html#traci_tutorials">Tutorials#TraCI_Tutorials</a>.</p>
+<h2 id="setting_the_duration">Setting the duration<a class="headerlink" href="#setting_the_duration" title="Permanent link">#</a></h2>
+<p>Using the function <strong>setPhaseDuration</strong>, the remaining duration for the
+current phase can be modified. Note, that this does not take effect when
+encountering the same phase again in the next phase cycle.</p>
+<h2 id="setting_the_state">Setting the state<a class="headerlink" href="#setting_the_state" title="Permanent link">#</a></h2>
+<p>Another method for controlling the traffic light is to set the signal
+state for all links directly using the function
+<em>setRedYellowGreenState</em>. After using this function, SUMO will not
+modify the state anymore (until switching to another program using
+<em>setProgram</em>). Consequently, the script must handle all phases and
+transitions.</p>
+<h2 id="setting_the_complete_program">Setting the complete Program<a class="headerlink" href="#setting_the_complete_program" title="Permanent link">#</a></h2>
+<p>Using the method <strong>setCompleteRedYellowGreenDefinition</strong>, a static
+signal plan can be loaded. Since this method requires a complex data
+structure as argument, it is recommend to first obtain a data structure
+using <strong>getCompleteRedYellowGreenDefinition</strong> and then modify it</p>
+<h2 id="switching_between_pre-defined_programs">Switching between pre-defined Programs<a class="headerlink" href="#switching_between_pre-defined_programs" title="Permanent link">#</a></h2>
+<p>SUMO can load multiple traffic light programs from the <em>.net.mxl</em> file
+and from <a href="#defining_new_tls-programs">additional files</a>. Using
+the TraCI function <strong>setProgram</strong>, a script can switch between them.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 06 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Demand/Activity-based_Demand_Generation.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Demand/Activity-based Demand Generation - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Demand/Activity-based_Demand_Generation.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#typical_command_line">Typical Command Line</a></li>
+            <li class="nav-item main"><a href="#example">Example</a></li>
+            <li class="nav-item main"><a href="#the_statistics_file">The Statistics File</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#general_information" class="nav-link">• General information</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#parameters" class="nav-link">• Parameters</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#populations_age_brackets" class="nav-link">• Population's Age Brackets</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#work_hours" class="nav-link">• Work Hours</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#population_and_work_position_distribution" class="nav-link">• Population and Work Position Distribution</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#city_gates" class="nav-link">• City Gates</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#schools" class="nav-link">• Schools</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#bus_lines" class="nav-link">• Bus Lines</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#final_aspect" class="nav-link">• Final Aspect</a>
+                </li>
+            <li class="nav-item main"><a href="#activities">Activities</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#work_and_school_activities" class="nav-link">• Work and School Activities</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#free_time_activities" class="nav-link">• Free Time Activities</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traffic_which_is_not_covered_by_activitygen" class="nav-link">• Traffic which is not covered by Activitygen</a>
+                </li>
+            <li class="nav-item main"><a href="#transportation_means">Transportation Means</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#feet_or_bike" class="nav-link">• Feet or Bike</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#buses" class="nav-link">• Buses</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#cars" class="nav-link">• Cars</a>
+                </li>
+            <li class="nav-item main"><a href="#generated_vehicles">Generated Vehicles</a></li>
+            <li class="nav-item main"><a href="#limitations">Limitations</a></li>
+            <li class="nav-item main"><a href="#model_documentation">Model Documentation</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Demand/Activity-based Demand Generation<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p><a href="../activitygen.html">activitygen</a> generates demand from a
+description of the population in the net. To do so, it uses a simple
+activity-based traffic model. It supports the activities work, school,
+and free time and the conveyances walking, bike, car, and bus. Cars may
+have their start or stop location outside the map.</p>
+<h2 id="typical_command_line">Typical Command Line<a class="headerlink" href="#typical_command_line" title="Permanent link">#</a></h2>
+<pre><code>activitygen --net-file &lt;NET&gt; --stat-file &lt;STATISTICS&gt; --output-file &lt;TRIPS&gt; --random
+</code></pre>
+
+<p>&lt;NET> is a map in form of a SUMO net file, &lt;STATISTICS> contains the
+description of the population (described below), and &lt;TRIPS> is the
+generated SUMO routes file (the demand).</p>
+<p>You can give ActivityGen a first try with the following example.</p>
+<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h2>
+<p><img alt="activitygen-example-net.png" src="../images/Activitygen-example-net.png" title="activitygen-example-net.png" /> While activitygen has been developed
+mainly to generate traffic demand for larger networks, this example
+features the small network shown in the image on the right. Download the
+files <a href="https://github.com/eclipse/sumo/blob/master/tests/activitygen/demand_generation/activitygen-example.net.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/activitygen/demand_generation/activitygen-example.net.xml</a> and <a href="https://github.com/eclipse/sumo/blob/master/tests/activitygen/demand_generation/activitygen-example.stat.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/activitygen/demand_generation/activitygen-example.stat.xml </a> to follow this example.</p>
+<p>To run this example, use the following commands:</p>
+<pre><code>activitygen --net-file activitygen-example.net.xml \
+            --stat-file activitygen-example.stat.xml \
+            --output-file activitygen-example.trips.rou.xml \
+            --random
+
+duarouter --net-file activitygen-example.net.xml \
+          --route-files activitygen-example.trips.rou.xml \
+          --output-file activitygen-example.rou.xml \
+          --ignore-errors
+
+sumo --net-file activitygen-example.net.xml \
+     --route-files activitygen-example.rou.xml
+</code></pre>
+
+<p>The first command generates the net file from the node and edge
+description. The second command generates the routes file (the demand)
+from a description of the population in the stat file. The generated
+routes files does not contain the complete route information though,
+instead it contains start edge and end edge (and optionally some vias,
+so-called trips) only. This allows you to choose the router you want for
+linking departure and destination edges.</p>
+<p>When you run <a href="../duarouter.html">duarouter</a> as shown above, all
+vehicles will pick the fastest route under the assumption of being alone
+in the network. This may lead to unrealistic jamming and should be
+remedied with a <a href="Dynamic_User_Assignment.html">traffic assignment
+method</a>.</p>
+<p>Finally, you can run a traffic simulation with the SUMO main executable.
+You may also give the trip file directly to SUMO as well but this will
+slow down the simulation considerably because all the routing is now
+done ad hoc based on the current network status. The benefit from this
+approach is better route choice since vehicles take the network state at
+the time of their departure into account during routing (see
+<a href="Automatic_Routing.html">Demand/Automatic_Routing</a>)</p>
+<pre><code>sumo --net-file activitygen-example.net.xml \
+     --route-files activitygen-example.trips.rou.xml
+</code></pre>
+
+<h2 id="the_statistics_file">The Statistics File<a class="headerlink" href="#the_statistics_file" title="Permanent link">#</a></h2>
+<h3 id="general_information">General information<a class="headerlink" href="#general_information" title="Permanent link">#</a></h3>
+<p>First of all we need general information over the city.</p>
+<pre><code>    &lt;city&gt;
+        &lt;general
+            inhabitants=&quot;1000&quot;
+            households=&quot;500&quot;
+            childrenAgeLimit=&quot;18&quot;
+            retirementAgeLimit=&quot;65&quot;
+            carRate=&quot;0.58&quot;
+            unemploymentRate=&quot;0.05&quot;
+            footDistanceLimit=&quot;350&quot;
+            incomingTraffic=&quot;200&quot;
+            outgoingTraffic=&quot;50&quot;
+        /&gt;
+    &lt;/city&gt;
+</code></pre>
+
+<p>The meanings of all these attributes are described in the following
+table:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>inhabitants</strong></td>
+<td>Integer</td>
+<td>Total number of inhabitants</td>
+</tr>
+<tr>
+<td><strong>households</strong></td>
+<td>Integer</td>
+<td>Total number of households (must be between 0.5 and 1 times the number of adults of the city)</td>
+</tr>
+<tr>
+<td><strong>childrenAgeLimit</strong></td>
+<td>Integer</td>
+<td>Age under which people are children. This is the first year of adulthood</td>
+</tr>
+<tr>
+<td><strong>retirementAgeLimit</strong></td>
+<td>Integer</td>
+<td>Age under which people can have children home and work</td>
+</tr>
+<tr>
+<td><strong>carRate</strong></td>
+<td>Float[0;1]</td>
+<td>Probability for an adult to own a car</td>
+</tr>
+<tr>
+<td><strong>unemploymentRate</strong></td>
+<td>Float[0;1]</td>
+<td>Probability for an adult in age of work to be unemployed</td>
+</tr>
+<tr>
+<td><strong>footDistanceLimit</strong></td>
+<td>Float</td>
+<td>Maximum distance one would go by foot instead of another transportation mean.</td>
+</tr>
+<tr>
+<td><strong>incomingTraffic</strong></td>
+<td>Integer</td>
+<td>Number of people coming everyday into the city for they work</td>
+</tr>
+<tr>
+<td><strong>outgoingTraffic</strong></td>
+<td>Integer[0,inhabitants]</td>
+<td>Number of inhabitants working outside the city</td>
+</tr>
+</tbody>
+</table>
+<h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">#</a></h3>
+<p>These entries are different from the general information element in what
+they describe. They depend much more of the special context or state of
+the city (events, behaviour of the population...). They can also be
+useful for optimization: the mean speed can be observed afterwards; all
+values can be changed in order to meet validation criteria on the
+traffic.</p>
+<pre><code>    &lt;city&gt;
+        &lt;general ... /&gt;
+        &lt;parameters
+            carPreference=&quot;0.50&quot;
+            meanTimePerKmInCity=&quot;360&quot;
+            freeTimeActivityRate=&quot;0.15&quot;
+            uniformRandomTraffic=&quot;0.20&quot;
+            departureVariation=&quot;120&quot;
+        /&gt;
+    &lt;/city&gt;
+</code></pre>
+
+<p>The meanings of all these attributes are described in the following
+table:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>carPreference</td>
+<td>Float[0;1]</td>
+<td>Probability that an adult prefers to take his car instead of a public transportation mean (when both available); <em>default: 0</em>.</td>
+</tr>
+<tr>
+<td>meanTimePerKmInCity</td>
+<td>Integer(sec)</td>
+<td>Estimation of the time needed to drive one kilometer (bird's eye) on the map; <em>default: 360s</em>.</td>
+</tr>
+<tr>
+<td>freeTimeActivityRate</td>
+<td>Float[0;1]</td>
+<td>Probability that a given household, a given day, has a free time activity using a car; <em>default: 0.15</em>.</td>
+</tr>
+<tr>
+<td>uniformRandomTraffic</td>
+<td>Float[0;0.999]</td>
+<td>Proportion of the random traffic demand in the whole traffic demand; <em>default: 0</em>.</td>
+</tr>
+<tr>
+<td>departureVariation</td>
+<td>Float(sec)</td>
+<td>Variance of the normal distribution introduced for slight variations in departure time (human natural variation in relation to schedules); <em>default: 0</em>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="populations_age_brackets">Population's Age Brackets<a class="headerlink" href="#populations_age_brackets" title="Permanent link">#</a></h3>
+<p>In order to distribute the population among households and in the city
+coherently, we need a precise age distribution of this population.</p>
+<pre><code>    &lt;city&gt;
+        &lt;general ... /&gt;
+        &lt;parameters ... /&gt;
+
+        &lt;population&gt;
+            &lt;bracket beginAge=&quot;0&quot; endAge&quot;4&quot; peopleNbr=&quot;1745&quot; /&gt;
+             ...
+            &lt;bracket beginAge=&quot;66&quot; endAge&quot;90&quot; peopleNbr=&quot;978&quot; /&gt;
+        &lt;/population&gt;
+
+    &lt;/city&gt;
+</code></pre>
+
+<p>Follows the description of all bracket attributes.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>beginAge</strong></td>
+<td>Integer</td>
+<td>Beginning age of the interval (incl.). If this is not the first bracket, this age is greater or equal to the previous bracket's ending age</td>
+</tr>
+<tr>
+<td><strong>endAge</strong></td>
+<td>Integer</td>
+<td>End age of the interval (excl.). This age is greater to the current bracket's Beginning age</td>
+</tr>
+<tr>
+<td><strong>peopleNbr</strong></td>
+<td>Integer</td>
+<td>Number of people in the interval age of the bracket ([beginAge,endAge)). This is an relative value, it will be normalized with the number of inhabitants of the city</td>
+</tr>
+</tbody>
+</table>
+<h3 id="work_hours">Work Hours<a class="headerlink" href="#work_hours" title="Permanent link">#</a></h3>
+<p>We need to specify the opening and closing hours of all city's work
+positions.</p>
+<pre><code>    &lt;city&gt;
+        &lt;general ... /&gt;
+        &lt;parameters ... /&gt;
+        &lt;population&gt; &lt;bracket ... /&gt; ... &lt;/population&gt;
+
+        &lt;workHours&gt;
+            &lt;opening hour=&quot;30600&quot; proportion=&quot;0.30&quot; /&gt;
+             ...
+            &lt;closing hour=&quot;43200&quot; proportion=&quot;0.20&quot; /&gt;
+             ...
+        &lt;/workHours&gt;
+
+    &lt;/city&gt;
+</code></pre>
+
+<p>Here are descriptions of all attributes of opening and closing elements:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>hour</strong></td>
+<td>Integer(sec)</td>
+<td>Possible beginning or ending time of work.</td>
+</tr>
+<tr>
+<td><strong>proportion</strong></td>
+<td>Float</td>
+<td>Proportion of work positions having this time as a beginning (resp. end) hour. It's a relative value: the probability of occurrence is computed by normalizing all opening (resp. closing) proportion values by one.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="population_and_work_position_distribution">Population and Work Position Distribution<a class="headerlink" href="#population_and_work_position_distribution" title="Permanent link">#</a></h3>
+<p>Now, we have to specify the density of people and work in each street of
+the city. (by street I meant edges which are even more precise)</p>
+<pre><code>    &lt;city&gt;
+        &lt;general ... /&gt;
+        &lt;parameters ... /&gt;
+        &lt;population&gt; &lt;bracket ... /&gt; ... &lt;/population&gt;
+        &lt;workHours&gt; &lt;opening ... /&gt; ... &lt;closing ... /&gt; ... &lt;/workHours&gt;
+
+        &lt;streets&gt;
+            &lt;street edge=&quot;abc123&quot; population=&quot;2.5&quot; workPosition=&quot;10.0&quot; /&gt;
+             ...
+        &lt;/streets&gt;
+
+    &lt;/city&gt;
+</code></pre>
+
+<p>Here are the corresponding attribute descriptions:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>edge</strong></td>
+<td>String</td>
+<td>Edge's id</td>
+</tr>
+<tr>
+<td><strong>population</strong></td>
+<td>Float</td>
+<td>Number of people per meter street. Relative value (normalized with the total number of inhabitants)</td>
+</tr>
+<tr>
+<td><strong>workPosition</strong></td>
+<td>Float</td>
+<td>Number of work positions per meter street. Relative value (normalized with the total number of city's work demand)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="city_gates">City Gates<a class="headerlink" href="#city_gates" title="Permanent link">#</a></h3>
+<p>In order to generate incoming and outgoing traffic, we need to specify
+gates to the city. Every gate will generate the same number of incoming
+(resp. outgoing) cars (the total number divided by the number of gates).</p>
+<pre><code>    &lt;city&gt;
+        &lt;general ... /&gt;
+        &lt;parameters ... /&gt;
+        &lt;population&gt; &lt;bracket ... /&gt; ... &lt;/population&gt;
+        &lt;workHours&gt; &lt;opening ... /&gt; ... &lt;closing ... /&gt; ... &lt;/workHours&gt;
+        &lt;streets&gt; &lt;street ... /&gt; ... &lt;/streets&gt;
+
+        &lt;cityGates&gt;
+            &lt;entrance edge=&quot;abc123&quot; pos=&quot;243.67&quot; incoming=&quot;1.5&quot; outgoing=&quot;2.2&quot;/&gt;
+            &lt;entrance edge=&quot;abc234&quot; pos=&quot;0.00&quot; incoming=&quot;1.0&quot; outgoing=&quot;0.5&quot;/&gt;
+             ...
+        &lt;/cityGates&gt;
+
+    &lt;/city&gt;
+</code></pre>
+
+<p>The corresponding attribute descriptions:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>edge</strong></td>
+<td>String</td>
+<td>Edge's id</td>
+</tr>
+<tr>
+<td><strong>pos</strong></td>
+<td>Float (m)</td>
+<td>Exact position in the street (edge), in meters, from the beginning of the given edge (the maximum value is the length of the edge)</td>
+</tr>
+<tr>
+<td><strong>incoming</strong></td>
+<td>Float</td>
+<td>Proportion of the incoming vehicles, coming through this gate (relatively to the incoming values of the other gates)</td>
+</tr>
+<tr>
+<td><strong>outgoing</strong></td>
+<td>Float</td>
+<td>Proportion of the outgoing vehicles, leaving the city through this gate (relatively to the outgoing values of the other gates)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="schools">Schools<a class="headerlink" href="#schools" title="Permanent link">#</a></h3>
+<p>Children don't go to work but to school. The particularity of schools is
+that they are exactly positioned and receive many pupils every day.</p>
+<pre><code>&lt;city&gt;
+    &lt;general ... /&gt;
+    &lt;parameters ... /&gt;
+    &lt;population&gt; &lt;bracket ... /&gt; ... &lt;/population&gt;
+    &lt;workHours&gt; &lt;opening ... /&gt; ... &lt;closing ... /&gt; ... &lt;/workHours&gt;
+    &lt;streets&gt; &lt;street ... /&gt; ... &lt;/streets&gt;
+    &lt;cityGates&gt; &lt;entrance ... /&gt; ... &lt;/cityGates&gt;
+
+    &lt;schools&gt;
+        &lt;school edge=&quot;123abc&quot; pos=&quot;23.0&quot; beginAge=&quot;12&quot; endAge=&quot;18&quot; capacity=&quot;400&quot; opening=&quot;32400&quot; closing=&quot;64800&quot; /&gt;
+        ...
+    &lt;/schools&gt;
+
+&lt;/city&gt;
+</code></pre>
+
+<p>The corresponding attribute descriptions:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>edge</strong></td>
+<td>String</td>
+<td>Edge's id</td>
+</tr>
+<tr>
+<td><strong>pos</strong></td>
+<td>Float (m)</td>
+<td>Exact position in the street (edge), in meters, from the beginning of the given edge (the maximum value is the length of the edge)</td>
+</tr>
+<tr>
+<td><strong>beginAge</strong></td>
+<td>Integer</td>
+<td>Age of the youngest pupils of the school (lower bound, included in the bracket of acceptance)</td>
+</tr>
+<tr>
+<td><strong>endAge</strong></td>
+<td>Integer</td>
+<td>Age of children not accepted in the school any more (higher bound, excluded from the bracket of acceptance)</td>
+</tr>
+<tr>
+<td><strong>capacity</strong></td>
+<td>Integer</td>
+<td>Maximum number of pupils accepted</td>
+</tr>
+<tr>
+<td><strong>opening</strong></td>
+<td>Integer (sec)</td>
+<td>Time of class beginning (school time)</td>
+</tr>
+<tr>
+<td><strong>closing</strong></td>
+<td>Integer (sec)</td>
+<td>Time of class ending (home time)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bus_lines">Bus Lines<a class="headerlink" href="#bus_lines" title="Permanent link">#</a></h3>
+<p>People have a public bus line system to their disposition. This public
+transportation system is described by stations, different bus lines
+having their corresponding station for both directions and schedules.</p>
+<pre><code>    &lt;city&gt;
+        &lt;general ... /&gt;
+        &lt;parameters ... /&gt;
+        &lt;population&gt; &lt;bracket ... /&gt; ... &lt;/population&gt;
+        &lt;workHours&gt; &lt;opening ... /&gt; ... &lt;closing ... /&gt; ... &lt;/workHours&gt;
+        &lt;streets&gt; &lt;street ... /&gt; ... &lt;/streets&gt;
+        &lt;cityGates&gt; &lt;entrance ... /&gt; ... &lt;/cityGates&gt;
+        &lt;schools&gt; &lt;school ... /&gt; ... &lt;/schools&gt;
+
+        &lt;busStations&gt;
+            &lt;busStation id=&quot;1&quot; edge=&quot;abc123&quot; pos=&quot;456&quot; /&gt;
+            &lt;busStation id=&quot;2&quot; edge=&quot;123cba&quot; pos=&quot;324&quot; /&gt;
+             ...
+        &lt;/busStations&gt;
+
+        &lt;busLines&gt;
+            &lt;busLine id=&quot;601&quot; maxTripDuration=&quot;3000&quot;&gt;
+                &lt;stations&gt;
+                    &lt;station refId=&quot;1&quot; /&gt;
+                     ...
+                &lt;/stations&gt;
+                &lt;revStations&gt;
+                    &lt;station refId=&quot;2&quot; /&gt;
+                     ...
+                &lt;/revStations&gt;
+                &lt;frequencies&gt;
+                    &lt;frequency begin=&quot;10000&quot; end=&quot;25000&quot; rate=&quot;1500&quot; /&gt;
+                     ...
+                &lt;/frequencies&gt;
+            &lt;/busLine&gt;
+        &lt;/busLines&gt;
+
+    &lt;/city&gt;
+</code></pre>
+
+<p>The corresponding attribute descriptions of all elements:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>String</td>
+<td>Bus line's id</td>
+</tr>
+<tr>
+<td><strong>maxTripDuration</strong></td>
+<td>Integer (sec)</td>
+<td>Maximum time needed for a bus to do the end-to-end trip.</td>
+</tr>
+<tr>
+<td><strong>refId</strong></td>
+<td>Integer</td>
+<td>Reference to the id of the chosen station (refers to a busStation object's id)</td>
+</tr>
+<tr>
+<td><strong>begin</strong></td>
+<td>Integer (sec)</td>
+<td>Time of the beginning of a new frequency</td>
+</tr>
+<tr>
+<td><strong>end</strong></td>
+<td>Integer (sec)</td>
+<td>End time of the frequency</td>
+</tr>
+<tr>
+<td><strong>rate</strong></td>
+<td>Integer (sec)</td>
+<td>Time between two buses, this is the inverse of the mathematical frequency. This bus rate is performed between the beginning and end values described above</td>
+</tr>
+</tbody>
+</table>
+<h3 id="final_aspect">Final Aspect<a class="headerlink" href="#final_aspect" title="Permanent link">#</a></h3>
+<p>Here is a complete example of a stat file:</p>
+<pre><code>    &lt;city&gt;
+        &lt;general inhabitants=&quot;1000&quot; households=&quot;500&quot; childrenAgeLimit=&quot;19&quot; retirementAgeLimit=&quot;66&quot; carRate=&quot;0.58&quot; unemploymentRate=&quot;0.05&quot;
+                     footDistanceLimit=&quot;250&quot; incomingTraffic=&quot;200&quot; outgoingTraffic=&quot;50&quot; /&gt;
+        &lt;parameters carPreference=&quot;0.50&quot; meanTimePerKmInCity=&quot;6&quot; freeTimeActivityRate=&quot;0.15&quot; uniformRandomTraffic=&quot;0.20&quot; departureVariation=&quot;300&quot; /&gt;
+
+        &lt;population&gt;
+            &lt;bracket beginAge=&quot;0&quot; endAge=&quot;30&quot; peopleNbr=&quot;30&quot; /&gt;
+            &lt;bracket beginAge=&quot;30&quot; endAge=&quot;60&quot; peopleNbr=&quot;40&quot; /&gt;
+            &lt;bracket beginAge=&quot;60&quot; endAge=&quot;90&quot; peopleNbr=&quot;30&quot; /&gt;
+        &lt;/population&gt;
+
+        &lt;workHours&gt;
+            &lt;opening hour=&quot;30600&quot; proportion=&quot;0.30&quot; /&gt;
+            &lt;opening hour=&quot;32400&quot; proportion=&quot;0.70&quot; /&gt;
+            &lt;closing hour=&quot;43200&quot; proportion=&quot;0.20&quot; /&gt;
+            &lt;closing hour=&quot;63000&quot; proportion=&quot;0.20&quot; /&gt;
+            &lt;closing hour=&quot;64800&quot; proportion=&quot;0.60&quot; /&gt;
+        &lt;/workHours&gt;
+
+        &lt;streets&gt;
+            &lt;street edge=&quot;e01t11&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e11t12&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e12t13&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e13t14&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e11t21&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e12t22&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e13t23&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e14t24&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e21t22&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e22t23&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e23t24&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e21t31&quot; population=&quot;10&quot; workPosition=&quot;100&quot; /&gt;
+            &lt;street edge=&quot;e22t32&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e23t33&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e24t34&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e31t32&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e32t33&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e33t34&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e31t41&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e32t42&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e33t43&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e34t44&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e41t42&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e42t43&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e43t44&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+            &lt;street edge=&quot;e44t51&quot; population=&quot;100&quot; workPosition=&quot;10&quot; /&gt;
+        &lt;/streets&gt;
+
+        &lt;cityGates&gt;
+            &lt;entrance edge=&quot;e01t11&quot; pos=&quot;1&quot; incoming=&quot;0.5&quot; outgoing=&quot;0.5&quot; /&gt;
+            &lt;entrance edge=&quot;e44t51&quot; pos=&quot;280&quot; incoming=&quot;0.5&quot; outgoing=&quot;0.5&quot; /&gt;
+        &lt;/cityGates&gt;
+
+        &lt;schools&gt;
+            &lt;school edge=&quot;e11t12&quot; pos=&quot;20&quot; beginAge=&quot;0&quot; endAge=&quot;6&quot; capacity=&quot;200&quot; opening=&quot;32400&quot; closing=&quot;64800&quot; /&gt;
+            &lt;school edge=&quot;e33t34&quot; pos=&quot;100&quot; beginAge=&quot;3&quot; endAge=&quot;12&quot; capacity=&quot;150&quot; opening=&quot;30600&quot; closing=&quot;64800&quot; /&gt;
+            &lt;school edge=&quot;e41t42&quot; pos=&quot;50&quot; beginAge=&quot;10&quot; endAge=&quot;20&quot; capacity=&quot;300&quot; opening=&quot;32400&quot; closing=&quot;61200&quot; /&gt;
+        &lt;/schools&gt;
+
+        &lt;busStations&gt;
+            &lt;busStation id=&quot;1&quot; edge=&quot;e11t12&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;2&quot; edge=&quot;e12t13&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;3&quot; edge=&quot;e13t14&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;4&quot; edge=&quot;e14t24&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;5&quot; edge=&quot;e24t23&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;6&quot; edge=&quot;e23t33&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;7&quot; edge=&quot;e33t32&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;8&quot; edge=&quot;e32t31&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;9&quot; edge=&quot;e31t21&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;10&quot; edge=&quot;e21t11&quot; pos=&quot;10&quot; /&gt;
+
+            &lt;busStation id=&quot;101&quot; edge=&quot;e12t11&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;102&quot; edge=&quot;e13t12&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;103&quot; edge=&quot;e14t13&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;104&quot; edge=&quot;e24t14&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;105&quot; edge=&quot;e23t24&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;106&quot; edge=&quot;e33t23&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;107&quot; edge=&quot;e32t33&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;108&quot; edge=&quot;e31t32&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;109&quot; edge=&quot;e21t31&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;110&quot; edge=&quot;e11t21&quot; pos=&quot;10&quot; /&gt;
+
+            &lt;busStation id=&quot;11&quot; edge=&quot;e12t22&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;12&quot; edge=&quot;e22t32&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;13&quot; edge=&quot;e32t42&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;14&quot; edge=&quot;e42t41&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;15&quot; edge=&quot;e41t31&quot; pos=&quot;10&quot; /&gt;
+
+            &lt;busStation id=&quot;111&quot; edge=&quot;e22t12&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;112&quot; edge=&quot;e32t22&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;113&quot; edge=&quot;e42t32&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;114&quot; edge=&quot;e41t42&quot; pos=&quot;10&quot; /&gt;
+            &lt;busStation id=&quot;115&quot; edge=&quot;e31t41&quot; pos=&quot;10&quot; /&gt;
+        &lt;/busStations&gt;
+
+        &lt;busLines&gt;
+            &lt;busLine id=&quot;101&quot; maxTripDuration=&quot;10&quot;&gt;
+                &lt;stations&gt;
+                    &lt;station refId=&quot;1&quot; /&gt;
+                    &lt;station refId=&quot;3&quot; /&gt;
+                    &lt;station refId=&quot;4&quot; /&gt;
+                    &lt;station refId=&quot;5&quot; /&gt;
+                    &lt;station refId=&quot;6&quot; /&gt;
+                    &lt;station refId=&quot;7&quot; /&gt;
+                    &lt;station refId=&quot;8&quot; /&gt;
+                    &lt;station refId=&quot;9&quot; /&gt;
+                &lt;/stations&gt;
+                &lt;revStations&gt;
+                    &lt;station refId=&quot;109&quot; /&gt;
+                    &lt;station refId=&quot;108&quot; /&gt;
+                    &lt;station refId=&quot;107&quot; /&gt;
+                    &lt;station refId=&quot;106&quot; /&gt;
+                    &lt;station refId=&quot;105&quot; /&gt;
+                    &lt;station refId=&quot;104&quot; /&gt;
+                    &lt;station refId=&quot;103&quot; /&gt;
+                    &lt;station refId=&quot;102&quot; /&gt;
+                &lt;/revStations&gt;
+                &lt;frequencies&gt;
+                    &lt;frequency begin=&quot;21600&quot; end=&quot;36000&quot; rate=&quot;300&quot; /&gt;
+                    &lt;frequency begin=&quot;36000&quot; end=&quot;57600&quot; rate=&quot;1800&quot; /&gt;
+                    &lt;frequency begin=&quot;57600&quot; end=&quot;68400&quot; rate=&quot;300&quot; /&gt;
+                    &lt;frequency begin=&quot;68400&quot; end=&quot;86399&quot; rate=&quot;1800&quot; /&gt;
+                &lt;/frequencies&gt;
+            &lt;/busLine&gt;
+
+            &lt;busLine id=&quot;102&quot; maxTripDuration=&quot;7&quot;&gt;
+                &lt;stations&gt;
+                    &lt;station refId=&quot;15&quot; /&gt;
+                    &lt;station refId=&quot;9&quot; /&gt;
+                    &lt;station refId=&quot;10&quot; /&gt;
+                    &lt;station refId=&quot;1&quot; /&gt;
+                    &lt;station refId=&quot;11&quot; /&gt;
+                    &lt;station refId=&quot;12&quot; /&gt;
+                    &lt;station refId=&quot;13&quot; /&gt;
+                    &lt;station refId=&quot;14&quot; /&gt;
+                &lt;/stations&gt;
+                &lt;revStations&gt;
+                    &lt;station refId=&quot;114&quot; /&gt;
+                    &lt;station refId=&quot;113&quot; /&gt;
+                    &lt;station refId=&quot;112&quot; /&gt;
+                    &lt;station refId=&quot;111&quot; /&gt;
+                    &lt;station refId=&quot;101&quot; /&gt;
+                    &lt;station refId=&quot;110&quot; /&gt;
+                    &lt;station refId=&quot;109&quot; /&gt;
+                    &lt;station refId=&quot;115&quot; /&gt;
+                &lt;/revStations&gt;
+                &lt;frequencies&gt;
+                    &lt;frequency begin=&quot;28800&quot; end=&quot;32400&quot; rate=&quot;600&quot; /&gt;
+                    &lt;frequency begin=&quot;57600&quot; end=&quot;64800&quot; rate=&quot;600&quot; /&gt;
+                &lt;/frequencies&gt;
+            &lt;/busLine&gt;
+        &lt;/busLines&gt;
+
+    &lt;/city&gt;
+</code></pre>
+
+<h2 id="activities">Activities<a class="headerlink" href="#activities" title="Permanent link">#</a></h2>
+<p>ActivityGen takes into account two groups of activities, which are
+considered as most traffic-relevant: <strong>Work And School</strong> and <strong>Free
+Time</strong>. The activities within each group follow the same statistical
+rules.</p>
+<h3 id="work_and_school_activities">Work and School Activities<a class="headerlink" href="#work_and_school_activities" title="Permanent link">#</a></h3>
+<p>This aggregate of activities contains the following activities:</p>
+<ol>
+<li>Going to work for adults (not retired), and</li>
+<li>Going to school for children.</li>
+</ol>
+<p>That implies trips from home to work and the return trip for the
+drivers.</p>
+<h3 id="free_time_activities">Free Time Activities<a class="headerlink" href="#free_time_activities" title="Permanent link">#</a></h3>
+<p>This aggregate of activities contains the following activities:</p>
+<ol>
+<li>Going out during the day (for retired or unemployed people)</li>
+<li>Going out in the evening (for all people who finished their <em>work
+    activity</em> not <em>too late</em>)</li>
+<li>Going out late in the evening or in the night (for not retired
+    adults having no children)</li>
+</ol>
+<p>This <em>activity</em> is supposed to cover all car uses for:</p>
+<ul>
+<li>Going out see friends</li>
+<li>Doing sport</li>
+<li>Visiting family</li>
+<li>Party</li>
+</ul>
+<p>Activity locations are randomized for this purpose.</p>
+<h3 id="traffic_which_is_not_covered_by_activitygen">Traffic which is not covered by Activitygen<a class="headerlink" href="#traffic_which_is_not_covered_by_activitygen" title="Permanent link">#</a></h3>
+<ul>
+<li>Through traffic from outside the city to outside the city</li>
+<li>Business traffic (delivery service, logistics, ...)</li>
+<li>Tourist traffic</li>
+<li>Special event traffic</li>
+</ul>
+<p>To some extend this can be mitigated by adding <code>uniformRandomTraffic</code>.</p>
+<h2 id="transportation_means">Transportation Means<a class="headerlink" href="#transportation_means" title="Permanent link">#</a></h2>
+<p>The population is distributed according to the statistics into
+households located in streets. People are likely to use different means
+of transportation in relation to their location, the availability of the
+different means and their destination. Three kind of Means are used in
+ActivityGen:<b></p>
+<ul>
+<li>Feet or bike</li>
+<li>Buses</li>
+<li>Cars</li>
+</ul>
+<p></b></p>
+<p>All of them have their own possibilities and availability
+characteristics:</p>
+<h3 id="feet_or_bike">Feet or Bike<a class="headerlink" href="#feet_or_bike" title="Permanent link">#</a></h3>
+<p>Trips by foot are available only for very short distances. But in this
+case, the person is very likely to go by foot. The bike isn't really
+used (buses and cars are preferred), it is supposed to serve in cases
+where none of the three means (Feet, buses and cars) are not available</p>
+<h3 id="buses">Buses<a class="headerlink" href="#buses" title="Permanent link">#</a></h3>
+<p>Bus stations are located in the city corresponding to the real bus line
+network given in input (statistical data over the city). Someone enough
+close to a bus station and whose destination is enough close to another
+bus station is eligible for the public transportation means.</p>
+<h3 id="cars">Cars<a class="headerlink" href="#cars" title="Permanent link">#</a></h3>
+<p>Householders having one or more cars can drive (not children) or be
+accompanied (escorted) by another adult who needs a car too. Children
+can only be accompanied (to school for example). Some households have no
+car, in this case they have to live enough close to a bus station. In
+the case of having a destination far from any bus station, they can go
+by foot or ride a bike. But this case doesn't generated any motorized
+vehicle traffic.</p>
+<h2 id="generated_vehicles">Generated Vehicles<a class="headerlink" href="#generated_vehicles" title="Permanent link">#</a></h2>
+<ul>
+<li>carInX:Y is commuter traffic</li>
+<li>randUniX is random traffic (X is a running index)</li>
+<li>blXbY is bus line X bus number Y</li>
+<li>hXcY is a car number Y from household X</li>
+<li>hXcY:Z is repeated use of the same car (e.g. when simulating
+multiple days) with Z as a running index over all cars</li>
+</ul>
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">#</a></h2>
+<p>SUMO has a <a href="../Specification/Persons.html">detailed model for individual multi-modal transport
+itineraries</a>. Since 0.26.0 multi-modal
+routing with public and individual transport modes is supported as well.
+However, <a href="../activitygen.html">activitygen</a> does not make use of
+these facilities. In <a href="../activitygen.html">activitygen</a></p>
+<ul>
+<li>Buses are generated according to the bus schedule. People using
+buses do not show up in the simulation.</li>
+<li>According to some distance criteria between locations and bus
+stations, fewer care trips are generated since people are assumed to
+take the bus. Public transport travel times are not considered.-</li>
+</ul>
+<h2 id="model_documentation">Model Documentation<a class="headerlink" href="#model_documentation" title="Permanent link">#</a></h2>
+<p>ActivityGen was developed as a tool for the evaluation of trust
+scenarios in VANETs. The work was part of the project <a href="http://www.ldv.ei.tum.de/fidens/">Fidens: Trust
+between Cooperative Systems</a> featuring
+trusted probabilistic knowledge processing in vehicular networks. For
+further documentation on the internals of the model, refer to the source
+code in <a href="https://github.com/eclipse/sumo/blob/master/src/activitygen"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/activitygen</a> or ask the <a href="../SUMO_at_a_Glance.html#contributors_and_participants">original
+authors</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

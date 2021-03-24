@@ -1,0 +1,678 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap8.html">[Prev]</A>&nbsp;<a href="chap10.html">[Next]</A>&nbsp;<a href="toc.html#toc_9.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:build-sim-progs"/>9 Building Simulation Programs<a class="headerlink" href="#cha:build-sim-progs" title="Permalink to this headline">¶</a></h1>
+
+<p><h2><a name="sec:build-sim-progs:overview"/>9.1 Overview<a class="headerlink" href="#sec:build-sim-progs:overview" title="Permalink to this headline">¶</a></h2>
+
+<p>This chapter describes the process and tools for building executable simulation
+models from their source code.
+
+<p>As described in the the previous chapters, the source of an OMNeT++ model usually
+contains the following files:
+
+<p><ul>
+  <li> C++ (<tt>.cc</tt> and <tt>.h</tt>) files, containing simple module
+        implementations and other code;
+  <li> Message (<tt>.msg</tt>) files, containing message definitions to be
+        translated into C++ classes;
+  <li> NED (<tt>.ned</tt>) files with component declarations and topology
+        descriptions;
+  <li> Configuration (<tt>.ini</tt>) files with model parameter assignments and 
+        other settings.
+</ul>
+
+<p>The process to turn the source into an executable form is this, in nutshell:
+
+<p><ol>
+  <li> Message files are translated into C++ using the message compiler,
+        <tt>opp_msgc</tt>
+  <li> C++ sources are compiled into object form (<tt>.o</tt> files)
+  <li> Object files are linked with the simulation kernel and other 
+        libraries to get an executable or a shared library
+</ol>
+
+<p>Note that apart from the first step, the process is the same as building any 
+C/C++ program. Also note that NED and ini files do not play a part in this
+process, as they are loaded by the simulation program at runtime.
+
+<p>One needs to link with the following libraries:
+
+<p><ul>
+  <li> The simulation kernel and class library<!--simulation!kernel--> (the
+        <i>oppsim</i> library) and its dependencies (<i>oppenvir</i>,
+        <i>oppcommon</i>, <i>oppnedxml</i>, etc).
+  <li> Optionally, with one or more user interface libraries
+  (<i>opptkenv</i>, <i>oppqtenv</i> and <i>oppcmdenv</i>.) 
+  Note that these libraries themselves may depend on other libraries.
+</ul>
+
+<p>The exact files names of libraries depend on the platform and a number of
+additional factors.<br><ul><font size=-1>[On Unix-like platforms, file names are
+prefixed with <tt>lib</tt>. For debug versions, a <tt>d</tt> is appended to the
+name. Static libraries have the <tt>.a</tt> suffix (except on Windows where
+the file extension is <tt>.lib</tt>). Shared libraries end in <tt>.so</tt> on
+Unix-like platforms (but <tt>.dylib</tt> on OS X), and <tt>.dll</tt> on Windows.]</font></ul>
+
+<p>Figure <a href="chap9.html#fig:ch-build:workflow">below</a> shows an overview of the process of
+building (and running) simulation programs.
+
+<p>
+  <center>
+    <img src="build-workflow.svg">
+    <center><div class="caption"><i>Figure: Building and running simulation</i></div></center>
+    <a name="fig:ch-build:workflow"></a>
+  </center>
+
+<p>
+You can see that the build process is not complicated. Tools such as
+<tt>make</tt> and <tt>opp_makemake</tt>, to be described in the rest of the
+chapter, are primarily needed to optimize rebuilds (if a message file has been
+translated already, there is no need to repeat the translation for every build
+unless the file has changed), and for automation.
+ 
+<p>
+<h2><a name="sec:build-sim-progs:opp-makemake"/>9.2 Using opp_makemake and Makefiles<a class="headerlink" href="#sec:build-sim-progs:opp-makemake" title="Permalink to this headline">¶</a></h2>
+
+<p>There are several tools available for managing the build of C/C++ programs.
+OMNeT++ uses the traditional way, Makefiles. Writing a Makefile is usually a
+tedious task. However, OMNeT++ provides a tool that can generate the
+Makefile for the user, saving manual labour.
+
+<p><tt>opp_makemake</tt> can automatically generate a Makefile for simulation
+programs, based on the source files in the current directory and (optionally)
+in subdirectories.
+
+<p><h3><a name="sec:build-sim-progs:makemake-options"/>9.2.1 Command-line Options<a class="headerlink" href="#sec:build-sim-progs:makemake-options" title="Permalink to this headline">¶</a></h3>
+
+<p>The most important options accepted by <tt>opp_makemake</tt> are:
+
+<p><ul>
+    <li> <tt>-f</tt>, <tt>-</tt>-force : Force overwriting existing Makefile
+    <li> <tt>-o &lt;filename&gt;</tt> : Name of simulation executable or library to be built.
+    <li> <tt>-O &lt;directory&gt;</tt>, <tt>-</tt>-out &lt;directory&gt; :
+                          Specifies the name of the output directory tree for out-of-directory build
+    <li> <tt>-</tt>-deep : Generates a "deep" Makefile. A deep Makefile will
+                          cover the whole source tree under the make directory,
+                          not just files in that directory.
+    <li> <tt>-r</tt>, <tt>-</tt>-recurse : Causes make to recursively descend into all subdirectories;
+                          subdirectories are expected to contain Makefiles themselves.
+    <li> <tt>-X &lt;directory&gt;</tt>, <tt>-X&lt;directory&gt;</tt>, <tt>-</tt>-except &lt;directory&gt; :
+                          With <tt>-r</tt> or <tt>-</tt>-deep: ignore the given directory.
+    <li> <tt>-d&lt;subdir&gt;</tt>, <tt>-d &lt;subdir&gt;</tt>, <tt>-</tt>-subdir &lt;subdir&gt; :
+                          Causes make to switch to the given directory and invoke
+                          a Makefile in that directory.
+    <li> <tt>-n</tt>, <tt>-</tt>-nolink : Produce object files but do not create an executable or library.
+    <li> <tt>-s</tt>, <tt>-</tt>-make-so : Build shared library (<tt>.so</tt>, <tt>.dll</tt> or <tt>.dylib</tt>).
+    <li> <tt>-a</tt>, <tt>-</tt>-make-lib : Create static library (<tt>.a</tt> or <tt>.lib</tt>).
+    <li> <tt>-I&lt;dir&gt;</tt> : Add the given directory to the C++ include path.
+    <li> <tt>-D&lt;name&gt;[=&lt;value&gt;]</tt>, <tt>-D &lt;name&gt;[=v&lt;alue&gt;]</tt>, <tt>--define &lt;name&gt;[=&lt;value&gt;]</tt> : 
+                          Define the given symbol in the C++ compiler.
+    <li> <tt>-L&lt;dir&gt;</tt> : Add the given directory to the library path.
+    <li> <tt>-l&lt;library&gt;</tt> : Additional library to link against.
+</ul>
+
+<p>There are several other options; run <tt>opp_makemake -h</tt> to see the complete
+list.
+
+<p>
+<h3><a name="sec:build-sim-progs:makemake-basic-use"/>9.2.2 Basic Use<a class="headerlink" href="#sec:build-sim-progs:makemake-basic-use" title="Permalink to this headline">¶</a></h3>
+
+<p>Assuming the source files (<tt>*.ned</tt>, <tt>*.msg</tt>, <tt>*.cc</tt>, <tt>*.h</tt>)
+are located in a single directory, one can change to that directory and type:
+
+<pre class="commandline">
+$ opp_makemake
+</pre>
+<p>
+This will create a file named <tt>Makefile</tt><!--Makefile-->. Now, running the
+<tt>make</tt> program will build a simulation executable.
+
+<pre class="commandline">
+$ make
+</pre>
+<p>
+<ul class="important"><b>IMPORTANT</b><br>
+The generated <tt>Makefile</tt> will contain the names of the sources files,
+so you need to re-run <tt>opp_makemake</tt> every time new files are added to 
+or removed from the project. 
+</ul>
+ 
+<p>To regenerate an existing <tt>Makefile</tt>, add the <tt>-f</tt> option to the
+command line, otherwise <tt>opp_makemake</tt> will refuse overwriting it.
+
+<pre class="commandline">
+$ opp_makemake -f
+</pre>
+<p>
+The name of the output file<!--output!file--> will be derived from
+the name of the project directory (see later). It can be overridden
+with the <tt>-o</tt> option:
+
+<pre class="commandline">
+$ opp_makemake -f -o aloha
+</pre>
+<p>
+The generated <tt>Makefile</tt> supports the following targets:
+
+<p><ul>
+  <li> <tt>all</tt> : Builds the simulation; this is also the default target.
+  <li> <tt>clean</tt> : Deletes files that were produced by the make process.
+</ul>
+
+<p>
+<h3><a name="sec:build-sim-progs:debug-and-release-builds"/>9.2.3 Debug and Release Builds<a class="headerlink" href="#sec:build-sim-progs:debug-and-release-builds" title="Permalink to this headline">¶</a></h3>
+
+<p><tt>opp_makemake</tt> generates a Makefile that can create both release and debug builds.
+By default it creates release version, but it is easy to override this behavior by
+defining the <tt>MODE</tt> variable on the <tt>make</tt> command line.
+
+<pre class="commandline">
+$ make MODE=debug
+</pre>
+<p>
+It is also possible to generate a Makefile that defaults to debug builds.
+This can be achieved by adding the <tt>-</tt>-mode option to the <tt>opp_makemake</tt>
+command line.
+
+<pre class="commandline">
+$ opp_makemake --mode debug
+</pre>
+<p>
+<h3><a name="sec:build-sim-progs:debugging-makefile"/>9.2.4 Debugging the Makefile<a class="headerlink" href="#sec:build-sim-progs:debugging-makefile" title="Permalink to this headline">¶</a></h3>
+
+<p><tt>opp_makemake</tt> generates a Makefile that prints only minimal information
+during the build process (only the name of the compiled file.) To see the full
+compiler commands executed by the Makefile, add the <tt>V=1</tt> parameter to
+the <tt>make</tt> command line.
+
+<pre class="commandline">
+$ make V=1
+</pre>
+<p>
+
+<p><h3><a name="sec:build-sim-progs:using-external-libraries"/>9.2.5 Using External C/C++ Libraries<a class="headerlink" href="#sec:build-sim-progs:using-external-libraries" title="Permalink to this headline">¶</a></h3>
+
+<p>If the simulation model relies on an external library, the following
+<tt>opp_makemake</tt> options can be used to make the simulation
+link with the library.
+
+<p><ul>
+  <li> Use the <tt>-I&lt;dir&gt;</tt> option to specify the location of
+        the header files. The directory will be added to the compiler's
+        include path. This option is not needed if the header files are
+        at a standard location, e.g. installed under <tt>/usr/include</tt>
+        on Linux.
+  <li> Use the <tt>-L&lt;dir&gt;</tt> to specify the location of the binaries
+        (static or shared library files.) Again, this option is not needed
+        if the binaries are at a standard place, e.g. under <tt>/usr/lib</tt>.
+  <li> Use the <tt>-l&lt;libname&gt;</tt> to specify the name of the library.
+        The name is normally the file name without the <tt>lib</tt> prefix and
+        the file name extension (e.g. <tt>.a</tt>, <tt>.so</tt>, <tt>.dylib</tt>).
+</ul>
+
+<p>For example, linking with a hypothetical <i>Foo</i> library installed under
+<tt>opt/</tt> might require the following additional <tt>opp_makemake</tt> options:
+<tt>-I/opt/foo/include -L/opt/foo/lib -lfoo</tt>.
+
+<p>
+<h3><a name="sec:build-sim-progs:building-directory-trees"/>9.2.6 Building Directory Trees<a class="headerlink" href="#sec:build-sim-progs:building-directory-trees" title="Permalink to this headline">¶</a></h3>
+
+<p>It is possible to build a whole source directory tree with a single Makefile.
+A source tree will generate a single output file (executable or library).
+A source directory tree will always have a <tt>Makefile</tt> in its root,
+and source files may be placed anywhere in the tree.
+
+<p>To turn on this option, use the <tt>opp_makemake --deep</tt> option.
+<tt>opp_makemake</tt> will collect all <tt>.cc</tt> and <tt>.msg</tt> files from
+the whole subdirectory tree, and generate a Makefile that covers all.
+To exclude a specific directory, use the <tt>-X exclude/dir/path</tt>
+option. (Multiple <tt>-X</tt> options are accepted.)
+
+<p>An example:
+
+<pre class="commandline">
+$ opp_makemake -f --deep -X experimental -X obsolete
+</pre>
+<p>
+In the C++ code, include statements should contain the location of the file
+relative to the Makefile's location.<br><ul><font size=-1>[
+  Support for deep includes (automatically adding each subdirectory
+  to the include path so that includes can be written without specifying
+  the location of the file) has been dropped in OMNeT++ version 5.1, due to
+  being error-prone in large projects, and having limited usefulness for
+  small projects.]</font></ul>
+For example, if <tt>Foo.h</tt> is under <tt>utils/common/</tt> in the source
+tree, it needs to be included as
+
+<pre class="cpp">
+#include "utils/common/Foo.h"
+</pre>
+<p>
+
+<p><h3><a name="sec:build-sim-progs:dependency-handling"/>9.2.7 Dependency Handling<a class="headerlink" href="#sec:build-sim-progs:dependency-handling" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt>make</tt> program can utilize dependency information in the Makefile
+to shorten build times by omitting build steps whose input has not changed
+since the last build. Dependency information is automatically created and kept
+up-to-date during the build process.
+
+<p>Dependency information is kept in <tt>.d</tt> files in the output directory.
+
+<p>
+<h3><a name="sec:build-sim-progs:out-of-directory-build"/>9.2.8 Out-of-Directory Build<a class="headerlink" href="#sec:build-sim-progs:out-of-directory-build" title="Permalink to this headline">¶</a></h3>
+
+<p>The build system creates object and executable files in a separate directory, called the
+<i>output directory</i>. By default, the output directory is <tt>out/&lt;configname&gt;</tt>,
+where the <tt>&lt;configname&gt;</tt> part depends on the compiler toolchain and build mode settings.
+(For example, the result of a debug build with GCC will be placed in <tt>out/gcc-debug</tt>.)
+The subdirectory tree inside the output directory will mirror the source directory
+structure.
+
+<p><ul class="note"><b>NOTE</b><br>
+Generated source files (i.e. those created by <tt>opp_msgc</tt>) will be placed in the
+source tree rather than the output directory.
+</ul>
+
+<p>By default, the <tt>out</tt> directory is placed in the project root directory. This location
+can be changed with <tt>opp_makemake</tt>'s <tt>-O</tt> option.
+
+<pre class="commandline">
+$ opp_makemake -O ../tmp/obj
+</pre>
+<p>
+<ul class="note"><b>NOTE</b><br>
+The project directory is identified as the first ancestor of the current directory
+that contains a <tt>.project</tt> file.
+</ul>
+
+<p>
+<h3><a name="sec:build-sim-progs:building-shared-and-static-libraries"/>9.2.9 Building Shared and Static Libraries<a class="headerlink" href="#sec:build-sim-progs:building-shared-and-static-libraries" title="Permalink to this headline">¶</a></h3>
+
+<p>By default the Makefile will create an executable file, but it is also
+possible to build shared or static libraries. Shared libraries
+are usually a better choice.
+
+<p>Use <tt>-</tt>-make-so to create shared libraries, and <tt>-</tt>-make-lib
+to build static libraries. The <tt>-</tt>-nolink option completely omits
+the linking step, which is useful for top-level Makefiles that only invoke
+other Makefiles, or when custom linking commands are needed.
+
+<p>
+
+<p>
+<h3><a name="sec:build-sim-progs:recursive-builds"/>9.2.10 Recursive Builds<a class="headerlink" href="#sec:build-sim-progs:recursive-builds" title="Permalink to this headline">¶</a></h3>
+
+<p>
+The <tt>-</tt>-recurse option enables recursive make; when you build the simulation, make
+descends into the subdirectories and runs make in them too.
+By default, <tt>-</tt>-recurse decends into all subdirectories; the <tt>-X &lt;dir&gt;</tt> option
+can be used to make it ignore certain subdirectories. This option is especially useful
+for top level Makefiles.
+
+<p>
+The <tt>-</tt>-recurse option automatically discovers subdirectories, but this
+is sometimes inconvenient. Your source directory tree may contain
+parts which need their own hand written Makefile. This can happen if
+you include source files from an other non OMNeT++ project. With the <tt>-d &lt;dir&gt;</tt>
+or <tt>-</tt>-subdir &lt;dir&gt; option, you can explicitly specify which directories to
+recurse into, and also, the directories need not be direct children of the
+current directory.
+
+<p>
+The recursive make options (<tt>-</tt>-recurse, <tt>-d</tt>, <tt>-</tt>-subdir)
+imply <tt>-X</tt>, that is, the directories recursed into will be
+automatically excluded from deep Makefiles.
+
+<p>
+You can control the order of traversal by adding dependencies into
+the <tt>makefrag</tt> file (see <a href="chap9.html#sec:makefrag">[9.2.11]</a>)
+
+<p><ul class="note"><b>NOTE</b><br>
+With <tt>-d</tt>, it is also possible to create infinite recursions.
+<tt>opp_makemake</tt> cannot detect them, it is your responsibility that
+cycles do not occur.
+</ul>
+
+<p>
+Motivation for recursive builds:
+<ul>
+ <li> toplevel Makefile
+ <li> integrating sources that have their own Makefile
+</ul>
+
+<p>
+<h3><a name="sec:makefrag"/>9.2.11 Customizing the Makefile<a class="headerlink" href="#sec:makefrag" title="Permalink to this headline">¶</a></h3>
+
+<p>It is possible to add rules or otherwise customize the generated Makefile
+by providing a <tt>makefrag</tt> file. When you run <tt>opp_makemake</tt>, it
+will automatically insert the content of the <tt>makefrag</tt> file into the
+resulting <tt>Makefile</tt>. With the <tt>-i</tt> option, you can also name other
+files to be included into the <tt>Makefile</tt>.
+
+<p><tt>makefrag</tt> will be inserted after the definitions but before the first
+rule, so it is possible to override existing definitions and add new
+ones, and also to override the default target.
+
+<p><tt>makefrag</tt> can be useful if some of your source files are generated
+from other files (for example, you use generated NED files), or you need
+additional targets in your Makefile or just simply want to override the
+default target in the Makefile.
+
+<p><ul class="note"><b>NOTE</b><br>
+If you change the content of the <tt>makefrag</tt> file, you must recreate the
+Makefile using the <tt>opp_makemake</tt> command.
+</ul>
+
+<p><h3><a name="sec:build-sim-progs:projects-with-multiple-source-trees"/>9.2.12 Projects with Multiple Source Trees<a class="headerlink" href="#sec:build-sim-progs:projects-with-multiple-source-trees" title="Permalink to this headline">¶</a></h3>
+
+<p>In the case of a large project, your source files may be spread across
+several directories and your project may generate more than one executable
+file (i.e. several shared libraries, examples etc.).
+
+<p>Once you have created your Makefiles with <tt>opp_makemake</tt> in
+every source directory tree, you will need a toplevel Makefile.
+The toplevel Makefile usually calls only the Makefiles
+recursively in the source directory trees.
+
+<p>
+<h3><a name="sec:build-sim-progs:multi-directory-example"/>9.2.13 A Multi-Directory Example<a class="headerlink" href="#sec:build-sim-progs:multi-directory-example" title="Permalink to this headline">¶</a></h3>
+
+<p>For a complex example of using <tt>opp_makemake</tt>, we will show how to create
+the Makefiles for a large project. First, take a look at the
+project's directory structure and find the directories that should be used as
+source trees:
+
+<pre class="verbatim">
+project/
+    doc/
+    images/
+    simulations/
+    contrib/ &lt;-- source tree (build libmfcontrib.so from this dir)
+    core/ &lt;-- source tree (build libmfcore.so from this dir)
+    test/ &lt;-- source tree (build testSuite executable from this dir)
+</pre>
+<p>
+Additionally, there are dependencies between these output files: <tt>mfcontrib</tt>
+requires <tt>mfcore</tt> and <tt>testSuite</tt> requires <tt>mfcontrib</tt> (and indirectly
+<tt>mfcore</tt>).
+
+<p>First, we create the Makefile for the core directory. The Makefile will build
+a shared lib from all .cc files in the <tt>core</tt> subtree, and will name it <tt>mfcore</tt>:
+
+<pre class="commandline">
+$ cd core && opp_makemake -f --deep --make-so -o mfcore -O out
+</pre>
+<p>
+The <tt>contrib</tt> directory depends on <tt>mfcore</tt>, so we use the <tt>-L</tt> and
+<tt>-l</tt> options to specify the library we should link with.
+
+<pre class="commandline">
+$ cd contrib && opp_makemake -f --deep --make-so -o mfcontrib -O out \
+  -I../core -L../out/\$\(CONFIGNAME\)/core -lmfcore
+</pre>
+<p>
+The <tt>testSuite</tt> will be created as an executable file which depends on both
+<tt>mfcontrib</tt> and <tt>mfcore</tt>.
+
+<pre class="commandline">
+$ cd test && opp_makemake -f --deep -o testSuite -O out \
+    -I../core -I../contrib -L../out/\$\(CONFIGNAME\)/contrib -lmfcontrib
+</pre>
+<p>
+Now, let us specify the dependencies among the above directories.
+Add the lines below to the <tt>makefrag</tt> file in the project root directory.
+
+<pre class="filelisting">
+contrib_dir: core_dir
+test_dir: contrib_dir
+</pre>
+<p>
+Now the last step is to create a top-level Makefile in the root of the project that
+calls the previously created Makefiles in the correct order. We will use the
+<tt>-</tt>-nolink option, exclude every subdirectory from the build (<tt>-X.</tt>),
+and explicitly call the above Makefiles using <tt>-d &lt;dir&gt;</tt>.
+<tt>opp_makemake</tt> will automatically include the above created <tt>makefrag</tt> file.
+
+<pre class="commandline">
+$ opp_makemake -f --nolink -O out -d test -d core -d contrib -X.
+</pre>
+<p>
+<h2><a name="sec:build-sim-progs:project-features"/>9.3 Project Features<a class="headerlink" href="#sec:build-sim-progs:project-features" title="Permalink to this headline">¶</a></h2>
+
+<p>Long compile times are often an inconvenience when working with large
+OMNeT++-based model frameworks. OMNeT++ has a facility named <i>project
+features</i> that lets you reduce build times by excluding or disabling parts
+of a large model library. For example, you can disable modules that you do
+not use for the current simulation study. The word <i>feature</i> refers
+to a piece of the project codebase that can be turned off as a whole.
+
+<p>Additional benefits of project features include enforcing cleaner
+separation of unrelated parts in the model framework, being able to exclude
+code written for other platforms, and a less cluttered model palette in the
+NED editor.
+
+<p><ul class="note"><b>NOTE</b><br>
+  Modularization could also be achieved via breaking up the model framework
+  into several smaller projects, but that would cause other kinds of
+  inconveniences for model developers and users alike.
+</ul>
+
+<p>Project features can be enabled/disabled from both the IDE and the command line.
+It is possible to query the list of enabled project features, and use this
+information in creating a Makefile for the project.
+
+<p>
+<h3><a name="sec:build-sim-progs:project-feature"/>9.3.1 What is a Project Feature<a class="headerlink" href="#sec:build-sim-progs:project-feature" title="Permalink to this headline">¶</a></h3>
+
+<p>Features can be defined per project. As already mentioned, a feature is a piece of the
+project codebase that can be turned off as a whole, that is, excluded from the C++ sources
+(and thus from the build) and also from NED. Feature definitions are typically written
+and distributed by the author of the project; end users are only presented with the
+option of enabling/disabling those features. A feature definition contains:
+
+<p><ul>
+  <li> Feature name; for example "UDP" or "Mobility examples".
+  <li> Feature description; This is a few sentences of text describing what the feature
+    is or does; for example "Implementation of the UDP protocol".
+  <li> Labels; This is a list of labels or keywords that facilitate grouping or finding features.
+  <li> Initially enabled. This is a boolean flag that determines the initial enablement
+    of the feature.
+<li> Required features; Some features may be built on top of others; for example, a HMIPv6
+    protocol implementation relies on MIPv6, which in turn relies on IPv6. Thus, HMIPv6 can
+    only be enabled if MIPv6 and IPv6 are enabled as well.
+<li> NED packages; This is a list of NED package names that identify the code that implements
+    the feature. When you disable the feature, NED types defined in those packages and their
+    subpackages will be excluded; also, C++ code in the folders that correspond to the packages
+    (i.e. in the same folders as excluded NED files) will also be excluded.
+<li> Extra C++ source folders; If the feature contains C++ code that lives outside NED source
+    folders (nontypical), those folders are listed here.
+<li> Compile options. When the feature is enabled, the compiler options listed
+    here are added to the compiler command line of all C++ files in the project.
+    Defines (<tt>-D</tt> options) are treated somewhat specially: the project can
+    be set up so that defines go into a generated header file as <tt>#define</tt>
+    lines instead of being added to the compiler command line. It is
+    customary for each feature to have a corresponding symbol
+    (<tt>WITH_FOO</tt> for a feature called <i>Foo</i>), so that other parts of
+    the code can contain conditional blocks that are only compiled in when the
+    given feature is enabled (or disabled). 
+<li> Linker options. When the feature is enabled, the linker options listed here are added
+    to the linker command line. A typical use of this field is linking with additional
+    libraries that the feature's code requires, for example libavcodec.
+    Currently only the <tt>-l</tt> option (<i>link with library</i>) is supported here.
+</ul>
+
+<p>
+<h3><a name="sec:build-sim-progs:opp-featuretool"/>9.3.2 The opp_featuretool Program<a class="headerlink" href="#sec:build-sim-progs:opp-featuretool" title="Permalink to this headline">¶</a></h3>
+
+<p>Project features can be queried and manipulated using the <tt>opp_featuretool</tt>
+program. The first argument to the program must be a command; the most frequently
+used ones are <tt>list</tt>, <tt>enable</tt> and <tt>disable</tt>. The operation of commands
+can be refined with further options. One can obtain the full list of commands
+and options using the <tt>-h</tt> option.
+
+<p>Here are some examples of using the program.
+
+<p>Listing all features in the project:
+<pre class="commandline">
+$ opp_featuretool list
+</pre>
+
+<p>Listing all enabled features in the project:
+<pre class="commandline">
+$ opp_featuretool list -e
+</pre>
+
+<p>Enabling all features:
+<pre class="commandline">
+$ opp_featuretool enable all
+</pre>
+
+<p>Disabling a specific feature:
+<pre class="commandline">
+$ opp_featuretool disable Foo
+</pre>
+
+<p>The following command prints the command line options that should be used
+with <tt>opp_makemake</tt> to create a Makefile that builds the project with the
+currently enabled features:
+
+<pre class="commandline">
+$ opp_featuretool options
+</pre>
+<p>
+The easiest way to pass the output of the above command to <tt>opp_makemake</tt>
+is the <tt>$(...)</tt> shell construct:
+
+<pre class="commandline">
+$ opp_makemake --deep $(opp_featuretool options)
+</pre>
+<p>
+Often it is convenient to put feature defines (e.g. <tt>WITH_FOO</tt>) into a
+header file instead of passing them to the compiler via <tt>-D</tt> options.
+This makes it easier to detect feature enablements from derived projects,
+and also makes it easier for C++ code editors to correctly highlight
+conditional code blocks that depend on project features.
+
+<p>The header file can be generated with <tt>opp_featuretool</tt> using the
+following command:
+
+<pre class="commandline">
+$ opp_featuretool defines &gt;feature_defines.h
+</pre>
+<p>
+At the same time, <tt>-D</tt> options must be removed from the compiler
+command line. <tt>opp_featuretool options</tt> has switches to filter them out.
+The modified command for Makefile generation:
+
+<pre class="commandline">
+$ opp_makemake --deep $(opp_featuretool options -fl)
+</pre>
+<p>
+It is advisable to create a Makefile rule that regenerates the header file
+when feature enablements change:
+
+<pre class="filelisting">
+feature_defines.h: $(wildcard .oppfeaturestate) .oppfeatures
+        opp_featuretool defines &gt;feature_defines.h
+</pre>
+<p>
+
+<p>
+<h3><a name="sec:build-sim-progs:oppfeatures-file"/>9.3.3 The .oppfeatures File<a class="headerlink" href="#sec:build-sim-progs:oppfeatures-file" title="Permalink to this headline">¶</a></h3>
+
+<p>Project features are defined in the <tt>.oppfeatures</tt> file in your project's
+root directory. This is an XML file, and it has to be written by hand
+(there is no specialized editor for it).
+
+<p>The root element is <tt>&lt;features&gt;</tt>, and it may have several <tt>&lt;feature&gt;</tt>
+child elements, each defining a project feature. The fields of a feature
+are represented with XML attributes; attribute names are <tt>id, name,
+description, initiallyEnabled, requires, labels, nedPackages,
+extraSourceFolders, compileFlags</tt> and <tt>linkerFlags</tt>. Items within attributes
+that represent lists (<tt>requires</tt>, <tt>labels</tt>, etc.) are separated by spaces.
+
+<p>Here is an example feature from the INET Framework:
+<pre class="filelisting">
+&lt;feature
+  id="TCP_common"
+  name="TCP Common"
+  description = "The common part of TCP implementations"
+  initiallyEnabled = "true"
+  requires = "IPv4"
+  labels = "Transport"
+  nedPackages = "inet.transport.tcp_common
+                 inet.applications.tcpapp
+                 inet.util.headerserializers.tcp"
+  extraSourceFolders = ""
+  compileFlags = "-DWITH_TCP_COMMON"
+  linkerFlags = ""
+  /&gt;
+</pre>
+
+<p>Project feature enablements are stored in the <tt>.featurestate</tt> file.
+
+<p>
+<h3><a name="sec:build-sim-progs:introducing-project-features"/>9.3.4 How to Introduce a Project Feature<a class="headerlink" href="#sec:build-sim-progs:introducing-project-features" title="Permalink to this headline">¶</a></h3>
+
+<p>If you plan to introduce a project feature in your project, here's what you'll need
+to do:
+
+<p><ul>
+  <li> Isolate the code that implements the feature into a separate source directory
+        (or several directories). This is because only whole folders can be
+        declared as part of a feature, individual source files cannot.
+
+<p>  <li> Check the remainder of the project. If you find source lines that reference
+        code from the new feature, use conditional compilation (<tt>#ifdef WITH_YOURFEATURE</tt>)
+        to make sure that code compiles (and either works sensibly or throws an error)
+        when the new feature is disabled. (Your feature should define the <tt>WITH_YOURFEATURE</tt>
+        symbol, i.e. <tt>-DWITH_YOURFEATURE</tt> will need to be added to the feature compile flags.)
+
+<p>  <li> Add the feature description into the <tt>.oppfeatures</tt> file of your project.
+
+<p>  <li> Test. A rudimentary test is to verify that the project compiles at all,
+        both with the new feature enabled and disabled. For projects with many
+        features, automated build tests that compile the project using various
+        feature configurations can be very useful. Such build tests can be
+        written on top of <tt>opp_featuretool</tt>.
+        
+<p></ul>
+
+<hr class='pgbr'><p><hr><b><a href="chap8.html">[Prev]</A>&nbsp;<a href="chap10.html">[Next]</A>&nbsp;<a href="toc.html#toc_9.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

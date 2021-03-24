@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Bicycles.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Bicycles - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Bicycles.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#bicycle_simulation">Bicycle Simulation</a></li>
+            <li class="nav-item main"><a href="#approaches_to_bicycle_modelling">Approaches to bicycle modelling</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#bicycles_as_slow_vehicles" class="nav-link">• Bicycles as slow vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#problems_and_workarounds" class="nav-link">&rarr; Problems and workarounds</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#bicycles_as_fast_pedestrians" class="nav-link">• Bicycles as fast pedestrians</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#problems_and_workarounds_1" class="nav-link">&rarr; Problems and workarounds</a>
+                </li>
+            <li class="nav-item main"><a href="#building_a_network_for_bicycle_simulation">Building a network for bicycle simulation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#automatic_import" class="nav-link">• Automatic import</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#generating_a_network_with_bike_lanes" class="nav-link">• Generating a network with bike lanes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#explicit_specification_of_additional_lanes" class="nav-link">&rarr; Explicit specification of additional lanes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#explicit_specification_of_bike_lanes" class="nav-link">&rarr; Explicit specification of bike lanes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#type-base_generation" class="nav-link">&rarr; Type-base generation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#heuristic_generation" class="nav-link">&rarr; Heuristic generation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#permission-based_generation" class="nav-link">&rarr; Permission-based generation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#adding_bike_lanes_with_netedit" class="nav-link">&rarr; Adding bike lanes with netedit</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#notes_on_right-of-way_rules" class="nav-link">• Notes on Right-of-Way rules</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#indirect_left_turn" class="nav-link">• Indirect left turn</a>
+                </li>
+            <li class="nav-item main"><a href="#bicycle_routing">Bicycle routing</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Bicycles<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="bicycle_simulation">Bicycle Simulation<a class="headerlink" href="#bicycle_simulation" title="Permanent link">#</a></h1>
+<p>This page describes simulations of bicycles in SUMO. To build an
+intermodal simulation scenario with bicycles, additional steps have to
+be take in comparison to a plain vehicular simulation.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The simulation of bicycles is a developing subject and still carries some difficulties. These are discussed below.</p>
+</div>
+<h1 id="approaches_to_bicycle_modelling">Approaches to bicycle modelling<a class="headerlink" href="#approaches_to_bicycle_modelling" title="Permanent link">#</a></h1>
+<p>Currently, no exclusive movement model for bicycles is implemented.
+Existing models need to be re-purposed</p>
+<h2 id="bicycles_as_slow_vehicles">Bicycles as slow vehicles<a class="headerlink" href="#bicycles_as_slow_vehicles" title="Permanent link">#</a></h2>
+<p>In this case, vehicles are specified as vehicles with the appropriate
+type:</p>
+<pre><code>&lt;vType id=&quot;bike&quot; vClass=&quot;bicycle&quot;/&gt;
+&lt;vehicle type=&quot;bike&quot; .../&gt;
+</code></pre>
+
+<p>Note, that that the <code>guiShape="bicycle"</code> along with <a href="../Vehicle_Type_Parameter_Defaults.html">sensible default
+parameters</a> are
+automatically used when specifying <code>vClass="bicycle"</code>. By adapting <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types">vType-parameters for
+acceleration,deceleration,maximumSpeed,etc..</a>
+different cyclist types can be modelled.</p>
+<h3 id="problems_and_workarounds">Problems and workarounds<a class="headerlink" href="#problems_and_workarounds" title="Permanent link">#</a></h3>
+<ul>
+<li>No bi-directional movements on bicycle lanes</li>
+<li>No shared space for bicycles and pedestrians by default. This can be fixed by using the <a href="SublaneModel.html">Sublane Model</a> and defining lanes that allow bicycles and pedestrians.</li>
+<li>No overtaking by vehicles on a single-lane road. This can be fixed
+  by using the <a href="SublaneModel.html">Sublane Model</a>.</li>
+<li>The intersection model has no special adaptations for bicycles. This
+  results in unrealistic (large) safety gaps when bicycles are
+  approaching a large priority intersection from a prioritized road</li>
+<li>The road speed limit is not meaningful for bicycles. This is a problem because the <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#speed_distributions">default way of modelling speed distributions is by setting a random multiplier for the speed limit</a>. There are several possibilities remedies:<ul>
+<li>define multiple vehicle types with different 'maxSpeed' for the bicycle fleet. This can be done efficiently with <a href="../Tools/Misc.html#createvehtypedistributionpy">Tool createVehTypeDistribution</a>
+speed distribution for bicycles there are several options</li>
+<li>define a meaningful speed limit for bicycle lanes (only useful if bikes always mostly use dedicated lanes)</li>
+<li>define <a href="../Networks/PlainXML.html#vehicle-class_specific_speed_limits">vClass-specific speed limits for bicycles</a> on all edges where bicycles are used </li>
+</ul>
+</li>
+</ul>
+<p>One way for overcoming most of these problems is to control bicycle
+movements at intersections with an <a href="../TraCI.html">external control
+script</a>. This approach is described in <a href="https://www.researchgate.net/publication/302909195_Integration_of_an_External_Bicycle_Model_in_SUMO">Integration of
+an external bicycle model in SUMO, Heather
+Twaddle 2016</a>.</p>
+<h2 id="bicycles_as_fast_pedestrians">Bicycles as fast pedestrians<a class="headerlink" href="#bicycles_as_fast_pedestrians" title="Permanent link">#</a></h2>
+<p>In this case, persons walking at high speed are used.</p>
+<h3 id="problems_and_workarounds_1">Problems and workarounds<a class="headerlink" href="#problems_and_workarounds_1" title="Permanent link">#</a></h3>
+<p>- No support for proper visualization
+  - Movement model is not validated</p>
+<h1 id="building_a_network_for_bicycle_simulation">Building a network for bicycle simulation<a class="headerlink" href="#building_a_network_for_bicycle_simulation" title="Permanent link">#</a></h1>
+<h2 id="automatic_import">Automatic import<a class="headerlink" href="#automatic_import" title="Permanent link">#</a></h2>
+<p>The import of bicycle lanes from OpenStreetMap is supported since
+version 0.24.0. To use this, <a href="../Networks/Import/OpenStreetMap.html#recommended_typemaps">an appropriate
+typemap</a>
+must be loaded.</p>
+<h2 id="generating_a_network_with_bike_lanes">Generating a network with bike lanes<a class="headerlink" href="#generating_a_network_with_bike_lanes" title="Permanent link">#</a></h2>
+<p>A bike lane is a lane which only permits the vClass <em>bicycle</em>. There are various different options for generating a network with bike lanes which are explained below. All of these options recognize the presence of an existing bike lane and will not add another lane in that case. </p>
+<h3 id="explicit_specification_of_additional_lanes">Explicit specification of additional lanes<a class="headerlink" href="#explicit_specification_of_additional_lanes" title="Permanent link">#</a></h3>
+<p>Bike lanes may be defined explicitly in plain XML input when describing edges <a href="../Networks/PlainXML.html#lane-specific_definitions">edges
+(plain.edg.xml)</a>. This is done by defining an additional lane which only permits the vClass “bicycle” and setting the appropriate width. In this case it may be useful to disallow bicycles on other lanes. Also, any pre-exisiting connection definitions must be modified to account for the new bike lane. </p>
+<h3 id="explicit_specification_of_bike_lanes">Explicit specification of bike lanes<a class="headerlink" href="#explicit_specification_of_bike_lanes" title="Permanent link">#</a></h3>
+<p>Alternatively to the above method, the <code>&lt;edge&gt;</code>-attribute <a href="../Networks/PlainXML.html#edge_descriptions"><code>bikeLanWidth</code> may be used</a>. It will cause a bike lane of the specified width to be added to that edge, connections to be remapped and bicycle permissions to be removed from all other lanes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The heuristic methods described below, also perform automatic connection shifting and removal of bicycle permissions from non-bike lanes</p>
+</div>
+<h3 id="type-base_generation">Type-base generation<a class="headerlink" href="#type-base_generation" title="Permanent link">#</a></h3>
+<p>When importing edges with defined types, it is also possible to declare that certain types should receive a sidewalk. This can be used to automatically generate bike lanes for residential streets while omitting them for motorways when importing OSM data. </p>
+<pre><code>&lt;types&gt;
+   &lt;type id=&quot;highway.motorway&quot; numLanes=&quot;3&quot; speed=&quot;44.44&quot; priority=&quot;13&quot; oneway=&quot;true&quot; disallow=&quot;pedestrian bicycle&quot;/&gt;
+   &lt;type id=&quot;highway.unclassified&quot;   numLanes=&quot;1&quot; speed=&quot;13.89&quot; priority=&quot;5&quot; bikeLaneWidth=&quot;1&quot; disallow=&quot;bicycle&quot;/&gt;
+   &lt;type id=&quot;highway.residential&quot;    numLanes=&quot;1&quot; speed=&quot;13.89&quot; priority=&quot;4&quot; bikeLaneWidth=&quot;1&quot; disallow=&quot;bicycle&quot;/&gt;
+   &lt;type id=&quot;highway.living_street&quot;  numLanes=&quot;1&quot; speed=&quot;2.78&quot;  priority=&quot;3&quot;/&gt;
+   ...
+&lt;/types&gt;
+</code></pre>
+
+<p>A special type file that imports bike lanes based on additional OSM attributes can be found in <a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvertBicycle.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvertBicycle.typ.xml</a>. This is to be preferred for importing bike lanes from OSM as it uses more accurate data. </p>
+<h3 id="heuristic_generation">Heuristic generation<a class="headerlink" href="#heuristic_generation" title="Permanent link">#</a></h3>
+<p>A third option which can be used if no edge types are available is a heuristic based on edge speed. It adds a bike lane for all edges within a given speed range. This is controlled by using the following options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--bikelanes.guess</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Guess bike lanes based on edge speed</td>
+</tr>
+<tr>
+<td><strong>--bikelanes.guess.max-speed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Add bike lanes for edges with a speed equal or below the given limit <em>default:13.89</em></td>
+</tr>
+<tr>
+<td><strong>--bikelanes.guess.min-speed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Add bike lanes for edges with a speed above the given limit <em>default:5.8</em></td>
+</tr>
+<tr>
+<td><strong>--bikelanes.guess.exclude</strong> [,<ID>]*</td>
+<td>Specify a list of edges that shall not receive a bike lane</td>
+</tr>
+</tbody>
+</table>
+<h3 id="permission-based_generation">Permission-based generation<a class="headerlink" href="#permission-based_generation" title="Permanent link">#</a></h3>
+<p>Option <strong>--bikelanes.guess.from-permissons</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> is suitable for networks which specify their edge permissions (such as <a href="../Networks/Import/DlrNavteq.html">DlrNavteq</a>). It adds a bike lane for all edges which allow bicycles on any of their lanes. The option <strong>--bikelanes.guess.exclude</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;ID&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;ID&gt;</em></a>]* applies here as well. </p>
+<h3 id="adding_bike_lanes_with_netedit">Adding bike lanes with <a href="../netedit.html">netedit</a><a class="headerlink" href="#adding_bike_lanes_with_netedit" title="Permanent link">#</a></h3>
+<p>To add bike lanes to a set of edges in <a href="../netedit.html">netedit</a> select these and right click on them. From the context-menu select <em>lane operations-&gt;add restricted lane-&gt;Bikelane</em>. </p>
+<h2 id="notes_on_right-of-way_rules">Notes on Right-of-Way rules<a class="headerlink" href="#notes_on_right-of-way_rules" title="Permanent link">#</a></h2>
+<p>When using bicycle lanes in a network, right-turning vehicles must yield
+for straight-going bicycles. The intersection model supports these
+right-of-way rules and builds internal junctions where appropriate.</p>
+<p>Likewise, left-turning bicycles one a bicycle lane (on the right side of
+the road) must yield to straight-going vehicles.</p>
+<h2 id="indirect_left_turn">Indirect left turn<a class="headerlink" href="#indirect_left_turn" title="Permanent link">#</a></h2>
+<p>In reality, left-turning bicycles may move in two stages
+1. move straight across
+2. turn 90° left and then move straight across</p>
+<p>By default, <a href="../netconvert.html">netconvert</a> generates a wide curve rather than going straight twice as above. Currently, this can only be remedied by setting <a href="../netedit.html#connection">custom shapes for these internal lanes</a>. To adjust the waiting position of the bicycle (the point where the first stage ends), <a href="../netedit.html#setting_connection_attributes">connection attribute 'contPos' must be set</a>.</p>
+<p>To define a controlled in direct turn where both stages respect the traffic light corresponding to the current movement direction another custom setting is needed. The first part of the left-turn connection will be controlled automatically by the traffic ligh according to the 'linkIndex' attribute of the connection.
+The second part can be controlled by <a href="../netedit.html#setting_connection_attributes">setting the optional attribute 'linkIndex2'</a>. The easiest setup is to copy the linkIndex that controlls the movement of vehicles (or pedestrians) going straight from right to left.</p>
+<h1 id="bicycle_routing">Bicycle routing<a class="headerlink" href="#bicycle_routing" title="Permanent link">#</a></h1>
+<p>When <a href="../Demand/Automatic_Routing.html">routing bicycles in the simulation</a> the option <strong>--device.rerouting.bike-speeds</strong> can be used to enable separate tracking of bicycle speeds. This ensure that routing for bicycles which can use a dedicated bicycle lane is not affected by jammed cars.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 06 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

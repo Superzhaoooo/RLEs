@@ -1,0 +1,13 @@
+prefix=C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 ScriptTools
+Description: Qt ScriptTools module
+Version: 5.9.1
+Libs: -L${libdir} -lQt5ScriptTools 
+Cflags: -I${includedir}/QtScriptTools -I${includedir}
+Requires: Qt5Core
+

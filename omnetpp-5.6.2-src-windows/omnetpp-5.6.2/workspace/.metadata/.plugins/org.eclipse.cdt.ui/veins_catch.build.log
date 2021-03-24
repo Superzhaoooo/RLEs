@@ -1,0 +1,13 @@
+21:29:41 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+
+21:29:54 Build Failed. 2 errors, 0 warnings. (took 12s.820ms)
+

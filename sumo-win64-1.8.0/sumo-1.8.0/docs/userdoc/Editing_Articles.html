@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Editing_Articles.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Help on editing Articles - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Editing_Articles.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#creating_an_article">Creating an article</a></li>
+            <li class="nav-item main"><a href="#sections_and_subsections">Sections and subsections</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example" class="nav-link">• Example</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#this_is_a_sub_section_equivalent_to_h462" class="nav-link">&rarr; This is a sub section, equivalent to &lt;h4></a>
+                </li>
+            <li class="nav-item main"><a href="#styling_text">Styling text</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_1" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#escape_character">Escape character</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_2" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#images">Images</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_3" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#tables">Tables</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_4" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#math">Math</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_5" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#macros_variables">Macros / Variables</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_6" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#links">Links</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#links_to_files_in_the_sumo_github_repo" class="nav-link">• Links to files in the SUMO GitHub repo</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#internal_links" class="nav-link">• Internal Links</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_7" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#github_issues_commits_and_users">GitHub issues, commits and users</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_8" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#notes">Notes</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#example_9" class="nav-link">• Example</a>
+                </li>
+            <li class="nav-item main"><a href="#see_also">See also</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Help on editing Articles<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This documentation is written using Markdown syntax. Every page or "article" is a Markdown (.md) file located <a href="https://github.com/eclipse/sumo/blob/master/docs/web/docs">here</a> in the official SUMO GitHub repository.
+The static html pages are then generated using <a href="https://www.mkdocs.org/">Mkdocs</a>.</p>
+<p>Feel free to contribute and improve the SUMO Documentation. All changes need to be via Pull requests. You can click on the "Edit on GitHub" button in the top right corner of every page, or just simply press the <code>e</code> key on your keyboard.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although HTML can be written within Markdown, please avoid using it and keep everything in native Markdown as much as possible.</p>
+</div>
+<p><br><br></p>
+<h1 id="creating_an_article"><strong>Creating an article</strong><a class="headerlink" href="#creating_an_article" title="Permanent link">#</a></h1>
+<p>To creat a new article (or page) just create a Markdown (.md) file in the <a href="https://github.com/eclipse/sumo/blob/master/docs/web/docs">documentation directory</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please capitalize the very first letter of the name and use <code>_</code> (underscores) instead of leaving a <code></code> (space) between words in the filename.</p>
+</div>
+<p>The very first 3 lines of each page should be:</p>
+<pre><code>---
+title: Name of the Article
+---
+</code></pre>
+
+<p><font color="red">If you want to create an fresh new article, please consider first seeing the source code of any existing article, to learn and get some basic notions.</font> </p>
+<p><br><br></p>
+<h1 id="sections_and_subsections"><strong>Sections and subsections</strong><a class="headerlink" href="#sections_and_subsections" title="Permanent link">#</a></h1>
+<p>Sections and subsections in a document are marked by using the <code>#</code> character.</p>
+<p># is equivalent to a &lt;h1> section, ## to an &lt;h2> and so on.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On the toc (table of content) sidebar you see on each page, only <strong>#</strong>, <strong>##</strong> and <strong>###</strong> sections are listed. Despite that, all other levels generate an internal link and therefore can be referenced and linked from another page.</p>
+</div>
+<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h2>
+<pre><code>#### This is a sub section, equivalent to &lt;h4&gt;
+</code></pre>
+
+<p><strong><em>will display:</em></strong></p>
+<h4 id="this_is_a_sub_section_equivalent_to_h462">This is a sub section, equivalent to &lt;h4><a class="headerlink" href="#this_is_a_sub_section_equivalent_to_h462" title="Permanent link">#</a></h4>
+<p><br><br></p>
+<h1 id="styling_text"><strong>Styling text</strong><a class="headerlink" href="#styling_text" title="Permanent link">#</a></h1>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Code</th>
+<th>Will show as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bold</td>
+<td>**test**</td>
+<td><strong>test</strong></td>
+</tr>
+<tr>
+<td>Italic</td>
+<td>*test*</td>
+<td><em>test</em></td>
+</tr>
+<tr>
+<td>Bold + Italic</td>
+<td>***test***</td>
+<td><strong><em>test</em></strong></td>
+</tr>
+<tr>
+<td>Strikethrough</td>
+<td>~~test~~</td>
+<td><del>test</del></td>
+</tr>
+</tbody>
+</table>
+<p>Markdown is compatible with the <code>&lt;sub&gt;</code> and <code>&lt;sup&gt;</code> html-Tags.</p>
+<ul>
+<li><code>η&lt;sub&gt;recup&lt;/sub&gt;=e&lt;sup&gt;x&lt;/sup&gt;</code> η<sub>recup</sub>=e<sup>x</sup></li>
+</ul>
+<h2 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">#</a></h2>
+<pre><code>Lorem *ipsum* dolor sit amet, *consetetur sadipscing elitr*, sed diam **nonumy** eirmod **tempor invidunt ut labore** et ~~dolore~~ magna ***aliquyam erat, sed diam*** voluptua.
+</code></pre>
+
+<p><strong><em>will display:</em></strong></p>
+<p>Lorem <em>ipsum</em> dolor sit amet, <em>consetetur sadipscing elitr</em>, sed diam <strong>nonumy</strong> eirmod <strong>tempor invidunt ut labore</strong> et <del>dolore</del> magna <strong><em>aliquyam erat, sed diam</em></strong> voluptua.</p>
+<p><br><br></p>
+<h1 id="escape_character"><strong>Escape character</strong><a class="headerlink" href="#escape_character" title="Permanent link">#</a></h1>
+<p>Use the escape character in order to display literal characters which would have special meaning in Markdown. The escape character is <code>\</code> (backslash). When writing text inside the `` marks (inline code) or in a code block, no escape character are required.</p>
+<p>Here are some expressions that need an escape character:</p>
+<ul>
+<li>@ : if not, it would be taken as a GitHub username</li>
+<li># : if not, it would be taken as a Header or a GitHub issue</li>
+<li>| : when using it inside a table</li>
+<li>></li>
+<li>{</li>
+<li>}</li>
+<li>*</li>
+</ul>
+<h2 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">#</a></h2>
+<pre><code>`&lt;TEST1&gt;` using code. No escape character is required here.
+&lt;TEST2&gt; not using the escape character. Here the element disappears.
+&lt;TEST3\&gt; using the escape character
+</code></pre>
+
+<p><strong><em>will display:</em></strong></p>
+<p><code>&lt;TEST1&gt;</code> using code. No escape character is required here.<br>
+<TEST2> not using the escape character. Here the element disappears.<br>
+&lt;TEST3> using the escape character</p>
+<p><br><br></p>
+<h1 id="images"><strong>Images</strong><a class="headerlink" href="#images" title="Permanent link">#</a></h1>
+<p>All images must be saved in the <a href="https://github.com/eclipse/sumo/blob/master/docs/web/docs/images">images directory</a>.
+To insert an image, just use the usual Markdown sytax: </p>
+<pre><code>![&lt;alt&gt;](images/Wikicommons_rail_fast.jpg &quot;&lt;title&gt;&quot;)
+</code></pre>
+
+<p>replace <code>&lt;alt&gt;</code> with the alternate text and <code>&lt;title&gt;</code> with the title to show on Mouseover.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>&lt;alt&gt;</code> and <code>&lt;title&gt;</code> attributes are not necessary required, as you can see in the example.</p>
+</div>
+<h2 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">#</a></h2>
+<pre><code>![](images/Wikicommons_rail_fast.jpg)
+</code></pre>
+
+<p><strong><em>will display:</em></strong></p>
+<p><img alt="" src="images/Wikicommons_rail_fast.jpg" /></p>
+<p><br><br></p>
+<h1 id="tables"><strong>Tables</strong><a class="headerlink" href="#tables" title="Permanent link">#</a></h1>
+<p>See this <a href="https://www.tablesgenerator.com/markdown_tables">Online Tables generator</a> to get help creating a Table in Markdown, or to convert an existing spreadsheet (e.g. Microsoft Excel) into Markdown.</p>
+<p>A table has a Header (the first row), which is separated by hyphens <code>-</code> from the rest of the Table.
+To separate columns, just use a pipe <code>|</code>.</p>
+<h2 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">#</a></h2>
+<pre><code>|   |   |   |   |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
+</code></pre>
+
+<p><strong><em>will display:</em></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is important to leave an empty line (line break) immediately before and immediately after a table.</p>
+</div>
+<p><br><br></p>
+<h1 id="math"><strong>Math</strong><a class="headerlink" href="#math" title="Permanent link">#</a></h1>
+<p>In order to insert Mathematical expressions (symbols or equations), you should write them in <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX format</a>. Math elements are being displayed as images, using a html <code>&lt;img&gt;</code> element.
+Just replace <code>&lt;HERE&gt;</code> with your math expression in the following html element:</p>
+<p><code>&lt;img src="http://latex.codecogs.com/gif.latex?&lt;HERE&gt;" border="0" style="margin:0;"/&gt;</code></p>
+<h2 id="example_5">Example<a class="headerlink" href="#example_5" title="Permanent link">#</a></h2>
+<pre><code>&lt;img src=&quot;http://latex.codecogs.com/gif.latex?R&quot; border=&quot;0&quot; style=&quot;margin:0;&quot;/&gt;
+</code></pre>
+
+<p><strong><em>will display:</em></strong></p>
+<p><img src="http://latex.codecogs.com/gif.latex?R" border="0" style="margin:0;"/></p>
+<hr>
+
+<pre><code>&lt;img src=&quot;http://latex.codecogs.com/gif.latex?F(x)=\int^a_b\frac{1}{3}x^3&quot; border=&quot;0&quot; style=&quot;margin:0;&quot;/&gt;
+</code></pre>
+
+<p><strong><em>will display:</em></strong></p>
+<p><img src="http://latex.codecogs.com/gif.latex?F(x)=\int^a_b\frac{1}{3}x^3" border="0" style="margin:0;"/></p>
+<p><br><br></p>
+<h1 id="macros_variables"><strong>Macros / Variables</strong><a class="headerlink" href="#macros_variables" title="Permanent link">#</a></h1>
+<p>In order to make writing this Documentation easier, we implemented some Macros. Macros replace some special text with other content.</p>
+<h2 id="example_6">Example<a class="headerlink" href="#example_6" title="Permanent link">#</a></h2>
+<p>{{SUMO}}
+{{DT_FILE}}
+{{DT_STR}}
+{{Version}}</p>
+<p><strong><em>will display:</em></strong></p>
+<p><strong><em>&lt;SUMO_HOME&gt;</em></strong>
+<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>
+<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>
+1.8.0</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The full list of available Macros can be found <a href="https://github.com/eclipse/sumo/blob/master/docs/web/mkdocs.yml">here</a> at the end in the <code>extra</code> section.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Macros do not work inside inline code or code blocks.</p>
+</div>
+<p><br><br></p>
+<h1 id="links"><strong>Links</strong><a class="headerlink" href="#links" title="Permanent link">#</a></h1>
+<p>When linking to a page within this Documentation, please consider the absolute path to the Markdown file.
+<font color="red">Do not forget to add the <code>.md</code> extension to every internal link.</font> </p>
+<p>Links to external pages will display an arrow at the end (e.g. <a href="https://www.dlr.de">DLR</a>).</p>
+<h2 id="links_to_files_in_the_sumo_github_repo"><strong>Links to files in the SUMO GitHub repo</strong><a class="headerlink" href="#links_to_files_in_the_sumo_github_repo" title="Permanent link">#</a></h2>
+<p>Using the {{Source}} Macro, linking to files in the official SUMO repository on GitHub is as easy as: </p>
+<ul>
+<li>[Read the gitignore file]({{Source}}.gitignore) <a href="https://github.com/eclipse/sumo/blob/master/.gitignore">Read the gitignore file</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The {{Source}} macro is equivalent to <a href="https://github.com/eclipse/sumo/blob/master/">https://github.com/eclipse/sumo/blob/master/</a> including the <code>/</code> at the end. Please analyze the following example:</p>
+</div>
+<ul>
+<li>[{{SUMO}}/src/sumo_main.cpp]({{Source}}src/sumo_main.cpp) <a href="https://github.com/eclipse/sumo/blob/master/src/sumo_main.cpp"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/sumo_main.cpp</a></li>
+</ul>
+<h2 id="internal_links"><strong>Internal Links</strong><a class="headerlink" href="#internal_links" title="Permanent link">#</a></h2>
+<p>Internal links are used to refer a special section of an article. You can obtain the internal link to a section by hovering the cursor next to the section title (an # character will appear).</p>
+<p>Linking to a section within the same page is as easy as this: <a href="#math">Read about Math</a> <code>[Read about Math](#math)</code></p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>All texts in internal links are in lower case.</p>
+</div>
+<p>To reference a section on another page, do not forget to put the absolute path and the <code>.md</code> extension, like this: <a href="sumo.html#input">Read about SUMO input</a> <code>[Read about SUMO input](sumo.md#input)</code></p>
+<p>Some characters are being ignored (deleted) or replaced when generating an internal link:</p>
+<ul>
+<li><code>.</code> is ignored</li>
+<li><code>:</code> is ignored</li>
+<li><code>?</code> is ignored</li>
+<li><code>'</code> is ignored</li>
+<li><code>"</code> is ignored</li>
+<li><code>/</code> is ignored</li>
+<li><code>(</code> is converted to <code>_</code></li>
+<li><code>)</code> is converted to <code>_</code></li>
+<li><code></code> (space) is converted to <code>_</code></li>
+<li><code>&gt;</code> is converted to <code>62</code></li>
+</ul>
+<p>Here are some practical examples:</p>
+<table>
+<thead>
+<tr>
+<th>Section title</th>
+<th>Actual link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tools fail with a SyntaxError or ImportError or some TypeError concerning "&gt;&gt;"</td>
+<td><a href="FAQ.html#tools_fail_with_a_syntaxerror_or_importerror_or_some_typeerror_concerning_6262">#tools_fail_with_a_syntaxerror_or_importerror_or_some_typeerror_concerning_6262</a></td>
+</tr>
+<tr>
+<td>Why do I get errors about missing files / file not found even though the file exists?</td>
+<td><a href="FAQ.html#why_do_i_get_errors_about_missing_files_file_not_found_even_though_the_file_exists">#why_do_i_get_errors_about_missing_files_file_not_found_even_though_the_file_exists</a></td>
+</tr>
+<tr>
+<td>Version 1.3.1 (27.08.2019)</td>
+<td><a href="ChangeLog.html#version_131_27082019">#version_131_27082019</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No permalink ends with a <code>_</code> character.</p>
+</div>
+<h2 id="example_7">Example<a class="headerlink" href="#example_7" title="Permanent link">#</a></h2>
+<pre><code>Go to [sumo-gui](sumo-gui.md), [netconvert options](netconvert.md#options) or [Notation](Basics/Notation.md)
+
+&lt;https://www.dlr.de&gt; or [DLR](https://www.dlr.de)
+</code></pre>
+
+<ul>
+<li>[Read the gitignore file]({{Source}}.gitignore) </li>
+<li>[{{SUMO}}/src/sumo_main.cpp]({{Source}}src/sumo_main.cpp)</li>
+</ul>
+<p><strong><em>will display:</em></strong></p>
+<p>Go to <a href="sumo-gui.html">sumo-gui</a>, <a href="netconvert.html#options">netconvert options</a> or <a href="Basics/Notation.html">Notation</a></p>
+<p><a href="https://www.dlr.de">https://www.dlr.de</a> or <a href="https://www.dlr.de">DLR</a></p>
+<ul>
+<li><a href="https://github.com/eclipse/sumo/blob/master/.gitignore">Read the gitignore file</a></li>
+<li><a href="https://github.com/eclipse/sumo/blob/master/src/sumo_main.cpp"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/sumo_main.cpp</a></li>
+</ul>
+<p><br><br></p>
+<h1 id="github_issues_commits_and_users"><strong>GitHub issues, commits and users</strong><a class="headerlink" href="#github_issues_commits_and_users" title="Permanent link">#</a></h1>
+<p>In order to use the # and @ characters freely, please use the <a href="#escape_character">escape character</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Code</th>
+<th>Will show as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub issue</td>
+<td>#5697</td>
+<td><a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/5697" title="GitHub Issue eclipse/sumo #5697">#5697</a></td>
+</tr>
+<tr>
+<td>GitHub user</td>
+<td>@namdre</td>
+<td><a class="gh-link gh-mention" href="https://github.com/namdre" title="GitHub User: @namdre">@namdre</a></td>
+</tr>
+<tr>
+<td>GitHub commit</td>
+<td><code>3aa106d1bf3221031cca75cfe259913d9d3e88ae</code> (the complete Commit Hash)</td>
+<td><a class="gh-link gh-commit" href="https://github.com/eclipse/sumo/commit/3aa106d1bf3221031cca75cfe259913d9d3e88ae" title="GitHub Commit: eclipse/sumo@3aa106d1bf3221031cca75cfe259913d9d3e88ae">3aa106d</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="example_8">Example<a class="headerlink" href="#example_8" title="Permanent link">#</a></h2>
+<pre><code>The issue #5697 was reported by @angelobanse. @behrisch commited 3aa106d1bf3221031cca75cfe259913d9d3e88ae to close that issue.
+</code></pre>
+
+<p><strong><em>will display:</em></strong></p>
+<p>The issue <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/5697" title="GitHub Issue eclipse/sumo #5697">#5697</a> was reported by <a class="gh-link gh-mention" href="https://github.com/angelobanse" title="GitHub User: @angelobanse">@angelobanse</a>. <a class="gh-link gh-mention" href="https://github.com/behrisch" title="GitHub User: @behrisch">@behrisch</a> commited <a class="gh-link gh-commit" href="https://github.com/eclipse/sumo/commit/3aa106d1bf3221031cca75cfe259913d9d3e88ae" title="GitHub Commit: eclipse/sumo@3aa106d1bf3221031cca75cfe259913d9d3e88ae">3aa106d</a> to close that issue.</p>
+<p><br><br></p>
+<h1 id="notes"><strong>Notes</strong><a class="headerlink" href="#notes" title="Permanent link">#</a></h1>
+<p>The <strong><em>NOTE</em></strong> and <strong><em>CAUTION</em></strong> elements are useful for highlighting important information.
+You can also use a custom note type.</p>
+<p>Inside a <strong>Note</strong> element you can use Markdown syntax to insert links, stylize text and even insert images.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Unfortunately, you cannot insert a note in a Table.</p>
+</div>
+<h2 id="example_9">Example<a class="headerlink" href="#example_9" title="Permanent link">#</a></h2>
+<pre><code>!!! note
+    When citing SUMO in general please use our current reference 
+    publication: [&quot;Microscopic Traffic Simulation using SUMO&quot;](https://elib.dlr.de/124092/); 
+    Pablo Alvarez Lopez, Michael Behrisch, Laura Bieker-Walz, Jakob Erdmann, Yun-Pang Flötteröd, 
+    Robert Hilbrich, Leonhard Lücken, Johannes Rummel, Peter Wagner, and Evamarie Wießner. 
+    IEEE Intelligent Transportation Systems Conference (ITSC) 2018.
+
+!!! caution
+    The list of not allowed characters is incomplete
+
+!!! incomplete &quot;Missing:&quot;
+    This is just a test
+</code></pre>
+
+<p>{{Outdated}}</p>
+<p><strong><em>will display:</em></strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When citing SUMO in general please use our current reference publication: <a href="https://elib.dlr.de/124092/">"Microscopic Traffic Simulation using SUMO"</a>; Pablo Alvarez Lopez, Michael Behrisch, Laura Bieker-Walz, Jakob Erdmann, Yun-Pang Flötteröd, Robert Hilbrich, Leonhard Lücken, Johannes Rummel, Peter Wagner, and Evamarie Wießner. IEEE Intelligent Transportation Systems Conference (ITSC) 2018.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The list of not allowed characters is incomplete</p>
+</div>
+<div class="admonition incomplete">
+<p class="admonition-title">Missing:</p>
+<p>This is just a test</p>
+</div>
+<div style="background: #801010; padding: .5em; border: 1px dashed #ffcc44; margin-right:10px; margin-left:10px; color: #ffffff">This information is outdated.</div>
+
+<p><br><br></p>
+<h1 id="see_also"><strong>See also</strong><a class="headerlink" href="#see_also" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf">Markdown Cheatsheet</a></li>
+<li><a href="https://guides.github.com/features/mastering-markdown/">GitHub Guide on Mastering Markdown</a></li>
+<li><a href="https://github.com/eclipse/sumo/blob/master/docs/web/docs/images">SUMO Documentation images</a></li>
+<li><a href="https://www.tablesgenerator.com/markdown_tables">Online Markdown Tables generator</a></li>
+<li><a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX Mathematics</a></li>
+</ul>
+<ul>
+<li><a href="https://github.com/eclipse/sumo/blob/master/docs/web/README.md">How to Build this Documentation</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

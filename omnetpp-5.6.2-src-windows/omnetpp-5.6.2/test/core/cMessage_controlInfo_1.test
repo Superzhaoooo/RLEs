@@ -1,0 +1,22 @@
+%description:
+Test that getControlInfo() gets deleted when message gets deleted
+
+%global:
+
+class Ctrl : public cObject
+{
+  public:
+    Ctrl() : cObject() { }
+    ~Ctrl() {EV << "control info deleted\n";}
+};
+
+%activity:
+cMessage *msg = new cMessage();
+Ctrl *ctrl = new Ctrl();
+
+msg->setControlInfo(ctrl);
+delete msg;
+
+%contains: stdout
+control info deleted
+

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/Implementation_Notes/Options_Sub_System.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Developer/Implementation Notes/Options Sub System - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/Implementation_Notes/Options_Sub_System.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+            <li class="nav-item main"><a href="#initialising_options">Initialising Options</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#first_steps" class="nav-link">• First Steps</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#registering_options" class="nav-link">• Registering Options</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#adding_synonyms" class="nav-link">&rarr; Adding Synonyms</a>
+                </li>
+            <li class="nav-item main"><a href="#retrieving_options">Retrieving Options</a></li>
+            <li class="nav-item main"><a href="#implementation">Implementation</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/Implementation Notes/Options Sub System<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
+<p>All major SUMO applications use the same classes for parsing command
+line options and configuration files. These classes encapsulate parsing
+options from the command line and XML-configuration files and validating
+whether they are of a correct type. The options sub system also supports
+writing configuration-templates, saving current (parsed/loaded) settings
+to files, and printing the help screen.</p>
+<h2 id="initialising_options">Initialising Options<a class="headerlink" href="#initialising_options" title="Permanent link">#</a></h2>
+<h3 id="first_steps">First Steps<a class="headerlink" href="#first_steps" title="Permanent link">#</a></h3>
+<p>Each application has exactly one instance of the <strong>OptionsCont</strong>
+(options container) - class. A reference to this class may be obtained
+using</p>
+<pre><code>static OptionsCont &amp;OptionsCont::getOptions();
+</code></pre>
+
+<p>Before an application starts registering its options, it must let
+OptionsCont know itself. It is needed due to the fact that OptionsCont
+is responsible for printing a basic information about the application
+and because it also generates the help screen which includes the
+application's name, possibly example calls, etc. Due to this, the first
+touch of the options sub system for each application looks similar to
+the following which is borrowed from netconvert_main.cpp:</p>
+<pre><code>   OptionsCont &amp;oc = OptionsCont::getOptions();
+   // give some application descriptions
+   oc.setApplicationDescription(&quot;Road network importer / builder for the road traffic simulation SUMO.&quot;);
+#ifdef WIN32
+   oc.setApplicationName(&quot;netconvert.exe&quot;, &quot;SUMO netconvert Version &quot; + (string)VERSION_STRING);
+#else
+   oc.setApplicationName(&quot;sumo-netconvert&quot;, &quot;SUMO netconvert Version &quot; + (string)VERSION_STRING);
+#endif
+</code></pre>
+
+<p>The ifdef-block is used to differ between the supported OSes
+(Windows/Linux) where the SUMO-applications are named slightly
+different.</p>
+<p>Please note that the description set by setApplicationDescription is a
+brief description and should fit into one line (be not longer than 80
+characters).</p>
+<h3 id="registering_options">Registering Options<a class="headerlink" href="#registering_options" title="Permanent link">#</a></h3>
+<p>Before the command line options are parsed, their names, allowed types
+and their default values (if existing) must be inserted into this
+container. This mostly done within a dedicated method or function.</p>
+<p>To insert an application option into the container, use one of the
+following polymorphs:</p>
+<pre><code>void doRegister(const std::string &amp;name1, Option *v);
+</code></pre>
+
+<p>or</p>
+<pre><code>void doRegister(const std::string &amp;name1, char abbr, Option *v);
+</code></pre>
+
+<p>The parameter "name1" is the name (or one of the possible names, better
+to say) of the inserted option. The character "abbr" within the second
+call is the possible one-char abbreviation of the name.</p>
+<pre><code>Caution: The behaviour after adding the same abbreviation for two different options is not defined.
+</code></pre>
+
+<p>The third parameter is an option that shall be assigned to the name(s).
+Remark that the <strong>OptionsCont</strong> takes the responsibility for this option
+- it will be deleted when the <strong>OptionsCont</strong> is deleted. The option
+itself must be an instance of one of the following classes, which all
+are derived from the class <strong>Option</strong>:</p>
+<ul>
+<li>Option_Integer</li>
+<li>Option_Bool</li>
+<li>Option_Float</li>
+<li>Option_String</li>
+<li>Option_FileName</li>
+<li>Option_IntVector</li>
+<li>Option_StringVector</li>
+</ul>
+<p>The names of the classes reflect the types which are awaited as
+parameter for the option. Do also remark, that later access for reading
+should be done in dependence to the type - it means that you should not
+try to get a string from an <strong>Option_Float</strong>. This results in an
+exception.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>All subclasses of Option are stored within the files ''<strong><em>&lt;SUMO_HOME&gt;</em></strong><em>/src/utils/options/Option.h</em> and ''<strong><em>&lt;SUMO_HOME&gt;</em></strong><em>/src/utils/options/Option.cpp</em>. This is surely not wished as when following the coding styleguide, each class should be stored in a separate pair of files. Also, one could imagine to use templates, here.</p>
+</div>
+<p>Every one of the option's subclasses has two constructors: one
+that is parametrised with the appropriate type and a parameter-less one.
+The parametrised constructor is used to supply default values for
+options, in the other case, no value is known to the system at first. An
+example: settings the "verbose"-switch as following, lets the
+application run quiet as default:</p>
+<pre><code>oc.doRegister(&quot;verbose&quot;, 'v', new Option_Bool(false));
+</code></pre>
+
+<h4 id="adding_synonyms">Adding Synonyms<a class="headerlink" href="#adding_synonyms" title="Permanent link">#</a></h4>
+<p>One can also add synonyms for options. If you want to implement the
+option "<strong>name-of-vehicle-that-shall-halt</strong>", but you wish to have a
+shorter name, too, use the following to make the same option accessible
+using both "<strong>name-of-vehicle-that-shall-halt</strong>" and "<strong>v2h</strong>":</p>
+<pre><code>oc.doRegister(&quot;name-of-vehicle-that-shall-halt&quot;, new Option_String());
+oc.addSynonyme(&quot;name-of-vehicle-that-shall-halt&quot;, &quot;v2h&quot;);
+</code></pre>
+
+<h2 id="retrieving_options">Retrieving Options<a class="headerlink" href="#retrieving_options" title="Permanent link">#</a></h2>
+<p>If no default value was supplied for an option, you should ask the
+<strong>OptionsCont</strong> whether it has been set. Access to values of unset
+options causes exceptions. This may sound hard, but as it's only the
+developer who accesses the options container in fact, it's the best way
+to assure security of the code. One can determine whether an option is
+set using</p>
+<pre><code>bool OptionsCont::isSet(const std::string &amp;name) const;
+</code></pre>
+
+<p>If one has to know whether an option still stores the default value or
+a value was supplied by the user, he/she may call</p>
+<pre><code>bool OptionsCont::isDefault(const std::string &amp;name) const;
+</code></pre>
+
+<p>Dependent on the type of an option, one can retrieve its value using
+the following methods from OptionsCont:</p>
+<pre><code>int OptionsCont::getInt(const std::string &amp;name) const;
+long OptionsCont::getLong(const std::string &amp;name) const;
+std::string OptionsCont::getString(const std::string &amp;name) const;
+float OptionsCont::getFloat(const std::string &amp;name) const;
+const IntVector &amp;OptionsCont::getIntVector(const std::string &amp;name) const;
+const StringVector &amp;OptionsCont::getStringVector(const std::string &amp;name) const;
+</code></pre>
+
+<p>Using an inproper method yields an exception.</p>
+<p>You may have noticed, that there is one method to retrieve a certain
+value less than types available. The type <strong>Option_FileName</strong> returns a
+string-vector, too. The only difference is their type which allows a different
+processing of the values to set when parsing.</p>
+<p>Please note, that it is good style to use the long (longest in fact)
+name for retrieving an option's value and that the same name (synonyme)
+should be used at all places. This makes it easier to locate this
+option's usage.</p>
+<h2 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">#</a></h2>
+<p>All classes needed to store and process options can be found within
+<strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/utils/options/</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,17 @@
+%description:
+Test display string parsing.
+
+%file: test.ned
+
+import testlib.Dump;
+
+network Test {
+    @display(",foo");  // missing tag name (?)
+    submodules:
+        dump: Dump;
+}
+
+%exitcode: 1
+
+%contains: stderr
+Illegal character "," encountered in tag name while parsing display string ",foo"

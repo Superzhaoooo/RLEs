@@ -1,0 +1,79 @@
+%description:
+Customized cMessage class
+
+%file: test.msg
+
+namespace @TESTNAME@;
+
+message SomePacket
+{
+    @customize(true);
+    int src;
+    int dest;
+    abstract int ttl;
+}
+
+%includes:
+#include <envir/objectprinter.h>   // from src/envir
+#include "test_m.h"
+
+using omnetpp::envir::ObjectPrinter;
+
+%global:
+class SomePacket : public SomePacket_Base
+{
+  private:
+    int ttl;
+  public:
+    SomePacket(const char *name=nullptr, int kind=0) : SomePacket_Base(name,kind) {ttl=0;}
+    SomePacket(const SomePacket& other) : SomePacket_Base(other.getName()) {operator=(other);}
+    SomePacket& operator=(const SomePacket& other) {SomePacket_Base::operator=(other); ttl=other.ttl;return *this;}
+    virtual SomePacket *dup() const {return new SomePacket(*this);}
+
+    virtual int getTtl() const {return ttl;}
+    virtual void setTtl(int d) {ttl=d;}
+};
+
+Register_Class(SomePacket);
+
+%activity:
+
+SomePacket *msg = new SomePacket("some", 99);
+EV << ObjectPrinter().printObjectToString(msg);
+delete msg;
+
+%subst: /omnetpp:://
+%contains: stdout
+class @TESTNAME@::SomePacket {
+    string className = @TESTNAME@::SomePacket
+    string fullName = some
+    string fullPath = Test.some
+    string info = "(new msg)"
+    string name = some
+    short schedulingPriority = 0
+    cObject *targetObject = nullptr
+    bool isScheduled = false
+    simtime_t arrivalTime = 0s
+    long id = 1
+    long treeId = 1
+    short kind = 99
+    string displayString = ""
+    cObject *controlInfo = nullptr
+    cArray *parList = nullptr
+    bool isSelfMessage = true
+    simtime_t creationTime = 0s
+    simtime_t sendingTime = 0s
+    simtime_t timestamp = 0s
+    int senderModuleId = -1
+    int senderGateId = -1
+    cModule *senderModule = nullptr
+    cGate *senderGate = nullptr
+    int arrivalModuleId = -1
+    int arrivalGateId = -1
+    cModule *arrivalModule = nullptr
+    cGate *arrivalGate = nullptr
+    int src = 0
+    int dest = 0
+    int ttl = 0
+}
+

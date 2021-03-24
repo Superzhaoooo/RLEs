@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Demand/Routes_from_Observation_Points.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Demand/Routes from Observation Points - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Demand/Routes_from_Observation_Points.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#chosing_the_right_tool" class="nav-link">• Chosing the right tool</a>
+                </li>
+            <li class="nav-item main"><a href="#dfrouter">dfrouter</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#computing_detector_types" class="nav-link">• Computing Detector Types</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#computing_routes" class="nav-link">• Computing Routes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#computing_flows" class="nav-link">• Computing Flows</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#algorithm_properties" class="nav-link">&rarr; Algorithm Properties</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#generating_vehicles" class="nav-link">• Generating Vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#further_outputs" class="nav-link">• Further Outputs</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#variable_speed_signs" class="nav-link">&rarr; Variable Speed Signs</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#rerouters" class="nav-link">&rarr; Rerouters</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#validation_detectors" class="nav-link">&rarr; Validation Detectors</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_to_include_the_files" class="nav-link">• How to include the files</a>
+                </li>
+            <li class="nav-item main"><a href="#flowrouterpy">flowrouter.py</a></li>
+            <li class="nav-item main"><a href="#jtcrouterpy">jtcrouter.py</a></li>
+            <li class="nav-item main"><a href="#routesamplerpy">routeSampler.py</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Demand/Routes from Observation Points<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<p>Traffic counts are a common form of traffic data. This data may be available from automated counting devices such as induction loops or radar detectors or it may be obtained from manual counts. The counts apply to a specific time range and the data may cover multiple time slices. It is also possible to distinguish counts for different types of vehicles.</p>
+<p>SUMO provides several tools to generate traffic demand from such counting data. The generated traffic demand typically describes vehicles and their routes through the network along with their departure time. Sometimes vehicles that use the same route are grouped into <code>&lt;flow&gt;</code>-definitions. </p>
+<p>The generated traffic should obviously match the counting data but this requirement alone does not define a unique solution. The provided SUMO tools differ in their algorithm to resolve the ambiguity and arrive at a specific set of routes and vehicles. The tools can also be distinguished by the type of counting data they consume:</p>
+<ul>
+<li><a href="../dfrouter.html">dfrouter</a> uses edge based counts</li>
+<li><a href="../Tools/Detector.html#flowrouterpy">flowrouter</a> uses edge based counts</li>
+<li><a href="../Tools/Turns.html#jtcrouterpy">jtcrouter</a> uses turn-counts</li>
+<li><a href="../Tools/Turns.html#routesamplerpy">routeSampler</a> uses turn-counts and edge counts (and also origin-destination counts)</li>
+</ul>
+<h2 id="chosing_the_right_tool">Chosing the right tool<a class="headerlink" href="#chosing_the_right_tool" title="Permanent link">#</a></h2>
+<p>The algorithms listed above where developed to solve different problems and may work badly when used on the wrong kind of problem.</p>
+<ul>
+<li>dfrouter requires that all edges which are used as sources and sinks of traffic are provided with traffic count data. In contrast, flowrouter can infer traffic on those edges from measurements at intermediate locations.</li>
+<li>dfrouter and jtcrouter have no capability for calibrating generated routes among the set of all routes that fit the measurement data. They can provide good results on motorway networks but produce implausible routes in highly meshed networks (i.e. cities).</li>
+<li>flowrouter can use a blacklist to avoid implausible routes. The tool <a href="../Tools/Routes.html#implausibleroutespy">implausibleRoutes.py</a> can be used to generate restrictions for routes that are implausible according to a configurable heuristic. When the set of implausible routes is very large (which is often the case due to a combinatorial explosion of possible routes), creating such a blacklist may be infeasible.</li>
+<li>routeSampler uses a whitelist to restrict the set of routes that can be used to construct a solution. Generating a sufficient set of plausible routes is easier than listing all implausible routes.</li>
+<li>routeSampler is the only tool that can use edge-count data together with turn-count data</li>
+</ul>
+<h1 id="dfrouter">dfrouter<a class="headerlink" href="#dfrouter" title="Permanent link">#</a></h1>
+<p>Since version 0.9.5, the SUMO-package contains a routing module named
+<a href="../dfrouter.html">dfrouter</a>. The idea behind this router is that
+nowadays, most highways are well equipped with induction loops,
+measuring each of the highways' entering and leaving flows. Given this
+information one may assume that the flows on the highway are completely
+known. <a href="../dfrouter.html">dfrouter</a> uses directly the information
+collected from induction loops to rebuild the vehicle amounts and
+routes. This is done in several steps, being mainly:</p>
+<ol>
+<li>Computing (and optionally saving) the detector types in the means
+    that each induction is set to be a source detector, a sink detector
+    or an in-between detector</li>
+<li>Computing (and optionally saving) the routes between the detectors</li>
+<li>Computing the flow amounts between the detectors</li>
+<li>Saving the flow amounts and further control structures</li>
+</ol>
+<h2 id="computing_detector_types">Computing Detector Types<a class="headerlink" href="#computing_detector_types" title="Permanent link">#</a></h2>
+<p>The idea behind the <a href="../dfrouter.html">dfrouter</a> assumes that a
+network is completely covered by detectors, meaning that all off- and
+on-ramps have an induction loop placed on them. Such an information
+whether an induction loop is a pure source or sink or whether it is
+placed between such is but not given initially. It must be computed. To
+do this, the <a href="../dfrouter.html">dfrouter</a> needs the underlying
+network as well as a list of detector definitions where each describes
+the position of an induction loop. The network, being a previously built
+SUMO-network, is supplied to the <a href="../dfrouter.html">dfrouter</a> as
+usual using the <strong>--net-file &lt;SUMO_NET_FILE></strong> (<strong>-n</strong>) option, the list of induction loops using <strong>--detector-files &lt;DETECTOR_FILE>[,&lt;DETECTOR_FILE>]+</strong> (<strong>-d</strong> for
+short). A detector file should look as follows:</p>
+<pre><code>&lt;detectors&gt;
+    &lt;detectorDefinition id=&quot;&lt;DETECTOR_ID&gt;&quot; lane=&quot;&lt;LANE_ID&gt;&quot; pos=&quot;&lt;POS&gt;&quot;/&gt;
+... further detectors ...
+&lt;/detectors&gt;
+</code></pre>
+
+<p>This means that each detector is initially described using its id, a
+lane it is placed on, and a position on the lane. To be exact:</p>
+<ul>
+<li>id: A string holding the id of the detector</li>
+<li>lane: The id of the lane the detector lies on. Must be a lane within
+  the network.</li>
+<li>pos: The position on the lane the detector shall be laid on in
+  meters. The position must be a value between -1*lane's length and
+  the lane's length. In the case of a negative value, the position
+  will be computed backward from the lane's end (the position the
+  vehicles drive towards).</li>
+</ul>
+<p>Given a network and the list of detectors,
+<a href="../dfrouter.html">dfrouter</a> assigns types to detectors and saves the
+so extended list into a file if the option <strong>--detectors-output &lt;DETECTOR_OUTPUT_FILE></strong> is given. This list looks
+like the input described above except that an additional attribute is
+given for each detector, "type", which may have one of the following
+values: "source", "sink", "between", and "discarded". You can also
+generate a list of points of interests (POIs) which can be read by
+<a href="../sumo-gui.html">sumo-gui</a> where each POI represents a detector and
+is colored by the detector type: green for source detectors, red for
+sink detectors, blue for in-between detectors, and black for discarded
+detectors. To force <a href="../dfrouter.html">dfrouter</a> to do this, use <strong>--detectors-poi-output &lt;POI_FILENAME></strong>.</p>
+<p>When wished, if for example other parameters change, the extended
+&lt;DETECTOR_OUTPUT_FILE> can be fed back again into
+<a href="../dfrouter.html">dfrouter</a> instead of the previous &lt;DETECTOR_FILE>.
+In this case the detector types do not have to be computed again. To
+force <a href="../dfrouter.html">dfrouter</a> to recompute the types, use <strong>--revalidate-detectors</strong>.</p>
+<h2 id="computing_routes">Computing Routes<a class="headerlink" href="#computing_routes" title="Permanent link">#</a></h2>
+<p>Now that we do know where vehicles enter and where they leave the
+network, we may compute routes for each of the pairs. The
+<a href="../dfrouter.html">dfrouter</a> is told to build and save routes using <strong>--routes-output &lt;ROUTE_OUTPUT_FILE></strong>
+where &lt;ROUTE_OUTPUT_FILE> is the name of the file the computed routes
+shall be written to. The generated file only contains routes, no vehicle
+type definitions and no vehicles.</p>
+<p>Normally, only routes starting at source detectors and ending at sink
+detectors are computed. Using the option <strong>--routes-for-all</strong> you can force
+<a href="../dfrouter.html">dfrouter</a> to also build routes that start at
+in-between detectors. The option <strong>--all-end-follower</strong> will make the routes not end at the
+edge the source detector is placed on, but on all edges that follow this
+edge. <strong>--keep-unfinished-routes</strong> will also keep those routes where a sink detector could not be
+found for what may be the case if the network is not completely covered
+with induction loops.</p>
+<h2 id="computing_flows">Computing Flows<a class="headerlink" href="#computing_flows" title="Permanent link">#</a></h2>
+<p>The next step is to use the computed routes and flow amounts from the
+real-world detectors to compute flows across the modelled network. The
+flows are given to dfrouter using <strong>--measure-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a> (or <strong>-f &lt;DETECTOR_FLOWS>[,&lt;DETECTOR_FLOWS>]+</strong>. They are assumed to be stored
+in CSV-format using ';' as dividing character. The file should look as
+follows:</p>
+<pre><code>Detector;Time;qPKW;qLKW;vPKW;vLKW
+myDet1;0;10;2;100;80
+... further entries ...
+</code></pre>
+
+<p>This means the first time has to name the entries (columns). Their order
+is not of importance, but at least the following columns must be
+included:</p>
+<ul>
+<li>Detector: A string holding the id of the detector this line
+  describes; should be one of the ids used in &lt;DETECTOR_FILE></li>
+<li>Time: The time period begin that this entry describes (in minutes)</li>
+<li>qPKW: The number of passenger cars that drove over the detector
+  within this time period</li>
+<li>vPKW: The average speed of passenger cars that drove over the
+  detector within this time period in km/h</li>
+</ul>
+<p>The following columns may optionally be included:</p>
+<ul>
+<li>qLKW: The number of transport vehicles that drove over the detector
+  within this time period</li>
+<li>vLKW: The average speed of transport vehicles that drove over the
+  detector within this time period in km/h</li>
+</ul>
+<p>These are not quite the values to be found in induction loop output. We
+had to constrain the &lt;DETECTOR_FLOWS> files this way because dfrouter is
+meant to read very many of such definitions and to do this as fast as
+possible.</p>
+<p>Because in some cases one reads detector flow definitions starting at a
+certain time but wants the simulation to begin at another, it is
+possible to add a time offset using <strong>--time-offset</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> which is the number of seconds to
+subtracted from the read times.</p>
+<h3 id="algorithm_properties">Algorithm Properties<a class="headerlink" href="#algorithm_properties" title="Permanent link">#</a></h3>
+<p><a href="../dfrouter.html">dfrouter</a> works best when all possible source and
+sink edges are supplied with detector values and these values are evenly
+spaced in time. The algorithm works under the assumption that the sum of
+source flows matches the sum of sink flows for every measurement
+interval (thus somewhat ignoring travel time). Some properties of
+<a href="#generating_vehicles">Vehicle generation</a>:</p>
+<ul>
+<li>The number of generated vehicles for each measurement interval is
+determined by source detectors alone.<ul>
+<li>Excess flow at sink detectors is ignored</li>
+<li>If sink detectors measure less flow, it will nevertheless arrive
+  there in proportion to the measured flow</li>
+<li>If sink detectors measure no flow at all, all vehicles will
+  drive to one (arbitrary) sink</li>
+</ul>
+</li>
+</ul>
+<p>The number of will be determined by</p>
+<h2 id="generating_vehicles">Generating Vehicles<a class="headerlink" href="#generating_vehicles" title="Permanent link">#</a></h2>
+<p>If flow definitions were supplied, we can let the dfrouter save the
+computed vehicles together with their routes. Vehicles will be generated
+at the source detectors which are placed at certain positions of the
+networks' lanes. dfrouter generates vehicle with the option <strong>--emitters-output &lt;EMITTER_OUTPUT_FILE></strong>. This file
+will contain vehicle (emitter) declarations for each of the source
+detectors. If no value is given, vehicles will not be written.
+Accompanying, there will be <code>routeDistributions</code> each with the same name as a detector.
+These reflect the distribution of routes at the detector with the same
+ID.</p>
+<p>By default vehicles are inserted with even spacing over each measurement
+interval. This can be changed by adding the option <strong>--randomize-flows</strong>.</p>
+<p>The generated file contains individual vehicles which are assigned
+routes from the <a href="#computing_routes">routes-output file</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The emitters output also contains a <code>&lt;routeDistribution&gt;</code> for each source detector but this distribution is not used by the vehicles. It is generated for information purposes and shows the route distribution aggregated over the whole simulation time (this distribution assumes that source flows data matches sink flow data).</p>
+</div>
+<h2 id="further_outputs">Further Outputs<a class="headerlink" href="#further_outputs" title="Permanent link">#</a></h2>
+<h3 id="variable_speed_signs">Variable Speed Signs<a class="headerlink" href="#variable_speed_signs" title="Permanent link">#</a></h3>
+<p>As some approaches use a speed limit to avoid open-end boundary
+problems, the dfrouter can generate a list of speed triggers (see
+"Variable Speed Signs (VSS)") placed on the positions of sink detectors.
+The name to save the declaration of these speed triggers into is given
+using the option <strong>--variable-speed-sign-output &lt;VSS_OUTPUT_FILE></strong>. The according variable speed sign definitions will be
+written into files named "vss_&lt;DETECTOR_ID>.def.xml" where
+&lt;DETECTOR_ID> is the name of the according sink detector.</p>
+<h3 id="rerouters">Rerouters<a class="headerlink" href="#rerouters" title="Permanent link">#</a></h3>
+<p>In order not to end vehicle routes on off-ramps, it is possible to place
+rerouters (see "Rerouter") at the positions of the sink detectors, too.
+Giving the option <strong>--end-reroute-output &lt;REROUTER_OUTPUT_FILE></strong> will generate a list of rerouter declarations. Please
+remark that in this case, no rerouter definitions are written, because
+the dfrouter has no further information about possible routes beyond the
+area covered by the detectors.</p>
+<h3 id="validation_detectors">Validation Detectors<a class="headerlink" href="#validation_detectors" title="Permanent link">#</a></h3>
+<p>It's quite nice to have the possibility to check whether the simulation
+does what one wants. To validate whether the same flows are found within
+the simulation as within the reality, the option <strong>--validation-output &lt;SUMO_DETECTORS_OUTPUT></strong> may be helpful. It
+generates a list of detector definitions (see "<a href="../Simulation/Output/Induction_Loops_Detectors_(E1).html">inductive loop
+detectors</a>")
+placed at the positions of sink and in-between detectors. Their output
+will be saved into files named "validation_det_&lt;DETECTOR_ID>.xml" and
+should be easily comparable to the detector flows previously fed to the
+router. The option <strong>--validation-output.add-sources</strong> will let dfrouter also build inductive loop
+detectors for source detectors which are place 1m behind the real-life
+detector's position.</p>
+<h2 id="how_to_include_the_files">How to include the files<a class="headerlink" href="#how_to_include_the_files" title="Permanent link">#</a></h2>
+<p>The <a href="../dfrouter.html">dfrouter</a> is unique among the <strong>SUMO</strong>-routing
+applications in that it outputs routes and vehicles separately. <a href="../sumo.html#loading_order_of_input_files">You
+need to make sure that the list of input files is in the correct order
+for resolving references</a>.
+Furthermore, <a href="../dfrouter.html">dfrouter</a> currently returns unsorted
+vehicles in its emitters-output. Assuming that
+<a href="../dfrouter.html">dfrouter</a> was called with the options</p>
+<pre><code>dfrouter --net-file net.net.xml --routes-output routes.rou.xml --emitters-output vehicles.xml ...
+</code></pre>
+
+<p>SUMO must be called in the following way:</p>
+<pre><code>sumo --net-file net.net.xml --additional-files routes.rou.xml,emitters.rou.xml
+</code></pre>
+
+<p>If you run the tool
+<a href="../Tools/Routes.html#sort_routespy">Tools/Routes#sort_routes.py</a>
+to sort the emitters, either of the following will work:</p>
+<pre><code>sumo --net-file net.net.xml --route-files routes.rou.xml,sorted_emitters.rou.xml
+sumo --net-file net.net.xml --route-files sorted_emitters.rou.xml --additional-files routes.rou.xml
+</code></pre>
+
+<h1 id="flowrouterpy">flowrouter.py<a class="headerlink" href="#flowrouterpy" title="Permanent link">#</a></h1>
+<p>The <a href="../Tools/Detector.html#flowrouterpy">flowrouter</a> tool <a href="https://doi.org/10.29007/rjj7">improves on dfrouter</a> by dealing better with missing data and finding a set of routes that maximize the total flow (within the limits given by the count data). It provides several options to restrict the set of generated routes and thus allows for calibrating the generated traffic.</p>
+<h1 id="jtcrouterpy">jtcrouter.py<a class="headerlink" href="#jtcrouterpy" title="Permanent link">#</a></h1>
+<p>The <a href="../Tools/Turns.html#jtcrouterpy">jtcrouter.py</a> tool (available since version 1.5.0) can build a traffic demand from turn-count data. It does so by transforming the counts into flows and turn-ratios and then passing these files to <a href="../jtrrouter.html">jtrrouter</a>. </p>
+<h1 id="routesamplerpy">routeSampler.py<a class="headerlink" href="#routesamplerpy" title="Permanent link">#</a></h1>
+<p>The <a href="../Tools/Turns.html#routesamplerpy">routeSampler.py</a> tool (available since version 1.5.0) builds traffic demand from turn-count data as well as edge-count data. It uses a route file as input and then repeatedly selects from this set of routes to fulfill the given count data.</p>
+<p>A suitable route file for a given network can be generated with <a href="../Tools/Trip.html#randomtripspy">randomTrips.py</a>. Such a route file covers the network with shortest-path routes. Routes that deviate from the shortest path can also be generated with the help of <a href="../duarouter.html">duarouter</a> option <strong>--weights.random-factor</strong>.</p>
+<p>By changing the route file used as input, the generated traffic can be calibrated.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

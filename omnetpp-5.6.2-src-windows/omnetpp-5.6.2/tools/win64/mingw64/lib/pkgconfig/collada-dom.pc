@@ -1,0 +1,14 @@
+# Package Information for pkg-config
+
+prefix=/mingw64
+exec_prefix=/mingw64/bin
+libdir=/mingw64/lib
+includedir=/mingw64/include/collada-dom2.4
+
+Name: collada-dom
+Description: COLLADA Document Object Model (DOM), 1.4 support=ON, 1.5 support=ON
+Version: 2.4.0
+URL:  http://sourceforge.net/projects/collada-dom
+Libs: -L${libdir} -lcollada-dom2.4-dp
+Libs.private:
+Cflags: -I${includedir}  -DCOLLADA_DOM_SUPPORT141 -DCOLLADA_DOM_SUPPORT150 -DCOLLADA_DOM_DAEFLOAT_IS64

@@ -1,0 +1,37 @@
+%description:
+Test that @isNetwork works for simple modules too
+
+%file: test.ned
+
+simple Test
+{
+    parameters:
+        @isNetwork(true);
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+class Test : public cSimpleModule
+{
+  public:
+    Test() : cSimpleModule(16384) { }
+    virtual void activity() override;
+};
+
+Define_Module(Test);
+
+void Test::activity()
+{
+    EV << "Hello\n";
+}
+
+}; //namespace
+
+%contains-regex: stdout
+Hello

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config date="1589808094951" transient="false">
+	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
+		<feature id="org.eclipse.cdt.gnu.dsf" version="9.10.0.201911251701" url="features/org.eclipse.cdt.gnu.dsf_9.10.0.201911251701/">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.rcp.feature" version="1.4.600.v20191120-0247" url="features/org.eclipse.equinox.p2.rcp.feature_1.4.600.v20191120-0247/">
+		</feature>
+		<feature id="org.eclipse.emf.edit" version="2.16.0.v20190920-0401" url="features/org.eclipse.emf.edit_2.16.0.v20190920-0401/">
+		</feature>
+		<feature id="org.eclipse.ecf.filetransfer.ssl.feature" version="1.1.200.v20191024-1546" url="features/org.eclipse.ecf.filetransfer.ssl.feature_1.1.200.v20191024-1546/">
+		</feature>
+		<feature id="org.eclipse.ecf.filetransfer.feature" version="3.14.600.v20191023-2007" url="features/org.eclipse.ecf.filetransfer.feature_3.14.600.v20191023-2007/">
+		</feature>
+		<feature id="org.eclipse.emf.validation" version="1.12.1.201812070911" url="features/org.eclipse.emf.validation_1.12.1.201812070911/">
+		</feature>
+		<feature id="org.eclipse.rcp" version="4.14.0.v20191210-0610" url="features/org.eclipse.rcp_4.14.0.v20191210-0610/">
+		</feature>
+		<feature id="org.eclipse.ecf.core.feature" version="1.5.400.v20191023-2007" url="features/org.eclipse.ecf.core.feature_1.5.400.v20191023-2007/">
+		</feature>
+		<feature id="org.eclipse.emf.workspace" version="1.12.0.201805140824" url="features/org.eclipse.emf.workspace_1.12.0.201805140824/">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.extras.feature" version="1.4.600.v20191120-0247" url="features/org.eclipse.equinox.p2.extras.feature_1.4.600.v20191120-0247/">
+		</feature>
+		<feature id="org.eclipse.gmf.runtime.thirdparty" version="1.12.2.201912020813" url="features/org.eclipse.gmf.runtime.thirdparty_1.12.2.201912020813/">
+		</feature>
+		<feature id="org.eclipse.egit" version="5.6.0.201912101111-r" url="features/org.eclipse.egit_5.6.0.201912101111-r/">
+		</feature>
+		<feature id="org.eclipse.emf.ecore" version="2.20.0.v20190920-0401" url="features/org.eclipse.emf.ecore_2.20.0.v20190920-0401/">
+		</feature>
+		<feature id="org.eclipse.help" version="2.3.0.v20191210-0610" url="features/org.eclipse.help_2.3.0.v20191210-0610/" plugin-identifier="org.eclipse.help.base">
+		</feature>
+		<feature id="org.omnetpp.ide" version="5.6.2.200518-aa79d0918f" url="features/org.omnetpp.ide_5.6.2.200518-aa79d0918f/">
+		</feature>
+		<feature id="org.eclipse.emf.ecore.edit" version="2.14.0.v20190822-1451" url="features/org.eclipse.emf.ecore.edit_2.14.0.v20190822-1451/">
+		</feature>
+		<feature id="org.eclipse.emf.transaction" version="1.12.0.201805140824" url="features/org.eclipse.emf.transaction_1.12.0.201805140824/">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.core.feature" version="1.6.400.v20191120-0247" url="features/org.eclipse.equinox.p2.core.feature_1.6.400.v20191120-0247/">
+		</feature>
+		<feature id="org.eclipse.gmf.runtime.notation" version="1.12.0.201805221301" url="features/org.eclipse.gmf.runtime.notation_1.12.0.201805221301/">
+		</feature>
+		<feature id="org.eclipse.linuxtools.profiling" version="7.5.0.201912060402" url="features/org.eclipse.linuxtools.profiling_7.5.0.201912060402/">
+		</feature>
+		<feature id="org.eclipse.linuxtools.valgrind" version="7.5.0.201912060402" url="features/org.eclipse.linuxtools.valgrind_7.5.0.201912060402/">
+		</feature>
+		<feature id="org.eclipse.draw2d" version="3.10.100.201606061308" url="features/org.eclipse.draw2d_3.10.100.201606061308/">
+		</feature>
+		<feature id="org.omnetpp.ide.academic" version="5.6.2.200518-aa79d0918f" url="features/org.omnetpp.ide.academic_5.6.2.200518-aa79d0918f/" plugin-identifier="org.omnetpp.main">
+		</feature>
+		<feature id="org.eclipse.cdt.platform" version="9.10.0.201912051559" url="features/org.eclipse.cdt.platform_9.10.0.201912051559/">
+		</feature>
+		<feature id="org.eclipse.cdt" version="9.10.0.201912051559" url="features/org.eclipse.cdt_9.10.0.201912051559/">
+		</feature>
+		<feature id="org.eclipse.emf.common" version="2.17.0.v20190920-0401" url="features/org.eclipse.emf.common_2.17.0.v20190920-0401/">
+		</feature>
+		<feature id="org.eclipse.jgit.http.apache" version="5.6.0.201912101111-r" url="features/org.eclipse.jgit.http.apache_5.6.0.201912101111-r/">
+		</feature>
+		<feature id="org.eclipse.platform" version="4.14.0.v20191210-0610" url="features/org.eclipse.platform_4.14.0.v20191210-0610/">
+		</feature>
+		<feature id="org.omnetpp.ide.source" version="5.6.2.200518-aa79d0918f" url="features/org.omnetpp.ide.source_5.6.2.200518-aa79d0918f/">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.user.ui" version="2.4.600.v20191120-0247" url="features/org.eclipse.equinox.p2.user.ui_2.4.600.v20191120-0247/">
+		</feature>
+		<feature id="org.eclipse.cdt.gdb" version="9.10.0.201910161455" url="features/org.eclipse.cdt.gdb_9.10.0.201910161455/">
+		</feature>
+		<feature id="org.eclipse.cdt.gnu.build" version="9.10.0.201910171407" url="features/org.eclipse.cdt.gnu.build_9.10.0.201910171407/">
+		</feature>
+		<feature id="org.eclipse.ecf.filetransfer.httpclient45.feature" version="1.0.100.v20191024-1546" url="features/org.eclipse.ecf.filetransfer.httpclient45.feature_1.0.100.v20191024-1546/">
+		</feature>
+		<feature id="org.eclipse.ecf.core.ssl.feature" version="1.1.300.v20191023-2007" url="features/org.eclipse.ecf.core.ssl.feature_1.1.300.v20191023-2007/">
+		</feature>
+		<feature id="org.eclipse.cdt.gnu.debug" version="9.10.0.201910171407" url="features/org.eclipse.cdt.gnu.debug_9.10.0.201910171407/">
+		</feature>
+		<feature id="org.eclipse.gef" version="3.11.0.201606061308" url="features/org.eclipse.gef_3.11.0.201606061308/">
+		</feature>
+		<feature id="org.eclipse.jgit.ssh.apache" version="5.6.0.201912101111-r" url="features/org.eclipse.jgit.ssh.apache_5.6.0.201912101111-r/">
+		</feature>
+		<feature id="org.eclipse.e4.rcp" version="4.14.0.v20191204-0601" url="features/org.eclipse.e4.rcp_4.14.0.v20191204-0601/">
+		</feature>
+		<feature id="org.eclipse.gmf" version="1.12.2.201912020813" url="features/org.eclipse.gmf_1.12.2.201912020813/">
+		</feature>
+		<feature id="org.eclipse.cdt.native" version="9.10.0.201911041219" url="features/org.eclipse.cdt.native_9.10.0.201911041219/">
+		</feature>
+		<feature id="org.eclipse.jgit" version="5.6.0.201912101111-r" url="features/org.eclipse.jgit_5.6.0.201912101111-r/">
+		</feature>
+	</site>
+</config>

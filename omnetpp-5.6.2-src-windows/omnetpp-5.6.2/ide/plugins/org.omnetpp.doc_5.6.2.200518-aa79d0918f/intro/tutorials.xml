@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  <extensionContent id="org.omnetpp.intro.tutorials.extension" style="intro.css"
+    name="OMNeT++ Tutorials" path="tutorials/@">
+    <group style-id="content-group" id="org.omnetpp.intro.tutorials.group">
+      <link label="Tic-Toc Tutorial" url="https://docs.omnetpp.org/tutorials/tictoc" id="orgomnetpp-link" style-id="content-link">
+        <text>A step by step example to show how to build OMNeT++ simulations.</text>
+      </link>
+    </group>
+  </extensionContent>
+</introContent>

@@ -1,0 +1,3431 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap6.html">[Prev]</A>&nbsp;<a href="chap8.html">[Next]</A>&nbsp;<a href="toc.html#toc_7.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:sim-lib"/>7 The Simulation Library<a class="headerlink" href="#cha:sim-lib" title="Permalink to this headline">¶</a></h1>
+
+<p>OMNeT++ has an extensive C++ class library available to the user for
+implementing simulation models and model components. Part of the class
+library's functionality has already been covered in the previous chapters,
+including discrete event simulation basics, the simple module programming
+model, module parameters and gates, scheduling events, sending and
+receiving messages, channel operation and programming model, finite state
+machines, dynamic module creation, signals, and more.
+
+<p>This chapter discusses the rest of the simulation library. Topics will
+include logging, random number generation, queues, topology discovery and
+routing support, and statistics and result collection. This chapter also
+covers some of the conventions and internal mechanisms of the simulation
+library to allow one extending it and using it to its full potential.
+
+<p>
+<h2><a name="sec:sim-lib:fundamentals"/>7.1 Fundamentals<a class="headerlink" href="#sec:sim-lib:fundamentals" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:sim-lib:using-omnetpp-library"/>7.1.1 Using the Library<a class="headerlink" href="#sec:sim-lib:using-omnetpp-library" title="Permalink to this headline">¶</a></h3>
+
+<p>Classes in the OMNeT++ simulation library are part of the <tt>omnetpp</tt>
+namespace. To use the OMNeT++ API, one must include the <tt>omnetpp.h</tt>
+header file and either import the namespace with <tt>using namespace
+omnetpp</tt>, or qualify names with the <tt>omnetpp::</tt> prefix.
+
+<p>Thus, simulation models will contain the
+
+<pre class="cpp">
+#include &lt;omnetpp.h&gt;
+</pre>
+<p>
+line, and often also
+
+<pre class="cpp">
+using namespace omnetpp;
+</pre>
+<p>
+When writing code that should work with various versions of OMNeT++, it is
+often useful to have compile-time access to the OMNeT++ version in a numeric
+form. The <tt>OMNETPP_VERSION</tt> macro exists for that purpose, and it is
+defined by OMNeT++ to hold the version number in the form
+<i>major*256+minor</i>. For example, in OMNeT++ 4.6 it was defined as
+
+<pre class="cpp">
+#define OMNETPP_VERSION 0x406
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:cobject"/>7.1.2 The <a href="../api/classomnetpp_1_1cObject.html">cObject</a> Base Class<a class="headerlink" href="#sec:sim-lib:cobject" title="Permalink to this headline">¶</a></h3>
+
+<p>Most classes in the simulation library are derived from <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>,
+or its subclasses <tt><a href="../api/classomnetpp_1_1cNamedObject.html">cNamedObject</a></tt> and <tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt>.
+<tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> defines several virtual member functions that are either
+inherited or redefined by subclasses. Otherwise, <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> is a
+zero-overhead class as far as memory consumption goes: it purely defines an
+interface but has no data members. Thus, having <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> a base
+class does not add anything to the size of a class if it already has at
+least one virtual member function.
+
+<p>
+  <center>
+    <img src="cobject-inheritance.svg">
+    <center><div class="caption"><i>Figure: <a href="../api/classomnetpp_1_1cObject.html">cObject</a> is the base class for most of the simulation library</i></div></center>
+  </center>
+
+<p>
+The subclasses <tt><a href="../api/classomnetpp_1_1cNamedObject.html">cNamedObject</a></tt> and <tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt> add data
+members to implement more functionality. The following sections discuss
+some of the practically important functonality defined by <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>.
+
+<p>
+<h4><a name="sec:sim-lib:object-name"/>7.1.2.1 Name and Full Name<a class="headerlink" href="#sec:sim-lib:object-name" title="Permalink to this headline">¶</a></h4>
+<!--object!name-->
+
+<p>The most useful and most visible member functions of <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> are
+<tt>getName()</tt> and <tt>getFullName()</tt>. The idea behind them is that
+many objects in OMNeT++ have names by default (for example, modules,
+parameters and gates), and even for other objects, having a printable name
+is a huge gain when it comes to logging and debugging.
+
+<p><tt>getFullName()</tt> is important for gates and modules, which may be part
+of gate or module vectors. For them, <tt>getFullName()</tt> returns the name
+with the index in brackets, while <tt>getName()</tt> only returns the name
+of the module or gate vector. That is, for a gate <tt>out[3]</tt> in the gate
+vector <tt>out[10]</tt>, <tt>getName()</tt> returns <tt>"out"</tt>, and
+<tt>getFullName()</tt> returns <tt>"out[3]"</tt>. For other objects,
+<tt>getFullName()</tt> simply returns the same string as <tt>getName()</tt>.
+An example:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cGate.html">cGate</a> *gate = gate("out", 3);  // out[3]
+EV &lt;&lt; gate-&gt;getName();  // prints "out"
+EV &lt;&lt; gate-&gt;getFullName();  // prints "out[3]"
+</pre>
+<p>
+<ul class="note"><b>NOTE</b><br>
+When printing out the name of an object, prefer <tt>getFullName()</tt> to
+<tt>getName()</tt>, especially if the runtime type is not know. This will
+ensure that the vector index will also be printed if the object has one.
+</ul>
+
+<p><tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> merely defines these member functions, but they return an
+empty string. Actual storage for a name string and a <tt>setName()</tt>
+method is provided by the class <tt><a href="../api/classomnetpp_1_1cNamedObject.html">cNamedObject</a></tt>, which is also an
+(indirect) base class for most library classes. Thus, one can assign names
+to nearly all user-created objects. It it also recommended to do so, because
+a name makes an object easier to identify in graphical runtimes like Tkenv
+or Qtenv.
+
+<p>By convention, the object name is the first argument to the constructor
+of every class, and it defaults to the empty string. To create an object with
+a name, pass the name string (a <tt>const char*</tt> pointer) as the first
+argument of the constructor. For example:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *timeoutMsg = new <a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>("timeout");
+</pre>
+<p>
+To change the name of an object, use <tt>setName()</tt>:
+
+<pre class="cpp">
+timeoutMsg-&gt;setName("timeout");
+</pre>
+<p>
+Both the constructor and <tt>setName()</tt> make an internal copy of the string,
+instead of just storing the pointer passed to them.<br><ul><font size=-1>[
+  In a simulation, there are usually many objects with the same name:
+  modules, parameters, gates, etc. To conserve memory, several classes
+  keep names in a shared, reference-counted <i>name pool</i> instead of
+  making separate copies for each object. The runtime cost of looking up an
+  existing string in the name pool and incrementing its reference count
+  also compares favorably to the cost of allocation and copying.]</font></ul>
+
+<p>For convenience and efficiency reasons, the empty string <tt>""</tt>
+and <tt>nullptr</tt> are treated as interchangeable by library objects.
+That is, <tt>""</tt> is stored as <tt>nullptr</tt> but returned as <tt>""</tt>.
+If one creates a message object with either <tt>nullptr</tt>
+or <tt>""</tt> as its name string, it will be stored as <tt>nullptr</tt>,
+and <tt>getName()</tt> will return a pointer to a static <tt>""</tt>.
+
+<p>
+<h4><a name="sec:sim-lib:object-fullpath"/>7.1.2.2 Hierarchical Name<a class="headerlink" href="#sec:sim-lib:object-fullpath" title="Permalink to this headline">¶</a></h4>
+<!--object!fullpath-->
+
+<p><tt>getFullPath()</tt> returns the object's hierarchical name. This name is
+produced by prepending the <i>full name</i> (<tt>getFullName()</tt>) with
+the parent or owner object's <tt>getFullPath()</tt>, separated by a dot. For
+example, if the <tt>out[3]</tt> gate in the previous example belongs to a
+module named <tt>classifier</tt>, which in turn is part of a network called
+<tt>Queueing</tt>, then the gate's <tt>getFullPath()</tt> method will return
+<tt>"Queueing.classifier.out[3]"</tt>.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cGate.html">cGate</a> *gate = gate("out", 3);  // out[3]
+EV &lt;&lt; gate-&gt;getName();  // prints "out"
+EV &lt;&lt; gate-&gt;getFullName();  // prints "out[3]"
+EV &lt;&lt; gate-&gt;getFullPath();  // prints "Queueing.classifier.out[3]"
+</pre>
+<p>
+The <tt>getFullName()</tt> and <tt>getFullPath()</tt> methods are
+extensively used in graphical runtime environments (Tkenv, Qtenv),
+and also when assembling runtime error messages.
+
+<p>In contrast to <tt>getName()</tt> and <tt>getFullName()</tt> which return
+<tt>const char *</tt> pointers, <tt>getFullPath()</tt> returns
+<tt>std::string</tt>. This makes no difference when logging via <tt>EV&lt;&lt;</tt>,
+but when <tt>getFullPath()</tt> is used as a <tt>"%s"</tt> argument to
+<tt>sprintf()</tt>, one needs to write <tt>getFullPath().c_str()</tt>.
+
+<pre class="cpp">
+char buf[100];
+sprintf("msg is '%80s'", msg-&gt;getFullPath().c_str()); // note c_str()
+</pre>
+<p>
+
+<p><h4><a name="sec:sim-lib:classname"/>7.1.2.3 Class Name<a class="headerlink" href="#sec:sim-lib:classname" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt>getClassName()</tt> member function returns the class
+name as a string, including the namespace. <tt>getClassName()</tt> internally
+relies on C++ RTTI.
+
+<p>An example:
+
+<pre class="cpp">
+const char *className = msg-&gt;getClassName(); // returns "omnetpp::<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>"
+</pre>
+<p>
+
+<h4><a name="sec:sim-lib:dup"/>7.1.2.4 Cloning Objects<a class="headerlink" href="#sec:sim-lib:dup" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt>dup()</tt> member function creates an exact copy of the
+object<!--object!copy-->, duplicating<!--object!duplication-->
+contained objects also if necessary. This is especially useful in the
+case of message objects.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *copy = msg-&gt;dup();
+</pre>
+<p>
+<tt>dup()</tt> delegates to the copy constructor. Classes also declare
+an assignment operator (<tt>operator=()</tt>) which can be used to copy contents
+of an object into another object of the same type. <tt>dup()</tt>, the copy
+constructor and the assignment operator all perform deep coping: objects
+contained in the copied object will also be duplicated if necessary.
+
+<p><tt>operator=()</tt> differs from the other two in that it does <i>not</i>
+copy the object's name string, i.e. does not invoke <tt>setName()</tt>.
+The rationale is that the name string is often used for identifying the particular
+object instance, as opposed to being considered as part of its contents.
+
+
+<h3><a name="sec:sim-lib:iterators"/>7.1.3 Iterators<a class="headerlink" href="#sec:sim-lib:iterators" title="Permalink to this headline">¶</a></h3>
+
+<p>There are several container classes in the library (<tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>,
+<tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> etc.) For many of them, there is a corresponding
+iterator class that one can use to loop through the objects stored in
+the container.
+
+<p>For example:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cQueue.html">cQueue</a> queue;
+
+//...
+for (<a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>::<a href="../api/classomnetpp_1_1cQueue_1_1Iterator.html">Iterator</a> it(queue); !it.end(); ++it) {
+    <a href="../api/classomnetpp_1_1cObject.html">cObject</a> *containedObject = *it;
+    //...
+}
+</pre>
+<p>
+<h3><a name="sec:sim-lib:runtime-errors"/>7.1.4 Runtime Errors<a class="headerlink" href="#sec:sim-lib:runtime-errors" title="Permalink to this headline">¶</a></h3>
+
+<p>When library objects detect an error condition, they throw a C++ exception.
+This exception is then caught by the simulation environment which pops up
+an error dialog or displays the error message.
+
+<p>At times it can be useful to be able stop the simulation at the place of
+the error (just before the exception is thrown) and use a C++ debugger to
+look at the stack trace and examine variables. Enabling the
+<b><tt>debug-on-errors</tt></b> or the <b><tt>debugger-attach-on-error</tt></b>
+configuration option lets you do that -- check it in section
+<a href="chap11.html#sec:run-sim:debugging-support">[11.12]</a>.
+
+<p>
+<h2><a name="sec:sim-lib:logging-from-modules"/>7.2 Logging from Modules<a class="headerlink" href="#sec:sim-lib:logging-from-modules" title="Permalink to this headline">¶</a></h2>
+
+<p>In a simulation there are often thousands of modules which simultaneously carry
+out non-trivial tasks. In order to understand a complex simulation, it is
+essential to know the inputs and outputs of algorithms, the information on
+which decisions are based, and the performed actions along with their parameters.
+In general, logging facilitates understanding which module is doing what and why.
+
+<p>OMNeT++ makes logging easy and consistent among simulation models by providing
+its own C++ API and configuration options. The API provides efficient logging
+with several predefined log levels, global compile-time and runtime filters,
+per-component runtime filters, automatic context information, log prefixes and
+other useful features. In the following sections, we look at how to write log
+statements using the OMNeT++ logging API.
+
+<p><h3><a name="sec:sim-lib:log-output"/>7.2.1 Log Output<a class="headerlink" href="#sec:sim-lib:log-output" title="Permalink to this headline">¶</a></h3>
+
+<p>The exact way log messages are displayed to the user depends on the user interface.
+In the command-line user interface (Cmdenv<!--Cmdenv-->), the log is simply
+written to the standard output. In the graphical user interfaces, Tkenv and Qtenv,
+the main window displays the log output of all modules by default. One can also
+open new output windows on a per module basis, these windows automatically filter
+for the log messages of the selected module.
+
+<p><h3><a name="sec:sim-lib:log-levels"/>7.2.2 Log Levels<a class="headerlink" href="#sec:sim-lib:log-levels" title="Permalink to this headline">¶</a></h3>
+
+<p>All logging must be categorized into one of the predefined log levels. The
+assigned log level determines how important and how detailed a log statement
+is. When deciding which log level is appropriate for a particular log statement,
+keep in mind that they are meant to be local to components. There's no need for
+a global agreement among all components, because OMNeT++ provides per component
+filtering. Log levels are mainly useful because log output can be filtered
+based on them.
+
+<p><ul>
+  <li> <tt>LOGLEVEL_OFF</tt> is not a real log level, it can't be used for actual
+    logging. It is only useful for configuration purposes, it completely disables
+    logging.
+  <li> <tt>LOGLEVEL_FATAL</tt> is the highest log level. It should be used for
+    fatal (unrecoverable) errors that prevent the component from further
+    operation. It doesn't mean that the simulation must stop immediately
+    (because in such cases the code should throw a <a href="../api/classomnetpp_1_1cRuntimeError.html">cRuntimeError</a>), but rather
+    that the a component is unable to continue normal operation. For example, a
+    special purpose recording component may be unable to continue recording due
+    to the disk being full.
+  <li> <tt>LOGLEVEL_ERROR</tt> should be used for recoverable (non-fatal)
+    errors that allow the component to continue normal operation. For example,
+    a MAC layer protocol component could log unsuccessful packet receptions and
+    unsuccessful packet transmissions using this level.
+  <li> <tt>LOGLEVEL_WARN</tt> should be used for exceptional (non-error)
+    situations that may be important for users and rarely occur in the
+    component. For example, a MAC layer protocol component could log detected
+    bit errors using this level.
+  <li> <tt>LOGLEVEL_INFO</tt> should be used for high-level protocol specific
+    details that are most likely important for the users of the component. For
+    example, a MAC layer protocol component could log successful packet
+    receptions and successful packet transmissions using this level.
+  <li> <tt>LOGLEVEL_DETAIL</tt> should be used for low-level protocol-specific
+    details that may be useful and understandable by the users of the component.
+    These messages may help to track down various protocol-specific issues
+    without actually looking too deep into the code. For example, a MAC layer
+    protocol component could log state machine updates, acknowledge timeouts
+    and selected back-off periods using this level.
+  <li> <tt>LOGLEVEL_DEBUG</tt> should be used for high-level
+    implementation-specific technical details that are most likely important
+    for the developers of the component. These messages may help to debug
+    various issues when one is looking at the code. For example, a MAC layer
+    protocol component could log updates to internal state variables, updates
+    to complex data structures using this level.
+  <li> <tt>LOGLEVEL_TRACE</tt> is the lowest log level. It should be used for
+    low-level implementation-specific technical details that are mostly useful
+    for the developers of the component. For example, a MAC layer protocol
+    component could log control flow in loops and if statements,
+    entering/leaving methods and code blocks using this level.
+</ul>
+
+<p><h3><a name="sec:sim-lib:log-statements"/>7.2.3 Log Statements<a class="headerlink" href="#sec:sim-lib:log-statements" title="Permalink to this headline">¶</a></h3>
+
+<p>OMNeT++ provides several C++ macros for the actual logging. Each one of these
+macros act like a C++ stream, so they can be used similarly to <tt>std::cout</tt>
+with <tt>operator&lt;&lt;</tt> (shift operator).
+
+<p><ul>
+  <li> <tt>EV_FATAL</tt> for <tt>LOGLEVEL_FATAL</tt>
+  <li> <tt>EV_ERROR</tt> for <tt>LOGLEVEL_ERROR</tt>
+  <li> <tt>EV_WARN</tt> for <tt>LOGLEVEL_WARN</tt>
+  <li> <tt>EV_INFO</tt> for <tt>LOGLEVEL_INFO</tt>
+  <li> <tt>EV_DETAIL</tt> for <tt>LOGLEVEL_DETAIL</tt>
+  <li> <tt>EV_DEBUG</tt> for <tt>LOGLEVEL_DEBUG</tt>
+  <li> <tt>EV_TRACE</tt> for <tt>LOGLEVEL_TRACE</tt>
+  <li> <tt>EV</tt> is provided for backward compatibility, and defaults to <tt>EV_INFO</tt>
+</ul>
+
+<p>The actual logging is as simple as writing information into one of these special
+log streams as follows:
+
+<pre class="cpp">
+EV_ERROR &lt;&lt; "Connection to server is lost.\n";
+EV_WARN &lt;&lt; "Queue is full, discarding packet.\n";
+EV_INFO &lt;&lt; "Packet received , sequence number = " &lt;&lt; seqNum &lt;&lt; "." &lt;&lt; endl;
+EV_TRACE &lt;&lt; "routeUnicastPacket(" &lt;&lt; packet &lt;&lt; ");" &lt;&lt; endl;
+</pre>
+<p>
+<ul class="note"><b>NOTE</b><br>
+It is not recommended to use plain <tt>printf()</tt> or <tt>std::cout</tt> for
+logging. Output from <tt>EV_INFO</tt> and the other log macros can be controlled
+more easily from <tt>omnetpp.ini</tt>, and it is more convenient to view
+using Tkenv or Qtenv.
+</ul>
+
+<p>The above C++ macros work well from any C++ class, including OMNeT++ modules. In
+fact, they automatically capture a number of context specific information such
+as the current event, current simulation time, context module, <tt>this</tt>
+pointer, source file and line number. The final log lines will be automatically
+extended with a prefix that is created from the captured information (see
+section <a href="chap10.html#sec:config-sim:logging">[10.6]</a>).
+
+<p>In static class member functions or in non-class member functions an extra
+<tt>EV_STATICCONTEXT</tt> macro must be present to make sure that normal log
+macros compile. <br><ul><font size=-1>[This is due to that in C++ it is impossible
+determine at compile-time whether a <tt>this</tt> pointer is accessible.]</font></ul>
+
+<pre class="cpp">
+void findModule(const char *name, <a href="../api/classomnetpp_1_1cModule.html">cModule</a> *from)
+{
+    EV_STATICCONTEXT;
+    EV_TRACE &lt;&lt; "findModule(" &lt;&lt; name &lt;&lt; ", " &lt;&lt; from &lt;&lt; ");" &lt;&lt; endl;
+</pre>
+<p>
+<h3><a name="sec:sim-lib:log-categories"/>7.2.4 Log Categories<a class="headerlink" href="#sec:sim-lib:log-categories" title="Permalink to this headline">¶</a></h3>
+
+<p>Sometimes it might be useful to further classify log statements into user
+defined log categories. In the OMNeT++ logging API, a log category is an
+arbitrary string provided by the user.
+
+<p>For example, a module test may check for a specific log message in the test's
+output. Putting the log statement into the <tt>test</tt> category ensures that
+extra care is taken when someone changes the wording in the statement to match
+the one in the test.
+
+<p>Similarily to the normal C++ log macros, there are separate log macros for each
+log level which also allow specifying the log category. Their name is the same
+as the normal variants' but simply extended with the <tt>_C</tt> suffix. They
+take the log category as the first parameter before any shift operator calls:
+
+<pre class="cpp">
+EV_INFO_C("test") &lt;&lt; "Received " &lt;&lt; numPacket &lt;&lt; " packets in total.\n";
+</pre>
+<p>
+<h3><a name="sec:sim-lib:logging-composition-and-new-lines"/>7.2.5 Composition and New lines<a class="headerlink" href="#sec:sim-lib:logging-composition-and-new-lines" title="Permalink to this headline">¶</a></h3>
+
+<p>Occasionally it's easier to produce a log line using multiple statements.
+Mostly because some computation has to be done between the parts. This can be
+achieved by omitting the new line from the log statements which are to be
+continued. And then subsequent log statements must use the same log level,
+otherwise an implicit new line would be inserted.
+
+<pre class="cpp">
+EV_INFO &lt;&lt; "Line starts here, ";
+... // some other code without logging
+EV_INFO &lt;&lt; "and it continues here" &lt;&lt; endl;
+</pre>
+<p>
+Assuming a simple log prefix that prints the log level in brakets, the above
+code fragment produces the following output in Cmdenv:
+
+<pre class="filelisting">
+[INFO] Line starts here, and it continues here
+</pre>
+<p>
+Sometimes it might be useful to split a line into multiple lines to achieve
+better formatting. In such cases, there's no need to write multiple log
+statements. Simply insert new lines into the sequence of shift operator calls:
+
+<pre class="cpp">
+EV_INFO &lt;&lt; "First line" &lt;&lt; endl &lt;&lt; "second line" &lt;&lt; endl;
+</pre>
+<p>
+In the produced output, each line will have the same log prefix, as shown below:
+
+<pre class="filelisting">
+[INFO] First line
+[INFO] Second line
+</pre>
+<p>
+The OMNeT++ logging API also supports direct printing to a log stream. This is
+mainly useful when printing is really complicated algorithmically (e.g. printing
+a multi-dimensional value). The following code could produce multiple log lines
+each having the same log prefix.
+
+<pre class="cpp">
+void Matrix::print(std::stream &output) { ... }
+void Matrix::someFunction()
+{
+   print(EV_INFO);
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:logging-implementation"/>7.2.6 Implementation<a class="headerlink" href="#sec:sim-lib:logging-implementation" title="Permalink to this headline">¶</a></h3>
+
+<p>OMNeT++ does its best to optimize the performance of logging. The implementation
+fully supports conditinal compilation of log statements based on their log
+level. It automatically checks whether the log is recorded anywhere. It also
+checks global and per-component runtime log levels. The latter is efficiently
+cached in the components for subsequent checks. See section
+<a href="chap10.html#sec:config-sim:logging">[10.6]</a> for more details on how to configure these log
+levels.
+
+<p>The implementation of the C++ log macros makes use of the fact that the
+<tt>operator&lt;&lt;</tt> is bound more loosely than the conditional operator
+(<tt>?:</tt>). This solves conditional compilation, and also helps runtime
+checks by redirecting the output to a <tt>null</tt> stream. Unfortunately the
+<tt>operator&lt;&lt;</tt> calls are still evaluated on the <tt>null</tt> stream, even if
+the log level is disabled.
+
+<p>Rarely just the computation of log statement parameters may be very expensive,
+and thus it must be avoided if possible. In this case, it is a good idea to
+make the log statement conditional on whether the output is actually being
+displayed or recorded anywhere. The <tt><a href="../api/classomnetpp_1_1cEnvir.html">cEnvir</a>::isLoggingEnabled()</tt> call
+returns false when the output is disabled, such as in &#8220;express&#8221; mode. Thus,
+one can write code like this:
+
+<p>
+<pre class="cpp">
+if (!getEnvir()-&gt;isLoggingEnabled())
+    EV_DEBUG &lt;&lt; "CRC: " &lt;&lt; computeExpensiveCRC(packet) &lt;&lt; endl;
+</pre>
+
+<p>
+
+
+<p><h2><a name="sec:sim-lib:random-number-generators"/>7.3 Random Number Generators<a class="headerlink" href="#sec:sim-lib:random-number-generators" title="Permalink to this headline">¶</a></h2>
+
+<p>Random numbers in simulation are usually not really random. Rather, they
+are produced using deterministic algorithms. Based on some internal state,
+the algorithm performs some deterministic computation to produce a
+&#8220;random&#8221; number and the next state. Such algorithms and their
+implementations are called <i>random number generators</i> or RNGs, or
+sometimes pseudo random number generators or PRNGs to highlight their
+deterministic nature. The algorithm's internal state is usually initialized
+from a smaller <i>seed</i> value.
+
+<p>Starting from the same seed, RNGs always produce the same sequence of
+random numbers. This is a useful property and of great importance, because
+it makes simulation runs repeatable.
+
+<p>RNGs are rarely used directly, because they produce uniformly distributed
+random numbers. When non-uniform random numbers are needed, mathematical
+transformations are used to produce random numbers from RNG input that
+correspond to specific distributions. This is called random variate
+generation, and it will be covered in the next section,
+<a href="chap7.html#sec:sim-lib:random-variate-generation">[7.4]</a>.
+
+<p>It is often advantageous for simulations to use random numbers from
+multiple RNG instances. For example, a wireless network simulation may use
+one RNG for generating traffic, and another RNG for simulating transmission
+errors in the noisy wireless channel. Since seeds for individual RNGs can
+be configured independently, this arrangement allows one e.g. to perform
+several simulation runs with the same traffic but with bit errors occurring
+in different places. A simulation technique called <i>variance
+reduction</i> is also related to the use of different random number streams.
+OMNeT++ makes it easy to use multiple RNGs in various flexible configurations.
+
+<p>When assigning seeds, it is important that different RNGs and also
+different simulation runs use non-overlapping series of random numbers.
+Overlap in the generated random number sequences can introduce unwanted
+correlation in the simulation results.
+
+<p><h3><a name="sec:sim-lib:rngs"/>7.3.1 RNG Implementations<a class="headerlink" href="#sec:sim-lib:rngs" title="Permalink to this headline">¶</a></h3>
+
+<p>OMNeT++ comes with the following RNG implementations.
+
+<p><h4><a name="sec:sim-lib:mersenne-twister"/>7.3.1.1 Mersenne Twister<a class="headerlink" href="#sec:sim-lib:mersenne-twister" title="Permalink to this headline">¶</a></h4>
+
+<p>By default, OMNeT++ uses the Mersenne Twister RNG (MT) by M. Matsumoto and
+T. Nishimura [<a href="#bib-Matsumoto98">Matsumoto98</a>]. MT has a period of <i>2<sup>19937</sup>-1</i>,
+and 623-dimensional equidistribution property is assured. MT is
+also very fast: as fast or faster than ANSI C's <tt>rand()</tt>.
+
+<p><h4><a name="sec:sim-lib:minimal-standard-rng"/>7.3.1.2 The "Minimal Standard" RNG<a class="headerlink" href="#sec:sim-lib:minimal-standard-rng" title="Permalink to this headline">¶</a></h4>
+
+<p>OMNeT++ releases prior to 3.0 used a linear congruential generator
+(LCG) with a cycle length of <i>2<sup>31</sup>-2</i>, described in
+[<a href="#bib-Jain91">Jain91</a>], pp. 441-444,455. This RNG is still available
+and can be selected from <tt>omnetpp.ini</tt> (Chapter <a href="chap11.html#cha:run-sim">[11]</a>).
+This RNG is only suitable for small-scale simulation studies.
+As shown by Karl Entacher et al. in [<a href="#bib-Entacher02">Entacher02</a>],
+the cycle length of about <i>2<sup>31</sup></i> is too small (on todays
+fast computers it is easy to exhaust all random numbers), and
+the structure of the generated &#8220;random&#8221; points is too regular.
+The [<a href="#bib-Hellekalek98">Hellekalek98</a>] paper provides a broader overview of issues
+associated with RNGs used for simulation, and it is well worth reading.
+It also contains useful links and references on the topic.
+
+<p><h4><a name="sec:sim-lib:akaroa-rng"/>7.3.1.3 The Akaroa RNG<a class="headerlink" href="#sec:sim-lib:akaroa-rng" title="Permalink to this headline">¶</a></h4>
+
+<p>When a simulation is executed under Akaroa control (see section
+<a href="chap11.html#sec:run-sim:akaroa">[11.21]</a>), it is also possible to let OMNeT++ use Akaroa's
+RNG. This needs to be configured in <tt>omnetpp.ini</tt> (section
+<a href="chap10.html#sec:config-sim:rng-config">[10.5]</a>).
+
+<p><h4><a name="sec:sim-lib:other-rngs"/>7.3.1.4 Other RNGs<a class="headerlink" href="#sec:sim-lib:other-rngs" title="Permalink to this headline">¶</a></h4>
+
+<p>OMNeT++ allows plugging in your own RNGs as well. This mechanism,
+based on the <tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt> interface, is described in section
+<a href="chap17.html#sec:plugin-exts:rng">[17.5]</a>.
+For example, one candidate to include could be L'Ecuyer's CMRG [<a href="#bib-LEcuyer02">LEcuyer02</a>]
+which has a period of about <i>2<sup>191</sup></i> and can provide a large
+number of <i>guaranteed</i> independent streams.
+
+<p>
+<h3><a name="sec:sim-lib:global-and-component-local-rngs"/>7.3.2 Global and Component-Local RNGs<a class="headerlink" href="#sec:sim-lib:global-and-component-local-rngs" title="Permalink to this headline">¶</a></h3>
+
+<p>OMNeT++ can be configured to make several RNGs available for the simulation
+model. These <i>global</i> or <i>physical</i> RNGs are numbered from
+<i>0</i> to <i>numRNGs-1</i>, and can be seeded independently.
+
+<p>However, usually model code doesn't directly work with those RNGs. Instead,
+there is an indirection step introduced for additional flexibility. When
+random numbers are drawn in a model, the code usually refers to
+<i>component-local</i> or <i>logical</i> RNG numbers. These
+local RNG numbers are mapped to global RNG indices to arrive at
+actual RNG instances. This mapping occurs on per-component basis. That is,
+each module and channel object contains a mapping table similar to the
+following:
+
+<p><center>
+<table>
+<TR> <TD align=center> Local RNG index </TD> <TD align=center>               </TD> <TD align=center> Global RNG </TD></TR>
+<TR> <TD align=center>               0 </TD> <TD align=center> <i>--></i> </TD> <TD align=center> 0 </TD></TR>
+<TR> <TD align=center>               1 </TD> <TD align=center> <i>--></i> </TD> <TD align=center> 0 </TD></TR>
+<TR> <TD align=center>               2 </TD> <TD align=center> <i>--></i> </TD> <TD align=center> 2 </TD></TR>
+<TR> <TD align=center>               3 </TD> <TD align=center> <i>--></i> </TD> <TD align=center> 1 </TD></TR>
+<TR> <TD align=center>               4 </TD> <TD align=center> <i>--></i> </TD> <TD align=center> 1 </TD></TR>
+<TR> <TD align=center>               5 </TD> <TD align=center> <i>--></i> </TD> <TD align=center> 3 </TD></TR>
+</table>
+</center>
+
+<p>In the example, the module or channel in question has 6 local (logical)
+RNGs that map to 4 global (physical) RNGs.
+
+<p><ul class="note"><b>NOTE</b><br>
+Local RNG number 0 is special in the sense that all random number functions
+use that RNG, unless explicitly told otherwise by specifying an <i>rng=k</i>
+argument.
+</ul>
+
+<p>The local-to-global mapping, as well as the number of number of global
+RNGs and their seeding can be configured in <tt>omnetpp.ini</tt> (see
+section <a href="chap10.html#sec:config-sim:rng-config">[10.5]</a>).
+
+<p>The mapping can be set up arbitrarily, with the default being identity
+mapping (that is, local RNG <i>k</i> refers to global RNG <i>k</i>.) The mapping
+allows for flexibility in RNG and random number streams configuration
+-- even for simulation models which were not written with RNG awareness.
+For example, even if modules in a simulation only use the default, local
+RNG number 0, one can set up mapping so that different groups of modules
+use different physical RNGs.
+
+<p>In theory, RNGs could also be instantiated and used directly from C++ model
+code. However, doing so is not recommended, because the model would lose
+configurability via <tt>omnetpp.ini</tt>.
+
+<p><h3><a name="sec:sim-lib:accessing-rngs"/>7.3.3 Accessing the RNGs<a class="headerlink" href="#sec:sim-lib:accessing-rngs" title="Permalink to this headline">¶</a></h3>
+
+<p>RNGs are represented with subclasses of the abstract class <tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt>.
+In addition to random number generation methods like <tt>intRand()</tt> and
+<tt>doubleRand()</tt>, the <tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt> interface also includes methods like
+<tt>selfTest()</tt> for basic integrity checking and <tt>getNumbersDrawn()</tt>
+to query the number of random numbers generated.
+
+<p>RNGs can be accessed by local RNG number via <tt><a href="../api/classomnetpp_1_1cComponent.html">cComponent</a></tt>'s
+<tt>getRNG(k)</tt> method. To access global global RNGs directly by their
+indices, one can use <tt><a href="../api/classomnetpp_1_1cEnvir.html">cEnvir</a></tt>'s <tt>getRNG(k)</tt> method.
+However, RNGs rarely need to be accessed directly. Most simulations will
+only use them via random variate generation functions, described in the
+next section.
+
+<p>
+<h2><a name="sec:sim-lib:random-variate-generation"/>7.4 Generating Random Variates<a class="headerlink" href="#sec:sim-lib:random-variate-generation" title="Permalink to this headline">¶</a></h2>
+
+<p>Random numbers produced by RNGs are uniformly distributed. This section
+describes how to obtain streams of non-uniformly distributed random numbers
+from various distributions.
+
+<p>The simulation library supports the following distributions:
+
+<p><table border>
+<TR> <TD align=left>
+<b>Distribution</b> </TD> <TD align=left> <b>Description</b></TD></TR>
+<TR> <TD align=center colspan=2><b>Continuous distributions</b></TD></TR>
+<TR> <TD align=left> <i><b>uniform</b>(a, b)</i> </TD> <TD align=left> uniform distribution in the range [a,b) </TD></TR>
+<TR> <TD align=left> <i><b>exponential</b>(mean)</i> </TD> <TD align=left> exponential distribution with the given mean </TD></TR>
+<TR> <TD align=left> <i><b>normal</b>(mean, stddev)</i> </TD> <TD align=left> normal distribution with the given mean and standard deviation </TD></TR>
+<TR> <TD align=left> <i><b>truncnormal</b>(mean, stddev)</i> </TD> <TD align=left> normal distribution truncated to nonnegative values </TD></TR>
+<TR> <TD align=left> <i><b>gamma_d</b>(alpha, beta)</i> </TD> <TD align=left> gamma distribution with parameters alpha&gt;0, beta&gt;0 </TD></TR>
+<TR> <TD align=left> <i><b>beta</b>(alpha1, alpha2)</i> </TD> <TD align=left> beta distribution with parameters alpha1&gt;0, alpha2&gt;0 </TD></TR>
+<TR> <TD align=left> <i><b>erlang_k</b>(k, mean)</i> </TD> <TD align=left> Erlang distribution with k&gt;0 phases and the given mean </TD></TR>
+<TR> <TD align=left> <i><b>chi_square</b>(k)</i> </TD> <TD align=left> chi-square distribution with k&gt;0 degrees of freedom </TD></TR>
+<TR> <TD align=left> <i><b>student_t</b>(i)</i> </TD> <TD align=left> student-t distribution with i&gt;0 degrees of freedom </TD></TR>
+<TR> <TD align=left> <i><b>cauchy</b>(a, b)</i> </TD> <TD align=left> Cauchy distribution with parameters a,b where b&gt;0 </TD></TR>
+<TR> <TD align=left> <i><b>triang</b>(a, b, c)</i> </TD> <TD align=left> triangular distribution with parameters a&lt;=b&lt;=c, a!=c </TD></TR>
+<TR> <TD align=left> <i><b>lognormal</b>(m, s)</i> </TD> <TD align=left> lognormal distribution with mean m and variance s&gt;0 </TD></TR>
+<TR> <TD align=left> <i><b>weibull</b>(a, b)</i> </TD> <TD align=left> Weibull distribution with parameters a&gt;0, b&gt;0 </TD></TR>
+<TR> <TD align=left> <i><b>pareto_shifted</b>(a, b, c)</i> </TD> <TD align=left> generalized Pareto distribution with parameters a, b and shift c </TD></TR>
+<TR> <TD align=center colspan=2><b>Discrete distributions</b> </TD></TR>
+<TR> <TD align=left> <i><b>intuniform</b>(a, b)</i> </TD> <TD align=left> uniform integer from a..b </TD></TR>
+<TR> <TD align=left> <i><b>bernoulli</b>(p)</i> </TD> <TD align=left> result of a Bernoulli trial with probability 0&lt;=p&lt;=1 (1 with probability p and 0 with probability (1-p)) </TD></TR>
+<TR> <TD align=left> <i><b>binomial</b>(n, p)</i> </TD> <TD align=left> binomial distribution with parameters n&gt;=0 and 0&lt;=p&lt;=1 </TD></TR>
+<TR> <TD align=left> <i><b>geometric</b>(p)</i> </TD> <TD align=left> geometric distribution with parameter 0&lt;=p&lt;=1 </TD></TR>
+<TR> <TD align=left> <i><b>negbinomial</b>(n, p)</i> </TD> <TD align=left> negative binomial distribution with parameters n&gt;0 and 0&lt;=p&lt;=1</TD></TR>
+<TR> <TD align=left> <i><b>poisson</b>(lambda)</i> </TD> <TD align=left> Poisson distribution with parameter lambda </TD></TR>
+</table>
+
+<p>Some notes:
+
+<p><ul>
+<li> <i>intuniform()</i> generates integers including both the lower and upper
+    limit, so for example the outcome of tossing a coin could be written as
+    <tt>intuniform(1,2)</tt>.
+<li> <i>truncnormal()</i> is the normal distribution truncated to nonnegative
+    values; its implementation generates a number with normal distribution and
+    if the result is negative, it keeps generating other numbers until the
+    outcome is nonnegative.
+</ul>
+
+<p>There are several ways to generate random numbers from these distributions,
+as described in the next sections.
+
+<p><h3><a name="sec:sim-lib:random-variate-component-methods"/>7.4.1 Component Methods<a class="headerlink" href="#sec:sim-lib:random-variate-component-methods" title="Permalink to this headline">¶</a></h3>
+
+<p>The preferred way is to use methods defined on <tt><a href="../api/classomnetpp_1_1cComponent.html">cComponent</a></tt>, the
+common base class of modules and channels:
+
+<pre class="cpp">
+double uniform(double a, double b, int rng=0) const;
+double exponential(double mean, int rng=0) const;
+double normal(double mean, double stddev, int rng=0) const;
+...
+</pre>
+<p>
+These methods work with the component's local RNGs, and accept the RNG
+index (default 0) in their extra <tt>int</tt> parameter.
+
+<p>Since most simulation code is located in methods of simple modules, these
+methods can be usually called in a concise way, without an explicit module
+or channel pointer. An example:
+
+<pre class="cpp">
+scheduleAt(simTime() + exponential(1.0), msg);
+</pre>
+<p>
+There are two additional methods, <tt>intrand()</tt> and <tt>dblrand()</tt>.
+<tt>intrand(n)</tt> generates random integers in the range <i>[0, n-1]</i>, and
+<tt>dblrand()</tt> generates a random double on <i>[0,1)</i>. They also accept
+an additional local RNG index that defaults to 0.
+
+<p><h3><a name="sec:sim-lib:random-number-stream-classes"/>7.4.2 Random Number Stream Classes<a class="headerlink" href="#sec:sim-lib:random-number-stream-classes" title="Permalink to this headline">¶</a></h3>
+
+<p>It is sometimes useful to be able to pass around random variate generators
+as objects. The classes <tt><a href="../api/classomnetpp_1_1cUniform.html">cUniform</a></tt>, <tt><a href="../api/classomnetpp_1_1cExponential.html">cExponential</a></tt>,
+<tt><a href="../api/classomnetpp_1_1cNormal.html">cNormal</a></tt>, etc. fulfill this need.
+
+<p>These classes subclass from the <tt><a href="../api/classomnetpp_1_1cRandom.html">cRandom</a></tt> abstract class.
+<tt><a href="../api/classomnetpp_1_1cRandom.html">cRandom</a></tt> was designed to encapsulate random number streams. Its
+most important method is <tt>draw()</tt> that returns a new random number
+from the stream. <tt><a href="../api/classomnetpp_1_1cUniform.html">cUniform</a></tt>, <tt><a href="../api/classomnetpp_1_1cExponential.html">cExponential</a></tt> and other classes
+essentially bind the distribution's parameters and an RNG to the generation
+function.
+
+<p>
+  <center>
+    <img src="crandom-inheritance.svg">
+    <center><div class="caption"><i>Figure: Random number stream classes</i></div></center>
+  </center>
+
+<p>
+Let us see for example <tt><a href="../api/classomnetpp_1_1cNormal.html">cNormal</a></tt>. The constructor expects an RNG
+(<tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt> pointer) and the parameters of the distribution, mean and
+standard deviation. It also has a default constructor, as it is a
+requirement for <tt>Register_Class()</tt>. When the default constructor
+is used, the parameters can be set with <tt>setRNG()</tt>, <tt>setMean()</tt>
+and <tt>setStddev()</tt>. <tt>setRNG()</tt> is defined on <tt><a href="../api/classomnetpp_1_1cRandom.html">cRandom</a></tt>.
+The <tt>draw()</tt> method, of course, is redefined to return a random
+number from the normal distribution.
+
+<p>An example that shows the use of a random number stream as an object:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cNormal.html">cNormal</a> *normal = new <a href="../api/classomnetpp_1_1cNormal.html">cNormal</a>(getRNG(0), 0, 1); // unit normal distr.
+printRandomNumbers(normal, 10);
+...
+
+void printRandomNumbers(<a href="../api/classomnetpp_1_1cRandom.html">cRandom</a> *rand, int n)
+{
+    EV &lt;&lt; "Some numbers from a " &lt;&lt; rand-&gt;getClassName() &lt;&lt; ":" &lt;&lt; endl;
+    for (int i = 0; i &lt; n; i++)
+        EV &lt;&lt; rand-&gt;draw() &lt;&lt; endl;
+}
+</pre>
+<p>
+Another important property of <tt><a href="../api/classomnetpp_1_1cRandom.html">cRandom</a></tt> is that it can encapsulate
+state. That is, subclasses can be implemented that, for example, return
+autocorrelated numbers, numbers from a stochastic process, or simply
+elements of a stored sequence (e.g. one loaded from a trace file).
+
+<p><h3><a name="sec:sim-lib:random-variate-generator-functions"/>7.4.3 Generator Functions<a class="headerlink" href="#sec:sim-lib:random-variate-generator-functions" title="Permalink to this headline">¶</a></h3>
+
+<p>Both the <tt><a href="../api/classomnetpp_1_1cComponent.html">cComponent</a></tt> methods and the random number stream classes
+described above have been implemented with the help of standalone generator
+functions. These functions take a <tt><a href="../api/classomnetpp_1_1cRNG.html">cRNG</a></tt> pointer as their first
+argument.
+
+<pre class="cpp">
+double uniform(<a href="../api/classomnetpp_1_1cRNG.html">cRNG</a> *rng, double a, double b);
+double exponential(<a href="../api/classomnetpp_1_1cRNG.html">cRNG</a> *rng, double mean);
+double normal(<a href="../api/classomnetpp_1_1cRNG.html">cRNG</a> *rng, double mean, double stddev);
+...
+</pre>
+<p>
+<h3><a name="sec:sim-lib:random-numbers-from-histograms"/>7.4.4 Random Numbers from Histograms<a class="headerlink" href="#sec:sim-lib:random-numbers-from-histograms" title="Permalink to this headline">¶</a></h3>
+
+<p>One can also specify a distribution as a histogram<!--distribution!as histogram-->.
+The <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt>, <tt><a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a></tt> and <tt><a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a></tt> classes
+can be used to generate random numbers from histograms. This feature is
+documented later, with the statistical classes.
+
+<p><h3><a name="sec:sim-lib:adding-new-distributions"/>7.4.5 Adding New Distributions<a class="headerlink" href="#sec:sim-lib:adding-new-distributions" title="Permalink to this headline">¶</a></h3>
+
+<p>One can easily add support for new distributions. We recommend that
+you write a standalone generator function first. Then you can add
+a <tt><a href="../api/classomnetpp_1_1cRandom.html">cRandom</a></tt> subclass that wraps it, and/or module (channel)
+methods that invoke it with the module's local RNG.
+If the function is registered with the <tt>Define_NED_Function()</tt>
+macro (see <a href="chap7.html#sec:sim-lib:defining-ned-functions">[7.11]</a>), it will be
+possible to use the new distribution in NED files and ini files, as well.
+
+<p>If you need a random number stream that has state, you need to
+subclass from <tt><a href="../api/classomnetpp_1_1cRandom.html">cRandom</a></tt>.
+
+<p>
+<h2><a name="sec:sim-lib:container-classes"/>7.5 Container Classes<a class="headerlink" href="#sec:sim-lib:container-classes" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:sim-lib:cqueue"/>7.5.1 Queue class: <a href="../api/classomnetpp_1_1cQueue.html">cQueue</a><a class="headerlink" href="#sec:sim-lib:cqueue" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:sim-lib:cqueue-basic-usage"/>7.5.1.1 Basic Usage<a class="headerlink" href="#sec:sim-lib:cqueue-basic-usage" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> is a container class that acts as a queue.
+<tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> can hold objects of type derived from <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>
+(almost all classes from the OMNeT++ library), such as
+<tt><a href="../api/classomnetpp_1_1cMessage.html">cMessage</a></tt>, <tt><a href="../api/classomnetpp_1_1cPar.html">cPar</a></tt>, etc. Normally, new elements
+are inserted at the back, and removed from the front.
+
+<p>
+  <center>
+    <img src="simlib-queue.svg">
+    <center><div class="caption"><i>Figure: <a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>: insertion and removal</i></div></center>
+    <a name="fig:ch-sim-lib:cqueue"></a>
+  </center>
+
+<p>
+The member functions dealing with insertion and removal are
+<tt>insert()</tt> and <tt>pop()</tt>.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cQueue.html">cQueue</a> queue("my-queue");
+<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *msg;
+
+// insert messages
+for (int i = 0; i &lt; 10; i++) {
+    msg = new <a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>;
+    queue.insert(msg);
+}
+
+// remove messages
+while(!queue.isEmpty()) {
+    msg = (<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *)queue.pop();
+    delete msg;
+}
+</pre>
+<p>
+The <tt>length()</tt> member function returns the number of items in the
+queue, and <tt>empty()</tt> tells whether there is anything in the queue.
+
+<p>There are other functions dealing with insertion and removal.  The
+<tt>insertBefore()</tt> and <tt>insertAfter()</tt> functions insert a
+new item exactly before or after a specified one, regardless of the
+ordering function.
+
+<p>The <tt>front()</tt> and <tt>back()</tt> functions return pointers to the objects
+at the front and back of the queue, without affecting queue contents.
+
+<p>The <tt>pop()</tt> function can be used to remove items from the
+tail of the queue, and the <tt>remove()</tt> function can be
+used to remove any item known by its pointer from the queue:
+
+<pre class="cpp">
+queue.remove(msg);
+</pre>
+<p>
+
+<p><h4><a name="sec:sim-lib:cqueue-as-priority-queue"/>7.5.1.2 Priority Queue<a class="headerlink" href="#sec:sim-lib:cqueue-as-priority-queue" title="Permalink to this headline">¶</a></h4>
+
+<p>By default, <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> implements a FIFO, but it can also act as a
+priority queue, that is, it can keep the inserted objects
+ordered<!--queue!order-->.  To use this feature, one needs to provide a
+comparison function that takes two <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> pointers, and returns
+-1, 0 or 1 (see the reference for details).  An example of setting up an
+ordered <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cQueue.html">cQueue</a> queue("queue", someCompareFunc);
+</pre>
+<p>
+If the queue object is set up as an ordered queue, the <tt>insert()</tt>
+function uses the ordering function: it searches the queue contents
+from the head until it reaches the position where the new item
+needs to be inserted, and inserts it there.
+
+<p>
+<h4><a name="sec:sim-lib:cqueue-iteration"/>7.5.1.3 Iterators<a class="headerlink" href="#sec:sim-lib:cqueue-iteration" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>::<a href="../api/classomnetpp_1_1cQueue_1_1Iterator.html">Iterator</a></tt> class lets one iterate over the contents
+of the queue and examine each object<!--queue!iteration-->.
+
+<p>The <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>::<a href="../api/classomnetpp_1_1cQueue_1_1Iterator.html">Iterator</a></tt> constructor expects the queue object in the
+first argument. Normally, forward iteration is assumed, and the iteration
+is initialized to point at the front of the queue. For reverse iteration,
+specify <tt>reverse=true</tt> as the optional second argument. After that, the
+class acts as any other OMNeT++ iterator: one can use the <tt>++</tt> and
+<tt>--</tt> operators to advance it, the <tt>*</tt> operator to get a pointer
+to the current item, and the <tt>end()</tt> member function to examine
+whether the iterator has reached the end (or the beginning) of the queue.
+
+<p>Forward iteration:
+
+<pre class="cpp">
+for (<a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>::<a href="../api/classomnetpp_1_1cQueue_1_1Iterator.html">Iterator</a> iter(queue); !iter.end(), iter++) {
+    <a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *msg = (<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *) *iter;
+    //...
+}
+</pre>
+<p>
+Reverse iteration:
+
+<pre class="cpp">
+for (<a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>::<a href="../api/classomnetpp_1_1cQueue_1_1Iterator.html">Iterator</a> iter(queue, true); !iter.end(), iter--) {
+    <a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *msg = (<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *) *iter;
+    //...
+}
+</pre>
+<p>
+
+<p>
+<h3><a name="sec:sim-lib:carray"/>7.5.2 Expandable Array: <a href="../api/classomnetpp_1_1cArray.html">cArray</a><a class="headerlink" href="#sec:sim-lib:carray" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:sim-lib:carray-basic-usage"/>7.5.2.1 Basic Usage<a class="headerlink" href="#sec:sim-lib:carray-basic-usage" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> is a container class that holds objects derived from
+<tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>. <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> implements a dynamic-size array: its
+capacity grows automatically when it becomes full. <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> stores
+pointers of objects inserted instead of making copies.
+
+<p>Creating an array:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cArray.html">cArray</a> array("array");
+</pre>
+<p>
+Adding an object at the first free index:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cMsgPar.html">cMsgPar</a> *p = new <a href="../api/classomnetpp_1_1cMsgPar.html">cMsgPar</a>("par");
+int index = array.add(p);
+</pre>
+<p>
+Adding an object at a given index (if the index is occupied,
+you will get an error message):
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cMsgPar.html">cMsgPar</a> *p = new <a href="../api/classomnetpp_1_1cMsgPar.html">cMsgPar</a>("par");
+int index = array.addAt(5,p);
+</pre>
+<p>
+Finding an object in the array:
+
+<pre class="cpp">
+int index = array.find(p);
+</pre>
+<p>
+Getting a pointer to an object at a given index:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPar.html">cPar</a> *p = (<a href="../api/classomnetpp_1_1cPar.html">cPar</a> *) array[index];
+</pre>
+<p>
+You can also search the array or get a pointer to an object by
+the object's name:
+
+<pre class="cpp">
+int index = array.find("par");
+Par *p = (<a href="../api/classomnetpp_1_1cPar.html">cPar</a> *) array["par"];
+</pre>
+<p>
+You can remove an object from the array by calling <tt>remove()</tt>
+with the object name, the index position or the object pointer:
+
+<pre class="cpp">
+array.remove("par");
+array.remove(index);
+array.remove(p);
+</pre>
+<p>
+
+<p>The <tt>remove()</tt> function doesn't deallocate the object, but it
+returns the object pointer. If you also want to deallocate it, you can
+write:
+
+<pre class="cpp">
+delete array.remove(index);
+</pre>
+<p>
+<h4><a name="sec:sim-lib:carray-iteration"/>7.5.2.2 Iteration<a class="headerlink" href="#sec:sim-lib:carray-iteration" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> has no iterator, but it is easy to loop through all the
+indices with an integer variable. The <tt>size()</tt> member function
+returns the largest index plus one.
+
+<pre class="cpp">
+for (int i = 0; i &lt; array.size(); i++) {
+  if (array[i]) { // is this position used?
+    <a href="../api/classomnetpp_1_1cObject.html">cObject</a> *obj = array[i];
+    EV &lt;&lt; obj-&gt;getName() &lt;&lt; endl;
+  }
+}
+</pre>
+<p>
+
+
+
+<p><h2><a name="sec:sim-lib:ctopology"/>7.6 Routing Support: <a href="../api/classomnetpp_1_1cTopology.html">cTopology</a><a class="headerlink" href="#sec:sim-lib:ctopology" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:sim-lib:ctopology-overview"/>7.6.1 Overview<a class="headerlink" href="#sec:sim-lib:ctopology-overview" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> class was designed primarily to support
+routing<!--routing support--> in communication networks.
+
+<p>A <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> object stores an abstract representation of the
+network in a graph form:
+<ul>
+  <li> each <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> node corresponds to a <i>module</i>
+    (simple or compound), and
+  <li> each <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> edge corresponds to a <i>link</i> or
+    <i>series of connecting links</i>.
+</ul>
+
+<p>One can specify which modules to include in the graph. Compound modules
+may also be selected. The graph will include all connections among the
+selected modules. In the graph, all nodes are at the same level;
+there is no submodule nesting.  Connections which span across compound
+module boundaries are also represented as one graph edge. Graph edges
+are directed, just as module gates are.
+
+<p>If you are writing a router or switch model, the <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt>
+graph can help you determine what nodes are available through which
+gate and also to find optimal routes<!--optimal routes-->. The
+<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> object can calculate shortest paths<!--shortest
+  path--> between nodes for you.
+
+<p>The mapping between the graph (nodes, edges) and network model (modules,
+gates, connections) is preserved: one can find the corresponding module for
+a <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> node and vice versa.
+
+<p>
+<h3><a name="sec:sim-lib:ctopology-basic-usage"/>7.6.2 Basic Usage<a class="headerlink" href="#sec:sim-lib:ctopology-basic-usage" title="Permalink to this headline">¶</a></h3>
+
+<p>One can extract the network topology into a <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt>
+object with a single method call. There are several ways to specify
+which modules should be included in the topology:
+
+<p><ul>
+  <li> by module type
+  <li> by a parameter's presence and value
+  <li> with a user-supplied boolean function
+</ul>
+
+<p>First, you can specify which node types you want to include. The
+following code extracts all modules of type <tt>Router</tt> or <tt>Host</tt>.
+(<tt>Router</tt> and <tt>Host</tt> can be either simple or compound module types.)
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a> topo;
+topo.extractByModuleType("Router", "Host", nullptr);
+</pre>
+<p>
+Any number of module types can be supplied; the list must be terminated by <tt>nullptr</tt>.
+
+<p>A dynamically assembled list of module types can be passed as a
+<tt>nullptr</tt>-terminated array of <tt>const char*</tt> pointers, or
+in an STL string vector <tt>std::vector&lt;std::string&gt;</tt>.
+An example for the former:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a> topo;
+const char *typeNames[3];
+typeNames[0] = "Router";
+typeNames[1] = "Host";
+typeNames[2] = nullptr;
+topo.extractByModuleType(typeNames);
+</pre>
+<p>
+Second, you can extract all modules which have a certain parameter:
+
+<pre class="cpp">
+topo.extractByParameter("ipAddress");
+</pre>
+<p>
+You can also specify that the parameter must have a certain value
+for the module to be included in the graph:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cMsgPar.html">cMsgPar</a> yes = "yes";
+topo.extractByParameter("includeInTopo", &yes);
+</pre>
+<p>
+The third form allows you to pass a function which can determine for
+each module whether it should or should not be included.  You can have
+<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> pass supplemental data to the function through a
+<tt>void*</tt> pointer. An example which selects all top-level modules (and
+does not use the <tt>void*</tt> pointer):
+
+<pre class="cpp">
+int selectFunction(<a href="../api/classomnetpp_1_1cModule.html">cModule</a> *mod, void *)
+{
+  return mod-&gt;getParentModule() == getSimulation()-&gt;getSystemModule();
+}
+
+topo.extractFromNetwork(selectFunction, nullptr);
+</pre>
+<p>
+
+A <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> object uses two types: <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt> for
+nodes and <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Link.html">Link</a></tt> for edges. (<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1LinkIn.html">LinkIn</a></tt> and
+<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1LinkOut.html">LinkOut</a></tt> are aliases for <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Link.html">Link</a></tt>; we'll
+talk about them later.)
+
+<p>Once you have the topology extracted, you can start exploring
+it. Consider the following code (we'll explain it shortly):
+
+<pre class="cpp">
+for (int i = 0; i &lt; topo.getNumNodes(); i++) {
+  <a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *node = topo.getNode(i);
+  EV &lt;&lt; "<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> i=" &lt;&lt; i &lt;&lt; " is " &lt;&lt; node-&gt;getModule()-&gt;getFullPath() &lt;&lt; endl;
+  EV &lt;&lt; " It has " &lt;&lt; node-&gt;getNumOutLinks() &lt;&lt; " conns to other nodes\n";
+  EV &lt;&lt; " and " &lt;&lt; node-&gt;getNumInLinks() &lt;&lt; " conns from other nodes\n";
+
+  EV &lt;&lt; " Connections to other modules are:\n";
+  for (int j = 0; j &lt; node-&gt;getNumOutLinks(); j++) {
+    <a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *neighbour = node-&gt;getLinkOut(j)-&gt;getRemoteNode();
+    <a href="../api/classomnetpp_1_1cGate.html">cGate</a> *gate = node-&gt;getLinkOut(j)-&gt;getLocalGate();
+    EV &lt;&lt; " " &lt;&lt; neighbour-&gt;getModule()-&gt;getFullPath()
+       &lt;&lt; " through gate " &lt;&lt; gate-&gt;getFullName() &lt;&lt; endl;
+  }
+}
+</pre>
+<p>
+The <tt>getNumNodes()</tt> member function returns the number of
+nodes in the graph, and <tt>getNode(i)</tt> returns a pointer to the <i>i</i>th
+node, a <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt> structure.
+
+<p>The correspondence between a graph node and a module can be obtained
+by <tt>getNodeFor()</tt> method:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *node = topo.getNodeFor(module);
+<a href="../api/classomnetpp_1_1cModule.html">cModule</a> *module = node-&gt;getModule();
+</pre>
+<p>
+The <tt>getNodeFor()</tt> member function returns a pointer to the graph
+node for a given module. (If the module is not in the graph, it
+returns <tt>nullptr</tt>). <tt>getNodeFor()</tt> uses binary search within the
+<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> object so it is relatively fast.
+
+<p><tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt>'s other member functions let you determine the
+connections of this node: <tt>getNumInLinks()</tt>, <tt>getNumOutLinks()</tt> return
+the number of connections, <tt>getLinkIn(i)</tt> and
+<tt>getLinkOut(i)</tt> return pointers to graph edge objects.
+
+<p>By calling member functions of the graph edge object, you can
+determine the modules and gates involved. The <tt>getRemoteNode()</tt>
+function returns the other end of the connection, and
+<tt>getLocalGate()</tt>, <tt>getRemoteGate()</tt>, <tt>getLocalGateId()</tt> and
+<tt>getRemoteGateId()</tt> return the gate pointers and ids of the gates
+involved. (Actually, the implementation is a bit tricky here: the same
+graph edge object <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Link.html">Link</a></tt> is returned either as
+<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1LinkIn.html">LinkIn</a></tt> or as <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1LinkOut.html">LinkOut</a></tt> so that &#8220;remote&#8221;
+and &#8220;local&#8221; can be correctly interpreted for edges of both
+directions.)
+
+<p>
+<h3><a name="sec:sim-lib:ctopology-shortest-paths"/>7.6.3 Shortest Paths<a class="headerlink" href="#sec:sim-lib:ctopology-shortest-paths" title="Permalink to this headline">¶</a></h3>
+
+<p>The real power of <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> is in finding shortest
+paths<!--topology!shortest path--> in the network to support optimal
+routing<!--optimal routing-->. <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> finds shortest paths
+from <i>all</i> nodes <i>to</i> a target node. The algorithm is
+computationally inexpensive. In the simplest case, all edges are
+assumed to have the same weight.
+
+<p>A real-life example assumes we have the target module pointer; finding
+the shortest path to the target looks like this:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cModule.html">cModule</a> *targetmodulep =...;
+<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *targetnode = topo.getNodeFor(targetmodulep);
+topo.calculateUnweightedSingleShortestPathsTo(targetnode);
+</pre>
+<p>
+
+<p>This performs the Dijkstra algorithm<!--Dijkstra algorithm--> and
+stores the result in the <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> object. The result can
+then be extracted using <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> and
+<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt><!--<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a>--> methods.  Naturally, each call to
+<tt>calculateUnweightedSingleShortestPathsTo()</tt> overwrites the results of
+the previous call.
+
+<p>Walking along the path from our module to the target node:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *node = topo.getNodeFor(this);
+
+if (node == nullptr) {
+  EV &lt;&lt; "We (" &lt;&lt; getFullPath() &lt;&lt; ") are not included in the topology.\n";
+}
+else if (node-&gt;getNumPaths()==0) {
+  EV &lt;&lt; "No path to destination.\n";
+}
+else {
+  while (node != topo.getTargetNode()) {
+    EV &lt;&lt; "We are in " &lt;&lt; node-&gt;getModule()-&gt;getFullPath() &lt;&lt; endl;
+    EV &lt;&lt; node-&gt;getDistanceToTarget() &lt;&lt; " hops to go\n";
+    EV &lt;&lt; "There are " &lt;&lt; node-&gt;getNumPaths()
+       &lt;&lt; " equally good directions, taking the first one\n";
+    <a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1LinkOut.html">LinkOut</a> *path = node-&gt;getPath(0);
+    EV &lt;&lt; "Taking gate " &lt;&lt; path-&gt;getLocalGate()-&gt;getFullName()
+       &lt;&lt; " we arrive in " &lt;&lt; path-&gt;getRemoteNode()-&gt;getModule()-&gt;getFullPath()
+       &lt;&lt; " on its gate " &lt;&lt; path-&gt;getRemoteGate()-&gt;getFullName() &lt;&lt; endl;
+    node = path-&gt;getRemoteNode();
+  }
+}
+</pre>
+<p>
+The purpose of the <tt>getDistanceToTarget()</tt> member function of a
+node is self-explanatory. In the unweighted case, it returns the
+number of hops. The <tt>getNumPaths()</tt> member function returns the number
+of edges which are part of a shortest path, and
+<tt>path(i)</tt> returns the <i>i</i>th edge of them as
+<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1LinkOut.html">LinkOut</a></tt>. If the shortest paths were created by the
+<tt>...SingleShortestPaths()</tt> function,
+<tt>getNumPaths()</tt> will always return 1 (or 0 if the target is not
+reachable), that is, only one of the several possible shortest paths
+are found.  The
+<tt>...MultiShortestPathsTo()</tt> functions
+find all paths, at increased run-time cost. The <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt>'s
+<tt>getTargetNode()</tt> function returns the target node of the last
+shortest path search.
+
+<p>You can enable/disable nodes or edges in the graph. This is done by
+calling their <tt>enable()</tt> or <tt>disable()</tt> member functions.
+Disabled nodes or edges are ignored by the shortest paths calculation
+algorithm. The <tt>isEnabled()</tt> member function returns the state of
+a node or edge in the topology graph.
+
+<p>One usage of <tt>disable()</tt> is when you want to determine in how many
+hops the target node can be reached from our node <i>through
+a particular output gate</i>. To compute this, you compute the
+shortest paths to the target <i>from the neighbor node</i> while
+disabling the current node to prevent the shortest paths
+from going through it:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *thisnode = topo.getNodeFor(this);
+thisnode-&gt;disable();
+topo.calculateUnweightedSingleShortestPathsTo(targetnode);
+thisnode-&gt;enable();
+
+for (int j = 0; j &lt; thisnode-&gt;getNumOutLinks(); j++) {
+  <a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1LinkOut.html">LinkOut</a> *link = thisnode-&gt;getLinkOut(i);
+  EV &lt;&lt; "Through gate " &lt;&lt; link-&gt;getLocalGate()-&gt;getFullName() &lt;&lt; " : "
+     &lt;&lt; 1 + link-&gt;getRemoteNode()-&gt;getDistanceToTarget() &lt;&lt; " hops" &lt;&lt; endl;
+}
+</pre>
+<p>
+In the future, other shortest path algorithms will also be implemented:
+
+<pre class="cpp">
+unweightedMultiShortestPathsTo(<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *target);
+weightedSingleShortestPathsTo(<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *target);
+weightedMultiShortestPathsTo(<a href="../api/classomnetpp_1_1cTopology.html">cTopology</a>::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *target);
+</pre>
+<p>
+<h3><a name="sec:sim-lib:ctopology-manipulating"/>7.6.4 Manipulating the graph<a class="headerlink" href="#sec:sim-lib:ctopology-manipulating" title="Permalink to this headline">¶</a></h3>
+
+<p><tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> also has methods that let one manipulate the stored graph,
+or even, build a graph from scratch. These methods are <tt>addNode()</tt>,
+<tt>deleteNode()</tt>, <tt>addLink()</tt> and <tt>deleteLink()</tt>.
+
+<p>When extracting the topology from the network, <tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> uses
+the factory methods <tt>createNode()</tt> and <tt>createLink()</tt> to instantiate
+the node and link objects. These methods may be overridden by subclassing
+<tt><a href="../api/classomnetpp_1_1cTopology.html">cTopology</a></tt> if the need arises, for example when it is useful to be
+able to store additional information in those objects.
+
+<p>
+<h2><a name="sec:sim-lib:pattern-matching"/>7.7 Pattern Matching<a class="headerlink" href="#sec:sim-lib:pattern-matching" title="Permalink to this headline">¶</a></h2>
+
+<p>Since version 4.3, OMNeT++ contains two utility classes for pattern
+matching, <tt><a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a></tt> and <tt><a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a></tt>.
+
+<p><tt><a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a></tt> is a glob-style pattern matching class, adopted to
+special OMNeT++ requirements. It recognizes wildcards, character ranges and
+numeric ranges, and supports options such as case sensitive and whole
+string matching. <tt><a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a></tt> builds on top of
+<tt><a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a></tt> and extends it in two ways: first, it lets you
+combine patterns with AND, OR, NOT into boolean expressions, and second, it
+applies the pattern expressions to <i>objects</i> instead of text. These
+classes are especially useful for making model-specific configuration files
+more concise or more powerful by introducing patterns.
+
+<p>
+
+<p><h3><a name="sec:sim-lib:cpatternmatcher"/>7.7.1 <a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a><a class="headerlink" href="#sec:sim-lib:cpatternmatcher" title="Permalink to this headline">¶</a></h3>
+
+<p><tt><a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a></tt> holds a pattern string and several option flags,
+and has a <tt>matches()</tt> boolean function that determines whether the
+string passed as argument matches the pattern with the given flags. The
+pattern and the flags can be set via the constructor or by calling the
+<tt>setPattern()</tt> member function.
+
+<p>The pattern syntax is a variation on Unix <i>glob</i>-style patterns. The
+most apparent differences to globbing rules are the distinction between
+<tt>*</tt> and <tt>**</tt>, and that character ranges should be written with
+curly braces instead of square brackets; that is, <i>any-letter</i> is
+expressed as <tt>{a-zA-Z}</tt> and not as <tt>[a-zA-Z]</tt>, because square
+brackets are reserved for the notation of module vector indices.
+
+<p>The following option flags are supported:
+
+<p><ul>
+  <li> <i>dottedpath</i>: controls whether some wildcards (<tt>?</tt>, <tt>*</tt>) will match dots
+  <li> <i>fullstring</i>: controls whether to do full string or substring match.
+  <li> <i>casesensitive</i>: whether matching is case sensitive or case insensitive
+</ul>
+
+<p>Patterns may contain the following elements:
+
+<p><ul>
+  <li> <i>question mark</i>, <tt>?</tt> : matches any character (except dot if <i>dottedpath</i>=true)
+  <li> <i>asterisk</i>, <tt>*</tt> : matches zero or more characters (except dots if <i>dottedpath</i>=true)
+  <li> <i>double asterisk</i>, <tt>**</tt> : matches zero or more characters, including dots
+  <li> <i>set</i>, e.g. <tt>{a-zA-Z}</tt> : matches any character that is contained in the set
+  <li> <i>negated set</i>, e.g. <tt>{^a-z}</tt>: matches any character that is NOT contained in the set
+  <li> <i>numeric range</i>, e.g. <tt>{38..150}</tt> : matches any number (i.e. sequence of digits) in the given range
+  <li> <i>numeric index range</i>, e.g. <tt>[38..150]</tt> : matches any number in square brackets in the given range
+  <li> <i>backslash</i>, \ : takes away the special meaning of the subsequent character
+</ul>
+
+<p><ul class="note"><b>NOTE</b><br>
+The <i>dottedpath</i> option was introduced to make matching OMNeT++
+module paths more powerful. When it is off (<i>dottedpath</i>=false),
+there is no difference between <tt>*</tt> and <tt>**</tt>, they both match any
+character sequence. However, when matching OMNeT++ module paths or other
+strings where dot is a separator character, it is useful to turn on the
+dottedpath mode (<i>dottedpath</i>=true). In that mode, <tt>*</tt>, not
+being able to cross a dot, can match only a single path component (or part
+of it), and <tt>**</tt> can match multiple path components.
+</ul>
+
+<p>Sets and negated sets can contain several character ranges and also
+enumeration of characters, for example <tt>{_a-zA-Z0-9}</tt> or
+<tt>{xyzc-f}</tt>. To include a hyphen in the set, place it at a position
+where it cannot be interpreted as character range, for example
+<tt>{a-z-}</tt> or <tt>{-a-z}</tt>. To include a close brace in
+the set, it must be the first character: <tt>{}a-z}</tt>, or for a negated
+set: <tt>{^}a-z}</tt>. A backslash is always taken as
+literal backslash (and NOT as escape character) within set definitions.
+When doing case-insensitive match, avoid ranges that include both alpha and
+non-alpha characters, because they might cause funny results.
+
+<p>For numeric ranges and numeric index ranges, ranges are inclusive, and both
+the start and the end of the range are optional; that is, <tt>{10..}</tt>,
+<tt>{..99}</tt> and <tt>{..}</tt> are all valid numeric ranges (the last one
+matches any number). Only nonnegative integers can be matched. Caveat:
+<tt>{17..19}</tt> will match <tt>"a17"</tt>, <tt>"117"</tt> and also <tt>"963217"</tt>!
+
+<p>The <tt><a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a></tt> constructor and the <tt>setPattern()</tt> member
+function have similar signatures:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a>(const char *pattern, bool dottedpath, bool fullstring,
+                bool casesensitive);
+void setPattern(const char *pattern, bool dottedpath, bool fullstring,
+                bool casesensitive);
+</pre>
+<p>
+The matcher function:
+
+<pre class="cpp">
+bool matches(const char *text);
+</pre>
+<p>
+There are also some more utility functions for printing the pattern,
+determining whether a pattern contains wildcards, etc.
+
+<p>Example:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a> matcher("**.host[*]", true, true, true);
+EV &lt;&lt; matcher.matches("Net.host[0]") &lt;&lt; endl;  // -&gt; true
+EV &lt;&lt; matcher.matches("Net.area1.host[0]") &lt;&lt; endl;  // -&gt; true
+EV &lt;&lt; matcher.matches("Net.host") &lt;&lt; endl;  // -&gt; false
+EV &lt;&lt; matcher.matches("Net.host[0].tcp") &lt;&lt; endl;  // -&gt; false
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:cmatchexpression"/>7.7.2 <a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a><a class="headerlink" href="#sec:sim-lib:cmatchexpression" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a></tt> class builds on top of <tt><a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a></tt>,
+and lets one determine whether an <i>object</i> matches a given pattern
+expression.
+
+<p>A pattern expression consists of elements in the
+<i>fieldname(pattern)</i> syntax; they check whether the string
+representation of the given field of the object matches the pattern. For
+example, <tt>srcAddr(192.168.0.*)</tt> will match if the <i>srcAddr</i>
+field of the object starts with <tt>192.168.0.</tt> A naked pattern (without
+field name and parens) is also accepted, and it will be matched against the
+<i>default field</i> of the object, which will usually be its name.
+
+<p>These elements can be combined with the AND, OR, NOT operators, accepted in
+both lowercase and uppercase. AND has higher precedence than OR, but
+parentheses can be used to change the evaluation order.
+
+<p>Pattern examples:
+
+<p><ul>
+ <li> <tt>"node*"</tt>
+ <li> <tt>"node* or host*"</tt>
+ <li> <tt>"packet-* and className(PPPFrame)"</tt>
+ <li> <tt>"className(TCPSegment) and byteLength({4096..})"</tt>
+ <li> <tt>"className(TCPSegment) and (SYN or DATA-*) and not kind({0..2})"</tt>
+</ul>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a></tt> class has a constructor and <tt>setPattern()</tt>
+method similar to those of <tt><a href="../api/classomnetpp_1_1cPatternMatcher.html">cPatternMatcher</a></tt>:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a>(const char *pattern, bool dottedpath, bool fullstring,
+                bool casesensitive);
+void setPattern(const char *pattern, bool dottedpath, bool fullstring,
+                bool casesensitive);
+</pre>
+<p>
+However, the matcher function takes a <tt><a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a>::<a href="../api/classomnetpp_1_1cMatchExpression_1_1Matchable.html">Matchable</a></tt>
+instead of string:
+
+<pre class="cpp">
+bool matches(const <a href="../api/classomnetpp_1_1cMatchExpression_1_1Matchable.html">Matchable</a> *object);
+</pre>
+<p>
+This means that objects to be matched must either be subclassed from
+<tt><a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a>::<a href="../api/classomnetpp_1_1cMatchExpression_1_1Matchable.html">Matchable</a></tt>, or be wrapped into some adapter class
+that does. <tt><a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a>::<a href="../api/classomnetpp_1_1cMatchExpression_1_1Matchable.html">Matchable</a></tt> is a small abstract class
+with only a few pure virtual functions:
+
+<pre class="cpp">
+/**
+ * Objects to be matched must implement this interface
+ */
+class SIM_API <a href="../api/classomnetpp_1_1cMatchExpression_1_1Matchable.html">Matchable</a>
+{
+  public:
+    /**
+     * Return the default string to match. The returned pointer will not be
+     * cached by the caller, so it is OK to return a pointer to a static buffer.
+     */
+    virtual const char *getAsString() const = 0;
+
+    /**
+     * Return the string value of the given attribute, or nullptr if the object
+     * doesn't have an attribute with that name. The returned pointer will not
+     * be cached by the caller, so it is OK to return a pointer to a static buffer.
+     */
+    virtual const char *getAsString(const char *attribute) const = 0;
+
+    /**
+     * Virtual destructor.
+     */
+    virtual ~<a href="../api/classomnetpp_1_1cMatchExpression_1_1Matchable.html">Matchable</a>() {}
+};
+</pre>
+<p>
+To be able to match instances of an existing class that is not already a
+<tt><a href="../api/classomnetpp_1_1cMatchExpression_1_1Matchable.html">Matchable</a></tt>, one needs to write an adapter class. An adapter class that
+we can look at as an example is <tt><a href="../api/classomnetpp_1_1cMatchableString.html">cMatchableString</a></tt>. <tt><a href="../api/classomnetpp_1_1cMatchableString.html">cMatchableString</a></tt>
+makes it possible to match strings with a <tt><a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a></tt>, and is part
+of OMNeT++:
+
+<pre class="cpp">
+/**
+ * Wrapper to make a string matchable with <a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a>.
+ */
+class <a href="../api/classomnetpp_1_1cMatchableString.html">cMatchableString</a> : public <a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a>::<a href="../api/classomnetpp_1_1cMatchExpression_1_1Matchable.html">Matchable</a>
+{
+  private:
+    std::string str;
+  public:
+    <a href="../api/classomnetpp_1_1cMatchableString.html">cMatchableString</a>(const char *s) {str = s;}
+    virtual const char *getAsString() const {return str.c_str();}
+    virtual const char *getAsString(const char *name) const {return nullptr;}
+};
+</pre>
+<p>
+An example:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cMatchExpression.html">cMatchExpression</a> expr("foo* or bar*", true, true, true);
+<a href="../api/classomnetpp_1_1cMatchableString.html">cMatchableString</a> str1("this is a foo");
+<a href="../api/classomnetpp_1_1cMatchableString.html">cMatchableString</a> str2("something else");
+EV &lt;&lt; expr.matches(&str1) &lt;&lt; endl; // -&gt; true
+EV &lt;&lt; expr.matches(&str2) &lt;&lt; endl; // -&gt; false
+</pre>
+<p>
+Or, by using temporaries:
+
+<pre class="cpp">
+EV &lt;&lt; expr.matches(&<a href="../api/classomnetpp_1_1cMatchableString.html">cMatchableString</a>("this is a foo")) &lt;&lt; endl; // -&gt; true
+EV &lt;&lt; expr.matches(&<a href="../api/classomnetpp_1_1cMatchableString.html">cMatchableString</a>("something else")) &lt;&lt; endl; // -&gt; false
+</pre>
+<p>
+
+<p><h2><a name="sec:sim-lib:statistics"/>7.8 Collecting Summary Statistics and Histograms<a class="headerlink" href="#sec:sim-lib:statistics" title="Permalink to this headline">¶</a></h2>
+
+<p>There are several statistic and result collection classes:
+<tt><a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a></tt>, <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt>, <tt><a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a></tt> and
+<tt><a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a></tt>. They are all derived from the abstract base class
+<tt><a href="../api/classomnetpp_1_1cStatistic.html">cStatistic</a></tt>; histogram-like classes derive from 
+<tt><a href="../api/classomnetpp_1_1cAbstractHistogram.html">cAbstractHistogram</a></tt>.<br><ul><font size=-1>[Earlier versions of OMNeT++ had more
+statistical classes: <tt><a href="../api/classomnetpp_1_1cWeightedStdDev.html">cWeightedStdDev</a></tt>, <tt><a href="../api/classomnetpp_1_1cLongHistogram.html">cLongHistogram</a></tt>,
+<tt><a href="../api/classomnetpp_1_1cDoubleHistogram.html">cDoubleHistogram</a></tt>, <tt><a href="../api/classomnetpp_1_1cVarHistogram.html">cVarHistogram</a></tt>. The functionality
+of these classes have been consolidated into <tt><a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a></tt> and
+<tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt>.]</font></ul>
+
+<p><ul>
+  <li> <tt><a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a></tt> keeps summary statistics (mean, standard deviation,
+    range) of weighted or unweighted observations. 
+  <li> <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> is for collecting observations into a histogram.
+    <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> is highly configurable, suports adding/removing/merging bins
+    dynamically, and can produce a good histogram from most distributions
+    without requiring manual configuration.
+  <li> <tt><a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a></tt> is a class that uses the <i>P<sup>2</sup></i> algorithm
+    described in [<a href="#bib-JCh85">JCh85</a>]. The algorithm calculates quantiles without
+    storing the observations; one can also think of it as a histogram
+    with equiprobable cells<!--histogram!equiprobable-cells-->.
+  <li> <tt><a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a></tt> is adaptive histogram-like algorithm
+    which performs dynamic subdivision of the bins to refine resolution
+    at the bulk of the distribution.
+</ul>
+
+<p>
+  <center>
+    <img src="cstatistic-inheritance.svg">
+    <center><div class="caption"><i>Figure: Statistics classes</i></div></center>
+  </center>
+
+<p>
+All classes use the <tt>double</tt> type for representing observations,
+and compute all metrics in the same data type (except the observation
+count, which is <tt>int64_t</tt>.)
+
+<p>For weighted statistics, weights are also <tt>double</tt>s. Being able to
+handle non-integer weights is important because weighted statistics
+are often used for computing time averages, e.g. average queue length
+or average channel utilization. 
+
+<p><h3><a name="sec:sim-lib:cstatistic-and-descendants"/>7.8.1 <a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a><a class="headerlink" href="#sec:sim-lib:cstatistic-and-descendants" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a></tt> class is meant to collect summary statistics of
+observations. If you also need to compute a histogram, use <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt>
+(or <tt><a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a></tt>/<tt><a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a></tt>) instead, because those classes 
+already include the functionality of <tt><a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a></tt>.
+
+<p><tt><a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a></tt> can collect unweighted or weighted statistics. This needs
+to be decided in the constructor call, and cannot be changed later. 
+Specify <tt>true</tt> as the second argument for weighted statistics.
+ 
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a> unweighted("packetDelay");  // unweighted
+<a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a> weighted("queueLength", true); // weighted
+</pre>
+<p> 
+Observations are added to the statistics by using the <tt>collect()</tt>
+or the <tt>collectweighted()</tt> methods. The latter takes two parameters,
+the value and the weight.
+
+<pre class="cpp">
+for (double value : values)
+    unweighted.collect(value);
+
+for (double value : values2) {
+    double weight = ...
+    weighted.collectWeighted(value, weight);
+}
+</pre>
+<p>
+Statistics can be obtained from the object with the following methods: 
+<tt>getCount()</tt>, <tt>getMin()</tt>, <tt>getMax()</tt>, <tt>getMean()</tt>, 
+<tt>getStddev()</tt>, <tt>getVariance()</tt>.
+
+<p>There are two getter methods that only work for unweighted statistics:
+<tt>getSum()</tt> and <tt>getSqrSum()</tt>. Plain (unweighted) sum and 
+sum of squares are not computed for weighted observations, and it is
+an error to call these methods in the weighted case.
+
+<p>Other getter methods are primarily meant for weighted statistics:
+<tt>getSumWeights()</tt>, <tt>getWeightedSum()</tt>, 
+<tt>getSqrSumWeights()</tt>, <tt>getWeightedSqrSum()</tt>.
+When called on unweighted statistics, these methods simply
+assume a weight of 1.0 for all observations.
+
+<p>An example:
+
+<pre class="cpp">
+EV &lt;&lt; "count = " &lt;&lt; unweighted.getCount() &lt;&lt; endl;
+EV &lt;&lt; "mean = " &lt;&lt; unweighted.getMean() &lt;&lt; end;
+EV &lt;&lt; "stddev = " &lt;&lt; unweighted.getStddev() &lt;&lt; end;
+EV &lt;&lt; "min = " &lt;&lt; unweighted.getMin() &lt;&lt; end;
+EV &lt;&lt; "max = " &lt;&lt; unweighted.getMax() &lt;&lt; end;
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:histograms"/>7.8.2 <a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a><a class="headerlink" href="#sec:sim-lib:histograms" title="Permalink to this headline">¶</a></h3>
+
+<p><tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> is able to represent both uniform and non-uniform
+bin histograms, and supports both weighted and unweighted observations.
+The histogram can be modified dynamically: it can be extended with new bins,
+and adjacent bins can be merged. In addition to the bin values (which mean
+count in the unweighted case, and sum of weights in the weighted case),
+the histogram object also keeps the number (or sum of weights) of the 
+lower and upper outliers (&#8220;underflows&#8221; and &#8220;overflows&#8221;.) 
+
+<p>
+  <center>
+    <img src="simlib-histogramsetup.svg">
+    <center><div class="caption"><i>Figure: Histograms keep track of outliers as well</i></div></center>
+  </center>
+
+<p>
+Setting up and managing the bins based on the collected observations
+is usually delegated to a strategy object. However, for most
+use cases, histogram strategies is not something the user needs
+to be concerned with. The default constructor of <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt>
+sets up the histogram with a default strategy that usually produces
+a good quality histogram without requiring manual configuration or a-priori 
+knowledge about the distribution. For special use cases, there are
+other histogram strategies, and it is also possible to write new ones. 
+
+<p><h4><a name="sec:sim-lib:creating-a-histogram"/>7.8.2.1 Creating a Histogram<a class="headerlink" href="#sec:sim-lib:creating-a-histogram" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> has several constructors variants. Like with 
+<tt><a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a></tt>, it needs to be decided in the constructor call
+by a boolean argument whether the histogram should collect 
+unweighted (<tt>false</tt>) or weighted (<tt>true</tt>) statistics;
+the default is unweighted. Another argument is a number of bins
+hint. (The actual number of bins produced might slightly differ,
+due to dynamic range extensions and bin merging performed by
+some strategies.)
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> unweighted1("packetDelay");  // unweighted
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> unweighted2("packetDelay", 10);  // unweighted, with ~10 bins
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> weighted1("queueLength", true); // weighted
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> weighted2("queueLength", 10, true); // weighted, with ~10 bins
+</pre>
+<p>
+It is also possible to provide a strategy object in a constructor call.
+(The strategy object may also be set later though, using <tt>setStrategy()</tt>.
+It must be called before the first observation is collected.)
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> autoRangeHist("queueLength", new <a href="../api/classomnetpp_1_1cAutoRangeHistogramStrategy.html">cAutoRangeHistogramStrategy</a>());
+</pre>
+<p>
+This constructor can also be used to create a histogram without a strategy
+object, which is useful if you want to set up the histogram bins manually.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> hist("queueLength", nullptr, true); // weighted, no strategy
+</pre>
+<p>
+<tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> also has methods where you can provide constraints
+and hints for setting up the bins: <tt>setMode()</tt>, <tt>setRange()</tt>,
+<tt>setRangeExtensionFactor()</tt>, <tt>setAutoExtend()</tt>, 
+<tt>setNumBinsHint()</tt>, <tt>setBinSizeHint()</tt>. These methods
+delegate to similar methods of <tt><a href="../api/classomnetpp_1_1cAutoRangeHistogramStrategy.html">cAutoRangeHistogramStrategy</a></tt>.
+
+<p>
+<h4><a name="sec:sim-lib:collecting-observations"/>7.8.2.2 Collecting Observations<a class="headerlink" href="#sec:sim-lib:collecting-observations" title="Permalink to this headline">¶</a></h4>
+
+<p>Observations are added to the histogram in the same way as with <tt><a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a></tt>:
+using the <tt>collect()</tt> and <tt>collectWeighted()</tt> methods. 
+
+<p><h4><a name="sec:sim-lib:querying-bins"/>7.8.2.3 Querying the Bins<a class="headerlink" href="#sec:sim-lib:querying-bins" title="Permalink to this headline">¶</a></h4>
+
+<p>Histogram bins can be accessed with three member functions: 
+<tt>getNumBins()</tt> returns the number of bins, 
+<tt>getBinEdge(int k)</tt> returns the <i>k</i>th bin edge, 
+<tt>getBinValue(int k)</tt> returns the count or sum of weights in bin <i>k</i>,
+and <tt>getBinPDF(int k)</tt> returns the PDF value in the bin 
+(i.e. between <tt>getBinEdge(k)</tt> and <tt>getBinEdge(k+1)</tt>).
+The <tt>getBinInfo(k)</tt> method returns multiple bin data
+(edges, value, relative frequency) packed together in a struct.
+Four other methods, <tt>getUnderflowSumWeights()</tt>, <tt>getOverflowSumWeights()</tt>, 
+<tt>getNumUnderflows()</tt>, <tt>getNumOverflows()</tt>, provide access to
+the outliers.  
+
+<p>These functions, being defined on <tt>cHistogramBase</tt>, are not only
+available on <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> but also for <tt><a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a></tt> and <tt><a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a></tt>.
+
+<p>For <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt>, bin edges and bin values can also be accessed 
+as a vector of <tt>double</tt>s, using the <tt>getBinEdges()</tt> and 
+<tt>getBinValues()</tt> methods. 
+
+<p>
+  <center>
+    <img src="simlib-histogramcells.svg">
+    <center><div class="caption"><i>Figure: Bin edges and bins of an <i>N</i>-bin histogram</i></div></center>
+  </center>
+
+<p>
+An example:
+
+<pre class="cpp">
+EV &lt;&lt; "[" &lt;&lt; hist.getMin() &lt;&lt; "," &lt;&lt; hist.getBinEdge(0) &lt;&lt; "): " 
+   &lt;&lt; hist.getUnderflowSumWeights() &lt;&lt; endl;
+int numBins = hist.getNumBins();
+for (int i = 0; i &lt; numBins; i++) {
+  EV &lt;&lt; "[" &lt;&lt; hist.getBinEdge(i) &lt;&lt; "," &lt;&lt; hist.getBinEdge(i+1) &lt;&lt; "): " 
+     &lt;&lt; hist.getBinValue(i) &lt;&lt; endl;
+}
+EV &lt;&lt; "[" &lt;&lt; hist.getBinEdge(numBins) &lt;&lt; "," &lt;&lt; hist.getMax() &lt;&lt; "]: " 
+   &lt;&lt; hist.getOverflowSumWeights() &lt;&lt; endl;
+</pre>
+<p>
+The <tt>getPDF(x)</tt> and <tt>getCDF(x)</tt> member functions
+return the value of the Probability Density Function and the Cumulated
+Density Function at a given <i>x</i>, respectively.
+
+<p>Note that bins may not be immediately available during observation
+collection, because some histogram strategies use precollection
+to gather information about the distribution before setting up the bins.
+Use <tt>binsAlreadySetUp()</tt> to figure out whether bins are
+set up already. Setting up the bins can be forced with the
+<tt>setupBins()</tt> method. 
+
+<p>
+<h4><a name="sec:sim-lib:setting-up-bins"/>7.8.2.4 Setting Up and Managing the Bins<a class="headerlink" href="#sec:sim-lib:setting-up-bins" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> class has several methods for creating and 
+manipulating bins. These methods are primarily intended to be called
+from strategy classes, but are also useful if you want to manage
+the bins manually, i.e. without a strategy class.
+
+<p>For setting up the bins, you can either use <tt>createUniformBins()</tt> 
+with the range (lo, hi) and the step size as parameters, or specify 
+all bin edges explicitly in a vector of <tt>double</tt>s to <tt>setBinEdges()</tt>.
+
+<p>When the bins have already been set up, the histogram can be extended
+with new bins down or up using the <tt>prependBins()</tt> and <tt>appendBins()</tt>
+methods that take a list of new bin edges to add. There is also an 
+<tt>extendBinsTo()</tt> method that extends the histogram with equal-sized
+bins at either end to make sure that a supplied value falls into the 
+histogram range. Of course, extending the histogram is only possible
+if there are no outliers in that direction. (The positions of the 
+outliers is not preserved, so it is not known how many would fall in
+each of the newly created bins.) 
+
+<p>If the histogram has too many bins, adjacent ones (pairs, triplets, 
+or groups of size <i>n</i>) can be merged, using the <tt>mergeBins()</tt>
+method.
+
+<p>Example code which sets up a histogram with uniform bins:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> hist("queueLength", nullptr); // create w/o strategy object
+hist.createUniformBins(0, 100, 10); // 10 bins over (0,100)
+</pre>
+<p>
+The following code achieves the same, but uses <tt>setBinEdges()</tt>:
+
+<pre class="cpp">
+std::vector&lt;double&gt; edges = {0,10,20,30,40,50,60,70,80,90,100}; // C++11
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> hist("queueLength", nullptr);
+hist.setBinEdges(edges);
+</pre>
+<p>
+
+<p><h4><a name="sec:sim-lib:histogram-strategy-concept"/>7.8.2.5 Strategy Concept<a class="headerlink" href="#sec:sim-lib:histogram-strategy-concept" title="Permalink to this headline">¶</a></h4>
+
+<p>Histogram strategies subclass from <tt><a href="../api/classomnetpp_1_1cIHistogramStrategy.html">cIHistogramStrategy</a></tt>, and are
+responsible for setting up and managing the bins.
+
+<p>A <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> is created with a <tt><a href="../api/classomnetpp_1_1cDefaultHistogramStrategy.html">cDefaultHistogramStrategy</a></tt>
+by default, which works well in most cases. Other <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> 
+constructors allow passing in an arbitrary histogram strategy. 
+
+<p>The <tt>collect()</tt> and <tt>collectWeighted()</tt> methods of a 
+<tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt> delegate to similar methods of the strategy
+object, which in turn decides when and how to set up the bins,
+and how to manage the bins later. (Setting up the bins may be 
+postponed until a few observations have been collected, in order to
+gather more information for it.) The histogram strategy
+uses public histogram methods like <tt>createUniformBins()</tt>
+to create and manage the bins.
+ 
+<p><h4><a name="sec:sim-lib:available-histogram-strategies"/>7.8.2.6 Available Histogram Strategies<a class="headerlink" href="#sec:sim-lib:available-histogram-strategies" title="Permalink to this headline">¶</a></h4>
+
+<p>The following histogram strategy classes exist.
+
+<p><tt><a href="../api/classomnetpp_1_1cFixedRangeHistogramStrategy.html">cFixedRangeHistogramStrategy</a></tt> sets up uniform bins over 
+a predetermined interval. The number of bins and the histogram mode 
+(integers or reals) also need to be configured. This strategy does 
+not use precollection, as all input for setting up the bins must be
+explicitly provided by the user.
+
+<p><tt><a href="../api/classomnetpp_1_1cDefaultHistogramStrategy.html">cDefaultHistogramStrategy</a></tt> is used by the default setup of <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt>.
+This strategy uses precollection to gather input information about the
+distribution before setting up the bins. Precollection is used to determine
+the initial histogram range and the histogram mode (integers vs. reals).
+In integers mode, bin edges will be whole numbers.
+
+<p>To keep up with distributions that change over time, this histogram strategy
+can auto-extend the histogram range by adding new bins as needed. It also
+performs bin merging when necessary, to keep the number of bins reasonably low.
+
+<p><tt><a href="../api/classomnetpp_1_1cAutoRangeHistogramStrategy.html">cAutoRangeHistogramStrategy</a></tt> is a generic, very configurable,
+precollection-based histogram strategy which creates uniform bins, and 
+creates quality histograms for practical distributions.
+
+<p>Several constraints and hints can be specified for setting up the bins: 
+range lower and/or upper endpoint, bin size, number of bins, 
+mode (integers vs. reals), and whether bin size rounding is to be used. 
+
+<p>This histogram strategy can auto-extend the histogram range by adding new
+bins at either end. One can also set up an upper limit to the number of
+histogram bins to prevent it from growing indefinitely. Bin merging can
+also be enabled: it will cause every two (or N) adjacent bins to be
+merged to reduce the number of bins if their number grows too high.
+
+<p>
+<h4><a name="sec:sim-lib:random-number-generation-from-distributions"/>7.8.2.7 Random Number Generation from Distributions<a class="headerlink" href="#sec:sim-lib:random-number-generation-from-distributions" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt>random()</tt> member function generates random
+numbers<!--random!numbers--> from the distribution stored by the
+object:
+
+<pre class="cpp">
+double rnd = histogram.random();
+</pre>
+<p>
+
+<p><h4><a name="sec:sim-lib:storing-and-loading-distributions"/>7.8.2.8 Storing and Loading Distributions<a class="headerlink" href="#sec:sim-lib:storing-and-loading-distributions" title="Permalink to this headline">¶</a></h4>
+
+<p>The statistic classes have <tt>loadFromFile()</tt> member functions
+that read the histogram data from a text file. If you need a custom
+distribution<!--distribution!custom--> that cannot be written (or it
+is inefficient) as a C++ function, you can describe it in histogram form
+stored in a text file, and use a histogram object with
+<tt>loadFromFile()</tt>.
+
+<p>You can also use <tt>saveToFile()</tt> that writes out the distribution
+collected by the histogram object:
+
+<pre class="cpp">
+FILE *f = fopen("histogram.dat","w");
+histogram.saveToFile(f); // save the distribution
+fclose(f);
+
+<a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a> restored;
+FILE *f2 = fopen("histogram.dat","r");
+restored.loadFromFile(f2); // load stored distribution
+fclose(f2);
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:psquare"/>7.8.3 <a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a><a class="headerlink" href="#sec:sim-lib:psquare" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a></tt> class implements the <i>P<sup>2</sup></i> algorithm
+described in [<a href="#bib-JCh85">JCh85</a>]. <i>P<sup>2</sup></i> is a heuristic algorithm 
+for dynamic calculation of the median and other quantiles. 
+The estimates are produced dynamically as the observations arrive. 
+The observations are not stored; therefore, the algorithm has 
+a very small and fixed storage requirement regardless of 
+the number of observations. The <i>P<sup>2</sup></i> algorithm operates 
+by adaptively shifting bin edges as observations arrive.
+
+<p><tt><a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a></tt> only needs the number of cells, for example 
+in the constructor:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a> psquare("endToEndDelay", 20);
+</pre>
+<p>
+Afterwards, observations can be added and the resulting histogram
+can be queried with the same <tt><a href="../api/classomnetpp_1_1cAbstractHistogram.html">cAbstractHistogram</a></tt> methods 
+as with <tt><a href="../api/classomnetpp_1_1cHistogram.html">cHistogram</a></tt>. 
+
+<p>
+<h3><a name="sec:sim-lib:ksplit"/>7.8.4 <a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a><a class="headerlink" href="#sec:sim-lib:ksplit" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:sim-lib:ksplit-purpose"/>7.8.4.1 Motivation<a class="headerlink" href="#sec:sim-lib:ksplit-purpose" title="Permalink to this headline">¶</a></h4>
+
+<p>The <i>k</i>-split algorithm is an on-line distribution
+estimation<!--distribution!online estimation--> method.  It was
+designed for on-line result collection in simulation programs.  The
+method was proposed by Varga and Fakhamzadeh in 1997. The primary
+advantage of <i>k</i>-split is that without having to store the
+observations, it gives a good estimate without requiring a-priori
+information about the distribution, including the sample size. The
+<i>k</i>-split algorithm can be extended to multi-dimensional
+distributions<!--distribution!multi-dimensional-->, but here we deal
+with the one-dimensional version only.
+
+<p>
+<h4><a name="sec:sim-lib:ksplit-algorithm"/>7.8.4.2 The k-split Algorithm<a class="headerlink" href="#sec:sim-lib:ksplit-algorithm" title="Permalink to this headline">¶</a></h4>
+
+<p>The <i>k-split</i> algorithm is an adaptive histogram-type estimate which
+maintains a good partitioning by doing cell splits. We start out with
+a histogram range <i>[x<sub>lo</sub>, x<sub>hi</sub>)</i> with <i>k</i> equal-sized histogram
+cells with observation counts <i>n<sub>1</sub>,n<sub>2</sub>, .. n<sub>k</sub></i>.  Each collected
+observation increments the corresponding observation count. When an
+observation count <i>n<sub>i</sub></i> reaches a <i>split threshold</i>, the cell
+is split into <i>k</i> smaller, equal-sized cells with observation counts
+<i>n<sub>i,1</sub>, n<sub>i,2</sub>, .. n<sub>i,k</sub></i> initialized to zero. The <i>n<sub>i</sub></i>
+observation count is remembered and is called the <i>mother
+  observation count</i> to the newly created cells. Further observations
+may cause cells to be split further (e.g. <i>n<sub>i,1,1</sub>,...n<sub>i,1,k</sub></i>
+etc.), thus creating a <i>k</i>-order tree of observation counts where
+leaves contain live counters that are actually incremented by new
+observations, and intermediate nodes contain mother observation counts
+for their children. If an observation falls outside the histogram
+range, the range is extended in a natural manner by inserting new
+level(s) at the top of the tree. The fundamental parameter to the
+algorithm is the split factor <i>k</i>. Experience has shown that <i>k=2</i>
+works best.
+
+<p>
+  <center>
+    <img src="simlib-ksplit1.svg">
+    <center><div class="caption"><i>Figure: Illustration of the k-split algorithm, <i>k=2</i>. The
+      numbers in boxes represent the observation count values</i></div></center>
+  </center>
+
+<p>
+
+<p>For density estimation, the total number of observations that
+fell into each cell of the partition has to be determined. For
+this purpose, mother observations in each internal node of the
+tree must be distributed among its child cells and propagated
+up to the leaves.
+
+<p>
+Let <i>n<sub>...,i</sub></i> be the (mother) observation count for a cell,
+<i>s<sub>...,i</sub></i> be the total observation count in a cell <i>n<sub>...,i</sub></i> plus
+the observation counts in all its sub-, sub-sub-, etc. cells), and
+<i>m<sub>...,i</sub></i> the mother observations propagated to the cell. We are
+interested in the <i>&ntilde;<sub>...,i</sub> = n<sub>...,i</sub> + m<sub>...,i</sub></i>
+estimated amount of observations in the tree nodes, especially in the
+leaves. In other words, if we have <i>&ntilde;<sub>...,i</sub></i> estimated
+observation amount in a cell, how to divide it to obtain
+<i>m<sub>...,i,1</sub>, m<sub>...,i,2</sub> .. m<sub>...,i,k</sub></i>
+that can be propagated to child cells. Naturally,
+<i>m<sub>...,i,1</sub> + m<sub>...,i,2</sub> + .. + m<sub>...,i,k</sub> = &ntilde;<sub>...,i</sub></i>.
+
+<p>
+Two natural distribution methods are even
+distribution<!--distribution!even--> (when
+<i>m<sub>...,i,1</sub> = m<sub>...,i,2</sub> = .. = m<sub>...,i,k</sub></i>) and proportional
+distribution<!--distribution!proportional--> (when
+<i>m<sub>...,i,1</sub> : m<sub>...,i,2</sub> : .. : m<sub>...,i,k</sub> = s<sub>...,i,1</sub> : s<sub>...,i,2</sub> : .. : s<sub>...,i,k</sub></i>).
+Even distribution is optimal when the
+<i>s<sub>...,i,j</sub></i> values are very small, and proportional distribution is
+good when the <i>s<sub>...,i,j</sub></i> values are large compared to
+<i>m<sub>...,i,j</sub></i>. In practice, a linear combination of them seems
+appropriate, where <i>&lambda;=0</i> means even and <i>&lambda;=1</i> means
+proportional distribution:
+
+<p>
+<i>m<sub>..,i,j</sub> = (1-&lambda;)&ntilde;<sub>..,i</sub>/k + &lambda; &ntilde;<sub>..,i</sub> s<sub>...,i,j</sub> / s<sub>..,i</sub></i>
+where <i>&lambda; is in [0,1]</i>
+
+<p>
+  <center>
+    <img src="simlib-ksplit2.svg">
+    <center><div class="caption"><i>Figure: Density estimation from the k-split cell tree. We
+      assume <i>&lambda;=0</i>, i.e. we distribute mother observations
+      evenly.</i></div></center>
+  </center>
+
+<p>
+
+Note that while <i>n<sub>...,i</sub></i> are integers, <i>m<sub>...,i</sub></i> and thus
+<i>&ntilde;<sub>...,i</sub></i> are typically real numbers. The histogram estimate
+calculated from <i>k</i>-split is not exact, because the frequency
+counts calculated in the above manner contain a degree of estimation
+themselves. This introduces a certain <i>cell division error</i>;
+the <i>&lambda;</i> parameter should be selected so that it minimizes that
+error. It has been shown that the cell division error can
+be reduced to a more-than-acceptable small value.<br>
+Strictly speaking, the <i>k</i>-split algorithm is semi-online,
+because its needs some observations to set up the initial histogram
+range.  Because of the range extension and cell split
+capabilities, the algorithm is not very sensitive to the choice of the
+initial range, so very few observations are sufficient for range
+estimation (say <i>N<sub>pre</sub>=10</i>). Thus we can regard <i>k</i>-split as
+an on-line method.
+
+<p><i>K</i>-split can also be used in semi-online mode, when the
+algorithm is only used to create an optimal partition from a larger
+number of <i>N<sub>pre</sub></i> observations. When the partition has been created,
+the observation counts are cleared and the <i>N<sub>pre</sub></i> observations are
+fed into <i>k</i>-split once again. This way all mother (non-leaf)
+observation counts will be zero and the cell division error is
+eliminated. It has been shown that the partition created by
+<i>k</i>-split can be better than both the equi-distant and the
+equal-frequency partition.
+
+<p>OMNeT++ contains an implementation of the <i>k</i>-split algorithm,
+the <tt><a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a></tt> class.
+
+<p>
+<h4><a name="sec:sim-lib:cksplit-class"/>7.8.4.3 The <a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a> Class<a class="headerlink" href="#sec:sim-lib:cksplit-class" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a></tt> class is an implementation of the <i>k-split</i>
+method. It is a subclass of <tt><a href="../api/classomnetpp_1_1cAbstractHistogram.html">cAbstractHistogram</a></tt>, so configuring,
+adding observations and querying histogram cells is done the same way as
+with other histogram classes.
+
+<p>Specific member functions allow one to fine-tune the <i>k</i>-split
+algorithm. <tt>setCritFunc()</tt> and <tt>setDivFunc()</tt> let one replace
+the split criteria and the cell division function, respectively.
+<tt>setRangeExtension()</tt> lets one enable/disable range extension. (If
+range extension is disabled, out-of-range observations will simply be
+counted as underflows or overflows.)
+
+<p>The class also allows one to access the <i>k</i>-split data structure,
+directly, via methods like <tt>getTreeDepth()</tt>, <tt>getRootGrid()</tt>,
+<tt>getGrid(i)</tt>, and others.
+
+<p>
+
+<h2><a name="sec:sim-lib:result-recording"/>7.9 Recording Simulation Results<a class="headerlink" href="#sec:sim-lib:result-recording" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:sim-lib:coutvector"/>7.9.1 Output Vectors: <a href="../api/classomnetpp_1_1cOutVector.html">cOutVector</a><a class="headerlink" href="#sec:sim-lib:coutvector" title="Permalink to this headline">¶</a></h3>
+
+<p>Objects of type <tt><a href="../api/classomnetpp_1_1cOutVector.html">cOutVector</a></tt> are responsible for writing time series
+data (referred to as <i>output vectors</i>) to a file. The <tt>record()</tt>
+method is used to output a value (or a value pair) with a timestamp.
+The object name will serve as the name of the output vector.
+
+<p>The vector name can be passed in the constructor,
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cOutVector.html">cOutVector</a> responseTimeVec("response time");
+</pre>
+<p>
+but in the usual arrangement you'd make the <tt><a href="../api/classomnetpp_1_1cOutVector.html">cOutVector</a></tt> a member
+of the module class and set the name in <tt>initialize()</tt>. You'd
+record values from <tt>handleMessage()</tt> or from a function called from
+<tt>handleMessage()</tt>.
+
+<p>The following example is a <tt>Sink</tt> module which records the lifetime
+of every message that arrives to it.
+
+<pre class="cpp">
+class Sink : public <a href="../api/classomnetpp_1_1cSimpleModule.html">cSimpleModule</a>
+{
+  protected:
+    <a href="../api/classomnetpp_1_1cOutVector.html">cOutVector</a> endToEndDelayVec;
+
+    virtual void initialize();
+    virtual void handleMessage(<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *msg);
+};
+
+Define_Module(Sink);
+
+void Sink::initialize()
+{
+    endToEndDelayVec.setName("End-to-End Delay");
+}
+
+void Sink::handleMessage(<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *msg)
+{
+    simtime_t eed = simTime() - msg-&gt;getCreationTime();
+    endToEndDelayVec.record(eed);
+    delete msg;
+}
+</pre>
+<p>
+There is also a <tt>recordWithTimestamp()</tt> method, to make it
+possible to record values into output vectors with a timestamp other than
+<tt>simTime()</tt>. Increasing timestamp order is still enforced though.
+
+<p>All <tt><a href="../api/classomnetpp_1_1cOutVector.html">cOutVector</a></tt> objects write to a single <i>output vector file</i>
+that has a file extension <tt>.vec</tt>.
+  <br><ul><font size=-1>[A <tt>.vci</tt> file is also created, but it is just an index for
+  the <tt>.vec</tt> file and does not contain any new information. The IDE
+  re-creates the <tt>.vci</tt> file if it gets lost.]</font></ul>
+The format and processing of output vector files is described in section
+<a href="chap12.html#cha:ana-sim">[12]</a>.
+
+<p>You can configure output vectors from <tt>omnetpp.ini</tt>:
+you can disable individual vectors, or limit recording to certain
+simulation time intervals (see sections
+<a href="chap12.html#sec:ana-sim:disabling-result-items">[12.2.2]</a>,
+<a href="chap12.html#sec:ana-sim:vector-recording-intervals">[12.2.5]</a>).
+
+<p>If the output vector object is disabled or the simulation time is
+outside the specified interval, <tt>record()</tt> doesn't write
+anything to the output file. However, if you have a Tkenv or Qtenv inspector
+window open for the output vector object<!--output!vector object-->,
+the values will be displayed there, regardless of the state of the
+output vector object.
+
+<p>
+
+<p><h3><a name="sec:sim-lib:output-scalars"/>7.9.2 Output Scalars<a class="headerlink" href="#sec:sim-lib:output-scalars" title="Permalink to this headline">¶</a></h3>
+
+<p>While output vectors are to record time series data and thus they
+typically record a large volume of data during a simulation run,
+output scalars<!--output!scalars--> are supposed to record a single
+value per simulation run. You can use output scalars
+
+<p><ul>
+<li> to record summary data at the end of the simulation run
+<li> to do several runs with different parameter settings/random seed
+    and determine the dependence of some measures on the parameter
+    settings. For example, multiple runs and output scalars are the
+    way to produce <i>Throughput vs. Offered Load</i> plots.
+</ul>
+
+<p>Output scalars are recorded with the <tt>record()</tt> method of
+<tt><a href="../api/classomnetpp_1_1cSimpleModule.html">cSimpleModule</a></tt>, and you will usually want to insert this code
+into the <tt>finish()</tt> function. An example:
+
+<pre class="cpp">
+void Transmitter::finish()
+{
+    double avgThroughput = totalBits / simTime();
+    recordScalar("Average throughput", avgThroughput);
+}
+</pre>
+<p>
+You can record whole statistic objects by calling their <tt>record()</tt>
+methods, declared as part of <tt><a href="../api/classomnetpp_1_1cStatistic.html">cStatistic</a></tt>. In the following example
+we create a <tt>Sink</tt> module which calculates the mean, standard
+deviation, minimum and maximum values of a variable, and records them at the
+end of the simulation.
+
+<pre class="cpp">
+class Sink : public <a href="../api/classomnetpp_1_1cSimpleModule.html">cSimpleModule</a>
+{
+  protected:
+    <a href="../api/classomnetpp_1_1cStdDev.html">cStdDev</a> eedStats;
+
+    virtual void initialize();
+    virtual void handleMessage(<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *msg);
+    virtual void finish();
+};
+
+Define_Module(Sink);
+
+void Sink::initialize()
+{
+    eedStats.setName("End-to-End Delay");
+}
+
+void Sink::handleMessage(<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *msg)
+{
+    simtime_t eed = simTime() - msg-&gt;getCreationTime();
+    eedStats.collect(eed);
+    delete msg;
+}
+
+void Sink::finish()
+{
+    recordScalar("Simulation duration", simTime());
+    eedStats.record();
+}
+</pre>
+<p>
+The above calls record the data into an <i>output scalar file</i>,
+a line-oriented text file that has the file extension <tt>.sca</tt>.
+The format and processing of output vector files is described in chapter
+<a href="chap12.html#cha:ana-sim">[12]</a>.
+
+<p>
+
+<p><h2><a name="sec:sim-lib:watches-and-snapshots"/>7.10 Watches and Snapshots<a class="headerlink" href="#sec:sim-lib:watches-and-snapshots" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:sim-lib:basic-watches"/>7.10.1 Basic Watches<a class="headerlink" href="#sec:sim-lib:basic-watches" title="Permalink to this headline">¶</a></h3>
+
+<p>Unfortunately, variables of type <tt>int</tt>, <tt>long</tt>, <tt>double</tt>
+do not show up by default in Tkenv/Qtenv; neither do STL classes
+(<tt>std::string</tt>, <tt>std::vector</tt>, etc.) or your own structs and
+classes. This is because the simulation kernel, being a library, knows
+nothing about types and variables in your source code.
+
+<p>OMNeT++ provides <tt>WATCH()</tt> and a set of other macros to
+allow variables to be inspectable in Tkenv/Qtenv and to be output into the snapshot
+file<!--snapshot file-->. <tt>WATCH()</tt> macros are usually placed into
+<tt>initialize()</tt> (to watch instance variables) or to the top of the
+<tt>activity()</tt> function (to watch its local variables); the point being
+that they should only be executed once.
+
+<pre class="cpp">
+long packetsSent;
+double idleTime;
+
+WATCH(packetsSent);
+WATCH(idleTime);
+</pre>
+<p>
+Of course, members of classes and structs can also be watched:
+
+<pre class="cpp">
+WATCH(config.maxRetries);
+</pre>
+<p>
+The Tkenv and Qtenv runtime environments let you inspect and also change
+the values of inspected variables.
+
+<p>The <tt>WATCH()</tt> macro can be used with any type that has a
+stream output operator (<tt>operator&lt;&lt;</tt>) defined. By default,
+this includes all primitive types and <tt>std::string</tt>, but since
+you can write <tt>operator&lt;&lt;</tt> for your classes/structs and basically
+any type, <tt>WATCH()</tt> can be used with anything. The only limitation
+is that since the output should more or less fit on single line, the
+amount of information that can be conveniently displayed is limited.
+
+<p>An example stream output operator:
+
+<pre class="cpp">
+std::ostream& operator&lt;&lt;(std::ostream& os, const ClientInfo& cli)
+{
+    os &lt;&lt; "addr=" &lt;&lt; cli.clientAddr &lt;&lt; "  port=" &lt;&lt; cli.clientPort; // no endl!
+    return os;
+}
+</pre>
+<p>
+And the <tt>WATCH()</tt> line:
+
+<pre class="cpp">
+WATCH(currentClientInfo);
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:read-write-watches"/>7.10.2 Read-write Watches<a class="headerlink" href="#sec:sim-lib:read-write-watches" title="Permalink to this headline">¶</a></h3>
+
+<p>Watches for primitive types and <tt>std::string</tt> allow for changing
+the value from the GUI as well, but for other types you need to explicitly
+add support for that. What you need to do is define a stream input
+operator (<tt>operator&gt;&gt;</tt>) and use the <tt>WATCH_RW()</tt> macro instead of
+<tt>WATCH()</tt>.
+
+<p>The stream input operator:
+
+<pre class="cpp">
+std::ostream& operator&gt;&gt;(std::istream& is, ClientInfo& cli)
+{
+    // read a line from "is" and parse its contents into "cli"
+    return is;
+}
+</pre>
+<p>
+And the <tt>WATCH_RW()</tt> line:
+
+<pre class="cpp">
+WATCH_RW(currentClientInfo);
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:structured-watches"/>7.10.3 Structured Watches<a class="headerlink" href="#sec:sim-lib:structured-watches" title="Permalink to this headline">¶</a></h3>
+
+<p><tt>WATCH()</tt> and <tt>WATCH_RW()</tt> are basic watches; they allow one
+line of (unstructured) text to be displayed. However, if you have a
+data structure generated from message definitions (see Chapter <a href="chap5.html#cha:messages">[5]</a>),
+then there is a better approach. The message compiler automatically generates
+meta-information describing individual fields of the class or struct,
+which makes it possible to display the contents on field level.
+
+<p>The <tt>WATCH</tt> macros to be used for this purpose are <tt>WATCH_OBJ()</tt>
+and <tt>WATCH_PTR()</tt>. Both expect the object to be subclassed from
+<tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>; <tt>WATCH_OBJ()</tt> expects a reference to such class,
+and <tt>WATCH_PTR()</tt> expects a pointer variable.
+
+<pre class="cpp">
+ExtensionHeader hdr;
+ExtensionHeader *hdrPtr;
+...
+WATCH_OBJ(hdr);
+WATCH_PTR(hdrPtr);
+</pre>
+<p>
+CAUTION: With <tt>WATCH_PTR()</tt>, the pointer variable must point to a valid
+object or be <tt>nullptr</tt> at all times, otherwise the GUI may crash
+while trying to display the object. This practically means that
+the pointer should be initialized to <tt>nullptr</tt> even if not used, and
+should be set to <tt>nullptr</tt> when the object to which it points is deleted.
+
+<pre class="cpp">
+delete watchedPtr;
+watchedPtr = nullptr;  // set to nullptr when object gets deleted
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:stl-watches"/>7.10.4 STL Watches<a class="headerlink" href="#sec:sim-lib:stl-watches" title="Permalink to this headline">¶</a></h3>
+
+<p>The standard C++ container classes (<tt>vector</tt>, <tt>map</tt>, <tt>set</tt>, etc)
+also have structured watches, available via the following macros:
+
+<p><tt>WATCH_VECTOR()</tt>, <tt>WATCH_PTRVECTOR()</tt>,
+<tt>WATCH_LIST()</tt>, <tt>WATCH_PTRLIST()</tt>,
+<tt>WATCH_SET()</tt>, <tt>WATCH_PTRSET()</tt>,
+<tt>WATCH_MAP()</tt>, <tt>WATCH_PTRMAP()</tt>.
+
+<p>The <tt>PTR</tt>-less versions expect the data items ("T") to have
+stream output operators (<tt>operator &lt;&lt;</tt>), because that is how
+they will display them. The <tt>PTR</tt> versions assume that
+data items are pointers to some type which has <tt>operator &lt;&lt;</tt>.
+<tt>WATCH_PTRMAP()</tt> assumes that only the value type (&#8220;second&#8221;)
+is a pointer, the key type (&#8220;first&#8221;) is not. (If you happen to use
+pointers as key, then define <tt>operator &lt;&lt;</tt> for the pointer type
+itself.)
+
+<p>Examples:
+
+<pre class="cpp">
+std::vector&lt;int&gt; intvec;
+WATCH_VECTOR(intvec);
+
+std::map&lt;std::string,Command*&gt; commandMap;
+WATCH_PTRMAP(commandMap);
+</pre>
+<p>
+
+<p>
+<h3><a name="sec:sim-lib:snapshots"/>7.10.5 Snapshots<a class="headerlink" href="#sec:sim-lib:snapshots" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt>snapshot()</tt> function outputs textual information about all
+or selected objects of the simulation (including the objects created
+in module functions by the user) into the snapshot file<!--snapshot file-->.
+
+<pre class="cpp">
+bool snapshot(<a href="../api/classomnetpp_1_1cObject.html">cObject</a> *obj=nullptr, const char *label=nullptr);
+</pre>
+<p>
+The function can be called from module functions, like this:
+
+<pre class="cpp">
+snapshot();     // dump the network
+snapshot(this); // dump this simple module and all its objects
+snapshot(getSimulation()-&gt;getFES()); // dump the future events set
+</pre>
+<p>
+<tt>snapshot()</tt> will append to the end of the snapshot file. The snapshot
+file name has an extension of <tt>.sna</tt>.
+
+<p>The snapshot file output is detailed enough to be used for debugging
+the simulation: by regularly calling <tt>snapshot()</tt>, one can trace
+how the values of variables, objects changed over the simulation.
+The arguments: label is a string that will appear in the output
+file; obj is the object whose inside is of interest. By default,
+the whole simulation (all modules etc) will be written out.
+
+<p>If you run the simulation with Tkenv or Qtenv, you can also create a
+snapshot from the menu.
+
+<p>An example snapshot file (some abbreviations have been applied):
+
+<pre class="filelisting">
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;snapshot object="simulation" label="Long queue" simtime="9.038229311343"
+network="FifoNet"&gt;
+  &lt;object class="<a href="../api/classomnetpp_1_1cSimulation.html">cSimulation</a>" fullpath="simulation"&gt;
+    &lt;info&gt;&lt;/info&gt;
+    &lt;object class="<a href="../api/classomnetpp_1_1cModule.html">cModule</a>" fullpath="FifoNet"&gt;
+      &lt;info&gt;id=1&lt;/info&gt;
+      &lt;object class="fifo::Source" fullpath="FifoNet.gen"&gt;
+        &lt;info&gt;id=2&lt;/info&gt;
+        &lt;object class="<a href="../api/classomnetpp_1_1cPar.html">cPar</a>" fullpath="FifoNet.gen.sendIaTime"&gt;
+          &lt;info&gt;exponential(0.01s)&lt;/info&gt;
+        &lt;/object&gt;
+        &lt;object class="<a href="../api/classomnetpp_1_1cGate.html">cGate</a>" fullpath="FifoNet.gen.out"&gt;
+          &lt;info&gt;--&gt; fifo.in&lt;/info&gt;
+        &lt;/object&gt;
+      &lt;/object&gt;
+      &lt;object class="fifo::Fifo" fullpath="FifoNet.fifo"&gt;
+        &lt;info&gt;id=3&lt;/info&gt;
+        &lt;object class="<a href="../api/classomnetpp_1_1cPar.html">cPar</a>" fullpath="FifoNet.fifo.serviceTime"&gt;
+          &lt;info&gt;0.01&lt;/info&gt;
+        &lt;/object&gt;
+        &lt;object class="<a href="../api/classomnetpp_1_1cGate.html">cGate</a>" fullpath="FifoNet.fifo.in"&gt;
+          &lt;info&gt;&lt;-- gen.out&lt;/info&gt;
+        &lt;/object&gt;
+        &lt;object class="<a href="../api/classomnetpp_1_1cGate.html">cGate</a>" fullpath="FifoNet.fifo.out"&gt;
+          &lt;info&gt;--&gt; sink.in&lt;/info&gt;
+        &lt;/object&gt;
+        &lt;object class="<a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>" fullpath="FifoNet.fifo.queue"&gt;
+          &lt;info&gt;length=13&lt;/info&gt;
+          &lt;object class="<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>" fullpath="FifoNet.fifo.queue.job"&gt;
+            &lt;info&gt;src=FifoNet.gen (id=2)  dest=FifoNet.fifo (id=3)&lt;/info&gt;
+          &lt;/object&gt;
+          &lt;object class="<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>" fullpath="FifoNet.fifo.queue.job"&gt;
+            &lt;info&gt;src=FifoNet.gen (id=2)  dest=FifoNet.fifo (id=3)&lt;/info&gt;
+          &lt;/object&gt;
+        &lt;/object&gt;
+      &lt;object class="fifo::Sink" fullpath="FifoNet.sink"&gt;
+        &lt;info&gt;id=4&lt;/info&gt;
+        &lt;object class="<a href="../api/classomnetpp_1_1cGate.html">cGate</a>" fullpath="FifoNet.sink.in"&gt;
+          &lt;info&gt;&lt;-- fifo.out&lt;/info&gt;
+        &lt;/object&gt;
+      &lt;/object&gt;
+    &lt;/object&gt;
+    &lt;object class="<a href="../api/classomnetpp_1_1cEventHeap.html">cEventHeap</a>" fullpath="simulation.scheduled-events"&gt;
+      &lt;info&gt;length=3&lt;/info&gt;
+      &lt;object class="<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>" fullpath="simulation.scheduled-events.job"&gt;
+        &lt;info&gt;src=FifoNet.fifo (id=3)  dest=FifoNet.sink (id=4)&lt;/info&gt;
+      &lt;/object&gt;
+      &lt;object class="<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>" fullpath="...sendMessageEvent"&gt;
+        &lt;info&gt;at T=9.0464.., in dt=0.00817..; selfmsg for FifoNet.gen (id=2)&lt;/info&gt;
+      &lt;/object&gt;
+      &lt;object class="<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>" fullpath="...end-service"&gt;
+        &lt;info&gt;at T=9.0482.., in dt=0.01; selfmsg for FifoNet.fifo (id=3)&lt;/info&gt;
+      &lt;/object&gt;
+    &lt;/object&gt;
+  &lt;/object&gt;
+&lt;/snapshot&gt;
+
+</pre>
+<p>
+
+<p>
+
+
+<p>
+
+<p>
+<h3><a name="sec:sim-lib:getting-coroutine-stack-usage"/>7.10.6 Getting Coroutine Stack Usage<a class="headerlink" href="#sec:sim-lib:getting-coroutine-stack-usage" title="Permalink to this headline">¶</a></h3>
+
+<p>It is important to choose the correct stack size for
+modules<!--module!stack size--><!--stack!size-->.  If the stack is
+too large, it unnecessarily consumes memory; if it is too small, stack
+violation occurs.
+
+<p>OMNeT++ contains a mechanism that detects stack
+overflows<!--stack!overflow-->. It checks the intactness of a
+predefined byte pattern (<tt>0xdeadbeef</tt>) at the stack boundary,
+and reports &#8220;stack violation&#8221;<!--stack!violation--> if it was
+overwritten. The mechanism usually works fine, but occasionally it can
+be fooled by large -- and not fully used -- local variables (e.g. char
+buffer[256]): if the byte pattern happens to fall in the middle of
+such a local variable, it may be preserved intact and OMNeT++ does not
+detect the stack violation.
+
+<p>To be able to make a good guess about stack size, you can use
+the <tt>getStackUsage()</tt> call which tells you how much stack the module
+actually uses. It is most conveniently called from <tt>finish()</tt>:
+
+<pre class="cpp">
+void FooModule::finish()
+{
+  EV &lt;&lt; getStackUsage() &lt;&lt; " bytes of stack used\n";
+}
+</pre>
+<p>
+
+<p>The value includes the extra stack added by the user interface library
+(see <i>extraStackforEnvir</i><!--extraStackforEnvir--> in
+envir/omnetapp.h), which is currently 8K for Cmdenv and at least 16K
+for Tkenv.
+  <br><ul><font size=-1>[The actual value is platform-dependent.]</font></ul>
+
+<p><tt>getStackUsage()</tt> also works by checking the existence of predefined
+byte patterns in the stack area, so it is also subject to the above
+effect with local variables.
+
+<p>
+<h2><a name="sec:sim-lib:defining-ned-functions"/>7.11 Defining New NED Functions<a class="headerlink" href="#sec:sim-lib:defining-ned-functions" title="Permalink to this headline">¶</a></h2>
+
+<p>It is possible to extend the NED language with new functions beyond the
+built-in ones. New functions are implemented in C++, and then compiled into
+the simulation model. When a simulation program starts up, the new
+functions are registered in the NED runtime, and become available for use
+in NED and ini files.
+
+<p>There are two methods to define NED functions. The
+<tt>Define_NED_Function()</tt> macro is the more flexible, preferred method
+of the two. <tt>Define_NED_Math_Function()</tt> is the older one, and it
+supports only certain cases. Both macros have several variants.
+  <br><ul><font size=-1>[Before OMNeT++ 4.2, <tt>Define_NED_Math_Function()</tt> was
+  called <tt>Define_Function()</tt>.]</font></ul>
+
+<p><h3><a name="sec:sim-lib:define-ned-function-macro"/>7.11.1 Define_NED_Function()<a class="headerlink" href="#sec:sim-lib:define-ned-function-macro" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt>Define_NED_Function()</tt> macro lets you define new functions that
+can accept arguments of various data types (<tt>bool</tt>, <tt>double</tt>,
+<tt>string</tt>, etc.), supports optional arguments and also variable
+argument lists (variadic functions).
+
+<p>The macro has two variants:
+
+<pre class="cpp">
+Define_NED_Function(FUNCTION,SIGNATURE);
+Define_NED_Function2(FUNCTION,SIGNATURE,CATEGORY,DESCRIPTION);
+</pre>
+<p>
+The two variants are basically equivalent; the only difference is that the
+second one allows you to specify two more parameters, <tt>CATEGORY</tt> and
+<tt>DESCRIPTION</tt>. These two parameters expect human-readable strings that
+are displayed when listing the available NED functions.
+
+<p>The common parameters, <tt>FUNCTION</tt> and <tt>SIGNATURE</tt> are the important
+ones. <tt>FUNCTION</tt> is the name of (or pointer to) the C++ function that
+implements the NED function, and <tt>SIGNATURE</tt> is the function signature
+as a string; it defines the name, argument types and return type of the NED
+function.
+
+<p>You can list the available NED functions by running <tt>opp_run</tt> or
+any simulation executable with the <tt>-h nedfunctions</tt> option.
+The result will be similar to what you can see in Appendix
+<a href="chap22.html#cha:ned-functions">[22]</a>.
+
+<pre class="commandline">
+$ opp_run -h nedfunctions
+OMNeT++ Discrete Event Simulation...
+Functions that can be used in NED expressions and in omnetpp.ini:
+
+ Category "conversion":
+  double : double double(any x)
+    Converts x to double, and returns the result. A boolean argument becomes
+    0 or 1; a string is interpreted as number; an XML argument causes an error.
+ ...
+</pre>
+<p>
+Seeing the above output, it should now be obvious what the <tt>CATEGORY</tt>
+and <tt>DESCRIPTION</tt> macro arguments are for. OMNeT++ uses the following
+category names: <tt>"conversion"</tt>, <tt>"math"</tt>, <tt>"misc"</tt>,
+<tt>"ned"</tt>, <tt>"random/continuous"</tt>, <tt>"random/discrete"</tt>,
+<tt>"strings"</tt>, <tt>"units"</tt>, <tt>"xml"</tt>. You can use these category names
+for your own functions as well, when appropriate.
+
+<p>
+<h4><a name="sec:sim-lib:ned-function-signature"/>7.11.1.1 The Signature<a class="headerlink" href="#sec:sim-lib:ned-function-signature" title="Permalink to this headline">¶</a></h4>
+
+<p>The signature string has the following syntax:
+
+<p><pre class="verbatim">
+<i>returntype functionname(argtype1 argname1, argtype2 argname2, ...)</i>
+</pre>
+
+<p>The <i>functionname</i> part defines the name of the NED function, and it
+must meet the syntactical requirements for NED identifiers (start with a
+letter or underscore, not be a reserved NED keyword, etc.)
+
+<p>The argument types and return type can be one of the following:
+<b><tt>bool</tt></b>, <b><tt>int</tt></b> (maps to C/C++ <tt>long</tt>),
+<b><tt>double</tt></b>, <b><tt>quantity</tt></b>, <b><tt>string</tt></b>, <b><tt>xml</tt></b>
+or <b><tt>any</tt></b>; that is, any NED parameter type plus <b><tt>quantity</tt></b>
+and <b><tt>any</tt></b>. <b><tt>quantity</tt></b> means <i>double with an
+optional measurement unit</i> (<b><tt>double</tt></b> and <b><tt>int</tt></b> only
+accept dimensionless numbers), and <b><tt>any</tt></b> stands for any type. The
+argument names are presently ignored.
+
+<p>To make arguments optional, append a question mark to the argument name.
+Like in C++, optional arguments may only occur at the end of the argument
+list, i.e. all arguments after an optional argument must also be optional.
+The signature string does not have syntax for supplying default values for
+optional arguments; that is, default values have to be built into the C++
+code that implements the NED function. To let the NED function accept any
+number of additional arguments of arbitrary types, add an ellipsis
+(<tt>...</tt>) to the signature as the last argument.
+
+<p>Some examples:
+
+<pre class="cpp">
+"int factorial(int n)"
+"bool isprime(int n)"
+"double sin(double x)"
+"string repeat(string what, int times)"
+"quantity uniform(quantity a, quantity b, long rng?)"
+"any choose(int index, ...)"
+</pre>
+<p>
+The first three examples define NED functions with the names <tt>factorial</tt>,
+<tt>isprime</tt> and <tt>sin</tt>, with the obvious meanings. The fourth example
+can be the signature for a function that repeats a string <i>n</i> times, and
+returns the concatenated result. The fifth example is the signature of the
+existing <tt>uniform()</tt> NED function; it accepts numbers both with and without
+measurement units (of course, when invoked with measurement units, both <tt>a</tt>
+and <tt>b</tt> must have one, and the two must be compatible -- this should be checked
+by the C++ implementation). <tt>uniform()</tt> also accepts an optional third argument,
+an RNG index. The sixth example can be the signature of a <tt>choose()</tt>
+NED function that accepts an integer plus any number of additional arguments
+of any type, and returns the <i>index</i>th one among them.
+
+<p><h4><a name="sec:sim-lib:implementing-ned-function"/>7.11.1.2 Implementing the NED Function<a class="headerlink" href="#sec:sim-lib:implementing-ned-function" title="Permalink to this headline">¶</a></h4>
+
+<p>The C++ function that implements the NED function must have the following
+signature, as defined by the <tt>NEDFunction</tt> typedef:
+
+<pre class="cpp">
+cNEDValue function(<a href="../api/classomnetpp_1_1cComponent.html">cComponent</a> *context, cNEDValue argv[], int argc);
+</pre>
+<p>
+As you can see, the function accepts an array of <tt>cNEDValue</tt>
+objects, and returns a <tt>cNEDValue</tt>; the <i>argc-argv</i> style
+argument list should be familiar to you from the declaration of the C/C++
+<tt>main()</tt> function. <tt>cNEDValue</tt> is a class that is used during
+the evaluation of NED expressions, and represents a value together with its
+type.  The <tt>context</tt> argument contains the module or channel in the
+context of which the NED expression is being evaluated; it is useful for
+implementing NED functions like <tt>getParentModuleIndex()</tt>.
+
+<p>The function implementation does not need to worry too much about checking
+the number and types of the incoming arguments, because the NED expression
+evaluator already does that: inside the function you can be sure that the
+number and types of arguments correspond to the function signature string.
+Thus, <tt>argc</tt> is mostly useful only if you have optional arguments or a
+variable argument list. The NED expression evaluator also checks that the
+value you return from the function corresponds to the signature.
+
+<p><tt>cNEDValue</tt> can store all the needed data types (<tt>bool</tt>,
+<tt>double</tt>, <tt>string</tt>, etc.), and is equipped with the functions
+necessary to conveniently read and manipulate the stored value. The value can
+be read via functions like <tt>boolValue()</tt>, <tt>longValue()</tt>,
+<tt>doubleValue()</tt>, <tt>stringValue()</tt> (returns <tt>const char *</tt>),
+<tt>stdstringValue()</tt> (returns <tt>const std::string&amp;</tt>) and
+<tt>xmlValue()</tt> (returns <tt><a href="../api/classomnetpp_1_1cXMLElement.html">cXMLElement</a>*</tt>), or by simply casting the
+object to the desired data type, making use of the provided typecast
+operators. Invoking a getter or typecast operator that does not match the
+stored data type will result in a runtime error. For setting the stored
+value, <tt>cNEDValue</tt> provides a number of overloaded <tt>set()</tt>
+functions, assignment operators and constructors.
+
+<p>Further <tt>cNEDValue</tt> member functions provide access to the stored
+data type; yet other functions are associated with handling quantities,
+i.e. doubles with measurement units. There are member functions for getting
+and setting the number part and the measurement unit part separately; for
+setting the two components together; and for performing unit conversion.
+
+<p>Equipped with the above information, we can already write a simple NED function
+that returns the length of a string:
+
+<pre class="cpp">
+static cNEDValue ned_strlen(<a href="../api/classomnetpp_1_1cComponent.html">cComponent</a> *context, cNEDValue argv[], int argc)
+{
+    return (long)argv[0].stdstringValue().size();
+}
+
+Define_NED_Function(ned_strlen, "int length(string s)");
+</pre>
+<p>
+Note that since <tt>Define_NED_Function()</tt> expects the C++ function to
+be already declared, we place the function implementation in front of the
+<tt>Define_NED_Function()</tt> line. We also declare the function to be
+<tt>static</tt>, because its name doesn't need to be visible for the linker.
+In the function body, we use <tt>std::string</tt>'s <tt>size()</tt> method to
+obtain the length of the string, and cast the result to <tt>long</tt>; the C++
+compiler will convert that into a <tt>cNEDValue</tt> using <tt>cNEDValue</tt>'s
+<tt>long</tt> constructor. Note that the <b><tt>int</tt></b> keyword in the signature
+maps to the C++ type <tt>long</tt>.
+
+<p>The following example defines a <tt>choose()</tt> NED function that returns
+its <i>k</i>th argument that follows the <tt>index</tt> (<i>k</i>) argument.
+
+<pre class="cpp">
+static cNEDValue ned_choose(<a href="../api/classomnetpp_1_1cComponent.html">cComponent</a> *context, cNEDValue argv[], int argc)
+{
+    int index = (int)argv[0];
+    if (index &lt; 0 || index &gt;= argc-1)
+        throw <a href="../api/classomnetpp_1_1cRuntimeError.html">cRuntimeError</a>("choose(): index %d is out of range", index);
+    return argv[index+1];
+}
+
+Define_NED_Function(ned_choose, "any choose(int index, ...)");
+</pre>
+<p>
+Here, the value of <tt>argv[0]</tt> is read using the typecast operator that
+maps to <tt>longValue()</tt>. (Note that if the value of the <tt>index</tt>
+argument does not fit into an <tt>int</tt>, the conversion will result
+in data loss!) The code also shows how to report errors (by throwing a
+<tt><a href="../api/classomnetpp_1_1cRuntimeError.html">cRuntimeError</a></tt>.)
+
+<p>The third example shows how the built-in <tt>uniform()</tt> NED function could
+be reimplemented by the user:
+
+<pre class="cpp">
+static cNEDValue ned_uniform(<a href="../api/classomnetpp_1_1cComponent.html">cComponent</a> *context, cNEDValue argv[], int argc)
+{
+    int rng = argc==3 ? (int)argv[2] : 0;
+    double argv1converted = argv[1].doubleValueInUnit(argv[0].getUnit());
+    double result = uniform((double)argv[0], argv1converted, rng);
+    return cNEDValue(result, argv[0].getUnit());
+    // or: argv[0].setPreservingUnit(result); return argv[0];
+}
+
+Define_NED_Function(ned_uniform, "quantity uniform(quantity a, quantity b, int rng?)");
+</pre>
+<p>
+The first line of the function body shows how to supply default values for
+optional arguments; for the <tt>rng</tt> argument in this case. The next line
+deals with unit conversion. This is necessary because the <tt>a</tt> and
+<tt>b</tt> arguments are both quantities and may come in with different
+measurement units. We use the <tt>doubleValueInUnit()</tt> function to
+obtain the numeric value of <tt>b</tt> in <tt>a</tt>'s measurement unit. If the
+two units are incompatible or only one of the parameters have a unit, an
+error will be raised. If neither parameters have a unit,
+<tt>doubleValueInUnit()</tt> simply returns the stored <tt>double</tt>. Then we
+call the <tt>uniform()</tt> C++ function to actually generate a random number,
+and return it in a temporary object with <tt>a</tt>'s measurement unit.
+Alternatively, we could have overwritten the numeric part of <tt>a</tt> with
+the result using <tt>setPreservingUnit()</tt>, and returned just that. If
+there is no measurement unit, <tt>getUnit()</tt> will return <tt>nullptr</tt>,
+which is understood by both <tt>doubleValueInUnit()</tt> and the
+<tt>cNEDValue</tt> constructor.
+
+<p><ul class="note"><b>NOTE</b><br>
+Note that it is OK to change the elements of the <tt>argv[]</tt> vector: they
+will be discarded (popped off the evaluation stack) by the NED expression
+evaluator anyway when your function returns.
+</ul>
+
+<p>
+<h4><a name="sec:sim-lib:cnedvalue-in-more-detail"/>7.11.1.3 cNEDValue In More Detail<a class="headerlink" href="#sec:sim-lib:cnedvalue-in-more-detail" title="Permalink to this headline">¶</a></h4>
+
+<p>In the previous section we have given an overview and demonstrated the basic
+use of the <tt>cNEDValue</tt> class; here we go into further details.
+
+<p>The stored data type can be obtained with the <tt>getType()</tt> function.
+It returns an enum (<tt>cNEDValue::Type</tt>) that has the following values:
+<tt>UNDEF</tt>, <tt>BOOL</tt>, <tt>DBL</tt>, <tt>STR</tt>, <tt>XML</tt>. <tt>UNDEF</tt> is
+synonymous with <i>unset</i>; the others have the obvious meanings. There
+is no separate <tt>QUANTITY</tt> type: quantities are also represented with
+the <tt>DBL</tt> type, which has an optional associated measurement unit. Note
+that <tt>LONG</tt> is also missing; the reason is that the NED expression
+evaluator currently (as of OMNeT++ 4.2) stores all numbers as <tt>double</tt>s.
+  <br><ul><font size=-1>[The IEEE <i>double</i>'s mantissa is 53 bits, so <tt>double</tt>
+  can accurately represent 32-bit integers, the usual size of <tt>long</tt> on
+  32-bit architectures. On 64-bit architectures the usual size of <tt>long</tt>
+  is 64 bits, so precision loss will occur when converting very large integers
+  to <tt>double</tt>. Note, however, that simulations that trigger this precision
+  loss would not be able to run on 32-bit architectures at all!]</font></ul>
+
+<p>The <tt>getTypeName()</tt> static function returns the string equivalent of
+a <tt>cNEDValue::Type</tt>. The utility functions <tt>isSet()</tt> and
+<tt>isNumeric()</tt> check that the type is (not) <tt>UNDEF</tt> and <tt>DBL</tt>,
+respectively.
+
+<pre class="cpp">
+cNEDValue value = 5.0;
+cNEDValue::Type type = value.getType(); // ==&gt; DBL
+EV &lt;&lt; cNEDValue::getTypeName(type) &lt;&lt; endl; // ==&gt; "double"
+</pre>
+<p>
+We have already seen that the <tt>DBL</tt> type serves both the
+<b><tt>double</tt></b> and <b><tt>quantity</tt></b> types of the NED function
+signature, by storing an optional measurement unit (a string)
+in addition to the <tt>double</tt> variable. A <tt>cNEDValue</tt> can be set
+to a quantity by creating it with a two-argument constructor that accepts
+a <tt>double</tt> and a <tt>const char *</tt> for unit, or by invoking a similar
+two-argument <tt>set()</tt> function. The measurement unit can be read with
+<tt>getUnit()</tt>, and overwritten with <tt>setUnit()</tt>. If you assign a
+<tt>double</tt> to a <tt>cNEDValue</tt> or invoke the one-argument
+<tt>set(double)</tt> method on it, that will clear the measurement unit. If you
+want to overwrite the number part but preserve the original unit, you need
+to use the <tt>setPreservingUnit(double)</tt> method.
+
+<p>There are several functions that perform unit conversion. The
+<tt>doubleValueInUnit()</tt> method accepts a measurement unit, and attempts
+to return the number in that unit. The <tt>convertTo()</tt> method also
+accepts a measurement unit, and tries to permanently convert the value to
+that unit; that is, if successful, it changes both the number and the
+measurement unit part of the object. The <tt>convertUnit()</tt> static
+<tt>cNEDValue</tt> member function accepts three arguments: a quantity as a
+<tt>double</tt> and a unit, and a target unit; and returns the number in the
+target unit. A <tt>parseQuantity()</tt> static member function parses
+a string that contains a quantity (e.g. <tt>"5min 48s"</tt>), and return
+both the numeric value and the measurement unit. Another version of
+<tt>parseQuantity()</tt> tries to return the value in a unit you specify.
+All functions raise an error if the unit conversion is not possible, e.g.
+due to incompatible units.
+
+<p>For performance reasons, <tt>setUnit()</tt>, <tt>convertTo()</tt> and all other
+functions that accept and store a measurement unit will only store the
+<tt>const char*</tt> pointer, but do <i>not</i> copy the string itself.
+Consequently, the passed measurement unit pointers must stay valid for at
+least the lifetime of the <tt>cNEDValue</tt> object, or even longer if the
+same pointer propagates to other <tt>cNEDValue</tt> objects. It is
+recommended that you only pass pointers that stay valid during the entire
+simulation. It is safe to use: (1) string constants from the code; (2) unit
+strings from other <tt>cNEDValue</tt>s; and (3) pooled strings e.g. from a
+<tt><a href="../api/classomnetpp_1_1cStringPool.html">cStringPool</a></tt> or from <tt>cNEDValue</tt>'s static <tt>getPooled()</tt>
+function.
+
+<p>Example code:
+
+<pre class="cpp">
+// manipulating the number and the measurement unit
+cNEDValue value(250,"ms");    // initialize to 250ms
+value = 300.0;                // ==&gt; 300 (clears the unit!)
+value.set(500,"ms");          // ==&gt; 500ms
+value.setUnit("s");           // ==&gt; 500s (overwrites the unit)
+value.setPreservingUnit(180); // ==&gt; 180s (overwrites the number)
+value.setUnit(nullptr);       // ==&gt; 180 (clears the unit)
+
+// unit conversion
+value.set(500, "ms");         // ==&gt; 500ms
+value.convertTo("s");         // ==&gt; 0.5s
+double us = value.doubleValueInUnit("us"); // ==&gt; 500000 (value is unchanged)
+double bps = cNEDValue::convertUnit(128, "kbps", "bps"); // ==&gt; 128000
+double ms = cNEDValue::convertUnit("2min 15.1s", "ms"); // ==&gt; 135100
+
+// getting persistent measurement unit strings
+const char *unit = argv[0].stringValue(); // cannot be trusted to persist
+value.setUnit(cNEDValue::getPooled(unit)); // use a persistent copy for setUnit()
+</pre>
+<p>
+
+<p><h3><a name="sec:sim-lib:define-ned-math-function"/>7.11.2 Define_NED_Math_Function()<a class="headerlink" href="#sec:sim-lib:define-ned-math-function" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt>Define_NED_Math_Function()</tt> macro lets you register a C/C++
+&#8220;mathematical&#8221; function as a NED function. The registered C/C++ function
+may take up to four <tt>double</tt> arguments, and must return a <tt>double</tt>;
+the NED signature will be the same. In other words, functions registered
+this way cannot accept any NED data type other than <tt>double</tt>; cannot
+return anything else than <tt>double</tt>; cannot accept or return values with
+measurement units; cannot have optional arguments or variable argument
+lists; and are restricted to four arguments at most. In exchange for these
+restrictions, the C++ implementation of the functions is a lot simpler.
+
+<p>Accepted function signatures for <tt>Define_NED_Math_Function()</tt>:
+
+<pre class="cpp">
+double f();
+double f(double);
+double f(double, double);
+double f(double, double, double);
+double f(double, double, double, double);
+</pre>
+<p>
+The simulation kernel uses <tt>Define_NED_Math_Function()</tt> to expose
+commonly used <tt>&lt;math.h&gt;</tt> functions in the NED language. Most <tt>&lt;math.h&gt;</tt>
+functions (<tt>sin()</tt>, <tt>cos()</tt>, <tt>fabs()</tt>, <tt>fmod()</tt>, etc.)
+can be directly registered without any need for wrapper code, because their
+signatures is already one of the accepted ones listed above.
+
+<p>The macro has the following variants:
+
+<pre class="cpp">
+Define_NED_Math_Function(NAME,ARGCOUNT);
+Define_NED_Math_Function2(NAME,FUNCTION,ARGCOUNT);
+Define_NED_Math_Function3(NAME,ARGCOUNT,CATEGORY,DESCRIPTION);
+Define_NED_Math_Function4(NAME,FUNCTION,ARGCOUNT,CATEGORY,DESCRIPTION);
+</pre>
+<p>
+All macros accept the <tt>NAME</tt> and <tt>ARGCOUNT</tt> parameters; they are
+the intended name of the NED function and the number of <tt>double</tt>
+arguments the function takes (0..3). <tt>NAME</tt> should be provided without
+quotation marks (they will be added inside the macro.) Two macros also
+accept a <tt>FUNCTION</tt> parameter, which is the name of (or pointer to) the
+implementation C/C++ function. The macros that don't have a <tt>FUNCTION</tt>
+parameter simply use the <tt>NAME</tt> parameter for that as well. The last
+two macros accept <tt>CATEGORY</tt> and <tt>DESCRIPTION</tt>, which have exactly
+the same role as with <tt>Define_NED_Function()</tt>.
+
+<p>Examples:
+
+<pre class="cpp">
+Define_NED_Math_Function3(sin, 1, "math", "Trigonometric function; see &lt;math.h&gt;");
+Define_NED_Math_Function3(cos, 1, "math", "Trigonometric function; see &lt;math.h&gt;");
+Define_NED_Math_Function3(pow, 2, "math", "Power-of function; see &lt;math.h&gt;");
+</pre>
+<p>
+
+<p>
+<h2><a name="sec:sim-lib:deriving-new-classes"/>7.12 Deriving New Classes<a class="headerlink" href="#sec:sim-lib:deriving-new-classes" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:sim-lib:cobject-or-not"/>7.12.1 <a href="../api/classomnetpp_1_1cObject.html">cObject</a> or Not?<a class="headerlink" href="#sec:sim-lib:cobject-or-not" title="Permalink to this headline">¶</a></h3>
+
+<p>If you plan to implement a completely new class (as opposed to
+subclassing something already present in OMNeT++), you have
+to ask yourself whether you want the new class to be based
+on <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> or not.
+Note that we are <i>not</i> saying you should always
+subclass from <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>.
+Both solutions have advantages and disadvantages, which you
+have to consider individually for each class.
+
+<p><tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> already carries (or provides a framework for)
+significant functionality that is either relevant to
+your particular purpose or not. Subclassing <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>
+generally means you have more code to write (as you <i>have to</i>
+redefine certain virtual functions and adhere to conventions)
+and your class will be a bit more heavy-weight.
+However, if you need to store your objects in OMNeT++ objects like <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>
+or you want to store OMNeT++ classes in your object,
+then you <i>must</i> subclass from <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>.
+  <br><ul><font size=-1>[For simplicity, in these sections &#8220;OMNeT++ object&#8221;
+  should be understood as &#8220;object of a class subclassed from
+  <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>&#8221;]</font></ul>
+
+<p>The most significant features of <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> are
+the name string (which has to be stored somewhere, so it has
+its overhead) and ownership management (see section
+<a href="chap7.html#sec:sim-lib:ownership-management">[7.13]</a>), which
+also provides advantages at some cost.
+
+<p>As a general rule, small <tt>struct</tt>-like classes like <tt>IPAddress</tt> or
+<tt>MACAddress</tt> are better <i>not</i> subclassed from <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>.
+If your class has at least one virtual member function, consider
+subclassing from <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>, which does not impose any
+extra cost because it doesn't have data members at all, only
+virtual functions.
+
+<p>
+<h3><a name="sec:sim-lib:cobject-virtual-methods"/>7.12.2 <a href="../api/classomnetpp_1_1cObject.html">cObject</a> Virtual Methods<a class="headerlink" href="#sec:sim-lib:cobject-virtual-methods" title="Permalink to this headline">¶</a></h3>
+
+<p>Most classes in the simulation class library are descendants of
+<tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>. When deriving a new class from <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>
+or a <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> descendant, one must redefine certain member
+functions so that objects of the new class can fully co-operate
+with the simulation library classes. A list of those methods is
+presented below.
+
+<p><ul class="note"><b>NOTE</b><br>
+You don't need to worry about the length of the list: most functions
+are not always required to implement. For example, <tt>forEachChild()</tt>
+is only important if the new class is a container.
+</ul>
+
+<p>The following methods <b>must</b> be implemented:
+
+<p><ul>
+  <li> <i>Constructor</i>. At least two constructors should be provided:
+        one that takes the object name string as <tt>const char *</tt>
+        (recommended by convention), and another one with no arguments
+        (must be present). The two are usually implemented as a single
+        method, with <tt>nullptr</tt> as default name string.
+  <li> <i>Copy constructor</i>, which must have the following signature
+        for a class <tt>X</tt>: <tt>X(const X&amp;)</tt>.
+  <li> <i>Destructor</i>.
+  <li> <i>Duplication function,</i> <tt>X *dup() const</tt>.
+        It should create and return an exact duplicate of the object.
+        It is usually a one-line function that delegates to the copy constructor.
+  <li> <i>Assignment operator</i>, that is, <tt>X&amp; operator=(const X&amp;)</tt>
+        for a class <tt>X</tt>. It should copy the contents of the other
+        object into this one, <i>except</i> the name string. See later what to do
+        if the object contains pointers to other objects.
+</ul>
+
+<p>If the new class contains other objects subclassed from <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>,
+either via pointers or as a data member, the following function <b>should</b>
+be implemented:
+
+<p><ul>
+  <li> <i>Iteration function,</i> <tt>void forEachChild(<a href="../api/classomnetpp_1_1cVisitor.html">cVisitor</a> *v)</tt>.
+        The implementation should call the function passed
+        for each object it contains via pointer or as a data member;
+        see the API Reference on <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> on how to implement
+        <tt>forEachChild()</tt>. <tt>forEachChild()</tt> makes it possible
+        for Tkenv and Qtenv to display the object tree, to perform searches on it, etc.
+        It is also used by <tt>snapshot()</tt> and some other library functions.
+</ul>
+
+<p>Implementation of the following methods is <b>recommended</b>:
+
+<p><ul>
+  <li> <i>Object info,</i> <tt>str()</tt>. The <tt>str()</tt> function
+        should return a one-line string describing the object's contents or state.
+        The text returned by <tt>str()</tt> is displayed at several places in Tkenv
+        and Qtenv.
+        <br><ul><font size=-1>[Until OMNeT++ version 5.1, <tt>str()</tt> was called <tt>info()</tt>.
+        There was also a <tt>detailedInfo()</tt> method that was removed in the
+        same version for lack of real usefulness.]</font></ul>
+  <li> <i>Serialization</i>, <tt>parsimPack()</tt> and <tt>parsimUnpack()</tt> methods.
+        These methods are needed for parallel simulation, if you want
+        objects of this type to be transmitted across partitions.
+</ul>
+
+<p>It is customary to implement the copy constructor and the assignment operator
+so that they delegate to the same function of the base class, and invoke a common
+private <tt>copy()</tt> function to copy the local members.
+
+<p><h3><a name="sec:sim-lib:class-registration"/>7.12.3 Class Registration<a class="headerlink" href="#sec:sim-lib:class-registration" title="Permalink to this headline">¶</a></h3>
+
+<p>You should also use the <tt>Register_Class()</tt> macro to register the
+new class. It is used by the <tt>createOne()</tt> factory function, which can
+create any object given the class name as a string. <tt>createOne()</tt>
+is used by the Envir library to implement <tt>omnetpp.ini</tt> options
+such as <tt>rng-class="..."</tt> or <tt>scheduler-class="..."</tt>.
+(see Chapter <a href="chap17.html#cha:plugin-exts">[17]</a>)
+
+<p>For example, an <tt>omnetpp.ini</tt> entry such as
+
+<pre class="inifile">
+rng-class = "<a href="../api/classomnetpp_1_1cMersenneTwister.html">cMersenneTwister</a>"
+</pre>
+<p>
+would result in something like the following code to be executed
+for creating the RNG objects:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cRNG.html">cRNG</a> *rng = check_and_cast&lt;<a href="../api/classomnetpp_1_1cRNG.html">cRNG</a>*&gt;(createOne("<a href="../api/classomnetpp_1_1cMersenneTwister.html">cMersenneTwister</a>"));
+</pre>
+<p>
+But for that to work, we needed to have the following line somewhere in the code:
+
+<pre class="cpp">
+Register_Class(<a href="../api/classomnetpp_1_1cMersenneTwister.html">cMersenneTwister</a>);
+</pre>
+<p>
+<tt>createOne()</tt> is also needed by the parallel distributed simulation feature
+(Chapter <a href="chap16.html#cha:parallel-exec">[16]</a>) to create blank objects to unmarshal into
+on the receiving side.
+
+<p>
+<h3><a name="sec:sim-lib:subclassing-cobject-details"/>7.12.4 Details<a class="headerlink" href="#sec:sim-lib:subclassing-cobject-details" title="Permalink to this headline">¶</a></h3>
+
+<p>We'll go through the details using an example. We create a new
+class <tt>NewClass</tt>, redefine all above mentioned <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>
+member functions, and explain the conventions, rules and tips
+associated with them.
+To demonstrate as much as possible, the class will contain
+an <tt>int</tt> data member, dynamically allocated non-<tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> data
+(an array of <tt>double</tt>s),
+an OMNeT++ object as data member (a <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>), and
+a dynamically allocated OMNeT++ object (a <tt><a href="../api/classomnetpp_1_1cMessage.html">cMessage</a></tt>).
+
+<p>The class declaration is the following. It contains the declarations
+of all methods discussed in the previous section.
+
+<pre class="cpp">
+//
+// file: NewClass.h
+//
+#include &lt;omnetpp.h&gt;
+
+class NewClass : public <a href="../api/classomnetpp_1_1cObject.html">cObject</a>
+{
+  protected:
+    int size;
+    double *array;
+    <a href="../api/classomnetpp_1_1cQueue.html">cQueue</a> queue;
+    <a href="../api/classomnetpp_1_1cMessage.html">cMessage</a> *msg;
+    ...
+  private:
+    void copy(const NewClass& other); // local utility function
+  public:
+    NewClass(const char *name=nullptr, int d=0);
+    NewClass(const NewClass& other);
+    virtual ~NewClass();
+    virtual NewClass *dup() const;
+    NewClass& operator=(const NewClass& other);
+
+    virtual void forEachChild(<a href="../api/classomnetpp_1_1cVisitor.html">cVisitor</a> *v);
+    virtual std::string info();
+};
+</pre>
+<p>
+We'll discuss the implementation method by method.
+Here is the top of the <tt>.cc</tt> file:
+
+<pre class="cpp">
+//
+// file: NewClass.cc
+//
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream.h&gt;
+#include "newclass.h"
+
+Register_Class(NewClass);
+
+NewClass::NewClass(const char *name, int sz) : <a href="../api/classomnetpp_1_1cObject.html">cObject</a>(name)
+{
+    size = sz;
+    array = new double[size];
+    take(&queue);
+    msg = nullptr;
+}
+</pre>
+<p>
+The constructor (above) calls the base class constructor with
+the name of the object, then initializes its own data members.
+You need to call <tt>take()</tt> for <tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt>-based data members.
+
+<pre class="cpp">
+NewClass::NewClass(const NewClass& other) : <a href="../api/classomnetpp_1_1cObject.html">cObject</a>(other)
+{
+    size = -1; // needed by copy()
+    array = nullptr;
+    msg = nullptr;
+    take(&queue);
+    copy(other);
+}
+</pre>
+<p>
+The copy constructor relies on the private <tt>copy()</tt> function.
+Note that pointer members have to be initialized (to <tt>nullptr</tt> or to an
+allocated object/memory) before calling the <tt>copy()</tt> function.
+
+<p>You need to call <tt>take()</tt> for <tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt>-based data members.
+
+<pre class="cpp">
+NewClass::~NewClass()
+{
+    delete [] array;
+    if (msg-&gt;getOwner()==this)
+        delete msg;
+}
+</pre>
+<p>
+The destructor should delete all data structures the object allocated.
+<tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt>-based objects should <i>only</i> be deleted if they
+are owned by the object -- details will be covered in section
+<a href="chap7.html#sec:sim-lib:ownership-management">[7.13]</a>.
+
+<pre class="cpp">
+NewClass *NewClass::dup() const
+{
+    return new NewClass(*this);
+}
+</pre>
+<p>
+The <tt>dup()</tt> function  is usually just one line, like the one above.
+
+<pre class="cpp">
+NewClass& NewClass::operator=(const NewClass& other)
+{
+    if (&other==this)
+        return *this;
+
+    <a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a>::operator=(other);
+    copy(other);
+    return *this;
+}
+</pre>
+<p>
+The assignment operator (above) first makes sure that will not try to copy
+the object to itself, because that can be disastrous. If so (that is,
+<tt>&amp;other==this</tt>), the function returns immediately without doing anything.
+
+<p>The base class part is copied via invoking the assignment operator of
+the base class. Then the method copies over the local members using the
+<tt>copy()</tt> private utility function.
+
+<pre class="cpp">
+void NewClass::copy(const NewClass& other)
+{
+    if (size != other.size) {
+        size = other.size;
+        delete array;
+        array = new double[size];
+    }
+    for (int i = 0; i &lt; size; i++)
+        array[i] = other.array[i];
+
+    queue = other.queue;
+    queue.setName(other.queue.getName());
+
+    if (msg && msg-&gt;getOwner()==this)
+        delete msg;
+
+    if (other.msg && other.msg-&gt;getOwner()==const_cast&lt;<a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>*&gt;(&other))
+        take(msg = other.msg-&gt;dup());
+    else
+        msg = other.msg;
+}
+</pre>
+<p>
+Complexity associated with copying and duplicating the object
+is concentrated in the <tt>copy()</tt> utility function.
+
+<p>Data members are copied in the normal C++ way. If the class
+contains pointers, you will most probably want to make a deep copy of
+the data where they point, and not just copy the pointer values.
+
+<p>If the class contains pointers to OMNeT++ objects, you need
+to take ownership into account. If the contained object is <i>not owned</i>
+then we assume it is a pointer to an &#8220;external&#8221; object, consequently
+we only copy the pointer. If it is <i>owned</i>, we duplicate
+it and become the owner of the new object. Details of ownership
+management will be covered in section <a href="chap7.html#sec:sim-lib:ownership-management">[7.13]</a>.
+
+<p>
+<pre class="cpp">
+void NewClass::forEachChild(<a href="../api/classomnetpp_1_1cVisitor.html">cVisitor</a> *v)
+{
+    v-&gt;visit(queue);
+    if (msg)
+        v-&gt;visit(msg);
+}
+</pre>
+
+<p>The <tt>forEachChild()</tt> function should call <tt>v-&gt;visit(obj)</tt>
+for each <tt>obj</tt> member of the class. See the API Reference for more
+information about <tt>forEachChild()</tt>.
+
+<pre class="cpp">
+std::string NewClass::info()
+{
+    std::stringstream out;
+    out &lt;&lt; "data=" &lt;&lt; data &lt;&lt; ", array[0]=" &lt;&lt; array[0];
+    return out.str();
+
+}
+</pre>
+<p>
+The <tt>info()</tt> method should produce a concise, one-line string
+about the object. You should try not to exceed 40-80 characters, since the
+string will be shown in tooltips and listboxes.
+
+<p>See the virtual functions of <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> and <tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt>
+in the class library reference for more information. The sources of the
+Sim library (<tt>include/</tt>, <tt>src/sim/</tt>) can serve as further examples.
+
+<p>
+
+<p><h2><a name="sec:sim-lib:ownership-management"/>7.13 Object Ownership Management<a class="headerlink" href="#sec:sim-lib:ownership-management" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:sim-lib:ownership-tree"/>7.13.1 The Ownership Tree<a class="headerlink" href="#sec:sim-lib:ownership-tree" title="Permalink to this headline">¶</a></h3>
+
+<p>OMNeT++ has a built-in ownership management mechanism which
+is used for sanity checks, and as part of the infrastructure
+supporting Tkenv/Qtenv inspectors.
+
+<p>Container classes like <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> own the objects inserted
+into them, but this is not limited to objects inserted into a container:
+<i>every <tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt>-based object has an owner all the time</i>.
+From the user's point of view, ownership is managed transparently.
+For example, when you create a new <tt><a href="../api/classomnetpp_1_1cMessage.html">cMessage</a></tt>,
+it will be owned by the simple module. When you send it, it will
+first be handed over to (i.e. change ownership to) the FES<!--FES-->, and,
+upon arrival, to the destination simple module. When you encapsulate
+the message in another one, the encapsulating message will become
+the owner. When you decapsulate it again, the currently active
+simple module becomes the owner.
+
+<p>The <tt>getOwner()</tt> method, defined in <tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt>, returns the
+owner of the object:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a> *o = msg-&gt;getOwner();
+EV &lt;&lt; "Owner of " &lt;&lt; msg-&gt;getName() &lt;&lt; " is: " &lt;&lt;
+   &lt;&lt; "(" &lt;&lt; o-&gt;getClassName() &lt;&lt; ") " &lt;&lt; o-&gt;getFullPath() &lt;&lt; endl;
+</pre>
+<p>
+The other direction, enumerating the objects owned can be implemented with
+the <tt>forEachChild()</tt> method by it looping through all
+contained objects and checking the owner of each object.
+
+<p><h4><a name="sec:sim-lib:why-we-need-ownership"/>7.13.1.1 Why Do We Need This?<a class="headerlink" href="#sec:sim-lib:why-we-need-ownership" title="Permalink to this headline">¶</a></h4>
+
+<p>The traditional concept of object ownership is associated with
+the &#8220;right to delete&#8221; objects. In addition to that,
+keeping track of the owner and the list of objects owned also
+serves other purposes in OMNeT++:
+
+<p><ul>
+    <li> enables methods like <tt>getFullPath()</tt> to be implemented.
+
+<p>    <li> prevents certain types of programming errors, namely,
+    those associated with wrong ownership handling.
+
+<p>    <li> enables Tkenv and Qtenv to display the list of simulation objects
+    present within a simple module. This is extremely useful for finding
+    memory leaks caused by forgetting to delete messages that are
+    no longer needed.
+</ul>
+
+<p>Some examples of programming errors that can be caught
+by the ownership facility:
+
+<p><ul>
+    <li> attempts to send a message while it is still in a queue,
+    encapsulated in another message, etc.
+
+<p>    <li> attempts to send/schedule a message while it is still owned
+    by the simulation kernel (i.e. scheduled as a future event)
+
+<p>    <li> attempts to send the very same message object to multiple
+    destinations at the same time (ie. to all connected modules)
+</ul>
+
+<p>For example, the <tt>send()</tt> and <tt>scheduleAt()</tt> functions check
+that the message being sent/scheduled is owned by the module.
+If it is not, then it signals a programming error: the message is probably
+owned by another module (already sent earlier?), or currently scheduled, or
+inside a queue, a message or some other object -- in either case, the
+module does not have any authority over it. When you get the error message
+(<tt>"not owner of object"</tt>), you need to carefully examine the error
+message to determine which object has ownership of the message, and correct
+the logic that caused the error.
+
+<p>The above errors are easy to make in the code, and if not detected
+automatically, they could cause random crashes which are usually very
+difficult to track down. Of course, some errors of the same kind still
+cannot be detected automatically, like calling member functions of a
+message object which has been sent to (and so is currently owned by) another
+module.
+
+<p>
+<h3><a name="sec:sim-lib:managing-ownership"/>7.13.2 Managing Ownership<a class="headerlink" href="#sec:sim-lib:managing-ownership" title="Permalink to this headline">¶</a></h3>
+
+<p>Ownership is managed transparently for the user, but this mechanism
+has to be supported by the participating classes themselves.
+It will be useful to look inside <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> and <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt>,
+because they might give you a hint what behavior you need
+to implement when you want to use non-OMNeT++ container classes
+to store messages or other <tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt>-based objects.
+
+<p>
+<h4><a name="sec:sim-lib:ownership-and-insertion-into-container"/>7.13.2.1 Insertion<a class="headerlink" href="#sec:sim-lib:ownership-and-insertion-into-container" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> and <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> have internal data structures
+(array and linked list) to store the objects which are inserted
+into them. However, they do <i>not</i> necessarily own all of these
+objects.  (Whether they own an object or not can be determined
+from that object's <tt>getOwner()</tt> pointer.)
+
+<p>The default behaviour of <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> and <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> is
+to take ownership of the objects inserted.
+This behavior can be changed via the <i>takeOwnership</i> flag.
+
+<p>Here is what the <i>insert</i> operation of <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> (or <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt>) does:
+<ul>
+    <li> insert the object into the internal array/list data structure
+
+<p>    <li> if the <i>takeOwnership</i> flag is true, take ownership
+    of the object, otherwise just leave it with its original owner
+</ul>
+
+<p>The corresponding source code:
+
+<pre class="cpp">
+void <a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>::insert(<a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a> *obj)
+{
+    // insert into queue data structure
+    ...
+
+    // take ownership if needed
+    if (getTakeOwnership())
+        take(obj);
+
+}
+</pre>
+<p>
+
+<p><h4><a name="sec:sim-lib:ownership-and-removal-from-container"/>7.13.2.2 Removal<a class="headerlink" href="#sec:sim-lib:ownership-and-removal-from-container" title="Permalink to this headline">¶</a></h4>
+
+<p>Here is what the <i>remove</i> family of operations in <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>
+(or <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt>) does:
+
+<p><ul>
+    <li> remove the object from the internal array/list data structure
+
+<p>    <li> if the object is actually owned by this <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>/<tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt>,
+    release ownership of the object, otherwise just leave it with
+    its current owner
+</ul>
+
+<p>After the object was removed from a <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>/<tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt>,
+you may further use it, or if it is not needed any more, you can delete it.
+
+<p>The <i>release ownership</i> phrase requires further explanation.
+When you remove an object from a queue or array, the ownership
+is expected to be transferred to the simple module's local objects list.
+This is accomplished by the <tt>drop()</tt> function, which transfers the
+ownership to the object's default owner.
+<tt>getDefaultOwner()</tt> is a virtual method defined in <tt><a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a></tt>,
+and its implementation returns
+the currently executing simple module's local object list.
+
+<p>As an example, the <tt>remove()</tt> method of <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> is
+implemented like this:
+  <br><ul><font size=-1>[Actual code in <tt>src/sim</tt> is structured somewhat
+  differently, but the meaning is the same.]</font></ul>
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a> *<a href="../api/classomnetpp_1_1cQueue.html">cQueue</a>::remove(<a href="../api/classomnetpp_1_1cOwnedObject.html">cOwnedObject</a> *obj)
+{
+    // remove object from queue data structure
+    ...
+
+    // release ownership if needed
+    if (obj-&gt;getOwner()==this)
+        drop(obj);
+
+    return obj;
+}
+</pre>
+<p>
+
+<p><h4><a name="sec:sim-lib:ownership-and-container-destructor"/>7.13.2.3 Destructor<a class="headerlink" href="#sec:sim-lib:ownership-and-container-destructor" title="Permalink to this headline">¶</a></h4>
+
+<p>The concept of <tt>ownership</tt> is that <i>the owner has the
+exclusive right and duty to delete the objects it owns</i>.
+For example, if you delete a <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> containing <tt><a href="../api/classomnetpp_1_1cMessage.html">cMessage</a></tt>s,
+all messages it contains <i>and</i> owns will also be deleted.
+
+<p>The destructor should delete all data structures the object allocated.
+From the contained objects, only the owned ones are deleted -- that is,
+where <tt>obj-&gt;getOwner()==this</tt>.
+
+<p>
+<h4><a name="sec:sim-lib:ownership-and-object-copying"/>7.13.2.4 Object Copying<a class="headerlink" href="#sec:sim-lib:ownership-and-object-copying" title="Permalink to this headline">¶</a></h4>
+
+<p>The ownership mechanism also has to be taken into consideration
+when a <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> or <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> object is duplicated
+(using <tt>dup()</tt> or the copy constructor.)
+The duplicate is supposed to have the same content as the
+original; however, the question is whether the contained objects
+should also be duplicated or only their pointers taken over
+to the duplicate <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt> or <tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>. A similar
+question arises when an object is copied using the assignment operator
+(<tt>operator=()</tt>).
+
+<p>The convention followed by <tt><a href="../api/classomnetpp_1_1cArray.html">cArray</a></tt>/<tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt> is that
+only owned objects are copied, and the contained but not owned ones
+will have their pointers taken over and their original owners
+left unchanged.
+
+<p>
+
+
+<hr class='pgbr'><p><hr><b><a href="chap6.html">[Prev]</A>&nbsp;<a href="chap8.html">[Next]</A>&nbsp;<a href="toc.html#toc_7.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

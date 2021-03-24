@@ -1,0 +1,48 @@
+%description:
+Testing opp_feature
+.nedfolders file is missing
+Try listing features
+
+%prerun-command: ../../lib/createSrcFolders
+%prerun-command: rm -f .nedfolders
+%prerun-command: cp ../../.oppfeatures .
+
+%file: .oppfeaturestate_in
+<?xml version="1.0" ?>
+<featurestates>
+    <feature enabled="true" id="F_A"/>
+    <feature enabled="false" id="F_B"/>
+    <feature enabled="false" id="F_C"/>
+    <feature enabled="false" id="F_D"/>
+    <feature enabled="true" id="F_E"/>
+</featurestates>
+%prerun-command: cp .oppfeaturestate_in .oppfeaturestate
+
+%file: .nedexclusions_in
+feature_b_folder
+feature_c_folder
+feature_d_folder
+%prerun-command: cp .nedexclusions_in .nedexclusions
+
+%testprog: opp_featuretool options
+
+%ignore-exitcode: 1
+
+%postrun-command: ../../lib/fileExistingCheck
+
+%contains: postrun-command(1).out
+'.oppfeatures' found.
+'.oppfeaturestate' found.
+'.nedfolders' not found.
+'.nedexclusions' found.
+
+%not-contains-regex: stdout
+[a-zA-Z0-9]
+
+%contains: stderr
+opp_featuretool: Error: NED package 'feature_a_folder' in feature 'F_A' was not found.
+opp_featuretool: Error: NED package 'feature_b_folder' in feature 'F_B' was not found.
+opp_featuretool: Error: NED package 'feature_c_folder' in feature 'F_C' was not found.
+opp_featuretool: Error: NED package 'feature_d_folder' in feature 'F_D' was not found.
+opp_featuretool: Error: NED package 'feature_e_folder' in feature 'F_E' was not found.
+opp_featuretool: Error: Check whether all NED folders are set properly (in the .nedfolders file) and all directories corresponding to the NED packages defined in the .oppfeatures file do exist.

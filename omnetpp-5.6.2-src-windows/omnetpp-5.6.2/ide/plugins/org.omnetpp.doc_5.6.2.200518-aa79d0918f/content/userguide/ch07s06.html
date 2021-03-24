@@ -1,0 +1,64 @@
+<html><head><link rel="STYLESHEET" href="../book.css"  type="text/css"/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Inspecting Objects</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="index.html" title="OMNeT&#8288;+&#8288;+ User Guide"><link rel="up" href="ch07.html" title="Chapter 7. The Qtenv Graphical Runtime Environment"><link rel="prev" href="ch07s05.html" title="Parts of the Qtenv UI"><link rel="next" href="ch07s07.html" title="The Preferences Dialog"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Inspecting Objects</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s05.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The Qtenv Graphical Runtime Environment</th><td width="20%" align="right"> <a accesskey="n" href="ch07s07.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idm2351"></a>Inspecting Objects</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2353"></a>Object Inspectors</h3></div></div></div><p>In addition to the inspectors embedded in the main window, Qtenv also lets you
+       open floating inspector windows for objects. The screenshow below shows Qtenv
+       with several inspectors open.
+      </p><div class="figure"><a name="pictures/Qtenv-with-inspectors.png"></a><p class="title"><b>Figure 7.25. Qtenv with several floating inspectors open</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="400"><tr><td align="center"><img src="pictures/Qtenv-with-inspectors.png" align="middle" width="400" alt="Qtenv with several floating inspectors open"></td></tr></table></div></div></div></div><br class="figure-break"></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2364"></a>Browsing the Registered Components</h3></div></div></div><div class="figure"><a name="pictures/Qtenv-inspect-menu-full.png"></a><p class="title"><b>Figure 7.26. The Inspect menu</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-inspect-menu-full.png" align="middle" alt="The Inspect menu"></div></div></div></div><br class="figure-break"><p> Registered components (NED Types, classes, functions, enums) can be displayed with the
+        <span class="emphasis"><em>Inspect | Available components</em></span> menu item. If an error message reports missing types or classes,
+        you can check here whether the missing item is in fact available, i.e. registered correctly.
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2376"></a>Querying Objects</h3></div></div></div><p>The <span class="emphasis"><em>Find/Inspect Objects</em></span> dialog lets you search the simulation for
+        objects that meet certain criteria. The criteria may be the object name, class name,
+        the value of a field of the object, or the combination of those.
+        The results are presented in a table which you can sort by columns,
+        and double-click items in it to inspect them.
+      </p><p>Some possible use cases:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">Identifying bottlenecks in the network by looking at the list of
+          all queues, and ordering them by length (i.e. have the result table sorted
+          by the <span class="emphasis"><em>Info</em></span> column)
+        </li><li class="listitem">Finding nodes with the highest packet drop count. If the drop counts are
+          watched variables (see <code class="literal">WATCH()</code> macro), you can get a list of them.
+        </li><li class="listitem">Finding modules that leak messages. If the live message count on
+          the status bar keeps climbing up, you can issue a search for all message
+          objects, and see where the leaked messages hide.
+        </li><li class="listitem">Easy access for some data structures or objects, for example routing tables.
+          You can search by name or class name, and use the result list as a collection of hotlinks,
+          sparing you manual navigation in the simulation's object tree.
+        </li></ul></div><div class="figure"><a name="pictures/Qtenv-find.png"></a><p class="title"><b>Figure 7.27. Using the Find/Inspect Objects dialog for finding long queues</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-find.png" align="middle" alt="Using the Find/Inspect Objects dialog for finding long queues"></div></div></div></div><br class="figure-break"><p>The dialog lets you specify the search root, and the name and class name of the objects
+        to find. The latter two accept wildcard patterns.
+      </p><p>The checkboxes in the dialog can be used to select the object category that interests you.
+        If you select a category, all objects with that type (and any type derived from it)
+        will be included in the search. Alternatively, if you specify object class as a class filter
+        expression, the search dialog will try to match the object's class name with the given string,
+        meaning that objects of derived types will not be included.
+      </p><p>You can also provide a generic filter expression, which matches the object's full path by default.
+        Wildcards (<code class="literal">"?"</code>, <code class="literal">"*"</code>) are allowed. <code class="literal">"{a-exz}"</code> matches any character in the range <code class="literal">"a".."e"</code> plus <code class="literal">"x"</code> and
+        <code class="literal">"z"</code>. You can match numbers: <code class="literal">"*.job{128..191}"</code> will match objects named <code class="literal">"job128"</code>, <code class="literal">"job129"</code>, ...,
+        <code class="literal">"job191"</code>. <code class="literal">"job{128..}"</code> and <code class="literal">"job{..191}"</code> are also understood.
+        You can combine patterns with <code class="literal">AND</code>, <code class="literal">OR</code> and <code class="literal">NOT</code> and parentheses
+        (lowercase <code class="literal">and</code>, <code class="literal">or</code>, <code class="literal">not</code> are also accepted). You can match other object fields such
+        as queue length, message kind, etc., with the syntax <code class="literal">"fieldname(pattern)"</code>. If the pattern
+        contains parentheses or space, you need to enclose in in quotes.
+        (HINT: You will want to start the pattern with <code class="literal">"*."</code> in most cases to
+        match objects anywhere in the network!).
+      </p><p>Examples:</p><div class="itemizedlist"><code class="literal">*.subnet2.*.destAddr</code><code class="literal">"destAddr"</code><code class="literal">"subnet2"</code><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><code class="literal">*.destAddr</code> : Matches all objects with the name <code class="literal">"destAddr"</code> (likely module parameters).
+        </li><li class="listitem"><code class="literal">*.node[8..10].*</code> : Matches anything inside module <code class="literal">node[8], node[9] </code>and <code class="literal">node[10] </code>.
+        </li><li class="listitem"><code class="literal">className(cQueue) and not length(0)</code> : Matches non-empty queue objects.
+        </li><li class="listitem"><code class="literal">className(cQueue) and length({10..})</code> : Matches queue objects with length&gt;=10.
+        </li><li class="listitem"><code class="literal">kind(3) or kind({7..9})</code> : Matches messages with message kind equal to 3, 7, 8 or 9 (only messages have
+          a <code class="literal">"kind"</code> attribute).
+        </li><li class="listitem"><code class="literal">className(IP*) and *.data-*</code> : Matches objects whose class name begins with <code class="literal">"IP"</code> and name begins with
+          <code class="literal">"data-."</code></li><li class="listitem"><code class="literal">not className(omnetpp::cMessage) and byteLength({1500..})</code> : Matches messages whose class is not cMessage and
+          byteLength is at least 1500 (only messages have a <code class="literal">"byteLength"</code> attribute).
+        </li><li class="listitem"><code class="literal">"*(*" or "*.msg(ACK)"</code> : Quotation marks needed when pattern is a reserved word or contains
+          parentheses (note: *.msg(ACK) without parentheses would be interpreted as some object having a "*.msg"
+          attribute with the value "ACK"!).
+        </li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+        Qtenv uses the <code class="literal">cObject::forEachChild</code> method to collect all objects from a tree recursively. If you
+        have your own objects derived from <code class="literal">cObject</code>, you should redefine the <code class="literal">cObject::forEachChild</code> to
+        function correctly with an object search.
+      </div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+        The class names have to be fully qualified, that is, they should contain the namespace(s) they are in,
+        regardless of the related setting in the <span class="emphasis"><em>Preferences dialog</em></span>.
+      </div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+        If you are debugging the simulation with a source level debugger, you may also use
+        the <span class="emphasis"><em>Inspect by pointer</em></span> menu item. Let the debugger display the address of the object
+        to be inspected, and paste it into the dialog. Please note that entering an invalid pointer will
+        crash the simulation.
+      </div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s05.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch07s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Parts of the Qtenv UI </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> The Preferences Dialog</td></tr></table></div></body></html>

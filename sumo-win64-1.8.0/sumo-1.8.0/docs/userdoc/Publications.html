@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Publications.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Publications - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Publications.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Publications<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>If your publication mentions SUMO please let us know!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When citing SUMO in general please use our current reference publication: <a href="https://ieeexplore.ieee.org/document/8569938">"Microscopic Traffic Simulation using SUMO"</a>; Pablo Alvarez Lopez, Michael Behrisch, Laura Bieker-Walz, Jakob Erdmann, Yun-Pang Flötteröd, Robert Hilbrich, Leonhard Lücken, Johannes Rummel, Peter Wagner, and Evamarie Wießner. IEEE Intelligent Transportation Systems Conference (ITSC), 2018.</p>
+</div>
+<p>BibTex:</p>
+<pre><code>@inproceedings{SUMO2018,
+          title = {Microscopic Traffic Simulation using SUMO},
+         author = {Pablo Alvarez Lopez and Michael Behrisch and Laura Bieker-Walz and Jakob Erdmann and Yun-Pang Fl{\&quot;o}tter{\&quot;o}d and Robert Hilbrich and Leonhard L{\&quot;u}cken and Johannes Rummel and Peter Wagner and Evamarie Wie{\ss}ner},
+      publisher = {IEEE},
+      booktitle = {The 21st IEEE International Conference on Intelligent Transportation Systems},
+           year = {2018},
+        journal = {IEEE Intelligent Transportation Systems Conference (ITSC)},
+       keywords = {traffic simulation, modelling, optimization},
+            url = {https://elib.dlr.de/124092/}
+ }
+</code></pre>
+
+<p>Most of the following entries and many more can also be found in this
+<a href="https://sourceforge.net/projects/sumo/files/traffic_data/sumo.bib/download">bibtex-file</a>.
+We advice to use <a href="http://jabref.sourceforge.net/">JabRef</a> for editing
+this list of publications.</p>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Authors</th>
+<th>Title</th>
+<th>Publication</th>
+<th>Year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Simulation Theory</td>
+<td>Chowdhury, D., L. Santen, A. Schadschneider</td>
+<td><a href="http://arxiv.org/abs/cond-mat/0007053">Statistical Physics of Vehicular Traffic and Some Related Systems</a></td>
+<td>Physics Reports 329, (4-6), pp. 199-329, Elsevier, ISSN 0370-1573</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>Car-Following Models</td>
+<td>Stefan Krauß, Peter Wagner, and Christian Gawron</td>
+<td><a href="http://sumo-sim.org/pdf/sk.pdf">Metastable States in a Microscopic Model of Traffic Flow</a></td>
+<td>Physical Review E 55, pp. 5597-5602</td>
+<td>1997</td>
+</tr>
+<tr>
+<td>Car-Following Models</td>
+<td>Krauß, Stefan</td>
+<td><a href="http://sumo-sim.org/pdf/KraussDiss.pdf">Microscopic Modeling of Traffic Flow: Investigation of Collision Free Vehicle Dynamics</a></td>
+<td>Hauptabteilung Mobilität und Systemtechnik des DLR Köln, ISSN 1434-8454</td>
+<td>1998</td>
+</tr>
+<tr>
+<td>Lane-Change Models</td>
+<td>Krajzewicz, Daniel</td>
+<td>Kombination von taktischen und strategischen Einflüssen in einer mikroskopischen Verkehrsflusssimulation</td>
+<td>Fahrermodellierung in Wissenschaft und Wirtschaft, 2. Berliner Fachtagung für Fahrermodellierung, VDI-Reihe 22 (Mensch-Maschine-Systeme), ISBN 978-3-18-302822-1</td>
+<td>2009</td>
+</tr>
+<tr>
+<td>Lane-Change Models</td>
+<td>Erdmann, Jakob</td>
+<td><a href="http://elib.dlr.de/89233">Lane-Changing Model in SUMO</a></td>
+<td>Proceedings of the SUMO2014 Modeling Mobility with Open Data, pp. 77-88, Berlin, ISSN 1866-721X</td>
+<td>2014</td>
+</tr>
+<tr>
+<td>Intermodality</td>
+<td>Behrisch, Michael and Erdmann, Jakob and Krajzewicz, Daniel</td>
+<td><a href="http://elib.dlr.de/65964">Adding intermodality to the microscopic simulation package SUMO</a></td>
+<td>MESM 2010, Alexandria (Egypt)</td>
+<td>2010</td>
+</tr>
+<tr>
+<td>Traffic Assignment</td>
+<td>Gawron, Christian</td>
+<td><a href="http://sumo-sim.org/pdf/GawronDiss.pdf">Simulation-Based Traffic Assignment</a></td>
+<td>PhD thesis, University of Cologne</td>
+<td>1998</td>
+</tr>
+<tr>
+<td>Traffic Assignment</td>
+<td>Gawron, Christian</td>
+<td><a href="http://e-archive.informatik.uni-koeln.de/339">An Iterative Algorithm to Determine the Dynamic User Equilibrium in a Traffic Simulation Model</a></td>
+<td>International Journal of Modern Physics C Vol. 9 (3), pp. 393-407</td>
+<td>1998</td>
+</tr>
+<tr>
+<td>Road Network Preparation</td>
+<td>Krajzewicz, Daniel and Georg Hertkorn, Julia Ringel, Peter Wagner</td>
+<td><a href="http://sumo-sim.org/pdf/dkrajzew_TRAF5_DigitalMaps1.pdf">Preparation of Digital Maps for Traffic Simulation; Part 1: Approach and Algorithms</a></td>
+<td>Proceedings of the 3rd Industrial Simulation Conference 2005, EUROSIS-ETI, pp. 285-290, Berlin, ISBN 90-77381-18-X</td>
+<td>2005</td>
+</tr>
+<tr>
+<td>Validation, Calibration, and Tests</td>
+<td>Krajzewicz, Daniel and Georg Hertkorn, Christian Rössel, Peter Wagner</td>
+<td><a href="http://sumo-sim.org/pdf/dkrajzew_ESS2002_LOG14_Validation.pdf">An Example of Microscopic Car Models Validation using the open source Traffic Simulation SUMO</a></td>
+<td>Proceedings of Simulation in Industry, 14th European Simulation Symposium 2002, SCS European Publishing House, pp. 318-322, Dresden</td>
+<td>2002</td>
+</tr>
+<tr>
+<td>Validation, Calibration, and Tests</td>
+<td>Heppner, Matthias</td>
+<td><a href="http://www2.informatik.hu-berlin.de/swt/dipl/MatthiasHeppner.2010.pdf">Einführung von Unit Tests in das bestehende C++ Softwaresystem SUMO</a></td>
+<td>Diploma Thesis, Humboldt-Universität zu Berlin</td>
+<td>2010</td>
+</tr>
+<tr>
+<td>Traffic Lights</td>
+<td>Krajzewicz, Daniel and Elmar Brockfeld, Jürgen Mikat, Julia Ringel, Christian Rössel, Wolfram Tuchscheerer, Peter Wagner, Richard Woesler</td>
+<td><a href="http://sumo-sim.org/pdf/dkrajzew_TRAF9_AgentbasedTLS.pdf">Simulation of modern Traffic Lights Control Systems using the open source Traffic Simulation SUMO</a></td>
+<td>Proceedings of the 3rd Industrial Simulation Conference 2005, EUROSIS-ETI, pp. 299-302, Berlin, ISBN 90-77381-18-X</td>
+<td>2005</td>
+</tr>
+<tr>
+<td>Traffic Lights</td>
+<td>Zubillaga D, Cruz G, Aguilar LD, Zapot‚catl J, Fern ndez N, Aguilar J, Rosenblueth DA, Gershenson C</td>
+<td><a href="http://www.mdpi.com/1099-4300/16/5/2384">Measuring the Complexity of Self-Organizing Traffic Lights</a></td>
+<td>Entropy 2014, 16(5), 2384-2407</td>
+<td>2014</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Bauza, R. and J. Gozalvez and M. Sepulcre</td>
+<td><a href="http://www.uwicore.umh.es/files/paper/2008_international/uwicore_WiVeC08_Operation%20and%20Performance%20of%20Vehicular%20Ad-hoc%20Routing%20Protocols%20in%20Realistic%20Environments.pdf">Operation and Performance of Vehicular Ad-hoc Routing Protocols in Realistic Environments</a></td>
+<td>Proceedings of the 2nd IEEE International Symposium on Wireless Vehicular Communications (WiVeC), Calgary (Canada)</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Cottingham, David N. and Jonathan J. Davies and Alastair R. Beresford</td>
+<td><a href="http://www.cl.cam.ac.uk/Research/DTG/research/sentient/vehicles.php">Congestion-Aware Vehicular Traffic Routing Using WiFi Hotspots</a></td>
+<td>Proceedings of Communications Innovation Institute Workshop, Cambridge-MIT Institute, pp. 4-6</td>
+<td>2005</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Kristianto Karnadi, Feliz and Zhi Hai Mo and Kun-chan Lan</td>
+<td><a href="http://www.cse.unsw.edu.au/~klan/paper/sumo.pdf">Rapid Generation of Realistic Mobility Models for VANET</a></td>
+<td>ACM MOBICOMM</td>
+<td>2005</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Gozalvez, J. and M. Sepulcre</td>
+<td><a href="http://www.uwicore.umh.es/files/paper/2008_international/uwicore_ITS08_Channel%20Efficiency%20of%20Adaptive%20Transmission%20Techniques%20for%20Wireless%20Vehicular%20Communications.pdf">Channel Efficiency of Adaptive Transmission Techniques for Wireless Vehicular Communications</a></td>
+<td>Proceedings of the 15th World Congress on Intelligent Transport Systems, New York (USA)</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Honomichl, Clemens</td>
+<td><a href="http://sumo.sf.net/pdf/Analyse_Verkettbarkeit.pdf">Analyse und Simulation von Verkettbarkeitsmaßen in pseudonymer, mobiler Kommunikation</a></td>
+<td>Diploma Thesis</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Lehr, Sebastian</td>
+<td><a href="http://sumo-sim.org/pdf/DiplomarbeitSebastianLehr.pdf">Optimierung der Kommunikation zwischen am Verkehr beteiligten Strukturen</a></td>
+<td>Diploma Thesis, Fachhochschule für Technik und Wirtschaft Berlin</td>
+<td>2005</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Piorkowski, Michal and Maxim Raya, Ada Lezama Lugo, Panos Papadimitratos, Matthias Grossglauser and Jean-Pierre Hubaux</td>
+<td><a href="http://infoscience.epfl.ch/record/113879">TraNS: Realistic Joint Traffic and Network Simulator for VANETs</a></td>
+<td>The 13th ACM Annual International Conference on Mobile Computing and Networking MobiCom'07, Montreal (Canada)</td>
+<td>2007</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Sommer, Christoph and Zheng Yao, Reinhard German and Falko Dressler</td>
+<td><a href="http://www7.informatik.uni-erlangen.de/~sommer/publications">Simulating the Influence of IVC on Road Traffic using Bidirectionally Coupled Simulators</a></td>
+<td>Proceedings of 27th IEEE Conference on Computer Communications (IEEE INFOCOM 2008): Mobile Networking for Vehicular Environments (MOVE 2008), Phoenix, AZ</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Sommer, Christoph and Zheng Yao, Reinhard German and Falko Dressler</td>
+<td><a href="http://www7.informatik.uni-erlangen.de/~sommer/publications">On the Need for Bidirectional Coupling of Road Traffic Microsimulation and Network Simulation</a></td>
+<td>Proceedings of 9th ACM International Symposium on Mobile Ad Hoc Networking and Computing (ACM Mobihoc 2008): 1st ACM International Workshop on Mobility Models for Networking Research (MobilityModels'08), Hong Kong (China)</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Wegener, Axel and Michal Piorkowski, Maxim Raya, Horst Hellbrck, Stefan Fischer, and Jean-Pierre Hubaux</td>
+<td><a href="http://infoscience.epfl.ch/record/115106">TraCI: An Interface for Coupling Road Traffic and Network Simulators</a></td>
+<td>The 11th Communications and Networking Simulation Symposium CNS'08, Ottawa (Canada)</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Wegener, Axel and Horst Hellbrck, Christian Wewetzer and Andreas Lbke</td>
+<td>VANET Simulation Environment with Feedback Loop and its Application to Traffic Light Assistance</td>
+<td>Proceedings of the 3rd IEEE Workshop on Automotive Networking and Applications, New Orleans, LA (USA)</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>Car2Car Communication</td>
+<td>Barber, Anthony</td>
+<td><a href="https://sumo.dlr.de/pdf/BarberThesis.pdf">Sharing the Roads Using Route Information Sharing</a></td>
+<td>Master Thesis, The University of Tulsa</td>
+<td>2011</td>
+</tr>
+<tr>
+<td>Car2Car Communication, Vehicle Navigation, Road Network Generation</td>
+<td>Edelkamp, Stefan and Shahidd Jabar, Tilman Mehrer</td>
+<td><a href="http://www.tzi.de/~edelkamp/Endbericht/End.pdf">GPS-Route, Endbericht</a></td>
+<td>Universität Dortmund, Fachbereich Informatik</td>
+<td>2004</td>
+</tr>
+<tr>
+<td>ITS - other topics</td>
+<td>Morenz, Tino</td>
+<td><a href="https://www.cs.tcd.ie/publications/tech-reports/reports.07/TCD-CS-2007-56.pdf">iTranSIM - Simulation-based Vehicle Location</a></td>
+<td>Master thesis, University of Dublin</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>ITS - other topics</td>
+<td>Willigens, Michael</td>
+<td>Development and Evaluation of a Centralized Traffic Information System using UMTS and GPS</td>
+<td>Master Thesis, Universität Düsseldorf</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>ITS - other topics</td>
+<td>Kerekes, John P. and Michael D. Presnar, Kenneth D. Fourspring, Zoran Ninkov, David R. Pogorzala, Alan D. Raisanen, Andrew C. Rice, Juan R. Vasquez, Jeffrey P. Patel, Robert T. MacIntyre, and Scott D. Brown</td>
+<td><a href="http://spie.org/x648.html?product_id=819265">Sensor modeling and demonstration of a multi-object spectrometer for performance-driven sensing</a></td>
+<td>Proc. SPIE 7334, 73340J, <DOI:10.1117/12.819265></td>
+<td>2009</td>
+</tr>
+<tr>
+<td>ITS - other topics</td>
+<td>Pereira, Jos‚ Luis Ferr s</td>
+<td><a href="https://sumo.dlr.de/pdf/mieec1.pdf">An Integrated Architecture for Autonomous Vehicles Simulation</a></td>
+<td>Master Thesis, Faculdade de Engenharia da Universidade do Porto</td>
+<td>2011</td>
+</tr>
+<tr>
+<td>ITS - other topics</td>
+<td>Bajpai, Ashutosh and Tom V Mathew</td>
+<td><a href="https://sumo.dlr.de/pdf/CTRG_Interface-SUMO.pdf">Development of an Interface between Signal Controller and Traffic Simulator</a></td>
+<td>1st Conference of Transportation Research Group of India (CTRG)</td>
+<td>2011</td>
+</tr>
+<tr>
+<td>SUMO Conference</td>
+<td><a href="http://www.dlr.de/ts/en/desktopdefault.aspx/tabid-10042/17127_read-41437">SUMO Conference Page</a></td>
+<td><a href="http://elib.dlr.de/93885/1/Proceeding_SUMO2013_15-17May%202013_Berlin-Adlershof.pdf">1st SUMO User Conference Proceedings</a></td>
+<td>Berichte aus dem DLR-Institut für Verkehrssystemtechnik, Band 21</td>
+<td>2013</td>
+</tr>
+<tr>
+<td>SUMO Conference</td>
+<td><a href="https://sumo.dlr.de/2014/conference.html">SUMO Conference Page</a></td>
+<td><a href="http://elib.dlr.de/94006/1/Proceeding_SUMO2014_15%2B16May2014_Berlin-Adlershof.pdf">Proceedings</a></td>
+<td>Berichte aus dem DLR-Institut für Verkehrssystemtechnik, Band 24</td>
+<td>2014</td>
+</tr>
+<tr>
+<td>SUMO Conference</td>
+<td><a href="http://www.dlr.de/ts/en/desktopdefault.aspx/tabid-10490/18168_read-42578">SUMO Conference Page</a></td>
+<td><a href="http://elib.dlr.de/97714/1/SUMO2015_Proceeding.pdf">SUMO2015 - Intermodal Simulation for Intermodal Transport</a></td>
+<td>Berichte aus dem DLR-Institut für Verkehrssystemtechnik, Band 28</td>
+<td>2015</td>
+</tr>
+<tr>
+<td>SUMO Conference</td>
+<td><a href="http://www.dlr.de/ts/en/desktopdefault.aspx/tabid-10848/18984_read-44970/">SUMO Conference Page</a></td>
+<td><a href="http://elib.dlr.de/106342/1/SUMOconference_proceedings_2016.pdf">SUMO2016 - Traffic, Mobility, and Logistics</a></td>
+<td>Berichte aus dem DLR-Institut für Verkehrssystemtechnik, Band 30</td>
+<td>2016</td>
+</tr>
+<tr>
+<td>SUMO Conference</td>
+<td><a href="https://sumo.dlr.de/2017">SUMO Conference Page</a></td>
+<td><a href="https://elib.dlr.de/118438/1/SUMO_proceedings_online.pdf">SUMO 2017 Towards Simulation for Autonomous Mobility</a></td>
+<td>Berichte aus dem DLR-Institut für Verkehrssystemtechnik, Band 31</td>
+<td>2017</td>
+</tr>
+<tr>
+<td>SUMO Conference</td>
+<td><a href="https://sumo.dlr.de/2018">SUMO Conference Page</a></td>
+<td><a href="https://easychair.org/publications/volume/SUMO2018">SUMO 2018- Simulating Autonomous and Intermodal Transport Systems</a></td>
+<td>EPiC Series in Engineering, Vol 2</td>
+<td>2018</td>
+</tr>
+<tr>
+<td>SUMO Conference</td>
+<td><a href="https://sumo.dlr.de/2019">SUMO Conference Page</a></td>
+<td><a href="https://easychair.org/publications/volume/SUMO2019">SUMO 2019- Simulating Connected Urban Mobility</a></td>
+<td>EPiC Series in Computing, Vol 62</td>
+<td>2019</td>
+</tr>
+<tr>
+<td>SUMO Software Description</td>
+<td>Behrisch, Michael and Laura Bieker, Jakob Erdmann, Daniel Krajzewicz</td>
+<td><a href="http://sumo-sim.org/pdf/simul_2011_3_40_50150.pdf">SUMO - Simulation of Urban MObility: An Overview</a>, <a href="http://www.thinkmind.org/index.php?view=article&amp;articleid=simul_2011_3_40_50150">publications page</a></td>
+<td>SIMUL 2011, The Third International Conference on Advances in System Simulation, pp. 63-68</td>
+<td>2011</td>
+</tr>
+<tr>
+<td>SUMO Software Description</td>
+<td>Krajzewicz, Daniel and Georg Hertkorn, Christian Rössel, Peter Wagner</td>
+<td><a href="http://sumo-sim.org/pdf/dkrajzew_MESM2002_SUMO.pdf">SUMO (Simulation of Urban MObility); An open-source traffic simulation</a>, <a href="http://sumo-sim.org/pdf/dkrajzew_mesm2002_SUMO_transparencies.pdf">Presentation Slides</a></td>
+<td>Proceedings of the 4th Middle East Symposium on Simulation and Modelling (MESM2002), Sharjah (UAE), SCS European Publishing House, pp. 183-187</td>
+<td>2002</td>
+</tr>
+<tr>
+<td>SUMO Software Description</td>
+<td>Krajzewicz, Daniel and Michael Bonert, Peter Wagner</td>
+<td><a href="http://sumo-sim.org/pdf/RoboCup2006_dkrajzew_SUMO.pdf">The Open Source Traffic Simulation Package SUMO</a></td>
+<td>RoboCup 2006 Infrastructure Simulation Competition, Bremen</td>
+<td>2006</td>
+</tr>
+<tr>
+<td>SUMO Software Description</td>
+<td>Krajzewicz, Daniel and Michael Behrisch</td>
+<td><a href="http://sumo-sim.org/pdf/de_SUMO_HU.pdf">Simulation of Urban MObility: SUMO - Eine freie Verkehrssimulation</a> (Presentation in German)</td>
+<td></td>
+<td>2008</td>
+</tr>
+<tr>
+<td>SUMO Software Description</td>
+<td>Krajzewicz, Daniel and Jakob Erdmann, Michael Behrisch, and Laura Bieker</td>
+<td><a href="http://sumo-sim.org/pdf/sysmea_v5_n34_2012_4.pdf">Recent Development and Applications of SUMO - Simulation of Urban MObility</a>, <a href="http://www.iariajournals.org/systems_and_measurements/tocv5n34.html">Journal Page</a></td>
+<td>International Journal On Advances in Systems and Measurements, 5 (3&amp;4), pp. 128-138</td>
+<td>2012</td>
+</tr>
+<tr>
+<td>ITS - other topics</td>
+<td>Xie, X.-F. and Y. Feng, K. Larry Head</td>
+<td><a href="http://www.wiomax.com/team/xie/paper/TRB14RCTC.pdf">Unified route choice framework: Specification and application to urban traffic control</a></td>
+<td>Transportation Research Record: Journal of the Transportation Research Board, 2466: 105-113</td>
+<td>2014</td>
+</tr>
+<tr>
+<td>Traffic Lights</td>
+<td>Xie, X.-F. et al.</td>
+<td><a href="http://www.wiomax.com/team/xie/paper/TRC12.pdf">Schedule-driven intersection control</a></td>
+<td>Transportation Research Part C: Emerging Technologies, 24: 168-189</td>
+<td>2012</td>
+</tr>
+<tr>
+<td>ITS - other topics</td>
+<td>Xie, X.-F. et al.</td>
+<td><a href="http://www.wiomax.com/team/xie/paper/ICAPS12.pdf">Schedule-driven coordination for real-time traffic network control</a></td>
+<td>International Conference on Automated Planning and Scheduling (ICAPS), pp. 323-331, Sao Paulo (Brazil)</td>
+<td>2012</td>
+</tr>
+</tbody>
+</table>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 02 June 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

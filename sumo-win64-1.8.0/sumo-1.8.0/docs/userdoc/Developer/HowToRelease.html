@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/HowToRelease.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Developer/HowToRelease - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/HowToRelease.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#packages">Packages</a></li>
+            <li class="nav-item main"><a href="#release_steps">Release steps</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#merge_phase" class="nav-link">• Merge phase</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#freeze_phase_release_day_-_7" class="nav-link">• Freeze phase (Release day - 7)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#release_day_-_1" class="nav-link">• Release day - 1</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#release_day" class="nav-link">• Release day</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#after-release_cleanup" class="nav-link">• After-release cleanup</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/HowToRelease<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="packages">Packages<a class="headerlink" href="#packages" title="Permanent link">#</a></h2>
+<p>For an overview of created packages and contents see
+<a href="../Downloads.html">Downloads</a>.</p>
+<h2 id="release_steps">Release steps<a class="headerlink" href="#release_steps" title="Permanent link">#</a></h2>
+<p>Below, a list of steps that should be done in order to publish a new
+release is given. All necessary commits which have no ticket of their
+own may refer to <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/563" title="GitHub Issue eclipse/sumo #563">#563</a>.</p>
+<h3 id="merge_phase">Merge phase<a class="headerlink" href="#merge_phase" title="Permanent link">#</a></h3>
+<p>Major changes to the SUMO trunk should end about two weeks before the
+release date. This refers especially to merges of project branches into
+the trunk. It is also a good idea to inform the developers of dependent
+software (Veins, VSimRTI, flow etc.) at this stage.
+- send out mail to sumo-dev informing about the upcoming release so that 'contributed'-authors can check their stuff for compatibility</p>
+<h3 id="freeze_phase_release_day_-_7">Freeze phase (Release day - 7)<a class="headerlink" href="#freeze_phase_release_day_-_7" title="Permanent link">#</a></h3>
+<ul>
+<li>check the sources<ul>
+<li>compile, try to remove warnings and commit the patches</li>
+<li>run <a href="CodeStyle.html">checkStyle</a> and commit
+  changed files</li>
+<li>check the calendar to update copyright statements</li>
+<li>check whether the TraCI version needs to be incremented
+  and rebuild TraCI constants in python
+  (tools/traci/rebuildConstants.py)</li>
+<li>check whether the network version needs to be incremented and
+  update the value in NWFrame::MAJOR_VERSION. netconvert tests
+  need to be updated afterwards.</li>
+<li>update author information</li>
+</ul>
+</li>
+<li>check the regular tests<ul>
+<li>put special attention to the tests which serve as examples, see
+  tests/examples.txt!</li>
+<li>Win64 and gcc4_64 should have no failing tests, the other
+  platforms are less important</li>
+<li>If there are failing tests, which are not flagged as known bugs,
+  save them after careful checking or open a ticket and assign a
+  known bug.</li>
+<li>recheck/rebuild the test networks (if necessary due to
+  netconvert changes)</li>
+<li>check the tests again</li>
+</ul>
+</li>
+<li>check the documentation<ul>
+<li>update the <a href="../ChangeLog.html">ChangeLog</a></li>
+<li>generate options documentation from configuration templates
+  using <code>tools/build/configTemplateToWiki.py</code></li>
+<li>recheck/rebuild the configuration xsd schemata (if options were
+  added) using <code>tools/xml/rebuildSchemata.py</code> </li>
+</ul>
+</li>
+<li>check the internal tests (same procedure as above), especially the
+  (to be) published scenarios</li>
+<li>GitHub<ul>
+<li>add new <a href="https://github.com/eclipse/sumo/milestones">milestone</a>
+  if necessary</li>
+<li>check all remaining tickets and assign them to later milestones
+  or to persons.</li>
+</ul>
+</li>
+<li>scenarios (optional)<ul>
+<li>prepare scenarios for release if the previous version does not
+  run with the current release or significant changes were made to
+  the scenarios</li>
+</ul>
+</li>
+<li>update submodules by running <code>git submodule update --remote</code> and committing
+  the changes if necessary</li>
+</ul>
+<p>The trunk is now frozen. All commits which do not refer to an open
+ticket for the upcoming release need to be made to a separate branch.
+The freeze phase should not last longer than one week. The goal is to
+fix all scenarios and have all failing tests fixed, which are not
+assigned to a later milestone.</p>
+<h3 id="release_day_-_1">Release day - 1<a class="headerlink" href="#release_day_-_1" title="Permanent link">#</a></h3>
+<p>All scenarios should be fixed by now.</p>
+<ul>
+<li>patch the version information<ul>
+<li>in src/config.h.cmake, also disable the HAVE_VERSION_H macro</li>
+<li>in CMakeLists.txt and build/wix/sumo.wxs</li>
+<li>commit the changes</li>
+</ul>
+</li>
+<li>recheck whether submodules changed by doing <code>git submodule update --remote</code>
+and committing the changes after careful inspection</li>
+<li>check the documentation<ul>
+<li>update the <a href="../ChangeLog.html">ChangeLog</a> again and include
+  version and release date</li>
+<li>modify the version number (Version) and the release date (ReleaseDate)
+  <a href="https://github.com/eclipse/sumo/blob/master/docs/web/mkdocs.yml">in mkdocs.yml</a> in the <strong>extra:</strong> section at the end
+  to update the <a href="../Downloads.html">download links</a></li>
+</ul>
+</li>
+<li>update the eclipse.org/sumo website<ul>
+<li>modify the version number (Version) <a href="https://github.com/eclipse/sumo.website/blob/master/config.toml">in config.toml</a> in the <strong>Default Parameters</strong> section at the beginning</li>
+</ul>
+</li>
+<li>If it is the first release of the year, create a new Eclipse release at <a href="https://projects.eclipse.org/projects/technology.sumo">https://projects.eclipse.org/projects/technology.sumo</a> (after login there should be a "Create Release" button)<ul>
+<li>add an IP Log to the release</li>
+<li>send an email to the PMC at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#121;&#45;&#112;&#109;&#99;&#64;&#101;&#99;&#108;&#105;&#112;&#115;&#101;&#46;&#111;&#114;&#103;">&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#121;&#45;&#112;&#109;&#99;&#64;&#101;&#99;&#108;&#105;&#112;&#115;&#101;&#46;&#111;&#114;&#103;</a> asking for review (include links to the release and the IP log)</li>
+</ul>
+</li>
+<li>add a new version tag</li>
+</ul>
+<pre><code>&gt; git tag -a v0_13_7 -m &quot;tagging release 0.13.7, refs #563&quot;
+&gt; git push --tags
+</code></pre>
+
+<h3 id="release_day">Release day<a class="headerlink" href="#release_day" title="Permanent link">#</a></h3>
+<p>The nightly build should have generated all releasable packages. If not,
+delay the release. (The complete documentation, tests and source
+distribution build can be achieved via "make dist".) The
+following things need to be there:</p>
+<ul>
+<li>the platform independent part of the distribution;<ul>
+<li>source and all inclusive distributions (.tar.gz, .zip) ("make dist")</li>
+</ul>
+</li>
+<li>the binary part of the distribution<ul>
+<li>windows binary distribution (zip, includes docs)</li>
+<li>windows installer (msi, Win32 and x64, includes docs)</li>
+<li>check presence of RPMs on
+  <a href="https://build.opensuse.org/package/show/home:behrisch/sumo_nightly">https://build.opensuse.org/package/show/home:behrisch/sumo_nightly</a></li>
+</ul>
+</li>
+</ul>
+<p>If everything is fine:</p>
+<ul>
+<li>make a new folder in S:\Sumo\Releases</li>
+<li>make new sumo.dlr.de-release<ul>
+<li>copy the folder from S:\Sumo\Releases to the releases dir <code>scp -r /media/S/Releases/x.y.z delphi@ts-sim-front-ba.intra.dlr.de:docs/releases</code></li>
+</ul>
+</li>
+<li>make new sourceforge-release<ul>
+<li>make a new release within the sumo package (named "version
+  x.y.z")</li>
+<li>add files to the release</li>
+<li>change default download attributes</li>
+<li>update files at the <a href="https://build.opensuse.org/package/show?package=sumo&amp;project=home%3Abehrisch">opensuse build
+  service</a></li>
+</ul>
+</li>
+<li>update the ubuntu ppa (see
+<a href="https://askubuntu.com/questions/642632/how-to-bump-the-version-of-a-package-available-in-another-users-ppa">https://askubuntu.com/questions/642632/how-to-bump-the-version-of-a-package-available-in-another-users-ppa</a>)<ul>
+<li>this assumes you have the devscripts package as well as all sumo dependencies installed</li>
+<li>if you try this on Windows Linux Subsystem you will also need to do <code>sudo update-alternatives --set fakeroot /usr/bin/fakeroot-tcp</code></li>
+<li>download the source release and rename it to <code>sumo_1.8.0+dfsg1.orig.tar.gz</code></li>
+<li>unzip the source release</li>
+<li>copy the debian dir one level up</li>
+<li>modify the changelog, using <code>dch</code> (enter an email address which has write access to the ppa and a valid gpg key)</li>
+<li>run <code>dpkg-buildpackage -S</code> in the sumo dir and <code>dput -f ppa:sumo/stable sumo_1.8.0+dfsg1_source.changes</code> one level up</li>
+</ul>
+</li>
+<li>scenarios (optional)<ul>
+<li>add files to <a href="https://sourceforge.net/projects/sumo/files/traffic_data/scenarios/">the scenario folder</a></li>
+<li>updated README.txt</li>
+</ul>
+</li>
+<li>inform the users about the new release<ul>
+<li>post information about the release to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#111;&#45;&#117;&#115;&#101;&#114;&#64;&#101;&#99;&#108;&#105;&#112;&#115;&#101;&#46;&#111;&#114;&#103;">&#115;&#117;&#109;&#111;&#45;&#117;&#115;&#101;&#114;&#64;&#101;&#99;&#108;&#105;&#112;&#115;&#101;&#46;&#111;&#114;&#103;</a> and
+  <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#111;&#45;&#97;&#110;&#110;&#111;&#117;&#110;&#99;&#101;&#64;&#101;&#99;&#108;&#105;&#112;&#115;&#101;&#46;&#111;&#114;&#103;">&#115;&#117;&#109;&#111;&#45;&#97;&#110;&#110;&#111;&#117;&#110;&#99;&#101;&#64;&#101;&#99;&#108;&#105;&#112;&#115;&#101;&#46;&#111;&#114;&#103;</a></li>
+<li>submit news about the release on the Eclipse Newsroom <a href="https://newsroom.eclipse.org/node/add/news">https://newsroom.eclipse.org/node/add/news</a></li>
+<li>tweet about it, post on Facebook and Instagram stories</li>
+<li>trigger update of main website at <a href="https://sumo.dlr.de">https://sumo.dlr.de</a></li>
+</ul>
+</li>
+<li>close <a href="https://github.com/eclipse/sumo/milestones">the milestone</a>
+  (retargeting open tickets needs to be done manually for now)</li>
+<li>create a <a href="https://github.com/eclipse/sumo/releases">release on github</a> to trigger the build of the release python wheels</li>
+<li>publish the wheels on PyPI</li>
+</ul>
+<h3 id="after-release_cleanup">After-release cleanup<a class="headerlink" href="#after-release_cleanup" title="Permanent link">#</a></h3>
+<p>The trunk is now open for changes again.</p>
+<ul>
+<li>re-enable HAVE_VERSION_H in src/config.h.cmake</li>
+<li>rename version to "git" in CMakeLists.txt</li>
+<li>insert a new empty "Git master" section at the top of the <a href="../ChangeLog.html">ChangeLog</a></li>
+<li>commit changes</li>
+<li>drink your favorite beverage</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 30 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

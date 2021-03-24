@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/FAQ.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>FAQ - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/FAQ.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#general">General</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_is_sumo" class="nav-link">• What is SUMO?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_does_sumo_mean" class="nav-link">• What does "SUMO" mean?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_kind_of_a_traffic_simulation_is_sumo" class="nav-link">• What kind of a traffic simulation is SUMO?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_is_the_best_way_to_read_the_documentation_and_find_out_about_specific_topics" class="nav-link">• What is the best way to read the documentation and find out about specific topics</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#are_there_any_tutorials_or_ready_to_use_scenarios" class="nav-link">• Are there any tutorials or ready to use scenarios?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_can_i_contribute_to_sumo" class="nav-link">• How can I contribute to SUMO?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_code_contributions_work" class="nav-link">• How do code contributions work?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_contribute_to_the_documentation" class="nav-link">• How do I contribute to the documentation?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_cite_sumo" class="nav-link">• How do I cite SUMO</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_unsubscribe_from_the_mailing_list" class="nav-link">• How do I unsubscribe from the mailing list?</a>
+                </li>
+            <li class="nav-item main"><a href="#general_problem_solving">General Problem Solving</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#an_application_crashed_what_should_i_do" class="nav-link">• An application crashed. What should I do?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#why_does_sumo_not_behave_as_documented_in_this_wiki" class="nav-link">• Why does SUMO not behave as documented in this wiki?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#there_is_an_error_message_but_i_dont_know_what_i_did_wrong" class="nav-link">• There is an error message but I don't know what I did wrong</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_report_erroneous_behavior_of_a_sumo_application" class="nav-link">• How do I report erroneous behavior of a SUMO application?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sumo_does_not_do_what_i_want_and_i_dont_know_how_to_solve_the_issue" class="nav-link">• SUMO does not do what I want and I don't know how to solve the issue</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_should_i_do_to_get_helpful_answers_on_the_mailing_list" class="nav-link">• What should I do to get helpful answers on the mailing list?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#i_asked_a_question_on_the_mailing_list_and_did_not_get_an_answer_within_x_days_why" class="nav-link">• I asked a question on the mailing list and did not get an answer within X days. Why?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#i_want_to_do_a_project_with_sumo_can_you_help_me_with_the_implementation" class="nav-link">• I want to do a project with SUMO can you help me with the implementation?</a>
+                </li>
+            <li class="nav-item main"><a href="#traci">TraCI</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#my_traci-program_is_not_working_as_intended_can_you_help_me_debug_it" class="nav-link">• My TraCI-program is not working as intended. Can you help me debug it?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#my_traci-program_is_not_working_as_intended_how_do_i_debug_it" class="nav-link">• My TraCI-program is not working as intended. How do I debug it?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#error_tcpipstoragereadissafe_want_to_read_8_bytes_from_storage_but_only_4_remaining" class="nav-link">• Error: tcpip::Storage::readIsSafe: want to read 8 bytes from Storage, but only 4 remaining</a>
+                </li>
+            <li class="nav-item main"><a href="#features">Features</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#does_sumo_support_traffic_within_the_junctions" class="nav-link">• Does SUMO support traffic within the junctions?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#is_it_possible_to_connect_sumo_to_an_external_application_fe_ns-2" class="nav-link">• Is it possible to connect SUMO to an external application (f.e. ns-2)?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#can_sumo_simulate_lefthand_traffic" class="nav-link">• Can SUMO simulate lefthand traffic?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#can_sumo_generate_movement_traces" class="nav-link">• Can SUMO generate movement traces?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#can_sumo_simulate_heterogeneous_traffic_lane-free_traffic" class="nav-link">• Can SUMO simulate heterogeneous traffic / lane-free traffic ?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#can_sumo_simulate_driving_in_reverse" class="nav-link">• Can SUMO simulate driving in reverse?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#can_sumo_simulate_driving_through_the_oncoming_lane" class="nav-link">• Can SUMO simulate driving through the oncoming lane?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#can_sumo_be_run_in_parallel_on_multiple_cores_or_computers" class="nav-link">• Can SUMO be run in parallel (on multiple cores or computers)?</a>
+                </li>
+            <li class="nav-item main"><a href="#building_installation">Building / Installation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_access_the_code_repository" class="nav-link">• How do I access the code repository?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#is_there_further_documentation_on_git_and_subversion" class="nav-link">• Is there further documentation on Git and Subversion?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_to_get_an_older_version_of_sumo" class="nav-link">• How to get an older version of SUMO?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_to_check_out_revision_5499_or_any_other_outdated_sumo" class="nav-link">• How to check out revision 5499 (or any other outdated sumo)?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#which_platforms_are_supported" class="nav-link">• Which platforms are supported?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#can_i_run_multiple_versions_of_sumo_alongside_each_other" class="nav-link">• Can I run multiple versions of SUMO alongside each other?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#letters_and_words_are_represented_as_squares_in_sumo-gui_and_netedit" class="nav-link">• Letters and words are represented as squares in sumo-gui and netedit</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#troubleshooting" class="nav-link">• Troubleshooting</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#uninstalling" class="nav-link">• Uninstalling</a>
+                </li>
+            <li class="nav-item main"><a href="#basic_usage">Basic Usage</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_measures_are_usedrepresented" class="nav-link">• What measures are used/represented?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_does_the_following_error_mean" class="nav-link">• What does the following error mean?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_work_around_a_file_not_found_command_not_found_error" class="nav-link">• How do I work around a file not found / command not found error?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_work_around_missing_dll_errors_on_windows" class="nav-link">• How do I work around missing dll errors on windows?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_is_the_meaning_of_the_different_exit_codes_linux_command_line" class="nav-link">• What is the meaning of the different exit codes (linux command line)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#whats_the_deal_with_schema_resolution_warnings_xsd_errors" class="nav-link">• What's the deal with schema resolution warnings / xsd errors?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_causes_error_unable_to_resolve_hostaddress_sumodlrde" class="nav-link">• What causes ''Error: unable to resolve host/address 'sumo.dlr.de' ''?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#why_can_my_input-xml_files_not_be_read_even_though_they_look_ok_to_me" class="nav-link">• Why can my input-XML files not be read even though they look OK to me?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#why_do_i_get_errors_about_missing_files_file_not_found_even_though_the_file_exists" class="nav-link">• Why do I get errors about missing files / file not found even though the file exists?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#windows_10_is_blocking_the_execution_of_sumo-gui_and_netedit_how_come" class="nav-link">• Windows 10 is blocking the execution of sumo-gui and netedit. How come?</a>
+                </li>
+            <li class="nav-item main"><a href="#netconvert">netconvert</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#i_made_changes_to_the_netxml-file_but_it_did_not_work_as_expected_why" class="nav-link">• I made changes to the .net.xml-file but it did not work as expected. Why?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#my_network_looks_ugly_all_the_junction_shapes_are_wrong_how_come" class="nav-link">• My network looks ugly, All the junction shapes are wrong. How come?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#some_junctions_in_my_network_look_ugly_what_can_i_do" class="nav-link">• Some junctions in my network look ugly. What can I do?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#can_i_import_the_free_network_of_osnabruck_frida" class="nav-link">• Can I import the free network of Osnabrück "Frida"?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#are_there_any_other_free_networks_available_i_can_use" class="nav-link">• Are there any other free networks available I can use?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_application_hangs_after_a_while_few_memory_consumption_most_of_the_system_time_windows" class="nav-link">• The application hangs after a while (few memory consumption, most of the system time) (Windows)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#many_errors_of_the_form_edges_x_from-_and_to-node_are_at_the_same_position" class="nav-link">• Many errors of the form Edge's 'x' from- and to-node are at the same position</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#many_errors_of_the_form_error_type_x_used_by_edge_y_was_not_defined" class="nav-link">• Many errors of the form Error: Type 'x' used by edge 'y' was not defined</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#error_sumo_was_compiled_without_gdal_support" class="nav-link">• Error: SUMO was compiled without GDAL support</a>
+                </li>
+            <li class="nav-item main"><a href="#netedit">netedit</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_can_i_obtain_netedit" class="nav-link">• How can I obtain netedit?</a>
+                </li>
+            <li class="nav-item main"><a href="#traffic_demand_generation">Traffic Demand Generation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_generate_random_routes" class="nav-link">• How do I generate random routes?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_maintain_a_constant_number_of_vehicles_in_the_net" class="nav-link">• How do I maintain a constant number of vehicles in the net?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#a_vehicle_cannot_reach_its_target_or_takes_a_circuitous_route_why" class="nav-link">• A vehicle cannot reach its target or takes a circuitous route. Why?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_generate_sumo_routes_from_gps_traces" class="nav-link">• How do I generate SUMO routes from GPS traces?</a>
+                </li>
+            <li class="nav-item main"><a href="#simulation">Simulation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_to_simulate_an_accident" class="nav-link">• How to simulate an accident</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#i_have_changed_my_network_and_now_sumo_does_not_load_it" class="nav-link">• I have changed my network and now SUMO does not load it.</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_change_the_duration_of_cycles_and_phases" class="nav-link">• How do I change the duration of cycles and phases?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#i_can_not_see_a_vehicle_moving_in_my_simulation" class="nav-link">• I can not see a vehicle moving in my simulation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#different_departure_times_with_different_time_step_size" class="nav-link">• Different departure times with different time step size</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_to_save_a_simulation_state_and_proceed_later_andor_differently" class="nav-link">• How to save a simulation state and proceed later and/or differently</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_can_i_make_the_simulation_run_faster" class="nav-link">• How can I make the simulation run faster?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_simulation_gets_slow_with_many_vehicles_waiting_for_insertion" class="nav-link">• The simulation gets slow with many vehicles waiting for insertion</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_simulation_runs_slow_on_the_command_line" class="nav-link">• The simulation runs slow on the command line</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_simulation_has_lots_of_jamsdeadlocks_what_can_i_do" class="nav-link">• The simulation has lots of jams/deadlocks. What can I do?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#why_do_the_vehicles_perform_unexpected_lane-changing_maneuvers" class="nav-link">• Why do the vehicles perform unexpected lane-changing maneuvers?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_get_high_flowsvehicle_densities" class="nav-link">• How do I get high flows/vehicle densities?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_insert_vehicles_with_a_fixed_density" class="nav-link">• How do I insert vehicles with a fixed density?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_force_a_lane_change" class="nav-link">• How do I force a lane change?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#are_there_any_limits_in_regard_to_the_size_of_a_simulation_scenario" class="nav-link">• Are there any limits in regard to the size of a simulation scenario?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_fast_can_sumo_run" class="nav-link">• How fast can SUMO run?</a>
+                </li>
+            <li class="nav-item main"><a href="#visualisation">Visualisation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sumo-gui_breaks" class="nav-link">• sumo-gui breaks</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#display_flickers_in_the_area_of_the_mouse_pointer_windows" class="nav-link">• Display flickers in the area of the mouse pointer (Windows)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sumo-gui_windows_and_buttons_appear_but_no_netcars_are_visible_vehicles_are_not_visible_or_flicker_roads_are_drawn_on_top_of_vehicles" class="nav-link">• sumo-gui windows and buttons appear but no net/cars are visible / Vehicles are not visible or flicker / Roads are drawn on top of vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#building_videos_from_sumo-gui" class="nav-link">• Building videos from sumo-gui</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#incomplete_output" class="nav-link">• Incomplete output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#incompatibility_with_displaylink_devices" class="nav-link">• Incompatibility with DisplayLink devices</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#distorted_view_with_green_lines_all_over_the_network" class="nav-link">• Distorted view with green lines all over the network</a>
+                </li>
+            <li class="nav-item main"><a href="#upgrading">Upgrading</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_upgrade_sumo" class="nav-link">• How do I upgrade SUMO?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sumo_warns_about_deprecated_networks_or_fails_to_load_them" class="nav-link">• sumo warns about deprecated networks or fails to load them</a>
+                </li>
+            <li class="nav-item main"><a href="#python_tools">Python tools</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_run_the_python_tools" class="nav-link">• How do I run the python tools?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#tools_fail_with_a_syntaxerror_or_importerror_or_some_typeerror_concerning_6262" class="nav-link">• tools fail with a SyntaxError or ImportError or some TypeError concerning ">>"</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#tools_fail_with_an_importerror" class="nav-link">• tools fail with an ImportError</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_import_traci_or_sumolib_in_my_own_python_script" class="nav-link">• how do I import traci or sumolib in my own python script?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_python_scripts_do_not_accept_command_line_arguments_windows_only" class="nav-link">• the python scripts do not accept command line arguments (windows only)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#osmwebwizardpy_fails_to_generate_scenario_on_windows_10" class="nav-link">• osmWebWizard.py fails to generate Scenario on Windows 10</a>
+                </li>
+            <li class="nav-item main"><a href="#communication_network_simulators">(Communication) Network Simulators</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_use_tcl_files_with_ns2" class="nav-link">• How do I use .tcl files with NS2?</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_do_i_combine_sumo_with_a_network_simulator" class="nav-link">• How do I combine SUMO with a network simulator?</a>
+                </li>
+            <li class="nav-item main"><a href="#validity">Validity</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#what_are_publications_on_sumos_validity" class="nav-link">• What are publications on SUMO's validity?</a>
+                </li>
+            <li class="nav-item main"><a href="#outdated_questions_for_very_old_versions_of_sumo">Outdated (Questions for very old versions of SUMO)</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicles_do_not_drive_on_the_last_edge_of_their_route" class="nav-link">• Vehicles do not drive on the last edge of their route</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_jumps_backward" class="nav-link">• Vehicle jumps backward</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>FAQ<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="general">General<a class="headerlink" href="#general" title="Permanent link">#</a></h2>
+<h3 id="what_is_sumo">What is SUMO?<a class="headerlink" href="#what_is_sumo" title="Permanent link">#</a></h3>
+<p>SUMO is a traffic simulation package. It is meant to be used to
+  simulate networks of a city's size, but you can of course use it for
+  smaller networks and larger, too, if your computer power is large
+  enough.</p>
+<h3 id="what_does_sumo_mean">What does "SUMO" mean?<a class="headerlink" href="#what_does_sumo_mean" title="Permanent link">#</a></h3>
+<p>"SUMO" is an acronym for "Simulation of Urban MObility".</p>
+<h3 id="what_kind_of_a_traffic_simulation_is_sumo">What kind of a traffic simulation is SUMO?<a class="headerlink" href="#what_kind_of_a_traffic_simulation_is_sumo" title="Permanent link">#</a></h3>
+<p>SUMO is mainly a <strong>microscopic</strong>, space-continuous road traffic
+  simulation. It supports multi-modal and inter-modal ground based
+  traffic. SUMO models individual vehicles and their interactions
+  using models for car-following, lane-changing and intersection
+  behavior. It also uses <a href="Simulation/Pedestrians.html">pedestrian models</a> to simulate the movement
+  of persons and their interactions with vehicles.</p>
+<p>To allow for the efficient simulation of very large scenarios, it is
+  also possible to run SUMO as a <a href="Simulation/Meso.html"><strong>mesoscopic</strong> simulation</a>.</p>
+<p>SUMO also supports <strong>macroscopic</strong> traffic assignment using the
+  <a href="marouter.html">marouter</a> application.</p>
+<h3 id="what_is_the_best_way_to_read_the_documentation_and_find_out_about_specific_topics">What is the best way to read the documentation and find out about specific topics<a class="headerlink" href="#what_is_the_best_way_to_read_the_documentation_and_find_out_about_specific_topics" title="Permanent link">#</a></h3>
+<p>The main page for getting an overview over the various topics is the
+  outline
+  <a href="index.html">SUMO User Documentation</a>. If
+  you do not find the topic of interest listed there use the site search.
+  Alternatively, use a general purpose search engine as this will also include the mailing list archives.</p>
+<h3 id="are_there_any_tutorials_or_ready_to_use_scenarios">Are there any tutorials or ready to use scenarios?<a class="headerlink" href="#are_there_any_tutorials_or_ready_to_use_scenarios" title="Permanent link">#</a></h3>
+<p>The main page for <a href="Tutorials.html">tutorials</a> lists several for beginners and advanced topics, there 
+  are also some <a href="https://www.youtube.com/results?search_query=sumo+simulation+tutorial">videos on YouTube</a>.
+  For scenarios have a look at our <a href="Data/Scenarios.html">scenario page</a>.</p>
+<h3 id="how_can_i_contribute_to_sumo">How can I contribute to SUMO?<a class="headerlink" href="#how_can_i_contribute_to_sumo" title="Permanent link">#</a></h3>
+<ul>
+<li>Tell us about your extensions on the <a href="https://accounts.eclipse.org/mailing-list/sumo-dev">developer mailing list</a></li>
+<li>Send us patches (bug fixes as well as extensions) either to the same
+  list or as pull requests at <a href="https://github.com/eclipse/sumo">https://github.com/eclipse/sumo</a> (also
+  see next question).</li>
+<li>Report bugs (crashes, surprising behavior) or invalid documentation
+  at <a href="https://accounts.eclipse.org/mailing-list/sumo-user">sumo-user</a>
+  or at <a href="https://github.com/eclipse/sumo/issues">https://github.com/eclipse/sumo/issues</a></li>
+<li>The main development team at the <a href="http://sumo.dlr.de">DLR</a> is always
+  looking for project partners. <a href="Contact.html">Contact us</a> to
+  discuss your proposals.</li>
+<li>Make your SUMO simulation scenarios publicly available</li>
+<li><a href="Publications.html">Cite us</a> in your publications and tell
+  other people about SUMO.</li>
+<li>Answer questions on the <a href="Contact.html">sumo-user mailing list</a>
+  whenever you know the answer</li>
+<li>Contribute to this wiki (<a href="Contact.html">contact us</a>, so we can
+  give you editing rights)</li>
+<li>Create a video tutorial and tell us about it</li>
+<li>Join us at the annual <a href="https://eclipse.org/sumo/conference/">SUMO User Conference</a></li>
+</ul>
+<h3 id="how_do_code_contributions_work">How do code contributions work?<a class="headerlink" href="#how_do_code_contributions_work" title="Permanent link">#</a></h3>
+<p>We need to make sure that you have the necessary rights on the code
+  and that you agree that your contribution is put under the Eclipse
+  Public License v2. The easiest way to do achieve this is</p>
+<ul>
+<li>Create a GitHub account</li>
+<li>Configure the git client on your computer to use the email address
+  that you used when registering for your account:</li>
+</ul>
+<pre><code>git config --global user.email &quot;email@example.com&quot;
+</code></pre>
+
+<ul>
+<li>Create an <a href="https://accounts.eclipse.org/user/register">Eclipse account</a> if you do not
+  already have one. Make sure to use the same email address as for
+  GitHub</li>
+<li>Fill out a simple online form, called the Eclipse Contributor
+  Agreement (ECA, this is mandatory)</li>
+<li><a href="https://help.github.com/en/articles/fork-a-repo">Fork</a> the sumo
+  repository on GitHub</li>
+<li>Clone the forked repository to your computer</li>
+</ul>
+<pre><code>git clone https://github.com/yourgithubid/sumo.git
+</code></pre>
+
+<ul>
+<li>Modify the files in the created sumo clone directory</li>
+<li>From within this directory Commit your changes with</li>
+</ul>
+<pre><code>git add src
+git commit -m &quot;your change message&quot; -s
+</code></pre>
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>the option -s must be used so the contribution can be accepted in accordance with Eclipse rules</p>
+</div>
+<ul>
+<li>Push your changes to your fork on GitHub with</li>
+</ul>
+<pre><code>git push
+</code></pre>
+
+<ul>
+<li>Send us a <a href="https://help.github.com/en/articles/creating-a-pull-request-from-a-fork">pull request on GitHub</a></li>
+<li>Delete your fork, once the pull request is accepted or declined.</li>
+<li>(If you wish to keep your fork consider adding a topic branch to your local copy and push it before submitting the pull request.)</li>
+<li>More info may be found at
+  <a href="https://wiki.eclipse.org/Development_Resources/Contributing_via_Git">https://wiki.eclipse.org/Development_Resources/Contributing_via_Git</a></li>
+</ul>
+<h3 id="how_do_i_contribute_to_the_documentation">How do I contribute to the documentation?<a class="headerlink" href="#how_do_i_contribute_to_the_documentation" title="Permanent link">#</a></h3>
+<p>The documentation is part of the code repository so the same rules as in the previous question apply. 
+If you just want to have a simple typo fixed you can always drop us a line at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#111;&#64;&#100;&#108;&#114;&#46;&#100;&#101;">&#115;&#117;&#109;&#111;&#64;&#100;&#108;&#114;&#46;&#100;&#101;</a> or at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#111;&#45;&#100;&#101;&#118;&#64;&#101;&#99;&#108;&#105;&#112;&#115;&#101;&#46;&#111;&#114;&#103;">&#115;&#117;&#109;&#111;&#45;&#100;&#101;&#118;&#64;&#101;&#99;&#108;&#105;&#112;&#115;&#101;&#46;&#111;&#114;&#103;</a>.</p>
+<h3 id="how_do_i_cite_sumo">How do I cite SUMO<a class="headerlink" href="#how_do_i_cite_sumo" title="Permanent link">#</a></h3>
+<p>Cite using <a href="https://elib.dlr.de/124092/">"Microscopic Traffic Simulation using SUMO"</a>; Pablo Alvarez Lopez, Michael
+  Behrisch, Laura Bieker-Walz, Jakob Erdmann, Yun-Pang Flötteröd,
+  Robert Hilbrich, Leonhard Lücken, Johannes Rummel, Peter Wagner, and
+  Evamarie Wießner. IEEE Intelligent Transportation Systems Conference
+  (ITSC), 2018.</p>
+<h3 id="how_do_i_unsubscribe_from_the_mailing_list">How do I unsubscribe from the mailing list?<a class="headerlink" href="#how_do_i_unsubscribe_from_the_mailing_list" title="Permanent link">#</a></h3>
+<p>Go to <a href="https://www.eclipse.org/mailman/listinfo/sumo-user">https://www.eclipse.org/mailman/listinfo/sumo-user</a>. At the
+bottom of the page you will find a form that allows you to enter your
+email address to unsubscribe it from the list.</p>
+<h2 id="general_problem_solving">General Problem Solving<a class="headerlink" href="#general_problem_solving" title="Permanent link">#</a></h2>
+<h3 id="an_application_crashed_what_should_i_do">An application crashed. What should I do?<a class="headerlink" href="#an_application_crashed_what_should_i_do" title="Permanent link">#</a></h3>
+<p>The applications in the SUMO suite may crash when running out of memory.
+Monitor the memory usage of your applications to check whether that may
+be your problem. 32bit-applications may only use 2GB of RAM. Use the
+64bit version and ensure sufficient memory on your machine in order to
+work with larger files. If this does not fix the crash, please report
+this as a bug <a href="#how_do_i_report_erroneous_behavior_of_a_sumo_application">as explained below</a>.</p>
+<h3 id="why_does_sumo_not_behave_as_documented_in_this_wiki">Why does SUMO not behave as documented in this wiki?<a class="headerlink" href="#why_does_sumo_not_behave_as_documented_in_this_wiki" title="Permanent link">#</a></h3>
+<p>This wiki documents the behavior of the <a href="Downloads.html#nightly_snapshots">latest development version</a>. This is usually quite
+close the the <a href="Downloads.html">latest release</a> (differences are
+explicitly listed in the <a href="ChangeLog.html">ChangeLog</a>. If you are
+using an older version of SUMO, you need to refer to <a href="Downloads.html#sumo_-_older_releases">the documentation that is packaged with that version</a>. Note that we do
+not back-port bugfixes to older version of SUMO. If possible you should
+always use the latest version of SUMO.</p>
+<h3 id="there_is_an_error_message_but_i_dont_know_what_i_did_wrong">There is an error message but I don't know what I did wrong<a class="headerlink" href="#there_is_an_error_message_but_i_dont_know_what_i_did_wrong" title="Permanent link">#</a></h3>
+<p>Activate <a href="XMLValidation.html">XML-Validation</a> on your input
+  files. If that does not solve your problem feel free to ask on the
+  mailing list but <strong>please</strong> remember to copy / screenshot the error
+  message itself and attach it to your question. Attaching (zipped!)
+  input files for reproducing the error message is also a good idea
+  (see question above).</p>
+<h3 id="how_do_i_report_erroneous_behavior_of_a_sumo_application">How do I report erroneous behavior of a SUMO application?<a class="headerlink" href="#how_do_i_report_erroneous_behavior_of_a_sumo_application" title="Permanent link">#</a></h3>
+<p>If you suspect a bug in one of the applications you should report
+  your findings by sending the following items to the <a href="Contact.html">mailing list</a>:</p>
+<ul>
+<li>a description of the SUMO-version and the operating system you are
+  using</li>
+<li>a screenshot or error output showing the unexpected behavior (this
+  may allow us to diagnose the problem at a single glance)</li>
+<li>the complete input files for reproducing the error (i.e. a .sumocfg
+  and all files referenced therein) in a zip-archive. Please remove
+  unnecessary inputs (i.e. only 2 vehicles instead of 2000) and try to
+  find the minimum input example which still shows the problem.</li>
+<li>a description at which time step (for simulations) and on which
+  edge/junction the problem occurs</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using an older version of SUMO, please also report whether the problem shows up with the <a href="Downloads.html">latest release</a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your attachments are rejected by the mailing list due to their size <strong>(max 100Kb)</strong>, upload them to a file hosting service and send the link. Alternatively, send them directly, rather than via the list.</p>
+</div>
+<h3 id="sumo_does_not_do_what_i_want_and_i_dont_know_how_to_solve_the_issue">SUMO does not do what I want and I don't know how to solve the issue<a class="headerlink" href="#sumo_does_not_do_what_i_want_and_i_dont_know_how_to_solve_the_issue" title="Permanent link">#</a></h3>
+<p>See above but <strong>please</strong> give enough details when asking on the
+  mailing list.</p>
+<h3 id="what_should_i_do_to_get_helpful_answers_on_the_mailing_list">What should I do to get helpful answers on the mailing list?<a class="headerlink" href="#what_should_i_do_to_get_helpful_answers_on_the_mailing_list" title="Permanent link">#</a></h3>
+<ul>
+<li>Make your question specific<ul>
+<li>avoid vague terms.</li>
+<li>Always name the SUMO version to which your question applies</li>
+<li>Include relevant warnings/errors/stack-traces in your question
+  (please copy the text and avoid screenshots to reproduce text
+  messages)</li>
+</ul>
+</li>
+<li>Phrase your question using familiar terms (not everyone is an expert
+in your domain).</li>
+<li>Don't ask for too many things in a single post.</li>
+<li>Do some research on your own before you post the question (otherwise
+you may appear to be lazy).<ul>
+<li>read the FAQ</li>
+<li>read the documentation</li>
+<li>check out the <a href="Tutorials.html">Tutorials</a></li>
+<li>do a web search (past questions and answers from the mailing
+  list can be found by google)</li>
+</ul>
+</li>
+<li>Do not ask the same thing twice in a short span of time. If you are
+in a hurry and cannot get an answer, try to change your question
+according to the above suggestions.</li>
+<li>Be polite</li>
+<li>Good Example questions:<ul>
+<li>How can I get data X out of SUMO?</li>
+<li>How can I influence aspect Y of a simulation?</li>
+<li>My simulation does Z though I do not expect it to. How do I fix that?</li>
+</ul>
+</li>
+</ul>
+<h3 id="i_asked_a_question_on_the_mailing_list_and_did_not_get_an_answer_within_x_days_why">I asked a question on the mailing list and did not get an answer within X days. Why?<a class="headerlink" href="#i_asked_a_question_on_the_mailing_list_and_did_not_get_an_answer_within_x_days_why" title="Permanent link">#</a></h3>
+<p>Community support is provided on a best effort basis. Questions are
+  mostly answered by the developers when they find time between their
+  projects. Thus, response times can vary between hours and weeks
+  (especially during holidays). Sometimes, when there is a high volume
+  of questions on the mailing list, your question may have been lost.
+  Feel free to repost your question if you did not get an answer
+  within a week. Response times also vary with the difficulty of the
+  question (because the person answering it needs to find a bigger
+  time slice to tackle the problem). Also, follow the advice given
+  above when phrasing your questions to increase the chance for quick
+  answers.</p>
+<h3 id="i_want_to_do_a_project_with_sumo_can_you_help_me_with_the_implementation">I want to do a project with SUMO can you help me with the implementation?<a class="headerlink" href="#i_want_to_do_a_project_with_sumo_can_you_help_me_with_the_implementation" title="Permanent link">#</a></h3>
+<p>Unfortunately, we do not have the resources to do other peoples
+  projects for free.
+  <a href="http://www.dlr.de/ts/en/desktopdefault.aspx/tabid-1231/mailcontact-30303/">Contact</a>
+  us for paid consultancy.
+  We try to help out with bugs and give pointers to the relevant
+  documentation but this free support is limited to what we can do in
+  our spare time.</p>
+<h2 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h2>
+<h3 id="my_traci-program_is_not_working_as_intended_can_you_help_me_debug_it">My <a href="TraCI.html">TraCI</a>-program is not working as intended. Can you help me debug it?<a class="headerlink" href="#my_traci-program_is_not_working_as_intended_can_you_help_me_debug_it" title="Permanent link">#</a></h3>
+<p>Unfortunately, we do not have the resources to debug other peoples
+  code. If you suspect a bug in TraCI itself, the <a href="FAQ.html#how_do_i_report_erroneous_behavior_of_a_sumo_application">general rules of bug-reporting</a>
+  apply. Feel free to post your code to the mailing list as there may
+  be other programmers present who could help. Be aware that someone
+  who wants to reproduce your problem needs all your input files to do
+  so.</p>
+<h3 id="my_traci-program_is_not_working_as_intended_how_do_i_debug_it">My <a href="TraCI.html">TraCI</a>-program is not working as intended. How do I debug it?<a class="headerlink" href="#my_traci-program_is_not_working_as_intended_how_do_i_debug_it" title="Permanent link">#</a></h3>
+<p>When using TraCI there are two processes that can raise errors: SUMO and
+the TraCI script being run. Here are some guidelines for figuring out
+what is happening:</p>
+<ul>
+<li>The SUMO error <em>connection reset by peer</em> indicates a problem in the
+script. The python strack trace should point to the problem (in the
+simplest case, the script ends without calling <em>traci.close()</em>)</li>
+<li>The error <strong>TraCIFatalError</strong> <em>connection closed by SUMO</em> indicates
+a problem with SUMO</li>
+<li>The error <strong>TraCIException</strong> indicates a minor problem with the
+script. (e.g. asking for a vehicle that does not exist). This type
+of error can be safely handled by the script with <em>try/except</em></li>
+<li>It is a good idea to run <a href="sumo.html">sumo</a> with the option <strong>--log</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> to
+figure out what went wrong in a simulation run or why the simulation
+aborted.</li>
+<li>If SUMO crashes (just stops instead of quitting with an error
+message) here is how to debug it:<ul>
+<li>in the options to <em>traci.start()</em> add <em>['--save-configuration',
+  'debug.sumocfg']</em></li>
+<li>run your script (sumo will not start and the script will try to
+  connect repeatedly)</li>
+<li>run the debug version of sumo with the saved configuration in a
+  debugger while the script is still trying to connect</li>
+</ul>
+</li>
+</ul>
+<pre><code>gdb --args sumoD -c debug.sumocfg
+</code></pre>
+
+<h3 id="error_tcpipstoragereadissafe_want_to_read_8_bytes_from_storage_but_only_4_remaining">Error: tcpip::Storage::readIsSafe: want to read 8 bytes from Storage, but only 4 remaining<a class="headerlink" href="#error_tcpipstoragereadissafe_want_to_read_8_bytes_from_storage_but_only_4_remaining" title="Permanent link">#</a></h3>
+<p>The TraCI protocol changed in version 1.0.0. Please make sure that TraCI
+client version and SUMO version match. When using SUMO version 1.0.0 or larger you cannot use traci version 17 or lower (check by calling <code>traci.getVersion()</code>)</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">#</a></h2>
+<h3 id="does_sumo_support_traffic_within_the_junctions">Does SUMO support traffic within the junctions?<a class="headerlink" href="#does_sumo_support_traffic_within_the_junctions" title="Permanent link">#</a></h3>
+<p>Yes, SUMO supports inner-junction traffic since version 0.9.5.</p>
+<h3 id="is_it_possible_to_connect_sumo_to_an_external_application_fe_ns-2">Is it possible to connect SUMO to an external application (f.e. ns-2)?<a class="headerlink" href="#is_it_possible_to_connect_sumo_to_an_external_application_fe_ns-2" title="Permanent link">#</a></h3>
+<p>There are several approaches to do this, see
+  <a href="TraCI.html">TraCI</a> and <a href="Topics/V2X.html">Topics/V2X</a></p>
+<h3 id="can_sumo_simulate_lefthand_traffic">Can SUMO simulate lefthand traffic?<a class="headerlink" href="#can_sumo_simulate_lefthand_traffic" title="Permanent link">#</a></h3>
+<p>Yes. It is supported since version 0.24.0. To create a new network for
+  lefthand traffic, the option <strong>--lefthand</strong> must be set.</p>
+<p>To convert an existing network to lefthand driving, there are two options. Abstract networks (no geo-reference, coordinates do not matter much) can be processed with netconvert:</p>
+<pre><code>    netconvert -s righthand.net.xml --flip-y-axis -o lefthand.net.xml
+</code></pre>
+
+<p>To convert an existing network and preserve coordinates, the network must first be disaggregated into nodes and edges and then re-assembled:</p>
+<pre><code>    netconvert -s righthand.net.xml --plain-output-prefix righthand
+    netconvert -e righthand.edg.xml -n righthand.nod.xml --lefthand -o lefthand.net.xml
+</code></pre>
+
+<h3 id="can_sumo_generate_movement_traces">Can SUMO generate movement traces?<a class="headerlink" href="#can_sumo_generate_movement_traces" title="Permanent link">#</a></h3>
+<p>Yes. This is accomplished by using the
+  <a href="Tools/TraceExporter.html">traceExporter</a> tool to convert SUMO
+  outputs into the appropriate format. Also see
+  <a href="Topics/V2X.html">Topics/V2X</a></p>
+<h3 id="can_sumo_simulate_heterogeneous_traffic_lane-free_traffic">Can SUMO simulate heterogeneous traffic / lane-free traffic ?<a class="headerlink" href="#can_sumo_simulate_heterogeneous_traffic_lane-free_traffic" title="Permanent link">#</a></h3>
+<p>Yes (since version 0.27.0). The
+  <a href="Simulation/SublaneModel.html">Sublane-Model</a> is activated by
+  setting the option <strong>--lateral-resolution</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>.</p>
+<h3 id="can_sumo_simulate_driving_in_reverse">Can SUMO simulate driving in reverse?<a class="headerlink" href="#can_sumo_simulate_driving_in_reverse" title="Permanent link">#</a></h3>
+<p>No. While it is possible to move a vehicle backwards using
+  <a href="TraCI.html">TraCI</a>, other vehicles will not react in a
+  sensible manner to this.</p>
+<h3 id="can_sumo_simulate_driving_through_the_oncoming_lane">Can SUMO simulate driving through the oncoming lane?<a class="headerlink" href="#can_sumo_simulate_driving_through_the_oncoming_lane" title="Permanent link">#</a></h3>
+<p>Yes. (since version 0.27.0). The <a href="Simulation/OppositeDirectionDriving.html">opposite-direction-driving feature is activated by using a network with additional information</a>.</p>
+<h3 id="can_sumo_be_run_in_parallel_on_multiple_cores_or_computers">Can SUMO be run in parallel (on multiple cores or computers)?<a class="headerlink" href="#can_sumo_be_run_in_parallel_on_multiple_cores_or_computers" title="Permanent link">#</a></h3>
+<p>The simulation itself runs on a single core. However, routing
+  in <a href="sumo.html">sumo</a> or <a href="duarouter.html">duarouter</a> can
+  be parallelized by setting the option <strong>--device.rerouting.threads</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> and <strong>--routing-threads</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> respectively.
+  When these options are are used, multiple cores on the machine are used.</p>
+<p>There is no support for multi-node parallelization.</p>
+<p>When running <a href="sumo-gui.html">sumo-gui</a>, an additional thread is used for visualization.</p>
+<p>The python TraCI library allows controlling multiple simulations
+  from a single script either by calling <em>traci.connect</em> and storing
+  the returned connection object or by calling
+  <em>traci.start(label=...)</em> and retrieving the connection object with
+  <em>traci.getConnection(label)</em>.</p>
+<p>The work to make the core (microscopic) simulation run in parallel is ongoing (Issue <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/4767" title="GitHub Issue eclipse/sumo #4767">#4767</a>). 
+  Some parts of the simulation can already be run in parallel when setting option <strong>--threads</strong> but this does not lead to meaningful speedup yet.</p>
+<h2 id="building_installation">Building / Installation<a class="headerlink" href="#building_installation" title="Permanent link">#</a></h2>
+<h3 id="how_do_i_access_the_code_repository">How do I access the code repository?<a class="headerlink" href="#how_do_i_access_the_code_repository" title="Permanent link">#</a></h3>
+<p>Since 2018-04-10 SUMO moved to <a href="https://github.com/eclipse/sumo/">the organizational Eclipse account at GitHub</a>. You have the choice to
+access the repository using git or subversion. There are plenty of
+clients for all platforms. If you use the command line client, you
+can checkout sumo using the following command (for git):</p>
+<pre><code>git clone --recursive https://github.com/eclipse/sumo
+</code></pre>
+
+<p>If you want to see the full project history in your git checkout please
+change to the created directory and call</p>
+<pre><code>git fetch origin refs/replace/*:refs/replace/*
+</code></pre>
+
+<p>For later updates go inside the sumo directory, which has been created,
+and simply type <code>git pull</code>.</p>
+<h3 id="is_there_further_documentation_on_git_and_subversion">Is there further documentation on Git and Subversion?<a class="headerlink" href="#is_there_further_documentation_on_git_and_subversion" title="Permanent link">#</a></h3>
+<p>There are the <a href="https://git-scm.com/book/de/v1">Git book</a> and the
+  <a href="http://svnbook.red-bean.com/">Subversion book</a> and the <a href="https://help.github.com/">GitHub help</a> is also worth reading.</p>
+<h3 id="how_to_get_an_older_version_of_sumo">How to get an older version of SUMO?<a class="headerlink" href="#how_to_get_an_older_version_of_sumo" title="Permanent link">#</a></h3>
+<p>see
+  <a href="Downloads.html#sumo_-_older_releases">Downloads#SUMO_-_older_releases</a>.
+  On Linux, older versions <a href="Installing/Linux_Build.html">must be built from source</a>.</p>
+<h3 id="how_to_check_out_revision_5499_or_any_other_outdated_sumo">How to check out revision 5499 (or any other outdated sumo)?<a class="headerlink" href="#how_to_check_out_revision_5499_or_any_other_outdated_sumo" title="Permanent link">#</a></h3>
+<p>You can use the subversion option "<strong>-r &lt;REVISION_NUMBER></strong>"
+  together with the checkout on the command line. If you are using git
+  you can find the correct hash using the git log. You have to consult
+  your client's documentation if you use a graphical interface. Please
+  be aware of the fact that we can only give very limited support for
+  older versions.</p>
+<h3 id="which_platforms_are_supported">Which platforms are supported?<a class="headerlink" href="#which_platforms_are_supported" title="Permanent link">#</a></h3>
+<p>We compile regularly under Windows 7 and Windows Server 2012 R2
+  using Visual Studio 2013 (32bit and 64bit) and have daily builds on
+  Linux (openSUSE Leap 42.1 (64bit) and openSUSE 13.1 (32bit)).
+  Furthermore there are nightly builds on the <a href="https://build.opensuse.org/package/show?package=sumo_nightly&amp;project=home%3Abehrisch">open build service</a>.
+  SUMO can be installed on macOS via Homebrew (or built from source).
+  We would be happy to hear about successful builds on other
+  platforms. We already heard about successful builds on Solaris and
+  Cygwin.</p>
+<h3 id="can_i_run_multiple_versions_of_sumo_alongside_each_other">Can I run multiple versions of SUMO alongside each other?<a class="headerlink" href="#can_i_run_multiple_versions_of_sumo_alongside_each_other" title="Permanent link">#</a></h3>
+<p>Different versions of SUMO generally do not interfere with each
+  other. When setting environment variables such as <em>SUMO_HOME</em> or
+  <em>PATH</em>, care must be taken to reference the desired directory. On
+  linux, the package manager will generally only offer a single
+  version. <a href="Installing/Linux_Build.html">All other versions must be built from source</a>.</p>
+<h3 id="letters_and_words_are_represented_as_squares_in_sumo-gui_and_netedit">Letters and words are represented as squares in sumo-gui and netedit<a class="headerlink" href="#letters_and_words_are_represented_as_squares_in_sumo-gui_and_netedit" title="Permanent link">#</a></h3>
+<p>Make sure that your computer supports 3D Acceleration and graphical
+  drivers are correctly installed and configured.</p>
+<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h3>
+<p>See <a href="Installing/Linux_Build.html">Installing/Linux Build</a> or
+  <a href="Installing/Windows_Build.html">Installing/Windows Build</a>.</p>
+<h3 id="uninstalling">Uninstalling<a class="headerlink" href="#uninstalling" title="Permanent link">#</a></h3>
+<p>In most cases you can simply delete the sumo folder. If you
+  installed sumo via a package manager on linux, uninstall it via the
+  package manager as well.</p>
+<h2 id="basic_usage">Basic Usage<a class="headerlink" href="#basic_usage" title="Permanent link">#</a></h2>
+<h3 id="what_measures_are_usedrepresented">What measures are used/represented?<a class="headerlink" href="#what_measures_are_usedrepresented" title="Permanent link">#</a></h3>
+<p>All time values are given in seconds. All length values are given in
+  meters. This means that speed should be given in m/s, etc.
+  Currently, the default simulation time step is one second long (to
+  be exact: in each simulation step one second real time is
+  simulated).</p>
+<h3 id="what_does_the_following_error_mean">What does the following error mean?<a class="headerlink" href="#what_does_the_following_error_mean" title="Permanent link">#</a></h3>
+<p>Warning: No types defined, using defaults... Error: An exception
+  occurred! Type:RuntimeException, Message:The primary document
+  entity could not be opened. Id=&lt;PATH> Error: (At line/column 1/0).
+  Error: Quitting (conversion failed).
+  Answer: Simply that the file you try to use (&lt;PATH>) does not exist.
+  This is xerces' way to say "file not found".</p>
+<h3 id="how_do_i_work_around_a_file_not_found_command_not_found_error">How do I work around a file not found / command not found error?<a class="headerlink" href="#how_do_i_work_around_a_file_not_found_command_not_found_error" title="Permanent link">#</a></h3>
+<p>To run the command-line programs your operating system must be able
+  to find them.
+  If you are using Windows please consult <a href="Basics/Basic_Computer_Skills.html#running_programs_from_the_command_line">Basics/Basic Computer Skills#running_programs_from_the_command_line</a>
+  If you are using Linux run <code>export PATH=$PATH:/path/to/sumo/bin</code>
+  (replace /path/to/sumo/bin with the path to the bin directory of
+  your sumo installation)</p>
+<h3 id="how_do_i_work_around_missing_dll_errors_on_windows">How do I work around missing dll errors on windows?<a class="headerlink" href="#how_do_i_work_around_missing_dll_errors_on_windows" title="Permanent link">#</a></h3>
+<p>Install <a href="http://www.microsoft.com/download/en/details.aspx?id=5555">MSVC2013 Redistributable</a>
+  (Old versions of SUMO may also require the MSVC2010 Redistributable)</p>
+<h3 id="what_is_the_meaning_of_the_different_exit_codes_linux_command_line">What is the meaning of the different exit codes (linux command line)<a class="headerlink" href="#what_is_the_meaning_of_the_different_exit_codes_linux_command_line" title="Permanent link">#</a></h3>
+<p>0 is success, 1 is a recognized error and anything above is an
+  unorderly termination (crash). If you see exit codes other than 0 or
+  1 <a href="FAQ.html#how_do_i_report_erroneous_behavior_of_a_sumo_application">please tell us about it</a></p>
+<h3 id="whats_the_deal_with_schema_resolution_warnings_xsd_errors">What's the deal with <em>schema resolution</em> warnings / xsd errors?<a class="headerlink" href="#whats_the_deal_with_schema_resolution_warnings_xsd_errors" title="Permanent link">#</a></h3>
+<p>Since version 0.20.0 sumo performs
+  <a href="XMLValidation.html">XML-validation</a> on input files with
+  schema information. This helps to detect common mistakes during
+  manual preparation of XML input files. Files generated by sumo
+  applications such as <a href="duarouter.html">duarouter</a> always add
+  schema information. The schema files which are needed for checking
+  are retrieved from the local sumo installation if <a href="Basics/Basic_Computer_Skills.html#additional_environment_variables">the environment variable <strong>SUMO_HOME</strong> is set</a>.
+  Otherwise the files will be retrieved from
+  <a href="https://sumo.dlr.de">sumo.dlr.de</a> which is slower. Validation
+  can be disabled by using the option <strong>--xml-validation never</strong> or by deleting the schema
+  information at the top of the XML input file(s).</p>
+<h3 id="what_causes_error_unable_to_resolve_hostaddress_sumodlrde">What causes ''Error: unable to resolve host/address 'sumo.dlr.de' ''?<a class="headerlink" href="#what_causes_error_unable_to_resolve_hostaddress_sumodlrde" title="Permanent link">#</a></h3>
+<p>This is related to <a href="XMLValidation.html">XML-validation</a> (see
+  above). When the <a href="Basics/Basic_Computer_Skills.html#additional_environment_variables">the environment variable <strong>SUMO_HOME</strong></a>
+  is not set, applications will try to retrieve the xsd schema files
+  online. If there is no internet connection. The above error results.
+  The solution is to either</p>
+<ul>
+<li>disable validation or</li>
+<li>declare <strong>SUMO_HOME</strong> or</li>
+<li>ensure internet connectivity</li>
+</ul>
+<h3 id="why_can_my_input-xml_files_not_be_read_even_though_they_look_ok_to_me">Why can my input-XML files not be read even though they look OK to me?<a class="headerlink" href="#why_can_my_input-xml_files_not_be_read_even_though_they_look_ok_to_me" title="Permanent link">#</a></h3>
+<p>Errors such as</p>
+<pre><code>Error: attribute name expected at
+At line/column 10/46
+</code></pre>
+
+<p>can be caused by non-printing characters in the XML-file. Open your
+  XML-file in a document editor and activate the option for showing
+  line-breaks and other non-printing characters to find them.</p>
+<h3 id="why_do_i_get_errors_about_missing_files_file_not_found_even_though_the_file_exists">Why do I get errors about <em>missing files</em> / <em>file not found</em> even though the file exists?<a class="headerlink" href="#why_do_i_get_errors_about_missing_files_file_not_found_even_though_the_file_exists" title="Permanent link">#</a></h3>
+<p>SUMO versions before 1.0.0 use the space character to separate file paths. This means it
+  will not be able to load files with a path such as <em>C:\Program
+  Files\foo.xml</em> even when adding quotation marks. Since 1.0.0 the ',' (comma) is used so these paths should work.
+  Additionally, SUMO may fail to load files if the name contains characters outside
+  the basic <a href="https://en.wikipedia.org/wiki/Ascii">ASCII set</a>.</p>
+<h3 id="windows_10_is_blocking_the_execution_of_sumo-gui_and_netedit_how_come">Windows 10 is blocking the execution of sumo-gui and netedit. How come?<a class="headerlink" href="#windows_10_is_blocking_the_execution_of_sumo-gui_and_netedit_how_come" title="Permanent link">#</a></h3>
+<p>Executable files downloaded from the internet may trigger the windows 10 security warning. You can work around this by clicking on the 'More Info' Text and then selecting 'Run Anyway' in the subsequent dialog.</p>
+<h2 id="netconvert">netconvert<a class="headerlink" href="#netconvert" title="Permanent link">#</a></h2>
+<h3 id="i_made_changes_to_the_netxml-file_but_it_did_not_work_as_expected_why">I made changes to the <em>.net.xml</em>-file but it did not work as expected. Why?<a class="headerlink" href="#i_made_changes_to_the_netxml-file_but_it_did_not_work_as_expected_why" title="Permanent link">#</a></h3>
+<p>As a general rule, you should never modify the <em>.net.xml</em> file
+  directly nor try to generate one with a custom process. There are
+  lots of subtle interdependencies between network elements which are
+  hard to get right with manual modifications. Even if your .net.xml
+  can be loaded by <a href="sumo.html">sumo</a> it could fail in ways that
+  are less obvious:</p>
+<ul>
+<li>By having right-of-way rules that work somewhat differently than
+  expected (this part of the <em>.net.xml</em> file is particularly complex)</li>
+<li>By losing properties when later being edited with
+  <a href="netedit.html">netedit</a></li>
+<li>By failing to work with updated versions of <a href="sumo.html">sumo</a></li>
+</ul>
+<p>If you need to modify a network there are several possibilities:</p>
+<ol>
+<li>Edit the network with <a href="netedit.html">netedit</a></li>
+<li>Modify the original input files and then rebuild the net with
+    <a href="netconvert.html">netconvert</a>.</li>
+<li>Patch the network with <a href="netconvert.html">netconvert</a>. You can
+    <a href="Networks/Import/SUMO_Road_Networks.html">load a <em>.net.xml</em> file</a> together with
+    <a href="Networks/PlainXML.html">small XML-files</a>
+    to patch individual edges, nodes and connections. Additional
+    possibilities are described
+    <a href="Tutorials/ScenarioGuide.html#modifying_the_network">here</a>.
+    For changing traffic light plans or timings see
+    <a href="Simulation/Traffic_Lights.html">Simulation/Traffic_Lights</a>.
+    If you cannot figure out how to accomplish the desired changes this
+    way, <a href="Contact.html">contact us!</a>.</li>
+<li>Use <a href="netconvert.html">netconvert</a>-option <strong>--plain-output-prefix</strong> to convert the
+    network into <a href="Networks/PlainXML.html">it's plain XML representation</a>.
+    Then modify these files and rebuild the network</li>
+</ol>
+<p>If you need to build a network from custom input data it is recommended
+to generate
+<a href="Networks/PlainXML.html"><em>plain-xml</em>-files</a>
+(nodes, edges, connections) with a custom process and build your network
+with <a href="netconvert.html">netconvert</a> from these files. These input
+files allow for many customization of geometrical and structural network
+properties. If you cannot get them to represent the network you need,
+ask for help on the mailing list. Alternatively you could also <a href="Developer/How_To/Net_Importer.html">add another import module to netconvert</a> (which we would be
+happy to integrate if possible).</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>In contrast, generating a network directly has been a dead-end for more than one project. You have been warned.</p>
+</div>
+<h3 id="my_network_looks_ugly_all_the_junction_shapes_are_wrong_how_come">My network looks ugly, All the junction shapes are wrong. How come?<a class="headerlink" href="#my_network_looks_ugly_all_the_junction_shapes_are_wrong_how_come" title="Permanent link">#</a></h3>
+<p>This currently happens up to version 0.23.0 if you import networks
+  with left-handed traffic. See
+  <a href="#can_sumo_simulate_lefthand_traffic">#Can_SUMO_simulate_lefthand_traffic?</a>.</p>
+<h3 id="some_junctions_in_my_network_look_ugly_what_can_i_do">Some junctions in my network look ugly. What can I do?<a class="headerlink" href="#some_junctions_in_my_network_look_ugly_what_can_i_do" title="Permanent link">#</a></h3>
+<p>See <a href="Networks/Import/OpenStreetMap.html#junctions">Joining Junctions</a>. If
+  that doesn't help, check for invalid edge geometry. A sharp turn in
+  front of an intersection (even if the segment is only centimeters
+  long) may mess up the shape computation. Read the
+  <a href="netconvert.html">netconvert</a> warnings about sharp angles and
+  consider using <a href="netconvert.html">netconvert</a> option <strong>--geometry.min-radius.fix</strong>.
+  If that still doesn't help you may specify the shape of the junction
+  <a href="Networks/PlainXML.html#node_descriptions">manually using the <code>shape</code>-attribute</a>.</p>
+<h3 id="can_i_import_the_free_network_of_osnabruck_frida">Can I import the free network of Osnabrück "Frida"?<a class="headerlink" href="#can_i_import_the_free_network_of_osnabruck_frida" title="Permanent link">#</a></h3>
+<p>Yes and no. You can import it using netconvert, a description is
+  available at
+  <a href="Networks/Import/ArcView.html#frida_network_city_of_osnabruck">Networks/Import/ArcView</a>.
+  This may be a good gis-network but lacks some needed information in
+  order to be usable for simulations (see discussion at the link
+  above).</p>
+<h3 id="are_there_any_other_free_networks_available_i_can_use">Are there any other free networks available I can use?<a class="headerlink" href="#are_there_any_other_free_networks_available_i_can_use" title="Permanent link">#</a></h3>
+<p>See <a href="Networks/Import/OpenStreetMap.html">Networks/Import/OpenStreetMap</a></p>
+<h3 id="the_application_hangs_after_a_while_few_memory_consumption_most_of_the_system_time_windows">The application hangs after a while (few memory consumption, most of the system time) (Windows)<a class="headerlink" href="#the_application_hangs_after_a_while_few_memory_consumption_most_of_the_system_time_windows" title="Permanent link">#</a></h3>
+<p>You are probably running a program compiled in the debug-mode. This
+  yields in at least the triple of normal memory usage and your system
+  may not be able to solve. Try to use the normal version, build in
+  Release-mode (or buy more RAM :-) ).</p>
+<h3 id="many_errors_of_the_form_edges_x_from-_and_to-node_are_at_the_same_position">Many errors of the form <em>Edge's 'x' from- and to-node are at the same position</em><a class="headerlink" href="#many_errors_of_the_form_edges_x_from-_and_to-node_are_at_the_same_position" title="Permanent link">#</a></h3>
+<p>You are probably trying to import a network with geo-coordinates
+  without specifying a geo-projection. Add option <strong>--proj.utm</strong>.</p>
+<h3 id="many_errors_of_the_form_error_type_x_used_by_edge_y_was_not_defined">Many errors of the form <em>Error: Type 'x' used by edge 'y' was not defined</em><a class="headerlink" href="#many_errors_of_the_form_error_type_x_used_by_edge_y_was_not_defined" title="Permanent link">#</a></h3>
+<p>You are probably trying to re-import an OSM-network written to plain
+  XML data. Add <strong>--ignore-errors.edge-type</strong> or provide a type file.</p>
+<h3 id="error_sumo_was_compiled_without_gdal_support">Error: SUMO was compiled without GDAL support<a class="headerlink" href="#error_sumo_was_compiled_without_gdal_support" title="Permanent link">#</a></h3>
+<p>The default windows release is currently provided without GDAL support
+due to EPL2 Licensing issues. If you need to import shapefiles, either
+use the Linux version or download the <a href="http://sumo.dlr.de/daily/sumo-msvc12extrax64-git.zip">nightly-extra version</a></p>
+<h2 id="netedit">netedit<a class="headerlink" href="#netedit" title="Permanent link">#</a></h2>
+<h3 id="how_can_i_obtain_netedit">How can I obtain netedit?<a class="headerlink" href="#how_can_i_obtain_netedit" title="Permanent link">#</a></h3>
+<p><a href="netedit.html">netedit</a> is available as part of the regular
+  distribution since version 0.25.0.</p>
+<h2 id="traffic_demand_generation">Traffic Demand Generation<a class="headerlink" href="#traffic_demand_generation" title="Permanent link">#</a></h2>
+<h3 id="how_do_i_generate_random_routes">How do I generate random routes?<a class="headerlink" href="#how_do_i_generate_random_routes" title="Permanent link">#</a></h3>
+<p>First of all you should know that random routes are probably quite
+  unrealistic.
+  If you wish to use them anyway, use the script
+  <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/trip/randomTrips.py to generate random trips as explained
+  here
+  <a href="Tools/Trip.html#randomtripspy">Tools/Trip#randomTrips.py</a>.</p>
+<p>You can also call the script without options to get additional help.
+  See <a href="Demand/Shortest_or_Optimal_Path_Routing.html#usage_examples">Demand/Shortest or Optimal Path Routing#Usage_Examples</a>
+  for more information on turning trips into routes.</p>
+<h3 id="how_do_i_maintain_a_constant_number_of_vehicles_in_the_net">How do I maintain a constant number of vehicles in the net?<a class="headerlink" href="#how_do_i_maintain_a_constant_number_of_vehicles_in_the_net" title="Permanent link">#</a></h3>
+<p>There are different methods for accomplishing this. In either case
+  the simulation itself should be constraint using options <strong>--begin</strong>, <strong>--end</strong>.</p>
+<ul>
+<li>You can use <a href="Simulation/Rerouter.html">rerouters</a> in the
+  simulation. Rerouters, assign a new route for vehicles driving
+  across them and thus prevent them from leaving the network. For an
+  example with a simple circle see <a href="https://github.com/eclipse/sumo/blob/master/tests/sumo/cf_model/drive_in_circles"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/sumo/cf_model/drive_in_circles</a><ul>
+<li>The tool <a href="Tools/Misc.html#generatecontinuousrerouterspy">generateContinuousRerouters.py</a> can be used to generate
+  rerouters for continuous operation with configurable turning ratios.</li>
+<li>If the network is not circular to begin with (i.e a single
+  road) you can make the network circular in a non-geometrical way
+  by adding a return edge and declaring it's length to be very
+  short (minimum 0.1m). The return edge should have a sensible geometry (i.e. a detour loop) but the length can be made very short so that it does not affect vehicle routes.</li>
+</ul>
+</li>
+<li>You can generate long trips going around the network with lots of
+  detours. This can be accomplished using
+  <a href="Tools/Trip.html#randomtripspy">randomTrips.py</a> by setting
+  the options below. If the network contains disconnected parts, not
+  all random trips will be viable. In this case, simply generate more
+  trips and delete superfluous vehicles from the output route file.<ul>
+<li><strong>--begin</strong> &lt;your desired begin time></li>
+<li><strong>--end</strong> &lt;begin + time in which vehicles shall be inserted to then network></li>
+<li><strong>--period</strong> &lt;(end - begin) / number of vehicles desired></li>
+<li><strong>--intermediate</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> set to a large value to ensure that vehicles remain in the simulation long enough</li>
+<li><strong>-r</strong> &lt;output route file></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>You can use <a href="jtrrouter.html">jtrrouter</a> to <a href="Tutorials/Manhattan.html#generating_vehicles">generate vehicles which drive randomly around the network with configurable turning ratios</a></li>
+</ul>
+<ul>
+<li>You can use the option <strong>--max-num-vehicles</strong> to set the desired number. Vehicle
+  insertions are delayed whenever this number would be exceeded. To
+  avoid a large number of delayed vehicles it is recommended to also
+  use the option <strong>--max-depart-delay</strong>. When using this approach you must ensure that there
+  is a sufficient number of vehicles that are ready for insertion at
+  all times. Note, that the number of distinct vehicle IDs over the
+  whole simulation is much larger the specified value because some
+  vehicles leave the simulation and new vehicles with distinct IDs are
+  inserted to replace them.</li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Up to version 0.24.0, option <strong>--max-num-vehicles</strong> terminates the simulation when exceeding the specified number</p>
+</div>
+<h3 id="a_vehicle_cannot_reach_its_target_or_takes_a_circuitous_route_why">A vehicle cannot reach its target or takes a circuitous route. Why?<a class="headerlink" href="#a_vehicle_cannot_reach_its_target_or_takes_a_circuitous_route_why" title="Permanent link">#</a></h3>
+<p>Unexpected routes are often caused by invalid lane-to-lane
+  connections or
+  <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#abstract_vehicle_class"><code>vClass</code>-restrictions</a>.
+  Even if there are some lanes on every edge that permit the vehicle,
+  they may not be connected. If the vehicle has the default type, it
+  will ignore access restrictions and travel on all lanes. The
+  <a href="Tools/Net.html#netcheckpy">netcheck tool</a> can be used to
+  visualize connectivity from a starting edge and to discover missing
+  connections. It may be necessary to <a href="netconvert.html#edge_removal">delete some detour edges</a> from <a href="Networks/Import/SUMO_Road_Networks.html">the network</a> to discover
+  the relevant connectivity boundaries.</p>
+<p>To investigate connectivity <a href="sumo-gui.html">sumo-gui</a> can be
+  made to show lane-to-lane connections when customizing the
+  visualization options for junctions. To investigate lane-permission
+  issues, the menu option <em>Edit->Select lanes which allow...</em> can be
+  used for visualizing selected permissions.</p>
+<h3 id="how_do_i_generate_sumo_routes_from_gps_traces">How do I generate SUMO routes from GPS traces?<a class="headerlink" href="#how_do_i_generate_sumo_routes_from_gps_traces" title="Permanent link">#</a></h3>
+<p>The answer largely depends on the quality of your input data mainly
+  on the frequency / distance of your location updates and how precise
+  the locations fit your street network. In the best case there is a
+  location update on each edge of the route in the street network and
+  you can simply read off the route by mapping the location to the
+  street. This mapping can be done using the python sumolib coming
+  with sumo, see
+  <a href="Tools/Sumolib.html#locate_nearby_edges_based_on_the_geo-coordinate">Tools/Sumolib#locate_nearby_edges_based_on_the_geo-coordinate</a>
+  or directly by using duarouter's functionality to map (geo) coordinates
+  using the attributes <a href="Demand/Shortest_or_Optimal_Path_Routing.html">fromXY, fromLonLat and their relatives</a>.</p>
+<p>This will fail when there is an edge in the route which did not get
+  hit by a data point or if you have a mismatch (for instance matching
+  an edge which goes in the "wrong" direction). In the former case you
+  can easily repair the route using <a href="duarouter.html">duarouter</a>
+  with <strong>--repair</strong>. Another small script which helps here is
+  <a href="Tools/Routes.html#tracemapperpy">Tools/Routes#tracemapper.py</a>.
+  You can also use the map matching plugin from
+  <a href="Contributed/SUMOPy.html">Contributed/SUMOPy</a> here.</p>
+<p>For more complex cases (i.e. large temporal gaps or spatial errors)
+  the problem is known as <a href="https://en.wikipedia.org/wiki/Map_matching">Map Matching</a>. Open source
+  tools exist to facilitate this
+  (<a href="http://wiki.openstreetmap.org/wiki/Routing/Travel_Time_Analysis/MatchGPX2OSM">MatchGPX2OSM</a>
+  <a href="https://github.com/graphhopper/map-matching">graphhopper</a>).</p>
+<p>To exactly reproduce high-resolution trajectories, it is possible to
+  map exact vehicle locations (including lateral positioning) and also
+  to move vehicles beyond the road space by using the <a href="TraCI/Change_Vehicle_State.html#move_to_xy_0xb4">TraCI moveToXY function</a>.</p>
+<h2 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">#</a></h2>
+<h3 id="how_to_simulate_an_accident">How to simulate an accident<a class="headerlink" href="#how_to_simulate_an_accident" title="Permanent link">#</a></h3>
+<p>SUMO automatically detects <a href="Simulation/Safety.html#collisions">vehicle collisions</a>. Since the default
+model aims to be accident free, some effort must be taken to <a href="Simulation/Safety.html#deliberately_causing_collisions">create accidents</a>.</p>
+<p>Often, the effects of an accident are required instead of the accident
+itself. Without using <a href="TraCI.html">TraCI</a> the following approaches
+may be useful:</p>
+<ol>
+<li>Let a vehicle halt on the lane for some time (see <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#stops">Definition of Vehicles, Vehicle Types, and Routes#Stops</a>).
+This works quite nice for simulating accidents.</li>
+<li>Put a variable speed sign of the lane where the accident is meant to
+be and let it reduce the speed (see <a href="Simulation/Variable_Speed_Signs.html">Simulation/Variable Speed Signs</a>). This method will
+reduce the throughput on the lane, but further dynamics will rather not
+fit to what one would expect from an accident situation.</li>
+<li>You may of course combine both approaches. Within a project we
+simulated traffic incidents by letting vehicles stop on one lane and
+reducing the speed on the other lanes.</li>
+<li>Alternatively, you may <a href="Simulation/Rerouter.html#closing_a_lane">close one or more of the lanes on an edge</a></li>
+<li>If you <a href="Simulation/Rerouter.html#closing_a_street">close the whole edge, rerouting may be triggered as well</a></li>
+<li>By setting the option <strong>--collision.stoptime</strong>, traffic jams may be created after a
+registered
+<a href="Simulation/Safety.html#deliberately_causing_collisions">collision</a>.</li>
+</ol>
+<h3 id="i_have_changed_my_network_and_now_sumo_does_not_load_it">I have changed my network and now SUMO does not load it.<a class="headerlink" href="#i_have_changed_my_network_and_now_sumo_does_not_load_it" title="Permanent link">#</a></h3>
+<p>Actually, SUMO-networks are not meant to be edited by hand. You have
+  to describe everything within your input properly and let netconvert
+  build your network. Editing networks by hand is very complicated and
+  error-prone.</p>
+<h3 id="how_do_i_change_the_duration_of_cycles_and_phases">How do I change the duration of cycles and phases?<a class="headerlink" href="#how_do_i_change_the_duration_of_cycles_and_phases" title="Permanent link">#</a></h3>
+<p>use <a href="netedit.html#traffic_lights">netedit</a></p>
+<h3 id="i_can_not_see_a_vehicle_moving_in_my_simulation">I can not see a vehicle moving in my simulation<a class="headerlink" href="#i_can_not_see_a_vehicle_moving_in_my_simulation" title="Permanent link">#</a></h3>
+<p>There may be several reasons why you do not see the cars.</p>
+<ul>
+<li>The simulation is not yet running (click the "play" button (<img alt="Image:play.gif" src="images/Play.gif" title="Image:play.gif" />), see <a href="sumo-gui.html#usage_description">sumo-gui#Usage_Description</a>)</li>
+<li>If your simulation area is too big, cars will not be displayed
+  unless you zoom into the net. Cars are simply to small when looking
+  from far away. To change this you may also set the option <em>Draw with
+  constant size when zoomed out</em> (see <a href="sumo-gui.html#changing_the_appearancevisualisation_of_the_simulation">visualization settings for vehicles</a>).</li>
+<li>The simulation is too fast so that all vehicles disappear before
+  being seen. To avoid this, you may <a href="sumo-gui.html#usage_description">increase the <em>Delay</em>-value</a> to slow down
+  the simulation.</li>
+<li><a href="sumo-gui.html#windows_and_buttons_appear_but_no_netcars_are_visible_vehicles_are_not_visible_or_flicker_roads_are_drawn_on_top_of_vehicles">You might have outdated graphic card drivers</a></li>
+</ul>
+<h3 id="different_departure_times_with_different_time_step_size">Different departure times with different time step size<a class="headerlink" href="#different_departure_times_with_different_time_step_size" title="Permanent link">#</a></h3>
+<p>Vehicles are entering the network earlier with decreasing time step
+  lengths.
+  The reason for this behavior is that a vehicle is emitted at the
+  end of a time step. For one second time steps, this means that a
+  vehicle which has the depart time of 0 will be inserted into the
+  network at the end of the time step between 0 and 1, this means
+  almost on second 1 (0.99...). If time steps of 0.1 seconds are used,
+  the same vehicle is inserted into the network at the end of the time
+  step between 0 and 0.1, this means almost on 0.1 (0.099...).</p>
+<h3 id="how_to_save_a_simulation_state_and_proceed_later_andor_differently">How to save a simulation state and proceed later and/or differently<a class="headerlink" href="#how_to_save_a_simulation_state_and_proceed_later_andor_differently" title="Permanent link">#</a></h3>
+<p>See <a href="Simulation/SaveAndLoad.html">Simulation/SaveAndLoad</a></p>
+<h3 id="how_can_i_make_the_simulation_run_faster">How can I make the simulation run faster?<a class="headerlink" href="#how_can_i_make_the_simulation_run_faster" title="Permanent link">#</a></h3>
+<ul>
+<li>make sure there are <a href="#the_simulation_has_lots_of_jamsdeadlocks_what_can_i_do">no unwanted jams</a>
+  The more vehicles there are in the simulion, the slower it gets.</li>
+<li>if your network is very large, build it with option
+  --no-internal-links (<a href="Simulation/Intersections.html#internal_links">simplified intersection model</a>)</li>
+<li>If you are using trips or periodic rerouting, enable <a href="Demand/Automatic_Routing.html#parallelization">parallel routing</a></li>
+<li>use the default step-lenght of 1s (using <strong>--step-length 0.1</strong> slows down the simulation
+  by a factor of 10)</li>
+<li>if your simulation is very larger. consider using the <a href="Simulation/Meso.html">mesoscopic simulation model</a></li>
+<li>see below for further tips on slow-down</li>
+</ul>
+<h3 id="the_simulation_gets_slow_with_many_vehicles_waiting_for_insertion">The simulation gets slow with many vehicles waiting for insertion<a class="headerlink" href="#the_simulation_gets_slow_with_many_vehicles_waiting_for_insertion" title="Permanent link">#</a></h3>
+<p>SUMO keeps checking continuously for possible vehicle insertions. If
+  the network is jammed the number of necessary checks grows quickly.
+  The option <strong>--max-depart-delay</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> may be used to discard vehicles which could not be
+  inserted within <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> seconds.</p>
+<h3 id="the_simulation_runs_slow_on_the_command_line">The simulation runs slow on the command line<a class="headerlink" href="#the_simulation_runs_slow_on_the_command_line" title="Permanent link">#</a></h3>
+<p>when running on the windows operating system, the command-line
+  output which is refreshed every simulation step slows the simulation
+  down significantly. Use option <strong>--no-step-log</strong> to avoid this.</p>
+<h3 id="the_simulation_has_lots_of_jamsdeadlocks_what_can_i_do">The simulation has lots of jams/deadlocks. What can I do?<a class="headerlink" href="#the_simulation_has_lots_of_jamsdeadlocks_what_can_i_do" title="Permanent link">#</a></h3>
+<p>Deadlocks in a scenario can have many causes:</p>
+<ol>
+<li>invalid network<ul>
+<li>invalid lane numbers</li>
+<li>missing turning lanes</li>
+<li>invalid connections</li>
+<li>invalid junctions <a href="Networks/PlainXML.html#joining_nodes">(big clusters of small junctions should be joined)</a></li>
+</ul>
+</li>
+<li>invalid traffic lights (see <a href="Simulation/Traffic_Lights.html#improving_generated_programs_with_knowledge_about_traffic_demand">Improving generated traffic lights</a>)</li>
+<li>invalid demand (too many vehicles overall, too many vehicles
+    starting on the same edge).</li>
+<li>invalid routing<ul>
+<li>only shortest path were used instead of <a href="Demand/Dynamic_User_Assignment.html">a user assignment algorithm</a></li>
+<li>to many vehicles start/end their route with a <a href="Simulation/Turnarounds.html">turn-around</a>.</li>
+</ul>
+</li>
+<li>invalid insertion (vehicles being inserted on the wrong lane close
+    to the end of an edge where they need to change to another turn
+    lane). This can be fixed by setting the vehicle attribute <code>departLane="best"</code></li>
+</ol>
+<p>If the network was imported from OpenStreetMap, it is highly recommended
+to use the <a href="Networks/Import/OpenStreetMap.html#recommended_netconvert_options">recommended import options</a>.
+The best course of action typically is to observe the simulation using
+<a href="sumo-gui.html">sumo-gui</a> and figure out where the first jam
+develops.</p>
+<h3 id="why_do_the_vehicles_perform_unexpected_lane-changing_maneuvers">Why do the vehicles perform unexpected lane-changing maneuvers?<a class="headerlink" href="#why_do_the_vehicles_perform_unexpected_lane-changing_maneuvers" title="Permanent link">#</a></h3>
+<p>This may be caused by invalid lane-to-lane connections. Check the
+  connections in <a href="sumo-gui.html">sumo-gui</a> by activating
+  <em>Junctions->show lane to lane connections</em> in the <a href="sumo-gui.html#changing_the_appearancevisualisation_of_the_simulation">gui settings dialog</a>.</p>
+<h3 id="how_do_i_get_high_flowsvehicle_densities">How do I get high flows/vehicle densities?<a class="headerlink" href="#how_do_i_get_high_flowsvehicle_densities" title="Permanent link">#</a></h3>
+<p>By default, insertion flow is <a href="Simulation/VehicleInsertion.html#forcing_insertion_avoiding_depart_delay">limited by the time resolution of the simulation</a> (vehicles are only inserted every full second) and by the default insertion speed of 0.</p>
+<p>The following definition will allow flows in the range of 2500 vehicles/hour/lane:</p>
+<p><code>&lt;vehicle departSpeed="max" departPos="last" departLane="best" ../&gt;</code></p>
+<p>Instead of setting <code>departPos="last"</code>, the option <strong>--extrapolate-departpos</strong> can also be used.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When using <em>departLane</em> values <em>best</em>, <em>free</em> or <em>random_free</em> high flows on multi-lane roads require insertion edges that are somewhat longer than the braking distance of the fastest vehicles. This is because the lane selection checks vehicles on the insertion edge to determine a suitable insertion lane and short edges give insufficient information.</p>
+</div>
+<p>To increase flows even further the following settings can be used
+(potentially sacrificing some realism)</p>
+<ul>
+<li><code>&lt;vType sigma="0" minGap="1" length="3" .../&gt;</code></li>
+<li><code>&lt;vType tau="0.5" .../&gt;</code> (should not be lower than step-length)</li>
+</ul>
+<h3 id="how_do_i_insert_vehicles_with_a_fixed_density">How do I insert vehicles with a fixed density?<a class="headerlink" href="#how_do_i_insert_vehicles_with_a_fixed_density" title="Permanent link">#</a></h3>
+<p>To start a simulation with 65 evenly-spaced vehicles on a specific lane
+of a 1km highway, do the following:</p>
+<ul>
+<li>create an edge that is 1km long</li>
+<li>compute the space for each vehicle: 1000m / 65 = 15.385m</li>
+<li>subtract the minimum space requirement (5m vehicle length + 2.5m
+  minimum gap by default)</li>
+<li>this gives you 7.885m as remaining space between vehicles.</li>
+<li>at a default value of tau=1 (desired time headway excluding minGap)
+  this means vehicles will be in a stationary state at 7.885m/s</li>
+<li>you can use insertion method 'last' which places vehicles at their
+  desired headway for a given speed (repeat for every lane):</li>
+</ul>
+<pre><code>&lt;flow id=&quot;lane0&quot; from=&quot;startEdge&quot; to=&quot;destEdge&quot; begin=&quot;0&quot; end=&quot;1&quot; number=&quot;65&quot; departPos=&quot;last&quot; departSpeed=&quot;7.885&quot; departLane=&quot;0&quot;/&gt;
+</code></pre>
+
+<p>To let vehicles enter the simulation continuously with a specific
+density:</p>
+<ul>
+<li>compute the time period between successive vehicles using the
+  equilibrium speed from above: 15.385m / 7.885m/s = 1.951s</li>
+<li>use the equilibrium speed as departSpeed</li>
+</ul>
+<pre><code>&lt;flow id=&quot;lane0&quot; from=&quot;startEdge&quot; to=&quot;destEdge&quot; begin=&quot;0&quot; end=&quot;3600&quot; period=&quot;1.951&quot; departPos=&quot;base&quot; departSpeed=&quot;7.885&quot; departLane=&quot;0&quot;/&gt;
+</code></pre>
+
+<h3 id="how_do_i_force_a_lane_change">How do I force a lane change?<a class="headerlink" href="#how_do_i_force_a_lane_change" title="Permanent link">#</a></h3>
+<p>There are several options to force a vehicle onto a lane:</p>
+<ul>
+<li>setting vehicle attributes <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#a_vehicles_depart_and_arrival_parameter">'departLane' and 'arrivalLane'</a></li>
+<li>setting a
+  <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#stops">&lt;stop></a>
+  on the desired lane (also affects speed)</li>
+<li>setting a route that requires lane-changing to a specific lane for
+  continuation</li>
+<li>setting the vehicle <a href="Simulation/VehiclePermissions.html">class of the vehicle and forbidding that class from using the other lanes of an edge</a></li>
+<li>trigger the lane-change via
+  <a href="TraCI/Change_Vehicle_State.html#change_lane_0x13">TraCI</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A further method is planned but not yet implemented: <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1020" title="GitHub Issue eclipse/sumo #1020">#1020</a></p>
+</div>
+<h3 id="are_there_any_limits_in_regard_to_the_size_of_a_simulation_scenario">Are there any limits in regard to the size of a simulation scenario?<a class="headerlink" href="#are_there_any_limits_in_regard_to_the_size_of_a_simulation_scenario" title="Permanent link">#</a></h3>
+<ul>
+<li>There are no hard limits on the number of streets, intersections or
+  vehicles in SUMO. Make sure that you have enough RAM when trying to
+  build or run scenarios beyond city-size. It may be necessary to use
+  the 64bit version of SUMO to make use of available RAM.</li>
+<li>The maximum length of a simulation scenario is 285 million years (or
+  278 thousand years at millisecond time resolution). If you need to
+  simulate longer time periods you must <a href="#how_to_save_a_simulation_state_and_proceed_later_andor_differently">save and reload the simulation state</a></li>
+</ul>
+<h3 id="how_fast_can_sumo_run">How fast can SUMO run?<a class="headerlink" href="#how_fast_can_sumo_run" title="Permanent link">#</a></h3>
+<p>This really depends on how many vehicles you have in your simulation at any given time (and to some extent on how strongly vehicles interact at intersections and how many lanes each vehicle has to chose during lane-changing). 
+When running in verbose mode, SUMO will tell you the UPS metric. This is vehicle <strong>up</strong>dates <strong>p</strong>er <strong>s</strong>econd. A number of x tells you that you could run x vehicles in real-time at a step length of 1 second. 
+Running time is inversely proportional to step-length (<strong>--step-length 0.1</strong> computes 10 times as many steps compared to the default of 1s and thus takes 10 times as long).</p>
+<p>Some examples on an average desktop PC:</p>
+<ul>
+<li>vehicles on a long single lane: 700k UPS</li>
+<li>vehicles on a long four-lane road: 240k UPS</li>
+<li>complex grid network: 80k UPS</li>
+</ul>
+<p>In a city simulation of one day running with 80k UPS where a vehicle spends on average 30 minutes driving, 3.8 million vehicles can be simulated in 24h wall-clock time. However, the simulation would run slower than real-time whenever there are more than 80k Vehicles in the network at the same time because rush hours and low-traffic times would average out.</p>
+<p>Calculated as <code>24 * 3600 * 80000 / 1800 = 3840000</code></p>
+<h2 id="visualisation">Visualisation<a class="headerlink" href="#visualisation" title="Permanent link">#</a></h2>
+<h3 id="sumo-gui_breaks">sumo-gui breaks<a class="headerlink" href="#sumo-gui_breaks" title="Permanent link">#</a></h3>
+<p>Sometimes <a href="sumo-gui.html">sumo-gui</a> terminates with no reason.
+  In most cases, an update of the opengl-driver solves this problem.</p>
+<h3 id="display_flickers_in_the_area_of_the_mouse_pointer_windows">Display flickers in the area of the mouse pointer (Windows)<a class="headerlink" href="#display_flickers_in_the_area_of_the_mouse_pointer_windows" title="Permanent link">#</a></h3>
+<p>Newer Windows-Versions seem to cache the area under the mouse to
+  apply the mouse shadow afterwards. To avoid this, go to your
+  Systemmenu, then Mouse->Pointers and disable the mouse shadows.
+  That's the only solution so far. (Origin: Till Oliver Knoll, via QT
+  Interest List)</p>
+<h3 id="sumo-gui_windows_and_buttons_appear_but_no_netcars_are_visible_vehicles_are_not_visible_or_flicker_roads_are_drawn_on_top_of_vehicles">sumo-gui windows and buttons appear but no net/cars are visible / Vehicles are not visible or flicker / Roads are drawn on top of vehicles<a class="headerlink" href="#sumo-gui_windows_and_buttons_appear_but_no_netcars_are_visible_vehicles_are_not_visible_or_flicker_roads_are_drawn_on_top_of_vehicles" title="Permanent link">#</a></h3>
+<p>This problem may occur when using outdated/wrong openGL drivers.
+  Please try to update the drivers for you graphics hardware.</p>
+<h3 id="building_videos_from_sumo-gui">Building videos from sumo-gui<a class="headerlink" href="#building_videos_from_sumo-gui" title="Permanent link">#</a></h3>
+<p>There are several ways to build videos from your SUMO simulation. You
+can use screen capturing tools like VLC Player
+<a href="http://www.videolan.org/vlc">[1]</a>. The disadvantage of this approach is
+the requirement of a (very) fast CPU to capture the video in real time,
+it depends on the chosen resolution and screen size of the simulation.</p>
+<p>The second approach needs a sumo-gui version which has support for
+ffmpeg compiled in (for the windows downloads this is the extra
+version). When in doubt open the about dialog (press F2) and read the
+line mentioning the compiled features (like Proj) whether it includes
+FFmpeg. If so, you can use the screenshot button to start video
+recording. Just enter a filename ending with ".h264" or ".hevc"
+depending on the encoder you want. Please be aware that this will slow
+down your simulation sometimes to the point of halting.</p>
+<p>Another approach is the use of single images for every simulation
+timestep. This can be done with an additional traci command for building
+screenshots. A small python snippet shows the usage of this TraCI
+command to get a new image for each new timestep.</p>
+<pre><code>    for i in range(duration):
+        traci.simulationStep()
+        traci.gui.screenshot(&quot;View #0&quot;, &quot;images/&quot;+str(i)+&quot;.png&quot;)
+</code></pre>
+
+<p>Next you have to glue the images together. This job can be done
+graphically with virtualdub <a href="http://www.virtualdub.org">[2]</a> or via
+commandline with ffmpeg <a href="http://www.ffmpeg.org">[3]</a>. An example command
+for ffmpeg is shown below.</p>
+<pre><code>    ffmpeg -r 10 -i images/%d.png -b:v 1500k -vcodec wmv2 sumo.wmv
+</code></pre>
+
+<p>The parameters -r set the value for the fps and -b:v the bitrate for the
+video.</p>
+<h3 id="incomplete_output">Incomplete output<a class="headerlink" href="#incomplete_output" title="Permanent link">#</a></h3>
+<p>When using the GUI or TraCI the output files seem sometimes incomplete
+because the files are only flushed when everything is closed. For the
+GUI you can either use the close item from the menu or close the whole
+GUI. In TraCI it is always a good idea to wait for the sumo process to
+be finished using some kind of
+<a href="https://docs.python.org/2/library/subprocess.html#popen-objects">process.wait()</a>
+mechanism</p>
+<h3 id="incompatibility_with_displaylink_devices">Incompatibility with DisplayLink devices<a class="headerlink" href="#incompatibility_with_displaylink_devices" title="Permanent link">#</a></h3>
+<p>Drivers of <a href="http://www.DisplayLink.com">DisplayLink</a> devices are
+incompatibles with Fox Library. If sumo-gui or netedit presents graphics
+problem like <a href="http://sumo.dlr.de/docs/images/DisplayLinkError.png">this</a>
+during the execution, DisplayLink drivers must be uninstalled.</p>
+<h3 id="distorted_view_with_green_lines_all_over_the_network">Distorted view with green lines all over the network<a class="headerlink" href="#distorted_view_with_green_lines_all_over_the_network" title="Permanent link">#</a></h3>
+<p>If your sumo-gui looks <a href="https://github.com/eclipse/sumo/issues/7511">like this</a>
+it is probably again a problem with your display driver. It seems to occur most
+of the time with on board (Intel) graphics together with a dedicated nvidia card.
+To fix it install the latest nvidia drivers, open the nvidia system control panel
+(should be available from a right click on the desktop background) go to 3D settings
+and select nvidia as your preferred graphics processor. If this does not fix it, try
+to set the integrated graphics as preferred. (Thanks <a class="gh-link gh-mention" href="https://github.com/palvarezlopez" title="GitHub User: @palvarezlopez">@palvarezlopez</a> for finding out.)</p>
+<h2 id="upgrading">Upgrading<a class="headerlink" href="#upgrading" title="Permanent link">#</a></h2>
+<h3 id="how_do_i_upgrade_sumo">How do I upgrade SUMO?<a class="headerlink" href="#how_do_i_upgrade_sumo" title="Permanent link">#</a></h3>
+<p>The easiest way is to download the <a href="https://sumo.dlr.de/docs/Downloads.php">latest sumo release</a> or the <a href="https://sumo.dlr.de/docs/Downloads.php#sumo_-_latest_development_version">latest development version</a> to a
+  directory of your choices and start using it from there. You may
+  have to update the environment variables <em>PATH</em> and <em>SUMO_HOME</em> to
+  ensure that the correct version of the application is called from
+  the command line (see
+  <a href="Basics/Basic_Computer_Skills.html#configuring_path_settings">Basics/Basic_Computer_Skills#Configuring_Path_Settings</a>).
+  Confirm that the values are update correctly by calling <code>echo %SUMO_HOME%</code> (Linux: <code>echo $SUMO_HOME</code>) 
+  from a command line that you wish to use for calling applications and traci scripts.</p>
+<h3 id="sumo_warns_about_deprecated_networks_or_fails_to_load_them"><a href="sumo.html">sumo</a> warns about deprecated networks or fails to load them<a class="headerlink" href="#sumo_warns_about_deprecated_networks_or_fails_to_load_them" title="Permanent link">#</a></h3>
+<p>In major versions (whenever the 1st or 2nd digit of the version
+  number changes) there may be changes to the network format. In this
+  case we provide scripts in  <strong><em>&lt;SUMO_HOME&gt;</em></strong><em>/tools/net</em> which can be used to
+  upgrade your networks automatically. The current version of
+  <a href="netconvert.html">netconvert</a> can also be used to upgrade most
+  network files to the current version. Simply call <code>netconvert -s old.net.xml -o new.net.xml</code></p>
+<h2 id="python_tools">Python tools<a class="headerlink" href="#python_tools" title="Permanent link">#</a></h2>
+<h3 id="how_do_i_run_the_python_tools">How do I run the python tools?<a class="headerlink" href="#how_do_i_run_the_python_tools" title="Permanent link">#</a></h3>
+<p>See <a href="Basics/Using_the_Command_Line_Applications.html#using_python_tools_from_the_command_line">here</a></p>
+<h3 id="tools_fail_with_a_syntaxerror_or_importerror_or_some_typeerror_concerning_6262">tools fail with a SyntaxError or ImportError or some TypeError concerning ">>"<a class="headerlink" href="#tools_fail_with_a_syntaxerror_or_importerror_or_some_typeerror_concerning_6262" title="Permanent link">#</a></h3>
+<p>Many python tools require python version 2.7. We aim to have Python
+  3 compatibility for <a href="Tools/Sumolib.html">sumolib</a> and
+  <a href="TraCI/Interfacing_TraCI_from_Python.html">traci</a> however.</p>
+<h3 id="tools_fail_with_an_importerror">tools fail with an ImportError<a class="headerlink" href="#tools_fail_with_an_importerror" title="Permanent link">#</a></h3>
+<p>Make sure to set the environment variable SUMO_HOME to point at the
+  base directory of your SUMO installation (the directory that
+  contains <em>tools</em> and <em>bin</em>).</p>
+<h3 id="how_do_i_import_traci_or_sumolib_in_my_own_python_script">how do I import <a href="TraCI/Interfacing_TraCI_from_Python.html">traci</a> or <a href="Tools/Sumolib.html">sumolib</a> in my own python script?<a class="headerlink" href="#how_do_i_import_traci_or_sumolib_in_my_own_python_script" title="Permanent link">#</a></h3>
+<p>In order to import these libraries the folder <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools must be in your
+<a href="https://docs.python.org/2/tutorial/modules.html#the-module-search-path">python search path</a>.
+This can be accomplished by modifying the python variable <strong>sys.path</strong>
+as explained <a href="TraCI/Interfacing_TraCI_from_Python.html">here</a> and
+<a href="Tools/Sumolib.html">here</a>. Alternatively you can hard-code the
+path to your SUMO-installation into your script:</p>
+<pre><code> import sys
+ sys.path.append('/your/path/to/sumo/tools')
+ import traci
+ import sumolib
+</code></pre>
+
+<h3 id="the_python_scripts_do_not_accept_command_line_arguments_windows_only">the python scripts do not accept command line arguments (windows only)<a class="headerlink" href="#the_python_scripts_do_not_accept_command_line_arguments_windows_only" title="Permanent link">#</a></h3>
+<p>This is a <a href="https://stackoverflow.com/questions/2640971/">known issue</a>
+with some python installations. The usual workaround if you are not
+allowed to do edit the registry, is to call the python interpreter
+explicitly, e.g. instead of</p>
+<pre><code>script.py &lt;argument&gt;
+</code></pre>
+
+<p>you do</p>
+<pre><code>python script.py &lt;argument&gt;
+</code></pre>
+
+<h3 id="osmwebwizardpy_fails_to_generate_scenario_on_windows_10"><a href="Tools/Import/OSM.html#osmWebWizard.py">osmWebWizard.py</a> fails to generate Scenario on Windows 10<a class="headerlink" href="#osmwebwizardpy_fails_to_generate_scenario_on_windows_10" title="Permanent link">#</a></h3>
+<p>This can happen with an outdated version of python 2.7. Updating to
+2.715 (64bit) has been reported as fixing this problem.</p>
+<h2 id="communication_network_simulators">(Communication) Network Simulators<a class="headerlink" href="#communication_network_simulators" title="Permanent link">#</a></h2>
+<h3 id="how_do_i_use_tcl_files_with_ns2">How do I use <em>.tcl</em> files with NS2?<a class="headerlink" href="#how_do_i_use_tcl_files_with_ns2" title="Permanent link">#</a></h3>
+<p>Questions regarding NS2 should be put to <a href="http://www.isi.edu/nsnam/ns/ns-lists.html">the NS2 mailing list</a>.</p>
+<h3 id="how_do_i_combine_sumo_with_a_network_simulator">How do I combine SUMO with a network simulator?<a class="headerlink" href="#how_do_i_combine_sumo_with_a_network_simulator" title="Permanent link">#</a></h3>
+<p>Check out <a href="http://veins.car2x.org/">veins</a>.</p>
+<h2 id="validity">Validity<a class="headerlink" href="#validity" title="Permanent link">#</a></h2>
+<h3 id="what_are_publications_on_sumos_validity">What are publications on SUMO's validity?<a class="headerlink" href="#what_are_publications_on_sumos_validity" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://elib.dlr.de/120856/">https://elib.dlr.de/120856/</a></li>
+<li><a href="https://elib.dlr.de/112657/">https://elib.dlr.de/112657/</a></li>
+<li><a href="https://elib.dlr.de/6657/">https://elib.dlr.de/6657/</a></li>
+<li><a href="https://elib.dlr.de/121278/">https://elib.dlr.de/121278/</a></li>
+<li><a href="https://elib.dlr.de/97240/">https://elib.dlr.de/97240/</a></li>
+<li><a href="https://elib.dlr.de/115720/">https://elib.dlr.de/115720/</a></li>
+<li><a href="https://elib.dlr.de/116607/">https://elib.dlr.de/116607/</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7906642">https://ieeexplore.ieee.org/abstract/document/7906642</a></li>
+</ul>
+<h2 id="outdated_questions_for_very_old_versions_of_sumo">Outdated (Questions for very old versions of SUMO)<a class="headerlink" href="#outdated_questions_for_very_old_versions_of_sumo" title="Permanent link">#</a></h2>
+<h3 id="vehicles_do_not_drive_on_the_last_edge_of_their_route">Vehicles do not drive on the last edge of their route<a class="headerlink" href="#vehicles_do_not_drive_on_the_last_edge_of_their_route" title="Permanent link">#</a></h3>
+<p>Up to (and including) version 0.13.1 a vehicle finished its route
+  (per default) on position 0 of the last edge. You can change this by
+  setting the attribute <strong>departPos</strong> in the vehicle definition (see
+  <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">Definition_of_Vehicles,_Vehicle_Types,_and_Routes</a>).
+  Negative values count backwards from the end of the edge, thus
+  setting <strong>departPos</strong>="-1" will make the vehicle drive (almost) to
+  the end of the last edge. The new default in more recent versions is
+  the end of the edge, which should disable this behavior.</p>
+<h3 id="vehicle_jumps_backward">Vehicle jumps backward<a class="headerlink" href="#vehicle_jumps_backward" title="Permanent link">#</a></h3>
+<p>When I try to evaluate my vehicle dump, sometimes vehicle seem to
+  jump backward (their position is smaller than in the previous step)</p>
+<p>To avoid jams due to an inappropriate lane changing behavior,
+  vehicles may swap their lanes. In this case each vehicle obtains the
+  position and speed of the other vehicle. As the position of the
+  vehicles may differ a bit, one of the vehicles may seem to jump
+  backwards.</p>
+<p>This should not happen from Version0.8 on.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 20 October 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

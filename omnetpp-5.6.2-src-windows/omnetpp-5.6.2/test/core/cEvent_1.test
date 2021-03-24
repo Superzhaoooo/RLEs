@@ -1,0 +1,64 @@
+%description:
+Basic test for cEvent.
+
+%module: Module
+
+class SayHelloEvent : public cEvent
+{
+  public:
+    SayHelloEvent(const char *name, simtime_t t);
+    virtual cEvent *dup() const override {copyNotSupported(); return nullptr;}
+    virtual cObject *getTargetObject() const override {return nullptr;}
+    virtual void execute() override;
+};
+
+SayHelloEvent::SayHelloEvent(const char *name, simtime_t t) : cEvent(name)
+{
+    setArrivalTime(t);
+}
+
+void SayHelloEvent::execute()
+{
+    EV << getName() << " at " << simTime() << "s" << endl;
+    delete this;
+}
+
+class Module : public cSimpleModule
+{
+  public:
+    virtual void initialize() override;
+    virtual void handleMessage(cMessage *msg) override;
+    virtual void finish() override;
+};
+
+Define_Module(Module);
+
+void Module::initialize()
+{
+    scheduleAt(5.0, new cMessage("msg1"));
+    getSimulation()->insertEvent(new SayHelloEvent("hello", 5.0));
+    scheduleAt(5.0, new cMessage("msg2"));
+}
+void Module::handleMessage(cMessage *msg)
+{
+    EV << msg->getName() << " at " << simTime() << "s" << endl;
+    delete msg;
+}
+
+void Module::finish()
+{
+   EV << "finish at " << simTime() << "s" << endl;
+   EV << "-" << endl;
+}
+
+%inifile: test.ini
+[General]
+network = Module
+cmdenv-express-mode = false
+
+%contains-regex: stdout
+.*msg1 at 5s
+.*hello at 5s
+.*msg2 at 5s
+.*finish at 5s
+-

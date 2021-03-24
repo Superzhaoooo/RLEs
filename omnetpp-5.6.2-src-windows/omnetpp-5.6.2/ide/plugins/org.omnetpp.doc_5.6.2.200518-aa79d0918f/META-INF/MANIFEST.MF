@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Created-By: Apache Maven 3.5.2
+Built-By: root
+Build-Jdk: 10.0.1
+Bundle-ManifestVersion: 2
+Bundle-Name: OMNeT++ Help
+Bundle-SymbolicName: org.omnetpp.doc;singleton:=true
+Bundle-Version: 5.6.2.200518-aa79d0918f
+Bundle-Vendor: OpenSim Ltd.
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir
+Require-Bundle: org.eclipse.ui,org.eclipse.ui.intro,org.eclipse.ui.int
+ ro.universal,org.eclipse.help,org.omnetpp.common
+

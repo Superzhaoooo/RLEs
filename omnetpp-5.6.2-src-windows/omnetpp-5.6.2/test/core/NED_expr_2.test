@@ -1,0 +1,45 @@
+%description:
+Shift operator in NED (Stefan Feuerhahn's bug)
+
+FIXME may fail on Linux (on Windows it's OK) because with double d=0xc0000000,
+(long)d yields 0x80000000  (Linux discards a bit on the double->long conversion).
+This occurs at cpar.cc#827 return (long)doubleValue();
+
+%file: test.ned
+
+simple Test
+{
+    parameters:
+        @isNetwork(true);
+        int p00 = 192<<24;
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+class Test : public cSimpleModule
+{
+  public:
+    Test() : cSimpleModule(16384) { }
+    virtual void activity() override;
+};
+
+Define_Module(Test);
+
+void Test::activity()
+{
+    for (int i=0; i<getNumParams(); i++)
+        EV << par(i).getName() << "=" << std::hex << (unsigned long)par(i) << endl;
+    EV << ".\n";
+}
+
+}; //namespace
+
+%contains: stdout
+p00=c0000000
+.

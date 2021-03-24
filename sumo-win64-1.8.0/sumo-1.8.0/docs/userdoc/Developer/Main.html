@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/Main.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Developer - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/Main.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#developer_documentation">Developer Documentation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#build_instructions" class="nav-link">• Build instructions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#how_tos" class="nav-link">• How Tos</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#methods_algorithms_and_subsystems" class="nav-link">• Methods, Algorithms, and Subsystems</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#current_development" class="nav-link">• Current Development</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#continuous_integration_code_analysis_and_other_external_references" class="nav-link">• Continuous integration, code analysis and other external references</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="developer_documentation">Developer Documentation<a class="headerlink" href="#developer_documentation" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="../Libraries_Licenses.html">Libraries Licenses</a> - which libraries are used and under which licenses</li>
+<li><a href="CodeStyle.html">Developer/CodeStyle</a> - information about how the sourcecode should look like</li>
+<li><a href="Tests.html">Developer/Tests</a> - information about performed software tests</li>
+<li><a href="Unit_Tests.html">Developer/Unit Tests</a> - information about how to set up Unit Tests</li>
+<li><a href="GUI_Testing.html">Developer/GUI Testing</a> - information about how to set up "interactive" GUI Tests with PyAutoGUI</li>
+<li><a href="Debugging.html">Developer/Debugging</a> - information about debugging SUMO</li>
+<li><a href="ExploringTheStructure.html">Developer/Exploring the structure</a> - explore the structure of SUMO with the doxygen documentation</li>
+<li><a href="http://sumo.dlr.de/daily/doxygen/">Inline code documentation (doxygen)</a></li>
+<li><a href="Used_Tools.html">Developer/Used Tools</a> - tools used for developing SUMO</li>
+<li><a href="Managing_Publications.html">Developer/Managing Publications</a> - how to work with the publications bibtex-file</li>
+<li><a href="FMI.html">Developer/FMI</a> - information about the current state of the FMI 2.0 support in SUMO</li>
+</ul>
+<h2 id="build_instructions">Build instructions<a class="headerlink" href="#build_instructions" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="../Installing/Linux_Build.html">Installing/Linux Build</a> - how to
+  build on Linux</li>
+<li><a href="../Installing/Windows_Build.html">Installing/Windows Build</a> -
+  how to build on Windows</li>
+<li><a href="../Installing/MacOS_Build.html">Installing/macOS Build</a> - how to
+  build on macOS</li>
+<li><a href="Documentation_Build.html">Developer/Documentation Build</a> - how to build the
+  documentation</li>
+<li><a href="Nightly_Build.html">Developer/Nightly Build</a> - what
+  happens every night</li>
+<li><a href="https://sumo.dlr.de/daily/">Status page</a> - log files and test
+  results of nightly builds</li>
+</ul>
+<h2 id="how_tos">How Tos<a class="headerlink" href="#how_tos" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="How_To/Net_Importer.html">How To write an own network importer</a></li>
+<li><a href="How_To/Extend_Vehicles.html">How To extend the vehicle class</a></li>
+<li><a href="How_To/Car-Following_Model.html">How To implement an own car-following model</a></li>
+<li><a href="How_To/Device.html">How To implement a new device</a></li>
+<li><a href="../FAQ.html#how_do_i_contribute_to_the_documentation">How To contribute to this documentation</a></li>
+<li><a href="../FAQ.html#how_can_i_contribute_to_sumo">How to contribute to SUMO in general</a></li>
+</ul>
+<h2 id="methods_algorithms_and_subsystems">Methods, Algorithms, and Subsystems<a class="headerlink" href="#methods_algorithms_and_subsystems" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Implementation_Notes.html">Developer/Implementation Notes</a> - more information about several subtopics (error handling, options sub system)</li>
+<li><a href="Network_Building_Process.html">Developer/Network Building Process</a></li>
+</ul>
+<h2 id="current_development">Current Development<a class="headerlink" href="#current_development" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Implementation_Notes/Vehicle_Models.html">How To add more car-following models</a></li>
+<li><a href="XML_Validation.html">Progress on implementing an XML validation</a></li>
+<li><a href="HowToRelease.html">Developer/HowToRelease</a> - how to build a release</li>
+<li><a href="Docker.html">Developer/Docker</a> - projects using Dockerised SUMO</li>
+<li><a href="../GitStuff.html">Git</a></li>
+<li><a href="VisualStudioCode.html">Visual Studio Code</a> - how to use Visual Studio Code with the SUMO code base</li>
+</ul>
+<h2 id="continuous_integration_code_analysis_and_other_external_references">Continuous integration, code analysis and other external references<a class="headerlink" href="#continuous_integration_code_analysis_and_other_external_references" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="https://github.com/eclipse/sumo">GitHub project</a></li>
+<li><a href="https://sourceforge.net/projects/sumo/">SourceForge project</a></li>
+<li><a href="https://software.opensuse.org/package/sumo">Packages on the open build service</a></li>
+<li><a href="https://build.opensuse.org/package/show/home%3Abehrisch/sumo_nightly">Nightly builds on the open build service</a></li>
+<li><a href="https://travis-ci.org/eclipse/sumo">SUMO on Travis</a> (legacy)</li>
+<li><a href="https://travis-ci.org/dlr-ts/homebrew-sumo">SUMO brew formula on Travis</a></li>
+<li><a href="https://www.openhub.net/p/sumo/">SUMO on OpenHub</a></li>
+<li><a href="https://codeclimate.com/github/DLR-TS/sumo">SUMO on codeclimate</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 11 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

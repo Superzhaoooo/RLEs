@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/DiplomStudArb.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>DiplomStudArb - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/DiplomStudArb.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#allgemeines">Allgemeines</a></li>
+            <li class="nav-item main"><a href="#themen_mit_bezug_zur_verkehrsforschung">Themen mit Bezug zur Verkehrsforschung</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#schadstoffemission" class="nav-link">• Schadstoffemission</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#implementierung_und_vergleich_von_emissionsmodellen" class="nav-link">&rarr; Implementierung und Vergleich von Emissionsmodellen</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#elektromobilitat_-_simulation_der_auswirkung_von_verkehrsmanagementstrategien" class="nav-link">• Elektromobilität - Simulation der Auswirkung von Verkehrsmanagementstrategien</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lichtsignalanlagen" class="nav-link">• Lichtsignalanlagen</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#methoden_fur_eine_schatzung_einer_grunen_welle_in_komplexen_straennetzen" class="nav-link">&rarr; Methoden für eine Schätzung einer "grünen Welle" in komplexen Straßennetzen</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#vergleich_verschiedener_ansatze_zur_steuerung_von_lichtsignalanlagen" class="nav-link">&rarr; Vergleich verschiedener Ansätze zur Steuerung von Lichtsignalanlagen</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routenwahl_und_nachfragemodellierung" class="nav-link">• Routenwahl und Nachfragemodellierung</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#auswertung_von_one-shot-ansatzen_zur_verkehrsumlegung" class="nav-link">&rarr; Auswertung von one-shot-Ansätzen zur Verkehrsumlegung</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#alternative_algorithmen_fur_kurzeste-wege-suche" class="nav-link">&rarr; Alternative Algorithmen für Kürzeste-Wege-Suche</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#ad-hoc_-_nachfragegenerierung" class="nav-link">&rarr; Ad-hoc - Nachfragegenerierung</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#nachfragegenerierung_aus_induktionsschleifendaten" class="nav-link">&rarr; Nachfragegenerierung aus Induktionsschleifendaten</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#anpassung_einer_verkehrsnachfrage_an_schleifendaten" class="nav-link">&rarr; Anpassung einer Verkehrsnachfrage an Schleifendaten</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#evaluierung_des_routings_nach_abbiegehaufigkeiten" class="nav-link">&rarr; Evaluierung des Routings nach Abbiegehäufigkeiten</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#kurzfristige_verkehrsprognose" class="nav-link">• Kurzfristige Verkehrsprognose</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#vorhersage_von_ganglinien" class="nav-link">&rarr; Vorhersage von Ganglinien</a>
+                </li>
+            <li class="nav-item main"><a href="#themen_mit_bezug_zu_softwareentwicklung">Themen mit Bezug zu Softwareentwicklung</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#schwerpunkt_algorithmik_theoretischer_informatik" class="nav-link">• Schwerpunkt Algorithmik / theoretischer Informatik</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#analyse_und_implementation_eines_netzwerkflussalgorithmus_zur_routenfindung" class="nav-link">&rarr; Analyse und Implementation eines Netzwerkflussalgorithmus zur Routenfindung</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#schnelle_flusse" class="nav-link">&rarr; Schnelle Flüsse</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#matching_von_straennetzen" class="nav-link">&rarr; Matching von Straßennetzen</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#schwerpunkt_software_engineering" class="nav-link">• Schwerpunkt Software Engineering</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#checkstyle_fur_c" class="nav-link">&rarr; Checkstyle für C++</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#fixed_point_vs_floating_point" class="nav-link">&rarr; Fixed point vs. Floating point</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#multi-core_parallelisierung" class="nav-link">&rarr; Multi-core Parallelisierung</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#schwerpunkt_xml" class="nav-link">• Schwerpunkt XML</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#effizienter_import_und_export_von_xml_mittels_schemabasierter_kompression" class="nav-link">&rarr; Effizienter Import und Export von XML mittels schemabasierter Kompression</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#modulares_xml" class="nav-link">&rarr; Modulares XML</a>
+                </li>
+            <li class="nav-item main"><a href="#sonstiges">Sonstiges</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#opensource_marketing_und_community_building" class="nav-link">• OpenSource Marketing und Community building</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>DiplomStudArb<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>In the following, you may find ideas for student work - Bachelor,
+Master, or Diploma theses. Please note that being a German institution,
+we can only offer assistance for work done on German Universities /
+Schools. That's why the work topics are listed in German.</p>
+<h2 id="allgemeines">Allgemeines<a class="headerlink" href="#allgemeines" title="Permanent link">#</a></h2>
+<p>Die meisten der folgenden Themen lassen sich sowohl im Rahmen einer
+Master- oder Diplomarbeit als auch in reduziertem Umfang in einer
+Studien- oder Bachelorarbeit behandeln. Alle stehen mehr oder weniger
+direkt im Zusammenhang mit <a href="http://sumo.dlr.de/">SUMO</a>.</p>
+<p>Alle Themen sind ausdrücklich nur als Vorschläge gedacht. Falls jemand
+nach Kennenlernen der Software und der Anwendungsgebiete eigene
+Vorschläge zur Verbesserung und Erweiterung hat, die er/sie selbst
+umsetzen möchte, sind diese sehr gern gesehen.</p>
+<h2 id="themen_mit_bezug_zur_verkehrsforschung">Themen mit Bezug zur Verkehrsforschung<a class="headerlink" href="#themen_mit_bezug_zur_verkehrsforschung" title="Permanent link">#</a></h2>
+<p><em>Voraussetzung: Kenntnisse in C++ oder Python</em></p>
+<h3 id="schadstoffemission">Schadstoffemission<a class="headerlink" href="#schadstoffemission" title="Permanent link">#</a></h3>
+<h4 id="implementierung_und_vergleich_von_emissionsmodellen">Implementierung und Vergleich von Emissionsmodellen<a class="headerlink" href="#implementierung_und_vergleich_von_emissionsmodellen" title="Permanent link">#</a></h4>
+<p>Es existiert eine Vielzahl unterschiedlicher Modelle für den Ausstoß von
+Schadstoffen, die sich in ihrer Granularität sowie der Menge
+abgebildeter Fahrzeugarten unterscheiden. Das Ziel dieser Arbeit ist die
+Umsetzung eines Teils dieser Modelle in SUMO und der Vergleich dieser.
+Die Arbeit würde auf bereits vorhandenen Ergebnissen aufbauen.</p>
+<h3 id="elektromobilitat_-_simulation_der_auswirkung_von_verkehrsmanagementstrategien">Elektromobilität - Simulation der Auswirkung von Verkehrsmanagementstrategien<a class="headerlink" href="#elektromobilitat_-_simulation_der_auswirkung_von_verkehrsmanagementstrategien" title="Permanent link">#</a></h3>
+<pre><code>Gegenwärtig hält eine neue Entwicklung mit all ihren Chancen und Herausforderungen Einzug in den Verkehrsraum – die Elektromobilität. Sie hat den Vorteil 
+nur geringe Lärm- und Schadstoff-emissionen zu verursachen. Doch die Elektromobilität wird die bisherigen Probleme im Verkehrsmanagement nicht automatisch lösen 
+Ganz im Gegenteil – im Zuge der Elektrifizierung des Verkehrs kommen neue Herausforderungen auf das Verkehrsmanagement zu 
+Die begrenzte Reichweite und langen Ladevorgänge der bisherigen Elektrofahrzeuge bedingen eine neuartige Lade- und Verkehrsinfrastruktur 
+Hinzu kommen unklare Rahmenbedingungen wie Kaufbereitschaft und Marktpreise. Die Konsequenzen für das Verkehrsmanagement sind daher kaum absehbar.
+</code></pre>
+
+<p>Wir möchten zusammen mit einem Studenten/einer Studentin
+Verkehrsmanagementstrategien unter Beachtung verschiedener Markt- und
+Nutzungsszenarien simulieren. Damit sollen Änderungen im
+Verkehrsmanagement virtuell erprobt und deren Auswirkungen bspw. auf
+deren Beitrag zum Klimaschutz untersucht werden. Mögliche
+Aufgabengebiete umfassen dabei: Recherche und Aufbereitung von Markt-
+und Nutzungsszenarien, Ableitung von Verkehrsmanagementstrategien /
+Recherche bisheriger Anstze, Emissionsprofil für verschiedenen
+Fahrzeugtypen (PHEV, REEV, BEV, FCEV etc.) implementieren, Simulation
+verschiedener Steuerungs- und Beeinflussungsmaßnahmen, Auswertung der
+Ergebnisse / Ziehen von Schlussfolgerungen.</p>
+<h3 id="lichtsignalanlagen">Lichtsignalanlagen<a class="headerlink" href="#lichtsignalanlagen" title="Permanent link">#</a></h3>
+<h4 id="methoden_fur_eine_schatzung_einer_grunen_welle_in_komplexen_straennetzen">Methoden für eine Schätzung einer "grünen Welle" in komplexen Straßennetzen<a class="headerlink" href="#methoden_fur_eine_schatzung_einer_grunen_welle_in_komplexen_straennetzen" title="Permanent link">#</a></h4>
+<p>Basierend auf der Auswertung bereits existierender Ansätze ist ein
+Verfahren auszuwählen und zu implementieren, welches für ein gegebenes
+Straßennetz und eine gegebene Nachfrage möglichst optimale, also z.B.
+die Wartezeiten vor den Lichtsignalanlagen minimierende, Programme der
+Lichtsignalanlagen erzeugt.</p>
+<h4 id="vergleich_verschiedener_ansatze_zur_steuerung_von_lichtsignalanlagen">Vergleich verschiedener Ansätze zur Steuerung von Lichtsignalanlagen<a class="headerlink" href="#vergleich_verschiedener_ansatze_zur_steuerung_von_lichtsignalanlagen" title="Permanent link">#</a></h4>
+<p>Ziel der Arbeit ist es, das modellbasierte Steuerverfahren OPAC mit
+einer Festzeitsteuerung und einer regelbasierten Steuerung zu
+vergleichen. Dazu ist zunächst zu untersuchen, mit welchem Aufwand sich
+die Steuerverfahren in der Simulation umsetzen lassen. Anschließend
+sollen möglichst alle Steuerverfahren in konkreten Simulationsszenarien
+umgesetzt und auf Basis der von SUMO generierten Ausgabedateien
+verglichen werden.</p>
+<h3 id="routenwahl_und_nachfragemodellierung">Routenwahl und Nachfragemodellierung<a class="headerlink" href="#routenwahl_und_nachfragemodellierung" title="Permanent link">#</a></h3>
+<h4 id="auswertung_von_one-shot-ansatzen_zur_verkehrsumlegung">Auswertung von one-shot-Ansätzen zur Verkehrsumlegung<a class="headerlink" href="#auswertung_von_one-shot-ansatzen_zur_verkehrsumlegung" title="Permanent link">#</a></h4>
+<p>Die Verteilung von Routen innerhalb eines belasteten Straßennetzes
+gehört zu den Standardschritten bei der Erstellung eines
+Verkehrssimulationsszenarios. Normalerweise benutzte Methoden sind dabei
+iterativ und benötigen daher viel Rechenzeit. Innerhalb dieser Arbeit
+soll ein bereits entwickelter one-shot - Ansatz, der ohne Iterationen
+auskommt im Vergleich zu herkömmlichen Verfahren evaluiert werden.</p>
+<h4 id="alternative_algorithmen_fur_kurzeste-wege-suche">Alternative Algorithmen für Kürzeste-Wege-Suche<a class="headerlink" href="#alternative_algorithmen_fur_kurzeste-wege-suche" title="Permanent link">#</a></h4>
+<p>Innerhalb dieser Arbeit sollen Alternativen zu dem in SUMO benutzten
+Kürzeste-Wege-Algorithmus von Dijkstra implementiert und verglichen
+werden.</p>
+<h4 id="ad-hoc_-_nachfragegenerierung">Ad-hoc - Nachfragegenerierung<a class="headerlink" href="#ad-hoc_-_nachfragegenerierung" title="Permanent link">#</a></h4>
+<p>Während mit OpenStreetMap reale Straßennetze frei zur Verfügung stehen,
+gibt es kaum Quellen für die von der Simulation benötigte
+Verkehrsnachfrage. Innerhalb dieser Arbeit sollen Heuristiken zur
+Bestimmung einer Nachfrage für ein gegebenes Straßennetz entwickelt,
+implementiert und ausgewertet werden.</p>
+<h4 id="nachfragegenerierung_aus_induktionsschleifendaten">Nachfragegenerierung aus Induktionsschleifendaten<a class="headerlink" href="#nachfragegenerierung_aus_induktionsschleifendaten" title="Permanent link">#</a></h4>
+<p>Die nahezu vollständige Abdeckung aller Zu- und Abfahrten an Autobahnen
+erlaubt die Modellierung einer Nachfrage für ein so beschriebenes
+Autobahnnetz. Innerhalb dieser Arbeit soll ein bereits entwickeltes
+Werkzeug auf ein solides theoretisches Fundament gestellt werden. Zudem
+sollen die vorhandenen, realen Daten dazu benutzt werden, die
+Möglichkeiten und Probleme bei der Benutzung dieses Werkzeugs auf zu
+decken.</p>
+<h4 id="anpassung_einer_verkehrsnachfrage_an_schleifendaten">Anpassung einer Verkehrsnachfrage an Schleifendaten<a class="headerlink" href="#anpassung_einer_verkehrsnachfrage_an_schleifendaten" title="Permanent link">#</a></h4>
+<p>Es soll ein Werkezeug erstellt und beschrieben werden, das eine für ein
+Straßennetz gegebene Nachfrage an die innerhalb dieses Netzes erhobenen
+Daten anpassen können soll. Vorarbeiten hierzu liegen vor.</p>
+<h4 id="evaluierung_des_routings_nach_abbiegehaufigkeiten">Evaluierung des Routings nach Abbiegehäufigkeiten<a class="headerlink" href="#evaluierung_des_routings_nach_abbiegehaufigkeiten" title="Permanent link">#</a></h4>
+<p>Der existierende jtrrouter erstellt mittels einens einfachen
+Wahrscheinlichkeitsmodells Routen aus Abbiegehäufigkeiten an Kreuzungen.
+Dieses Modell sollte evaluiert und verfeinert werden.</p>
+<h3 id="kurzfristige_verkehrsprognose">Kurzfristige Verkehrsprognose<a class="headerlink" href="#kurzfristige_verkehrsprognose" title="Permanent link">#</a></h3>
+<h4 id="vorhersage_von_ganglinien">Vorhersage von Ganglinien<a class="headerlink" href="#vorhersage_von_ganglinien" title="Permanent link">#</a></h4>
+<p>Es sollen eigene Ideen entwickelt werden, wie Vorhersagen zur
+Fahrzeugzahl und -geschwindigkeit in einem Straßennetz aufgrund
+historischer Daten und dem Einsatz maschineller Lernverfahren gemacht
+werden können.</p>
+<h2 id="themen_mit_bezug_zu_softwareentwicklung">Themen mit Bezug zu Softwareentwicklung<a class="headerlink" href="#themen_mit_bezug_zu_softwareentwicklung" title="Permanent link">#</a></h2>
+<h3 id="schwerpunkt_algorithmik_theoretischer_informatik">Schwerpunkt Algorithmik / theoretischer Informatik<a class="headerlink" href="#schwerpunkt_algorithmik_theoretischer_informatik" title="Permanent link">#</a></h3>
+<p><em>Voraussetzungen: keine Angst vor Beweisen, Grundkenntnisse der
+Graphentheorie (z.B. aus einer Vorlesung zu Graphen und
+Algorithmen)</em></p>
+<h4 id="analyse_und_implementation_eines_netzwerkflussalgorithmus_zur_routenfindung">Analyse und Implementation eines Netzwerkflussalgorithmus zur Routenfindung<a class="headerlink" href="#analyse_und_implementation_eines_netzwerkflussalgorithmus_zur_routenfindung" title="Permanent link">#</a></h4>
+<p>Im Rahmen der Arbeit sollte ein schon weitgehend entwickelter
+Algorithmus zur Routenfindung effizient implementiert, seine Laufzeit
+theoretisch und praktisch untersucht und seine Lösungen verbessert
+werden. Ziel der Arbeit ist einen Routenfindungsalgorithmus zu
+erstellen, der in der Praxis schnell und trotzdem theoretisch fundiert
+vorgegebene Verkehrszählungen annähert.</p>
+<h4 id="schnelle_flusse">Schnelle Flüsse<a class="headerlink" href="#schnelle_flusse" title="Permanent link">#</a></h4>
+<p>Es gibt in der kombinatorischen Optimierung das Konzept der Quickest
+flows zur Abbildung der zeitlichen Komponente bei Netzwerkflüssen. Es
+soll evaluiert werden, inwieweit diese zur Routenfindung eingesetzt
+werden können.</p>
+<h4 id="matching_von_straennetzen">Matching von Straßennetzen<a class="headerlink" href="#matching_von_straennetzen" title="Permanent link">#</a></h4>
+<p>Oft liegen für eine Region mehrere Beschreibungen in unterschiedlichen
+Formaten und unterschiedlicher Qualität vor. Ziel dieser Arbeit ist die
+Auswertung verschiedener Ansätze, die eine Projektion von Straßennetzen
+unterschiedlicher Genauigkeit aufeinander realisieren sowie die
+Implementierung eines diese Funktion realisierenden Verfahrens.</p>
+<h3 id="schwerpunkt_software_engineering">Schwerpunkt Software Engineering<a class="headerlink" href="#schwerpunkt_software_engineering" title="Permanent link">#</a></h3>
+<p><em>Voraussetzung: Kenntnisse in C++</em></p>
+<h4 id="checkstyle_fur_c">Checkstyle für C++<a class="headerlink" href="#checkstyle_fur_c" title="Permanent link">#</a></h4>
+<p>Während es für Java und Python bereits recht ausgereifte Tools zur
+statischen Überprüfung des Quellcodes gibt, gibt es für C++ nur wenig
+(bezahlbares). Es soll überprüft werden inwieweit bestehende Tools für
+Java sich auch bei C++ anwenden lassen.</p>
+<h4 id="fixed_point_vs_floating_point">Fixed point vs. Floating point<a class="headerlink" href="#fixed_point_vs_floating_point" title="Permanent link">#</a></h4>
+<p>Gibt es bei modernen Prozessorarchitekturen noch einen deutlichen
+Performanceunterschied zwischen Fest- und Fließkommaberechnungen?
+Rechtfertigt dieser einen unter Umständen deutlich erhöhten
+Implementationsaufwand? Und ändern sich die Antworten auf diese Fragen
+für (stark) nebenläufige Programme?</p>
+<h4 id="multi-core_parallelisierung">Multi-core Parallelisierung<a class="headerlink" href="#multi-core_parallelisierung" title="Permanent link">#</a></h4>
+<p>Bislang nutzen die Anwendungen des Softwarepaketes SUMO keine
+Parallelisierung. Ziel dieser Arbeit ist die Implementierung einer
+Parallelisierung für eine multi-core Architektur und die Messung des so
+erhaltenen Geschwindigkeitsgewinns.</p>
+<h3 id="schwerpunkt_xml">Schwerpunkt XML<a class="headerlink" href="#schwerpunkt_xml" title="Permanent link">#</a></h3>
+<p><em>Voraussetzung: Erfahrung mit der Parsierung / Erzeugung von XML</em></p>
+<h4 id="effizienter_import_und_export_von_xml_mittels_schemabasierter_kompression">Effizienter Import und Export von XML mittels schemabasierter Kompression<a class="headerlink" href="#effizienter_import_und_export_von_xml_mittels_schemabasierter_kompression" title="Permanent link">#</a></h4>
+<p>SUMO erzeugt und importiert zum Teil riesige XML-Dateien, welche die
+Simulation durch ihre schiere Größe ausbremsen. Effiziente Kompression
+mittels so genanntem binärem XML (z.B. XSBC) soll als Lösungsansatz
+evaluiert und implementiert werden.</p>
+<h4 id="modulares_xml">Modulares XML<a class="headerlink" href="#modulares_xml" title="Permanent link">#</a></h4>
+<p>Die Wiederverwendung von Konfigurationen wird durch die begrenzte
+Modularisierbarkeit von "reinem" XML eingeschränkt. Daher sollen in
+dieser Arbeit verschiedene (standardisierte) Modularisierungsansätze,
+wie z.B. XInclude, untersucht und implementiert werden.</p>
+<h2 id="sonstiges">Sonstiges<a class="headerlink" href="#sonstiges" title="Permanent link">#</a></h2>
+<h4 id="opensource_marketing_und_community_building">OpenSource Marketing und Community building<a class="headerlink" href="#opensource_marketing_und_community_building" title="Permanent link">#</a></h4>
+<p>Welche Eigenschaften muss ein Softwareprojekt haben, damit es die
+Anwender nutzen und zur Verbesserung beitragen? Spielt die Codequalität
+eine Rolle, liegt es vor allem an der Dokumentation? Diesen Fragen
+sollen studiert und Verbesserungsvorschläge gerne auch direkt
+ausprobiert werden.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Intersections.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Intersections - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Intersections.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#internal_links">Internal links</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#netconvert-option_--no-internal-links" class="nav-link">• netconvert-option --no-internal-links</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sumo-option_--no-internal-links" class="nav-link">• sumo-option --no-internal-links</a>
+                </li>
+            <li class="nav-item main"><a href="#speed_when_approaching_the_intersection">Speed when approaching the intersection</a></li>
+            <li class="nav-item main"><a href="#waiting_before_the_intersection">Waiting before the Intersection</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lane_shape" class="nav-link">• Lane Shape</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#right-of-way" class="nav-link">• Right-Of-Way</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_class" class="nav-link">• Vehicle Class</a>
+                </li>
+            <li class="nav-item main"><a href="#waiting_within_the_intersection">Waiting Within the Intersection</a></li>
+            <li class="nav-item main"><a href="#speed_while_passing_the_intersection">Speed while passing the Intersection</a></li>
+            <li class="nav-item main"><a href="#junction_blocking">Junction Blocking</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#netconvert_options_for_allowing_drivers_to_drive_onto_an_intersections" class="nav-link">• netconvert options for allowing drivers to drive onto an intersections</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#junction_model_attributes_for_allowing_drivers_to_drive_onto_an_intersection" class="nav-link">• Junction model attributes for allowing drivers to drive onto an intersection</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#ignoring_blocking_vehicles_after_some_time" class="nav-link">• Ignoring blocking vehicles after some time</a>
+                </li>
+            <li class="nav-item main"><a href="#customizing_behavior_at_junctions">Customizing Behavior at Junctions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traci" class="nav-link">• TraCI</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#driver_parameters" class="nav-link">• Driver Parameters</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Intersections<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>The vehicle dynamics at intersection are governed by the intersection
+model described in
+<a href="http://elib.dlr.de/93669/1/LNCS_SUMOIntersections.pdf">[Road Intersection Model in SUMO, Krajzewicz et al]</a>. Of course, the model in
+the latest revision may deviate somewhat due to the ongoing evolution of
+the model. This page gives an overview over the configuration options
+governing the intersection model.</p>
+<h1 id="internal_links">Internal links<a class="headerlink" href="#internal_links" title="Permanent link">#</a></h1>
+<p>The most important configuration aspect is whether the dynamics within
+an intersection shall be modelled or not. This is configured using the
+following options. When simulating without internal links, 
+Vehicles  be subject to right-of-way rules (waiting at traffic lights and at minor roads)
+but they will appear instantly on the other side of the intersection after passing the stop line.
+They cannot block the intersection, wait within the intersection for left turns nor collide on the intersection.</p>
+<h2 id="netconvert-option_--no-internal-links"><a href="../netconvert.html">netconvert</a>-option <strong>--no-internal-links</strong><a class="headerlink" href="#netconvert-option_--no-internal-links" title="Permanent link">#</a></h2>
+<p>When set to <strong>true</strong>, the network will not contain <em>internal lanes</em>,
+that is lanes within an intersection. Instead, vehicles will <em>jump</em>
+across the intersection. To avoid a systematic shortening of route lengths,
+the length of all edges is <a href="Distances.html">set artificially to the length</a>
+between junction centers without changing their appearance. When set to
+<strong>false</strong> (the default), The network will contain lanes within
+intersections on which vehicles will drive just as on normal lanes,
+albeit subject to some blocking constraints.</p>
+<h2 id="sumo-option_--no-internal-links"><a href="../sumo.html">sumo</a>-option <strong>--no-internal-links</strong><a class="headerlink" href="#sumo-option_--no-internal-links" title="Permanent link">#</a></h2>
+<p>When set to <strong>true</strong>, lanes within intersections are ignored. This
+option is not needed when the network does not contain them in the first
+place. Note, that route lengths will be wrong when ignoring internal
+lanes in a network that includes them.</p>
+<h1 id="speed_when_approaching_the_intersection">Speed when approaching the intersection<a class="headerlink" href="#speed_when_approaching_the_intersection" title="Permanent link">#</a></h1>
+<p>Vehicles that approach an intersection distinguish 3 cases</p>
+<ul>
+<li>neither crossing nor merging takes place or the vehicle has
+  right-of-way (linkState <em>M</em>,<em>G</em> or <em>O</em> ): vehicles drive across the
+  intersection without slowdown</li>
+<li>a zipper merge must be performed (only at junction of type
+  type="zipper", linkState <em>Z</em>). Speed depends directly on neighboring
+  traffic (braking only takes place on demand)</li>
+<li>interference with other streams of traffic is possible
+  (merging/crossing) and vehicle does not have right of way: vehicle
+  prepares to break until reaching a specific distance (configurable
+  for each location with connection attribute <em>visibilityDistance</em>).
+  At that distance, the vehicle determines whether higher-prioritized
+  traffic presents a conflict and then either brakes or accelerates
+  across the intersection.</li>
+</ul>
+<p>In each of these cases, the vehicle may also slow down if another
+vehicle is still on the intersection and in the way.</p>
+<h1 id="waiting_before_the_intersection">Waiting before the Intersection<a class="headerlink" href="#waiting_before_the_intersection" title="Permanent link">#</a></h1>
+<p>Vehicles wait with a context dependent offset before the end of their
+lane where it meets the intersection. The exact position depends on
+several factors explained below.</p>
+<h2 id="lane_shape">Lane Shape<a class="headerlink" href="#lane_shape" title="Permanent link">#</a></h2>
+<p>Usually the lane ends exactly where the intersection shape starts. One
+way to customize the exact position for each lane is to <a href="../netedit.html#junction">edit the intersection shape</a>. An alternative method
+is to <a href="../netedit.html#specifying_the_complete_geometry_of_an_edge_including_endpoints">set a custom endpoint for an edge</a>.</p>
+<p>Another possibility is the set the <em>endOffset</em> attribute for either the <code>&lt;edge&gt;</code>
+or <code>&lt;lane&gt;</code> element. This will shorten the edge/lane by a set amount.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>using <em>endOffset</em> currently does not affect junction shape so there will be a visible gap between the end of the lane and the start of the junction shape. The shape of internal lanes will be lengthened to compensate for this gap.</p>
+</div>
+<h2 id="right-of-way">Right-Of-Way<a class="headerlink" href="#right-of-way" title="Permanent link">#</a></h2>
+<p>Vehicles from a minor road wait exactly at the end of the lane in order
+to minimize the distance they have to cover when a suitable gap in
+traffic is found. Vehicles waiting at at a traffic light wait with an
+offset of 1m ahead of the lane end.</p>
+<h2 id="vehicle_class">Vehicle Class<a class="headerlink" href="#vehicle_class" title="Permanent link">#</a></h2>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Vehicle class specific offsets can be created by using the <code>&lt;stopOffset&gt;</code> element but this is still experimental.</p>
+</div>
+<h1 id="waiting_within_the_intersection">Waiting Within the Intersection<a class="headerlink" href="#waiting_within_the_intersection" title="Permanent link">#</a></h1>
+<p>In some situations, drivers are permitted to wait within the
+intersection for a gap in foe traffic. Typical cases are left-turning
+vehicles from the prioritized direction that wait for oncoming traffic
+or right-turning vehicles that have to wait for straight-going
+pedestrians. In SUMO this is modeled with <a href="../Networks/SUMO_Road_Networks.html#internal_junctions">internal junctions</a>.
+An internal junction splits the internal lane in two parts. Upon
+reaching the intersection, drivers may enter the intersection and drive
+up to the end of the first part despite approaching foe vehicles. They
+are not permitted to enter the intersection if it is blocked by vehicles
+already on the intersection or if there is a red traffic light.</p>
+<p>When building networks, <a href="../netconvert.html">netconvert</a>
+automatically recognizes common cases for waiting within the
+intersection and creates internal junctions as necessary. At
+intersections which are controlled by a traffic light, internal
+junctions are built for every stream that has a <em>green minor</em> phase
+(dark green). Thus, loading custom traffic light plans during network
+building may influence the building of internal junctions.</p>
+<p>Since version 0.25.0 the user also has the option for <a href="../Networks/PlainXML.html#explicitly_setting_which_edge_lane_is_connected_to_which">customizing the presence and location of internal junctions</a>.</p>
+<h1 id="speed_while_passing_the_intersection">Speed while passing the Intersection<a class="headerlink" href="#speed_while_passing_the_intersection" title="Permanent link">#</a></h1>
+<p>All the <a href="VehicleSpeed.html">rules for vehicle speed</a>
+are applicable but there is an additioal feature to model speed
+reductions while turning. Since SUMO version 1.0, lane speeds within the
+intersection are reduced in accordance to their turning radius. This
+means, that vehicles will reduce their speed while turning according to
+their <a href="VehicleSpeed.html#edge.2flane_speed_and_speedfactor">individual speedFactor</a>.</p>
+<p>The speedLimit is computed as</p>
+<pre><code>speedLimit = sqrt(radius * factor)
+</code></pre>
+
+<p>where <em>factor</em> is set by <strong>--junctions.limit-turn-speed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (default 5.5) If factor is set to 0, the
+turning limit is not applied.</p>
+<p>Additionally, the computed speed will never be higher than the average
+speed of source and destination lane for that particular connection.</p>
+<p>The speed can be overruled by <a href="../Networks/PlainXML.html#explicitly_setting_which_edge_lane_is_connected_to_which">setting the connection speed explicitly in the XML input</a>
+or via <a href="../netedit.html#inspect">netedit</a>.</p>
+<h1 id="junction_blocking">Junction Blocking<a class="headerlink" href="#junction_blocking" title="Permanent link">#</a></h1>
+<p>In most jurisdictions, drivers are forbidden to enter an intersection if
+the outbound road is jammed to prevent them from blocking the
+intersection. By default, vehicles in SUMO try to prevent blocking
+intersections. This is accomplished by the <strong>no-block-heuristic</strong> which
+prevents them from driving onto the intersection if they are likely to
+become stuck there. This heuristic may be disabled by modifying the
+simulation network ahead of the simulation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>no-block-heuristic</strong> does not apply to <em>geometry-like</em> nodes (nodes without intersecting streams of traffic)</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Junction blocking cannot occur when using option <strong>--no-internal-links</strong></p>
+</div>
+<h2 id="netconvert_options_for_allowing_drivers_to_drive_onto_an_intersections"><a href="../netconvert.html">netconvert</a> options for allowing drivers to drive onto an intersections<a class="headerlink" href="#netconvert_options_for_allowing_drivers_to_drive_onto_an_intersections" title="Permanent link">#</a></h2>
+<ul>
+<li>setting option <strong>--default.junctions.keep-clear <em>false</em> </strong> (default <em>true</em>) will cause the
+  <strong>no-block-heuristic</strong> to be disabled for all intersections.</li>
+<li>setting <a href="../Networks/PlainXML.html#node_descriptions"><code>&lt;node&gt;</code>-attribute <code>keepClear="false"</code></a></li>
+<li>setting <a href="../Networks/PlainXML.html#connection_descriptions"><code>&lt;connection&gt;</code>-attribute <code>keepClear="false"\&gt;</code></a>
+    will cause the <strong>no-block-heuristic</strong> to be disabled for vehicles
+  entering the intersection via that connection</li>
+</ul>
+<h2 id="junction_model_attributes_for_allowing_drivers_to_drive_onto_an_intersection">Junction model attributes for allowing drivers to drive onto an intersection<a class="headerlink" href="#junction_model_attributes_for_allowing_drivers_to_drive_onto_an_intersection" title="Permanent link">#</a></h2>
+<p>By setting the junction model parameter <em>jmIgnoreKeepClearTime</em> in a
+<code>&lt;vType&gt;</code>-definition, drivers of that type will ignore the <strong>no-block-heuristic</strong>
+after their accumulated waiting time exceeds the parameter value (in
+seconds).</p>
+<h2 id="ignoring_blocking_vehicles_after_some_time">Ignoring blocking vehicles after some time<a class="headerlink" href="#ignoring_blocking_vehicles_after_some_time" title="Permanent link">#</a></h2>
+<p>When vehicles in SUMO are unable to move for some time they will be
+<a href="Why_Vehicles_are_teleporting.html#waiting_too_long.2c_aka_grid-locks">teleported</a>
+to resolve dead-lock. If this is not desired,
+<a href="../sumo.html">sumo</a>-option <strong>--ignore-junction-blocker</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> may be used to ignore vehicles which are
+blocking the intersection on an intersecting lane after the specified
+time. This can be used to model the real-life behavior of eventually
+finding a way around the offending vehicle that is blocking the
+intersection.</p>
+<h1 id="customizing_behavior_at_junctions">Customizing Behavior at Junctions<a class="headerlink" href="#customizing_behavior_at_junctions" title="Permanent link">#</a></h1>
+<h2 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h2>
+<p>The speed of a vehicle may be set using the <a href="../TraCI/Change_Vehicle_State.html#command_0xc4:_change_vehicle_state">speed command</a>.
+When combined with <a href="../TraCI/Change_Vehicle_State.html#speed_mode_.280xb3.29">speed mode command</a>
+various safety-related rules can be disabled. Among them are flags for</p>
+<ul>
+<li>overriding save speed in regard to leader vehicles, or vehicles already on the intersection</li>
+<li>ignoring right-of-way rules</li>
+<li>ignore red lights</li>
+</ul>
+<h2 id="driver_parameters">Driver Parameters<a class="headerlink" href="#driver_parameters" title="Permanent link">#</a></h2>
+<p>The behavior at intersections can be configured with <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#junction_model_parameters">junction model parameters</a>.
+The following aspects can be affected</p>
+<ul>
+<li>aggressiveness when merging from a unprioritized road (<em>impatience</em>)</li>
+<li>distance-keeping to pedestrians</li>
+<li>driving onto an intersection despite of
+<a href="#junction_blocking">#Junction_Blocking</a> rules</li>
+<li>ignoring red lights<ul>
+<li>speed when ignoring red lights</li>
+</ul>
+</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 01 September 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

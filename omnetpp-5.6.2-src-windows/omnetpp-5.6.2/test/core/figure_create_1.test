@@ -1,0 +1,66 @@
+%description:
+Test instantiating custom figure types from @figure.
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+class Test : public cSimpleModule {
+public:
+    void initialize() {
+        cCanvas *canvas = getCanvas();
+        for (int i = 0; i < canvas->getNumFigures(); i++) {
+            cFigure *f = canvas->getFigure(i);
+            EV << f->getName() << " --> " << f->getClassName() << endl;
+        }
+        EV << "." << endl;
+    }
+};
+Define_Module(Test);
+
+} // namespace @TESTNAME@
+
+%file: test.ned
+
+simple Test
+{
+    @isNetwork(true);
+
+	@figure[group](type=group);
+	@figure[line](type=line);
+	@figure[arc](type=arc);
+	@figure[polyline](type=polyline);
+	@figure[rectangle](type=rectangle);
+	@figure[oval](type=oval);
+	@figure[ring](type=ring);
+	@figure[pieslice](type=pieslice);
+	@figure[polygon](type=polygon);
+	@figure[path](type=path);
+	@figure[text](type=text);
+	@figure[label](type=label);
+	@figure[image](type=image);
+	@figure[icon](type=icon);
+	@figure[pixmap](type=pixmap);
+}
+
+%contains: stdout
+group --> omnetpp::cGroupFigure
+line --> omnetpp::cLineFigure
+arc --> omnetpp::cArcFigure
+polyline --> omnetpp::cPolylineFigure
+rectangle --> omnetpp::cRectangleFigure
+oval --> omnetpp::cOvalFigure
+ring --> omnetpp::cRingFigure
+pieslice --> omnetpp::cPieSliceFigure
+polygon --> omnetpp::cPolygonFigure
+path --> omnetpp::cPathFigure
+text --> omnetpp::cTextFigure
+label --> omnetpp::cLabelFigure
+image --> omnetpp::cImageFigure
+icon --> omnetpp::cIconFigure
+pixmap --> omnetpp::cPixmapFigure
+.

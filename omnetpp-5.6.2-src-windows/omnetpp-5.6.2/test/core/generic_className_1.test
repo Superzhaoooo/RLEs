@@ -1,0 +1,35 @@
+%description:
+Test the getClassName() methods of several classes.
+
+%activity:
+
+#define PRINT_CLASSNAME(T) {T a##T; EV << #T ": " << a##T.getClassName() << endl;}
+
+PRINT_CLASSNAME( cArray )
+PRINT_CLASSNAME( cFSM )
+PRINT_CLASSNAME( cHistogram )
+PRINT_CLASSNAME( cKSplit )
+PRINT_CLASSNAME( cMessage )
+PRINT_CLASSNAME( cEventHeap )
+PRINT_CLASSNAME( cObject )
+PRINT_CLASSNAME( cOutVector )
+PRINT_CLASSNAME( cPSquare )
+PRINT_CLASSNAME( cQueue )
+PRINT_CLASSNAME( cStdDev )
+PRINT_CLASSNAME( cTopology )
+
+%subst: /omnetpp:://
+%contains: stdout
+cArray: cArray
+cFSM: cFSM
+cHistogram: cHistogram
+cKSplit: cKSplit
+cMessage: cMessage
+cEventHeap: cEventHeap
+cObject: cObject
+cOutVector: cOutVector
+cPSquare: cPSquare
+cQueue: cQueue
+cStdDev: cStdDev
+cTopology: cTopology
+

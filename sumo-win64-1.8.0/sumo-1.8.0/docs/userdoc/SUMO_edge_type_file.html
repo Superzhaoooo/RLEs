@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/SUMO_edge_type_file.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>SUMO edge type file - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/SUMO_edge_type_file.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#syntax">Syntax</a></li>
+            <li class="nav-item main"><a href="#templates_for_openstreetmap">Templates for OpenStreetMap</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#germany" class="nav-link">• Germany</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#templates_for_additional_traffic_modes_in_openstreetmap" class="nav-link">• Templates for additional traffic modes in OpenStreetMap</a>
+                </li>
+            <li class="nav-item main"><a href="#templates_for_opendrive">Templates for OpenDrive</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>SUMO edge type file<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<table>
+<thead>
+<tr>
+<th>SUMO edge type file</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filename extension</td>
+<td>.typ.xml</td>
+</tr>
+<tr>
+<td>Type of content</td>
+<td>Road type description</td>
+</tr>
+<tr>
+<td>Open format?</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SUMO specific?</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XML Schema</td>
+<td><a href="http://sumo.sourceforge.net/xsd/types_file.xsd">types_file.xsd</a></td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>SUMO edge type file</strong> assigns default values for certain attributes
+to types of roads. It configures <a href="netconvert.html">netconvert</a>
+when importing, for example, <a href="Networks/PlainXML.html">SUMO XML
+descriptions</a>,
+<a href="OpenStreetMap_file.html">OpenStreetMap files</a> or <a href="Networks/Import/ArcView.html">ArcView
+files</a>. The type configuration is
+saved in an XML structure. It is always possible to load multiple type
+maps and redefining types partly or completely when loading an
+additional file.</p>
+<p>This article introduces the file format first. After that, it discusses
+the application of the SUMO edge type file on certain types of map files
+and collects reasonable templates for these map files. <em>You are very
+welcome to provide additional templates for various contexts or to start
+a discussion about existing templates.</em></p>
+<h2 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">#</a></h2>
+<p>The XML root element is called <em>types</em>. It contains a collection of
+<em>type</em> elements. A type element represents a record with the following
+attributes:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>id (string)</td>
+<td>The name of the road type. This is the only mandatory attribute. For OpenStreetMap data, the name could, for example, be <em>highway.trunk</em> or <em>highway.residential</em>. For ArcView data, the name of the road type is a number.</td>
+</tr>
+<tr>
+<td>allow</td>
+<td>string</td>
+<td>List of allowed vehicle classes. The classes are space separated (e.g. "pedestrian bicycle").</td>
+</tr>
+<tr>
+<td>disallow</td>
+<td>string</td>
+<td>List of not allowed vehicle classes. The classes are space separated too.</td>
+</tr>
+<tr>
+<td>discard</td>
+<td>bool</td>
+<td>If "yes", edges of that type are not imported. This parameter is optional and defaults to false.</td>
+</tr>
+<tr>
+<td>numLanes</td>
+<td>int</td>
+<td>The number of lanes on an edge. This is the default number of lanes per direction.</td>
+</tr>
+<tr>
+<td>oneway</td>
+<td>bool</td>
+<td>If "yes", only the edge for one direction is created during the import. (This attribute makes no sense for SUMO XML descriptions but, for example, for OpenStreetMap files.)</td>
+</tr>
+<tr>
+<td>priority</td>
+<td>int</td>
+<td>A number, which determines the priority between different road types. netconvert derives the right-of-way rules at junctions from the priority. The number starts with one; higher numbers represent more important roads.</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>float</td>
+<td>The default (implicit) speed limit in m/s.</td>
+</tr>
+<tr>
+<td>sidewalkWidth</td>
+<td>float</td>
+<td>The default width for added sidewalks (defaults to -1 which disables extra sidewalks).</td>
+</tr>
+</tbody>
+</table>
+<p>The names of the SUMO vehicle classes are:</p>
+<ul>
+<li>
+<p><strong>By ownership</strong></p>
+<p>private, public_transport, public_emergency, public_authority, public_army, vip, ignoring,</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>By size</strong></p>
+<p>passenger (a “normal” car), hov, taxi, bus, delivery, transport, lightrail, cityrail, rail_slow, rail_fast, motorcycle, bicycle, pedestrian.</p>
+</li>
+</ul>
+<p>So an example of a SUMO edge type file is:</p>
+<pre><code>&lt;types&gt;
+    &lt;type id=&quot;highway.motorway&quot; priority=&quot;13&quot; numLanes=&quot;2&quot; speed=&quot;44.0&quot; /&gt;
+    &lt;type id=&quot;highway.residential&quot; priority=&quot;4&quot; numLanes=&quot;1&quot; speed=&quot;13.889&quot; /&gt;
+&lt;/types&gt;
+</code></pre>
+
+<h2 id="templates_for_openstreetmap">Templates for OpenStreetMap<a class="headerlink" href="#templates_for_openstreetmap" title="Permanent link">#</a></h2>
+<p>The SUMO edge type file defines default values for some tags, which are
+taken if no explicit value is given for a certain road in a
+OpenStreetMap file. So the OpenStreetMap tags <em>maxspeed</em>, <em>lanes</em> and
+<em>oneway</em> override these defaults. If the map is tagged correctly, these
+tags should only be omitted if their value equals an implicitly assumed
+value. In this section, SUMO edge type files are collected that contain
+these implicit values of OpenStreetMap for various contexts. The
+following OpenStreetMap pages help to find out the implicit values for
+the following attributes:</p>
+<ul>
+<li>
+<p><strong>allow/disallow</strong></p>
+<p><a href="http://wiki.openstreetmap.org/wiki/Map_Features">Map features</a>, <a href="http://wiki.openstreetmap.org/wiki/OSM_tags_for_routing/Access-Restrictions">OSM tags for routing/Access restrictions</a>.</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>numLanes</strong></p>
+<p><a href="http://wiki.openstreetmap.org/wiki/Map_Features">Map features</a>, <a href="http://wiki.openstreetmap.org/wiki/Editing_Standards_and_Conventions">Editing standards and
+conventions</a>,
+<a href="http://wiki.openstreetmap.org/wiki/Key:lanes">Key:lanes</a>,
+<a href="http://wiki.openstreetmap.org/wiki/Key:highway">Key:highway</a> and
+<a href="http://wiki.openstreetmap.org/wiki/Tagging">Tagging scheme by
+country</a>.</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>priority</strong></p>
+<p><a href="http://wiki.openstreetmap.org/wiki/Map_Features">Map features</a>.</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>oneway</strong></p>
+<p><a href="http://wiki.openstreetmap.org/wiki/Key:oneway">Key:oneway</a>.</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>speed</strong></p>
+<p><a href="http://wiki.openstreetmap.org/wiki/Key:maxspeed">Key:maxspeed</a>,
+<a href="https://wiki.openstreetmap.org/wiki/OSM_tags_for_routing#Max_speed">OSM tags for
+routing/Maxspeed</a>,
+<a href="http://wiki.openstreetmap.org/wiki/Key:source:maxspeed">Key:source:maxspeed</a>
+and
+<a href="http://wiki.openstreetmap.org/wiki/Key:traffic_sign">Key:traffic_sign</a>.
+Wikipedia lists the <a href="https://en.wikipedia.org/wiki/Speed_limits_by_country">Speed limits by
+country</a>.</p>
+</li>
+</ul>
+<p>The right values are hard to find. Because they depend at least partly
+on the legislation (maxspeed, for example); the values vary from country
+to country. Further context information, like the fact whether a road is
+inside or outside a city border, may determine the defaults as well. In
+the following, SUMO edge type files for various contexts are given,
+using the country as the main ordering criterion. The lists and files
+contain only way types as they correspond to SUMO edges; node and area
+types (like highway=services) are not considered. <em>You are very welcome
+to provide additional templates for various contexts or to start a
+discussion about existing templates.</em></p>
+<h3 id="germany">Germany<a class="headerlink" href="#germany" title="Permanent link">#</a></h3>
+<p>In Germany, the legislation for the speed limit distinguishes roads
+inside from those outside city borders, roads with a central barrier
+separation from those without, and special road like living streets and
+pedestrian areas. There is no direct connection to the importance of a
+road. However in OpenStreetMap, a motorway is supposed to have such a
+central barrier separation per default
+<a href="">[1]</a>(<a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmotorway">http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmotorway</a>). As a
+consequence, the speed value only varies between rural and urban
+contexts but not between road types, except for motorways, living
+streets and pedestrian areas. The two SUMO edge type files are given
+next, for the detailed values have a look at the files. References are
+mentioned in the table below. The rural type map is the default mapping
+when converting OpenStreetMap networks without an explicit typemap.</p>
+<ul>
+<li><a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvert.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvert.typ.xml</a></li>
+<li><a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvertUrbanDe.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvertUrbanDe.typ.xml</a></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>highway.motorway</td>
+<td>Autobahn. No legislative speed limit: 44.4 is just a reasonable default. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmotorway">[2]</a> is a bit opposite to <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dmotorway">[3]</a> regarding oneway tagging.</td>
+</tr>
+<tr>
+<td>highway.motorway_link</td>
+<td>Links are usually subordinate to the road that leads to the trunk (e.g. a secondary or tertiary road)</td>
+</tr>
+<tr>
+<td>highway.trunk</td>
+<td>Similar to Autobahn <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtrunk">[4]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dtrunk">[5]</a>. Lanes, maxspeed and oneway should be tagged explicitely.</td>
+</tr>
+<tr>
+<td>highway.trunk_link</td>
+<td>Links are usually subordinate to the road that leads to the trunk (e.g. a secondary or tertiary road)</td>
+</tr>
+<tr>
+<td>highway.primary</td>
+<td>Bundesstraße <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dprimary">[6]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dprimary">[7]</a></td>
+</tr>
+<tr>
+<td>highway.primary_link</td>
+<td>Links are usually subordinate to the road that leads to the trunk (e.g. a secondary or tertiary road)</td>
+</tr>
+<tr>
+<td>highway.secondary</td>
+<td>Land-, Staats-, or a major Kreisstraße <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsecondary">[8]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dsecondary">[9]</a></td>
+</tr>
+<tr>
+<td>highway.secondary_link</td>
+<td>Links are usually subordinate to the road that leads to the trunk (e.g. a tertiary road)</td>
+</tr>
+<tr>
+<td>highway.tertiary</td>
+<td>Kreisstraße, major Gemeindeverbindungsstraße or minor Staats-/Landesstraße <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary">[10]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dtertiary">[11]</a></td>
+</tr>
+<tr>
+<td>highway.tertiary_link</td>
+<td>Links are usually subordinate to the road that leads to the trunk (e.g. a tertiary road).</td>
+</tr>
+<tr>
+<td>highway.unclassified</td>
+<td>Below tertiary, still interconnecting, not in a residential area <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dunclassified">[12]</a> <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dresidential">[13]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dunclassified">[14]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dresidential">[15]</a></td>
+</tr>
+<tr>
+<td>highway.residential</td>
+<td>Accessing a residential area, should probably not be outside a town <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dresidential">[16]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dresidential">[17]</a></td>
+</tr>
+<tr>
+<td>highway.living_street</td>
+<td>Verkehrsberuhigter Bereich (walking speed). If you leave that street, you have to give way <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dliving_street">[18]</a></td>
+</tr>
+<tr>
+<td>highway.pedestrian</td>
+<td>Fußgängerzone. Pedestrians only. (Bicycles should be pushed.) <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtrack">[19]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dpedestrian">[20]</a></td>
+</tr>
+<tr>
+<td>highway.service</td>
+<td>No explicit regulatory speed limit. Usually you have to give way when leaving such a street as it is not part of the road network with moving traffic. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dservice">[21]</a></td>
+</tr>
+<tr>
+<td>highway.services</td>
+<td>Rest area with additional services like a gas station. Usually you have to give way when leaving such a street as it is not part of the road network with moving traffic. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dservices">[22]</a></td>
+</tr>
+<tr>
+<td>highway.bus_guideway</td>
+<td>For busses only. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dbus_guideway">[23]</a></td>
+</tr>
+<tr>
+<td>highway.track</td>
+<td>For agricultural traffic, usually not used by normal vehicles. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtrack">[24]</a></td>
+</tr>
+<tr>
+<td>highway.path</td>
+<td>Usually “not intended for motor vehicles”. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dpath">[25]</a></td>
+</tr>
+<tr>
+<td>highway.cycleway</td>
+<td>“Access is only allowed for bikes” in Germany. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dcycleway">[26]</a></td>
+</tr>
+<tr>
+<td>highway.footway</td>
+<td>For designated footpaths in Germany. (Bicycles must be tagged explicitely.) <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway">[27]</a> <a href="http://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dfootway">[28]</a></td>
+</tr>
+<tr>
+<td>highway.bridleway</td>
+<td>For pedestrians, horses and sometimes bicycles. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dbridleway">[29]</a></td>
+</tr>
+<tr>
+<td>highway.steps<br>highway.step<br>highway.stairs</td>
+<td>Steps are usually for pedestrians. <a href="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsteps">[30]</a></td>
+</tr>
+<tr>
+<td>railway.rail</td>
+<td>Typical full sized trains</td>
+</tr>
+<tr>
+<td>railway.tram</td>
+<td>Trams</td>
+</tr>
+<tr>
+<td>railway.light_rail</td>
+<td>S-Bahn <a href="http://wiki.openstreetmap.org/wiki/Tag:railway%3Dlight_rail">[31]</a></td>
+</tr>
+<tr>
+<td>railway.subway</td>
+<td>U-Bahn <a href="http://wiki.openstreetmap.org/wiki/Tag:railway%3Dsubway">[32]</a></td>
+</tr>
+<tr>
+<td>railway.preserved</td>
+<td>Historic trains <a href="http://wiki.openstreetmap.org/wiki/Map_Features">[33]</a> <a href="http://wiki.openstreetmap.org/wiki/Tag:railway%3Dpreserved">[34]</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="templates_for_additional_traffic_modes_in_openstreetmap">Templates for additional traffic modes in OpenStreetMap<a class="headerlink" href="#templates_for_additional_traffic_modes_in_openstreetmap" title="Permanent link">#</a></h3>
+<p>There are additional templates which should be loaded when importing
+pedestrian infrastructure (sidewalks), bike lanes, ship movements and
+special railways with some comments below:</p>
+<ul>
+<li><a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvertPedestrians.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvertPedestrians.typ.xml</a></li>
+<li><a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvertBicycle.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvertBicycle.typ.xml</a></li>
+<li><a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvertShip.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvertShip.typ.xml</a></li>
+<li><a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvertExtraRail.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvertExtraRail.typ.xml</a></li>
+</ul>
+<p>If your railways have two tracks but are mapped with a single way in
+OSM, you may wish to load:
+<a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvertBidiRail.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvertBidiRail.typ.xml</a></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>railway.narrow_gauge</td>
+<td>Smaller gauge. Assigned it to the SUMO class lightrail. <a href="http://wiki.openstreetmap.org/wiki/Tag:railway%3Dnarrow_gauge">[35]</a></td>
+</tr>
+<tr>
+<td>railway.monorail</td>
+<td>“Trains run on one single rail”. Assigned it to the SUMO class lightrail. <a href="http://wiki.openstreetmap.org/wiki/Tag:railway%3Dmonorail">[36]</a></td>
+</tr>
+<tr>
+<td>railway.funicular</td>
+<td>“Cable driven inclined railways”. Assigned it to the SUMO class cityrail. <a href="http://wiki.openstreetmap.org/wiki/Map_Features">[37]</a> <a href="http://wiki.openstreetmap.org/wiki/Tag:railway%3Dfunicular">[38]</a></td>
+</tr>
+</tbody>
+</table>
+<p>Only few data is available about the railway types. The most important
+document might be the <a href="http://www.gesetze-im-internet.de/bundesrecht/ebo/gesamt.pdf">Eisenbahn-Bau- und Betriebsordnung
+(EBO)</a>,
+but even that did not help me much. So the given values are mostly
+personal opinion, except if a reference is given. More references are
+very welcome.</p>
+<h2 id="templates_for_opendrive">Templates for OpenDrive<a class="headerlink" href="#templates_for_opendrive" title="Permanent link">#</a></h2>
+<p>The default type map is <a href="https://github.com/eclipse/sumo/blob/master/data/typemap/opendrivenetconvert.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/opendrivenetconvert.typ.xml</a>.</p>
+<p>There are additional templates which should be loaded when importing
+pedestrian infrastructure (sidewalks) and/or bike lanes:</p>
+<ul>
+<li><a href="https://github.com/eclipse/sumo/blob/master/data/typemap/opendrivenetconvertPedestrians.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/opendrivenetconvertPedestrians.typ.xml</a></li>
+<li><a href="https://github.com/eclipse/sumo/blob/master/data/typemap/opendrivenetconvertBicycle.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/opendrivenetconvertBicycle.typ.xml</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

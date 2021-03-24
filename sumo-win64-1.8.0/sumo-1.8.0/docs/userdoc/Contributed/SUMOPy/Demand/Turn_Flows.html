@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Contributed/SUMOPy/Demand/Turn_Flows.html">
+        <link rel="shortcut icon" href="../../../favicon.ico">
+        
+        <title>Contributed/SUMOPy/Demand/Turn Flows - SUMO Documentation</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Contributed/SUMOPy/Demand/Turn_Flows.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Contributed/SUMOPy/Demand/Turn Flows<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>Trip generation with turnflows allows to model traffic flows in a
+precise way, for simple, possibly loop-free networks with few internal
+traffic generation. The general idea is to generate trips and routes for
+individual vehicles based on road traffic counts. These traffic counts
+can be performed at junctions. Ideally, the traffic counts should be
+performed simultaneously at all relevant junctions. However, some edge
+flows can be derived from other edge flows considering flow preservation
+lows at nodes.</p>
+<p>Basically two types of flows are needed in order to reconstruct the
+routes in a predefined study area:</p>
+<ul>
+<li>The <em>generating flows</em> <span><em>FG[a]</em></span> on all edges
+  <span><em>a</em></span> that <em>enter</em> the study area. [1]</li>
+<li>The <em>turn flows</em> <span><em>FT[a1,a2]</em></span> for all flows between
+  links <span><em>a1</em></span> and <span><em>a2</em></span> at nodes with more
+  than one exiting edge.</li>
+</ul>
+<p>The choice of traffic flows that need to be counted is illustrated by an
+example network:</p>
+<p><img alt="fig_demand_turnsflows_png.png" src="../../../images/Fig_demand_turnsflows_png.png" title="Example network to illustrate the use of turnflows for demand modeling." /></p>
+<p>Neglecting all traffic generated within the study area, the following
+flows need to be counted:</p>
+<ul>
+<li>The <em>generating flows</em> <em>FG[3], FG[12]</em> are
+  entering the network.</li>
+<li>The <em>turn flows</em> <em>F[8,9], F[8,2]</em> at node <em>6</em> and <em>F[12,4], F[12,7]</em> at node <em>3</em>. All other nodes have only one exiting edge.</li>
+</ul>
+<p>Once the necessary flows are counted for all considered transport modes
+and time intervals, the trips and routes of all vehicles can be
+generated with a special router, called JTRouter.</p>
+<p>With SUMOPY the route generation with SUMOPY works as follows: First
+import flows and turnflows from a CSV file by selecting the menu item</p>
+<p><code>Demand&gt;Turnflows&gt;Import turnflows</code></p>
+<p>The import turnflows dialog will pop up, as shown below.</p>
+<p><img alt="fig_sumopy_gui_turnflowwizard.png" src="../../../images/Fig_sumopy_gui_turnflowwizard.png" title="Dialog for importing turnflow CSV files" /></p>
+<p>This dialog is similar to the OD-flow wizard explained in Sec. <a href="Zone_To_Zone.html">Zone
+to zone demand flows</a> and allows
+to import traffic counts, and associate them with a time interval and a
+transport mode.</p>
+<p>The <code>Turnflow File</code> to be imported contains the traffic counts of both
+flow types, generating flows and turnflows. The turnflow file has the
+following format:</p>
+<pre><code>&lt;ID1&gt;, &lt;count 1&gt;, &lt;ID11&gt;, &lt;count 11&gt;,  &lt;ID12&gt;, &lt;count 12&gt;, ...
+&lt;ID2&gt;, &lt;count 2&gt;, &lt;ID21&gt;, &lt;count 21&gt;,  &lt;ID22&gt;, &lt;count 22&gt;, ...
+...
+</code></pre>
+
+<p>This notation has the following meaning:</p>
+<p><code>&lt;IDa&gt;</code> means the SUMO edge ID of edge <em>a</em>, where edge
+<em>a</em> is the edge entering a node.</p>
+<p><code>&lt;IDab&gt;</code> means the SUMO edge ID of edge <em>ab</em>, where edge
+<em>ab</em> is the edge outgoing from the node which edge
+<em>a</em> enters.</p>
+<p><code>&lt;count a&gt;</code> means the number of vehicles leaving edge <em>a</em>, in
+case the edge is generating flows, otherwise this count is zero.</p>
+<p><code>&lt;count ab&gt;</code> means the number of vehicles from edge <em>a</em>
+turning into edge <em>b</em>.</p>
+<p>All counts in this file refer to the mode and time interval specified in
+the dialog box.</p>
+<p>The turnflow file for the example network shown
+<a href="../../../images/Fig_demand_turnsflows_png.png">above</a>, could look like
+this:</p>
+<pre><code>3, 1000
+12, 800, 4, 200, 7, 600
+8, 0, 9, 800, 2, 400
+</code></pre>
+
+<p>In this case, the generating flows <em>FG[3]=1000, F[12]=800</em> and the turn flows <em>FT[8,9] = 800, FT[8,2] = 400</em> and <em>FT[12,4] = 200, FT[12,7] = 500</em> for a
+specific mode and time interval.</p>
+<p><em>Hint:</em> In order to quickly compile the turnflow file, open a text
+editor and the SUMOPy window next to each other. In the SUMOPy network
+editor, deselect lanes, connections and crossings by clicking on the
+button next to the zoom buttons below the network canvas. Then select
+the info tool (if not already active) and click on the edges you
+consider for the turnflow file. The respective edge will be highlighted
+and you can see all edge attributes in the object browser, as shown
+below:</p>
+<p><img alt="fig_sumopy_gui_edgeid.png" src="../../../images/Fig_sumopy_gui_edgeid.png" title="Fig sumopy gui edgeid.png" /></p>
+<p>From there, copy the SUMO edge ID and paste it into your turnflow text
+file.</p>
+<p>Optionally define destination zones: Within the turnflow demand model
+destination zones define edges where vehicle routes end. This may be
+necessary in order to prevent vehicles of making a loop on the network
+outside the study area and re-entering the study area. Destination zones
+for turnflows are created in the same way as Traffic assignment Zones in
+section <a href="Zone_To_Zone.html">Zone
+to zone demand flows</a>.</p>
+<p>Generate directly route from flows and turn-flows information by
+selecting menu item</p>
+<p><code>Demand&gt;Turnflows&gt;Turnflows to routes</code></p>
+<p>This process is using SUMO’s jtrrouter and will generate both trips and
+routes. The scenario is now ready to be simulated by selecting</p>
+<p><code>Simulation&gt;Sumo&gt;export routes and simulate...</code></p>
+<p>Proceed as described in Sec. <a href="#Simulating_the_scenario.md">#Simulating the
+scenario</a>.</p>
+<p>A test file for turnflows is located in</p>
+<p><code>SUMOHOME/tools/contributed/sumopy/testscenario/demo_dem_tf_car.csv</code></p>
+<ol>
+<li>In addition, traffic flows can also be generated on edges within the
+    study area, but in practice it is difficult to measure those flows
+    because one would need to spot and count only departing vehicles
+    along the roads of the study area. However, for some particular
+    edges with many departing vehicles this may be necessary to do.</li>
+</ol>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

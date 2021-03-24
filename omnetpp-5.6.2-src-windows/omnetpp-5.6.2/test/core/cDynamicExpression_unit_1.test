@@ -1,0 +1,332 @@
+%description:
+Test unit checking/conversion in NED expressions (they are implemented
+with cDynamicExpression).
+
+%global:
+
+void test(const char *expr)
+{
+    cDynamicExpression e;
+    std::string result;
+    try {
+        e.parse(expr);
+        cNedValue v = e.evaluate();
+        result = v.str();
+    } catch (std::exception& ex) {
+        result = ex.what();
+    }
+    EV << expr << " ==> " << result << "\n";
+}
+
+void test(const char *s1, const std::string& s2, const char *s3)
+{
+    test((std::string(s1) + " " + s2 + " " + s3).c_str());
+}
+
+%activity:
+// constants
+test("2m");
+test("2 meter");
+test("2 meters");
+test("3km");
+test("3 kilometer");
+test("3 kilometers");
+test("10dBm");
+test("1dBW 10dBm");
+EV << "\n";
+
+// negative constants
+test("-2m");
+test("-2 meter");
+test("-10dBm");
+EV << "\n";
+
+// unary operators
+test("-(10dBm)");
+test("-(1+1)");
+test("-(1m+1m)");
+test("-(1km+1km)");
+EV << "\n";
+
+test("~(1+1)");
+test("~(1m+1m)");
+test("~(1km+1km)");
+EV << "\n";
+
+// binary operators
+std::vector<std::string> ops = cStringTokenizer("+ - * / % ^  & | # << >> == != > >= < <=").asVector();
+for (int i=0; i<(int)ops.size(); i++)
+{
+    std::string op = ops[i];
+    test("3",  op, "-2");
+    test("3",  op, "2");
+    test("3m", op, "2m");
+    test("3m", op, "2km");
+    test("3km",op, "2m");
+    test("3",  op, "2m");
+    test("3m", op, "2");
+    test("3m", op, "2s");
+    test("2",  op, "10dBm");
+    test("10dBm", op, "2");
+    test("10dBm", op, "10dBm");
+    EV << "\n";
+}
+
+// tertiary operators
+test("true ? 2 : 3");
+test("true ? 2m : 3m");
+test("true ? 2m : 3km");
+test("true ? 2km : 3m");
+test("true ? 2 : 3m");
+test("true ? 2m : 3");
+test("true ? 2m : 3s");
+
+EV << "\n";
+
+test("3km == 3000m");
+test("3km != 3000m");
+
+EV << ".\n";
+
+%subst: /4\.294\d*e\+0*9/_maxlong_/
+%subst: /1\.844\d*e\+0*19/_maxlong_/
+
+%contains: stdout
+2m ==> 2m
+2 meter ==> 2meter
+2 meters ==> 2meters
+3km ==> 3km
+3 kilometer ==> 3kilometer
+3 kilometers ==> 3kilometers
+10dBm ==> 10dBm
+1dBW 10dBm ==> Error in quantity '1 dBW 10 dBm': Concatenated quantity literals are not supported with non-linear units like dB
+
+-2m ==> -2m
+-2 meter ==> -2meter
+-10dBm ==> -10dBm
+
+-(10dBm) ==> -10dBm
+-(1+1) ==> -2
+-(1m+1m) ==> -2m
+-(1km+1km) ==> -2km
+
+~(1+1) ==> -3
+~(1m+1m) ==> operator "~": Dimensionless argument expected, got 2m
+~(1km+1km) ==> operator "~": Dimensionless argument expected, got 2km
+
+3 + -2 ==> 1
+3 + 2 ==> 5
+3m + 2m ==> 5m
+3m + 2km ==> 2003m
+3km + 2m ==> 3002m
+3 + 2m ==> operator "+": Cannot convert unit 'm' (meter) to none
+3m + 2 ==> operator "+": Cannot convert unit none to 'm' (meter)
+3m + 2s ==> operator "+": Cannot convert unit 's' (second) to 'm' (meter)
+2 + 10dBm ==> operator "+": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm + 2 ==> operator "+": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm + 10dBm ==> operator "+": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+
+3 - -2 ==> 5
+3 - 2 ==> 1
+3m - 2m ==> 1m
+3m - 2km ==> -1997m
+3km - 2m ==> 2998m
+3 - 2m ==> operator "-": Cannot convert unit 'm' (meter) to none
+3m - 2 ==> operator "-": Cannot convert unit none to 'm' (meter)
+3m - 2s ==> operator "-": Cannot convert unit 's' (second) to 'm' (meter)
+2 - 10dBm ==> operator "-": Refusing to perform computations involving quantities with nonlinear units (-10dBm)
+10dBm - 2 ==> operator "-": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm - 10dBm ==> operator "-": Refusing to perform computations involving quantities with nonlinear units (-10dBm)
+
+3 * -2 ==> -6
+3 * 2 ==> 6
+3m * 2m ==> operator "*": Multiplying two quantities with units is not supported
+3m * 2km ==> operator "*": Multiplying two quantities with units is not supported
+3km * 2m ==> operator "*": Multiplying two quantities with units is not supported
+3 * 2m ==> 6m
+3m * 2 ==> 6m
+3m * 2s ==> operator "*": Multiplying two quantities with units is not supported
+2 * 10dBm ==> operator "*": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm * 2 ==> operator "*": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm * 10dBm ==> operator "*": Multiplying two quantities with units is not supported
+
+3 / -2 ==> -1.5
+3 / 2 ==> 1.5
+3m / 2m ==> 1.5
+3m / 2km ==> 0.0015
+3km / 2m ==> 1500
+3 / 2m ==> operator "/": Cannot convert unit 'm' (meter) to none
+3m / 2 ==> 1.5m
+3m / 2s ==> operator "/": Cannot convert unit 's' (second) to 'm' (meter)
+2 / 10dBm ==> operator "/": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm / 2 ==> operator "/": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm / 10dBm ==> operator "/": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+
+3 % -2 ==> 1
+3 % 2 ==> 1
+3m % 2m ==> operator "%": Dimensionless argument expected, got 3m and 2m
+3m % 2km ==> operator "%": Dimensionless argument expected, got 3m and 2km
+3km % 2m ==> operator "%": Dimensionless argument expected, got 3km and 2m
+3 % 2m ==> operator "%": Dimensionless argument expected, got 3 and 2m
+3m % 2 ==> operator "%": Dimensionless argument expected, got 3m and 2
+3m % 2s ==> operator "%": Dimensionless argument expected, got 3m and 2s
+2 % 10dBm ==> operator "%": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm % 2 ==> operator "%": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+10dBm % 10dBm ==> operator "%": Refusing to perform computations involving quantities with nonlinear units (10dBm)
+
+3 ^ -2 ==> operator "^": Negative exponent in integer exponentiation, cast operands to double to allow it
+3 ^ 2 ==> 9
+3m ^ 2m ==> operator "^": Dimensionless argument expected, got 3m and 2m
+3m ^ 2km ==> operator "^": Dimensionless argument expected, got 3m and 2km
+3km ^ 2m ==> operator "^": Dimensionless argument expected, got 3km and 2m
+3 ^ 2m ==> operator "^": Dimensionless argument expected, got 3 and 2m
+3m ^ 2 ==> operator "^": Dimensionless argument expected, got 3m and 2
+3m ^ 2s ==> operator "^": Dimensionless argument expected, got 3m and 2s
+2 ^ 10dBm ==> operator "^": Dimensionless argument expected, got 2 and 10dBm
+10dBm ^ 2 ==> operator "^": Dimensionless argument expected, got 10dBm and 2
+10dBm ^ 10dBm ==> operator "^": Dimensionless argument expected, got 10dBm and 10dBm
+
+3 & -2 ==> 2
+3 & 2 ==> 2
+3m & 2m ==> operator "&": Dimensionless argument expected, got 3m and 2m
+3m & 2km ==> operator "&": Dimensionless argument expected, got 3m and 2km
+3km & 2m ==> operator "&": Dimensionless argument expected, got 3km and 2m
+3 & 2m ==> operator "&": Dimensionless argument expected, got 3 and 2m
+3m & 2 ==> operator "&": Dimensionless argument expected, got 3m and 2
+3m & 2s ==> operator "&": Dimensionless argument expected, got 3m and 2s
+2 & 10dBm ==> operator "&": Dimensionless argument expected, got 2 and 10dBm
+10dBm & 2 ==> operator "&": Dimensionless argument expected, got 10dBm and 2
+10dBm & 10dBm ==> operator "&": Dimensionless argument expected, got 10dBm and 10dBm
+
+3 | -2 ==> -1
+3 | 2 ==> 3
+3m | 2m ==> operator "|": Dimensionless argument expected, got 3m and 2m
+3m | 2km ==> operator "|": Dimensionless argument expected, got 3m and 2km
+3km | 2m ==> operator "|": Dimensionless argument expected, got 3km and 2m
+3 | 2m ==> operator "|": Dimensionless argument expected, got 3 and 2m
+3m | 2 ==> operator "|": Dimensionless argument expected, got 3m and 2
+3m | 2s ==> operator "|": Dimensionless argument expected, got 3m and 2s
+2 | 10dBm ==> operator "|": Dimensionless argument expected, got 2 and 10dBm
+10dBm | 2 ==> operator "|": Dimensionless argument expected, got 10dBm and 2
+10dBm | 10dBm ==> operator "|": Dimensionless argument expected, got 10dBm and 10dBm
+
+3 # -2 ==> -3
+3 # 2 ==> 1
+3m # 2m ==> operator "#": Dimensionless argument expected, got 3m and 2m
+3m # 2km ==> operator "#": Dimensionless argument expected, got 3m and 2km
+3km # 2m ==> operator "#": Dimensionless argument expected, got 3km and 2m
+3 # 2m ==> operator "#": Dimensionless argument expected, got 3 and 2m
+3m # 2 ==> operator "#": Dimensionless argument expected, got 3m and 2
+3m # 2s ==> operator "#": Dimensionless argument expected, got 3m and 2s
+2 # 10dBm ==> operator "#": Dimensionless argument expected, got 2 and 10dBm
+10dBm # 2 ==> operator "#": Dimensionless argument expected, got 10dBm and 2
+10dBm # 10dBm ==> operator "#": Dimensionless argument expected, got 10dBm and 10dBm
+
+3 << -2 ==> 0
+3 << 2 ==> 12
+3m << 2m ==> operator "<<": Dimensionless argument expected, got 3m and 2m
+3m << 2km ==> operator "<<": Dimensionless argument expected, got 3m and 2km
+3km << 2m ==> operator "<<": Dimensionless argument expected, got 3km and 2m
+3 << 2m ==> operator "<<": Dimensionless argument expected, got 3 and 2m
+3m << 2 ==> operator "<<": Dimensionless argument expected, got 3m and 2
+3m << 2s ==> operator "<<": Dimensionless argument expected, got 3m and 2s
+2 << 10dBm ==> operator "<<": Dimensionless argument expected, got 2 and 10dBm
+10dBm << 2 ==> operator "<<": Dimensionless argument expected, got 10dBm and 2
+10dBm << 10dBm ==> operator "<<": Dimensionless argument expected, got 10dBm and 10dBm
+
+3 >> -2 ==> 12
+3 >> 2 ==> 0
+3m >> 2m ==> operator ">>": Dimensionless argument expected, got 3m and 2m
+3m >> 2km ==> operator ">>": Dimensionless argument expected, got 3m and 2km
+3km >> 2m ==> operator ">>": Dimensionless argument expected, got 3km and 2m
+3 >> 2m ==> operator ">>": Dimensionless argument expected, got 3 and 2m
+3m >> 2 ==> operator ">>": Dimensionless argument expected, got 3m and 2
+3m >> 2s ==> operator ">>": Dimensionless argument expected, got 3m and 2s
+2 >> 10dBm ==> operator ">>": Dimensionless argument expected, got 2 and 10dBm
+10dBm >> 2 ==> operator ">>": Dimensionless argument expected, got 10dBm and 2
+10dBm >> 10dBm ==> operator ">>": Dimensionless argument expected, got 10dBm and 10dBm
+
+3 == -2 ==> false
+3 == 2 ==> false
+3m == 2m ==> false
+3m == 2km ==> false
+3km == 2m ==> false
+3 == 2m ==> operator "==": Cannot convert unit 'm' (meter) to none
+3m == 2 ==> operator "==": Cannot convert unit none to 'm' (meter)
+3m == 2s ==> operator "==": Cannot convert unit 's' (second) to 'm' (meter)
+2 == 10dBm ==> operator "==": Cannot convert unit 'dBm' (decibel-milliwatt) to none
+10dBm == 2 ==> operator "==": Cannot convert unit none to 'dBm' (decibel-milliwatt)
+10dBm == 10dBm ==> true
+
+3 != -2 ==> true
+3 != 2 ==> true
+3m != 2m ==> true
+3m != 2km ==> true
+3km != 2m ==> true
+3 != 2m ==> operator "!=": Cannot convert unit 'm' (meter) to none
+3m != 2 ==> operator "!=": Cannot convert unit none to 'm' (meter)
+3m != 2s ==> operator "!=": Cannot convert unit 's' (second) to 'm' (meter)
+2 != 10dBm ==> operator "!=": Cannot convert unit 'dBm' (decibel-milliwatt) to none
+10dBm != 2 ==> operator "!=": Cannot convert unit none to 'dBm' (decibel-milliwatt)
+10dBm != 10dBm ==> false
+
+3 > -2 ==> true
+3 > 2 ==> true
+3m > 2m ==> true
+3m > 2km ==> false
+3km > 2m ==> true
+3 > 2m ==> operator ">": Cannot convert unit 'm' (meter) to none
+3m > 2 ==> operator ">": Cannot convert unit none to 'm' (meter)
+3m > 2s ==> operator ">": Cannot convert unit 's' (second) to 'm' (meter)
+2 > 10dBm ==> operator ">": Cannot convert unit 'dBm' (decibel-milliwatt) to none
+10dBm > 2 ==> operator ">": Cannot convert unit none to 'dBm' (decibel-milliwatt)
+10dBm > 10dBm ==> false
+
+3 >= -2 ==> true
+3 >= 2 ==> true
+3m >= 2m ==> true
+3m >= 2km ==> false
+3km >= 2m ==> true
+3 >= 2m ==> operator ">=": Cannot convert unit 'm' (meter) to none
+3m >= 2 ==> operator ">=": Cannot convert unit none to 'm' (meter)
+3m >= 2s ==> operator ">=": Cannot convert unit 's' (second) to 'm' (meter)
+2 >= 10dBm ==> operator ">=": Cannot convert unit 'dBm' (decibel-milliwatt) to none
+10dBm >= 2 ==> operator ">=": Cannot convert unit none to 'dBm' (decibel-milliwatt)
+10dBm >= 10dBm ==> true
+
+3 < -2 ==> false
+3 < 2 ==> false
+3m < 2m ==> false
+3m < 2km ==> true
+3km < 2m ==> false
+3 < 2m ==> operator "<": Cannot convert unit 'm' (meter) to none
+3m < 2 ==> operator "<": Cannot convert unit none to 'm' (meter)
+3m < 2s ==> operator "<": Cannot convert unit 's' (second) to 'm' (meter)
+2 < 10dBm ==> operator "<": Cannot convert unit 'dBm' (decibel-milliwatt) to none
+10dBm < 2 ==> operator "<": Cannot convert unit none to 'dBm' (decibel-milliwatt)
+10dBm < 10dBm ==> false
+
+3 <= -2 ==> false
+3 <= 2 ==> false
+3m <= 2m ==> false
+3m <= 2km ==> true
+3km <= 2m ==> false
+3 <= 2m ==> operator "<=": Cannot convert unit 'm' (meter) to none
+3m <= 2 ==> operator "<=": Cannot convert unit none to 'm' (meter)
+3m <= 2s ==> operator "<=": Cannot convert unit 's' (second) to 'm' (meter)
+2 <= 10dBm ==> operator "<=": Cannot convert unit 'dBm' (decibel-milliwatt) to none
+10dBm <= 2 ==> operator "<=": Cannot convert unit none to 'dBm' (decibel-milliwatt)
+10dBm <= 10dBm ==> true
+
+true ? 2 : 3 ==> 2
+true ? 2m : 3m ==> 2m
+true ? 2m : 3km ==> 2m
+true ? 2km : 3m ==> 2km
+true ? 2 : 3m ==> 2
+true ? 2m : 3 ==> 2m
+true ? 2m : 3s ==> 2m
+
+3km == 3000m ==> true
+3km != 3000m ==> false
+.
+

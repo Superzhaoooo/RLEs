@@ -1,0 +1,1488 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap9.html">[Prev]</A>&nbsp;<a href="chap11.html">[Next]</A>&nbsp;<a href="toc.html#toc_10.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:config-sim"/>10 Configuring Simulations<a class="headerlink" href="#cha:config-sim" title="Permalink to this headline">¶</a></h1>
+
+<p><h2><a name="sec:config-sim:config-file"/>10.1 The Configuration File<a class="headerlink" href="#sec:config-sim:config-file" title="Permalink to this headline">¶</a></h2>
+
+<p>Configuration and input data for the simulation are in
+a configuration file usually called <tt>omnetpp.ini</tt>.
+
+<p><h3><a name="sec:config-sim:example-inifile"/>10.1.1 An Example<a class="headerlink" href="#sec:config-sim:example-inifile" title="Permalink to this headline">¶</a></h3>
+
+<p>For a start, let us see a simple <tt>omnetpp.ini</tt> file which
+can be used to run the Fifo example simulation.
+
+<pre class="inifile">
+[General]
+network = FifoNet
+sim-time-limit = 100h
+cpu-time-limit = 300s
+#debug-on-errors = true
+#record-eventlog = true
+
+[Config Fifo1]
+description = "low job arrival rate"
+**.gen.sendIaTime = exponential(0.2s)
+**.gen.msgLength = 100b
+**.fifo.bitsPerSec = 1000bps
+
+[Config Fifo2]
+description = "high job arrival rate"
+**.gen.sendIaTime = exponential(0.01s)
+**.gen.msgLength = 10b
+**.fifo.bitsPerSec = 1000bps
+</pre>
+<p>
+The file is grouped into <i>sections</i> named <tt>[General]</tt>, <tt>[Config Fifo1]</tt>
+and <tt>[Config Fifo2]</tt>, each one containing several <i>entries</i>.
+
+<p>
+<h3><a name="sec:config-sim:inifile-syntax"/>10.1.2 File Syntax<a class="headerlink" href="#sec:config-sim:inifile-syntax" title="Permalink to this headline">¶</a></h3>
+
+<p>An OMNeT++ configuration file is an ASCII text file, but non-ASCII
+characters are permitted in comments and string literals. This allows for
+using encodings that are a superset of ASCII, for example ISO 8859-1 and
+UTF-8. There is no limit on the file size or on the line length.
+
+<p>Comments may be placed at the end of any line after a hash mark, &#8220;#&#8221;.
+Comments extend to the end of the line, and are ignored during processing.
+Blank lines are also allowed and ignored.
+
+<p>The file is line oriented, and consists of <i>section heading lines</i>,
+<i>key-value lines</i>, and <i>directive lines</i>:
+
+<p><ol>
+<li> <i>Section heading lines</i> contain a section name enclosed in square brackets.
+<li> <i>Key-value lines</i> have the <i>&lt;key&gt;=&lt;value&gt;</i> syntax; spaces
+      are allowed (but not required) on both sides of the equal sign.
+      If a line contains more than one equal sign, the leftmost one is taken
+      as the key-value separator.
+<li> Currently there is only one kind of directive line, <i>include</i>. An
+      include line starts with the <tt>include</tt> word, followed by the name of
+      the file to be included.
+</ol>
+
+<p>Key-value lines may not occur above the first section heading line (except
+in included files, see later).
+
+<p>Keys may be further classified based on syntax alone:
+
+<p><ol>
+<li> Keys that do not contain dots represent global or per-run <i>configuration options</i>.
+<li> If a key contains a dot, its last component (substring after the last dot)
+      is considered. If the last component contains a hyphen or is equal to
+      <tt>typename</tt>, the key represents a <i>per-object configuration option</i>.
+<li> Otherwise, the key represents a <i>parameter assignment</i>. Thus, parameter
+      assignment keys contain a dot, and no hyphen after the last dot.
+</ol>
+
+<p>Long lines can be broken up using the backslash notation: if the last
+character of a line is &#8220;\&#8221;, it will be merged with the next
+line.
+
+<p>An example:
+
+<pre class="inifile">
+# This is a comment line
+[General]                       # section heading
+network = Foo                   # configuration option
+debug-on-errors = false         # another configuration option
+
+**.vector-recording = false     # per-object configuration option
+**.app*.typename = "HttpClient" # per-object configuration option
+
+**.app*.interval = 3s           # parameter value
+**.app*.requestURL = "http://www.example.com/this-is-a-very-very-very-very\
+-very-long-url?q=123456789"     # a two-line parameter value
+</pre>
+<p>
+<h3><a name="sec:config-sim:inifile-inclusion"/>10.1.3 File Inclusion<a class="headerlink" href="#sec:config-sim:inifile-inclusion" title="Permalink to this headline">¶</a></h3>
+
+<p>OMNeT++ supports including an ini file in another<!--ini file!file inclusion-->,
+via the <tt>include</tt> keyword. This feature allows one to partition a large ini
+file into logical units, fixed and varying part, etc.
+
+<p>An example:
+
+<pre class="inifile">
+# omnetpp.ini
+...
+include params1.ini
+include params2.ini
+include ../common/config.ini
+...
+</pre>
+<p>
+One can also include files from other directories. If the included ini file
+further includes others, their path names will be understood as relative to
+the location of the file which contains the reference, rather than relative
+to the current working directory of the simulation.
+
+<p>This rule also applies to other file names occurring in ini files (such as
+the <b><tt>load-libs</tt></b>, <b><tt>output-vector-file</tt></b>,
+<b><tt>output-scalar-file</tt></b>, etc. options, and <tt>xmldoc()</tt> module
+parameter values.)
+
+<p>In included files, it is allowed to have key-value lines without first having a
+section heading line. File inclusion is conceptually handled as text
+substitution, except that a section heading in an included file will not
+change the current section the main file. The following example illustrates
+the rules:
+
+<pre class="inifile">
+# incl.ini
+foo1 = 1          # no preceding section heading: these lines will go into
+foo2 = 2          # whichever section the file is included into
+[Config Bar]
+bar = 3           # this will always go to into [Config Bar]
+</pre>
+<p>
+<pre class="inifile">
+# omnetpp.ini
+[General]
+include incl.ini  # adds foo1/foo2 to [General], and defines [Config Bar] w/ bar
+baz1 = 4          # include files don't change the current section, so these
+baz2 = 4          # lines still belong to [General]
+</pre>
+
+<p><ul class="note"><b>NOTE</b><br>
+The concept of file inclusion implies that include files may not make sense
+on their own. Thus, when an included ini file is opened in the ini editor
+in the IDE, file contents may be flagged with errors and warnings. These
+errors/warnings disappear when the file is viewed as part of its main file.
+</ul>
+
+<p>
+<h2><a name="sec:config-sim:sections"/>10.2 Sections<a class="headerlink" href="#sec:config-sim:sections" title="Permalink to this headline">¶</a></h2>
+
+<p>An ini file may contain a <tt>[General]</tt> section and several <tt>[Config &lt;configname&gt;]</tt>
+sections. The order of the sections doesn't matter.
+
+<p><h3><a name="sec:config-sim:general-section"/>10.2.1 The [General] Section<a class="headerlink" href="#sec:config-sim:general-section" title="Permalink to this headline">¶</a></h3>
+
+<p>The most commonly used options of the <tt>[General]</tt> section are the
+following.
+
+<p><ul>
+  <li> The <b><tt>network</tt></b> option selects the model to be set up and run.
+  <li> The length of the simulation can be set with the
+    <b><tt>sim-time-limit</tt></b> and the <b><tt>cpu-time-limit</tt></b> options (the
+    usual time units such as ms, s, m, h, etc. can be used).
+</ul>
+
+<p>Note that the NED files loaded by the simulation may contain several
+networks, and any of them may be specified in the <b><tt>network</tt></b>
+option.
+
+<p>
+<h3><a name="sec:config-sim:named-configurations"/>10.2.2 Named Configurations<a class="headerlink" href="#sec:config-sim:named-configurations" title="Permalink to this headline">¶</a></h3>
+
+<p>Named configurations are sections of the form <tt>[Config &lt;configname&gt;]</tt>, where
+<i>&lt;configname&gt;</i> is by convention a camel-case string that starts with a capital letter:
+<tt>Config1</tt>, <tt>WirelessPing</tt>, <tt>OverloadedFifo</tt>, etc. For example,
+<tt>omnetpp.ini</tt> for an Aloha simulation might have the following skeleton:
+
+<pre class="inifile">
+[General]
+...
+[Config PureAloha]
+...
+[Config SlottedAloha1]
+...
+[Config SlottedAloha2]
+...
+</pre>
+<p>
+Some configuration options (such as user interface selection) are only
+accepted in the <tt>[General]</tt> section, but most of them can go into <tt>Config</tt>
+sections as well.
+
+<p>When a simulation is run, one needs to select one of the configurations
+to be activated. In Cmdenv, this is done with the <tt>-c</tt> command-line option:
+
+<pre class="commandline">
+$ aloha -c PureAloha
+</pre>
+<p>
+The simulation will then use the contents of the <tt>[Config PureAloha]</tt>
+section to set up the simulation. (Tkenv, of course, lets the user choose
+the configuration from a dialog.)
+
+<p>
+<h3><a name="sec:config-sim:section-inheritance"/>10.2.3 Section Inheritance<a class="headerlink" href="#sec:config-sim:section-inheritance" title="Permalink to this headline">¶</a></h3>
+
+<p>When the PureAloha configuration is activated, the contents of
+the <tt>[General]</tt> section will also be taken into account: if some
+configuration option or parameter value is not found in <tt>[Config PureAloha]</tt>,
+then the search will continue in the <tt>[General]</tt> section. In
+other words, lookups in <tt>[Config PureAloha]</tt> will fall back to <tt>[General]</tt>.
+The <tt>[General]</tt> section itself is optional; when it is absent, it is
+treated like an empty <tt>[General]</tt> section.
+
+<p>All named configurations fall back to <tt>[General]</tt> by default. However, for
+each configuration it is possible to specify the fall-back section or a list of
+fallback sections explicitly, using the <b><tt>extends</tt></b> key. Consider the
+following ini file skeleton:
+
+<pre class="inifile">
+[General]
+...
+[Config SlottedAlohaBase]
+...
+[Config LowTrafficSettings]
+...
+[Config HighTrafficSettings]
+...
+
+[Config SlottedAloha1]
+extends = SlottedAlohaBase, LowTrafficSettings
+...
+[Config SlottedAloha2]
+extends = SlottedAlohaBase, HighTrafficSettings
+...
+[Config SlottedAloha2a]
+extends = SlottedAloha2
+...
+[Config SlottedAloha2b]
+extends = SlottedAloha2
+...
+</pre>
+<p>
+
+<p>When <tt>SlottedAloha2b</tt> is activated, lookups will consider sections in the
+following order (this is also called the <i>section fallback chain</i>):
+<tt>SlottedAloha2b</tt>, <tt>SlottedAloha2</tt>, <tt>SlottedAlohaBase</tt>,
+<tt>HighTrafficSettings</tt>, <tt>General</tt>.
+
+<p>The effect is the same as if the contents of the sections
+SlottedAloha2b, SlottedAloha2, SlottedAlohaBase, HighTrafficSettings and
+General were copied together into one section, one after another,
+<tt>[Config SlottedAloha2b]</tt> being at the top, and <tt>[General]</tt>
+at the bottom. Lookups always start at the top, and stop at the first
+matching entry.
+
+<p>The order of the sections in the <i>fallback chain</i> is computed
+using the <i>C3 linearization algorithm</i> ([<a href="#bib-Barrett1996">Barrett1996</a>]):
+
+<p>The <i>fallback chain</i> of a configuration <tt>A</tt> is
+<ul>
+  <li> if <tt>A</tt> does not have an <b><tt>extends</tt></b> key then
+        <tt>A</tt>, <tt>General</tt>
+  <li> otherwise the merge of the configurations enumerated in the
+        <b><tt>extends</tt></b> key, and all of their <i>fallback section chains</i>.
+        The merge is <i>monotonic</i>: if some configuration <tt>X</tt>
+        precedes configuration <tt>Y</tt> in one of the input chains,
+        it will precede it in the output chain too.
+</ul>
+
+<p>The <i>section fallback chain</i> can be printed by the <tt>-X</tt> option
+of the command line of the simulation program:
+
+<pre class="commandline">
+$ aloha -X SlottedAloha2b
+OMNeT++ Discrete Event Simulation
+...
+Config SlottedAloha2b
+Config SlottedAloha2
+Config SlottedAlohaBase
+Config HighTrafficSettings
+General
+</pre>
+<p>
+The <i>section fallback</i> concept is similar to multiple inheritance in
+object-oriented languages, and benefits are similar too; one can factor out
+the common parts of several configurations into a &#8220;base&#8221; configuration,
+and additionally, one can reuse existing configurations without copying, by
+using them as a base. In practice one will often have &#8220;abstract&#8221;
+configurations too (in the C++/Java sense), which assign only a subset of
+parameters and leave the others open, to be assigned in derived
+configurations.
+
+<p>When experimenting with a lot of different parameter settings for a
+simulation model, file inclusion and section inheritance can make it much
+easier to manage ini files.
+
+<p>
+<h2><a name="sec:config-sim:parameter-settings"/>10.3 Assigning Module Parameters<a class="headerlink" href="#sec:config-sim:parameter-settings" title="Permalink to this headline">¶</a></h2>
+
+<p>Simulations get input via module parameters, which can be assigned a
+value in NED files or in <tt>omnetpp.ini</tt> -- in this order. Since parameters
+assigned in NED files cannot be overridden in <tt>omnetpp.ini</tt>, one can
+think about them as being &#8220;hardcoded&#8221;. In contrast, it is easier
+and more flexible to maintain module parameter settings in <tt>omnetpp.ini</tt>.
+
+<p>In <tt>omnetpp.ini</tt>, module parameters are referred to by their full paths
+(hierarchical names). This name consists of the dot-separated list of
+the module names (from the top-level module down to the module containing
+the parameter), plus the parameter name (see section <a href="chap7.html#sec:sim-lib:object-fullpath">[7.1.2.2]</a>).
+
+<p>An example <tt>omnetpp.ini</tt> which sets the <tt>numHosts</tt> parameter of
+the toplevel module and the <tt>transactionsPerSecond</tt> parameter of the
+<tt>server</tt> module:
+
+<pre class="inifile">
+[General]
+Network.numHosts = 15
+Network.server.transactionsPerSecond = 100
+</pre>
+<p>
+Typename pattern assignments are also accepted:
+
+<pre class="inifile">
+[General]
+Network.host[*].app.typename = "PingApp"
+</pre>
+<p>
+
+<p><h3><a name="sec:config-sim:wildcards"/>10.3.1 Using Wildcard Patterns<a class="headerlink" href="#sec:config-sim:wildcards" title="Permalink to this headline">¶</a></h3>
+
+<p>Models can have a large number of parameters to be configured, and it would
+be tedious to set them one-by-one in <tt>omnetpp.ini</tt>. OMNeT++ supports
+<i>wildcard patterns</i> which allow for setting several model parameters
+at once. The same pattern syntax is used for per-object configuration options;
+for example <tt>&lt;object-path-pattern&gt;.record-scalar</tt>, or <tt>&lt;module-path-pattern&gt;.rng-&lt;N&gt;</tt>.
+
+<p>The pattern syntax is a variation on Unix <i>glob</i>-style
+patterns. The most apparent differences to globbing rules are the
+distinction between <tt>*</tt> and <tt>**</tt>, and that character ranges should
+be written with curly braces instead of square brackets; that is,
+<i>any-letter</i> is expressed as <tt>{a-zA-Z}</tt> and not as
+<tt>[a-zA-Z]</tt>, because square brackets are reserved for the notation of
+module vector indices.
+
+<p>Pattern syntax:
+
+<p><ul>
+  <li> <tt>?</tt> : matches any character except dot (.)
+  <li> <tt>*</tt> : matches zero or more characters except dot (.)
+  <li> <tt>**</tt> : matches zero or more characters (any character)
+  <li> <tt>{a-f}</tt> : <i>set</i>: matches a character in the range a-f
+  <li> <tt>{^a-f}</tt>: <i>negated set</i>: matches a character
+    NOT in the range a-f
+  <li> <tt>{38..150}</tt> : <i>numeric range</i>: any number (i.e. sequence of digits)
+    in the range 38..150, inclusive; both limits are optional
+  <li> <tt>[38..150]</tt> : <i>index range</i>: any number in square brackets in the
+    range 38..150, inclusive; both limits are optional
+  <li> backslash (\) : takes away the special meaning of the
+    subsequent character
+</ul>
+
+<p><h4><a name="sec:config-sim:precedence-of-entries"/>10.3.1.1 Precedence<a class="headerlink" href="#sec:config-sim:precedence-of-entries" title="Permalink to this headline">¶</a></h4>
+
+<p>The order of entries is very important with wildcards. When a key matches
+several wildcard patterns, the <i>first</i> matching occurrence
+is used. This means that one needs to list specific settings first, and
+more general ones later. Catch-all settings should come last.
+
+<p>An example ini file:
+
+<pre class="inifile">
+[General]
+*.host[0].waitTime = 5ms   # specifics come first
+*.host[3].waitTime = 6ms
+*.host[*].waitTime = 10ms  # catch-all comes last
+</pre>
+<p>
+
+<p><h4><a name="sec:config-sim:asterisk-vs-double-asterisk"/>10.3.1.2 Asterisk vs Double Asterisk<a class="headerlink" href="#sec:config-sim:asterisk-vs-double-asterisk" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt>*</tt> wildcard is for matching a single module or parameter name in the
+path name, while <tt>**</tt> can be used to match several components in the path.
+For example, <tt>**.queue*.bufSize</tt> matches the <tt>bufSize</tt> parameter of any module
+whose name begins with <tt>queue</tt> in the model, while <tt>*.queue*.bufSize</tt>
+or <tt>net.queue*.bufSize</tt> selects only queues immediately on network level.
+Also note that <tt>**.queue**.bufSize</tt> would match <tt>net.queue1.foo.bar.bufSize</tt>
+as well!
+
+<p><h4><a name="sec:config-sim:sets-negated-sets"/>10.3.1.3 Sets, Negated Sets<a class="headerlink" href="#sec:config-sim:sets-negated-sets" title="Permalink to this headline">¶</a></h4>
+
+<p>Sets and negated sets can contain several character ranges and also
+enumeration of characters. For example, <tt>{_a-zA-Z0-9}</tt> matches any letter
+or digit, plus the underscore; <tt>{xyzc-f}</tt> matches any of the characters
+x, y, z, c, d, e, f.
+To include '-' in the set, put it at a position where it cannot be
+interpreted as character range, for example: <tt>{a-z-}</tt> or <tt>{-a-z}</tt>.
+To include '}' in the set, it must be the first character: <tt>{}a-z}</tt>,
+or as a negated set: <tt>{^}a-z}</tt>.
+A backslash is always taken as a literal backslash (and not as an escape
+character) within set definitions.
+
+<p>
+<h4><a name="sec:config-sim:numeric-ranges-and-index-ranges"/>10.3.1.4 Numeric Ranges and Index Ranges<a class="headerlink" href="#sec:config-sim:numeric-ranges-and-index-ranges" title="Permalink to this headline">¶</a></h4>
+
+<p>Only nonnegative integers can be matched.  The start or the end of the range
+(or both) can be omitted: <tt>{10..}</tt>, <tt>{..99}</tt> or <tt>{..}</tt>
+are valid numeric ranges (the last one matches any number).
+The specification must use exactly two dots.
+Caveat: <tt>*{17..19}</tt> will match <tt>a17</tt>, <tt>117</tt> and <tt>963217</tt> as well,
+because the <tt>*</tt> can also match digits!
+
+<p>An example for numeric ranges:
+
+<pre class="inifile">
+[General]
+*.*.queue[3..5].bufSize = 10
+*.*.queue[12..].bufSize = 18
+*.*.queue[*].bufSize = 6  # this will only affect queues 0,1,2 and 6..11
+</pre>
+<p>
+
+<p><h3><a name="sec:config-sim:using-default-values"/>10.3.2 Using the Default Values<a class="headerlink" href="#sec:config-sim:using-default-values" title="Permalink to this headline">¶</a></h3>
+
+<p>It is also possible to utilize the default values specified in the NED files.
+The <i>&lt;parameter-fullpath&gt;</i><tt>=default</tt> setting assigns
+the default value to a parameter if it has one.
+
+<p>The <i>&lt;parameter-fullpath&gt;</i><tt>=ask</tt> setting will try to get the parameter
+value interactively from the user.
+
+<p>If a parameter was not set but has a default value, that value will be
+assigned. This is like having a <tt>**=default</tt> line at the
+bottom of the <tt>[General]</tt> section.
+
+<p>If a parameter was not set and has no default value, that will either
+cause an error or will be interactively prompted for, depending
+on the particular user interface.
+
+<p><ul class="note"><b>NOTE</b><br>
+In Cmdenv, one must explicitly enable interactive mode with the
+<tt>-</tt>-cmdenv-interactive=true option, otherwise the simulation
+program will stop with an error in the setup phase.
+</ul>
+
+<p>More precisely, parameter resolution takes place as follows:
+
+<p><ol>
+<li> If the parameter is assigned in NED, it cannot be overridden in the
+    configuration. The value is applied and the process finishes.
+<li> If the first match is a value line (matches
+    <i>&lt;parameter-fullpath&gt;</i><tt>=</tt><i>&lt;value&gt;</i>), the value is
+    applied and the process finishes.
+<li> If the first match is a <i>&lt;parameter-fullpath&gt;</i><tt>=default</tt> line,
+    the default value is applied and the process finishes.
+<li> If the first match is a <i>&lt;parameter-fullpath&gt;</i><tt>=ask</tt> line,
+    the parameter will be asked from the user interactively (UI dependent).
+<li> If there was no match and the parameter has a default value, it is applied
+    and the process finishes.
+<li> Otherwise the parameter is declared unassigned, and handled accordingly
+    by the user interface. It may be reported as an error, or may be
+    asked from the user interactively.
+</ol>
+
+<p>
+<h2><a name="sec:config-sim:parameter-studies"/>10.4 Parameter Studies<a class="headerlink" href="#sec:config-sim:parameter-studies" title="Permalink to this headline">¶</a></h2>
+
+<p>It is quite common in simulation studies that the simulation model is
+run several times with different parameter settings, and the results
+are analyzed in relation to the input parameters. OMNeT++ 3.x had no
+direct support for batch runs, and users had to resort to writing shell
+(or Python, Ruby, etc.) scripts that iterated over the required
+parameter space, to generate a (partial) ini file and run the
+simulation program in each iteration.
+
+<p>OMNeT++ 4.x largely automates this process, and eliminates the need for
+writing batch execution scripts. It is the ini file where the user can
+specify iterations over various parameter settings.
+Here is an example:
+
+<pre class="inifile">
+[Config AlohaStudy]
+*.numHosts = ${1, 2, 5, 10..50 step 10}
+**.host[*].generationInterval = exponential(${0.2, 0.4, 0.6}s)
+</pre>
+<p>
+This parameter study expands to 8*3 = 24 simulation runs, where the number of
+hosts iterates over the numbers 1, 2, 5, 10, 20, 30, 40, 50, and for
+each host count three simulation runs will be done, with the generation
+interval being exponential(0.2), exponential(0.4), and
+exponential(0.6).
+
+<p>How does it work? First of all, Cmdenv with the <tt>-x</tt> option will print
+how many simulation runs a given section expands to. (One should of course
+use Cmdenv for batch runs, not a GUI one like Tkenv or Qtenv.)
+
+<pre class="commandline">
+$ aloha -u Cmdenv -x AlohaStudy
+
+OMNeT++ Discrete Event Simulation
+...
+Config: AlohaStudy
+Number of runs: 24
+</pre>
+<p>
+When the <tt>-g</tt> option is also added, the program also prints the values
+of the iteration variables for each run. (Use <tt>-G</tt> for even more info.)
+Note that the parameter study actually maps to nested loops, with the last
+<tt>${...}</tt> becoming the innermost loop. The iteration variables are
+just named <tt>$0</tt> and <tt>$1</tt> -- we'll see that it is possible to give
+meaningful names to them. Please ignore the <tt>$repetition=0</tt> part in
+the printout for now.
+
+<pre class="commandline">
+$ aloha -u Cmdenv -x AlohaStudy -g
+OMNeT++ Discrete Event Simulation
+...
+Config: AlohaStudy
+Number of runs: 24
+Run 0: $0=1, $1=0.2, $repetition=0
+Run 1: $0=1, $1=0.4, $repetition=0
+Run 2: $0=1, $1=0.6, $repetition=0
+Run 3: $0=2, $1=0.2, $repetition=0
+Run 4: $0=2, $1=0.4, $repetition=0
+Run 5: $0=2, $1=0.6, $repetition=0
+Run 6: $0=5, $1=0.2, $repetition=0
+Run 7: $0=5, $1=0.4, $repetition=0
+...
+Run 19: $0=40, $1=0.4, $repetition=0
+Run 20: $0=40, $1=0.6, $repetition=0
+Run 21: $0=50, $1=0.2, $repetition=0
+Run 22: $0=50, $1=0.4, $repetition=0
+Run 23: $0=50, $1=0.6, $repetition=0
+</pre>
+<p>
+Any of these runs can be executed by passing the <tt>-r &lt;runnumber&gt;</tt>
+option to Cmdenv. So, the task is now to run the simulation program 24
+times, with <tt>-r</tt> running from 0 through 23:
+
+<pre class="commandline">
+$ aloha -u Cmdenv -c AlohaStudy -r 0
+$ aloha -u Cmdenv -c AlohaStudy -r 1
+$ aloha -u Cmdenv -c AlohaStudy -r 2
+...
+$ aloha -u Cmdenv -c AlohaStudy -r 23
+</pre>
+<p>
+This batch can be executed either from the OMNeT++ IDE (where you are
+prompted to pick an executable and an ini file, choose the configuration
+from a list, and just click Run), or using a little command-line
+batch execution tool (<tt>opp_runall</tt>) supplied with OMNeT++.
+
+<p>Actually, it is also possible to get Cmdenv execute all runs in one go,
+by simply omitting the <tt>-r</tt> option.
+
+<pre class="commandline">
+$ aloha -u Cmdenv -c AlohaStudy
+
+OMNeT++ Discrete Event Simulation
+Preparing for running configuration AlohaStudy, run #0...
+...
+Preparing for running configuration AlohaStudy, run #1...
+...
+...
+Preparing for running configuration AlohaStudy, run #23...
+</pre>
+<p>
+
+<p>However, this approach is not recommended, because it is more
+susceptible to C++ programming errors in the model. (For example, if
+any of the runs crashes, the whole batch stops -- which may
+not be what the user wants.)
+
+<p>
+<h3><a name="sec:config-sim:iterations"/>10.4.1 Iterations<a class="headerlink" href="#sec:config-sim:iterations" title="Permalink to this headline">¶</a></h3>
+
+<p>Let us return to the example ini file in the previous section:
+
+<pre class="inifile">
+[Config AlohaStudy]
+*.numHosts = ${1, 2, 5, 10..50 step 10}
+**.host[*].generationInterval = exponential( ${0.2, 0.4, 0.6}s )
+</pre>
+<p>
+The <tt>${...}</tt> syntax specifies an iteration. It is sort of a macro: at
+each run, the whole <tt>${...}</tt> string is textually replaced with the
+current iteration value. The values to iterate over do not need to be
+numbers (although the <i>"a..b"</i> and <i>"a..b step c"</i> forms
+only work on numbers), and the substitution takes place even inside
+string constants. So, the following examples are all valid (note that
+textual substitution is used):
+
+<p><pre class="verbatim">
+*.param = 1 + ${1e-6, 1/3, sin(0.5)}
+    ==&gt; *.param = 1 + 1e-6
+        *.param = 1 + 1/3
+        *.param = 1 + sin(0.5)
+*.greeting = "We will simulate ${1,2,5} host(s)."
+    ==&gt; *.greeting = "We will simulate 1 host(s)."
+        *.greeting = "We will simulate 2 host(s)."
+        *.greeting = "We will simulate 5 host(s)."
+</pre>
+
+<p>To write a literal <tt>${..}</tt> inside a string constant, quote
+the left brace with a backslash: <tt>$\{..}</tt>.
+
+<p><ul class="note"><b>NOTE</b><br>
+Inside <tt>${..}</tt>, the values are separated with commas. However,
+not every comma is taken as a value separator because the parser
+tries to be smart about what is meant. Commas inside (nested) parentheses,
+brackets or curly braces are ignored so that <tt>${uniform(0,3)}</tt> is
+parsed as one value and not as <tt>uniform(0</tt> plus <tt>3)</tt>. Commas, curly
+braces and other charachers inside double-quoted string literals are
+also ignored, so <tt>${"Hello, world"}</tt> yields a single <tt>"Hello, world"</tt>
+string and not <tt>"Hello</tt> plus <tt>world"</tt>. It is assumed that string literals
+use backslash as an escape characher, like in C/C++ and NED.
+
+<p>To include a literal comma or close-brace inside a value, one needs
+to escape it with a backslash: <tt>${foo\,bar\}baz}</tt>
+will parse as a single value, <tt>foo,bar}baz</tt>. Backslashes themselves must be doubled.
+As the above examples illustrate, the parser removes one level of backslashes,
+except inside string literals where they are left intact.
+</ul>
+
+<p>
+<h3><a name="sec:config-sim:named-iteration-variables"/>10.4.2 Named Iteration Variables<a class="headerlink" href="#sec:config-sim:named-iteration-variables" title="Permalink to this headline">¶</a></h3>
+
+<p>One can assign names to iteration variables, which has the advantage
+that meaningful names will be displayed in the Cmdenv output instead
+of <tt>$0</tt> and <tt>$1</tt>, and also lets one reference iteration
+variables at other places in the ini file. The syntax is
+<tt>${&lt;varname&gt;=&lt;iteration&gt;}</tt>, and variables can be referred to simply as
+<tt>${&lt;varname&gt;}</tt>:
+
+<pre class="inifile">
+[Config Aloha]
+*.numHosts = ${N=1, 2, 5, 10..50 step 10}
+**.host[*].generationInterval = exponential( ${mean=0.2, 0.4, 0.6}s )
+**.greeting = "There are ${N} hosts"
+</pre>
+<p>
+The scope of the variable name is the section that defines it, plus
+sections based on that section (via <b><tt>extends</tt></b>).
+
+<p><h4><a name="sec:config-sim:referencing-other-iteration-variables"/>10.4.2.1 Referencing Other Iteration Variables<a class="headerlink" href="#sec:config-sim:referencing-other-iteration-variables" title="Permalink to this headline">¶</a></h4>
+
+<p>Iterations may refer to other iteration variables, using the dollar syntax
+(<tt>$var</tt>) or the dollar-brace syntax (<tt>${var}</tt>).
+
+<p>This feature makes it possible to have loops where the inner iteration range
+depends on the outer one. An example:
+
+<pre class="inifile">
+**.foo = ${i=1..10}  # outer loop
+**.bar = ${j=1..$i}  # inner loop depends on $i
+</pre>
+<p>
+When needed, the default top-down nesting order of iteration loops is
+modified (loops are reordered) to ensure that expressions only refer to
+more outer loop variables, but not to inner ones. When this is not
+possible, an error is generated with the &#8220;circular dependency&#8221; message.
+
+<p>For instance, in the following example the loops will be nested in
+<i>k - i - j</i> order, <i>k</i> being the outermost and <i>j</i>
+the innermost loop:
+
+<pre class="inifile">
+**.foo = ${i=0..$k}   # must be inner to $k
+**.bar = ${j=$i..$k}  # must be inner to both $i and $k
+**.baz = ${k=1..10}   # may be the outermost loop
+</pre>
+<p>
+And the next example will stop with an error because there is no &#8220;good&#8221;
+ordering:
+
+<pre class="inifile">
+**.foo = ${i=0..$j}
+**.bar = ${j=0..$k}
+**.baz = ${k=0..$i} # --&gt; error: circular references
+</pre>
+<p>
+Variables are substituted <i>textually</i>, and the result is normally
+<i>not</i> evaluated as an arithmetic expression.  The result of the
+substitution is only evaluated where needed, namely in the three arguments
+of iteration ranges (<i>from</i>, <i>to</i>, <i>step</i>), and in the
+value of the <b><tt>constraint</tt></b> configuration option.
+
+<p>To illustrate textual substitution, consider the following contorted example:
+
+<pre class="inifile">
+**.foo = ${i=1..3, 1s+, -}001s
+</pre>
+<p>
+Here, the <tt>foo</tt> NED parameter will receiving the following values in subsequent runs:
+<tt>1001s</tt>, <tt>2001s</tt>, <tt>3001s</tt>, <tt>1s+001s</tt>, <tt>-001s</tt>.
+
+<p><ul class="caution"><b>CAUTION</b><br>
+Due to textual substitution, variables in arithmetic expressions should be
+protected with parentheses -- just like in C/C++ function-style macros.
+Consider the following example:
+
+<pre class="inifile">
+**.foo = ${i=10}
+**.bar = ${j=$i+5}
+**.baz = ${k=2*$j}   # bogus! $j should be written as ($j)
+constraint = $i+50 &lt; 2*$j  # ditto: should use ($i) and ($j)
+</pre>
+<p>
+Here, the <tt>baz</tt> parameter will receive the string <tt>2*10+5</tt> after
+the substitutions and hence evaluate to <i>25</i> instead of the correct
+<i>2*(10+5)=30</i>; the constraint expression is similarly wrong. Mind the parens!
+</ul>
+
+<p>Substitution also works inside string constants within iterations (<tt>${..}</tt>).
+
+<pre class="inifile">
+**.foo = "${i=Jo}"  # -&gt; Jo
+**.bar = ${"Hi $i", "Hi ${i}hn"}  # -&gt; Hi Jo /John
+</pre>
+<p>
+However, outside iterations the plain dollar syntax is not understood, only
+the dollar-brace syntax is:
+
+<pre class="inifile">
+**.foo = "${i=Day}"
+**.baz = "Good $i"     # -&gt; remains "Good $i"
+**.baz = "Good ${i}"   # -&gt; becomes "Good Day"
+</pre>
+<p>
+<ul class="rationale"><b>Rationale</b><br>
+The text substitution model was chosen for greater flexibility as well as
+the ability to produce more consistent semantics. The advantages outweigh
+the inconvenience of having to parenthesize variable references in
+arithmetic expressions.
+</ul>
+
+<p>
+<h3><a name="sec:config-sim:parallel-iteration"/>10.4.3 Parallel Iteration<a class="headerlink" href="#sec:config-sim:parallel-iteration" title="Permalink to this headline">¶</a></h3>
+
+<p>The body of an iteration may end in an exclamation mark followed by the
+name of another iteration variable. This syntax denotes a <i>parallel
+iteration</i>. A parallel iteration does not define a loop of its own, but
+rather, the sequence is advanced in lockstep with the variable after the
+&#8220;!&#8221;. In other words, the &#8220;!&#8221; syntax chooses the <i>kth</i> value from
+the iteration, where <i>k</i> is the position (iteration count) of the
+iteration variable after the &#8220;!&#8221;.
+
+<p>An example:
+
+<pre class="inifile">
+**.plan =     ${plan= "A", "B", "C", "D"}
+**.numHosts = ${hosts= 10,  20,  50, 100 ! plan}
+**.load =     ${load= 0.2, 0.3, 0.3, 0.4 ! plan}
+</pre>
+<p>
+In the above example, the only loop is defined by the first line, the <tt>plan</tt>
+variable. The other two iterations, <tt>hosts</tt> and <tt>load</tt> just follow it;
+for the first value of <tt>plan</tt> the first values of <tt>host</tt> and <tt>load</tt>
+are selected, and so on.
+
+<p>
+
+<p><h3><a name="sec:config-sim:predefined-variables"/>10.4.4 Predefined Variables, Run ID<a class="headerlink" href="#sec:config-sim:predefined-variables" title="Permalink to this headline">¶</a></h3>
+
+<p>There are a number of predefined variables: <tt>${configname}</tt> and
+<tt>${runnumber}</tt> with the obvious meanings; <tt>${network}</tt> is the
+name of the network that is simulated; <tt>${processid}</tt> and
+<tt>${datetime}</tt> expand to the OS process id of the simulation and the
+time it was started; and there are some more: <tt>${runid},</tt>
+<tt>${iterationvars}</tt> and <tt>${repetition}.</tt>
+
+<p><tt>${runid}</tt> holds the <i>run ID</i>. When a simulation is run, a
+run ID is assigned that uniquely identifies that instance of running the
+simulation: every subsequent run of the same simulation will produce a different
+run ID. The run ID is generated as the concatenation of several variables like
+<tt>${configname},</tt> <tt>${runnumber},</tt> <tt>${datetime}</tt> and
+<tt>${processid}.</tt> This yields an identifier that is unique &#8220;enough&#8221;
+for all practical purposes, yet it is meaningful for humans. The run ID is
+recorded into result files written during the simulation, and can be used
+to match vectors and scalars written by the same simulation run.
+
+<p>
+<h3><a name="sec:config-sim:constraint-expression"/>10.4.5 Constraint Expression<a class="headerlink" href="#sec:config-sim:constraint-expression" title="Permalink to this headline">¶</a></h3>
+
+<p>In cases when not all combinations of the iteration variables make sense
+or need to be simulated, it is possible to specify an additional
+constraint expression. This expression is interpreted as a conditional
+(an "if" statement) within the innermost
+loop, and it must evaluate to <tt>true</tt> for
+the variable combination to generate a run. The expression should be
+given with the <b><tt>constraint</tt></b> configuration option. An example:
+
+<pre class="inifile">
+*.numNodes = ${n=10..100 step 10}
+**.numNeighbors = ${m=2..10 step 2}
+constraint = ($m) &lt;= sqrt($n)  # note: parens needed due to textual substitution
+</pre>
+<p>
+The expression syntax supports most C language operators including boolean,
+conditional and binary shift operations, and most <tt>&lt;math.h&gt;</tt> functions;
+data types are boolean, double and string. The expression must evaluate to
+a boolean.
+
+<p><ul class="note"><b>NOTE</b><br>
+Remember that variables are substituted textually into the expresssion, so
+they must be protected with parentheses to preserve evaluation order.
+</ul>
+
+<p>
+<h3><a name="sec:config-sim:repeating-runs-with-different-seeds"/>10.4.6 Repeating Runs with Different Seeds<a class="headerlink" href="#sec:config-sim:repeating-runs-with-different-seeds" title="Permalink to this headline">¶</a></h3>
+
+<p>It is directly supported to perform several runs with the same
+parameters but different random number seeds. There are two
+configuration options related to this: <b><tt>repeat</tt></b> and <b><tt>seed-set</tt></b>.
+The first one simply specifies how many times a run needs to be repeated. For
+example,
+
+<pre class="inifile">
+repeat = 10
+</pre>
+<p>
+causes every combination of iteration variables to be repeated 10 times,
+and the <tt>${repetition}</tt> predefined variable holds the loop counter.
+Indeed, <tt>repeat=10</tt> is equivalent to adding <tt>${repetition=0..9}</tt>
+to the ini file. The <tt>${repetition}</tt> loop always becomes the innermost loop.
+
+<p>The <b><tt>seed-set</tt></b> configuration key affects seed selection. Every
+simulation uses one or more random number generators (as configured by
+the <b><tt>num-rngs</tt></b> key), for which the simulation kernel can automatically
+generate seeds. The first simulation run may use one set of seeds (seed
+set 0), the second run may use a second set (seed set 1), and so on.
+Each set contains as many seeds as there are RNGs configured. All
+automatic seeds generate random number sequences that are far apart in
+the RNG's cycle, so they will never overlap during
+simulations.
+
+<p><ul class="note"><b>NOTE</b><br>
+Mersenne Twister, the default RNG of OMNeT++ has a cycle length of
+<i>2<sup>19937</sup></i>, which is more than enough for any conceivable purpose.
+</ul>
+
+<p>The <b><tt>seed-set</tt></b> key tells the simulation kernel which seed set to use.
+It can be set to a concrete number (such as <tt>seed-set=0</tt>), but it
+usually does not make sense as it would cause every simulation to run
+with exactly the same seeds. It is more practical to set it to either
+<tt>${runnumber}</tt> or to <tt>${repetition}</tt>. The default setting is
+<tt>${runnumber}</tt>:
+
+<pre class="inifile">
+seed-set = ${runnumber}   # this is the default
+</pre>
+<p>
+This causes every simulation run to execute with a unique seed set. The
+second option is:
+
+<pre class="inifile">
+seed-set = ${repetition}
+</pre>
+<p>
+where all <tt>$repetition=0</tt> runs will use the same seeds (seed set 0), all
+<tt>$repetition=1</tt> runs use another seed set, <tt>$repetition=2</tt> a third seed
+set, etc.
+
+<p>To perform runs with manually selected seed sets, one needs to define an
+iteration for the <b><tt>seed-set</tt></b> key:
+
+<pre class="inifile">
+seed-set = ${5,6,8..11}
+</pre>
+<p>
+In this case, the <b><tt>repeat</tt></b> key should be left out, as <b><tt>seed-set</tt></b>
+already defines an iteration and there is no need for an extra loop.
+
+<p>It is of course also possible to manually specify individual seeds for
+simulations. The parallel iteration feature is very convenient here:
+
+<pre class="inifile">
+repeat = 4
+seed-1-mt = ${53542, 45732, 47853, 33434 ! repetition}
+seed-2-mt = ${75335, 35463, 24674, 56673 ! repetition}
+seed-3-mt = ${34542, 67563, 96433, 23567 ! repetition}
+</pre>
+<p>
+The meaning of the above is this: in the first repetition, the first
+column of seeds is chosen, for the second repetition, the second
+column, etc. The "!" syntax chooses the
+<i>kth</i> value from the iteration, where <i>k</i> is the position
+(iteration count) of the iteration variable after the
+"!". Thus, the above example is equivalent to the following:
+
+<pre class="inifile">
+# no repeat= line!
+seed-1-mt = ${seed1 = 53542, 45732, 47853, 33434}
+seed-2-mt = ${        75335, 35463, 24674, 56673 ! seed1}
+seed-3-mt = ${        34542, 67563, 96433, 23567 ! seed1}
+</pre>
+<p>
+That is, the iterators of <tt>seed-2-mt</tt> and <tt>seed-3-mt</tt> are advanced
+in lockstep with the <tt>seed1</tt> iteration.
+
+<p>
+
+<p><h3><a name="sec:config-sim:experiment-measurement-replication"/>10.4.7 Experiment-Measurement-Replication<a class="headerlink" href="#sec:config-sim:experiment-measurement-replication" title="Permalink to this headline">¶</a></h3>
+
+<p>We have introduced three concepts that are useful for organizing
+simulation results generated by batch executions or several batches of
+executions.
+
+<p>During a simulation study, a user prepares several
+<i>experiments</i>. The purpose of an experiment is to find out the
+answer to questions like <i>"how does the number of
+nodes affect response times in the network?"</i> For an
+experiment, several <i>measurements</i> are performed on the
+simulation model, and each measurement runs the simulation model with a
+different set of parameters. To eliminate the bias introduced by the
+particular random number stream used for the simulation, several
+<i>replications</i> of every measurement are run with different
+random number seeds, and the results are averaged.
+
+<p>OMNeT++ result analysis tools can take advantage of the <i>experiment</i>,
+<i>measurement</i> and <i>replication</i> labels recorded into result
+files, and display simulation runs and recorded results accordingly on
+the user interface.
+
+<p>These labels can be explicitly specified in the ini file using the
+<b><tt>experiment-label</tt></b>, <b><tt>measurement-label</tt></b> and <b><tt>replication-label</tt></b>
+config options. If they are missing, the default is the following:
+
+<pre class="inifile">
+experiment-label = "${configname}"
+measurement-label = "${iterationvars}"
+replication-label = "#${repetition},seed-set=&lt;seedset&gt;"
+</pre>
+<p>
+That is, the default experiment label is the configuration name; the
+measurement label is concatenated from the iteration variables; and the
+replication label contains the repeat loop variable and seed-set.
+Thus, for our first example the <i>experiment-measurement-replication</i>
+tree would look like this:
+
+<p><pre class="verbatim">
+"PureAloha"<i><i>--experiment</i></i>
+  $N=1,$mean=0.2<i><i> -- measurement</i></i>
+    #0, seed-set=0<i><i> -- replication</i></i>
+    #1, seed-set=1
+    #2, seed-set=2
+    #3, seed-set=3
+    #4, seed-set=4
+  $N=1,$mean=0.4
+    #0, seed-set=5
+    #1, seed-set=6
+    ...
+    #4, seed-set=9
+  $N=1,$mean=0.6
+    #0, seed-set=10
+    #1, seed-set=11
+    ...
+    #4, seed-set=14
+  $N=2,$mean=0.2
+    ...
+  $N=2,$mean=0.4
+    ...
+    ...
+</pre>
+
+<p>The <i>experiment-measurement-replication</i> labels should be enough to
+reproduce the same simulation results, given of course that the ini
+files and the model (NED files and C++ code) haven't changed.
+
+<p>Every instance of running the simulation gets a unique run ID. We can
+illustrate this by listing the corresponding run IDs under each
+repetition in the tree. For example:
+
+<p><pre class="verbatim">
+"PureAloha"
+  $N=1,$mean=0.2
+    #0, seed-set=0
+      <i>PureAloha-0-20070704-11:38:21-3241</i>
+      <i>PureAloha-0-20070704-11:53:47-3884</i>
+      <i>PureAloha-0-20070704-16:50:44-4612</i>
+    #1, seed-set=1
+      <i>PureAloha-1-20070704-16:50:55-4613</i>
+    #2, seed-set=2
+      <i>PureAloha-2-20070704-11:55:23-3892</i>
+      <i>PureAloha-2-20070704-16:51:17-4615</i>
+      ...
+</pre>
+
+<p>The tree shows that ("PureAloha", "$N=1,$mean=0.2", "#0, seed-set=0")
+was run three times. The results produced
+by these three executions should be identical, unless, for example,
+some parameter was modified in the ini file, or a bug got fixed in the
+C++ code.
+
+<p>The default way of generating the <i>experiment/measurement/replication</i>
+labels is useful and sufficient for the majority of simulation studies.
+However, it can be customized if needed. For example, here is a way to join two
+configurations into one experiment:
+
+<pre class="inifile">
+[Config PureAloha_Part1]
+experiment-label = "PureAloha"
+...
+[Config PureAloha_Part2]
+experiment-label = "PureAloha"
+...
+</pre>
+<p>
+Measurement and replication labels can be customized in a similar way,
+making use of named iteration variables, <tt>${repetition}</tt>,
+<tt>${runnumber}</tt> and other predefined variables. One possible benefit is
+to customize the generated measurement and replication labels. For
+example:
+
+<pre class="inifile">
+[Config PureAloha_Part1]
+measurement = "${N} hosts, exponential(${mean}) packet generation interval"
+</pre>
+<p>
+One should be careful with the above technique though, because if some
+iteration variables are left out of the measurement labels, runs with
+all values of those variables will be grouped together to the same
+replications.
+
+<p>
+<h2><a name="sec:config-sim:rng-config"/>10.5 Configuring the Random Number Generators<a class="headerlink" href="#sec:config-sim:rng-config" title="Permalink to this headline">¶</a></h2>
+
+<p>The random number architecture of OMNeT++ was already outlined
+in section <a href="chap7.html#sec:sim-lib:random-number-generators">[7.3]</a>. Here
+we'll cover the configuration of RNGs in <tt>omnetpp.ini</tt>.
+
+<p><h3><a name="sec:config-sim:number-of-rngs"/>10.5.1 Number of RNGs<a class="headerlink" href="#sec:config-sim:number-of-rngs" title="Permalink to this headline">¶</a></h3>
+
+<p>The <b><tt>num-rngs</tt></b> configuration option sets the number of
+random number generator instances (i.e. random number streams)
+available for the simulation model (see <a href="chap7.html#sec:sim-lib:random-number-generators">[7.3]</a>).
+Referencing an RNG number greater or equal to this number
+(from a simple module or NED file) will cause a runtime error.
+
+<p>
+<h3><a name="sec:config-sim:rng-choice"/>10.5.2 RNG Choice<a class="headerlink" href="#sec:config-sim:rng-choice" title="Permalink to this headline">¶</a></h3>
+
+<p>The <b><tt>rng-class</tt></b> configuration option sets the random number
+generator class to be used. It defaults to <tt>"<a href="../api/classomnetpp_1_1cMersenneTwister.html">cMersenneTwister</a>"</tt>,
+the Mersenne Twister RNG. Other available classes are <tt>"<a href="../api/classomnetpp_1_1cLCG32.html">cLCG32</a>"</tt>
+(the "legacy" RNG of OMNeT++ 2.3 and earlier versions, with a cycle length
+of <i>2<sup>31</sup>-2</i>), and <tt>"cAkaroaRNG"</tt> (Akaroa's random number generator,
+see section <a href="chap11.html#sec:run-sim:akaroa">[11.21]</a>).
+
+<p><h3><a name="sec:config-sim:rng-mapping"/>10.5.3 RNG Mapping<a class="headerlink" href="#sec:config-sim:rng-mapping" title="Permalink to this headline">¶</a></h3>
+
+<p>The RNG numbers used in simple modules may be arbitrarily mapped to the
+actual random number streams (actual RNG instances) from <tt>omnetpp.ini</tt>.
+The mapping allows for great flexibility in RNG usage and random number
+streams configuration -- even for simulation models which were not
+written with RNG awareness.
+
+<p>RNG mapping may be specified in <tt>omnetpp.ini</tt>. The syntax of
+configuration entries is the following.
+
+<pre class="inifile">
+[General]
+&lt;modulepath&gt;.rng-N = M  # where N,M are numeric, M &lt; num-rngs
+</pre>
+<p>
+This maps module-local RNG N to physical RNG M. The following
+example maps all <tt>gen</tt> module's default (N=0) RNG to physical RNG 1,
+and all <tt>noisychannel</tt> module's default (N=0) RNG to physical RNG 2.
+
+<pre class="inifile">
+[General]
+num-rngs = 3
+**.gen[*].rng-0 = 1
+**.noisychannel[*].rng-0 = 2
+</pre>
+<p>
+The value also allows expressions, including those containing <b><tt>index</tt></b>,
+<b><tt>parentIndex</tt></b>, and <b><tt>ancestorIndex(level)</tt></b>. This allows things
+like assigning a separate RNG to each element of a module vector.
+
+<p>This mapping allows variance reduction techniques to be applied to
+OMNeT++ models, without any model change or recompilation.
+
+<p>
+<h3><a name="sec:config-sim:automatic-seed-selection"/>10.5.4 Automatic Seed Selection<a class="headerlink" href="#sec:config-sim:automatic-seed-selection" title="Permalink to this headline">¶</a></h3>
+
+<p>Automatic seed selection is used for an RNG if one does not explicitly
+specify seeds in <tt>omnetpp.ini</tt>. Automatic and manual seed selection can
+co-exist; for a particular simulation, some RNGs can be configured
+manually, and some automatically.
+
+<p>The automatic seed selection mechanism uses two inputs: the <i>run number</i>
+ and the <i>RNG number</i>. For the same run number and RNG number,
+OMNeT++ always selects the same seed value for any simulation model.
+If the run number or the RNG number is different, OMNeT++ does its best
+to choose different seeds which are also sufficiently separated in the RNG's sequence
+so that the generated sequences don't overlap.
+
+<p>The run number can be specified either in in <tt>omnetpp.ini</tt> (e.g. via the
+<b><tt>cmdenv-runs-to-execute</tt></b> option) or on the command line:
+
+<pre class="commandline">
+$ ./mysim -r 1
+$ ./mysim -r 2
+$ ./mysim -r 3
+</pre>
+<p>
+For the <tt><a href="../api/classomnetpp_1_1cMersenneTwister.html">cMersenneTwister</a></tt> random number generator, selecting seeds
+so that the generated sequences don't overlap is easy,
+due to the extremely long sequence of the RNG.
+The RNG is initialized from the 32-bit seed value <i>seed = runNumber*numRngs + rngNumber</i>.
+(This implies that simulation runs participating in the study should have
+the same number of RNGs set).
+    <br><ul><font size=-1>[While (to our knowledge) no one has proven that the seeds 0,1,2,...
+    are well apart in the sequence, this is probably true, due to the extremely
+    long sequence of MT. The author would however be interested in papers
+    published about seed selection for MT.]</font></ul>
+
+<p>For the <tt><a href="../api/classomnetpp_1_1cLCG32.html">cLCG32</a></tt> random number generator, the situation is more difficult,
+because the range of this RNG is rather short (<i>2<sup>31</sup>-1</i>, about 2 billion).
+For this RNG, OMNeT++ uses a table of 256 pre-generated seeds, equally spaced
+in the RNG's sequence. Index into the table is calculated with the
+<i>runNumber*numRngs + rngNumber</i> formula. Care should be taken that
+one doesn't exceed 256 with the index, or it will wrap and the
+same seeds will be used again. It is best not to use the <tt><a href="../api/classomnetpp_1_1cLCG32.html">cLCG32</a></tt>
+at all -- <tt><a href="../api/classomnetpp_1_1cMersenneTwister.html">cMersenneTwister</a></tt> is superior in every respect.
+
+<p>
+<h3><a name="sec:config-sim:manual-seed-configuration"/>10.5.5 Manual Seed Configuration<a class="headerlink" href="#sec:config-sim:manual-seed-configuration" title="Permalink to this headline">¶</a></h3>
+
+<p>In some cases, one may want to manually configure seed values. The
+motivation for doing so may be the use of variance reduction techniques, or
+the intention to reuse the same seeds for several simulation runs.
+
+<p>To manually set seeds for the Mersenne Twister RNG, use the <tt>seed-</tt><i>k</i><tt>-mt</tt>
+option, where <i>k</i> is the RNG index. An example:
+
+<pre class="inifile">
+[General]
+num-rngs = 3
+seed-0-mt = 12
+seed-1-mt = 9
+seed-2-mt = 7
+</pre>
+<p>
+<a name="sec:config-sim:seedtool"></a>
+
+<p>For the now obsolete <a href="../api/classomnetpp_1_1cLCG32.html">cLCG32</a> RNG, the name of the corresponding option is
+<tt>seed-</tt><i>k</i><tt>-lcg32</tt>.
+
+<p><h2><a name="sec:config-sim:logging"/>10.6 Logging<a class="headerlink" href="#sec:config-sim:logging" title="Permalink to this headline">¶</a></h2>
+
+<p>The OMNeT++ logging infrastructure provides a few configuration options that
+affect what is written to the log output. It supports configuring multiple
+filters: global compile-time, global runtime, and per-component runtime log
+level filters. For a log statement to actually produce output, it must pass
+each filter simulatenously. In addition, one can also specify a log prefix
+format string which determines the context information that is written before
+each log line. In the following sections, we look how to configure logging.
+
+<p><h3><a name="sec:config-sim:compile-time-log-filtering"/>10.6.1 Compile-Time Filtering<a class="headerlink" href="#sec:config-sim:compile-time-log-filtering" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt>COMPILETIME_LOGLEVEL</tt> macro determines which log statements
+are compiled into the executable. Any log statment which uses a log level below
+the specified compile-time log level is omitted. In other words, no matter how
+the runtime log levels are configured, such log statements are not even executed.
+This is mainly useful to avoid the performance penalty paid for log statements
+which are not needed.
+
+<pre class="cpp">
+#define COMPILETIME_LOGLEVEL LOGLEVEL_INFO
+EV_INFO &lt;&lt; "Packet received successfully" &lt;&lt; endl;
+EV_DEBUG &lt;&lt; "CRC check successful" &lt;&lt; endl;
+</pre>
+<p>
+In the above example, the output of the second log statement is omitted:
+
+<pre class="filelisting">
+[INFO] Packet received successfully
+</pre>
+<p>
+If simulation performance is critical, and if there are lots of log statements
+in the code, it might be useful to omit all log statements from the executable.
+This can be very simply achieved by putting the following macro into effect for
+the compilation of all source files.
+
+<pre class="cpp">
+#define COMPILETIME_LOGLEVEL LOGLEVEL_OFF
+</pre>
+<p>
+On the other hand, if there's some hard to track down issue, it might be useful
+to just do the opposite. Compiling with the lowest log level ensures that the
+log output contains as much information as possible.
+
+<pre class="cpp">
+#define COMPILETIME_LOGLEVEL LOGLEVEL_TRACE
+</pre>
+<p>
+By default, the <tt>COMPILETIME_LOGLEVEL</tt> macro is set to
+<tt>LOGLEVEL_TRACE</tt> if the code is compiled in debug mode (<tt>NDEBUG</tt> is
+not set). However, it is set to <tt>LOGLEVEL_DETAIL</tt> if the code is compiled
+in release mode (<tt>NDEBUG</tt> is set).
+
+<p>In fact, the <tt>COMPILETIME_LOG_PREDICATE</tt> macro is the most generic compile
+time predicate that determines which log statements are compiled into the executable.
+Mostly, there's no need to redefine this macro, but it can be useful sometimes.
+For example, one can do compile-time filtering for log categories by redefining
+this macro. By default, the <tt>COMPILETIME_LOG_PREDICATE</tt> macro is defined
+as follows:
+
+<pre class="cpp">
+#define COMPILETIME_LOG_PREDICATE(object, loglevel, category) \
+        (loglevel &gt;= COMPILETIME_LOGLEVEL)
+</pre>
+<p>
+<h3><a name="sec:config-sim:runtime-log-filtering"/>10.6.2 Runtime Filtering<a class="headerlink" href="#sec:config-sim:runtime-log-filtering" title="Permalink to this headline">¶</a></h3>
+
+<p>The <tt><a href="../api/classomnetpp_1_1cLog.html">cLog</a>::logLevel</tt> variable restricts during runtime which log statements
+produce output. By default, the global runtime log level doesn't filter logging,
+it is set to <tt>LOGLEVEL_TRACE</tt>. Although due to its global nature it's not
+really modular, nevertheless it's still allowed to change the value of this
+variable. It is mainly used in interactive user interfaces to implement efficient
+global filtering, but it may also be useful for various debugging purposes.
+
+<p>In addition to the global variable, there's also a per-component runtime log
+level which only restricts the output of a particular component of the
+simulation. By default, the runtime log level of all components are set to
+<tt>LOGLEVEL_TRACE</tt>. Programmatically, these log levels can be retrieved
+with <tt><a href="../api/classomnetpp_1_1cComponent.html">cComponent</a>::getLogLevel()</tt> and changed with
+<tt><a href="../api/classomnetpp_1_1cComponent.html">cComponent</a>::setLogLevel()</tt>.
+
+<p>In general, any log statment which uses a log level below the specified global
+runtime log level, or below the specified per-component runtime log level, is
+omitted. If the log statement appears in a module source, then the module's
+per-component runtime log level is checked. In any other C++ code, the context
+module's per-component runtime log level is checked.
+
+<p>In fact, the <tt><a href="../api/classomnetpp_1_1cLog.html">cLog</a>::noncomponentLogPredicate</tt> and the <tt><a href="../api/classomnetpp_1_1cLog.html">cLog</a>::componentLogPredicate</tt>
+are the most generic runtime predicates that determines which log statements are
+executed. Mostly, there's no need to redefine these predicates, but it can be
+useful sometimes. For example, one can do runtime filtering for log categories
+by redefining them. To cite a real example, the <tt><a href="../api/classomnetpp_1_1cLog.html">cLog</a>::componentLogPredicate</tt> function
+contains the following runtime checks:
+
+<pre class="cpp">
+return statementLogLevel &gt;= <a href="../api/classomnetpp_1_1cLog.html">cLog</a>::loglevel &&
+       statementLogLevel &gt;= sourceComponent-&gt;getLogLevel() &&
+       getEnvir()-&gt;isLoggingEnabled(); // for express mode
+</pre>
+<p>
+<h3><a name="sec:config-sim:log-prefix-format"/>10.6.3 Log Prefix Format<a class="headerlink" href="#sec:config-sim:log-prefix-format" title="Permalink to this headline">¶</a></h3>
+
+<p>The log prefix format is a string which determines the log prefix that is written
+before each log line. The format string contains constant parts interleaved with
+special format directives. The latter always start with the <tt>%</tt> character
+followed by another character that identifies the format directive. Constant
+parts are simply written to the output, while format directives are substituted
+at runtime with the corresponding data that is captured by the log statement.
+
+<p>The following is the list of predefined log prefix format directives. They are
+organized into groups based on what kind of information they provide.
+
+<p>Log statement related format directives:
+<ul>
+  <li> <tt>%l</tt> log level name
+  <li> <tt>%c</tt> log category
+</ul>
+
+<p>Current simulation state related format directives:
+<ul>
+  <li> <tt>%e</tt> current event number
+  <li> <tt>%t</tt> current simulation time
+  <li> <tt>%g</tt> current fingerprint if fingerprint verification is enabled in the configuration, otherwise empty
+  <li> <tt>%v</tt> current message or event name
+  <li> <tt>%a</tt> current message or event class name
+  <li> <tt>%n</tt> module name of current event
+  <li> <tt>%m</tt> module path of current event
+  <li> <tt>%o</tt> module class name of current event
+  <li> <tt>%s</tt> simple NED type name of module of current event
+  <li> <tt>%q</tt> fully qualified NED type name of module of current event
+  <li> <tt>%N</tt> context component name
+  <li> <tt>%M</tt> context component path
+  <li> <tt>%O</tt> context component class name
+  <li> <tt>%S</tt> context component NED type simple name
+  <li> <tt>%Q</tt> context component NED type fully qualified name
+</ul>
+
+<p>Simulation run related format directives:
+<ul>
+  <li> <tt>%G</tt> config name
+  <li> <tt>%R</tt> run number
+  <li> <tt>%X</tt> network module class name
+  <li> <tt>%Y</tt> network module NED type simple name
+  <li> <tt>%Z</tt> network module NED type fully qualified name
+</ul>
+
+<p>C++ source related (where the log statement is) format directives:
+<ul>
+  <li> <tt>%p</tt> source object pointer
+  <li> <tt>%b</tt> source object name
+  <li> <tt>%d</tt> source object path
+  <li> <tt>%z</tt> source class name
+  <li> <tt>%u</tt> source function name
+  <li> <tt>%x</tt> source component NED type simple name
+  <li> <tt>%y</tt> source component NED type fully qualified
+  <li> <tt>%f</tt> source file name
+  <li> <tt>%i</tt> source line number
+</ul>
+
+<p>Operating system related format directives:
+<ul>
+  <li> <tt>%w</tt> user time in seconds
+  <li> <tt>%W</tt> human readable wall time
+  <li> <tt>%H</tt> host name
+  <li> <tt>%I</tt> process id
+</ul>
+
+<p>Compound field format directives:
+<ul>
+  <li> <tt>%E</tt> event object (class name, name)
+  <li> <tt>%U</tt> module of current event (NED type, full path)
+  <li> <tt>%C</tt> context component (NED type, full path)
+  <li> <tt>%K</tt> context component, if different from current module (NED type, full path)
+  <li> <tt>%J</tt> source component or object (NED type or class, full path or pointer)
+  <li> <tt>%L</tt> source component or object, if different from context component (NED type or class, full path or pointer)
+</ul>
+
+<p>Padding format directives:
+<ul>
+  <li> <tt>%[0-9]+</tt> add spaces until specified column
+  <li> <tt>%|</tt> adaptive tabstop: add padding until longest prefix seen so far
+  <li> <tt>%&gt;</tt> function call depth times 2-space indentation (see Enter_Method, Enter_Method_Silent)
+  <li> <tt>%&lt;</tt> remove preceding whitespace characters
+</ul>
+
+<p>Conditional format directives:
+<ul>
+  <li> <tt>%?</tt> ignore the following constant part if the preceding directive didn't print anything (useful for separators)
+</ul>
+
+<p>Escaping the % character:
+<ul>
+  <li> <tt>%%</tt> one % character
+</ul>
+
+<p><h3><a name="sec:config-sim:configuring-cmdenv"/>10.6.4 Configuring Cmdenv<a class="headerlink" href="#sec:config-sim:configuring-cmdenv" title="Permalink to this headline">¶</a></h3>
+
+<p>In Cmdenv, logging can be configured using <tt>omnetpp.ini</tt> configuration
+options. The configured settings remain in effect during the whole simulation run
+unless overridden programatically.
+
+<p><ul>
+  <li> <b><tt>cmdenv-output-file</tt></b> redirects standard output to a file
+  <li> <b><tt>cmdenv-log-prefix</tt></b> determines the log prefix of each line
+  <li> <b><tt>&lt;object-full-path&gt;.cmdenv-log-level</tt></b> restricts output on a per-component basis
+</ul>
+
+<p>By default, the log is written to the standard output but it can be redirected to
+a file. The output can be completely disabled from <tt>omnetpp.ini</tt>, so
+that it doesn't slow down simulation when it is not needed. The per-component
+runtime log level option must match the full path of the targeted component. The
+supported values for this configuration option are the following:
+
+<p><ul>
+  <li> <tt>off</tt> completely disables log output
+  <li> <tt>fatal</tt> omits log output below <tt>LOGLEVEL_FATAL</tt>
+  <li> <tt>error</tt> omits log output below <tt>LOGLEVEL_ERROR</tt>
+  <li> <tt>warn</tt> omits log output below <tt>LOGLEVEL_WARN</tt>
+  <li> <tt>info</tt> omits log output below <tt>LOGLEVEL_INFO</tt>
+  <li> <tt>detail</tt> omits log output below <tt>LOGLEVEL_DETAIL</tt>
+  <li> <tt>debug</tt> omits log output below <tt>LOGLEVEL_DEBUG</tt>
+  <li> <tt>trace</tt> completely enables log output
+</ul>
+
+<p>By default, the log prefix format is set to <tt>"[%l]\t"</tt>. The
+default setting is intentionally quite simple to avoid cluttered standard output,
+it produces similar log output:
+
+<pre class="filelisting">
+[INFO]  Packet received successfully
+[DEBUG] CRC check successful
+</pre>
+<p>
+The log messages are aligned vertically because there's a <tt>TAB</tt> character
+in the format string. Setting the log prefix format to an empty string disables
+writing a log prefix altogether. Finally, here is a more detailed format string:
+<tt>"[%l]\t%C for %E: %|"</tt>, it produces similar output:
+
+<pre class="filelisting">
+[INFO]  (IPv4)host.ip for (ICMPMessage)ping0:     Pending (IPv4Datagram)ping0
+[INFO]  (ARP)host.arp for (ICMPMessage)ping0:     Starting ARP resolution
+[DEBUG] (ARP)host.arp for (ICMPMessage)ping0:     Sending (ARPPacket)arpREQ
+[INFO]  (Mac)host.wlan.mac for (ARPPacket)arpREQ: Enqueing (ARPPacket)arpREQ
+</pre>
+<p>
+In express mode, for performance reasons, log output is disabled during the whole
+simulation. However, during the simulation finish stage, logging is automatically
+re-enabled to allow writing statistical and other results to the log. One can
+completely disable all logging by adding following configuration option at the
+beginning of <tt>omnetpp.ini</tt>:
+
+<pre class="inifile">
+[General]
+**.cmdenv-log-level = off
+</pre>
+<p>
+Finally, the following is a more complex example that sets the per-component
+runtime log levels for all PHY components to <tt>LOGLEVEL_WARN</tt>, except for
+all MAC modules where it is set to <tt>LOGLEVEL_DEBUG</tt>, and for all other
+modules it is set <tt>LOGLEVEL_OFF</tt>.
+
+<pre class="inifile">
+[General]
+**.phy.cmdenv-log-level = warn
+**.mac.cmdenv-log-level = debug
+**.cmdenv-log-level = off
+</pre>
+<p>
+<h3><a name="sec:config-sim:configuring-tkenv-and-qtenv"/>10.6.5 Configuring Tkenv and Qtenv<a class="headerlink" href="#sec:config-sim:configuring-tkenv-and-qtenv" title="Permalink to this headline">¶</a></h3>
+
+<p>The graphical user interfaces, Tkenv and Qtenv, provide their own configuration
+dialogs where the user can configure logging. These dialogs offer setting the
+global runtime log level and the log prefix format string. The per-component
+runtime log levels can be set from the context menu of components. As in Cmdenv,
+it's also possible to set the log levels to <tt>off</tt>, effectively disabling
+logging globally or for specific components only.
+
+<p>In contrast to Cmdenv, setting the runtime log levels is possible even if the
+simulation is already running. This feature allows continuous control over the
+level of detail of what is written to the log output. For obvious reasons,
+changing the log levels has no effect back in time, so already written log
+content in the log windows will not change.
+
+<p>By default, the log prefix format is set to <tt>"%l %C: "</tt>, it produces
+similar log output:
+
+<pre class="filelisting">
+INFO  Network.server.wlan[0].mac: Packet received successfully
+DEBUG Network.server.wlan[0].mac: CRC check successful
+</pre>
+<p>
+
+
+<hr class='pgbr'><p><hr><b><a href="chap9.html">[Prev]</A>&nbsp;<a href="chap11.html">[Next]</A>&nbsp;<a href="toc.html#toc_10.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

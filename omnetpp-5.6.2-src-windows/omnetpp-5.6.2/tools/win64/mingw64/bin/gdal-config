@@ -1,0 +1,74 @@
+#!/bin/sh
+CONFIG_LIBS="-L/mingw64/lib -lgdal"
+CONFIG_DEP_LIBS=" -lcryptopp -lpoppler -ljson-c -lfreexl -L/mingw64/lib -lgeos_c -lwebp -lodbc32 -lodbccp32 -LC:/building/msys64/mingw64/lib -lkmlbase -lkmldom -lkmlengine -lkmlxsd -lkmlregionator -lexpat -lxerces-c -lpthread -lopenjp2 -L/mingw64/lib -lnetcdf -lhdf5_hl -lhdf5 -lz -lhdf5 -lgif -ljpeg -lgeotiff -ltiff -lpng -lcfitsio -LC:/building/msys64/mingw64/lib -lpq -llzma -lz -lpthread  -lws2_32 -lpsapi -lspatialite -lsqlite3 -lpcre   -L/mingw64/lib -lcurl -lnghttp2 -lrtmp -lssh2 -lssl -lcrypto -lssl -lcrypto -lgdi32 -lwldap32 -lz -lws2_32           -liconv  -L/mingw64/lib -lxml2 -L/mingw64/lib -lz -L/mingw64/lib -llzma -liconv -lws2_32   "
+CONFIG_PREFIX="/mingw64"
+CONFIG_CFLAGS="-I/mingw64/include"
+CONFIG_DATA="/mingw64/share/gdal"
+CONFIG_VERSION="2.2.0"
+CONFIG_OGR_ENABLED=yes
+CONFIG_GNM_ENABLED=yes
+CONFIG_FORMATS=" gxf gtiff hfa aigrid aaigrid ceos ceos2 iso8211 xpm sdts raw dted mem jdem envisat elas fit vrt usgsdem l1b nitf bmp airsar rs2 ilwis rmf leveller sgi srtmhgt idrisi gsg ingr ers jaxapalsar dimap gff cosar pds adrg coasp tsx terragen blx msgn til r northwood saga xyz hf2 kmlsuperoverlay ctg e00grid zmap ngsgeoid iris map cals safe sentinel2 derived prf mrf webp wcs wms plmosaic wmts grib bsb openjpeg netcdf hdf5 gif jpeg png pcraster fits  pcidsk rik ozi pdf rasterlite mbtiles postgisraster arg"
+usage()
+{
+	cat <<EOF
+Usage: gdal-config [OPTIONS]
+Options:
+	[--prefix[=DIR]]
+	[--libs]
+	[--dep-libs]
+	[--cflags]
+	[--datadir]
+	[--version]
+	[--ogr-enabled]
+	[--gnm-enabled]
+	[--formats]
+EOF
+	exit $1
+}
+
+if test $# -eq 0; then
+	usage 1 1>&2
+fi
+
+case $1 in
+  --libs)
+    echo $CONFIG_LIBS
+    ;;
+
+  --dep-libs)
+    echo $CONFIG_DEP_LIBS
+    ;;
+
+  --cflags)
+    echo $CONFIG_CFLAGS
+    ;;
+
+  --datadir)
+    echo $CONFIG_DATA
+    ;;
+
+  --prefix)
+    echo $CONFIG_PREFIX
+    ;;
+
+  --version)
+    echo $CONFIG_VERSION
+    ;;
+
+  --ogr-enabled)
+    echo yes
+    ;;
+
+  --gnm-enabled)
+    echo $CONFIG_GNM_ENABLED
+    ;;
+
+  --formats)
+    echo $CONFIG_FORMATS
+    ;;
+
+  *)
+    usage 1 1>&2
+    ;;
+
+esac

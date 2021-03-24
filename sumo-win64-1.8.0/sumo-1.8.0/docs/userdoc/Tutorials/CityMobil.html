@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tutorials/CityMobil.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tutorials/CityMobil - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tutorials/CityMobil.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#the_scenario">The Scenario</a></li>
+            <li class="nav-item main"><a href="#network_building">Network building</a></li>
+            <li class="nav-item main"><a href="#additional_infrastructure_and_vehicle_types">Additional infrastructure and vehicle types</a></li>
+            <li class="nav-item main"><a href="#traffic_demand">Traffic Demand</a></li>
+            <li class="nav-item main"><a href="#running_the_scenario_generation_and_the_scenario">Running the scenario generation and the scenario</a></li>
+            <li class="nav-item main"><a href="#description_of_the_dispatching_algorithm">Description of the dispatching algorithm</a></li>
+            <li class="nav-item main"><a href="#evaluation">Evaluation</a></li>
+            <li class="nav-item main"><a href="#comparison_with_a_simple_bus">Comparison with a simple bus</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tutorials/CityMobil<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>The <em>city_mobil</em> subdirectory in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/docs/tutorial contains the setup for
+a simulation of a parking lot using sumo with its taxi device to build a demand 
+responsive transport service. Most of the files in the directory are for the
+<a href="CityMobil_old.html">old CityMobil tutorial</a>,
+for the new version only <code>createNetTaxi.py</code> is relevant.</p>
+<p>This tutorial explains how to build such a scenario programmatically by generating
+all input files with a (python) script we call <code>createNetTaxi.py</code>. The easiest way
+of following it is probably to read the existing code side by side with this tutorial
+since not every line wil be covered here. Some basic knowledge of Python is assumed.</p>
+<p>Most parameters for the application (including the paths to the
+executables) are in constants.py and can be easily adapted there to modify the scenario.
+These parameters are written in ALL_CAPS below.</p>
+<p>At the start of our script we will import those constants as well as modifying the 
+system path to be able to use the sumolib (this is optional if you installed sumolib via
+pip).</p>
+<pre><code>... # more imports
+import os
+import sys
+from constants import PREFIX, DOUBLE_ROWS, ROW_DIST, SLOTS_PER_ROW, SLOT_WIDTH
+... # more constants
+sys.path.append(os.path.join(os.environ['SUMO_HOME'], 'tools'))
+import sumolib
+</code></pre>
+
+<h2 id="the_scenario">The Scenario<a class="headerlink" href="#the_scenario" title="Permanent link">#</a></h2>
+<p><img alt="" src="../images/citymobil.png" /></p>
+<p>The setup consists of a parking lot with access streets in several rows and parking
+areas on both sides of the road. Vehicles with passengers arrive on the main street
+in the lower left corner, drive to a parking lot where the passengers exit and walk
+to a bus stop on the top road where an automated shuttle service brings them to their
+final destination in the upper right corner. The shuttle service will be demand driven,
+so it will only stop when passengers want to enter or leave.</p>
+<h2 id="network_building">Network building<a class="headerlink" href="#network_building" title="Permanent link">#</a></h2>
+<p>The main parameters of the network are the number of (double) rows the parking lot has 
+(DOUBLE_ROWS), the number of slots per row (SLOTS_PER_ROW) and the distance of the rows 
+(ROW_DIST). They define the layout assuming a fixed width of each slot.</p>
+<p>We generate a node file defining the positions of the junctions and an edge file
+specifiying the connections between the nodes together with parameters such as the 
+number of lanes and the allowed vehicle classes.</p>
+<p>We open the files as standard text files and use a helper function from the sumolib to 
+write the XML header:</p>
+<pre><code>nodes = open(&quot;%s.nod.xml&quot; % PREFIX, &quot;w&quot;)
+sumolib.xml.writeHeader(nodes, root=&quot;nodes&quot;)
+</code></pre>
+
+<p>This results in a header like this in our node file:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- generated on 2020-09-01 11:03:05.263997 by createNetTaxi.py v1_6_0+1864-1ecf301a37
+  options: 
+--&gt;
+&lt;nodes xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sumo.dlr.de/xsd/nodes_file.xsd&quot;&gt;
+</code></pre>
+
+<p>This gives complete information on how and when this file has been generated as well
+as a schema reference which allows for validating the input. This makes it easier to find mistakes 
+such as typing errors in attribute names which could go unnoticed otherwise.</p>
+<p>After opening the edges file in the same way we can start writing the node and edge definitions.
+We first define a starting point for the insertion edge which is located 100m to the
+left of the first parking row and then one junction at the start of 
+each double row:</p>
+<pre><code>print('&lt;node id=&quot;in&quot; x=&quot;-100&quot; y=&quot;0&quot;/&gt;', file=nodes)
+for row in range(DOUBLE_ROWS):
+    nextNodeID = &quot;main%s&quot; % row
+    x = row * ROW_DIST
+    print('&lt;node id=&quot;%s&quot; x=&quot;%s&quot; y=&quot;0&quot;/&gt;' % (nextNodeID, x), file=nodes)
+</code></pre>
+
+<p>We can generate the edges in the same loop, which extends the code to:</p>
+<pre><code>nodeID = &quot;main0&quot;
+print('&lt;node id=&quot;in&quot; x=&quot;-100&quot; y=&quot;0&quot;/&gt;', file=nodes)
+print('&lt;edge id=&quot;mainin&quot; from=&quot;in&quot; to=&quot;%s&quot; numLanes=&quot;2&quot;/&gt;' % nodeID, file=edges)
+for row in range(DOUBLE_ROWS):
+    nextNodeID = &quot;main%s&quot; % row
+    x = row * ROW_DIST
+    print('&lt;node id=&quot;%s&quot; x=&quot;%s&quot; y=&quot;0&quot;/&gt;' % (nextNodeID, x), file=nodes)
+    if row &gt; 0:
+        print('&lt;edge id=&quot;main%sto%s&quot; from=&quot;%s&quot; to=&quot;%s&quot; numLanes=&quot;2&quot;/&gt;' %
+              (row - 1, row, nodeID, nextNodeID), file=edges)
+    nodeID = nextNodeID
+</code></pre>
+
+<p>Note that we need to keep track of the id of the previous node and we need one
+edge less than nodes. The edge has almost no additional parameters except for the
+number of lanes, which is 2 to allow for overtaking vehicles which slowly turn
+into the lot.</p>
+<p>The code for the (cyber)bus edges follows the same pattern but is a little bit 
+more involved because it needs also a street in the opposite direction since the busses
+need to turn around. Furthermore it needs a sidewalk (modelled as a lane for pedestrians).
+The code for generating a forward and back connection between two parking streets is:</p>
+<pre><code>print(&quot;&quot;&quot;&lt;edge id=&quot;%s&quot; from=&quot;cyber%s&quot; to=&quot;cyber%s&quot; numLanes=&quot;3&quot; spreadType=&quot;center&quot;&gt;
+    &lt;lane index=&quot;0&quot; allow=&quot;pedestrian&quot; width=&quot;2.00&quot;/&gt;
+    &lt;lane index=&quot;1&quot; allow=&quot;taxi bus&quot;/&gt;
+    &lt;lane index=&quot;2&quot; allow=&quot;taxi bus&quot;/&gt;
+&lt;/edge&gt;&quot;&quot;&quot; % (edgeID, row - 1, row), file=edges)
+print(&quot;&quot;&quot;&lt;edge id=&quot;-%s&quot; from=&quot;cyber%s&quot; to=&quot;cyber%s&quot; numLanes=&quot;2&quot; spreadType=&quot;center&quot;&gt;
+    &lt;lane index=&quot;0&quot; allow=&quot;taxi bus&quot;/&gt;
+    &lt;lane index=&quot;1&quot; allow=&quot;taxi bus&quot;/&gt;
+&lt;/edge&gt;&quot;&quot;&quot; % (edgeID, row, row - 1), file=edges)
+</code></pre>
+
+<p>Note that the back leading streets do not have a side walk because the passengers are 
+only allowed to enter and leave on the side of the parking lot.</p>
+<p>Now we only need the vertical running streets and we are done with the basic network.
+Here we do not need further nodes, we only connect the existing parts, but we need
+sidewalks again on both sides for the people to walk to the bus.</p>
+<pre><code>for row in range(DOUBLE_ROWS):
+    print(&quot;&quot;&quot;&lt;edge id=&quot;road%s&quot; from=&quot;main%s&quot; to=&quot;cyber%s&quot; numLanes=&quot;2&quot;&gt;
+    &lt;lane index=&quot;0&quot; allow=&quot;pedestrian&quot; width=&quot;2.00&quot;/&gt;
+    &lt;lane index=&quot;1&quot; disallow=&quot;pedestrian&quot;/&gt;
+&lt;/edge&gt;&quot;&quot;&quot; % (row, row, row), file=edges)
+    print(&quot;&quot;&quot;&lt;edge id=&quot;-road%s&quot; from=&quot;cyber%s&quot; to=&quot;main%s&quot; numLanes=&quot;2&quot;&gt;
+    &lt;lane index=&quot;0&quot; allow=&quot;pedestrian&quot; width=&quot;2.00&quot;/&gt;
+    &lt;lane index=&quot;1&quot; disallow=&quot;pedestrian&quot;/&gt;
+&lt;/edge&gt;&quot;&quot;&quot; % (row, row, row), file=edges)
+</code></pre>
+
+<p>Now we can close the files and run netconvert:</p>
+<pre><code>subprocess.call([sumolib.checkBinary('netconvert'),
+                 '-n', '%s.nod.xml' % PREFIX,
+                 '-e', '%s.edg.xml' % PREFIX,
+                 '-o', '%s.net.xml' % PREFIX])
+</code></pre>
+
+<p>You can already open the resulting network with netedit or sumo-gui
+and it will look like the picture above except for the parking slots and the
+bus stops which we add next.</p>
+<h2 id="additional_infrastructure_and_vehicle_types">Additional infrastructure and vehicle types<a class="headerlink" href="#additional_infrastructure_and_vehicle_types" title="Permanent link">#</a></h2>
+<p>For the bus stops and the parking areas we use a so called additional file 
+which we open and write a header like above. The definition of the parking areas
+looks like that:</p>
+<pre><code>for row in range(DOUBLE_ROWS):
+    print(&quot;&quot;&quot;
+    &lt;parkingArea id=&quot;ParkArea%s&quot; lane=&quot;road%s_1&quot; 
+                 roadsideCapacity=&quot;%s&quot; angle=&quot;270&quot; length=&quot;8&quot;/&gt;
+    &lt;parkingArea id=&quot;ParkArea-%s&quot; lane=&quot;-road%s_1&quot; 
+                 roadsideCapacity=&quot;%s&quot; angle=&quot;270&quot; length=&quot;8&quot;/&gt;&quot;&quot;&quot; %
+          (row, row, SLOTS_PER_ROW, row, row, SLOTS_PER_ROW), file=stops)
+</code></pre>
+
+<p>Here we use a small trick. Since sumo attaches the parking lot to the vehicle lane (which is not the rightmost) it 
+would block (only visually but still) the sidewalk, so we enlarge the slots a little to 8m and define an 
+angle which lets all vehicles park forward leaving some space for the pedestrians.</p>
+<p>For the bus stops the only small surprise is that we need one less than parking lots because they are only 
+inbetween the parking roads.</p>
+<pre><code>for row in range(DOUBLE_ROWS-1):
+    edgeID = &quot;cyber%sto%s&quot; % (row, row + 1)
+    print('    &lt;busStop id=&quot;%sstop&quot; lane=&quot;%s_1&quot; startPos=&quot;2&quot; endPos=&quot;12&quot;/&gt;' % (edgeID, edgeID), file=stops)
+</code></pre>
+
+<p>Now we could close the additional file and already load it to the see the infrastructure.</p>
+<p>We will however reuse the additional file to start defining the vehicles (at least the vehicle types).
+Most of the vehicle type definiton is for the look (the color) and the vehicle class such that
+it will only use the right roads. The cyber car also has a taxi device to react to passenger requests.
+We will also define a regular bus to allow for comparisons with a regular bus service in further iterations
+of this tutorial.</p>
+<pre><code>print((&quot;&quot;&quot;    &lt;vType id=&quot;car&quot; color=&quot;0.7,0.7,0.7&quot;/&gt;
+    &lt;vType id=&quot;ped_pedestrian&quot; vClass=&quot;pedestrian&quot; color=&quot;1,0.2,0.2&quot;/&gt;
+    &lt;vType id=&quot;cybercar&quot; vClass=&quot;taxi&quot; length=&quot;%s&quot; minGap=&quot;1&quot; guiShape=&quot;evehicle&quot; maxSpeed=&quot;%s&quot;
+           color=&quot;green&quot; emissionClass=&quot;HBEFA2/P_7_7&quot; personCapacity=&quot;%s&quot;&gt;
+        &lt;param key=&quot;has.taxi.device&quot; value=&quot;true&quot;/&gt;
+    &lt;/vType&gt;
+    &lt;vType id=&quot;bus&quot; vClass=&quot;bus&quot; color=&quot;blue&quot; personCapacity=&quot;%s&quot;/&gt;
+&quot;&quot;&quot;) % (CYBER_LENGTH, CYBER_SPEED, CYBER_CAPACITY, BUS_CAPACITY), file=stops)
+</code></pre>
+
+<p>Now we are ready to define the traffic demand.</p>
+<h2 id="traffic_demand">Traffic Demand<a class="headerlink" href="#traffic_demand" title="Permanent link">#</a></h2>
+<p>We define the cybercars and the passenger vehicles in different route files. For the cybercars a simple flow is enough:</p>
+<pre><code>print(&quot;&quot;&quot;    &lt;flow id=&quot;c&quot; type=&quot;cybercar&quot; begin=&quot;50&quot; period=&quot;100&quot; number=&quot;%s&quot; line=&quot;taxi&quot;&gt;
+        &lt;route edges=&quot;cyberin cyber0to1&quot;/&gt;
+    &lt;/flow&gt;&quot;&quot;&quot; % (TOTAL_CAPACITY // CYBER_CAPACITY), file=routes)
+</code></pre>
+
+<p>The only special thing here is line which uses the reserved string "taxi" to denote that this will be a demand driven 
+transport system answering to special transportation requests. This specialty will also take care of the fact that 
+the vehicle should not leave the scenario after it reached the end of its initial route but wait for new requests.</p>
+<p>The persons are slightly more complex as they arrive in their own car, drive to the parking lot, leave the car, walk to
+the bus stop and then enter the cybercar to got to their final destination. We do everything here in two nested loops 
+because we want to fill all slots of all rows.</p>
+<pre><code>for v in range(SLOTS_PER_ROW):
+        for idx in range(DOUBLE_ROWS):
+</code></pre>
+
+<p>Since the persons need to start in their car we need to define the cars first:</p>
+<pre><code>print(&quot;&quot;&quot;    &lt;trip id=&quot;v%s.%s&quot; type=&quot;car&quot; depart=&quot;%s&quot; from=&quot;mainin&quot; to=&quot;road%s&quot;&gt;
+        &lt;stop parkingArea=&quot;ParkArea%s&quot; duration=&quot;1000&quot;/&gt;
+    &lt;/trip&gt;&quot;&quot;&quot; % (idx, v, v * period, idx, idx), file=routes)
+</code></pre>
+
+<p>Now we generate a random number of passengers per car each with her own plan:</p>
+<pre><code>print(&quot;&quot;&quot;    &lt;person id=&quot;%sp%s&quot; type=&quot;ped_pedestrian&quot; depart=&quot;triggered&quot;&gt;
+        &lt;ride from=&quot;mainin&quot; to=&quot;%sroad%s&quot; lines=&quot;%s&quot;/&gt;
+        &lt;walk busStop=&quot;%s&quot;/&gt;
+        &lt;ride to=&quot;cyberout&quot; lines=&quot;taxi&quot;/&gt;
+    &lt;/person&gt;&quot;&quot;&quot; % (vehId, p, infix, idx, vehId, busStop), file=routes)
+</code></pre>
+
+<p>The first ride uses the private vehicle to the parking lot, then we walk to the 
+bus stop and ride with the cybercar. The "triggered" depart is needed to let the 
+person start in the car.</p>
+<p>That's already it! We sum up everything in writing a nice configuration file which binds together the network,
+the additional file (for stops and parking lots), the cyber-route file and the passenger route file.</p>
+<pre><code>print(&quot;&quot;&quot;&lt;configuration&gt;
+    &lt;input&gt;
+        &lt;net-file value=&quot;%s.net.xml&quot;/&gt;
+        &lt;route-files value=&quot;%s_cyber.rou.xml,%s_demand%02i.rou.xml&quot;/&gt;
+        &lt;additional-files value=&quot;%s.add.xml&quot;/&gt;
+        &lt;no-step-log value=&quot;True&quot;/&gt;
+        &lt;time-to-teleport value=&quot;0&quot;/&gt;
+        &lt;device.taxi.dispatch-algorithm value=&quot;routeExtension&quot;/&gt;
+    &lt;/input&gt;
+&lt;/configuration&gt;&quot;&quot;&quot; % (PREFIX, PREFIX, PREFIX, period, PREFIX), file=config)
+</code></pre>
+
+<p>One thing to note here is the usage of the dispatch algorithm which will determine how the cybercars choose 
+which request to serve next.</p>
+<h2 id="running_the_scenario_generation_and_the_scenario">Running the scenario generation and the scenario<a class="headerlink" href="#running_the_scenario_generation_and_the_scenario" title="Permanent link">#</a></h2>
+<p>Now finally we can run by double clicking the script or if you are on a Linux / MacOS console:</p>
+<pre><code>./createNetTaxi.py
+</code></pre>
+
+<p>It will create configuration files for the different demands
+which you can open and run with sumo-gui (again double click or from the console):</p>
+<pre><code>sumo-gui park05_cyber.sumocfg
+</code></pre>
+
+<p>Feel free to change the layout of the parking lot and the behavior
+(speed, capacity etc.) of the vehicles. Whenever you edit constants.py
+or createNetTaxi.py remember to re-execute createNetTaxi.py before running the scenario.</p>
+<h2 id="description_of_the_dispatching_algorithm">Description of the dispatching algorithm<a class="headerlink" href="#description_of_the_dispatching_algorithm" title="Permanent link">#</a></h2>
+<p>TBD</p>
+<h2 id="evaluation">Evaluation<a class="headerlink" href="#evaluation" title="Permanent link">#</a></h2>
+<p>TBD</p>
+<h2 id="comparison_with_a_simple_bus">Comparison with a simple bus<a class="headerlink" href="#comparison_with_a_simple_bus" title="Permanent link">#</a></h2>
+<p>TBD</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 01 September 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

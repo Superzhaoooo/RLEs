@@ -1,0 +1,2496 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Definition of Vehicles, Vehicle Types, and Routes - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Definition_of_Vehicles,_Vehicle_Types,_and_Routes.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#vehicles_and_routes">Vehicles and Routes</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#repeated_vehicles_flows" class="nav-link">• Repeated vehicles (Flows)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routes" class="nav-link">• Routes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#repeated_routes" class="nav-link">&rarr; Repeated Routes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#incomplete_routes_trips_and_flows" class="nav-link">• Incomplete Routes (trips and flows)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traffic_assignment_zones_taz" class="nav-link">&rarr; Traffic assignment zones (TAZ)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#routing_between_junctions" class="nav-link">&rarr; Routing between Junctions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#implicit_origin_and_destination_from_stops" class="nav-link">&rarr; Implicit Origin and Destination from Stops</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#a_vehicles_depart_and_arrival_parameter" class="nav-link">• A Vehicle's depart and arrival parameter</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#depart" class="nav-link">&rarr; depart</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#departlane" class="nav-link">&rarr; departLane</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#departpos" class="nav-link">&rarr; departPos</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#departspeed" class="nav-link">&rarr; departSpeed</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#departedge" class="nav-link">&rarr; departEdge</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#arrivallane" class="nav-link">&rarr; arrivalLane</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#arrivalpos" class="nav-link">&rarr; arrivalPos</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#arrivalspeed" class="nav-link">&rarr; arrivalSpeed</a>
+                </li>
+            <li class="nav-item main"><a href="#vehicle_types">Vehicle Types</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#available_vtype_attributes" class="nav-link">• Available vType Attributes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#speed_distributions" class="nav-link">• Speed Distributions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#vehicle_class_specific_defaults" class="nav-link">&rarr; Vehicle class specific defaults</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#global_configuration" class="nav-link">&rarr; Global Configuration</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#defining_speed_limit_violations_explicitly" class="nav-link">&rarr; Defining speed limit violations explicitly</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#defining_a_normal_distribution_for_vehicle_speeds" class="nav-link">&rarr; Defining a normal distribution for vehicle speeds</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#defining_a_normal_distribution_old_style" class="nav-link">&rarr; Defining a normal distribution (old style)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#different_distributions_for_cars_and_trucks" class="nav-link">&rarr; Different distributions for cars and trucks</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#additional_remarks_on_speed_distributions" class="nav-link">&rarr; Additional remarks on speed distributions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_length" class="nav-link">• Vehicle Length</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#abstract_vehicle_class" class="nav-link">• Abstract Vehicle Class</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_emission_classes" class="nav-link">• Vehicle Emission Classes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#visualization" class="nav-link">• Visualization</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#car-following_models" class="nav-link">• Car-Following Models</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#car-following_model_parameters" class="nav-link">&rarr; Car-Following Model Parameters</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#default_krauss_model_description" class="nav-link">&rarr; Default Krauss Model Description</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lane-changing_models" class="nav-link">• Lane-Changing Models</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#junction_model_parameters" class="nav-link">• Junction Model Parameters</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#impatience" class="nav-link">&rarr; Impatience</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#default_vehicle_type" class="nav-link">• Default Vehicle Type</a>
+                </li>
+            <li class="nav-item main"><a href="#route_and_vehicle_type_distributions">Route and vehicle type distributions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_type_distributions" class="nav-link">• Vehicle Type Distributions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#using_existing_types" class="nav-link">&rarr; Using existing types</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#route_distributions" class="nav-link">• Route Distributions</a>
+                </li>
+            <li class="nav-item main"><a href="#stops">Stops</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#startpos_and_endpos" class="nav-link">• startPos and endPos</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#waypoints" class="nav-link">• Waypoints</a>
+                </li>
+            <li class="nav-item main"><a href="#colors">Colors</a></li>
+            <li class="nav-item main"><a href="#devices">Devices</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#automatic_assignment" class="nav-link">• Automatic assignment</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#assignment_by_global_options" class="nav-link">• Assignment by global options</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#assignment_by_generic_parameters" class="nav-link">• Assignment by generic parameters</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Definition of Vehicles, Vehicle Types, and Routes<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<table>
+<thead>
+<tr>
+<th>Filename extension</th>
+<th>.rou.xml</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type of content</td>
+<td>Vehicles, Vehicle Types, and Routes</td>
+</tr>
+<tr>
+<td>Open format?</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SUMO specific?</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XML Schema</td>
+<td><a href="http://sumo.dlr.de/xsd/routes_file.xsd">routes_file.xsd</a></td>
+</tr>
+</tbody>
+</table>
+<p>There are <a href="index.html#data_sources_for_demand_generation">various applications</a>
+that can be used to define vehicular demand for SUMO. Of course it is
+also possible to define the demand file manually or to edit generated
+files with a text editor. Before starting, it is important to know that
+a vehicle in SUMO consists of three parts:</p>
+<ul>
+<li>a vehicle type which describes the vehicle's physical properties,</li>
+<li>a route the vehicle shall take,</li>
+<li>and the vehicle itself.</li>
+</ul>
+<p>Both routes and vehicle types can be shared by several vehicles. It is
+not mandatory to define a vehicle type. If not given, a default type is
+used. The driver of a vehicle does not have to be modelled explicitly.
+For the simulation of <a href="Specification/Persons.html">persons which walk around or ride in vehicles, additional definitions are necessary</a>.</p>
+<h1 id="vehicles_and_routes">Vehicles and Routes<a class="headerlink" href="#vehicles_and_routes" title="Permanent link">#</a></h1>
+<p>Initially, we will define a vehicle with a route owned by him only:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vType id=&quot;type1&quot; accel=&quot;0.8&quot; decel=&quot;4.5&quot; sigma=&quot;0.5&quot; length=&quot;5&quot; maxSpeed=&quot;70&quot;/&gt;
+
+    &lt;vehicle id=&quot;0&quot; type=&quot;type1&quot; depart=&quot;0&quot; color=&quot;1,0,0&quot;&gt;
+      &lt;route edges=&quot;beg middle end rend&quot;/&gt;
+    &lt;/vehicle&gt;
+
+&lt;/routes&gt;
+</code></pre>
+
+<p>By giving such a route definition to <a href="sumo.html">sumo</a> (or
+<a href="sumo-gui.html">sumo-gui</a>), <a href="sumo.html">sumo</a> will build a
+red (color=1,0,0) vehicle of type "type1" named "0" which starts at time
+0. The vehicle will drive along the streets "beg", "middle", "end", and
+as soon as it has approached the edge "rend" it will be removed from the
+simulation.</p>
+<p>This vehicle has its own internal route which is not shared with other
+vehicles. It is also possible to define two vehicles using the same
+route. In this case the route must be "externalized" - defined before
+being referenced by the vehicles. Also, the route must be named by
+giving it an id. The vehicles using the route refer it using the
+"route"-attribute. The complete change looks like this:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vType id=&quot;type1&quot; accel=&quot;0.8&quot; decel=&quot;4.5&quot; sigma=&quot;0.5&quot; length=&quot;5&quot; maxSpeed=&quot;70&quot;/&gt;
+
+    &lt;route id=&quot;route0&quot; color=&quot;1,1,0&quot; edges=&quot;beg middle end rend&quot;/&gt;
+
+    &lt;vehicle id=&quot;0&quot; type=&quot;type1&quot; route=&quot;route0&quot; depart=&quot;0&quot; color=&quot;1,0,0&quot;/&gt;
+    &lt;vehicle id=&quot;1&quot; type=&quot;type1&quot; route=&quot;route0&quot; depart=&quot;0&quot; color=&quot;0,1,0&quot;/&gt;
+
+&lt;/routes&gt;
+</code></pre>
+
+<p>A vehicle may be defined using the following attributes:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>id (string)</td>
+<td>The name of the vehicle</td>
+</tr>
+<tr>
+<td>type</td>
+<td>id</td>
+<td>The id of the <a href="#vehicle_types">vehicle type</a> to use for this vehicle.</td>
+</tr>
+<tr>
+<td>route</td>
+<td>id</td>
+<td>The id of the route the vehicle shall drive along</td>
+</tr>
+<tr>
+<td>color</td>
+<td><a href="#colors">color</a></td>
+<td>This vehicle's color</td>
+</tr>
+<tr>
+<td><strong>depart</strong></td>
+<td>float (s) or one of <em>triggered</em>, <em>containerTriggered</em></td>
+<td>The time step at which the vehicle shall enter the network; see <a href="#depart">#depart</a>. Alternatively the vehicle departs once a <a href="Specification/Persons.html#rides">person enters</a> or a <a href="Specification/Containers.html">container is loaded</a></td>
+</tr>
+<tr>
+<td>departLane</td>
+<td>int/string (≥0, "random", "free", "allowed", "best", "first")</td>
+<td>The lane on which the vehicle shall be inserted; see <a href="#departlane">#departLane</a>. <em>default: "first"</em></td>
+</tr>
+<tr>
+<td>departPos</td>
+<td>float(m)/string ("random", "free", "random_free", "base", "last", "stop")</td>
+<td>The position at which the vehicle shall enter the net; see <a href="#departpos">#departPos</a>. <em>default: "base"</em></td>
+</tr>
+<tr>
+<td>departSpeed</td>
+<td>float(m/s)/string (≥0, "random", "max", "desired", "speedLimit")</td>
+<td>The speed with which the vehicle shall enter the network; see <a href="#departspeed">#departSpeed</a>. <em>default: 0</em></td>
+</tr>
+<tr>
+<td>departEdge</td>
+<td>int (index from [0, routeLength[ or "random"</td>
+<td>The initial edge along the route where the vehicle should enter the network (only supported if a complete route is defined); see <a href="#departEdge">#departEdge</a>. <em>default: 0</em></td>
+</tr>
+<tr>
+<td>arrivalLane</td>
+<td>int/string (≥0,"current")</td>
+<td>The lane at which the vehicle shall leave the network; see <a href="#arrivallane">#arrivalLane</a>. <em>default: "current"</em></td>
+</tr>
+<tr>
+<td>arrivalPos</td>
+<td>float(m)/string (≥0<sup>(1)</sup>, "random", "max")</td>
+<td>The position at which the vehicle shall leave the network; see <a href="#arrivalpos">#arrivalPos</a>. <em>default: "max"</em></td>
+</tr>
+<tr>
+<td>arrivalSpeed</td>
+<td>float(m/s)/string (≥0,"current")</td>
+<td>The speed with which the vehicle shall leave the network; see <a href="#arrivalspeed">#arrivalSpeed</a>. <em>default: "current"</em></td>
+</tr>
+<tr>
+<td>line</td>
+<td>string</td>
+<td>A string specifying the id of a public transport line which can be used when specifying <a href="Specification/Persons.html#rides">person rides</a></td>
+</tr>
+<tr>
+<td>personNumber</td>
+<td>int (in [0,personCapacity])</td>
+<td>The number of occupied seats when the vehicle is inserted. <em>default: 0</em></td>
+</tr>
+<tr>
+<td>containerNumber</td>
+<td>int (in [0,containerCapacity])</td>
+<td>The number of occupied container places when the vehicle is inserted. <em>default: 0</em></td>
+</tr>
+<tr>
+<td>reroute</td>
+<td>bool</td>
+<td>Whether the vehicle should be equipped with a <a href="Demand/Automatic_Routing.html">rerouting device</a> (setting this to <em>false</em> does not take precedence over other assignment options)</td>
+</tr>
+<tr>
+<td>via</td>
+<td>id list</td>
+<td>List of intermediate edges that shall be passed on <a href="Simulation/Routing.html#features_that_cause_rerouting">rerouting</a> <br><br><strong>Note:</strong> when via is not set, any <code>&lt;stop&gt;</code>-elements that belong to this route will automatically be used as intermediate edges. Otherwise via takes precedence.</td>
+</tr>
+<tr>
+<td>departPosLat</td>
+<td>float(m)/string ("random", "free", "random_free", "left", "right", "center")</td>
+<td>The lateral position on the departure lane at which the vehicle shall enter the net; see <a href="Simulation/SublaneModel.html">Simulation/SublaneModel</a>. <em>default: "center"</em></td>
+</tr>
+<tr>
+<td>arrivalPosLat</td>
+<td>float(m)/string ("left", "right", "center")</td>
+<td>The lateral position on the arrival lane at which the vehicle shall arrive; see <a href="Simulation/SublaneModel.html">Simulation/SublaneModel</a>. by default the vehicle does not care about lateral arrival position</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Any vehicle types or routes referenced by the attributes <strong>type</strong> or <strong>route</strong> must be defined <strong>before</strong> they are used. <a href="sumo.html#loading_order_of_input_files">Loading order is described here.</a></p>
+</div>
+<h2 id="repeated_vehicles_flows">Repeated vehicles (Flows)<a class="headerlink" href="#repeated_vehicles_flows" title="Permanent link">#</a></h2>
+<p>It is possible to define repeated vehicle emissions ("flow"s), which
+have the same parameters as the vehicle except for the departure time.
+The id of the created vehicles is "flowId.runningNumber" and they are
+distributed either equally or randomly in the given interval. The
+following additional parameters are known:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>begin</td>
+<td>float(s)</td>
+<td>first vehicle departure time</td>
+</tr>
+<tr>
+<td>end</td>
+<td>float(s)</td>
+<td>end of departure interval (if undefined, defaults to 24 hours)</td>
+</tr>
+<tr>
+<td>vehsPerHour</td>
+<td>float(#/h)</td>
+<td>number of vehicles per hour, equally spaced (not together with period or probability)</td>
+</tr>
+<tr>
+<td>period</td>
+<td>float(s)</td>
+<td>insert equally spaced vehicles at that period (not together with vehsPerHour or probability)</td>
+</tr>
+<tr>
+<td>probability</td>
+<td>float([0,1])</td>
+<td>probability for emitting a vehicle each second (not together with vehsPerHour or period), see also <a href="Simulation/Randomness.html#flows_with_a_random_number_of_vehicles">Simulation/Randomness</a></td>
+</tr>
+<tr>
+<td>number</td>
+<td>int(#)</td>
+<td>total number of vehicles, equally spaced</td>
+</tr>
+</tbody>
+</table>
+<pre><code>&lt;flow id=&quot;type1&quot; color=&quot;1,1,0&quot;  begin=&quot;0&quot; end= &quot;7200&quot; period=&quot;900&quot; type=&quot;BUS&quot;&gt;
+    &lt;route edges=&quot;beg middle end rend&quot;/&gt;
+    &lt;stop busStop=&quot;station1&quot; duration=&quot;30&quot;/&gt;
+&lt;/flow&gt;
+</code></pre>
+
+<h2 id="routes">Routes<a class="headerlink" href="#routes" title="Permanent link">#</a></h2>
+<p>One may notice, that the route itself also got a
+<a href="#colors">color</a> definition, so the attributes of a route
+are:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>id (string)</td>
+<td>The name of the route</td>
+</tr>
+<tr>
+<td><strong>edges</strong></td>
+<td>id list</td>
+<td>The edges the vehicle shall drive along, given as their ids, separated using spaces</td>
+</tr>
+<tr>
+<td>color</td>
+<td><a href="#colors">color</a></td>
+<td>This route's color</td>
+</tr>
+<tr>
+<td>repeat</td>
+<td>int</td>
+<td>The number of times that the edges of this route shall be repeated (default 0)</td>
+</tr>
+<tr>
+<td>cycleTime</td>
+<td>time (s)</td>
+<td>When defining a repeating route with stops and those stops use the <code>until</code> attribute, the times will be shifted forward by 'cycleTime' on each repeat</td>
+</tr>
+</tbody>
+</table>
+<p>There are a few important things to consider when building your own
+routes:</p>
+<ul>
+<li>Routes have to be connected. At the moment the simulation raises an
+  error if the next edge of the current route is not a successor of
+  the current edge or if the vehicle is not allowed to drive on any of
+  the lanes. If you want the old behavior where a vehicle simply
+  stopped at the end of the current edge and was possibly "teleported"
+  to the next edge after a waiting time, use the Option <strong>--ignore-route-errors</strong>.</li>
+<li>Routes have to contain at least one edge.</li>
+<li>The route file has to be sorted by starting times. In fact this is
+  only relevant, when you define a lot of routes or have large gaps
+  between departure times. The simulation parameter <strong>--route-steps</strong>, which defaults
+  to 200, defines the size of the time interval with which the
+  simulation loads its routes. That means by default at startup, only
+  routes with departure times &lt;200 are loaded, if all the vehicles
+  have departed, the routes up to departure time 400 are loaded etc.
+  pp. This works only if the route file is sorted. This behavior may
+  be disabled by specifying --route-steps 0. It is possible to load
+  unsorted route files as an additional file which will load the whole
+  file at once.</li>
+</ul>
+<p>The first two conditions can be checked using <a href="https://github.com/eclipse/sumo/blob/master/tools/route/routecheck.py"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/route/routecheck.py</a>, the third can be "fixed"
+using <a href="https://github.com/eclipse/sumo/blob/master/tools/route/sort_routes.py"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/route/sort_routes.py</a>.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>sumo may enter an infinite loop when given an unsorted route file with person definitions.</p>
+</div>
+<h3 id="repeated_routes">Repeated Routes<a class="headerlink" href="#repeated_routes" title="Permanent link">#</a></h3>
+<p>When using attribute 'repeat' to repeat a route. The number of edges will be repeated the given number of times <em>after</em> driving them for the first time. 
+If route is defined as stand-alone route (defined with it's own id outside a vehicl definition), any stops defined within the route will be repeated as well. If the stops use attribute 'until', they will be shifted by attribute 'cycleTime' in each iteration.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When defining a route as child element of a vehicle, any defined stops will belong to the vehicle rather than the route and will not be repeated.</p>
+</div>
+<h2 id="incomplete_routes_trips_and_flows">Incomplete Routes (trips and flows)<a class="headerlink" href="#incomplete_routes_trips_and_flows" title="Permanent link">#</a></h2>
+<p>Demand information for the simulation may also take the form of origin
+and destination edges instead of a complete list of edges. In this case
+the simulation performs fastest-path routing based on the traffic
+conditions found in the network at the time of departure/flow begin.
+Optionally, a list of intermediate edges can be specified with the <code>via</code>
+attribute. The input format is exactly the same as that for the
+<a href="duarouter.html">duarouter</a> application <a href="Demand/Shortest_or_Optimal_Path_Routing.html">and can be found here</a>.</p>
+<pre><code>&lt;routes&gt;
+  &lt;trip id=&quot;t&quot; depart=&quot;0&quot; from=&quot;beg&quot; to=&quot;end&quot;/&gt;
+  &lt;flow id=&quot;f&quot; begin=&quot;0&quot; end=&quot;100&quot; number=&quot;23&quot; from=&quot;beg&quot; to=&quot;end&quot;/&gt;
+  &lt;flow id=&quot;f2&quot; begin=&quot;0&quot; end=&quot;100&quot; number=&quot;23&quot; from=&quot;beg&quot; to=&quot;end&quot; via=&quot;e1 e23 e7&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>For more details on how to handle routing errors and influence the
+routing in this case see
+<a href="Demand/Automatic_Routing.html">Demand/Automatic_Routing</a>.</p>
+<p><a href="Demand/Shortest_or_Optimal_Path_Routing.html">For supported attributes for flows and trips see here.</a></p>
+<h3 id="traffic_assignment_zones_taz">Traffic assignment zones (TAZ)<a class="headerlink" href="#traffic_assignment_zones_taz" title="Permanent link">#</a></h3>
+<p>It is also possible to let vehicles depart and arrive at <a href="Demand/Importing_O/D_Matrices.html#describing_the_taz">traffic assignment zones (TAZ)</a>.
+This allows the departure and arrival edges to be selected from a
+predefined list of edges. Those edges are used which minimize the travel
+time from origin TAZ to destination TAZ. When loading trips into
+<a href="duarouter.html">duarouter</a> the loaded travel times are used (with
+empty-network travel times as default). When loading trips into
+<a href="sumo.html">sumo</a>, the current travel times in the network are
+used as determined by the <a href="Demand/Automatic_Routing.html">rerouting
+device</a>.</p>
+<pre><code class="xml">&lt;routes&gt;
+  &lt;trip id=&quot;t&quot; depart=&quot;0&quot; fromTaz=&quot;taz1&quot; toTaz=&quot;taz2&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<pre><code>&lt;additional&gt;
+  &lt;taz id=&quot;&lt;TAZ_ID&gt;&quot; edges=&quot;&lt;EDGE_ID&gt; &lt;EDGE_ID&gt; ...&quot;/&gt;
+  ...
+&lt;/additional&gt;
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When used in <a href="duarouter.html">duarouter</a> or <a href="sumo.html">sumo</a>, edge weights within TAZ are ignored.</p>
+</div>
+<p>When loading <code>&lt;taz&gt;</code> in <a href="sumo-gui.html">sumo-gui</a> the optional attribute <code>shape</code>
+can be used to draw an arbitrary polygon border for visualizing the
+traffic assignment zone.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When using TAZ with <a href="sumo.html">sumo</a> and <a href="duarouter.html">duarouter</a>, their edges will be selected to minimize travel time. This is different from TAZ usage in <a href="od2trips.html">od2trips</a> where edges are selected according to a probability distribution.</p>
+</div>
+<h3 id="routing_between_junctions">Routing between Junctions<a class="headerlink" href="#routing_between_junctions" title="Permanent link">#</a></h3>
+<p>Trips and flows may use the attributes <code>fromJunction</code>, <code>toJunction</code>, and <code>viaJunctions</code> to describe origin, destination and intermediate locations. This is a special form of TAZ-routing and it must be enabled by either setting the SUMO option <strong>--junction-taz</strong> or by loading TAZ-definitions that use the respective junction IDs. When using option <strong>--junction-taz</strong>, all edges outgoing from a junction may be used at the origin and all edges incoming to a junction may be used to reach the intermediate and final junctions.</p>
+<h3 id="implicit_origin_and_destination_from_stops">Implicit Origin and Destination from Stops<a class="headerlink" href="#implicit_origin_and_destination_from_stops" title="Permanent link">#</a></h3>
+<p>If a trip or flow defines at least one stop as child element, the attributes 'from' and 'to' may be omitted.
+In this case the edge of the first stop will be used as the 'from'-edge and the edge of the last stop will be used as the 'to'-edge.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A good combination with an implicit origin is also setting the attribute <code>departPos="stop"</code> to make the vehicle start at the exact position of the first stop.</p>
+</div>
+<h2 id="a_vehicles_depart_and_arrival_parameter">A Vehicle's depart and arrival parameter<a class="headerlink" href="#a_vehicles_depart_and_arrival_parameter" title="Permanent link">#</a></h2>
+<p>Using the <code>depart...</code> and
+<code>arrival...</code>-attributes, it is possible to
+control how a vehicle is inserted into the network and how it leaves it.</p>
+<h3 id="depart">depart<a class="headerlink" href="#depart" title="Permanent link">#</a></h3>
+<p>Determines the time at which the vehicle enters the network (for <code>&lt;flow&gt;</code> the
+value of <strong>begin</strong> is used instead). If there is not enough space in the
+network, the actual depart time may be later.</p>
+<ul>
+<li>When using option <strong>--max-depart-delay</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> the vehicle is discarded if unable to depart
+  after the given delay</li>
+<li>A random offset to the specified depart time is added for each
+  vehicle when using option <strong>--random-depart-offset</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></li>
+<li>When using the special value <em>triggered</em>, the vehicle will depart as
+  soon as a <a href="Specification/Persons.html#riding">person enters it</a>.</li>
+</ul>
+<h3 id="departlane">departLane<a class="headerlink" href="#departlane" title="Permanent link">#</a></h3>
+<p>Determines on which lane the vehicle is tried to be inserted;</p>
+<ul>
+<li><code>≥0</code>: the index of the lane, starting with
+  rightmost=0</li>
+<li>"<code>random</code>": a random lane is chosen;
+  please note that a vehicle insertion is not retried if it could not
+  be inserted</li>
+<li>"<code>free</code>": the most free (least occupied)
+  lane is chosen</li>
+<li>"<code>allowed</code>": the "free" lane (see above)
+  of those lane of the depart edge which allow vehicles of the class
+  the vehicle belongs to</li>
+<li>"<code>best</code>": the "free" lane of those who
+  allow the vehicle the longest ride without the need to lane change</li>
+<li>"<code>first</code>": the rightmost lane the vehicle
+  may use</li>
+</ul>
+<h3 id="departpos">departPos<a class="headerlink" href="#departpos" title="Permanent link">#</a></h3>
+<p>Determines the position on the chosen departure lane at which the
+vehicle is tried to be inserted;</p>
+<ul>
+<li><code>≥0</code>: the position on the lane, starting at the lane's begin; must be
+smaller than the starting lane's length</li>
+<li><code>"random"</code>: a random position is chosen; it is not retried to insert the
+vehicle if the first try fails</li>
+<li><code>"free"</code>: a free position (if existing) is used</li>
+<li><code>"random_free"</code>: at first, ten random positions are tried, if all fail, "free" is applied</li>
+<li><code>"base"</code>: the vehicle is tried to be inserted at the position which lets its
+back be at the beginning of the lane (vehicle's front
+position=vehicle length)</li>
+<li><code>"last"</code>: the vehicle is inserted with the given speed as close as possible</li>
+<li><code>"stop"</code>: if the vehicle has a stop defined, it will depart at the endPos of the stop. If no stop is defined, the behavior defaults to <code>"base"</code>
+behind the last vehicle on the lane. If the lane is empty it is
+inserted at the end of the lane instead. When departSpeed="max" is set, vehicle speed will not be adapted.</li>
+</ul>
+<h3 id="departspeed">departSpeed<a class="headerlink" href="#departspeed" title="Permanent link">#</a></h3>
+<p>Determines the speed of the vehicle at insertion, where maxSpeed = MIN(speedLimit * speedFactor, vTypeMaxSpeed);</p>
+<ul>
+<li><code>≥0</code>: The vehicle is tried to be inserted
+using the given speed. If that speed is unsafe, departure is
+delayed.</li>
+<li>"<code>random</code>": A random speed between 0 and
+maxSpeed is used,
+the speed may be adapted to ensure a safe distance to the leader
+vehicle.</li>
+<li>"<code>max</code>": The maxSpeed is used, the speed may be adapted to ensure a safe distance to the leader vehicle.</li>
+<li>"<code>desired</code>": The maxSpeed is used. If that speed is unsafe, departure is delayed.</li>
+<li>"<code>speedLimit</code>": The speed limit of the lane is used. If that speed is unsafe, departure is delayed.</li>
+</ul>
+<h3 id="departedge">departEdge<a class="headerlink" href="#departedge" title="Permanent link">#</a></h3>
+<p>Determines the edge along the vehicles route where the vehicle enters the network (By default this is 0: the first edge).</p>
+<ul>
+<li>integer index <code>≥0</code> and <code>&lt;routeLength</code>: The vehicle is inserted at the given index</li>
+<li>"<code>random</code>": A random index along the route is usedd. If that speed is unsafe, departure is delayed.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The attribute <code>departEdge</code> is ignored if the vehicle or flow  does not use attribute <code>route</code> and does not define the child element <code>&lt;route&gt;</code></p>
+</div>
+<h3 id="arrivallane">arrivalLane<a class="headerlink" href="#arrivallane" title="Permanent link">#</a></h3>
+<p>Determines the speed at which the vehicle should end its route;</p>
+<ul>
+<li>"<code>current</code>": the vehicle will not change
+it's lane when nearing arrival. It will use whatever lane is more
+convenient to reach its arrival position. <em>(default behavior)</em></li>
+<li><code>≥0</code>: the vehicle changes lanes to end
+it's route on the specified lane</li>
+</ul>
+<h3 id="arrivalpos">arrivalPos<a class="headerlink" href="#arrivalpos" title="Permanent link">#</a></h3>
+<p>Determines the position along the destination edge where the vehicle is
+considered to have arrived;</p>
+<ul>
+<li>"<code>max</code>": the vehicle will drive up to the
+  end of its final lane. <em>(default behavior)</em></li>
+<li><code>&lt;FLOAT&gt;</code>: the position on the lane, starting at
+  the lane's begin; Negative values count from the end of the lane</li>
+<li>"<code>random</code>": a random position is chosen at
+  departure; If vehicle is rerouted a new random position is selected.</li>
+</ul>
+<h3 id="arrivalspeed">arrivalSpeed<a class="headerlink" href="#arrivalspeed" title="Permanent link">#</a></h3>
+<p>Determines the speed at which the vehicle should end its route;</p>
+<ul>
+<li>"<code>current</code>": the vehicle will not modify
+  it's speed when nearing arrival. It will drive as fast as (safely)
+  possible. <em>(default behavior)</em></li>
+<li><code>≥0</code>: the vehicle approaches it's arrival
+  position to end with the specified speed</li>
+</ul>
+<h1 id="vehicle_types">Vehicle Types<a class="headerlink" href="#vehicle_types" title="Permanent link">#</a></h1>
+<p>A vehicle is defined using the <code>vType</code>-element as shown below:</p>
+<pre><code class="xml">&lt;routes&gt;
+    &lt;vType id=&quot;type1&quot; accel=&quot;2.6&quot; decel=&quot;4.5&quot; sigma=&quot;0.5&quot; length=&quot;5&quot; maxSpeed=&quot;70&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>Having defined this, one can build vehicles of type "type1". The values
+used above are the ones most of the examples use. They resemble a
+standard vehicle as used within the Stefan Krauß' thesis.</p>
+<pre><code class="xml">&lt;routes&gt;
+    &lt;vType id=&quot;type1&quot; accel=&quot;2.6&quot; decel=&quot;4.5&quot; sigma=&quot;0.5&quot; length=&quot;5&quot; maxSpeed=&quot;70&quot;/&gt;
+    &lt;vehicle id=&quot;veh1&quot; type=&quot;type1&quot; depart=&quot;0&quot;&gt;
+        &lt;route edges=&quot;edge1 edge2 edge3&quot;/&gt;
+    &lt;/vehicle&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>This definition is the initial one which includes both, the definition
+of the vehicle's "purely physical" parameters, such as its length, its
+color, or its maximum velocity, and also the used car-following model's
+parameters. Please note that even though the car-following parameters
+are describing values such as max. acceleration, or max. deceleration,
+they mostly do not correspond to what one would assume. The maximum
+acceleration for example is not the car's maximum acceleration
+possibility but rather the maximum acceleration a driver choses - even
+if you have a Jaguar, you probably are not trying to go to 100km/h in 5s
+when driving through a city.</p>
+<p>The default car following model is based on the work of Krauß but other
+models can be selected as well. Model selection and parameterization is
+done by setting further <code>vType</code>-attributes as shown below. The models and their
+parameters are described in the following.</p>
+<pre><code>&lt;routes&gt;
+    &lt;vType id=&quot;type1&quot; length=&quot;5&quot; maxSpeed=&quot;70&quot; carFollowModel=&quot;Krauss&quot; accel=&quot;2.6&quot; decel=&quot;4.5&quot; sigma=&quot;0.5&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<h2 id="available_vtype_attributes">Available vType Attributes<a class="headerlink" href="#available_vtype_attributes" title="Permanent link">#</a></h2>
+<p>These values have the following meanings:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>id (string)</td>
+<td>-</td>
+<td>The name of the vehicle type</td>
+</tr>
+<tr>
+<td>accel</td>
+<td>float</td>
+<td>2.6</td>
+<td>The acceleration ability of vehicles of this type (in m/s^2)</td>
+</tr>
+<tr>
+<td>decel</td>
+<td>float</td>
+<td>4.5</td>
+<td>The deceleration ability of vehicles of this type (in m/s^2)</td>
+</tr>
+<tr>
+<td>apparentDecel</td>
+<td>float</td>
+<td><code>==decel</code></td>
+<td>The apparent deceleration of the vehicle as used by the standard model (in m/s^2). The follower uses this value as expected maximal deceleration of the leader.</td>
+</tr>
+<tr>
+<td>emergencyDecel</td>
+<td>float</td>
+<td>9.0</td>
+<td>The maximal physically possible deceleration for the vehicle (in m/s^2).</td>
+</tr>
+<tr>
+<td>sigma</td>
+<td>float</td>
+<td>0.5</td>
+<td><a href="#car-following_models">Car-following model</a> parameter, see below</td>
+</tr>
+<tr>
+<td>tau</td>
+<td>float</td>
+<td>1.0</td>
+<td><a href="#car-following_models">Car-following model</a> parameter, see below</td>
+</tr>
+<tr>
+<td>length</td>
+<td>float</td>
+<td>5.0</td>
+<td>The vehicle's <strong>netto</strong>-length (length) (in m)</td>
+</tr>
+<tr>
+<td>minGap</td>
+<td>float</td>
+<td>2.5</td>
+<td>Empty space after leader [m]</td>
+</tr>
+<tr>
+<td>maxSpeed</td>
+<td>float</td>
+<td>55.55 (200 km/h) for vehicles, 1.39 (5 km/h) for pedestrians</td>
+<td>The vehicle's maximum velocity (in m/s)</td>
+</tr>
+<tr>
+<td>speedFactor</td>
+<td>float</td>
+<td>1.0</td>
+<td>The vehicles expected multiplicator for lane speed limits</td>
+</tr>
+<tr>
+<td>speedDev</td>
+<td>float</td>
+<td>0.1</td>
+<td>The deviation of the speedFactor; see below for details (some vClasses use a different default)</td>
+</tr>
+<tr>
+<td>color</td>
+<td><a href="#colors">RGB-color</a></td>
+<td>"1,1,0" (yellow)</td>
+<td>This vehicle type's color</td>
+</tr>
+<tr>
+<td>vClass</td>
+<td>class (enum)</td>
+<td>"passenger"</td>
+<td>An abstract <a href="#abstract_vehicle_class">vehicle class (see below)</a>. By default vehicles represent regular passenger cars.</td>
+</tr>
+<tr>
+<td>emissionClass</td>
+<td>emission class (enum)</td>
+<td><a href="Models/Emissions/HBEFA3-based.html">"PC_G_EU4"</a></td>
+<td>An <a href="#vehicle_emission_classes">emission class (see below)</a>. By default a gasoline passenger car conforming to emission standard <em>EURO 4</em> is used.</td>
+</tr>
+<tr>
+<td>guiShape</td>
+<td>shape (enum)</td>
+<td>"unknown"</td>
+<td><a href="#visualization">a vehicle shape for drawing</a>. By default a standard passenger car body is drawn.</td>
+</tr>
+<tr>
+<td>width</td>
+<td>float</td>
+<td>1.8</td>
+<td>The vehicle's width [m] (used only for visualization with the default model, affects <a href="Simulation/SublaneModel.html">sublane model</a>)</td>
+</tr>
+<tr>
+<td>height</td>
+<td>float</td>
+<td>1.5</td>
+<td>The vehicle's height [m]</td>
+</tr>
+<tr>
+<td>collisionMinGapFactor</td>
+<td>float</td>
+<td>depends on carFollowModel (1.0 for most models)</td>
+<td>The minimum fraction of minGap that must be maintained to the leader vehicle to avoid a collision event</td>
+</tr>
+<tr>
+<td>imgFile</td>
+<td>filename (string)</td>
+<td>""</td>
+<td>Image file for rendering vehicles of this type (should be grayscale to allow functional coloring)</td>
+</tr>
+<tr>
+<td>osgFile</td>
+<td>filename (string)</td>
+<td>""</td>
+<td>Object file for rendering with OpenSceneGraph (any of the file types supported by the available OSG-plugins)</td>
+</tr>
+<tr>
+<td>laneChangeModel</td>
+<td>lane changing model name (string)</td>
+<td>'LC2013'</td>
+<td>The model used for changing lanes</td>
+</tr>
+<tr>
+<td>carFollowModel</td>
+<td>car following model name (string)</td>
+<td>'Krauss'</td>
+<td>The model used for <a href="#car-following_models">car following</a></td>
+</tr>
+<tr>
+<td>personCapacity</td>
+<td>int</td>
+<td>4</td>
+<td>The number of persons (excluding an autonomous driver) the vehicle can transport.</td>
+</tr>
+<tr>
+<td>containerCapacity</td>
+<td>int</td>
+<td>0</td>
+<td>The number of containers the vehicle can transport.</td>
+</tr>
+<tr>
+<td>boardingDuration</td>
+<td>float</td>
+<td>0.5</td>
+<td>The time required by a person to board the vehicle.</td>
+</tr>
+<tr>
+<td>loadingDuration</td>
+<td>float</td>
+<td>90.0</td>
+<td>The time required to load a container onto the vehicle.</td>
+</tr>
+<tr>
+<td>latAlignment</td>
+<td>string</td>
+<td><em>center</em></td>
+<td>The preferred lateral alignment when using the <a href="Simulation/SublaneModel.html">sublane-model</a>. One of (<em>left, right, center, compact, nice, arbitrary</em>).</td>
+</tr>
+<tr>
+<td>minGapLat</td>
+<td>float</td>
+<td>0.6</td>
+<td>The desired minimum lateral gap when using the <a href="Simulation/SublaneModel.html">sublane-model</a></td>
+</tr>
+<tr>
+<td>maxSpeedLat</td>
+<td>float</td>
+<td>1.0</td>
+<td>The maximum lateral speed when using the <a href="Simulation/SublaneModel.html">sublane-model</a></td>
+</tr>
+<tr>
+<td>actionStepLength</td>
+<td>float</td>
+<td>global default (defaults to the simulation step, configurable via <strong>--default.action-step-length</strong>)</td>
+<td>The interval length for which vehicle performs its decision logic (acceleration and lane-changing). The given value is processed to the closest (if possible smaller) positive multiple of the simulation step length. See <a href="Car-Following-Models.html#actionsteplength">actionStepLength details</a></td>
+</tr>
+</tbody>
+</table>
+<p>Besides values which describe the vehicle's car-following properties,
+one can find definitions of the assigned vehicles' shapes, emissions,
+and assignment to abstract vehicle classes. These concepts will be
+described in the following. Also, you may find further descriptions of
+implemented car-following models in the subsection <a href="#car-following_models">#Car-Following Models</a>.</p>
+<h2 id="speed_distributions">Speed Distributions<a class="headerlink" href="#speed_distributions" title="Permanent link">#</a></h2>
+<p>The desired driving speed usually varies among the vehicle of a fleet.
+In SUMO this is modeled by a speed distribution using the attributes
+<strong>speedFactor</strong> or <strong>speedDev</strong>. as explained below.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since version 1.0.0 speed distributions are used by default (speedDev="0.1"). In older version, speed distributions had to be defined for every vehicle type to avoid homogeneous speeds (and consequently invalid driving behavior because vehicles would never catch up with their leader vehicle)</p>
+</div>
+<h3 id="vehicle_class_specific_defaults">Vehicle class specific defaults<a class="headerlink" href="#vehicle_class_specific_defaults" title="Permanent link">#</a></h3>
+<p>When defining a vehicle type with a <em>vClass</em>, the following default speed-deviation will be used.</p>
+<ul>
+<li>passenger (default vClass): 0.1</li>
+<li>pedestrian: 0.1</li>
+<li>bicycle: 0.1</li>
+<li>truck, trailer, coach, delivery, taxi: 0.05</li>
+<li>tram, rail_urban, rail, rail_electric, rail_fast: 0</li>
+<li>emergency: 0</li>
+<li>everything else: 0.1</li>
+</ul>
+<h3 id="global_configuration">Global Configuration<a class="headerlink" href="#global_configuration" title="Permanent link">#</a></h3>
+<p>Instead of configuring speed distributions in a <code>&lt;vType&gt;</code> definition (as
+explained below), the <a href="sumo.html">sumo</a>-option <strong>--default.speeddev</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> can be used to set
+a global default. Seeting this value to 0 restores pre-1.0.0 behavior.</p>
+<h3 id="defining_speed_limit_violations_explicitly">Defining speed limit violations explicitly<a class="headerlink" href="#defining_speed_limit_violations_explicitly" title="Permanent link">#</a></h3>
+<p>Each vehicle has an individual speed factor which is multiplied with the
+speed limit (edge speed) to determine the desired driving speed (default
+1.0). A vehicle with speed factor 1.2 drives up to 20% above the speed
+limit whereas a vehicle with speed factor 0.8 would always stay below
+the speed limit by 20%. By setting attributes <strong>speedFactor</strong> and
+<strong>speedDev</strong> as show below this individual speed factor for all vehicles
+of a type can be set to a fixed value.</p>
+<pre><code>&lt;vType id=&quot;example&quot; speedFactor=&quot;1.2&quot; speedDev=&quot;0&quot;
+</code></pre>
+
+<h3 id="defining_a_normal_distribution_for_vehicle_speeds">Defining a normal distribution for vehicle speeds<a class="headerlink" href="#defining_a_normal_distribution_for_vehicle_speeds" title="Permanent link">#</a></h3>
+<p>The desired driving speed usually varies among the vehicle of a fleet.
+While this could be modeled by defining a new type for each vehicle and
+assigning a distinct speed factor for each type (as above) this would be
+quite cumbersome. Instead the attribute <strong>speedFactor</strong> can also be used
+to sample a vehicle specific speed factor from a normal distribution.
+The parameter can be given as "norm(mean, dev)" or "normc(mean, dev,
+min, max)". Using <strong>speedFactor</strong>="normc(1,0.1,0.2,2)" will result in a
+speed distribution where 95% of the vehicles drive between 80% and 120%
+of the legal speed limit. For flows, every inserted vehicle will draw an
+individual chosen speed multiplier as well. The resulting values in this
+example are capped at 20% of speedFactor at the low end to prevent
+extreme dawdling and at twice the recommended speed. A vehicle keeps its
+chosen speed multiplier for the whole simulation and multiplies it with
+edge speeds to compute the actual speed for driving on this edge. Thus
+vehicles can exceed edge speeds. However, vehicle speeds are still
+capped at the vehicle type's <strong>maxSpeed</strong>.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>In order to use mean values below 0.2 or above 2.0, the 4-parameter version must be used to modify the cut-off parameters as well.</p>
+</div>
+<h3 id="defining_a_normal_distribution_old_style">Defining a normal distribution (old style)<a class="headerlink" href="#defining_a_normal_distribution_old_style" title="Permanent link">#</a></h3>
+<p>An alternative way to specify speed distributions is to use numerical
+values for <strong>speedFactor</strong> and <strong>speedDev</strong>. In this case
+<strong>speedFactor</strong> defines the expected value and <strong>speedDev</strong> defines the
+deviation. When using this style, capping cannot be controlled and will
+always default to 20% and 200%. Thus the above example can also be
+defined as <strong>speedFactor</strong>="1" <strong>speedDev</strong>="0.1".</p>
+<h3 id="different_distributions_for_cars_and_trucks">Different distributions for cars and trucks<a class="headerlink" href="#different_distributions_for_cars_and_trucks" title="Permanent link">#</a></h3>
+<p>The center of the speed distribution is defined relative to the road speed limit. On some roads, different speed limits may apply to cars and trucks.
+To model this, <a href="Networks/PlainXML.html#vehicle-class_specific_speed_limits">vClass-specific speed limits may be defined either in the network</a> or directly in an additional file:</p>
+<p>Note, that the given type id refers to an edge type rather than a vehicle type. The edge type may be <a href="netedit.html#inspect">set to an arbitrary value in the network file</a>.</p>
+<pre><code>&lt;type id=&quot;a&quot; priority=&quot;3&quot; numLanes=&quot;3&quot; speed=&quot;38.89&quot;/&gt;
+   &lt;restriction vClass=&quot;truck&quot; speed=&quot;27.89&quot;/&gt;
+&lt;/type&gt;
+</code></pre>
+
+<h3 id="additional_remarks_on_speed_distributions">Additional remarks on speed distributions<a class="headerlink" href="#additional_remarks_on_speed_distributions" title="Permanent link">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When used for <a href="Simulation/Pedestrians.html">pedestrians</a>, the <em>speedFactor</em> attribute is applied directly to the maximum speed of the vType since speed limits are not applicable to pedestrians</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the specified departSpeed of a vehicle exceeds the speed limit and it's vType has a speedFactor deviation &gt; 0, the indivial chosen speed multiplier is at least high enough to accommodate the stated depart speed.</p>
+</div>
+<h2 id="vehicle_length">Vehicle Length<a class="headerlink" href="#vehicle_length" title="Permanent link">#</a></h2>
+<p>Due to the work on <a href="#car-following_models">car following models</a>, we decided to use two values
+for vehicle length. The <code>length</code>-attribute
+describes the length of the vehicle itself. Additionally, the
+<code>minGap</code>-attribute describes the offset to the
+leading vehicle when standing in a jam.</p>
+<p>This is illustrated in the following image:</p>
+<p><img alt="length_vs_minGap.svg" src="images/Length_vs_minGap.svg" title="length_vs_minGap.svg" /></p>
+<p>Within the simulation, each vehicle needs - when ignoring the safe gap -
+<code>length</code>+<code>minGap</code>.
+But only <code>length</code> of the road should be marked
+as being occupied.</p>
+<h2 id="abstract_vehicle_class">Abstract Vehicle Class<a class="headerlink" href="#abstract_vehicle_class" title="Permanent link">#</a></h2>
+<p>A SUMO vehicle may be assigned to an "abstract vehicle class", defined
+by using the attribute <code>vClass</code>. These classes
+are used in lane definitions and allow/disallow the usage of lanes for
+certain vehicle types. One may think of having a road with three lanes,
+where the rightmost may only be used by "taxis" or "buses". The default
+vehicle class is <strong>passenger</strong> (denoting normal passenger cars).</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Routing or insertion may fail due to a mismatch between a vehicles <code>vClass</code> and the <a href="Simulation/VehiclePermissions.html#network_definition">road permissions</a>. This can be diagnosed in <a href="sumo-gui.html#road_access_permissions">sumo-gui buy highlighting edges according to their permissions</a>.</p>
+</div>
+<p>The following vehicle classes exist:</p>
+<table>
+<thead>
+<tr>
+<th>vClass</th>
+<th>bitmask bit</th>
+<th>comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ignoring</td>
+<td>- (all bits set to 0)</td>
+<td>may drive on all lanes regardless of set permissions.</td>
+</tr>
+<tr>
+<td>private</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>emergency</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>authority</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>army</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>vip</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>pedestrian</td>
+<td>5</td>
+<td>lanes which only allow this class are considered to be 'sidewalks' in <a href="netconvert.html">netconvert</a></td>
+</tr>
+<tr>
+<td><strong>passenger</strong></td>
+<td>6</td>
+<td>This is the default vehicle class and denotes regular passenger traffic</td>
+</tr>
+<tr>
+<td>hov</td>
+<td>7</td>
+<td><a href="https://en.wikipedia.org/wiki/High-occupancy_vehicle_lane">High-occupancy vehicle</a></td>
+</tr>
+<tr>
+<td>taxi</td>
+<td>8</td>
+<td></td>
+</tr>
+<tr>
+<td>bus</td>
+<td>9</td>
+<td>urban line traffic</td>
+</tr>
+<tr>
+<td>coach</td>
+<td>10</td>
+<td>overland transport</td>
+</tr>
+<tr>
+<td>delivery</td>
+<td>11</td>
+<td>Allowed on service roads that are not meant for public traffic</td>
+</tr>
+<tr>
+<td>truck</td>
+<td>12</td>
+<td></td>
+</tr>
+<tr>
+<td>trailer</td>
+<td>13</td>
+<td>truck with trailer</td>
+</tr>
+<tr>
+<td>motorcycle</td>
+<td>14</td>
+<td></td>
+</tr>
+<tr>
+<td>moped</td>
+<td>15</td>
+<td>motorized 2-wheeler which may not drive on motorways</td>
+</tr>
+<tr>
+<td>bicycle</td>
+<td>16</td>
+<td></td>
+</tr>
+<tr>
+<td>evehicle</td>
+<td>17</td>
+<td>future mobility concepts such as electric vehicles which may get special access rights</td>
+</tr>
+<tr>
+<td>tram</td>
+<td>18</td>
+<td></td>
+</tr>
+<tr>
+<td>rail_urban</td>
+<td>19</td>
+<td>heavier than 'tram' but distinct from 'rail'. Encompasses <a href="http://en.wikipedia.org/wiki/Light_Rail">Light Rail</a> and <a href="http://en.wikipedia.org/wiki/S-Bahn">S-Bahn</a></td>
+</tr>
+<tr>
+<td>rail</td>
+<td>20</td>
+<td>heavy rail</td>
+</tr>
+<tr>
+<td>rail_electric</td>
+<td>21</td>
+<td>heavy rail vehicle that may only drive on electrified tracks</td>
+</tr>
+<tr>
+<td>rail_fast</td>
+<td>22</td>
+<td><a href="https://en.wikipedia.org/wiki/High-speed_rail">High-speed-rail</a></td>
+</tr>
+<tr>
+<td>ship</td>
+<td>23</td>
+<td>basic class for navigating waterways</td>
+</tr>
+<tr>
+<td>custom1</td>
+<td>24</td>
+<td>reserved for user-defined semantics</td>
+</tr>
+<tr>
+<td>custom2</td>
+<td>25</td>
+<td>reserved for user-defined semantics</td>
+</tr>
+</tbody>
+</table>
+<p>These values are a "best guess" of somehow meaningful values, surely
+worth to be discussed. Though, in parts, they represent classes found in
+imported formats. They are "abstract" in the means that they are just
+names only, one could build a .5m long bus.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>vClass</code> values are mainly used for determining access restrictions for lanes and edges. Since version 0.21.0 they will also affect the defaults of some other <code>vType</code> parameters. These defaults are documented at <a href="Vehicle_Type_Parameter_Defaults.html">Vehicle_Type_Parameter_Defaults</a>.</p>
+</div>
+<p>The following vehicle deprecated classes exist for maintaining backward
+compatibility:</p>
+<table>
+<thead>
+<tr>
+<th>deprecated vClass</th>
+<th>replacement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public_emergency</code></td>
+<td>deprecated. use 'emergency'</td>
+</tr>
+<tr>
+<td><code>public_authority</code></td>
+<td>deprecated, use 'authority'</td>
+</tr>
+<tr>
+<td><code>public_army</code></td>
+<td>deprecated, use 'army'</td>
+</tr>
+<tr>
+<td><code>public_transport</code></td>
+<td>deprecated, use 'bus'</td>
+</tr>
+<tr>
+<td><code>transport</code></td>
+<td>deprecated, use 'truck'</td>
+</tr>
+<tr>
+<td><code>lightrail</code></td>
+<td>deprecated, use 'tram'</td>
+</tr>
+<tr>
+<td><code>cityrail</code></td>
+<td>deprecated, use 'rail_urban'</td>
+</tr>
+<tr>
+<td><code>rail_slow</code></td>
+<td>deprecated, use 'rail'</td>
+</tr>
+</tbody>
+</table>
+<h2 id="vehicle_emission_classes">Vehicle Emission Classes<a class="headerlink" href="#vehicle_emission_classes" title="Permanent link">#</a></h2>
+<p>The emission class represents a certain emission class. It is defined
+using the <code>emissionClass</code> attribute. Possible
+values are given in <a href="Models/Emissions.html">Models/Emissions</a> and
+its subsections.</p>
+<h2 id="visualization">Visualization<a class="headerlink" href="#visualization" title="Permanent link">#</a></h2>
+<p>For a nicer visualization of the traffic, the appearance of a vehicle
+type's vehicles may be changed by assigning them a certain shape using
+the <code>guiShape</code> attribute. These shapes are
+used when setting the drawing mode for vehicles to <strong>simple shapes</strong>.
+The following shapes are known:</p>
+<ul>
+<li>"pedestrian"</li>
+<li>"bicycle"</li>
+<li>"motorcycle"</li>
+<li>"passenger"</li>
+<li>"passenger/sedan"</li>
+<li>"passenger/hatchback"</li>
+<li>"passenger/wagon"</li>
+<li>"passenger/van"</li>
+<li>"delivery"</li>
+<li>"truck"</li>
+<li>"truck/semitrailer"</li>
+<li>"truck/trailer"</li>
+<li>"bus"</li>
+<li>"bus/city"</li>
+<li>"bus/flexible" (8.25)</li>
+<li>"bus/overland" (8.25)</li>
+<li>"rail" (24.5)</li>
+<li>"rail/light" (16.85)</li>
+<li>"rail/city" (5.71)</li>
+<li>"rail/slow" (9.44)</li>
+<li>"rail/fast" (24.775)</li>
+<li>"rail/cargo" (13.86)</li>
+<li>"evehicle"</li>
+<li>"ship"</li>
+</ul>
+<p>Some of these classes are drawn as a sequence of carriages. The length
+of a single carriage is indicated in parentheses after the type. For
+these types, the length of the vehicleType is used as the overall length
+of the train (all carriages combined). For example, a vehicle with shape
+<code>rail/cargo</code> and length 70m will have 5
+carriages. The number of carriages will always be a whole number and no
+carriage will be shorter than the length given in brackets but may be
+longer to meet the length requirements of the whole vehicle. When
+drawing vehicles with raster images, the image will be repeated for each
+carriage.</p>
+<p>In addition, one can determine the width of the vehicle using the
+attribute <code>width</code>. When using shapes, one
+should consider that different vehicle classes (passenger vehicles or
+buses) have different lengths. Passenger vehicles with more than 10m
+length look quite odd, buses with 2m length, too.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Not all of these named shapes are implemented.</p>
+</div>
+<p>Further parameters can be used to achieve visualization of individual rail carriages</p>
+<pre><code>&lt;vType id=&quot;rail&quot;&gt;
+    &lt;param key=&quot;carriageLength&quot; value=&quot;20&quot;/&gt;
+    &lt;param key=&quot;carriageGap&quot; value=&quot;1&quot;/&gt;
+    &lt;param key=&quot;locomotiveLength&quot; value=&quot;25&quot;/&gt;   
+&lt;/vType&gt;
+</code></pre>
+
+<h2 id="car-following_models">Car-Following Models<a class="headerlink" href="#car-following_models" title="Permanent link">#</a></h2>
+<p>The car-following models currently implemented in SUMO are given in the
+following table.</p>
+<table>
+<thead>
+<tr>
+<th>Element Name <em>(deprecated)</em></th>
+<th>Attribute Value <em>(when declaring as attribute)</em></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>carFollowing-Krauss</td>
+<td>Krauss</td>
+<td>The Krauß-model with some modifications which is the default model used in SUMO</td>
+</tr>
+<tr>
+<td>carFollowing-KraussOrig1</td>
+<td>KraussOrig1</td>
+<td>The original Krauß-model</td>
+</tr>
+<tr>
+<td>carFollowing-PWagner2009</td>
+<td>PWagner2009</td>
+<td>A model by Peter Wagner, using Todosiev's action points</td>
+</tr>
+<tr>
+<td>carFollowing-BKerner</td>
+<td>BKerner</td>
+<td>A model by Boris Kerner<br><br><strong>Caution:</strong> currently under work</td>
+</tr>
+<tr>
+<td>carFollowing-IDM</td>
+<td>IDM</td>
+<td>The Intelligent Driver Model by Martin Treiber<br><br><strong>Caution:</strong> Default parameters result in very conservative lane changing gap acceptance</td>
+</tr>
+<tr>
+<td>carFollowing-IDMM</td>
+<td>IDMM</td>
+<td>Variant of IDMM<br><br><strong>Caution:</strong> lacking documentation</td>
+</tr>
+<tr>
+<td>carFollowing-KraussPS</td>
+<td>KraussPS</td>
+<td>the default Krauss model with consideration of road slope</td>
+</tr>
+<tr>
+<td>carFollowing-KraussAB</td>
+<td>KraussAB</td>
+<td>the default Krauss model with bounded acceleration (only relevant when using PHEM classes)</td>
+</tr>
+<tr>
+<td>carFollowing-SmartSK</td>
+<td>SmartSK</td>
+<td>Variant of the default Krauss model<br><br><strong>Caution:</strong> lacking documentation</td>
+</tr>
+<tr>
+<td>carFollowing-Wiedemann</td>
+<td>Wiedemann</td>
+<td>Car following model by Wiedemann (2-Parameters)</td>
+</tr>
+<tr>
+<td>carFollowing-W99</td>
+<td>W99</td>
+<td>Car following model by Wiedemann, <a href="http://w99demo.com/">10-Parameter version</a></td>
+</tr>
+<tr>
+<td>carFollowing-Daniel1</td>
+<td>Daniel1</td>
+<td>Car following model by Daniel Krajzewicz<br><br><strong>Caution:</strong> lacking documentation</td>
+</tr>
+<tr>
+<td>carFollowing-ACC</td>
+<td>ACC</td>
+<td><a href="Car-Following-Models/ACC.html">Car following model by Milanés V. and Shladover S.E.</a></td>
+</tr>
+<tr>
+<td>carFollowing-CACC</td>
+<td>CACC</td>
+<td><a href="Car-Following-Models/CACC.html">Car following model by Milanés V. and Shladover S.E.</a></td>
+</tr>
+<tr>
+<td>carFollowing-Rail</td>
+<td>Rail</td>
+<td><a href="Simulation/Railways.html#modelling_trains">Model for various train types</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="car-following_model_parameters">Car-Following Model Parameters<a class="headerlink" href="#car-following_model_parameters" title="Permanent link">#</a></h3>
+<p>Mostly, each model uses its own set of parameters. The following table
+lists which parameter are used by which model(s). <a href="Car-Following-Models.html">Details on car-following models and their parameters can be found here</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Default</th>
+<th>Range</th>
+<th>Description</th>
+<th>Models</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>minGap</td>
+<td><a href="Vehicle_Type_Parameter_Defaults.html">vClass-specific</a></td>
+<td>&gt;= 0</td>
+<td>Minimum Gap when standing (m)</td>
+<td>all models</td>
+</tr>
+<tr>
+<td>accel</td>
+<td><a href="Vehicle_Type_Parameter_Defaults.html">vClass-specific</a></td>
+<td>&gt;= 0</td>
+<td>The acceleration ability of vehicles of this type (in m/s^2)</td>
+<td>Krauss, SKOrig, PW2009, Kerner, IDM, ACC, CACC</td>
+</tr>
+<tr>
+<td>decel</td>
+<td><a href="Vehicle_Type_Parameter_Defaults.html">vClass-specific</a></td>
+<td>&gt;= 0</td>
+<td>The deceleration ability of vehicles of this type (in m/s^2)</td>
+<td>Krauss, SKOrig, PW2009, Kerner, IDM, ACC, CACC</td>
+</tr>
+<tr>
+<td>emergencyDecel</td>
+<td><a href="Vehicle_Type_Parameter_Defaults.html">vClass-specific</a></td>
+<td>&gt;= decel</td>
+<td>The maximum deceleration ability of vehicles of this type in case of emergency (in m/s^2)</td>
+<td>Krauss, SKOrig, PW2009, Kerner, IDM, ACC, CACC</td>
+</tr>
+<tr>
+<td>sigma</td>
+<td>0.5</td>
+<td>[0,1]</td>
+<td>The driver imperfection (0 denotes perfect driving</td>
+<td>Krauss, SKOrig, PW2009, Kerner, IDM, ACC, CACC</td>
+</tr>
+<tr>
+<td>tau</td>
+<td>1</td>
+<td>&gt;= 0</td>
+<td>The driver's desired (minimum) time headway. Exact interpretation varies by model. For the default model <em>Krauss</em> this is based on the net space between leader back and follower front). For limitations, see <a href="Car-Following-Models.html#tau">Car-Following-Models#tau</a>).</td>
+<td>all Models</td>
+</tr>
+<tr>
+<td>k</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Kerner</td>
+</tr>
+<tr>
+<td>phi</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Kerner</td>
+</tr>
+<tr>
+<td>delta</td>
+<td>4</td>
+<td></td>
+<td>acceleration exponent</td>
+<td>IDM</td>
+</tr>
+<tr>
+<td>stepping</td>
+<td>0.25</td>
+<td>&gt;= 0</td>
+<td>the internal step length (in s) when computing follow speed</td>
+<td>IDM</td>
+</tr>
+<tr>
+<td>adaptFactor</td>
+<td>1.8</td>
+<td>&gt;= 0</td>
+<td>the factor for taking into account past level of service</td>
+<td>IDMM</td>
+</tr>
+<tr>
+<td>adaptTime</td>
+<td>600</td>
+<td>&gt;= 0</td>
+<td>the time interval (in s) for relaxing past level of service</td>
+<td>IDMM</td>
+</tr>
+<tr>
+<td>security</td>
+<td></td>
+<td></td>
+<td>desire for security</td>
+<td>Wiedemann</td>
+</tr>
+<tr>
+<td>estimation</td>
+<td></td>
+<td></td>
+<td>accuracy of situation estimation</td>
+<td>Wiedemann</td>
+</tr>
+<tr>
+<td>speedControlGain</td>
+<td>-0.4</td>
+<td></td>
+<td>The control gain determining the rate of speed deviation (Speed control mode)</td>
+<td>ACC</td>
+</tr>
+<tr>
+<td>gapClosingControlGainSpeed</td>
+<td>0.8</td>
+<td></td>
+<td>The control gain determining the rate of speed deviation (Gap closing control mode)</td>
+<td>ACC</td>
+</tr>
+<tr>
+<td>gapClosingControlGainSpace</td>
+<td>0.04</td>
+<td></td>
+<td>The control gain determining the rate of positioning deviation (Gap closing control mode)</td>
+<td>ACC</td>
+</tr>
+<tr>
+<td>gapControlGainSpeed</td>
+<td>0.07</td>
+<td></td>
+<td>The control gain determining the rate of speed deviation (Gap control mode)</td>
+<td>ACC</td>
+</tr>
+<tr>
+<td>gapControlGainSpace</td>
+<td>0.23</td>
+<td></td>
+<td>The control gain determining the rate of positioning deviation (Gap control mode)</td>
+<td>ACC</td>
+</tr>
+<tr>
+<td>collisionAvoidanceGainSpace</td>
+<td>0.8</td>
+<td></td>
+<td>The control gain determining the rate of positioning deviation (Collision avoidance mode)</td>
+<td>ACC</td>
+</tr>
+<tr>
+<td>collisionAvoidanceGainSpeed</td>
+<td>0.23</td>
+<td></td>
+<td>The control gain determining the rate of speed deviation (Collision avoidance mode)</td>
+<td>ACC</td>
+</tr>
+<tr>
+<td>speedControlGainCACC</td>
+<td>-0.4</td>
+<td></td>
+<td>The control gain determining the rate of speed deviation (Speed control mode)</td>
+<td>CACC</td>
+</tr>
+<tr>
+<td>gapClosingControlGainGap</td>
+<td>0.005</td>
+<td></td>
+<td>The control gain determining the rate of positioning deviation (Gap closing control mode)</td>
+<td>CACC</td>
+</tr>
+<tr>
+<td>gapClosingControlGainGapDot</td>
+<td>0.05</td>
+<td></td>
+<td>The control gain determining the rate of the positioning deviation derivative (Gap closing control mode)</td>
+<td>CACC</td>
+</tr>
+<tr>
+<td>gapControlGainGap</td>
+<td>0.45</td>
+<td></td>
+<td>The control gain determining the rate of positioning deviation (Gap control mode)</td>
+<td>CACC</td>
+</tr>
+<tr>
+<td>gapControlGainGapDot</td>
+<td>0.0125</td>
+<td></td>
+<td>The control gain determining the rate of the positioning deviation derivative (Gap control mode)</td>
+<td>CACC</td>
+</tr>
+<tr>
+<td>collisionAvoidanceGainGap</td>
+<td>0.45</td>
+<td></td>
+<td>The control gain determining the rate of positioning deviation (Collision avoidance mode)</td>
+<td>CACC</td>
+</tr>
+<tr>
+<td>collisionAvoidanceGainGapDot</td>
+<td>0.05</td>
+<td></td>
+<td>The control gain determining the rate of the positioning deviation derivative (Collision avoidance mode)</td>
+<td>CACC</td>
+</tr>
+<tr>
+<td>CC1</td>
+<td></td>
+<td></td>
+<td>Spacing Time - s</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>CC2</td>
+<td></td>
+<td></td>
+<td>Following Variation - m</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>CC3</td>
+<td></td>
+<td></td>
+<td>Threshold for Entering "Following" - s</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>CC4</td>
+<td></td>
+<td></td>
+<td>Negative "Following" Threshold - m/s</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>CC5</td>
+<td></td>
+<td></td>
+<td>Positive "Following" Threshold - m/s</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>CC6</td>
+<td></td>
+<td></td>
+<td>Speed Dependency of Oscillation - 10^-4 rad/s</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>CC7</td>
+<td></td>
+<td></td>
+<td>Oscillation Acceleration - m/s^2</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>CC8</td>
+<td></td>
+<td></td>
+<td>Standstill Acceleration - m/s^2</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>CC9</td>
+<td></td>
+<td></td>
+<td>Acceleration at 80km/h - m/s^2</td>
+<td>W99</td>
+</tr>
+<tr>
+<td>trainType</td>
+<td></td>
+<td></td>
+<td><a href="Simulation/Railways.html#modelling_trains">string id for pre-defined train type</a></td>
+<td>Rail</td>
+</tr>
+</tbody>
+</table>
+<p>To select a car following model the following syntax should be used:</p>
+<pre><code>&lt;vType id=&quot;idmAlternative&quot; length=&quot;5&quot; minGap=&quot;2&quot; carFollowModel=&quot;IDM&quot; tau=&quot;1.0&quot; .../&gt;
+</code></pre>
+
+<h3 id="default_krauss_model_description">Default <em>Krauss</em> Model Description<a class="headerlink" href="#default_krauss_model_description" title="Permanent link">#</a></h3>
+<p>The default model is a modification of the model defined by Stefan Krauß
+in <a href="http://sumo.dlr.de/pdf/KraussDiss.pdf">Microscopic Modeling of Traffic Flow: Investigation of Collision Free Vehicle Dynamics</a>. The
+implemented model follows the same idea as that of Krauß, namely: Let
+vehicles drive as fast as possibly while maintaining perfect safety
+(always being able to avoid a collision if the leader starts braking
+within leader and follower maximum acceleration bounds). The implemented
+model as in <a href="https://github.com/eclipse/sumo/blob/master/src/microsim/cfmodels/MSCFModel_Krauss.cpp"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/microsim/cfmodels/MSCFModel_Krauss.cpp</a> has the following differences:</p>
+<ul>
+<li>Different deceleration capabilities among the vehicles are handled
+  without violating safety (the original model allowed for collisions
+  in this case)</li>
+<li>The formula for safe velocity was adapted to maintain safety when
+  using the <em>Ballistic</em>-position update rule. This was done by
+  discretizing some of the continuous terms. The original model was
+  defined for the <em>Euler</em>-position updated rule and would produce
+  collisions when using <em>Ballistic</em>. See also
+  <a href="Simulation/Basic_Definition.html#defining_the_integration_method">Simulation/Basic_Definition#Defining_the_Integration_Method</a>.</li>
+</ul>
+<h2 id="lane-changing_models">Lane-Changing Models<a class="headerlink" href="#lane-changing_models" title="Permanent link">#</a></h2>
+<p>The lane-changing models currently implemented in SUMO are given in the
+following table.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LC2013</td>
+<td>The default car following model, developed by Jakob Erdmann based on DK2008 (see <a href="http://elib.dlr.de/102254/">SUMO’s Lane-Changing Model</a>). This is the default model.</td>
+</tr>
+<tr>
+<td>SL2015</td>
+<td>Lane-changing model for <a href="Simulation/SublaneModel.html">sublane-simulation</a> (used by default when setting option <strong>--lateral-resolution</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>). This model can only be used with the sublane-extension.<br><br><strong>Caution:</strong> This model may technically be used without activating sublane-simulation but this usage has not been fully tested and may not work as expected.</td>
+</tr>
+<tr>
+<td>DK2008</td>
+<td>The original lane-changing model of sumo until version 0.18.0, developed by Daniel Krajzewicz (see <a href="http://link.springer.com/chapter/10.1007/978-1-4419-6142-6_7">Traffic Simulation with SUMO – Simulation of Urban Mobility</a>).</td>
+</tr>
+</tbody>
+</table>
+<p>Mostly, each model uses its own set of parameters. The following table
+lists which parameter are used by which model(s).</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Models</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lcStrategic</td>
+<td>The eagerness for performing strategic lane changing. Higher values result in earlier lane-changing. <em>default: 1.0, range [0-inf[</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcCooperative</td>
+<td>The willingness for performing cooperative lane changing. Lower values result in reduced cooperation. <em>default: 1.0, range [0-1]</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcSpeedGain</td>
+<td>The eagerness for performing lane changing to gain speed. Higher values result in more lane-changing. <em>default: 1.0, range [0-inf[</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcKeepRight</td>
+<td>The eagerness for following the obligation to keep right. Higher values result in earlier lane-changing. <em>default: 1.0, range [0-inf[</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcOvertakeRight</td>
+<td>The probability for violating rules gainst overtaking on the right <em>default: 0, range [0-1[</em></td>
+<td>LC2013</td>
+</tr>
+<tr>
+<td>lcOpposite</td>
+<td>The eagerness for overtaking through the opposite-direction lane. Higher values result in more lane-changing. <em>default: 1.0, range [0-inf[</em></td>
+<td>LC2013</td>
+</tr>
+<tr>
+<td>lcLookaheadLeft</td>
+<td>Factor for configuring the strategic lookahead distance when a change to the left is necessary (relative to right lookahead). <em>default: 2.0, range ]0-inf[</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcSpeedGainRight</td>
+<td>Factor for configuring the threshold asymmetry when changing to the left or to the right for speed gain. By default the decision for changing to the right takes more deliberation. Symmetry is achieved when set to 1.0. <em>default: 0.1, range ]0-inf[</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcSpeedGainLookahead</td>
+<td>Lookahead time in seconds for anticipating slow down. <em>default: 0, range [0-inf[</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcCooperativeRoundabout</td>
+<td>Factor that increases willingness to move to the inside lane in a multi-lane roundabout. <em>default: lcCooperative, range ]0-1[</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcCooperativeSpeed</td>
+<td>Factor for cooperative speed adjustments. <em>default: lcCooperative, range [0-1]</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcSublane</td>
+<td>The eagerness for using the configured lateral alignment within the lane. Higher values result in increased willingness to sacrifice speed for alignment. <em>default: 1.0, range [0-inf]</em></td>
+<td>SL2015</td>
+</tr>
+<tr>
+<td>lcPushy</td>
+<td>Willingness to encroach laterally on other drivers. ''default: 0, range 0 to 1</td>
+<td>SL2015</td>
+</tr>
+<tr>
+<td>lcPushyGap</td>
+<td>Minimum lateral gap when encroaching laterally on other drives (alternative way to define lcPushy). ''default: minGapLat, range 0 to minGapLat</td>
+<td>SL2015</td>
+</tr>
+<tr>
+<td>lcAssertive</td>
+<td>Willingness to accept lower front and rear gaps on the target lane. The required gap is divided by this value. ''default: 1, range: positive reals</td>
+<td>LC2013,SL2015</td>
+</tr>
+<tr>
+<td>lcImpatience</td>
+<td>dynamic factor for modifying lcAssertive and lcPushy. <em>default: 0 (no effect) range -1 to 1</em>. Impatience acts as a multiplier. At -1 the multiplier is 0.5 and at 1 the multiplier is 1.5.</td>
+<td>SL2015</td>
+</tr>
+<tr>
+<td>lcTimeToImpatience</td>
+<td>Time to reach maximum impatience (of 1). Impatience grows whenever a lane-change manoeuvre is blocked.. <em>default: infinity (disables impatience growth)</em></td>
+<td>SL2015</td>
+</tr>
+<tr>
+<td>lcAccelLat</td>
+<td>maximum lateral acceleration per second. <em>default: 1.0</em></td>
+<td>SL2015</td>
+</tr>
+<tr>
+<td>lcTurnAlignmentDistance</td>
+<td>Distance to an upcoming turn on the vehicles route, below which the alignment should be dynamically adapted to match the turn direction. <em>default: 0.0 (i.e., disabled)</em></td>
+<td>SL2015</td>
+</tr>
+<tr>
+<td>lcMaxSpeedLatStanding</td>
+<td>Upper bound on lateral speed when standing. <em>default: maxSpeedLat (i.e., disabled)</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcMaxSpeedLatFactor</td>
+<td>Upper bound on lateral speed while moving computed as lcMaxSpeedLatStanding + lcMaxSpeedLatFactor * getSpeed(). <em>default: 1.0</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+<tr>
+<td>lcLaneDiscipline</td>
+<td>Reluctance to perform speedGain-changes that would place the vehicle across a lane boundary. <em>default: 0.0</em></td>
+<td>SL2015</td>
+</tr>
+<tr>
+<td>lcSigma</td>
+<td>Lateral positioning-imperfection. <em>default: 0.0</em></td>
+<td>LC2013, SL2015</td>
+</tr>
+</tbody>
+</table>
+<p>The parameters are set within the <code>&lt;vType&gt;</code>:</p>
+<pre><code>&lt;vType id=&quot;myType&quot; lcStrategic=&quot;0.5&quot; lcCooperative=&quot;0.0&quot;/&gt;
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>parameter 'lcMaxSpeedLatStanding' will not be applied when a vehicle is at the end of its lane (to ensure that there are no deadlocks).</p>
+</div>
+<h2 id="junction_model_parameters">Junction Model Parameters<a class="headerlink" href="#junction_model_parameters" title="Permanent link">#</a></h2>
+<p>The behavior at intersections may be configured with the parameters
+listed below.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jmCrossingGap</td>
+<td>float >= 0 (m)</td>
+<td>10</td>
+<td>Minimum distance to pedestrians that are walking towards the conflict point with the ego vehicle. If the pedestrians are further away the vehicle may drive across the pedestrian crossing.</td>
+</tr>
+<tr>
+<td>jmIgnoreKeepClearTime</td>
+<td>float (s)</td>
+<td>-1</td>
+<td>The accumulated waiting time (see Option <a href="sumo.html#processing"><strong>--waiting-time-memory</strong></a>) after which a vehicle will <a href="Simulation/Intersections.html#junction_blocking">drive onto an intersection even though this might cause jamming</a>. For negative values, the vehicle will always try to keep the junction clear.</td>
+</tr>
+<tr>
+<td>jmDriveAfterRedTime</td>
+<td>float (s)</td>
+<td>-1</td>
+<td>This value causes vehicles to violate a red light if the duration of the red phase is lower than the given threshold. When set to 0, vehicles will always drive at yellow but will try to brake at red. If this behavior causes a vehicle to drive so fast that stopping is not possible any more it will not attempt to stop. This value also applies to <a href="Simulation/Pedestrians.html#model_striping">the default pedestrian model</a>.</td>
+</tr>
+<tr>
+<td>jmDriveAfterYellowTime</td>
+<td>float (s)</td>
+<td>-1</td>
+<td>This value causes vehicles to violate a yellow light if the duration of the yellow phase is lower than the given threshold. Vehicles that are too fast to brake always drive at yellow..</td>
+</tr>
+<tr>
+<td>jmDriveRedSpeed</td>
+<td>float (m/s)</td>
+<td><em>maxSpeed</em></td>
+<td>This value causes vehicles affected by <em>jmDriveAfterRedTime</em> to slow down when violating a red light. The given speed will not be exceeded when entering the intersection.</td>
+</tr>
+<tr>
+<td>jmIgnoreFoeProb</td>
+<td>float</td>
+<td>0</td>
+<td>This value causes vehicles and pedestrians to ignore foe vehicles that have right-of-way with the given probability. The check is performed anew every simulation step. (range [0,1]).</td>
+</tr>
+<tr>
+<td>jmIgnoreFoeSpeed</td>
+<td>float (m/s)</td>
+<td>0</td>
+<td>This value is used in conjunction with <em>jmIgnoreFoeProb</em>. Only vehicles with a speed below or equal to the given value may be ignored.</td>
+</tr>
+<tr>
+<td>jmSigmaMinor</td>
+<td>float, scaling factor (like <em>sigma</em>)</td>
+<td>sigma</td>
+<td>This value configures driving imperfection (dawdling) while passing a minor link (ahead of the intersection after having comitted to drive and while still on the intersection).</td>
+</tr>
+<tr>
+<td>jmStoplineGap</td>
+<td>float >= 0 (m)</td>
+<td>1</td>
+<td>This value configures stopping distance in front of prioritary / TL-controlled stop line. In case the stop line has been relocated by a <a href="Networks/SUMO_Road_Networks.html#stop_offsets"><strong>stopOffset</strong></a> item, the maximum of both distances is applied.</td>
+</tr>
+<tr>
+<td>jmTimegapMinor</td>
+<td>float s</td>
+<td>1</td>
+<td>This value defines the minimum time gap when passing ahead of a prioritized vehicle.</td>
+</tr>
+<tr>
+<td>impatience</td>
+<td>float or 'off'</td>
+<td>0.0</td>
+<td>Willingess of drivers to impede vehicles with higher priority. See below for semantics.</td>
+</tr>
+</tbody>
+</table>
+<p>The parameters are set within the <code>&lt;vType&gt;</code>:</p>
+<pre><code>&lt;vType id=&quot;ambulance&quot; jmDriveAfterRedTime=&quot;300&quot; jmDriveAfterRedSpeed=&quot;5.56&quot;/&gt;
+</code></pre>
+
+<h3 id="impatience">Impatience<a class="headerlink" href="#impatience" title="Permanent link">#</a></h3>
+<p>The impatience of a driver is value between 0 and 1 that grows whenever
+the driver has to stop unintentionally (i.e. due to a jam or waiting at
+an intersection). The impatience value is computed as</p>
+<pre><code>MAX(0, MIN(1.0, baseImpatience + waitingTime / timeToMaxImpatience))
+</code></pre>
+
+<p>Where baseImpatience is configured by setting the vType-attribute
+<em>impatience</em> and timeToMaxImpatience is set using the option <strong>--time-to-impatience</strong> (default
+300s). Setting this option to 0 disables impatience growth. The value of baseImpatience may be negative to slow the growth of
+the dynamically computed impatience. It may also be defined with the
+value <strong>off</strong> to prevent drivers from becoming impatient.</p>
+<p>The impatience value is used to represent a drivers willingness to
+impede vehicles with higher priority. At a value of 1 or above, the
+driver will use any gap that is <em>safe</em> in the sense of
+collision-avoidance even if it means that another vehicle has to brake
+as hard as it can. At a value of 0, the driver will only perform
+maneuvers that do not force other vehicles to slow down. Intermediate
+values interpolate smoothly between these extremes.</p>
+<h2 id="default_vehicle_type">Default Vehicle Type<a class="headerlink" href="#default_vehicle_type" title="Permanent link">#</a></h2>
+<p>If the <code>type</code> attribute of a vehicle is not
+defined it defaults to <code>"DEFAULT_VEHTYPE"</code>.
+By defining a vehicle type with this id (<code>&lt;vType id="DEFAULT_VEHTYPE" ..../&gt;</code>) the default parameters for
+vehicles without an explicititly defined type can be changed. The change
+of the default vehicle type needs to occur before any reference to the
+type was made, so basically before any vehicle or vehicle type was
+defined. So it should always be at the top of the very first route file.</p>
+<h1 id="route_and_vehicle_type_distributions">Route and vehicle type distributions<a class="headerlink" href="#route_and_vehicle_type_distributions" title="Permanent link">#</a></h1>
+<p>Instead of defining routes and vTypes explicitly for a vehicle
+<a href="sumo.html">sumo</a> can choose them at runtime from a given
+distribution. In order to use this feature just define distributions as
+following:</p>
+<h2 id="vehicle_type_distributions">Vehicle Type Distributions<a class="headerlink" href="#vehicle_type_distributions" title="Permanent link">#</a></h2>
+<pre><code>&lt;routes&gt;
+    &lt;vTypeDistribution id=&quot;typedist1&quot;&gt;
+        &lt;vType id=&quot;type1&quot; accel=&quot;0.8&quot; length=&quot;5&quot; maxSpeed=&quot;70&quot; probability=&quot;0.9&quot;/&gt;
+        &lt;vType id=&quot;type2&quot; accel=&quot;1.8&quot; length=&quot;15&quot; maxSpeed=&quot;50&quot; probability=&quot;0.1&quot;/&gt;
+    &lt;/vTypeDistribution&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The python tool <a href="Tools/Misc.html#createvehtypedistributionspy">createVehTypeDistributions.py</a> can be used to generate large distributions that vary multiple <em>vType</em> parameters independently of each other.</p>
+</div>
+<h3 id="using_existing_types">Using existing types<a class="headerlink" href="#using_existing_types" title="Permanent link">#</a></h3>
+<pre><code>&lt;routes&gt;
+    &lt;vType id=&quot;type1&quot; accel=&quot;0.8&quot; length=&quot;5&quot; maxSpeed=&quot;70&quot; probability=&quot;0.9&quot;/&gt;
+    &lt;vType id=&quot;type2&quot; accel=&quot;1.8&quot; length=&quot;15&quot; maxSpeed=&quot;50&quot; probability=&quot;0.1&quot;/&gt;
+    &lt;vTypeDistribution id=&quot;typedist1&quot; vTypes=&quot;type1 type2&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<h2 id="route_distributions">Route Distributions<a class="headerlink" href="#route_distributions" title="Permanent link">#</a></h2>
+<pre><code>&lt;routes&gt;
+    &lt;routeDistribution id=&quot;routedist1&quot;&gt;
+        &lt;route id=&quot;route0&quot; color=&quot;1,1,0&quot; edges=&quot;beg middle end rend&quot; probability=&quot;0.9&quot;/&gt;
+        &lt;route id=&quot;route1&quot; color=&quot;1,2,0&quot; edges=&quot;beg middle end&quot; probability=&quot;0.1&quot;/&gt;
+    &lt;/routeDistribution&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>A distribution has only an id as (mandatory) attribute and needs a
+probability attribute for each of its child elements. The sum of the
+probability values needs not to be 1, they are scaled accordingly. Note,
+that probability defaults to <em>1.00</em> when not specified. At the moment
+the id for the children is mandatory, this is likely to change in future
+versions.</p>
+<p>A distribution can be used just as using individual types and routes:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vehicle id=&quot;0&quot; type=&quot;typedist1&quot; route=&quot;routedist1&quot; depart=&quot;0&quot; color=&quot;1,0,0&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When using <a href="duarouter.html">duarouter</a> with input files containing distributions, the output files will contain a fixed route and type for each vehicle and the distributions will be gone. This is to ensure that the each vehicles route will fit its sampled <code>vClass</code> when using the input files with <a href="sumo.html">sumo</a></p>
+</div>
+<h1 id="stops">Stops<a class="headerlink" href="#stops" title="Permanent link">#</a></h1>
+<p>Vehicles may be forced to stop for a defined time span or wait for
+persons by using the stop element either as part of a route or a vehicle
+definition as following:</p>
+<pre><code>&lt;routes&gt;
+    &lt;route id=&quot;route0&quot; edges=&quot;beg middle end rend&quot;&gt;
+        &lt;stop lane=&quot;middle_0&quot; endPos=&quot;50&quot; duration=&quot;20&quot;/&gt;
+    &lt;/route&gt;
+    &lt;vehicle id=&quot;v0&quot; route=&quot;route0&quot; depart=&quot;0&quot;&gt;
+        &lt;stop lane=&quot;end_0&quot; endPos=&quot;10&quot; until=&quot;50&quot;/&gt;
+    &lt;/vehicle&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>The resulting vehicle will stop twice, once at lane middle_0 because of
+the stop defined in its route and the second time because of the stop
+defined in the vehicle itself. The first stop will last 20 seconds the
+second one until simulation second 50. For a detailed list of attributes
+to stops see below. For a description on how to use them to simulate
+public transport see <a href="Simulation/Public_Transport.html">Simulation/Public Transport</a>.</p>
+<p>Stops can be childs of vehicles, routes, persons or containers.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>busStop</td>
+<td>string</td>
+<td>valid busStop ids</td>
+<td>-</td>
+<td>if given, containerStop, chargingStation, edge, lane, startPos and endPos are not allowed</td>
+</tr>
+<tr>
+<td>containerStop</td>
+<td>string</td>
+<td>valid containerStop ids</td>
+<td>-</td>
+<td>if given, busStop, chargingStation, edge, lane, startPos and endPos are not allowed</td>
+</tr>
+<tr>
+<td>chargingStation</td>
+<td>string</td>
+<td>valid chargingStation ids</td>
+<td>-</td>
+<td>if given, busStop, containerStop, edge, lane, startPos and endPos are not allowed</td>
+</tr>
+<tr>
+<td>lane</td>
+<td>string</td>
+<td>lane id</td>
+<td>-</td>
+<td>the lane id takes the form &lt;edge_id>_&lt;lane_index>. the edge has to be part of the corresponding route</td>
+</tr>
+<tr>
+<td>endPos</td>
+<td>float(m)</td>
+<td>-lane.length &lt; x &lt; lane.length (negative values count backwards from the end of the lane)</td>
+<td>lane.length</td>
+<td></td>
+</tr>
+<tr>
+<td>startPos</td>
+<td>float(m)</td>
+<td>-lane.length &lt; x &lt; lane.length (negative values count backwards from the end of the lane)</td>
+<td>endPos-0.2m</td>
+<td>there must be a difference of more than 0.1m between <em>startPos</em> and <em>endPos</em></td>
+</tr>
+<tr>
+<td>friendlyPos</td>
+<td>bool</td>
+<td>true,false</td>
+<td>false</td>
+<td>whether invalid stop positions should be corrected automatically</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>-</td>
+<td>minimum duration for stopping</td>
+</tr>
+<tr>
+<td>until</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>-</td>
+<td>the time step at which the route continues</td>
+</tr>
+<tr>
+<td>arrival</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>-</td>
+<td>the expected time of arrival for the stop. If this value is set, <a href="">stop-output</a> will include the attribute ''arrivalDelay''.</td>
+</tr>
+<tr>
+<td>extension</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>-</td>
+<td>the maximum time by which to extend the stop duration due to boarding persons and when waiting for expected persons / triggered stopping</td>
+</tr>
+<tr>
+<td>index</td>
+<td>int, "end", "fit"</td>
+<td>0≤index≤number of stops in the route</td>
+<td>"end"</td>
+<td>where to insert the stop in the vehicle's list of stops</td>
+</tr>
+<tr>
+<td>triggered</td>
+<td>bool</td>
+<td>true,false</td>
+<td>false</td>
+<td>whether a person may end the stop</td>
+</tr>
+<tr>
+<td>expected</td>
+<td>string</td>
+<td>list of person IDs</td>
+<td></td>
+<td>list of persons that must board the vehicle before it may continue (only takes effect for triggered stops)</td>
+</tr>
+<tr>
+<td>expectedContainers</td>
+<td>string</td>
+<td>list of container IDs</td>
+<td></td>
+<td>list of containers that must be loaded onto the vehicle before it may continue (only takes effect for triggered stops)</td>
+</tr>
+<tr>
+<td>parking</td>
+<td>bool</td>
+<td>true,false</td>
+<td>value of triggered</td>
+<td>whether the vehicle stops on the road or beside</td>
+</tr>
+<tr>
+<td>actType</td>
+<td>string</td>
+<td>arbitrary</td>
+<td>'waiting'</td>
+<td>activity displayed for stopped person in GUI and output files (only applies to person simulation)</td>
+</tr>
+<tr>
+<td>tripId</td>
+<td>string</td>
+<td>arbitrary</td>
+<td></td>
+<td>parameter to be applied to the vehicle to track the trip id within a cyclical public transport route</td>
+</tr>
+<tr>
+<td>line</td>
+<td>string</td>
+<td>arbitrary</td>
+<td></td>
+<td>new line attribute to be set on the vehicle when reaching this stop (for cyclical public transport route)</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>float</td>
+<td>positive</td>
+<td>-</td>
+<td>speed to be kept while driving between startPos and endPos. This turns the stop into a waypoint.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>If "duration" <em>and</em> "until" are given, the vehicle will stop for at least "duration" seconds.</li>
+<li>If "duration" is 0 the vehicle will decelerate to reach velocity 0 and then start to accelerate again.</li>
+<li>If "until" is given and "duration" is not and the vehicle arrives at the stop at or after the time step defined by "until" it will decelerate to speed 0 and then accelerate again.</li>
+<li>If persons board the vehicle, the stop is extended by the "boardingDuration" of the vehicle or until the "personCapacity" is reached. (or "loadingDuration" and "containerCapacity" for containers).</li>
+<li>If until is defined in the context of a repeated vehicle insertion (flow) it will be incremented by the difference of vehicle creation time and "begin" of the flow.</li>
+<li>If neither "duration" nor "until" are given, "triggered" defaults to true. If "triggered" is set to false explicitly the vehicle will stop forever.</li>
+<li>if "duration" or "until" are given along with "triggered", then the vehicle will stop until the given duration/until is reached <strong>and</strong> a person has boarded</li>
+<li>If "parking" is set to true. The vehicle stops besides the road without blocking other vehicles.</li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If <em>triggered</em> is true then <em>parking</em> will also be set to true by default. If you then set <em>parking</em> to false you may create deadlocks which prevent the simulation from terminating</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bus stops must have a length of at least 10</p>
+</div>
+<h2 id="startpos_and_endpos">startPos and endPos<a class="headerlink" href="#startpos_and_endpos" title="Permanent link">#</a></h2>
+<ul>
+<li>by default vehicles will try to stop at the given endPos</li>
+<li>if the vehicle comes to a halt earlier (i.e. due to a jam) then the stop counts as reached if the vehicle front is between startPos and endPos</li>
+<li>if the vehicle picks up a person or container, it can do so as long as the person is between startPos and endPos</li>
+<li>if the stop uses attribute 'speed', than that speed will be maintained between startPos and endPos</li>
+</ul>
+<h2 id="waypoints">Waypoints<a class="headerlink" href="#waypoints" title="Permanent link">#</a></h2>
+<p>By defining attribute 'speed' with a positive value, the stop definition is turned into a waypoint. The vehicle will drive past the given lane and keep the defined speed while between startPos end endPos. The 'duration' and 'until' values are ignored.</p>
+<h1 id="colors">Colors<a class="headerlink" href="#colors" title="Permanent link">#</a></h1>
+<p>A color is defined as <em>red,green,blue</em> or <em>red,green,blue,alpha</em> either
+in a vehicle, route or vType.</p>
+<pre><code>&lt;route id=&quot;r0&quot; color=&quot;0,255,255&quot;/&gt;
+&lt;type id=&quot;t0&quot; color=&quot;0,0,255&quot;/&gt;
+&lt;vehicle id=&quot;v0&quot; color=&quot;255,0,0,0&quot;/&gt;
+</code></pre>
+
+<p>In the default visualization settings the vehicle color will be used if
+define, otherwise the type and finally the route color. <a href="sumo-gui.html#vehicle_visualisation_settings">These settings can be changed.</a></p>
+<p>By default color components should be given as integers in the range of
+(0,255) but other definitions are also supported:</p>
+<pre><code>color=&quot;0.5, 0.5, 1.0&quot;
+color=&quot;#FF0000&quot;
+color=&quot;red&quot;
+</code></pre>
+
+<p>The transparency value (alpha) only <a href="sumo-gui.html#transparency">takes effect</a> when also using the vType
+attribute <em>imgFile</em>.</p>
+<h1 id="devices">Devices<a class="headerlink" href="#devices" title="Permanent link">#</a></h1>
+<p>Vehicle devices are used to model and configure different aspects such
+as output (device.fcd) or behavior (device.rerouting).</p>
+<p>The following device names are supported and can be used for the
+placeholder <code>&lt;DEVICENAME&gt;</code> below</p>
+<ul>
+<li><a href="Models/Emissions.html">emission</a></li>
+<li><a href="Models/Electric.html">battery</a></li>
+<li><a href="Models/ElectricHybrid.html">elechybrid</a></li>
+<li><a href="Simulation/Bluetooth.html">btreiver</a></li>
+<li><a href="Simulation/Bluetooth.html">btsender</a></li>
+<li><a href="Simulation/Emergency.html">bluelight</a></li>
+<li><a href="Demand/Automatic_Routing.html">rerouting</a></li>
+<li><a href="Simulation/Output/SSM_Device.html">ssm</a></li>
+<li><a href="ToC_Device.html">toc</a></li>
+<li><a href="Driver_State.html">driverstate</a></li>
+<li><a href="Simulation/Output/FCDOutput.html">fcd</a></li>
+<li><a href="Simulation/Output/TripInfo.html">tripinfo</a></li>
+<li><a href="Simulation/Output/VehRoutes.html">vehroute</a></li>
+<li><a href="Simulation/Taxi.html">taxi</a></li>
+<li><a href="Developer/How_To/Device.html">example</a></li>
+</ul>
+<h2 id="automatic_assignment">Automatic assignment<a class="headerlink" href="#automatic_assignment" title="Permanent link">#</a></h2>
+<p>Some devices are assigned automatically. Every <code>&lt;trip&gt;</code> that is loaded into the
+simulation is automatically equipped with a <em>rerouting</em> device to
+perform the initial route computation.</p>
+<p>Other devices such as <em>fcd</em> are assigned automatically when the option <strong>--fcd-output</strong>
+is set.</p>
+<h2 id="assignment_by_global_options">Assignment by global options<a class="headerlink" href="#assignment_by_global_options" title="Permanent link">#</a></h2>
+<p>Devices can be configured globally for all vehicles in the simulation by
+setting the option <strong>--device.&lt;DEVICENAME>.probability</strong> (e.g. <code>--device.fcd.probability 0.25</code>. This will equip
+about a quarter of the vehicles with an fcd device (each vehicle
+determines this randomly with 25% probability).) To make the assignment
+exact the additional option <strong>--device.&lt;DEVICENAME>.deterministic</strong> can be set Another option is to pass the
+list of vehicle ids that shall be equipped using the option <strong>--device.&lt;DEVICENAME>.explicit &lt;ID1,ID2,...IDk></strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These options take precedence over automatic assignment by output-option.</p>
+</div>
+<h2 id="assignment_by_generic_parameters">Assignment by generic parameters<a class="headerlink" href="#assignment_by_generic_parameters" title="Permanent link">#</a></h2>
+<p>Another option for assigning devices for vehicle types or individual
+vehicles is by using <a href="Simulation/GenericParameters.html">generic parameters</a>. This is done by
+defining them for the vehicle or the vehicle type in the following way:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vehicle id=&quot;v0&quot; route=&quot;route0&quot; depart=&quot;0&quot;&gt;
+        &lt;param key=&quot;has.&lt;DEVICENAME&gt;.device&quot; value=&quot;true&quot;/&gt;
+    &lt;/vehicle&gt;
+
+    &lt;vType id=&quot;t1&quot;&gt;
+        &lt;param key=&quot;has.&lt;DEVICENAME&gt;.device&quot; value=&quot;true&quot;/&gt;
+    &lt;/vType&gt;
+
+    &lt;vehicle id=&quot;v1&quot; route=&quot;route0&quot; depart=&quot;0&quot; type=&quot;t1&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>&lt;param&gt;</code> of a vehicle has precedence over the <code>&lt;param&gt;</code> of the vehicle's type. Both have precedence over the assignment by options.</p>
+</div>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 20 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

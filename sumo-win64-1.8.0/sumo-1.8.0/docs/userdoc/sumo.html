@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/sumo.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>sumo - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/sumo.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#from_30000_feet">From 30.000 feet</a></li>
+            <li class="nav-item main"><a href="#usage_description">Usage Description</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#options" class="nav-link">• Options</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#configuration" class="nav-link">&rarr; Configuration</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#input" class="nav-link">&rarr; Input</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#output" class="nav-link">&rarr; Output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#time" class="nav-link">&rarr; Time</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#processing" class="nav-link">&rarr; Processing</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#routing" class="nav-link">&rarr; Routing</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#report" class="nav-link">&rarr; Report</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#emissions" class="nav-link">&rarr; Emissions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#communication" class="nav-link">&rarr; Communication</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#battery" class="nav-link">&rarr; Battery</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#example_device" class="nav-link">&rarr; Example Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#ssm_device" class="nav-link">&rarr; Ssm Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#toc_device" class="nav-link">&rarr; Toc Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#driver_state_device" class="nav-link">&rarr; Driver State Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#bluelight_device" class="nav-link">&rarr; Bluelight Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#fcd_device" class="nav-link">&rarr; Fcd Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#elechybrid_device" class="nav-link">&rarr; Elechybrid Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#taxi_device" class="nav-link">&rarr; Taxi Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#tripinfo_device" class="nav-link">&rarr; Tripinfo Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#vehroutes_device" class="nav-link">&rarr; Vehroutes Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traci_server" class="nav-link">&rarr; Traci Server</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#mesoscopic" class="nav-link">&rarr; Mesoscopic</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#random_number" class="nav-link">&rarr; Random Number</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#gui_only" class="nav-link">&rarr; Gui Only</a>
+                </li>
+            <li class="nav-item main"><a href="#loading_order_of_input_files">Loading order of input files</a></li>
+            <li class="nav-item main"><a href="#format_of_additional_files">Format of additional files</a></li>
+            <li class="nav-item main"><a href="#subtopics">Subtopics</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>sumo<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="from_30000_feet">From 30.000 feet<a class="headerlink" href="#from_30000_feet" title="Permanent link">#</a></h1>
+<p><strong>sumo</strong> is the simulation itself; it is a microscopic,
+space-continuous, and time-discrete traffic flow simulation.</p>
+<ul>
+<li><strong>Purpose:</strong> Simulates a defined scenario</li>
+<li><strong>System:</strong> portable (Linux/Windows is tested); runs on command line<ul>
+<li>
+<p><strong>Input (mandatory):</strong></p>
+<p>A) a road network as generated via
+<a href="netconvert.html">netconvert</a> or
+<a href="netgenerate.html">netgenerate</a>, see <a href="index.html#network_building">Building
+Networks</a></p>
+<p>B) a set of routes (as generated by
+<a href="duarouter.html">duarouter</a>,
+<a href="jtrrouter.html">jtrrouter</a>,
+<a href="dfrouter.html">dfrouter</a>, or
+<a href="activitygen.html">activitygen</a>, see also <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">Definition of
+Vehicles, Vehicle Types, and
+Routes</a>)</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>Input (optional):</strong> Additional definitions of traffic lights,
+    variable speed signs, output detectors etc.</li>
+<li><strong>Output:</strong> SUMO allows to generate a wide set of outputs;
+    visualization is done using <a href="sumo-gui.html">sumo-gui</a></li>
+<li><strong>Programming Language:</strong> C++</li>
+</ul>
+<h1 id="usage_description">Usage Description<a class="headerlink" href="#usage_description" title="Permanent link">#</a></h1>
+<p>For a brief overview see
+<a href="Simulation/Basic_Definition.html">Simulation/Basic_Definition</a>.
+Model details and feature documentation can be found at <a href="index.html#simulation">Simulation
+topics</a>.</p>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">#</a></h2>
+<p>You may use a XML schema definition file for setting up a SUMO
+configuration:
+<a href="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">sumoConfiguration.xsd</a>.</p>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-c</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br> <strong>--configuration-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Loads the named config on startup</td>
+</tr>
+<tr>
+<td><strong>-C</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br> <strong>--save-configuration</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Saves current configuration into FILE</td>
+</tr>
+<tr>
+<td><strong>--save-template</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Saves a configuration template (empty) into FILE</td>
+</tr>
+<tr>
+<td><strong>--save-schema</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Saves the configuration schema into FILE</td>
+</tr>
+<tr>
+<td><strong>--save-commented</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Adds comments to saved template, configuration, or schema; <em>default:</em> <strong>false</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="input">Input<a class="headerlink" href="#input" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-n</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br> <strong>--net-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Load road network description from FILE</td>
+</tr>
+<tr>
+<td><strong>-r</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br> <strong>--route-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Load routes descriptions from FILE(s)</td>
+</tr>
+<tr>
+<td><strong>-a</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br> <strong>--additional-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Load further descriptions from FILE(s)</td>
+</tr>
+<tr>
+<td><strong>-w</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br> <strong>--weight-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Load edge/lane weights for online rerouting from FILE</td>
+</tr>
+<tr>
+<td><strong>-x</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a><br> <strong>--weight-attribute</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Name of the xml attribute which gives the edge weight; <em>default:</em> <strong>traveltime</strong></td>
+</tr>
+<tr>
+<td><strong>--load-state</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Loads a network state from FILE</td>
+</tr>
+<tr>
+<td><strong>--load-state.offset</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Shifts all times loaded from a saved state by the given offset; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--load-state.remove-vehicles</strong></td>
+<td>Removes vehicles with the given IDs from the loaded state</td>
+</tr>
+<tr>
+<td><strong>--junction-taz</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Initialize a TAZ for every junction to use attributes toJunction and fromJunction; <em>default:</em> <strong>false</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="output">Output<a class="headerlink" href="#output" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--write-license</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Include license info into every output file; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--output-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Prefix which is applied to all output files. The special string 'TIME' is replaced by the current time.</td>
+</tr>
+<tr>
+<td><strong>--precision</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Defines the number of digits after the comma for floating point output; <em>default:</em> <strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>--precision.geo</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Defines the number of digits after the comma for lon,lat output; <em>default:</em> <strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>-H</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--human-readable-time</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write time values as hour:minute:second or day:hour:minute:second rather than seconds; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--netstate-dump</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save complete network states into FILE</td>
+</tr>
+<tr>
+<td><strong>--netstate-dump.empty-edges</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write also empty edges completely when dumping; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--netstate-dump.precision</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Write positions and speeds with the given precision (default 2); <em>default:</em> <strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>--emission-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save the emission values of each vehicle</td>
+</tr>
+<tr>
+<td><strong>--emission-output.precision</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Write emission values with the given precision (default 2); <em>default:</em> <strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>--battery-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save the battery values of each vehicle</td>
+</tr>
+<tr>
+<td><strong>--battery-output.precision</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Write battery values with the given precision (default 2); <em>default:</em> <strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>--elechybrid-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save the elecHybrid values of each vehicle</td>
+</tr>
+<tr>
+<td><strong>--elechybrid-output.precision</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Write elecHybrid values with the given precision (default 2); <em>default:</em> <strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>--elechybrid-output.aggregated</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write elecHybrid values into one aggregated file; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--chargingstations-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Write data of charging stations</td>
+</tr>
+<tr>
+<td><strong>--overheadwiresegments-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Write data of overhead wire segments</td>
+</tr>
+<tr>
+<td><strong>--substations-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Write data of electrical substation stations</td>
+</tr>
+<tr>
+<td><strong>--fcd-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save the Floating Car Data</td>
+</tr>
+<tr>
+<td><strong>--fcd-output.geo</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Save the Floating Car Data using geo-coordinates (lon/lat); <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--fcd-output.signals</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Add the vehicle signal state to the FCD output (brake lights etc.); <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--fcd-output.distance</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Add kilometrage to the FCD output (linear referencing); <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--fcd-output.acceleration</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Add acceleration to the FCD output; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--fcd-output.max-leader-distance</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Add leader vehicle information to the FCD output (within the given distance); <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--fcd-output.params</strong></td>
+<td>Add generic parameter values to the FCD output</td>
+</tr>
+<tr>
+<td><strong>--fcd-output.filter-edges.input-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Restrict fcd output to the edge selection from the given input file</td>
+</tr>
+<tr>
+<td><strong>--full-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save a lot of information for each timestep (very redundant)</td>
+</tr>
+<tr>
+<td><strong>--queue-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save the vehicle queues at the junctions (experimental)</td>
+</tr>
+<tr>
+<td><strong>--vtk-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save complete vehicle positions inclusive speed values in the VTK Format (usage: /path/out will produce /path/out_$TIMESTEP$.vtp files)</td>
+</tr>
+<tr>
+<td><strong>--amitran-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save the vehicle trajectories in the Amitran format</td>
+</tr>
+<tr>
+<td><strong>--summary-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save aggregated vehicle departure info into FILE</td>
+</tr>
+<tr>
+<td><strong>--person-summary-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save aggregated person counts into FILE</td>
+</tr>
+<tr>
+<td><strong>--tripinfo-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save single vehicle trip info into FILE</td>
+</tr>
+<tr>
+<td><strong>--tripinfo-output.write-unfinished</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write tripinfo output for vehicles which have not arrived at simulation end; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save single vehicle route info into FILE</td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.exit-times</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write the exit times for all edges; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.last-route</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write the last route only; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.sorted</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Sorts the output by departure time; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.dua</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write the output in the duarouter alternatives style; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.cost</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write costs for all routes; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.intended-depart</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write the output with the intended instead of the real departure time; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.route-length</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Include total route length in the output; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.write-unfinished</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Write vehroute output for vehicles which have not arrived at simulation end; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.skip-ptlines</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Skip vehroute output for public transport vehicles; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.incomplete</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Include invalid routes and route stubs in vehroute output; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--vehroute-output.stop-edges</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Include information about edges between stops; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--link-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save links states into FILE</td>
+</tr>
+<tr>
+<td><strong>--railsignal-block-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save railsignal-blocks into FILE</td>
+</tr>
+<tr>
+<td><strong>--bt-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save bluetooth visibilities into FILE (in conjunction with device.btreceiver and device.btsender)</td>
+</tr>
+<tr>
+<td><strong>--lanechange-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Record lane changes and their motivations for all vehicles into FILE</td>
+</tr>
+<tr>
+<td><strong>--lanechange-output.started</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Record start of lane change manoeuvres; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--lanechange-output.ended</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Record end of lane change manoeuvres; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--lanechange-output.xy</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Record coordinates of lane change manoeuvres; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--stop-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Record stops and loading/unloading of passenger and containers for all vehicles into FILE</td>
+</tr>
+<tr>
+<td><strong>--statistic-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Write overall statistics into FILE</td>
+</tr>
+<tr>
+<td><strong>--save-state.times</strong></td>
+<td>Use TIME[] as times at which a network state written</td>
+</tr>
+<tr>
+<td><strong>--save-state.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>save state repeatedly after TIME period; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--save-state.prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Prefix for network states; <em>default:</em> <strong>state</strong></td>
+</tr>
+<tr>
+<td><strong>--save-state.suffix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Suffix for network states (.xml.gz or .xml); <em>default:</em> <strong>.xml.gz</strong></td>
+</tr>
+<tr>
+<td><strong>--save-state.files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Files for network states</td>
+</tr>
+<tr>
+<td><strong>--save-state.rng</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Save random number generator states; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--save-state.transportables</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Save person and container states (experimental); <em>default:</em> <strong>false</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="time">Time<a class="headerlink" href="#time" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-b</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a><br> <strong>--begin</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Defines the begin time in seconds; The simulation starts at this time; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>-e</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a><br> <strong>--end</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Defines the end time in seconds; The simulation ends at this time; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--step-length</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Defines the step duration in seconds; <em>default:</em> <strong>1</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="processing">Processing<a class="headerlink" href="#processing" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--step-method.ballistic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether to use ballistic method for the positional update of vehicles (default is a semi-implicit Euler method).; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--extrapolate-departpos</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether vehicles that depart between simulation steps should extrapolate the depart position; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--threads</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Defines the number of threads for parallel simulation; <em>default:</em> <strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>--lateral-resolution</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the resolution in m when handling lateral positioning within a lane (with -1 all vehicles drive at the center of their lane; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>-s</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a><br> <strong>--route-steps</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Load routes for the next number of seconds ahead; <em>default:</em> <strong>200</strong></td>
+</tr>
+<tr>
+<td><strong>--no-internal-links</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Disable (junction) internal links; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--ignore-junction-blocker</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Ignore vehicles which block the junction after they have been standing for SECONDS (-1 means never ignore); <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--ignore-route-errors</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>(1) Do not check whether routes are connected. (2) Allow inserting a vehicle in a situation which requires emergency braking.; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--ignore-accidents</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Do not check whether accidents occur; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--collision.action</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>How to deal with collisions: [none,warn,teleport,remove]; <em>default:</em> <strong>teleport</strong></td>
+</tr>
+<tr>
+<td><strong>--collision.stoptime</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Let vehicle stop for TIME before performing collision.action (except for action 'none'); <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--collision.check-junctions</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enables collisions checks on junctions; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--collision.mingap-factor</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Sets the fraction of minGap that must be maintained to avoid collision detection. If a negative value is given, the carFollowModel parameter is used; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--max-num-vehicles</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Delay vehicle insertion to stay within the given maximum number; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--max-num-teleports</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Abort the simulation if the given maximum number of teleports is exceeded; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--scale</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Scale demand by the given factor (by discarding or duplicating vehicles); <em>default:</em> <strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>--time-to-teleport</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Specify how long a vehicle may wait until being teleported, defaults to 300, non-positive values disable teleporting; <em>default:</em> <strong>300</strong></td>
+</tr>
+<tr>
+<td><strong>--time-to-teleport.highways</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>The waiting time after which vehicles on a fast road (speed &gt; 69km/h) are teleported if they are on a non-continuing lane; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--waiting-time-memory</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Length of time interval, over which accumulated waiting time is taken into account (default is 100s.); <em>default:</em> <strong>100</strong></td>
+</tr>
+<tr>
+<td><strong>--max-depart-delay</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>How long vehicles wait for departure before being skipped, defaults to -1 which means vehicles are never skipped; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--sloppy-insert</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether insertion on an edge shall not be repeated in same step once failed; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--eager-insert</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether each vehicle is checked separately for insertion on an edge; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--random-depart-offset</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Each vehicle receives a random offset to its depart value drawn uniformly from [0, TIME]; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--lanechange.duration</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Duration of a lane change maneuver (default 0); <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--lanechange.overtake-right</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether overtaking on the right on motorways is permitted; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--tls.all-off</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Switches off all traffic lights.; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--tls.actuated.show-detectors</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Sets default visibility for actuation detectors; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--tls.delay_based.detector-range</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Sets default range for detecting delayed vehicles; <em>default:</em> <strong>100</strong></td>
+</tr>
+<tr>
+<td><strong>--time-to-impatience</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Specify how long a vehicle may wait until impatience grows from 0 to 1, defaults to 300, non-positive values disable impatience growth; <em>default:</em> <strong>300</strong></td>
+</tr>
+<tr>
+<td><strong>--default.action-step-length</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Length of the default interval length between action points for the car-following and lane-change models (in seconds). If not specified, the simulation step-length is used per default. Vehicle- or VType-specific settings override the default. Must be a multiple of the simulation step-length.; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--default.carfollowmodel</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Select default car following model (Krauss, IDM, ...); <em>default:</em> <strong>Krauss</strong></td>
+</tr>
+<tr>
+<td><strong>--default.speeddev</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Select default speed deviation. A negative value implies vClass specific defaults (0.1 for the default passenger class; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--default.emergencydecel</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Select default emergencyDecel value among ('decel', 'default', FLOAT) which sets the value either to the same as the deceleration value, a vClass-class specific default or the given FLOAT in m/s^2; <em>default:</em> <strong>default</strong></td>
+</tr>
+<tr>
+<td><strong>--overhead-wire-solver</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Use Kirchhoff's laws for solving overhead wire circuit; <em>default:</em> <strong>true</strong></td>
+</tr>
+<tr>
+<td><strong>--emergencydecel.warning-threshold</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Sets the fraction of emergency decel capability that must be used to trigger a warning.; <em>default:</em> <strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>--parking.maneuver</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether parking simulation includes manoeuvering time and associated lane blocking; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.model</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Select among pedestrian models ['nonInteracting', 'striping', 'remote']; <em>default:</em> <strong>striping</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.striping.stripe-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Width of parallel stripes for segmenting a sidewalk (meters) for use with model 'striping'; <em>default:</em> <strong>0.64</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.striping.dawdling</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Factor for random slow-downs [0,1] for use with model 'striping'; <em>default:</em> <strong>0.2</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.striping.jamtime</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Time in seconds after which pedestrians start squeezing through a jam when using model 'striping' (non-positive values disable squeezing); <em>default:</em> <strong>300</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.striping.jamtime.crossing</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Time in seconds after which pedestrians start squeezing through a jam while on a pedestrian crossing when using model 'striping' (non-positive values disable squeezing); <em>default:</em> <strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.striping.jamtime.narrow</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Time in seconds after which pedestrians start squeezing through a jam while on a narrow lane when using model 'striping'; <em>default:</em> <strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.striping.reserve-oncoming</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Fraction of stripes to reserve for oncoming pedestrians; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.striping.reserve-oncoming.junctions</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Fraction of stripes to reserve for oncoming pedestrians on crossings and walkingareas; <em>default:</em> <strong>0.34</strong></td>
+</tr>
+<tr>
+<td><strong>--pedestrian.remote.address</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>The address (host:port) of the external simulation; <em>default:</em> <strong>localhost:9000</strong></td>
+</tr>
+<tr>
+<td><strong>--ride.stop-tolerance</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Tolerance to apply when matching pedestrian and vehicle positions on boarding at individual stops; <em>default:</em> <strong>10</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="routing">Routing<a class="headerlink" href="#routing" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--routing-algorithm</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Select among routing algorithms ['dijkstra', 'astar', 'CH', 'CHWrapper']; <em>default:</em> <strong>dijkstra</strong></td>
+</tr>
+<tr>
+<td><strong>--weights.random-factor</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Edge weights for routing are dynamically disturbed by a random factor drawn uniformly from [1,FLOAT); <em>default:</em> <strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>--weights.minor-penalty</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Apply the given time penalty when computing minimum routing costs for minor-link internal lanes; <em>default:</em> <strong>1.5</strong></td>
+</tr>
+<tr>
+<td><strong>--weights.priority-factor</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Consider edge priorities in addition to travel times, weighted by factor; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--astar.all-distances</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Initialize lookup table for astar from the given file (generated by marouter --all-pairs-output)</td>
+</tr>
+<tr>
+<td><strong>--astar.landmark-distances</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Initialize lookup table for astar ALT-variant from the given file</td>
+</tr>
+<tr>
+<td><strong>--persontrip.walkfactor</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Use FLOAT as a factor on pedestrian maximum speed during intermodal routing; <em>default:</em> <strong>0.75</strong></td>
+</tr>
+<tr>
+<td><strong>--persontrip.transfer.car-walk</strong></td>
+<td>Where are mode changes from car to walking allowed (possible values: 'parkingAreas', 'ptStops', 'allJunctions' and combinations); <em>default:</em> <strong>parkingAreas</strong></td>
+</tr>
+<tr>
+<td><strong>--persontrip.transfer.taxi-walk</strong></td>
+<td>Where taxis can drop off customers ('allJunctions, 'ptStops')</td>
+</tr>
+<tr>
+<td><strong>--persontrip.transfer.walk-taxi</strong></td>
+<td>Where taxis can pick up customers ('allJunctions, 'ptStops')</td>
+</tr>
+<tr>
+<td><strong>--persontrip.default.group</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>When set, trips between the same origin and destination will share a taxi by default</td>
+</tr>
+<tr>
+<td><strong>--persontrip.taxi.waiting-time</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Estimated time for taxi pickup; <em>default:</em> <strong>300</strong></td>
+</tr>
+<tr>
+<td><strong>--railway.max-train-length</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Use FLOAT as a maximum train length when initializing the railway router; <em>default:</em> <strong>5000</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'rerouting' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.explicit</strong></td>
+<td>Assign a 'rerouting' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'rerouting' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>The period with which the vehicle shall be rerouted; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.pre-period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>The rerouting period before depart; <em>default:</em> <strong>60</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.adaptation-weight</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The weight of prior edge weights for exponential moving average; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.adaptation-steps</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>The number of steps for moving average weight of prior edge weights; <em>default:</em> <strong>180</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.adaptation-interval</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>The interval for updating the edge weights; <em>default:</em> <strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.with-taz</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Use zones (districts) as routing start- and endpoints; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.init-with-loaded-weights</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Use weight files given with option --weight-files for initializing edge weights; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.threads</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>The number of parallel execution threads used for rerouting; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.synchronize</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Let rerouting happen at the same time for all vehicles; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.railsignal</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Allow rerouting triggered by rail signals.; <em>default:</em> <strong>true</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.bike-speeds</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Compute separate average speeds for bicycles; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.rerouting.output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save adapting weights to FILE</td>
+</tr>
+<tr>
+<td><strong>--person-device.rerouting.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a person to have a 'rerouting' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--person-device.rerouting.explicit</strong></td>
+<td>Assign a 'rerouting' device to named persons</td>
+</tr>
+<tr>
+<td><strong>--person-device.rerouting.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'rerouting' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--person-device.rerouting.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>The period with which the person shall be rerouted; <em>default:</em> <strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="report">Report<a class="headerlink" href="#report" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-v</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--verbose</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Switches to verbose output; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--print-options</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Prints option values before processing; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>-?</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--help</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Prints this screen or selected topics; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>-V</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--version</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Prints the current version; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>-X</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a><br> <strong>--xml-validation</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Set schema validation scheme of XML inputs ("never", "auto" or "always"); <em>default:</em> <strong>auto</strong></td>
+</tr>
+<tr>
+<td><strong>--xml-validation.net</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Set schema validation scheme of SUMO network inputs ("never", "auto" or "always"); <em>default:</em> <strong>never</strong></td>
+</tr>
+<tr>
+<td><strong>--xml-validation.routes</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Set schema validation scheme of SUMO route inputs ("never", "auto" or "always"); <em>default:</em> <strong>auto</strong></td>
+</tr>
+<tr>
+<td><strong>-W</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--no-warnings</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Disables output of warnings; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--aggregate-warnings</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Aggregate warnings of the same type whenever more than INT occur; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>-l</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br> <strong>--log</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Writes all messages to FILE (implies verbose)</td>
+</tr>
+<tr>
+<td><strong>--message-log</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Writes all non-error messages to FILE (implies verbose)</td>
+</tr>
+<tr>
+<td><strong>--error-log</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Writes all warnings and errors to FILE</td>
+</tr>
+<tr>
+<td><strong>--duration-log.disable</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Disable performance reports for individual simulation steps; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>-t</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--duration-log.statistics</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enable statistics on vehicle trips; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--no-step-log</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Disable console output of current simulation step; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--step-log.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Number of simulation steps between step-log outputs; <em>default:</em> <strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="emissions">Emissions<a class="headerlink" href="#emissions" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--phemlight-path</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Determines where to load PHEMlight definitions from.; <em>default:</em> <strong>./PHEMlight/</strong></td>
+</tr>
+<tr>
+<td><strong>--device.emissions.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'emissions' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.emissions.explicit</strong></td>
+<td>Assign a 'emissions' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.emissions.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'emissions' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.emissions.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Recording period for emission-output; <em>default:</em> <strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="communication">Communication<a class="headerlink" href="#communication" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.btreceiver.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'btreceiver' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.btreceiver.explicit</strong></td>
+<td>Assign a 'btreceiver' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.btreceiver.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'btreceiver' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.btreceiver.range</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The range of the bt receiver; <em>default:</em> <strong>300</strong></td>
+</tr>
+<tr>
+<td><strong>--device.btreceiver.all-recognitions</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether all recognition point shall be written; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.btreceiver.offtime</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The offtime used for calculating detection probability (in seconds); <em>default:</em> <strong>0.64</strong></td>
+</tr>
+<tr>
+<td><strong>--device.btsender.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'btsender' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.btsender.explicit</strong></td>
+<td>Assign a 'btsender' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.btsender.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'btsender' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="battery">Battery<a class="headerlink" href="#battery" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.battery.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'battery' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.battery.explicit</strong></td>
+<td>Assign a 'battery' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.battery.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'battery' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="example_device">Example Device<a class="headerlink" href="#example_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.example.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'example' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.example.explicit</strong></td>
+<td>Assign a 'example' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.example.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'example' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.example.parameter</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>An exemplary parameter which can be used by all instances of the example device; <em>default:</em> <strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ssm_device">Ssm Device<a class="headerlink" href="#ssm_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.ssm.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'ssm' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.ssm.explicit</strong></td>
+<td>Assign a 'ssm' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.ssm.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'ssm' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.ssm.measures</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Specifies which measures will be logged (as a space separated sequence of IDs in ('TTC', 'DRAC', 'PET')).</td>
+</tr>
+<tr>
+<td><strong>--device.ssm.thresholds</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Specifies thresholds corresponding to the specified measures (see documentation and watch the order!). Only events exceeding the thresholds will be logged.</td>
+</tr>
+<tr>
+<td><strong>--device.ssm.trajectories</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Specifies whether trajectories will be logged (if false, only the extremal values and times are reported, this is the default).</td>
+</tr>
+<tr>
+<td><strong>--device.ssm.range</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Specifies the detection range in meters (default is 50.00m.). For vehicles below this distance from the equipped vehicle, SSM values are traced.</td>
+</tr>
+<tr>
+<td><strong>--device.ssm.extratime</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Specifies the time in seconds to be logged after a conflict is over (default is 5.00secs.). Required &gt;0 if PET is to be calculated for crossing conflicts.</td>
+</tr>
+<tr>
+<td><strong>--device.ssm.file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Give a global default filename for the SSM output.</td>
+</tr>
+<tr>
+<td><strong>--device.ssm.geo</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether to use coordinates of the original reference system in output (default is false).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="toc_device">Toc Device<a class="headerlink" href="#toc_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.toc.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'toc' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.explicit</strong></td>
+<td>Assign a 'toc' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.toc.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'toc' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.manualType</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Vehicle type for manual driving regime.</td>
+</tr>
+<tr>
+<td><strong>--device.toc.automatedType</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Vehicle type for automated driving regime.</td>
+</tr>
+<tr>
+<td><strong>--device.toc.responseTime</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Average response time needed by a driver to take back control.; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.recoveryRate</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Recovery rate for the driver's awareness after a ToC.; <em>default:</em> <strong>0.1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.lcAbstinence</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Attention level below which a driver restrains from performing lane changes (value in [0,1]).; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.initialAwareness</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Average awareness a driver has initially after a ToC (value in [0,1]).; <em>default:</em> <strong>0.5</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.mrmDecel</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Deceleration rate applied during a 'minimum risk maneuver'.; <em>default:</em> <strong>1.5</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.dynamicToCThreshold</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Time, which the vehicle requires to have ahead to continue in automated mode. The default value of 0 indicates no dynamic triggering of ToCs.; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.dynamicMRMProbability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Probability that a dynamically triggered TOR is not answered in time.; <em>default:</em> <strong>0.05</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.mrmKeepRight</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>If true, the vehicle tries to change to the right during an MRM.; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.mrmSafeSpot</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>If set, the vehicle tries to reach the given named stopping place during an MRM.</td>
+</tr>
+<tr>
+<td><strong>--device.toc.mrmSafeSpotDuration</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Duration the vehicle stays at the safe spot after an MRM.; <em>default:</em> <strong>60</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.maxPreparationAccel</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Maximal acceleration that may be applied during the ToC preparation phase.; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.ogNewTimeHeadway</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Timegap for ToC preparation phase.; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.ogNewSpaceHeadway</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Additional spacing for ToC preparation phase.; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.ogMaxDecel</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Maximal deceleration applied for establishing increased gap in ToC preparation phase.; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.ogChangeRate</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Rate of adaptation towards the increased headway during ToC preparation.; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.useColorScheme</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Whether a coloring scheme shall by applied to indicate the different ToC stages.; <em>default:</em> <strong>true</strong></td>
+</tr>
+<tr>
+<td><strong>--device.toc.file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Switches on output by specifying an output filename.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="driver_state_device">Driver State Device<a class="headerlink" href="#driver_state_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.driverstate.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'driverstate' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.explicit</strong></td>
+<td>Assign a 'driverstate' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'driverstate' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.initialAwareness</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Initial value assigned to the driver's awareness.; <em>default:</em> <strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.errorTimeScaleCoefficient</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Time scale for the error process.; <em>default:</em> <strong>100</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.errorNoiseIntensityCoefficient</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Noise intensity driving the error process.; <em>default:</em> <strong>0.2</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.speedDifferenceErrorCoefficient</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>General scaling coefficient for applying the error to the perceived speed difference (error also scales with distance).; <em>default:</em> <strong>0.15</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.headwayErrorCoefficient</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>General scaling coefficient for applying the error to the perceived distance (error also scales with distance).; <em>default:</em> <strong>0.75</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.speedDifferenceChangePerceptionThreshold</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Base threshold for recognizing changes in the speed difference (threshold also scales with distance).; <em>default:</em> <strong>0.1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.headwayChangePerceptionThreshold</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Base threshold for recognizing changes in the headway (threshold also scales with distance).; <em>default:</em> <strong>0.1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.minAwareness</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Minimal admissible value for the driver's awareness.; <em>default:</em> <strong>0.1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.driverstate.maximalReactionTime</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Maximal reaction time (~action step length) induced by decreased awareness level (reached for awareness=minAwareness).; <em>default:</em> <strong>-1</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="bluelight_device">Bluelight Device<a class="headerlink" href="#bluelight_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.bluelight.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'bluelight' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.bluelight.explicit</strong></td>
+<td>Assign a 'bluelight' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.bluelight.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'bluelight' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.bluelight.reactiondist</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Set the distance at which other drivers react to the blue light and siren sound; <em>default:</em> <strong>25</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="fcd_device">Fcd Device<a class="headerlink" href="#fcd_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.fcd.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'fcd' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.fcd.explicit</strong></td>
+<td>Assign a 'fcd' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.fcd.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'fcd' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.fcd.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Recording period for FCD-data; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--device.fcd.radius</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Record objects in a radius around equipped vehicles; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--person-device.fcd.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a person to have a 'fcd' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--person-device.fcd.explicit</strong></td>
+<td>Assign a 'fcd' device to named persons</td>
+</tr>
+<tr>
+<td><strong>--person-device.fcd.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'fcd' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--person-device.fcd.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Recording period for FCD-data; <em>default:</em> <strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="elechybrid_device">Elechybrid Device<a class="headerlink" href="#elechybrid_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.elechybrid.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'elechybrid' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.elechybrid.explicit</strong></td>
+<td>Assign a 'elechybrid' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.elechybrid.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'elechybrid' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="taxi_device">Taxi Device<a class="headerlink" href="#taxi_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.taxi.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'taxi' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.taxi.explicit</strong></td>
+<td>Assign a 'taxi' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.taxi.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'taxi' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--device.taxi.dispatch-algorithm</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>The dispatch algorithm [greedy</td>
+</tr>
+<tr>
+<td><strong>--device.taxi.dispatch-algorithm.output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Write information from the dispatch algorithm to FILE</td>
+</tr>
+<tr>
+<td><strong>--device.taxi.dispatch-algorithm.params</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Load dispatch algorithm parameters in format KEY1:VALUE1[,KEY2:VALUE]</td>
+</tr>
+<tr>
+<td><strong>--device.taxi.dispatch-period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>The period between successive calls to the dispatcher; <em>default:</em> <strong>60</strong></td>
+</tr>
+<tr>
+<td><strong>--device.taxi.idle-algorithm</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>The behavior of idle taxis [stop</td>
+</tr>
+<tr>
+<td><strong>--device.taxi.idle-algorithm.output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Write information from the idling algorithm to FILE</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tripinfo_device">Tripinfo Device<a class="headerlink" href="#tripinfo_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.tripinfo.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'tripinfo' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.tripinfo.explicit</strong></td>
+<td>Assign a 'tripinfo' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.tripinfo.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'tripinfo' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="vehroutes_device">Vehroutes Device<a class="headerlink" href="#vehroutes_device" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--device.vehroute.probability</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The probability for a vehicle to have a 'vehroute' device; <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--device.vehroute.explicit</strong></td>
+<td>Assign a 'vehroute' device to named vehicles</td>
+</tr>
+<tr>
+<td><strong>--device.vehroute.deterministic</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>The 'vehroute' devices are set deterministic using a fraction of 1000; <em>default:</em> <strong>false</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="traci_server">Traci Server<a class="headerlink" href="#traci_server" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--remote-port</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Enables TraCI Server if set; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--num-clients</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Expected number of connecting clients; <em>default:</em> <strong>1</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="mesoscopic">Mesoscopic<a class="headerlink" href="#mesoscopic" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--mesosim</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enables mesoscopic simulation; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-edgelength</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Length of an edge segment in mesoscopic simulation; <em>default:</em> <strong>98</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-tauff</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Factor for calculating the net free-free headway time; <em>default:</em> <strong>1.13</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-taufj</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Factor for calculating the net free-jam headway time; <em>default:</em> <strong>1.13</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-taujf</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Factor for calculating the jam-free headway time; <em>default:</em> <strong>1.73</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-taujj</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Factor for calculating the jam-jam headway time; <em>default:</em> <strong>1.4</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-jam-threshold</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Minimum percentage of occupied space to consider a segment jammed. A negative argument causes thresholds to be computed based on edge speed and tauff (default); <em>default:</em> <strong>-1</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-multi-queue</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enable multiple queues at edge ends; <em>default:</em> <strong>true</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-lane-queue</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enable separate queues for every lane; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-junction-control</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enable mesoscopic traffic light and priority junction handling; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-junction-control.limited</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enable mesoscopic traffic light and priority junction handling for saturated links. This prevents faulty traffic lights from hindering flow in low-traffic situations; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-tls-penalty</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Apply scaled travel time penalties when driving across tls controlled junctions based on green split instead of checking actual phases; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-tls-flow-penalty</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Apply scaled headway penalties when driving across tls controlled junctions based on green split instead of checking actual phases; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-minor-penalty</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Apply fixed time penalty when driving across a minor link. When using --meso-junction-control.limited, the penalty is not applied whenever limited control is active.; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-overtaking</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enable mesoscopic overtaking; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--meso-recheck</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></td>
+<td>Time interval for rechecking insertion into the next segment after failure; <em>default:</em> <strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="random_number">Random Number<a class="headerlink" href="#random_number" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--random</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Initialises the random number generator with the current system time; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--seed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Initialises the random number generator with the given value; <em>default:</em> <strong>23423</strong></td>
+</tr>
+<tr>
+<td><strong>--thread-rngs</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Number of pre-allocated random number generators to ensure repeatable multi-threaded simulations (should be at least the number of threads for repeatable simulations).; <em>default:</em> <strong>64</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="gui_only">Gui Only<a class="headerlink" href="#gui_only" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-g</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br> <strong>--gui-settings-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Load visualisation settings from FILE</td>
+</tr>
+<tr>
+<td><strong>-Q</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--quit-on-end</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Quits the GUI when the simulation stops; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>-G</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--game</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Start the GUI in gaming mode; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--game.mode</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Select the game type ('tls', 'drt'); <em>default:</em> <strong>tls</strong></td>
+</tr>
+<tr>
+<td><strong>-S</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--start</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Start the simulation after loading; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>-d</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a><br> <strong>--delay</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Use FLOAT in ms as delay between simulation steps; <em>default:</em> <strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>-B</strong> <br> <strong>--breakpoints</strong></td>
+<td>Use TIME[] as times when the simulation should halt</td>
+</tr>
+<tr>
+<td><strong>--edgedata-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Load edge/lane weights for visualization from FILE</td>
+</tr>
+<tr>
+<td><strong>-D</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--demo</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Restart the simulation after ending (demo mode); <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>-T</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a><br> <strong>--disable-textures</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Do not load background pictures; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--registry-viewport</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Load current viewport from registry; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--window-size</strong></td>
+<td>Create initial window with the given x,y size</td>
+</tr>
+<tr>
+<td><strong>--window-pos</strong></td>
+<td>Create initial window at the given x,y position</td>
+</tr>
+<tr>
+<td><strong>--tracker-interval</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The aggregation period for value tracker windows; <em>default:</em> <strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>--osg-view</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Start with an OpenSceneGraph view instead of the regular 2D view; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--gui-testing</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enable overlay for screen recognition; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--gui-testing-debug</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a></td>
+<td>Enable output messages during GUI-Testing; <em>default:</em> <strong>false</strong></td>
+</tr>
+<tr>
+<td><strong>--gui-testing.setting-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Save gui settings in the given settings output file</td>
+</tr>
+</tbody>
+</table>
+<h1 id="loading_order_of_input_files">Loading order of input files<a class="headerlink" href="#loading_order_of_input_files" title="Permanent link">#</a></h1>
+<p>Whenever a simulation object A (such as a vehicle) defined in an input
+file refers to another simulation object B (such as a vehicle type), the
+corresponding object B must be defined before A either by being put into
+a file that is loaded earlier, or by being put into the same file on an
+earlier line.</p>
+<p>This is of particular importance in regard to files loaded with the
+options <strong>--route-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and <strong>--additional-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>. The most important feature of the option <strong>--route-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> is that it
+loads the files incrementally thus saving memory. However, this means
+vehicles and flows must be sorted by their <code>departure</code> and <code>begin</code> times.</p>
+<p>The option <strong>--additional-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> is handled before option <strong>--route-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and the given files are fully
+loaded before the simulation starts. All items which can be put into a
+<em>route-file</em> can also be put into an <em>additional-file</em> (no vehicle
+sorting is necessary). Some objects must be available at the start of
+the simulation (such as output objects) and thus need to be loaded with
+this option, but is also useful for loading things referenced by route
+files such as <code>&lt;vType&gt;</code>-elements, named <code>&lt;route&gt;</code> elements or <code>&lt;routeDistribution&gt;</code>.</p>
+<p>When multiple files are given as a comma-separated list, they are loaded
+from left to right.</p>
+<h1 id="format_of_additional_files">Format of additional files<a class="headerlink" href="#format_of_additional_files" title="Permanent link">#</a></h1>
+<p>Files loaded with the option <strong>--additional-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> may included a wide range of network
+elements such as <a href="Simulation/Traffic_Lights.html">traffic light
+programs</a>, <a href="Simulation/Output/Induction_Loops_Detectors_(E1).html">detector
+definitions</a>,
+<a href="Simulation/Variable_Speed_Signs.html">variable speed signs</a> and
+<a href="Simulation/Public_Transport.html">bus stops</a>. These files are
+also used to configure simulation outputs such as <a href="Simulation/Output.html#values_for_edges_or_lanes">edge-based traffic
+measures</a> or
+<a href="Simulation/Output.html#traffic_lights-based_information">traffic light switching
+information</a>.
+Furthermore, any element permitted in a route file such as
+<a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types">vTypes</a>,
+<a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#routes">routes</a>
+and
+<a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicles_and_routes">vehicles</a>
+can be added. All elements may be put into the same additional file or
+they may be grouped into multiple files as convenient.</p>
+<p>The additional file always needs a top level tag with arbitrary name
+(<em>additional</em> is customary). An example file is given below:</p>
+<pre><code>&lt;additional&gt;
+    &lt;inductionLoop id=&quot;myLoop1&quot; lane=&quot;foo_0&quot; pos=&quot;42&quot; freq=&quot;900&quot; file=&quot;out.xml&quot;/&gt;
+    &lt;inductionLoop id=&quot;myLoop2&quot; lane=&quot;foo_2&quot; pos=&quot;42&quot; freq=&quot;900&quot; file=&quot;out.xml&quot;/&gt;
+
+    &lt;busStop id=&quot;station1&quot; lane=&quot;foo_0&quot; startPos=&quot;5&quot; endPos=&quot;20&quot;/&gt;
+
+    &lt;vType id=&quot;bus&quot; maxSpeed=&quot;20&quot; length=&quot;12&quot;/&gt;
+&lt;/additional&gt;
+</code></pre>
+
+<h1 id="subtopics">Subtopics<a class="headerlink" href="#subtopics" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="index.html#simulation">General topics</a></li>
+<li><a href="index.html#traffic_management_and_other_structures">Traffic Management and Other Structures</a></li>
+<li><a href="index.html#traffic_modes">Traffic Modes</a></li>
+<li><a href="index.html#additional_features">Additional Features</a></li>
+<li><a href="index.html#model_details">Model details</a></li>
+<li><a href="index.html#common_problems">Common Problems</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 30 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

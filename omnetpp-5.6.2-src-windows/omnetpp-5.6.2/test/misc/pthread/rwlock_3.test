@@ -1,0 +1,38 @@
+%description:
+Tests the ReadWriteLock class
+
+%includes:
+
+#include <common/rwlock.h>
+using namespace omnetpp;
+using namespace omnetpp::common;
+
+%activity:
+
+try
+{
+  ReentrantReadWriteLock lock;
+  EV << "Lock created\n";
+  lock.readLock().lock();
+  EV << "Read lock acquired\n";
+  lock.writeLock().lock();
+  EV << "Write lock acquired\n";
+  lock.writeLock().unlock();
+  EV << "Write lock released\n";
+  lock.readLock().unlock();
+  EV << "Read lock released\n";
+}
+catch (std::exception &e)
+{
+  EV << "ERROR: " << e.what() << "\n";
+}
+
+EV << ".\n";
+
+%contains: stdout
+Lock created
+Read lock acquired
+Write lock acquired
+Write lock released
+Read lock released
+.

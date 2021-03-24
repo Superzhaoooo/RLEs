@@ -1,0 +1,3 @@
+#!/bin/sh
+opp_run -l $(dirname $0)/../queueinglib/queueinglib $*
+

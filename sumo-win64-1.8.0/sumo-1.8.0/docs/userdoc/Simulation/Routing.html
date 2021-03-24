@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Routing.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Routing - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Routing.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#features_that_cause_rerouting">Features that cause rerouting</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routing_triggered_by_the_vehicle" class="nav-link">• Routing triggered by the vehicle</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#incomplete_trips_and_flows" class="nav-link">• Incomplete Trips and Flows</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#alternative_route_signage" class="nav-link">• Alternative Route Signage</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traci" class="nav-link">• TraCI</a>
+                </li>
+            <li class="nav-item main"><a href="#alternative_destinations">Alternative Destinations</a></li>
+            <li class="nav-item main"><a href="#travel-time_values_for_routing">Travel-time values for routing</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routing_mode_traciconstantsrouting_mode_default" class="nav-link">• Routing Mode traci.constants.ROUTING_MODE_DEFAULT</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routing_mode_traciconstantsrouting_mode_aggregated" class="nav-link">• Routing Mode traci.constants.ROUTING_MODE_AGGREGATED</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#special_cases" class="nav-link">• Special cases</a>
+                </li>
+            <li class="nav-item main"><a href="#routing_by_traveltime_and_edge_priority">Routing by Traveltime and Edge Priority</a></li>
+            <li class="nav-item main"><a href="#routing_by_effort">Routing by effort</a></li>
+            <li class="nav-item main"><a href="#routing_by_distance">Routing by distance</a></li>
+            <li class="nav-item main"><a href="#routing_algorithms">Routing Algorithms</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Routing<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="features_that_cause_rerouting">Features that cause rerouting<a class="headerlink" href="#features_that_cause_rerouting" title="Permanent link">#</a></h1>
+<p>There are multiple simulation features that allow routing at simulation
+time. They are described in the following:</p>
+<h2 id="routing_triggered_by_the_vehicle">Routing triggered by the vehicle<a class="headerlink" href="#routing_triggered_by_the_vehicle" title="Permanent link">#</a></h2>
+<p>This type of routing works by assigning a <em>rerouting device</em> to some or
+all vehicles. Details are given at
+<a href="../Demand/Automatic_Routing.html">Demand/Automatic_Routing</a>.</p>
+<h2 id="incomplete_trips_and_flows">Incomplete Trips and Flows<a class="headerlink" href="#incomplete_trips_and_flows" title="Permanent link">#</a></h2>
+<p>This is a special case of the above method. Vehicles with incomplete
+routes automatically receive a <em>rerouting device</em> and are rerouted once
+when entering the network. In some scenarios this is a practical
+<a href="../Demand/Dynamic_User_Assignment.html#oneshot-assignment"><em>one-shot</em>-approach to route assignment</a>
+that avoids time-consuming <a href="../Demand/Dynamic_User_Assignment.html#general_behavior">iterative assignment</a>.</p>
+<h2 id="alternative_route_signage">Alternative Route Signage<a class="headerlink" href="#alternative_route_signage" title="Permanent link">#</a></h2>
+<p>This is a location based method for triggering rerouting and is
+described at <a href="Rerouter.html">Simulation/Rerouter</a>.</p>
+<h2 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h2>
+<p>Using the methods <a href="../TraCI/Change_Vehicle_State.html"><em>traci.vehicle.changeTarget</em> or <em>traci.vehicle.rerouteTraveltime</em></a>
+rerouting is triggered for the specified vehicle.</p>
+<p>Alternatively, routes can be computed using
+<a href="../TraCI/Simulation_Value_Retrieval.html">''traci.simulation.findRoute</a>
+and applied using
+<a href="../TraCI/Change_Vehicle_State.html"><em>traci.vehicle.setRoute</em></a>.</p>
+<p>For persons, the function
+<a href="../TraCI/Simulation_Value_Retrieval.html">''traci.simulation.findIntermodalRoute</a>
+can be used to compute simple walks as well as <a href="../IntermodalRouting.html">itineraries for public transport</a>.</p>
+<h1 id="alternative_destinations">Alternative Destinations<a class="headerlink" href="#alternative_destinations" title="Permanent link">#</a></h1>
+<p>By using <a href="Rerouter.html"><code>&lt;rerouter&gt;</code>-definitions</a>, vehicles can be routed
+to alternative destinations. A different method is to use <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#traffic_assignement_zones_taz">traffic assignment zones (TAZ)</a>.
+This allows vehicles to change their destination to the best alternative
+from a list of potential destinations.</p>
+<h1 id="travel-time_values_for_routing">Travel-time values for routing<a class="headerlink" href="#travel-time_values_for_routing" title="Permanent link">#</a></h1>
+<p>By default, the route with the least travel time is chosen. The travel
+time depends on the current routing mode (configurable via
+<em>traci.vehicle.setRoutingMode</em>) or via the explicit <em>routingMode</em>
+argument to <em>traci.simulation.findRoute</em>.</p>
+<h2 id="routing_mode_traciconstantsrouting_mode_default">Routing Mode <em>traci.constants.ROUTING_MODE_DEFAULT</em><a class="headerlink" href="#routing_mode_traciconstantsrouting_mode_default" title="Permanent link">#</a></h2>
+<p>The following order of steps is taken to retrieve the travel time for each edge. If a step provides data, this is used, otherwise the next step is attempted: </p>
+<ol>
+<li>The vehicle retrieves it's individual data storage. This can be set
+    and retrieved using the TraCI vehicle methods <a href="../TraCI/Change_Vehicle_State.html#change_edge_travel_time_information_0x58"><em>change edge travel time information</em></a>
+    and <a href="../TraCI/Vehicle_Value_Retrieval.html#edge_travel_time_information_0x58"><em>edge travel time information</em></a>.</li>
+<li>The <a href="../Demand/Shortest_or_Optimal_Path_Routing.html#custom_edge_weights">global edge weights</a>
+    loaded using option <strong>--weight-files</strong> are retrieved.</li>
+<li>The global edge weights (set and retrieved via TraCI) using the
+    TraCI edge methods <a href="../TraCI/Change_Edge_State.html"><em>change edge travel time information</em></a> and <a href="../TraCI/Edge_Value_Retrieval.html"><em>edge travel time information</em></a>.</li>
+<li>The minimum travel time (length/allowedSpeed) is used.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The edge weights for cases 1-3 support modeling time-dependent variations in edge travel time. This means future changes in travel time along a vehicles route can be taking into account when routing.</p>
+</div>
+<h2 id="routing_mode_traciconstantsrouting_mode_aggregated">Routing Mode <em>traci.constants.ROUTING_MODE_AGGREGATED</em><a class="headerlink" href="#routing_mode_traciconstantsrouting_mode_aggregated" title="Permanent link">#</a></h2>
+<p>The <a href="../Demand/Automatic_Routing.html#edge_weights">smoothed travel times</a> computed for
+the <em>rerouting device</em> are used.</p>
+<h2 id="special_cases">Special cases<a class="headerlink" href="#special_cases" title="Permanent link">#</a></h2>
+<ul>
+<li>When rerouting with the <em>rerouting device</em> the travel time always
+  comes from another data storage which is updated continuously with a
+  configurable averaging procedure. The <a href="../Demand/Automatic_Routing.html">parameters for this updating strategy are user definable</a>.
+  It is also possible to <a href="../TraCI/Change_Vehicle_State.html#supported_device_parameters">set the device travel time directly via TraCI</a>.</li>
+<li>When using the TraCI method rerouteTraveltime from the <a href="../TraCI/Interfacing_TraCI_from_Python.html">python TraCI library</a>, the
+  command supports an additional boolean parameter <em>currentTravelTime</em>
+  (default <em>True</em>). When this parameter is set to <em>True</em>, the global
+  edge weights are replaced by the currently measured travel times
+  before rerouting. To replicate this behavior with other TraCI
+  clients, all edges in the network must be called with <em>change global
+  travel time information</em> using the value of <em>current travel time</em>.
+  Note that the travel time values which are set in this way are used
+  for the full duration of the simulation unless updated again.</li>
+</ul>
+<h1 id="routing_by_traveltime_and_edge_priority">Routing by Traveltime and Edge Priority<a class="headerlink" href="#routing_by_traveltime_and_edge_priority" title="Permanent link">#</a></h1>
+<p>Sometimes it is useful to guide route search with additional information while still taking travel times into account.
+For this use case the option <strong>--weights.priority-factor FLOAT</strong> can be used with <a href="../sumo.html">sumo</a> and <a href="../duarouter.html">duarouter</a>.</p>
+<p>When this option is set, the priority value of each edge is factored into the routing decision so that low-priority edges receive a penalty (they appear to be slower) whereas high-priority edges receive little or no penalty. For the option value <code>PriorityFactor</code>, the penalty is computed thus:</p>
+<pre><code>  MinEdgePriority : minimum priority value of all edges
+  MaxEdgePriority : maximum priority value of all edges
+  EdgePriorityRange = MaxEdgePriority - MinEdgePriority
+
+  relativeInversePrio = 1 - ((edgePriority - MinEdgePriority) / EdgePriorityRange)
+  effort =  traveltime * (1 + relativeInversePrio * PriorityFactor)
+</code></pre>
+
+<p>As a consequence:</p>
+<ul>
+<li>the highest priority edge will get no penalty</li>
+<li>the traveltime of the lowest priority edge is multiplied with 1+PriorityFactor, </li>
+<li>edges with in-between priorities will get a scaled penalty</li>
+</ul>
+<h1 id="routing_by_effort">Routing by <em>effort</em><a class="headerlink" href="#routing_by_effort" title="Permanent link">#</a></h1>
+<p>By default, the objective of the routing algorithms is to minimize the travel time between origin and destination.
+The traveltime can either be computed from the speed limits and vehicle maximum speed, it can be estimated at runtime from the simulation state or it can be loaded from a data file. The latter option allows defining travel times for the future.
+An example for the relevance of future travel times would be this:
+- a vehicle departs for a long trip at a time where there is no jamming
+- it is known that parts of the network will be jammed later
+- the route of the vehicle computed at departure time can circumvent the jam because the routing algorithm is aware that by the time those edges are reached they will be jammed.</p>
+<p>It may be useful to compute routes which minimize some other criteria (called <strong>effort</strong>) besides travel time (distance, emissions, price, ...).
+When these quantities are meant to change over time, the routing algorithm needs two kinds of values for each edge:</p>
+<ul>
+<li>the <strong>effort</strong> that shall be minimized</li>
+<li>the <strong>travel time</strong> for the edge.</li>
+</ul>
+<p>The travel time is needed to compute at which time a certain edge is reached so that effors which change over time can be used correctly.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When the effort values do not change over time, routing by effort can be achieved by loading weight-files with a modified <code>traveltime</code> attribute (the effort value is written into the traveltime attribute) and the option <strong>--weight-attribute</strong> can be omitted.</p>
+</div>
+<p>When setting the options <strong>--weight-file</strong> and <strong>--weight-attribute</strong>, additional routing efforts are read
+according to the specified attribute. These are only used when calling
+the TraCI function <a href="../TraCI/Change_Vehicle_State.html">reroute by effort</a>. The assumed efforts
+along a vehicles route are are time-based values and the time is
+computed based on the travel time values described above. The effort can
+also be set using <em>traci.edge.setEffort</em>.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The default effort value is 0 which causes detour routes to be preferred when not loading sensible effort values.</p>
+</div>
+<p>The applications <a href="../duarouter.html">duarouter</a> and <a href="../marouter.html">marouter</a> also support the options <strong>--weight-file</strong> and <strong>--weight-attribute</strong> but they can only be used with one of the weight attributes "CO", "CO2", "PMx", "HC", "NOx", "fuel", "electricity", "noise". However, the will still work as expected when the user loads custom effort values for these attributes.</p>
+<h1 id="routing_by_distance">Routing by <em>distance</em><a class="headerlink" href="#routing_by_distance" title="Permanent link">#</a></h1>
+<p>Finding the shortest route rather than the fastests can be achieved by
+loading suitable <em>effort</em>-data (see
+<a href="#routing_by_effort">#Routing_by_effort</a>) or by setting
+the speed for all network edges to the same value.</p>
+<p>A simpler solution is to define a vehicle type that travels with the
+same speed on all edges:</p>
+<pre><code>&lt;vType id=&quot;routeByDistance&quot; maxSpeed=&quot;1&quot;/&gt;
+</code></pre>
+
+<p>and then using that type to find the fastest route:</p>
+<pre><code>stageResult = traci.simulation.findRoute(fromEdge, toEdge, &quot;routeByDistance&quot;)
+shortestDistance = stage.length
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Older versions of SUMO do not supply the value <em>stage.length</em>. In this case <strong>shortestDistance = stage.travelTime</strong> is also correct due to the speed of 1m/s.</p>
+</div>
+<h1 id="routing_algorithms">Routing Algorithms<a class="headerlink" href="#routing_algorithms" title="Permanent link">#</a></h1>
+<p>Applications that perform routing (<a href="../sumo.html">sumo</a>,
+<a href="../sumo-gui.html">sumo-gui</a>, <a href="../duarouter.html">duarouter</a>,
+<a href="../marouter.html">marouter</a>) support the option <strong>--routing.algorithm</strong> for selecting among
+the following values:</p>
+<ul>
+<li><em>dijkstra</em>: (default)
+<a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstras</a>
+algorithm is the simplest and slowest of routing algorithms. It is
+well suited to routing in time-dependent networks (i.e. when the
+travel time on an edge depends on the time of day)</li>
+<li><em>astar</em>: The
+<a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> routing
+algorithm uses a metric for bounding travel time to direct the
+search and is often faster than dijkstra. Here, the metric <em>euclidean distance / maximumVehicleSpeed</em>) is used.<ul>
+<li>by using <em>astar</em> together with the option <strong>--astar.landmark-distance</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> the ALT-Algorithm is
+  activated (A*, Landmarks, triangle inequality). It uses a
+  precomputed distance table to selected network edges (so-called
+  landmarks) to speed up the search, often by a significant
+  factor. A lookup table can be generated by creating a file with one landmark edge id per line (e.g. landmarks.txt)
+  and then setting the options <strong>-astar.landmark-distances landmarks.txt --astar.save-landmark-distances lookuptable.txt</strong></li>
+<li>by using <em>astar</em> together with the option <strong>--astar.all-distances</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> the A* algorithm is
+  used together with a complete (and often huge) distance table to
+  allow for blazing fast search.</li>
+</ul>
+</li>
+<li><em>CH</em>: <a href="https://en.wikipedia.org/wiki/Contraction_hierarchies">Contraction Hierarchies</a>
+is preprocessing-based routing algorithm. This is very efficient
+when a large number of queries is expected. The algorithm does not
+consider time-dependent weights. Instead, new preprocessing can be
+performed for time-slices of fixed size by setting the option <strong>--weight-period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>. The
+preprocessing is done without restrictions on vehicle class which
+reduces efficiency in multi-modal networks.</li>
+<li><em>CHWrapper</em>: This works like <em>CH</em> but performs separate
+preprocessing for every vehicle class that is encountered, thereby
+increasing routing efficiency.</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 31 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

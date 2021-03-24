@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/XMLValidation.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>XMLValidation - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/XMLValidation.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#validation_of_xml_inputs">Validation of XML inputs</a></li>
+            <li class="nav-item main"><a href="#adding_a_schema_declaration">Adding a schema declaration</a></li>
+            <li class="nav-item main"><a href="#schema_files">Schema Files</a></li>
+            <li class="nav-item main"><a href="#sumo_file_types">SUMO File Types</a></li>
+            <li class="nav-item main"><a href="#disabling_schema_validation">Disabling Schema Validation</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>XMLValidation<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="validation_of_xml_inputs">Validation of XML inputs<a class="headerlink" href="#validation_of_xml_inputs" title="Permanent link">#</a></h1>
+<p>All <a href="SUMO_at_a_Glance.html#included_applications">SUMO applications</a> support
+XML validation for their inputs. To enable this, the following options
+can be used:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-X</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a><br><strong>--xml-validation</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Set schema validation scheme of XML inputs ("never", "auto" or "always"); <em>default: <strong>auto</strong></em></td>
+</tr>
+<tr>
+<td><strong>--xml-validation.net</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Set schema validation scheme of SUMO network inputs ("never", "auto" or "always"); <em>default: <strong>never</strong></em></td>
+</tr>
+</tbody>
+</table>
+<p>Validation is performed by activating <a href="https://xerces.apache.org/xerces-c/schema-3.html">XML schema
+processing</a> in the XML
+parser. This catches many common input errors such as spelling mistakes
+and attributes which should have been placed within another element.</p>
+<p>Another prerequisite for validation is a schema deceleration within the
+root element of the input file such as</p>
+<pre><code>&lt;routes xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sumo.dlr.de/xsd/routes_file.xsd&quot;&gt;
+</code></pre>
+
+<p>When setting the validation options to <em>always</em> it is an error to omit
+this declaration.</p>
+<p>Schema validation may slowdown XML parsing considerably and is therefore
+disabled for the network input by default (because networks should not
+be edited by hand and therefore be valid anyway).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have large auto-generated inputs you may consider disabling schema validation altogether. See also <a href="FAQ.html#whats_the_deal_with_schema_resolution_warnings_errors">this FAQ</a></p>
+</div>
+<h1 id="adding_a_schema_declaration">Adding a schema declaration<a class="headerlink" href="#adding_a_schema_declaration" title="Permanent link">#</a></h1>
+<p>Files that are written by one of the SUMO applications automatically
+receive the appropriate schema declaration. When writing an input file
+from scratch the schema declaration must be added manually to the root
+element as follows:</p>
+<pre><code>    &lt;ROOT_ELEMENT xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:noNamespaceSchemaLocation=&quot;http://sumo.dlr.de/xsd/SCHEMA_FILE&quot;&gt;
+</code></pre>
+
+<p>where <em>ROOT_ELEMENT</em> and <em>SCHEMA_FILE</em> should be set according to the
+following table:</p>
+<table>
+<thead>
+<tr>
+<th>Application Option</th>
+<th>ROOT_ELEMENT</th>
+<th>SCHEMA_FILE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--route-files</strong>, <strong>--trip-files</strong>, <strong>--flow-files</strong></td>
+<td>routes</td>
+<td>routes_file.xsd</td>
+</tr>
+<tr>
+<td><strong>--additional-files</strong></td>
+<td>add</td>
+<td>additional_file.xsd</td>
+</tr>
+<tr>
+<td><strong>--node-files</strong></td>
+<td>nodes</td>
+<td>nodes_file.xsd</td>
+</tr>
+<tr>
+<td><strong>--edge-files</strong></td>
+<td>edges</td>
+<td>edges_file.xsd</td>
+</tr>
+<tr>
+<td><strong>--connection-files</strong></td>
+<td>connections</td>
+<td>connections_file.xsd</td>
+</tr>
+<tr>
+<td><strong>--tllogic-files</strong></td>
+<td>tlLogics</td>
+<td>tllogic_file.xsd</td>
+</tr>
+<tr>
+<td><strong>--type-files</strong></td>
+<td>types</td>
+<td>types_file.xsd</td>
+</tr>
+<tr>
+<td><strong>--weight-files</strong></td>
+<td>meandata</td>
+<td>meandata_file.xsd</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The value of ROOT_ELEMENT is a matter of convention and may take an arbitrary value.</p>
+</div>
+<h1 id="schema_files">Schema Files<a class="headerlink" href="#schema_files" title="Permanent link">#</a></h1>
+<p>The schema files can be found in the <strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/xsd directory of your SUMO
+installation. If the <a href="Basics/Basic_Computer_Skills.html#additional_environment_variables">environment variable <em>SUMO_HOME</em> is
+set</a>,
+these files will be used when validation inputs.</p>
+<p>Otherwise, the files are loaded from
+<em><a href="http://sumo.dlr.de/xsd/SCHEMA_FILE">http://sumo.dlr.de/xsd/SCHEMA_FILE</a></em> which may slow down the
+application (or fail if there is no internet connection).</p>
+<h1 id="sumo_file_types">SUMO File Types<a class="headerlink" href="#sumo_file_types" title="Permanent link">#</a></h1>
+<p>A complete listing of file extensions used by <a href="SUMO_at_a_Glance.html#included_applications">SUMO
+Applications</a> is
+given at <a href="Other/File_Extensions.html">File_Extensions</a>.</p>
+<h1 id="disabling_schema_validation">Disabling Schema Validation<a class="headerlink" href="#disabling_schema_validation" title="Permanent link">#</a></h1>
+<p>To disable schema validation any of the following actions is sufficient</p>
+<ul>
+<li>set the option <strong>--xml-validation never</strong></li>
+<li>Remove the <code>xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</code> <code>xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/....xsd"</code>
+attribute from the top of the XML input file.</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

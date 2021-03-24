@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tools/Visualization.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tools/Visualization - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tools/Visualization.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#current_tools">Current Tools</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_trajectoriespy" class="nav-link">• plot_trajectories.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_net_dumppy" class="nav-link">• plot_net_dump.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_net_selectionpy" class="nav-link">• plot_net_selection.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_net_speedspy" class="nav-link">• plot_net_speeds.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_net_trafficlightspy" class="nav-link">• plot_net_trafficLights.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_summarypy" class="nav-link">• plot_summary.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_tripinfo_distributionspy" class="nav-link">• plot_tripinfo_distributions.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_csv_timelinepy" class="nav-link">• plot_csv_timeline.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_csv_piepy" class="nav-link">• plot_csv_pie.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#plot_csv_barspy" class="nav-link">• plot_csv_bars.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#common_options" class="nav-link">• common options</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#formatting_options" class="nav-link">&rarr; Formatting Options</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#interaction_options" class="nav-link">&rarr; Interaction Options</a>
+                </li>
+            <li class="nav-item main"><a href="#further_visualization_methods">Further Visualization Methods</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#coloring_edges_in_sumo-gui_according_to_arbitrary_data" class="nav-link">• Coloring edges in sumo-gui according to arbitrary data</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#intersection_flow_diagram" class="nav-link">• Intersection Flow Diagram</a>
+                </li>
+            <li class="nav-item main"><a href="#outdated">Outdated</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#mpl_dump_twoagainstpy" class="nav-link">• mpl_dump_twoAgainst.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#mpl_tripinfos_twoagainstpy" class="nav-link">• mpl_tripinfos_twoAgainst.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#mpl_dump_timelinepy" class="nav-link">• mpl_dump_timeline.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#mpl_dump_onnetpy" class="nav-link">• mpl_dump_onNet.py</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tools/Visualization<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p><a href="../sumo.html">sumo</a> offers a wide range of
+<a href="../Simulation/Output.html">outputs</a>, but one may find it hard to
+parse and visualize them. Below, you may find some tools that allow to
+visualize a simulation run's results for being included in a scientific
+paper. Additional tools read plain .csv-files and were added to the
+suite as they offer a similar interface.</p>
+<p>All these tools are just wrappers around the wonderful
+<a href="http://matplotlib.org/">matplotlib</a> library. If you are familiar with
+Python, you must have a look.</p>
+<p>The tools share a set of <a href="#common_options">common options</a> to
+fine-tune the appearance of the generated figures. These options' names
+where chosen similar to the <a href="http://matplotlib.org/">matplotlib</a> calls.</p>
+<p>The tools are implemented in Python and need
+<a href="http://matplotlib.org/">matplotlib</a> to be installed. The tools can be
+found in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/visualization.</p>
+<h1 id="current_tools">Current Tools<a class="headerlink" href="#current_tools" title="Permanent link">#</a></h1>
+<p>Below, you will find the descriptions of tools that should work with the
+current outputs <a href="../sumo.html">sumo</a>/<a href="../sumo-gui.html">sumo-gui</a>
+generate. To run them, you'll need:</p>
+<ul>
+<li>to install Python</li>
+<li>to install <a href="http://matplotlib.org/">matplotlib</a></li>
+<li>to set <strong><em>&lt;SUMO_HOME&gt;</em></strong></li>
+</ul>
+<p>All scripts are executed from the command line and you have to give the
+command line options as listed in the descriptions below. Please note
+that <a href="#common_options">#common options</a> may be applied to
+all the scripts listed in the following sub-sections albeit few options
+may not work for certain scripts.</p>
+<h2 id="plot_trajectoriespy">plot_trajectories.py<a class="headerlink" href="#plot_trajectoriespy" title="Permanent link">#</a></h2>
+<p>Show plots for all trajectories in a given <strong>--fcd-output</strong> file.</p>
+<p>Example use:</p>
+<pre><code>python plot_trajectories.py fcd.xml -t td -o plot.png -s
+</code></pre>
+
+<p>The option <strong>-t (--trajectory-type)</strong> supports different plot styles:</p>
+<ul>
+<li>td: time vs distance</li>
+<li>ts: time vs speed</li>
+<li>ta: time vs acceleration</li>
+<li>ds: distance vs speed</li>
+<li>da: distance vs acceleration</li>
+</ul>
+<p>When option <strong>-s</strong> is set, a interactive plot is opened that allows
+identifying vehicles by clicking on the respective line (vehicle ids is
+printed in the console).</p>
+<p>Option <strong>--filter-route EDGE1,EDGE2,...</strong> allows restricting the plot to all trajectories that contain the
+given set of edges.</p>
+<p><img alt="plot_trajectories.png" src="../images/Plot_trajectories.png" title="plot_trajectories.png" /></p>
+<h2 id="plot_net_dumppy">plot_net_dump.py<a class="headerlink" href="#plot_net_dumppy" title="Permanent link">#</a></h2>
+<p>plot_net_dump.py shows a network, where the network edges' colors and
+width are set in dependence to defined edge attributes. The edge weights
+are read from "edgedumps" - <a href="../Simulation/Output/Lane-_or_Edge-based_Traffic_Measures.html">edgelane
+traffic</a>,
+<a href="../Simulation/Output/Lane-_or_Edge-based_Emissions_Measures.html">edgelane
+emissions</a>,
+or <a href="../Simulation/Output/Lane-_or_Edge-based_Noise_Measures.html">edgelane
+noise</a>.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Plot_net_dump.png" title="plot_net_dump.png" width="500" alt="" /></figure></td>
+<td><p><code>python plot_dump_net.py -v -n bs.net.xml \</code><br />
+<code> --xticks 7000,14001,2000,16 --yticks 9000,16001,1000,16 \</code><br />
+<code> --measures entered,entered --xlabel [m] --ylabel [m] \</code><br />
+<code> --default-width 1 -i base-jr.xml,base-jr.xml \</code><br />
+<code> --xlim 7000,14000 --ylim 9000,16000 -\</code><br />
+<code> --default-width .5 --default-color #606060 \</code><br />
+<code> --min-color-value -1000 --max-color-value 1000 \</code><br />
+<code> --max-width-value 1000 --min-width-value -1000  \</code><br />
+<code> --max-width 3 --min-width .5 \</code><br />
+<code> --colormap #0:#0000c0,.25:#404080,.5:#808080,.75:#804040,1:#c00000</code></p>
+<p>It shows the shift in traffic in the city of Brunswick, Tuesday-Thursday week type after establishing an environmental zone.</p></td>
+</tr>
+<tr class="even">
+<td><figure>
+<img src="../images/Plot_net_dump2.png" title="plot_net_dump2.png" width="500" alt="" /></figure></td>
+<td><p><code>python plot_dump_net.py -v -n bs.net.xml \</code><br />
+<code> --xticks 7000,14001,2000,16 --yticks 9000,16001,1000,16 \</code><br />
+<code> --measures NOx_normed,NOx_normed --xlabel [m] --ylabel [m] \</code><br />
+<code> --default-width 1 -i HBEFA_base-jr.xml,HBEFA_base-jr.xml \</code><br />
+<code> --xlim 7000,14000 --ylim 9000,16000 \</code><br />
+<code> --default-width .5 --default-color #606060 \</code><br />
+<code> --min-color-value -.1 --max-color-value .1 \</code><br />
+<code> --max-width-value .1  --max-width 3 --min-width .5 \</code><br />
+<code> --colormap #0:#00c000,.25:#408040,.5:#808080,.75:#804040,1:#c00000</code></p>
+<p>Showing the according changes in NOx emissions.</p></td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>both, <strong>--dump-inputs</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> as well as <strong>--measures</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a> expect two entries being divided by a ','. The
+  first is used for the edges' color, the second for their widths. But
+  you may simply skip one entry. Then, the default values are used.</li>
+<li>dump-files cover usually more than one interval. To generate an extra output file for each interval, use the string '%s' as part of the output filename (this part will be replaced with the corresponding begin time).</li>
+</ul>
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-n</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--net</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the network to read</td>
+</tr>
+<tr>
+<td><strong>-i</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--dump-inputs</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the dump-output files to use as input</td>
+</tr>
+<tr>
+<td><strong>-m</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a><br><strong>--measures</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Define which measure to plot;default: speed,entered</td>
+</tr>
+<tr>
+<td><strong>-w</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a><br><strong>--default-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the default edge width; default: .1</td>
+</tr>
+<tr>
+<td><strong>-c</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;COLOR&gt;</em></a><br> <strong>--default-color</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;COLOR&gt;</em></a></td>
+<td>If set, the progress is printed on the screen</td>
+</tr>
+<tr>
+<td><strong>--min-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the minimum edge width; default: .5</td>
+</tr>
+<tr>
+<td><strong>--max-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the maximumedge width; default: 3</td>
+</tr>
+<tr>
+<td><strong>--log-colors</strong></td>
+<td>If set, colors are log-scaled</td>
+</tr>
+<tr>
+<td><strong>--log-widths</strong></td>
+<td>If set, widths are log-scaled</td>
+</tr>
+<tr>
+<td><strong>--min-color-value</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>If set, defines the minimum edge color value</td>
+</tr>
+<tr>
+<td><strong>--max-color-value</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>If set, defines the maximum edge color value</td>
+</tr>
+<tr>
+<td><strong>--min-width-value</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>If set, defines the minimum edge width value</td>
+</tr>
+<tr>
+<td><strong>--max-width-value</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>If set, defines the maximum edge width value</td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the progress is printed on the screen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plot_net_selectionpy">plot_net_selection.py<a class="headerlink" href="#plot_net_selectionpy" title="Permanent link">#</a></h2>
+<p>plot_net_selection.py reads a road network and a selection file as
+written by <a href="../sumo-gui.html">sumo-gui</a>. It plots the road network,
+choosing a different color and width for the edges which are within the
+selection (all edge with at least one lane in the selection).</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Plot_net_selection.png" title="plot_net_selection.png" width="500" alt="" /></figure></td>
+<td><p><code>python plot_selection.py -n bs.net.xml \</code><br />
+<code> --xlim 7000,14000 --ylim 9000,16000 \</code><br />
+<code> -i selection_environmental_zone.txt \</code><br />
+<code> --xlabel [m] --ylabel [m] \</code><br />
+<code> --xticks 7000,14001,2000,16 --yticks 9000,16001,1000,16 \</code><br />
+<code> --selected-width 1 --edge-width .5 -o selected_ez.png \</code><br />
+<code> --edge-color #606060 --selected-color #800000 </code></p>
+<p>The example shows the selection of an "environmental zone".</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-n</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--net</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the network to read</td>
+</tr>
+<tr>
+<td><strong>-i</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--selection</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines selection file to read</td>
+</tr>
+<tr>
+<td><strong>--selected-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the width for selected edges;default: 1</td>
+</tr>
+<tr>
+<td><strong>--selected-color</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;COLOR&gt;</em></a></td>
+<td>Defines the color for selected edges; default: r (red)</td>
+</tr>
+<tr>
+<td><strong>--edge-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the default edge width; default: .2</td>
+</tr>
+<tr>
+<td><strong>--edge-color</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;COLOR&gt;</em></a></td>
+<td>Defines the default edge color; default: #606060</td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the progress is printed on the screen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plot_net_speedspy">plot_net_speeds.py<a class="headerlink" href="#plot_net_speedspy" title="Permanent link">#</a></h2>
+<p>plot_net_speeds.py reads a road network and plots it using the allowed
+speeds to color the edges. It is rather an example for using measures
+read from the network file.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Plot_net_speeds.png" title="plot_net_speeds.png" width="500" alt="" /></figure></td>
+<td><p><code>python plot_speeds.py -n bs.net.xml --xlim 1000,25000 \</code><br />
+<code> --ylim 2000,26000 --edge-width .5 -o speeds2.png \</code><br />
+<code> --minV 0 --maxV 60 --xticks 16 --yticks 16 \</code><br />
+<code> --xlabel [m] --ylabel [m] --xlabelsize 16 --ylabelsize 16 \</code><br />
+<code> --colormap jet</code></p>
+<p>The example colors the streets in Brunswick, Germany by their maximum allowed speed.</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-n</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--net</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the network to read</td>
+</tr>
+<tr>
+<td><strong>--edge-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the default edge width; default: .2</td>
+</tr>
+<tr>
+<td><strong>--edge-color</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;COLOR&gt;</em></a></td>
+<td>Defines the default edge color; default: #606060</td>
+</tr>
+<tr>
+<td><strong>--minV</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Define the minimum value boundary</td>
+</tr>
+<tr>
+<td><strong>--maxV</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Define the maximum value boundary</td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the script says what it's doing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plot_net_trafficlightspy">plot_net_trafficLights.py<a class="headerlink" href="#plot_net_trafficlightspy" title="Permanent link">#</a></h2>
+<p>plot_net_trafficLights.py reads a road network and plots it and
+additionally adds dots/markers at the position of traffic lights that
+are part of the net.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Plot_net_trafficLights.png" title="plot_net_trafficLights.png" width="500" alt="" /></figure></td>
+<td><p><code>python plot_trafficLights.py -n bs.net.xml \</code><br />
+<code> --xlim 1000,25000 --ylim 2000,26000 --edge-width .5 \</code><br />
+<code> --xticks 16 --yticks 16 --xlabel [m] --ylabel [m] \ </code><br />
+<code> --xlabelsize 16 --ylabelsize 16 --width 5 \</code><br />
+<code> --edge-color #606060</code></p>
+<p>The example shows the traffic lights in Brunswick.</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-n</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--net</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the network to read</td>
+</tr>
+<tr>
+<td><strong>--edge-width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the default edge width; default: .2</td>
+</tr>
+<tr>
+<td><strong>--edge-color</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;COLOR&gt;</em></a></td>
+<td>Defines the default edge color; default: #606060</td>
+</tr>
+<tr>
+<td><strong>--minV</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Define the minimum value boundary</td>
+</tr>
+<tr>
+<td><strong>--maxV</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Define the maximum value boundary</td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the script says what it's doing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plot_summarypy">plot_summary.py<a class="headerlink" href="#plot_summarypy" title="Permanent link">#</a></h2>
+<p>plot_summary.py reads one or multiple
+<a href="../Simulation/Output/Summary.html">summary-files</a> and plots a
+selected measure (attribute of the read
+<a href="../Simulation/Output/Summary.html">summary-files</a>). The measure is
+visualised as a time line along the simulation time.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Summary_running.png" title="summary_running.png" width="500" alt="" /></figure></td>
+<td><p><code>python plot_summary.py </code><br />
+<code> -i mo.xml,dido.xml,fr.xml,sa.xml,so.xml \</code><br />
+<code> -l Mo,Di-Do,Fr,Sa,So --xlim 0,86400 --ylim 0,10000 </code><br />
+<code> -o sumodocs/summary_running.png --yticks 0,10001,2000,14 \</code><br />
+<code> --xticks 0,86401,14400,14 --xtime1 --ygrid \</code><br />
+<code> --ylabel "running vehicles [#]" --xlabel "time" \</code><br />
+<code> --title "running vehicles over time" --adjust .14,.1 </code></p>
+<p>The example shows the numbers of vehicles running in a large-scale scenario of the city of Brunswick over the day for the standard week day classes. "mo.xml", "dido.xml", "fr.xml", "sa.xml", and "so.xml" are <a href="../Simulation/Output/Summary.html" title="wikilink">summary-files</a> resulting from simulations of the weekday-types Monday, Tuesday-Thursday, Friday, Saturday, and Sunday, respectively.</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-i</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>]*<br><strong>--summary-inputs</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>]*</td>
+<td>Defines the <a href="../Simulation/Output/Summary.html">summary-file</a>(s) to read</td>
+</tr>
+<tr>
+<td><strong>-m</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a><br><strong>--measure</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Defines the measure to read from the summary file; default: <em>running</em></td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the progress is printed on the screen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plot_tripinfo_distributionspy">plot_tripinfo_distributions.py<a class="headerlink" href="#plot_tripinfo_distributionspy" title="Permanent link">#</a></h2>
+<p>plot_tripinfo_distributions.py reads one or multiple
+<a href="../Simulation/Output/TripInfo.html">tripinfo-files</a> and plots a
+selected measure (attribute of the read
+<a href="../Simulation/Output/TripInfo.html">tripinfo-files</a>). The measure is
+visualised as vertical bars that represent the numbers of occurrences of
+the measure (vehicles) that fall into a bin.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Tripinfo_distribution_duration.png" title="tripinfo_distribution_duration.png" width="500" alt="" />
+</figure></td>
+<td><p><code>python plot_tripinfo_distributions.py \</code><br />
+<code> -i mo.xml,dido.xml,fr.xml,sa.xml,so.xml \</code><br />
+<code> -o tripinfo_distribution_duration.png -v -m duration \</code><br />
+<code> --minV 0 --maxV 3600 --bins 10 --xticks 0,3601,360,14 \</code><br />
+<code> --xlabel "duration [s]" --ylabel "number [#]" \</code><br />
+<code> --title "duration distribution" \</code><br />
+<code> --yticks 14 --xlabelsize 14 --ylabelsize 14 --titlesize 16 \</code><br />
+<code> -l mon,tue-thu,fri,sat,sun --adjust .14,.1 --xlim 0,3600</code></p>
+<p>The example shows the travel time distribution for the vehicles of different week day classes (Braunschweig scenario). "mo.xml", "dido.xml", "fr.xml", "sa.xml", and "so.xml" are <a href="../Simulation/Output/TripInfo.html" title="wikilink">tripinfo-files</a> resulting from simulations of the weekday-types Monday, Tuesday-Thursday, Friday, Saturday, and Sunday, respectively.</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-i</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>]*<br><strong>--tripinfos-inputs</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>]*</td>
+<td>Defines the <a href="../Simulation/Output/Summary.html">summary-file</a>(s) to read</td>
+</tr>
+<tr>
+<td><strong>-m</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a><br><strong>--measure</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Defines the measure to read from the summary file</td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the progress is printed on the screen</td>
+</tr>
+<tr>
+<td><strong>--bins</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>The number of bins to devide the values into</td>
+</tr>
+<tr>
+<td><strong>--norm</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines a number by which read values are divided; default: 1.0</td>
+</tr>
+<tr>
+<td><strong>--minV</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The minimum value; if set, read values that are lower than this value are set to this value</td>
+</tr>
+<tr>
+<td><strong>--maxV</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The maximum value; if set, read values that are higher than this value are set to this value</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plot_csv_timelinepy">plot_csv_timeline.py<a class="headerlink" href="#plot_csv_timelinepy" title="Permanent link">#</a></h2>
+<p>plot_csv_timeline.py reads a .csv file and plots columns selected
+using the <strong>--columns</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>]* option. The values are visualised as lines.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Nefz.png" title="nefz.png" width="500" alt="" /></figure></td>
+<td><p><code>plot_csv_timeline.py \</code><br />
+<code> -i nefz.csv -c 1 --no-legend --xlabel "time [s]" \</code><br />
+<code> --ylabel "velocity [km/h]" --xlabelsize 14 --ylabelsize 14 \</code><br />
+<code> --xticks 14 --yticks 14 --colors k --ylim 0,125 \</code><br />
+<code> --output nefz.png \</code><br />
+<code> --title "New European Driving Cycle (NEDC)" --titlesize 16</code></p>
+<p>The example shows the <a href="../Tools/Emissions.html#driving_cycles" title="wikilink">New European Driving Cycle (NEDC)</a>.</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-i</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--input</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the input file to use</td>
+</tr>
+<tr>
+<td><strong>-c</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>]*<br><strong>--columns</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>[,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>]*</td>
+<td>Defines which columns shall be plotted</td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the progress is printed on the screen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plot_csv_piepy">plot_csv_pie.py<a class="headerlink" href="#plot_csv_piepy" title="Permanent link">#</a></h2>
+<p>plot_csv_pie.py reads a .csv file that is assumed to contain a name in
+the first and an according value in the second column. The read
+name/value-pairs are visualised as a pie chart.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Paradigm.png" title="paradigm.png" width="500" alt="" />
+</figure></td>
+<td><p><code>plot_csv_pie.py \</code><br />
+<code> -i paradigm.csv -b --colormap Accent --no-legend -s 6,6 </code></p><br><br><b>Note:</b> Please note that you should set the width and the height to the same value using the <b>--size</b> &lt;FLOAT&gt;,&lt;FLOAT&gt; option, see <a href="#common_options">#common options</a>. Otherwise you'll get an oval.</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-i</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--input</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the input file to read</td>
+</tr>
+<tr>
+<td><strong>-p</strong><br><strong>--percentage</strong></td>
+<td>Interprets read measures as percentages</td>
+</tr>
+<tr>
+<td><strong>-r</strong><br><strong>--revert</strong></td>
+<td>Reverts the order of read values before plotting them</td>
+</tr>
+<tr>
+<td><strong>--no-labels</strong></td>
+<td>Does not plot the labels</td>
+</tr>
+<tr>
+<td><strong>--shadow</strong></td>
+<td>Puts a shadow below the circle</td>
+</tr>
+<tr>
+<td><strong>--startangle</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Sets the start angle</td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the progress is printed on the screen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plot_csv_barspy">plot_csv_bars.py<a class="headerlink" href="#plot_csv_barspy" title="Permanent link">#</a></h2>
+<p>plot_csv_bars.py reads a .csv file that is assumed to contain a name
+in the first and an according value in the second column. The read
+name/value-pairs are visualised as a bar chart.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><figure>
+<img src="../images/Nox_effects_bars.png" title="nox_effects_bars.png" width="500" alt="" />
+</figure></td>
+<td><p><code>plot_csv_bars.py \</code><br />
+<code> -i nox_effects.txt --colormap RdYlGn --no-legend --width .4 \</code><br />
+<code> -s 8,4 --revert --xlim 0,50 --xticks 0,51,10,16 --yticks 16 \</code><br />
+<code> --adjust .28,.1,.95,.9 --show-values </code></p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-i</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--input</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the csv file to use as input</td>
+</tr>
+<tr>
+<td><strong>-x</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a><br><strong>--column</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></td>
+<td>Defines which column of the read .csv-file shall be plotted; default: 1</td>
+</tr>
+<tr>
+<td><strong>-r</strong><br><strong>--revert</strong></td>
+<td>Reverts the order of read values before plotting them</td>
+</tr>
+<tr>
+<td><strong>-w</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a><br><strong>--width</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the width of the bars; default: .8</td>
+</tr>
+<tr>
+<td><strong>--space</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the space between the bars; default: .2</td>
+</tr>
+<tr>
+<td><strong>--norm</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines a number by which read values are divided; default: 1.0</td>
+</tr>
+<tr>
+<td><strong>--show-values</strong></td>
+<td>Shows the values</td>
+</tr>
+<tr>
+<td><strong>--values-offset</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Position offset for values</td>
+</tr>
+<tr>
+<td><strong>--vertical</strong></td>
+<td>Draws vertical bars (default are horizontal bars)</td>
+</tr>
+<tr>
+<td><strong>--no-labels</strong></td>
+<td>Does not plot the labels</td>
+</tr>
+<tr>
+<td><strong>-v</strong><br><strong>--verbose</strong></td>
+<td>If set, the progress is printed on the screen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common_options">common options<a class="headerlink" href="#common_options" title="Permanent link">#</a></h2>
+<p>The following options are common to all previously listed tools. They
+can be divided into two groups:</p>
+<ul>
+<li>options for formatting the figure (including adding captions etc.)</li>
+<li>options for determining what to do with the generated figure</li>
+</ul>
+<p>The options are listed and discussed in the following sub-sections,
+respectively.</p>
+<h3 id="formatting_options">Formatting Options<a class="headerlink" href="#formatting_options" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--colors</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;COLOR&gt;</em></a></td>
+<td>Uses the given colors; the number of given colors must be the same as the number of measures to plot</td>
+</tr>
+<tr>
+<td><strong>--colormap</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Uses the named colormap</td>
+</tr>
+<tr>
+<td><strong>--labels</strong> <code>&lt;LABELS&gt;</code><br><strong>-l</strong> <code>&lt;LABELS&gt;</code></td>
+<td>Uses the given labels; the number of given labels must be the same as the number of measures to plot</td>
+</tr>
+<tr>
+<td><strong>--xlim</strong> <code>&lt;XMIN&gt;</code>,<code>&lt;XMAX&gt;</code></td>
+<td>Describes the limits of the figure along the x-axis</td>
+</tr>
+<tr>
+<td><strong>--ylim</strong> <code>&lt;YMIN&gt;</code>,<code>&lt;YMAX&gt;</code></td>
+<td>Describes the limits of the figure along the y-axis</td>
+</tr>
+<tr>
+<td><strong>--xticks</strong> <code>&lt;XMIN&gt;</code>,<code>&lt;XMAX&gt;</code>,<code>&lt;XSTEP&gt;</code>,<code>&lt;XSIZE&gt;</code><br><strong>--yticks</strong> <code>&lt;XSIZE&gt;</code></td>
+<td>If only one number is given, it is interpreted as the size of the tick labels on the x-axis; if four numbers are given, they are interpreted as the lowest ticks position, the highest ticks position, the step between ticks, and the tick's size, respectively, all along the x-axis</td>
+</tr>
+<tr>
+<td><strong>--yticks</strong> <code>&lt;XMIN&gt;</code>,<code>&lt;XMAX&gt;</code>,<code>&lt;XSTEP&gt;</code>,<code>&lt;XSIZE&gt;</code> <br><strong>--yticks</strong> <code>&lt;XSIZE&gt;</code></td>
+<td>If only one number is given, it is interpreted as the size of the tick labels on the y-axis; if four numbers are given, they are interpreted as the lowest ticks position, the highest ticks position, the step between ticks, and the tick's size, respectively, all along the y-axis</td>
+</tr>
+<tr>
+<td><strong>--xtime1</strong></td>
+<td>If set, the tick labels along the x-axis are formatted as time entries (hh:mm)</td>
+</tr>
+<tr>
+<td><strong>--ytime1</strong></td>
+<td>If set, the tick labels along the y-axis are formatted as time entries (hh:mm)</td>
+</tr>
+<tr>
+<td><strong>--xtime2</strong></td>
+<td>If set, the tick labels along the x-axis are formatted as time entries (hh:mm:ss)</td>
+</tr>
+<tr>
+<td><strong>--ytime2</strong></td>
+<td>If set, the tick labels along the y-axis are formatted as time entries (hh:mm:ss)</td>
+</tr>
+<tr>
+<td><strong>--xgrid</strong></td>
+<td>If set, a grid along the ticks on the x-axis is drawn</td>
+</tr>
+<tr>
+<td><strong>--ygrid</strong></td>
+<td>If set, a grid along the ticks on the y-axis is drawn</td>
+</tr>
+<tr>
+<td><strong>--xticksorientation</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The orientation of the x-ticks (in °); default: matplotlib default</td>
+</tr>
+<tr>
+<td><strong>--yticksorientation</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>The orientation of the y-ticks (in °); default: matplotlib default</td>
+</tr>
+<tr>
+<td><strong>--xlabel</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Defines the label to set for the x-axis</td>
+</tr>
+<tr>
+<td><strong>--ylabel</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Defines the label to set for the y-axis</td>
+</tr>
+<tr>
+<td><strong>--xlabelsize</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the size of the label of the x-axis</td>
+</tr>
+<tr>
+<td><strong>--ylabelsize</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the size of the label of the y-axis</td>
+</tr>
+<tr>
+<td><strong>--title</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Defines the title of the figure</td>
+</tr>
+<tr>
+<td><strong>--titlesize</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the size of the title</td>
+</tr>
+<tr>
+<td><strong>--adjust</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a><br><strong>--adjust</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Adjust the plot; If two floats are given, they are interpreted as left and bottom values, if four numbers are given, they are interpreted as left, bottom, right, top</td>
+</tr>
+<tr>
+<td><strong>--size</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a></td>
+<td>Defines the size of figure</td>
+</tr>
+<tr>
+<td><strong>--no-legend</strong></td>
+<td>If set, no legend is drawn</td>
+</tr>
+<tr>
+<td><strong>--legend-position</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Defines the position of the legend; default: matplolib default</td>
+</tr>
+</tbody>
+</table>
+<h3 id="interaction_options">Interaction Options<a class="headerlink" href="#interaction_options" title="Permanent link">#</a></h3>
+<p>If one of the scripts is simply started with no options that are listed
+below, the figure will be shown. To write the figure additionally into a
+file, the filename to generate must be given using the <strong>--output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> (or <strong>-o</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> for short).</p>
+<p>If the script is run in a batch file, it is often not convenient to show
+the figure (once known it is as it should be). In such cases, the option
+<strong>--blind</strong> (<strong>-b</strong>) can be used that suppresses showing the figure.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-o</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a><br><strong>--output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Defines the name under which the figure shall be saved</td>
+</tr>
+<tr>
+<td><strong>-b</strong><br><strong>--blind</strong></td>
+<td>If set, the figure will not be shown</td>
+</tr>
+</tbody>
+</table>
+<h1 id="further_visualization_methods">Further Visualization Methods<a class="headerlink" href="#further_visualization_methods" title="Permanent link">#</a></h1>
+<h2 id="coloring_edges_in_sumo-gui_according_to_arbitrary_data">Coloring edges in <a href="../sumo-gui.html">sumo-gui</a> according to arbitrary data<a class="headerlink" href="#coloring_edges_in_sumo-gui_according_to_arbitrary_data" title="Permanent link">#</a></h2>
+<p><a href="../sumo-gui.html">sumo-gui</a> can load weight files and show their
+values when setting edge coloring mode to <em>by loaded weight</em>. When
+stepping through the simulation, different time intervals contained in
+the weight file can be shown.</p>
+<pre><code>sumo-gui -n NET --weight-files FILE --weight-attribute ATTR -e 86400
+</code></pre>
+
+<p>Suitable weight files are those produced by
+<a href="../Simulation/Output/Lane-_or_Edge-based_Traffic_Measures.html">edgeData-output</a>.
+To show the number of departed vehicles for each edge, the option <strong>--weight-attribute departed</strong> would
+be used.</p>
+<p>The weight files generated by <a href="Trip.html#customized_weights">randomTrips option <strong>--weights-output-prefix</strong></a> can also be used (to visualize depart/arrival probabilties). </p>
+<h2 id="intersection_flow_diagram">Intersection Flow Diagram<a class="headerlink" href="#intersection_flow_diagram" title="Permanent link">#</a></h2>
+<p>To visualize the flow on an intersection with line widths according to the amount of traffic, the tool <a href="Routes.html#route2polypy">route2poly.py</a> can be used.</p>
+<ol>
+<li>Use <a href="../netedit.html">netedit</a> to select all edges at one or more intersection for which the flow shall be visualized and save the selection to a file (e.g. <em>sel.txt</em>)</li>
+<li>
+<p>generate polygons with widths according to the number of vehicles passing the selected edges. When setting <strong>--scale-width to 0.01</strong>, 100 vehicles using the same edge sequence will correspond to a polygon width of 1m. The option <strong>--spread</strong> is used to prevent overlapping of the generated polygons and should be adapted according the the polygon width.</p>
+<pre><code>  route2poly.py NET routes.rou.xml -o flows.poly.xml --filter-output.file sel.txt --scale-width 0.01 --internal --spread 1 --hue cycle
+</code></pre>
+</li>
+<li>
+<p>visualize the flows in <a href="../sumo-gui.html">sumo-gui</a></p>
+<pre><code>  sumo-gui -n NET -a flows.poly.xml
+</code></pre>
+</li>
+</ol>
+<p><img alt="" src="../images/Route2poly_intersectionFlow.png" /></p>
+<h1 id="outdated">Outdated<a class="headerlink" href="#outdated" title="Permanent link">#</a></h1>
+<p>The tools are meant to be named as following: &lt;API>__&lt;DESCRIPTION>.py, where:</p>
+<ul>
+<li><em>&lt;API></em>: mpl for matplotlib</li>
+<li>: the SUMO-output that is processed (mainly)</li>
+<li><em>&lt;DESCRIPTION></em>: what the tool does</li>
+</ul>
+<h2 id="mpl_dump_twoagainstpy">mpl_dump_twoAgainst.py<a class="headerlink" href="#mpl_dump_twoagainstpy" title="Permanent link">#</a></h2>
+<p>Reads two dump files (mandatory options <strong>--dump1</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and <strong>--dump2</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>, or, for short <strong>-1</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and <strong>-2</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>). Extracts the value described by <strong>--value</strong> (default: <em>speed</em>). Plots the values of dump2 over the according (same interval time and edge) values from dump1.</p>
+<p>Either shows the plot (when <strong>--show</strong> is set) or saves it into a file (when <strong>--output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> is set).</p>
+<p>You can additionally plot the normed sums of the value using (<strong>--join</strong>). In the other case, you can try to use <strong>--time-coloring</strong> to assign different colors to the read intervals.</p>
+<p>You can format the axes by using <strong>--xticks</strong> <strong>&lt;XMIN,XMAX,XSTEP,FONTSIZE></strong> and <strong>--yticks</strong> <strong>&lt;YMIN,YMAX,YSTEP,FONTSIZE></strong> and set theit limits using <strong>--xlim</strong> <strong>&lt;XMIN,XMAX></strong> and <strong>--ylim</strong> <strong>&lt;YMIN,YMAX></strong>. The output size of the image may be set using <strong>--size</strong> <strong>&lt;WIDTH,HEIGHT></strong>. </p>
+<h2 id="mpl_tripinfos_twoagainstpy">mpl_tripinfos_twoAgainst.py<a class="headerlink" href="#mpl_tripinfos_twoagainstpy" title="Permanent link">#</a></h2>
+<p>Reads two tripinfos files (mandatory options <strong>--tripinfos1</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and <strong>--tripinfos2</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>, or, for short <strong>-1</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and <strong>-2</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>). Extracts the value described by <strong>--value</strong> (default: <em>duration</em>). Plots the values of tripinfos2 over the according (same vehicle) values from tripinfos1.</p>
+<p>Either shows the plot (when <strong>--show</strong> is set) or saves it into a file (when <strong>--output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> is set).</p>
+<p>You can format the axes by using <strong>--xticks</strong> <strong>&lt;XMIN,XMAX,XSTEP,FONTSIZE></strong> and <strong>--yticks</strong> <strong>&lt;YMIN,YMAX,YSTEP,FONTSIZE></strong> and set theit limits using <strong>--xlim</strong> <strong>&lt;XMIN,XMAX></strong> and <strong>--ylim</strong> <strong>&lt;YMIN,YMAX></strong>. The output size of the image may be set using <strong>--size</strong> <strong>&lt;WIDTH,HEIGHT></strong>. </p>
+<h2 id="mpl_dump_timelinepy">mpl_dump_timeline.py<a class="headerlink" href="#mpl_dump_timelinepy" title="Permanent link">#</a></h2>
+<p>Reads a value (given as <strong>--value</strong> <strong>&lt;VALUE></strong>, default speed) for edges defined via <strong>--edges</strong> <strong>&lt;EDGEID>[,&lt;EDGEID>]*</strong> from the dumps defined via <strong>--dumps</strong> <strong>&lt;DUMP>[,&lt;DUMP>]*</strong>. Plots them as time lines, using the colors defined via <strong>--colors</strong> <strong>&lt;MPL_COLOR>[,&lt;MPLCOLOR>]*</strong>. Please note that the number of colors must be equal to number of edges * number of dumps.</p>
+<p>Either shows the plot (when <strong>--show</strong> is set) or saves it into a file (when <strong>--output</strong> <strong>&lt;FILENAME></strong> is set).</p>
+<p>You can format the axes by using <strong>--xticks</strong> <strong>&lt;XMIN,XMAX,XSTEP,FONTSIZE></strong> and <strong>--yticks</strong> <strong>&lt;YMIN,YMAX,YSTEP,FONTSIZE></strong> and set theit limits using <strong>--xlim</strong> <strong>&lt;XMIN,XMAX></strong> and <strong>--ylim</strong> <strong>&lt;YMIN,YMAX></strong>. The output size of the image may be set using <strong>--size</strong> <strong>&lt;WIDTH,HEIGHT></strong>. </p>
+<h2 id="mpl_dump_onnetpy">mpl_dump_onNet.py<a class="headerlink" href="#mpl_dump_onnetpy" title="Permanent link">#</a></h2>
+<p>Reads a network (defined using <strong>--net-file</strong> <strong>&lt;NET></strong> or <strong>-n</strong> <strong>&lt;NET></strong>) and an edge-dump file (<strong>--dump</strong> <strong>&lt;DUMPFILE></strong> or <strong>-d</strong> <strong>&lt;DUMP_FILE></strong>). <strong>Plots the network using the geometries read from &lt;NET>. Both the width and the colors used for each edge are determined using --value &lt;WIDTHVALUE>,&lt;COLORVALUE> where both &lt;WIDTHVALUE> and &lt;COLORVALUE> are attributes within the dump-file that exist for each edge.</strong></p>
+<p>You can change the used color map by setting <strong>--color-map</strong> <strong>&lt;DEFINITION></strong>. &lt;DEFINITION> is made of a sorted list of values (between 0 and 1) and assigned colors. This means that the default 0:#ff0000,.5:#ffff00,1:#00ff00 let streets with low value for &lt;COLORVALUE> appear red, for those in the middle yellow and for those with a high value green. For values between the given values, the color is determined using linear interpolation. Please note that only lowercase hexadecimal characters may be used.</p>
+<p>Either shows the plot (when <strong>--show</strong> is set) or saves it into a file (when <strong>--output</strong> <strong>&lt;FILENAME></strong> is set).</p>
+<p><strong>--join</strong> sums up the values found for each edge and divides the result by the number of these values. If join is not set and <strong>--output</strong> is given, one should choose an output name which looks as following: &lt;NAME><strong>'%05d.png. The %05d will be replaced by the current time step written.</strong></p>
+<p>If you have generated a set of images by not "joining" (aggregating) the data, you can convert the obtained pictures into an animated gif using ImageMagick and the following command:</p>
+<pre><code>convert -delay 20 *.png -loop 0 animation.gif
+</code></pre>
+
+<p>(loop 0 means that the animation repeats from begin after the end)</p>
+<p>You can format the axes by using <strong>--xticks</strong> <strong>&lt;XMIN,XMAX,XSTEP,FONTSIZE></strong> and <strong>--yticks</strong> <strong>&lt;YMIN,YMAX,YSTEP,FONTSIZE></strong> and set theit limits using <strong>--xlim</strong> <strong>&lt;XMIN,XMAX></strong> and <strong>--ylim</strong> <strong>&lt;YMIN,YMAX></strong>. The output size of the image may be set using <strong>--size</strong> <strong>&lt;WIDTH,HEIGHT></strong>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

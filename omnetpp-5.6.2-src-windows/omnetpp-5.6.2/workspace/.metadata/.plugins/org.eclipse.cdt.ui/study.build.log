@@ -1,0 +1,6 @@
+21:29:38 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+
+21:29:38 Build Finished. 0 errors, 0 warnings. (took 330ms)
+

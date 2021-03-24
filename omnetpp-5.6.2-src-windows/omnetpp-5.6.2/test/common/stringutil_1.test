@@ -1,0 +1,34 @@
+%description:
+Tests stringutil.h functions
+
+%includes:
+#include <common/stringutil.h>
+
+%global:
+using namespace omnetpp::common;
+
+%activity:
+#define P(x) EV << #x << " = " << opp_quotestr(x) << endl;
+
+P(opp_trim(""));
+P(opp_trim(" "));
+P(opp_trim("x "));
+P(opp_trim(" x"));
+P(opp_trim("hello"));
+P(opp_trim(" hello "));
+P(opp_trim("   hello   "));
+
+EV << ".\n";
+
+%exitcode: 0
+
+%contains: stdout
+opp_trim("") = ""
+opp_trim(" ") = ""
+opp_trim("x ") = "x"
+opp_trim(" x") = "x"
+opp_trim("hello") = "hello"
+opp_trim(" hello ") = "hello"
+opp_trim("   hello   ") = "hello"
+.
+

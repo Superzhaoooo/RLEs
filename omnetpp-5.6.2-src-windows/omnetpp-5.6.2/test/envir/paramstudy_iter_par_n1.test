@@ -1,0 +1,14 @@
+%description:
+Tests scenario generation: parallel iterations: not enough values
+
+%inifile: omnetpp.ini
+[Config Test]
+**.a = ${i=1..4}
+**.b = ${100,200 ! i}
+
+%extraargs: -c Test -q runs
+
+%exitcode: 1
+
+%contains: stderr
+Could not compute number of runs in config Test: Parallel iterator ${...!i} does not have enough values

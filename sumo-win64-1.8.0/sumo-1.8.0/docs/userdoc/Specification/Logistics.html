@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Specification/Logistics.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Specification/Logistics - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Specification/Logistics.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#container_stops">Container stops</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Specification/Logistics<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>The concept of logistics is mostly realised by
+<a href="Containers.html">containers</a> and <a href="Logistics.html#container_stops">container
+stops</a>.</p>
+<h1 id="container_stops">Container stops<a class="headerlink" href="#container_stops" title="Permanent link">#</a></h1>
+<p>Container stops can be used to simulate transhipment stations, harbours
+and other places for transhipping and storing containers/goods.
+Similarly to the concept of <a href="../Simulation/Public_Transport.html">bus
+stops</a>, container stops are
+<a href="../Specification.html#stops">stops</a> at which containers can be
+loaded onto or unloaded from a vehicle. Vehicles use the same advanced
+approaching behavior at container stops as at bus stops. Definitions of
+container stop locations in SUMO have the following format:</p>
+<pre><code class="xml">&lt;additional&gt;
+    &lt;containerStop id=&quot;&lt;CONTAINER_STOP_ID&gt;&quot; lane=&quot;&lt;LANE_ID&gt;&quot; startPos=&quot;&lt;STARTING_POSITION&gt;&quot; endPos=&quot;&lt;ENDING_POSITION&gt;&quot; [line=&quot;&lt;LINE_ID&gt;[ &lt;LINE_ID&gt;]*&quot;]/&gt;
+    ...
+&lt;/additional&gt;
+</code></pre>
+
+<p>That means that a container stop is an area
+on a lane. The parameters have the following meanings:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Value Range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>id</td>
+<td></td>
+<td>The name of the container stop; must be unique</td>
+</tr>
+<tr>
+<td><strong>lane</strong></td>
+<td>string</td>
+<td>valid lane id</td>
+<td></td>
+<td>The name of the lane the container stop shall be located at</td>
+</tr>
+<tr>
+<td><strong>startPos</strong></td>
+<td>float</td>
+<td>-lane.length &lt; x &lt; lane.length (negative values count backwards from the end of the lane)</td>
+<td>0</td>
+<td>The begin position on the lane (the lower position on the lane) in meters</td>
+</tr>
+<tr>
+<td>endPos</td>
+<td>float</td>
+<td>-lane.length &lt; x &lt; lane.length (negative values count backwards from the end of the lane)</td>
+<td>lane.length</td>
+<td>The end position on the lane (the higher position on the lane) in meters, must be larger than <em>startPos</em> by more than 0.1m</td>
+</tr>
+<tr>
+<td>friendlyPos</td>
+<td>bool</td>
+<td><em>true,false</em></td>
+<td><em>false</em></td>
+<td>whether invalid stop positions should be corrected automatically (default <em>false</em>)</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>simple String</td>
+<td></td>
+<td>Container stop name. This is only used for visualization purposes.</td>
+</tr>
+<tr>
+<td>lines</td>
+<td>string list</td>
+<td>A list of names separated by spaces (' ')</td>
+<td></td>
+<td>meant to be the names of the logistic lines that stop at this container stop. This is only used for visualization purposes.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Please note that container stops must be added to a config via the <em>--additional-files</em> parameter</p>
+</div>
+<p>Vehicles must be informed that they must stop at a container stop. The
+following example shows how this should be done:</p>
+<pre><code class="xml">&lt;vtype id=&quot;truck&quot; accel=&quot;2.6&quot; decel=&quot;4.5&quot; sigma=&quot;0.5&quot; length=&quot;15&quot; maxspeed=&quot;70&quot; color=&quot;1,1,0&quot;/&gt;
+&lt;vehicle id=&quot;0&quot; type=&quot;truck&quot; depart=&quot;0&quot; color=&quot;1,1,0&quot;&gt;
+    &lt;route edges=&quot;2/0to2/1 2/1to1/1 1/1to1/2 1/2to0/2 0/2to0/1 0/1to0/0 0/0to1/0 1/0to2/0 2/0to2/1&quot;/&gt;
+    &lt;stop containerStop=&quot;containerStop1&quot; duration=&quot;20&quot;/&gt;
+    &lt;stop containerStop=&quot;containerStop2&quot; duration=&quot;20&quot;/&gt;
+    &lt;stop containerStop=&quot;containerStop3&quot; duration=&quot;20&quot;/&gt;
+    &lt;stop containerStop=&quot;containerStop4&quot; duration=&quot;20&quot;/&gt;
+&lt;/vehicle&gt;
+</code></pre>
+
+<p>What is defined here is a vehicle named "0" being a "truck". "truck" is
+a referenced type declared earlier. The vehicle has an embedded route
+(written by hand in this case) and a list of stop places. Each stop
+place is described by two attributes, "containerStop" and "duration"
+where "containerStop" is the name of the container stop the vehicle
+shall halt at and "duration" is the time the vehicle shall wait at the
+container stop in seconds. Please note that the order of container stops
+the vehicle shall halt at must be correct.</p>
+<p>You may also let a vehicle stop at another position than a container
+stop. The short definition of a vehicle's stop is:</p>
+<pre><code class="xml">&lt;stop [containerStop=&quot;&lt;CONTAINER_STOP_ID&gt;&quot; | ( lane=&quot;&lt;LANE_ID&gt;&quot; endPos=&quot;&lt;POSITION_AT_LANE&gt;&quot; )] duration=&quot;&lt;HALTING_DURATION&gt;&quot;/&gt;
+</code></pre>
+
+<p>This means you can either use a
+container stop or a lane position to define where a vehicle has to stop.
+For a complete list of attributes for the "stop"-element of a vehicle
+see <a href="../Specification.html#stops">Specification#Stops</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 06 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

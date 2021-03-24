@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/Implementation_Notes/Vehicle_Models.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Developer/Implementation Notes/Vehicle Models - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/Implementation_Notes/Vehicle_Models.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#implementing_new_car-following_models">Implementing new Car-Following Models</a></li>
+            <li class="nav-item main"><a href="#defining_vehicle_types">Defining Vehicle Types</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#possible_descriptions" class="nav-link">• Possible Descriptions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#currently_chosen_description" class="nav-link">• (currently) Chosen Description</a>
+                </li>
+            <li class="nav-item main"><a href="#car-following_model_interface">Car-following Model Interface</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#loading_and_parsing_vehicle_types" class="nav-link">• Loading and Parsing Vehicle Types</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/Implementation Notes/Vehicle Models<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Please note that this is a working document... No user documentation!</p>
+</div>
+<h1 id="implementing_new_car-following_models">Implementing new Car-Following Models<a class="headerlink" href="#implementing_new_car-following_models" title="Permanent link">#</a></h1>
+<p>A car-following model in SUMO is an implementation of the abstract class
+MSCFModel (microsim/cfmodels/MSCFModel.h).</p>
+<p>The following steps must be taken to add a new model:</p>
+<ol>
+<li>define a new model name in utils/common/SUMOXMLDefinitions.h and
+    .cpp</li>
+<li>define model parameters in
+    utild/xml/SUMOVehicleParserHelper::getAllowedCFModelAttrs() (define
+    new attributes in SUMOXMLDefinitions if necessary)</li>
+<li>add a new class to microsim/cfmodels (i.e. by copying one of the
+    existing classes there)</li>
+<li>add this class to the build files (i.e.
+    microsim/cfmodels/Makefile.am when building on Linux)</li>
+<li>add code that selects the new class based on the new name in
+    microsim/MSVehicleType::build()</li>
+</ol>
+<p>If your model needs persistent state you need to derive a class to hold
+it from MSCFModel::VehicleVariables. See
+microsim/cfmodels/MSCFModel_IDM as an example.</p>
+<h1 id="defining_vehicle_types">Defining Vehicle Types<a class="headerlink" href="#defining_vehicle_types" title="Permanent link">#</a></h1>
+<p>Before starting to hack, we should decide how vehicle type shall be
+represented. Some facts and needs (unsorted):</p>
+<ul>
+<li><font color="green">ok</font> Both the simulation and the routing
+  modules must be able to parse vehicle type definitions</li>
+<li>It would be nice to allow a validation against XML Schemata</li>
+<li>At least two sub-types must be able to be defined: car-following
+  model and lane-changing model (maybe the lane-changing model even
+  splits into a navigational and a tactical part)</li>
+<li><font color="green">ok</font> Parameter should have default values</li>
+<li><font color="green">ok</font> a default vehicle type must exist</li>
+<li>Models differ in parameter sets</li>
+</ul>
+<h2 id="possible_descriptions">Possible Descriptions<a class="headerlink" href="#possible_descriptions" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr class="header">
+<th><p>Index</p></th>
+<th><p>Sample</p></th>
+<th><p>pros/cons</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>A</p></td>
+<td><p>&lt;vtype cfModel="xxx" xxxParam1="..." xxxParam2="..." ...</p></td>
+<td><ul>
+<li>(-) hard to verify - parameter change in dependence to the value of "cfModel"</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><p>B</p></td>
+<td><p>&lt;vtype-XXX xxxParam1="..." xxxParam2="..." ...</p></td>
+<td><ul>
+<li>(-) large number of different elements needed</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><p>C</p></td>
+<td><p>&lt;cfmodel id="#id" model="xxx" param1="..." param2="..." .../&gt;<br>
+    &lt;vtype cfModelId="#id" .../&gt;</p></td>
+<td><ul>
+<li>(+) straight forward; many combinations possible</li>
+<li>(+) is similar to how every vehicle references its vtype</li>
+<li>(-) hard to verify - parameter change in dependence to the value of "cfModel"</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><p>D</p></td>
+<td><p>&lt;vtype cfModel="xxx" param1="..." param2="..." ...&gt;</p></td>
+<td><ul>
+<li>(--) parameter sets differ between models</li>
+<li>(-) hard to verify - parameter change in dependence to the value of "cfModel"</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><p>E</p></td>
+<td><p>&lt;vtype ...&gt;<br>&lt;cfmodel model="xxx" param1="..." param2="..." .../&gt;</vtype></p></td>
+<td><ul>
+<li>(+) straight forward</li>
+<li>(-) hard to verify - parameter change in dependence to the value of "cfModel"</li>
+<li><strong>1 vote (Mayer)</strong></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><p>F</p></td>
+<td><p>&lt;vtype ...&gt;<br>&lt;cfmodel-XXX model="xxx" param1="..." param2="..." .../&gt;</vtype></p></td>
+<td><ul>
+<li>(+) straight forward</li>
+<li>(-) large number of different elements needed</li>
+<li><strong>2 votes (Behrisch, Krajzewicz)</strong></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="currently_chosen_description">(currently) Chosen Description<a class="headerlink" href="#currently_chosen_description" title="Permanent link">#</a></h2>
+<p>After some talks, the following description of vehicle types was chosen:</p>
+<pre><code class="xml">&lt;vtype id=&quot;...&quot; ...&gt;
+    &lt;carFollowing-Krauss ... &gt;
+    &lt;laneChanging-DK2002 ... &gt;
+&lt;/vtype&gt;
+</code></pre>
+
+<p><code>vtype</code> will contain parameters which can
+neither be counted to the lane-changing nor the car-following model,
+such as the vehicle type's color, the width of the vehicle etc. which
+are (currently) used for visualisation only. Also, the vehicle's length
+and other parameter which are not only used by one of the models are
+stored herein.</p>
+<p>The embedded <code>carFollowing-Krauss</code>-Element in
+this example describes the car-following model (Krauss in this case),
+the <code>laneChanging-DK2002</code> the lane-changing
+model (Daniel Krajzewicz's from 2002 :-) ), each with their own
+parameter.</p>
+<p>The known <code>vtype</code>-definition is wanted to be
+kept. In this case, the Krauss-model stays chosen per default.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Probably, it will not be possible to validate this against a schema.</p>
+</div>
+<h1 id="car-following_model_interface">Car-following Model Interface<a class="headerlink" href="#car-following_model_interface" title="Permanent link">#</a></h1>
+<p>Currently, it is assumed that the following methods should be
+re-implemented for each model; the "generic" column should identify
+those which may be same across models:</p>
+<table>
+<thead>
+<tr>
+<th>method</th>
+<th>generic?</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ffeV</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>ffeS</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>maxNextSpeed</td>
+<td>no</td>
+<td>internal SUMO-tweak</td>
+</tr>
+<tr>
+<td>brakeGap</td>
+<td>maybe</td>
+<td>should depend on maximum deceleration (a rather common value) and physics, only</td>
+</tr>
+<tr>
+<td>approachingBrakeGap</td>
+<td>maybe</td>
+<td>almost same as brakeGap, only not incorporating the driver's reaction time</td>
+</tr>
+<tr>
+<td>interactionGap</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>hasSafeGap</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>safeEmitGap</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>dawdle</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>decelAbility</td>
+<td>rather no</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="loading_and_parsing_vehicle_types">Loading and Parsing Vehicle Types<a class="headerlink" href="#loading_and_parsing_vehicle_types" title="Permanent link">#</a></h2>
+<p>As already implemented for vehicles, a new intermediate structure
+<strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/utils/common/SUMOVTypeParameter which contains vehicle type
+descriptions was added. When reading XML-definitions, both routers and
+the simulation use the additionally implemented helper methods located
+in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/utils/xml/SUMOVehicleParserHelper for filling this structure.</p>
+<p>SUMOVTypeParameter has member variables for those vehicle type
+parameters which are assumed to be neither part of the car-following
+model nor part of the lane-change model: <em>id</em>, <em>length</em>, <em>maxSpeed</em>,
+<em>defaultProbability</em>, <em>speedFactor</em>, <em>speedDev</em>, <em>emissionClass</em>,
+<em>color</em>, <em>vehicleClass</em>, <em>width</em>, <em>offset</em>, <em>shape</em>. These values are
+initialised with defaults. When reading values, SUMOVehicleParserHelper
+stores the information about which value was set from the XML
+description in <em>SUMOVTypeParameter::setParameter</em>. This allows to save
+(pass) only set values when writing the definitions back to a file -
+routers need this.</p>
+<p>Parameters of the car-following model are saved into a map,
+<em>SUMOVTypeParameter::cfParameter</em>, the model's name to
+<em>SUMOVTypeParameter::cfModel</em>. Note that lane-changing model parameter
+handling is not implemented. The map contains only those parameter of
+the model which were given in the read XML file; no defaults are
+inserted at this time. In order to allow processing of old
+vtype-definitions, parameter stored directly within the vtype-element
+for the Krauss car-following model are stored within this map, too.</p>
+<p>The routers consume the SUMOVTypeParameter class directly - making
+ROVehicleType unnecessary. The simulation uses the new method
+MSVehicleType::build for building the described MSVehicleType/MSCFModel
+combination. Missing defaults are set within this method for obtaining
+complete vehicle type/model descriptions.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 17 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

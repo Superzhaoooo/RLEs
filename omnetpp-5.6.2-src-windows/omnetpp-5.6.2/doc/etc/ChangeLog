@@ -1,0 +1,111 @@
+2020-01-06  ------ omnetpp-5.6 released ------
+
+2019-05-15  ------ omnetpp-5.5 released ------
+
+2018-06-25  ------ omnetpp-5.4.1 released ------
+
+2018-06-11  ------ omnetpp-5.4 released ------
+
+2018-04-11  ------ omnetpp-5.3 released ------
+
+2017-12-08  ------ omnetpp-5.2.1 released ------
+
+2017-09-18  ------ omnetpp-5.2 released ------
+
+2017-05-08  ------ omnetpp-5.1.1 released ------
+
+2017-03-31  ------ omnetpp-5.1 released ------
+
+2017-02-06  ------ omnetpp-5.1pre3 released ------
+
+2016-12-23  ------ omnetpp-5.1pre2 released ------
+
+2016-07-12  Andras Varga
+
+	* ned2.dtd: "name" attribute of "class", "struct", "message", "packet",
+	and "enum" elements changed from NMTOKEN to CDATA, to allow generating
+	descriptors for existing inner classes.
+
+2016-04-20  Andras Varga
+
+	* ned2/ and misc/ consolidated under etc/ and _internal/old
+
+2016-04-13  ------ omnetpp-5.0 released ------
+
+2016-03-10  ------ omnetpp-5.0rc released ------
+
+2015-12-07  ------ omnetpp-5.0b3 released ------
+
+2015-07-20  ------ omnetpp-5.0b2 released ------
+
+2015-03-04  ------ omnetpp-5.0b1 released ------
+
+2014-11-27  ------ omnetpp-4.6 released ------
+
+2014-06-30  ------ omnetpp-4.5 released ------
+
+2014-02-13  ------ omnetpp-4.4.1 released ------
+
+2013-12-20  ------ omnetpp-4.4 released ------
+
+2013-09-12  ------ omnetpp-4.3.1 released ------
+
+2013-04-02  ------ omnetpp-4.3 released ------
+
+2013-02-08  ------ omnetpp-4.3rc1 released ------
+
+2012-01-14  Andras Varga
+
+	* Named channels support: added attribute "name" to the "connection" element
+
+2012-03-13  ------ omnetpp-4.2.2 released ------
+
+2012-01-17  ------ omnetpp-4.2.1 released ------
+
+2011-10-28  ------ omnetpp-4.2 released ------
+
+2011-09-11  ------ omnetpp-4.2rc1 released ------
+
+2011-06-02  Andras Varga
+
+	* Renamed the "like-param" attribute of "submodule" and "connection"
+	to "like-expr"
+
+2011-05-05  ------ omnetpp-4.2b2 released ------
+
+2011-04-08  Andras Varga
+
+	* Support for conditional submodules: the "submodule" element can now
+	have a "condition" child
+
+2011-04-02  Andras Varga
+
+	* Support for default value for parametric submodule and channel types:
+	added an "is-default" attribute to the  "submodule" and "connection"
+	elements
+
+2011-02-23  ------ omnetpp-4.2b1 released ------
+
+2011-01-18  Andras Varga
+
+	* Refactoring: merged the "channel-spec" element into "connection";
+	split the "arrow-direction" attribute of "connection" into two boolean
+	attributes, "is-bidirectional" and "is-forward-arrow"
+
+2010-06-11  ------ omnetpp-4.1 released ------
+
+2010-05-31  ------ omnetpp-4.1rc2 released ------
+
+2010-04-20  ------ omnetpp-4.1b4 released ------
+
+2010-03-14  ------ omnetpp-4.1b3 released ------
+
+2009-07-15  Andras Varga
+
+	* ned2.dtd:
+	- added field properties for msg files
+	- field enum-name eliminated (it is represented as property)
+	- class/struct/message "extends-name" properties changed to CDATA,
+	  so that they can hold namespace prefix
+
+2009-03-12  ------ omnetpp-4.0 released ------

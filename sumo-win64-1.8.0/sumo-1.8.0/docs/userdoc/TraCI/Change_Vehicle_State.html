@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/TraCI/Change_Vehicle_State.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>TraCI/Change Vehicle State - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/TraCI/Change_Vehicle_State.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#command_0xc4_change_vehicle_state">Command 0xc4: Change Vehicle State</a></li>
+            <li class="nav-item main"><a href="#compound_message_details">compound message details</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#stop_0x12" class="nav-link">• stop (0x12)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#change_lane_0x13" class="nav-link">• change lane (0x13)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#slow_down_0x14" class="nav-link">• slow down (0x14)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#open_gap_0x16" class="nav-link">• open gap (0x16)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#move_to_0x5c" class="nav-link">• move to (0x5c)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#move_to_xy_0xb4" class="nav-link">• move to XY (0xb4)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#replacestop_0x17" class="nav-link">• replaceStop (0x17)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#resume_0x19" class="nav-link">• resume (0x19)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#change_target_0x31" class="nav-link">• change target (0x31)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#change_route_by_id_0x54" class="nav-link">• change route by id (0x54)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#change_route_0x57" class="nav-link">• change route (0x57)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#change_edge_travel_time_information_0x58" class="nav-link">• change edge travel time information (0x58)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#change_edge_effort_information_0x59" class="nav-link">• change edge effort information (0x59)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#reroute_compute_new_route_by_travel_time_0x90" class="nav-link">• reroute (compute new route) by travel time (0x90)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#reroute_compute_new_route_by_effort_0x91" class="nav-link">• reroute (compute new route) by effort (0x91)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#speed_mode_0xb3" class="nav-link">• speed mode (0xb3)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lane_change_mode_0xb6" class="nav-link">• lane change mode (0xb6)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#add_legacy_0x80" class="nav-link">• add (legacy) (0x80)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#add_full_0x85" class="nav-link">• add_full (0x85)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#remove_0x81" class="nav-link">• remove (0x81)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#highlight_0x6c" class="nav-link">• highlight (0x6c)</a>
+                </li>
+            <li class="nav-item main"><a href="#setting_device_and_lanechangemodel_parameters_0x7e">Setting Device and LaneChangeModel Parameters (0x7e)</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#supported_device_parameters" class="nav-link">• Supported Device Parameters</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#supported_lanechangemodel_parameters" class="nav-link">• Supported LaneChangeModel Parameters</a>
+                </li>
+            <li class="nav-item main"><a href="#application_order_of_traci_commands_and_simulation_step">Application order of traci commands and simulation step</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_insertion" class="nav-link">• Vehicle insertion</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>TraCI/Change Vehicle State<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="command_0xc4_change_vehicle_state">Command 0xc4: Change Vehicle State<a class="headerlink" href="#command_0xc4_change_vehicle_state" title="Permanent link">#</a></h1>
+<table>
+<thead>
+<tr>
+<th align="center">ubyte</th>
+<th align="center">string</th>
+<th align="center">ubyte</th>
+<th align="center">&lt;value_type></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Variable</td>
+<td align="center">Vehicle ID</td>
+<td align="center">Type of the value</td>
+<td align="center">New Value</td>
+</tr>
+</tbody>
+</table>
+<p>Changes the state of a vehicle. Because it is possible to change
+different values of a vehicle, the number of parameter to supply and
+their types differ between commands. The following values can be
+changed, the parameter which must be given are also shown in the table.
+Furthermore it is possible to change all values mentioned in
+<a href="Change_VehicleType_State.html">TraCI/Change_VehicleType_State</a>.
+If you do so, the vehicle gets a new type (named "typeid@vehid") and
+won't be affected by further changes to the original type.</p>
+<p><center>
+<strong>Overview Changeable Vehicle Variables</strong>
+</center></p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>ValueType</th>
+<th>Description</th>
+<th><a href="Interfacing_TraCI_from_Python.html">Python Method</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stop (0x12)</td>
+<td>compound (string, double, byte, double), see below</td>
+<td>Lets the vehicle stop at the given edge, at the given position and lane. The vehicle will stop for the given duration. Re-issuing a stop command with the same lane and position allows changing the duration. Setting the duration to 0 cancels an existing stop.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setStop">setStop</a><br><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setBusStop">setBusStop</a><br><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setContainerStop">setContainerStop</a><br><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setChargingStationStop">setChargingStationStop</a><br><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setParkingAreaStop">setParkingAreaStop</a></td>
+</tr>
+<tr>
+<td>change lane (0x13)</td>
+<td>compound (byte, double), see below</td>
+<td>Forces a lane change to the lane with the given index; if successful, the lane will be chosen for the given amount of time (in seconds).</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-changeLane">changeLane</a></td>
+</tr>
+<tr>
+<td>change sublane (0x15)</td>
+<td>double (lateral distance)</td>
+<td>Forces a lateral change by the given amount (negative values indicate changing to the right, positive to the left). This will override any other lane change motivations but conform to safety-constraints as configured by laneChangeMode.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-changeSublane">changeSublane</a></td>
+</tr>
+<tr>
+<td>slow down (0x14)</td>
+<td>compound (double, double), see below</td>
+<td>Changes the speed smoothly to the given value over the given amount of time in seconds (can also be used to increase speed).</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-slowDown">slowDown</a></td>
+</tr>
+<tr>
+<td>resume (0x19)</td>
+<td>compound (), see below</td>
+<td>Resumes from a stop</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-resume">resume</a></td>
+</tr>
+<tr>
+<td>change target (0x31)</td>
+<td>string (destination edge id)</td>
+<td>The vehicle's destination edge is set to the given. The route is rebuilt.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-changeTarget">changeTarget</a></td>
+</tr>
+<tr>
+<td>speed (0x40)</td>
+<td>double (new speed)</td>
+<td>Sets the vehicle speed to the given value. The speed will be followed according to the current <a href="Change_Vehicle_State.html#speed_mode_0xb3">speed mode</a>. By default the vehicle may drive slower than the set speed according to the safety rules of the car-follow model. When sending a value of -1 the vehicle will revert to its original behavior (using the <em>maxSpeed</em> of its vehicle type and following all safety rules).</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setSpeed">setSpeed</a></td>
+</tr>
+<tr>
+<td>color (0x45)</td>
+<td>ubyte,ubyte,ubyte,ubyte (RGBA)</td>
+<td>Sets the vehicle's color.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setColor">setColor</a></td>
+</tr>
+<tr>
+<td>change route by id (0x53)</td>
+<td>string (route id)</td>
+<td>Assigns the named route to the vehicle, assuming a) the named route exists, and b) it starts on the edge the vehicle is currently at<sup>(1)(2)</sup>.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setRouteID">setRouteID</a></td>
+</tr>
+<tr>
+<td>change route (0x57)</td>
+<td>stringList (ids of edges to pass)</td>
+<td>Assigns the list of edges as the vehicle's new route assuming the first edge given is the one the vehicle is curently at<sup>(1)(2)</sup>.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setRoute">setRoute</a></td>
+</tr>
+<tr>
+<td>reroute parking area (0xc2)</td>
+<td>string (parking area id)</td>
+<td>Changes the next parking area in parkingAreaID, updates the vehicle route, and preserve consistency in case of passengers/containers on board.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-rerouteParkingArea">rerouteParkingArea</a></td>
+</tr>
+<tr>
+<td>dispatchTaxi</td>
+<td>stringList (reservation ids)</td>
+<td>dispatches the taxi with the given id to service the given reservations. If only a single reservation is given, this implies pickup and drop-off If multiple reservations are given, each reservation id must occur twice (once for pickup and once for drop-off) and the list encodes ride sharing of passengers (in pickup and drop-off order)</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-dispatchTaxi">dispatchTaxi</a></td>
+</tr>
+<tr>
+<td>change edge travel time information (0x58)</td>
+<td>compound (begin time, end time, edgeID, value), see below</td>
+<td>Inserts the information about the travel time (in seconds) of edge "edgeID" valid from begin time to end time (in seconds) into the vehicle's internal edge weights container.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setAdaptedTraveltime">setAdaptedTraveltime</a></td>
+</tr>
+<tr>
+<td>change edge effort information (0x59)</td>
+<td>compound (begin time, end time, edgeID, value), see below</td>
+<td>Inserts the information about the effort of edge "edgeID" valid from begin time to end time (in seconds) into the vehicle's internal edge weights container.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setEffort">setEffort</a></td>
+</tr>
+<tr>
+<td>signal states (0x5b)</td>
+<td>int</td>
+<td>Sets a new state of signal. See <a href="Vehicle_Signalling.html">TraCI/Vehicle Signalling</a> for more information.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setSignals">setSignals</a></td>
+</tr>
+<tr>
+<td>routing mode (0x89)</td>
+<td>int</td>
+<td>Sets the <a href="../Simulation/Routing.html#travel-time_values_for_routing">routing mode</a> (0: default, 1: aggregated)</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setRoutingMode">setRoutingMode</a></td>
+</tr>
+<tr>
+<td>move to (0x5c)</td>
+<td>compound (lane ID, position along lane)</td>
+<td>Moves the vehicle to a new position along the current route <sup>(3)</sup>.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-moveTo">moveTo</a></td>
+</tr>
+<tr>
+<td>move to XY (0xb4)</td>
+<td>compound (edgeID, laneIndex, x, y, angle, keepRoute) (see below)</td>
+<td>Moves the vehicle to a new position after normal vehicle movements have taken place. Also forces the angle of the vehicle to the given value (navigational angle in degree). <a href="Change_Vehicle_State.html#move_to_xy_0xb4">See below for additional details</a></td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-moveToXY">moveToXY</a></td>
+</tr>
+<tr>
+<td>replaceStop (0x17)</td>
+<td>compound (edgeID, vehID, nextStopIndex, edgeID, pos, laneIndex, duration, flags, startPos, until) (see below)</td>
+<td>Replaces stop at the given index with a new stop. Automatically modifies the route if the replacement stop is at another location. <a href="Change_Vehicle_State.html#replaceStop-0x17">See below for additional details</a></td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-replaceStop">replaceStop</a></td>
+</tr>
+<tr>
+<td>reroute (compute new route) by travel time (0x90)</td>
+<td>compound (&lt;empty>), see below</td>
+<td>Computes a new route to the current destination that minimizes travel time. The assumed values for each edge in the network can be customized in various ways. See <a href="../Simulation/Routing.html#travel-time_values_for_routing">Simulation/Routing#Travel-time_values_for_routing</a>. Replaces the current route by the found<sup>(2)</sup>.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-rerouteTraveltime">rerouteTraveltime</a></td>
+</tr>
+<tr>
+<td>reroute (compute new route) by effort (0x91)</td>
+<td>compound (&lt;empty>), see below</td>
+<td>Computes a new route using the vehicle's internal and the global edge effort information. Replaces the current route by the found<sup(2)</sup>.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-rerouteEffort">rerouteEffort</a></td>
+</tr>
+<tr>
+<td>speed mode (0xb3)</td>
+<td>int bitset (see below)</td>
+<td>Sets how the values set by speed (0x40) and slowdown (0x14) shall be treated. Also allows to configure the behavior at junctions. See below.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setSpeedMode">setSpeedMode</a></td>
+</tr>
+<tr>
+<td>speed factor (0x5e)</td>
+<td>double</td>
+<td>Sets the vehicle's speed factor to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setSpeedFactor">setSpeedFactor</a></td>
+</tr>
+<tr>
+<td>max speed (0x41)</td>
+<td>double</td>
+<td>Sets the vehicle's maximum speed to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setMaxSpeed">setMaxSpeed</a></td>
+</tr>
+<tr>
+<td>lane change mode (0xb6)</td>
+<td>int bitset (see <a href="Change_Vehicle_State.html#lane_change_mode_0xb6">below</a>)</td>
+<td>Sets how lane changing in general and lane changing requests by TraCI are performed. See below.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setLaneChangeMode">setLaneChangeMode</a></td>
+</tr>
+<tr>
+<td>update bestLanes (0x6a)</td>
+<td></td>
+<td>updates internal data structures for strategic lane choice. (e.g. after modifying access permissions).<br><br><strong>Note:</strong> This happens automatically when changing the route or moving to a new edge</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-updateBestLanes">updateBestLanes</a></td>
+</tr>
+<tr>
+<td>add (0x85)</td>
+<td>complex (see below)</td>
+<td>Adds the defined vehicle. See below.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-add">add</a> (alias addFull)</td>
+</tr>
+<tr>
+<td>add_legacy (0x80)</td>
+<td>complex (see below)</td>
+<td>Adds the defined vehicle (fewer parameters, obsolete). See below.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-addFull">addLegacy</a></td>
+</tr>
+<tr>
+<td>remove (0x81)</td>
+<td>complex (see below)</td>
+<td>Removes the defined vehicle. See below.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-remove">remove</a></td>
+</tr>
+<tr>
+<td>length (0x44)</td>
+<td>double</td>
+<td>Sets the vehicle's length to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setLength">setLength</a></td>
+</tr>
+<tr>
+<td>vehicle class (0x49)</td>
+<td>string</td>
+<td>Sets the vehicle's vehicle class to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setVehicleClass">setVehicleClass</a></td>
+</tr>
+<tr>
+<td>emission class (0x4a)</td>
+<td>string</td>
+<td>Sets the vehicle's emission class to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setEmissionClass">setEmissionClass</a></td>
+</tr>
+<tr>
+<td>width (0x4d)</td>
+<td>double</td>
+<td>Sets the vehicle's width to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setWidth">setWidth</a></td>
+</tr>
+<tr>
+<td>height (0xbc)</td>
+<td>double</td>
+<td>Sets the vehicle's height to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setHeight">setHeight</a></td>
+</tr>
+<tr>
+<td>min gap (0x4c)</td>
+<td>double</td>
+<td>Sets the vehicle's minimum headway gap to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setMinGap">setMinGap</a></td>
+</tr>
+<tr>
+<td>shape class (0x4b)</td>
+<td>string</td>
+<td>Sets the vehicle's shape class to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setShapeClass">setShapeClass</a></td>
+</tr>
+<tr>
+<td>acceleration (0x46)</td>
+<td>double</td>
+<td>Sets the vehicle's wished maximum acceleration to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setAccel">setAccel</a></td>
+</tr>
+<tr>
+<td>deceleration (0x47)</td>
+<td>double</td>
+<td>Sets the vehicle's wished maximum deceleration to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setDecel">setDecel</a></td>
+</tr>
+<tr>
+<td>imperfection (0x5d)</td>
+<td>double</td>
+<td>Sets the vehicle's driver imperfection (sigma) to the given value</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setImperfection">setImperfection</a></td>
+</tr>
+<tr>
+<td>tau (0x48)</td>
+<td>double</td>
+<td>Sets the vehicle's wished headway time to the given value.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setTau">setTau</a></td>
+</tr>
+<tr>
+<td>type (0x4f)</td>
+<td>string</td>
+<td>Sets the id of the type for the named vehicle.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setType">setType</a></td>
+</tr>
+<tr>
+<td>via (0xbe)</td>
+<td>stringList</td>
+<td>Changes the via edges to the given edges list (to be used during subsequent rerouting calls).</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setVia">setVia</a></td>
+</tr>
+<tr>
+<td>max lateral speed (0xba)</td>
+<td>double</td>
+<td>Sets the maximum lateral speed in m/s for this vehicle.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setMaxSpeedLat">setMaxSpeedLat</a></td>
+</tr>
+<tr>
+<td>lateral gap (0xbb)</td>
+<td>double</td>
+<td>Sets the minimum lateral gap of the vehicle at 50km/h in m.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setMinGapLat">setMinGapLat</a></td>
+</tr>
+<tr>
+<td>lateral alignment (0xb9)</td>
+<td>string</td>
+<td>Sets the preferred lateral alignment for this vehicle.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setLateralAlignment">setLateralAlignment</a></td>
+</tr>
+<tr>
+<td>parameter (0x7e)</td>
+<td>string, string</td>
+<td><a href="Change_Vehicle_State.html#setting_device_and_lanechangemodel_parameters_0x7e">Sets the string value for the given string parameter</a></td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setParameter">setParameter</a></td>
+</tr>
+<tr>
+<td>action step length (0x7d)</td>
+<td>double (new action step length), boolean (reset action offset)</td>
+<td>Sets the current action step length for the vehicle in s. If the boolean value resetActionOffset is true, an action step is scheduled immediately for the vehicle.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setActionStepLength">setActionStepLength</a></td>
+</tr>
+<tr>
+<td>highlight (0x6c)</td>
+<td>highlight specification, see below</td>
+<td>Adds a highlight to the vehicle</td>
+<td><a href="http://sumo.sourceforge.net/pydoc/traci._vehicle.html#VehicleDomain-highlight">highlight</a></td>
+</tr>
+</tbody>
+</table>
+<p>Please note:</p>
+<ol>
+<li>The first occurrence of the edge is currently at is searched within
+    the new route; the vehicle continues the route from this point in
+    the route from. If the edge the vehicle is currently does not exist
+    within the new route, an error is generated.</li>
+<li>changing the route works only if the vehicle is not within an
+    intersection.</li>
+<li>The specified lane must lie ahead of the vehicle on its current
+    route. The next occurence is used. Intermediate edges will count the
+    vehicle when entering and exiting.</li>
+</ol>
+<h1 id="compound_message_details">compound message details<a class="headerlink" href="#compound_message_details" title="Permanent link">#</a></h1>
+<p>The message contents are as following:</p>
+<h3 id="stop_0x12">stop (0x12)<a class="headerlink" href="#stop_0x12" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">integer</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">byte</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">item number (4 to 7)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">Edge ID</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">end position</td>
+<td align="center">value type <em>byte</em></td>
+<td align="center">Lane Index</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">Duration in seconds</td>
+<td align="center">value type <em>byte</em> (optional)</td>
+<td align="center">stop flags: (see below)</td>
+<td align="center">value type <em>double</em> (optional)</td>
+<td align="center">start position</td>
+<td align="center">value type <em>double</em> (optional)</td>
+<td align="center">Until in seconds</td>
+</tr>
+</tbody>
+</table>
+<p>The stop flags are a bitset with the following additive components</p>
+<ul>
+<li>1 : parking</li>
+<li>2 : triggered</li>
+<li>4 : containerTriggered</li>
+<li>8 : busStop (Edge ID is re-purposed as busStop ID)</li>
+<li>16 : containerStop (Edge ID is re-purposed as containerStop ID)</li>
+<li>32 : chargingStation (Edge ID is re-purposed as chargingStation ID)</li>
+<li>64 : parkingArea (Edge ID is re-purposed as parkingArea ID)</li>
+</ul>
+<h3 id="change_lane_0x13">change lane (0x13)<a class="headerlink" href="#change_lane_0x13" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">integer</th>
+<th align="center">byte</th>
+<th align="center">byte</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">byte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">item number (2 or 3)</td>
+<td align="center">value type <em>byte</em></td>
+<td align="center">Lane Index</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">Duration in seconds</td>
+<td align="center">value type <em>byte</em> (optional)</td>
+<td align="center">bool for relative lane change</td>
+</tr>
+</tbody>
+</table>
+<h3 id="slow_down_0x14">slow down (0x14)<a class="headerlink" href="#slow_down_0x14" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">integer</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">item number (always 2)</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">Speed</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">Duration in seconds</td>
+</tr>
+</tbody>
+</table>
+<h3 id="open_gap_0x16">open gap (0x16)<a class="headerlink" href="#open_gap_0x16" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">integer</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">item number (4 or 5)</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">Adapted time headway in seconds</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">Adapted space headway in seconds</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">Duration in seconds</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">changeRate</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">maxDecel</td>
+<td align="center">value type <em>string</em> (optional)</td>
+<td align="center">reference vehicle ID</td>
+</tr>
+</tbody>
+</table>
+<p>This command induces a temporary increase of the vehicles desired time
+headway (car-following parameter tau) and specifies a minimal space
+headway to keep, as well. The execution is separated into an adaptation
+phase, where the headways are gradually altered at the specified rate.
+As soon as the desired headways are established they are kept for the
+specified duration. Afterwards they are reset to the original value.
+Deactivation of the control can be achieved by sending
+newHeadway=duration=maxDecel=-1. The desired time headway of the vehicle
+is left unchanged if a value of -1 is send at the corresponding
+position. If -1 is sent for duration, the largest possible time is set.
+If -1 is sent for the maxDecel, no limitation of the induced braking
+rate is applied. If the optional reference vehicle ID is specified, the
+method does not use the current leader as a reference for the gap
+creation but the specified vehicle.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the Euler integration method, the time headway control does not work properly for low speeds.</p>
+</div>
+<h3 id="move_to_0x5c">move to (0x5c)<a class="headerlink" href="#move_to_0x5c" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">integer</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">item number (always 2)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">Lane ID</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">Position along lane</td>
+</tr>
+</tbody>
+</table>
+<p>The vehicle will be removed from its lane and moved to the given position on the given lane. No collision checks are done, this means that moving the vehicle may cause a collisions or a situations leading to collision. The vehicle keeps its speed - in the next time step it is at given position + speed. Note that the lane must be a part of the route, this means it must be either a part of any of the edges within the vehicles route or an internal lane that connects route edges. To overcome this limitation, the route can be modified prior to calling moveTo. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This can also be used to force a vehicle into the network that <a href="../Simulation/VehicleInsertion.html#loading">has been loaded</a> but could not depart due to having it's departure lane blocked.</p>
+</div>
+<h3 id="move_to_xy_0xb4">move to XY (0xb4)<a class="headerlink" href="#move_to_xy_0xb4" title="Permanent link">#</a></h3>
+<p>The vehicle (the center of it's front bumper) is moved to the network
+position that best matches the given x,y network coordinates. </p>
+<p>The arguments edgeID and lane are optional and can be set to "" and -1 respectively if not known.
+Their use is to resolve ambiguities when there are multiple roads on top of each other (i.e. at bridges) or to provide additional guidance on intersections (where internal edges overlap). 
+If the edgeID and lane are given, they are compared against the 'origID'-attribute of the road lanes (which may be set to providate a mapping to some other network such as OpenDRIVE) and if the attribute isn't set against the actual lane id.</p>
+<p>The optional keepRoute flag is a bitset that influences
+mapping as follows:</p>
+<ul>
+<li><strong>bit0</strong> (keepRoute = 1 when only this bit is set)<ul>
+<li><strong>1</strong>: The vehicle is mapped to the closest edge within it's existing route. 
+         If no suitable position is found within 100m   mapping fails with an error.</li>
+<li><strong>0</strong>: The vehicle is mapped to the closest edge within the network.
+         If that edge does not belong to the original route, the current route is replaced by a new 
+         route which consists of that edge only.
+         If no suitable position is found within 100m mapping fails with an error.
+         When using the <a href="../Simulation/SublaneModel.html">sublane model</a> the best lateral position
+         that is fully within the lane will be used. Otherwise, the vehicle  will drive in the center of the closest lane.</li>
+</ul>
+</li>
+<li><strong>bit1</strong> (keepRoute = 2 when only this bit is set)           <ul>
+<li><strong>1</strong>: The vehicle is mapped to the exact position in
+the network (including the exact lateral position). If that position
+lies outside the road network, the vehicle stops moving on it's own
+accord until it is placed back into the network with another TraCI
+command. (if keeproute = 3, the position must still be within 100m of the vehicle route)</li>
+<li><strong>0</strong>: The vehicle is always on a road</li>
+</ul>
+</li>
+<li><strong>bit2</strong> (keepRoute = 4 when only this bit is set)<ul>
+<li><strong>1</strong>: lane permissions are ignored when mapping</li>
+<li><strong>0</strong>: The vehicle is mapped only to lanes that allow it's vehicle class       </li>
+</ul>
+</li>
+</ul>
+<p>The angle value is assumed to be in navigational degrees (between 0 and
+360 with 0 at the top, going clockwise). The angle is used when scoring
+candidate mapping lanes to resolve ambiguities. Upon mapping the vehicle
+is angle set to the given value for purposes of drawing and all outputs.
+If the angle is set to the special TraCI constant
+INVALID_DOUBLE_VALUE, the angle will not be used for scoring and the
+vehicle will assume the angle of the best found lane. When mapping the
+vehicle outside the road network, the angle will be computed from the
+previous and the new position instead.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function can also be used to force a vehicle into the network that <a href="../Simulation/VehicleInsertion.html#loading">has been loaded</a> but could not depart due to having it's departure lane blocked.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When mapping a vehicle to an edge that is not currently on it's route, the new route will consist of that edge only. Once the vehicle reaches the end of that edge it disappears unless receiving another moveToXY command in that simulation step. This means, vehicles may disappear when calling <em>traci.simulationStep</em> with arguments that cause SUMO to perform multiple steps.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">integer</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">item number (5 or 6)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">edge ID (to resolve ambiguities, may be arbitrary)</td>
+<td align="center">value type <em>int</em></td>
+<td align="center">lane index (to resolve ambiguities, may be arbitrary)</td>
+<td align="center">value type double</td>
+<td align="center">x Position (network coordinates)</td>
+<td align="center">value type double</td>
+<td align="center">y Position (network coordinates)</td>
+<td align="center">value type double</td>
+<td align="center">angle</td>
+<td align="center">value type byte</td>
+<td align="center">keepRoute (0 - 7)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="replacestop_0x17">replaceStop (0x17)<a class="headerlink" href="#replacestop_0x17" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">string</th>
+<th align="center">int</th>
+<th align="center">string</th>
+<th align="center">double</th>
+<th align="center">integer</th>
+<th align="center">double</th>
+<th align="center">integer</th>
+<th align="center">double</th>
+<th align="center">double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">vehID</td>
+<td align="center">nextStopIndex</td>
+<td align="center">edgeID</td>
+<td align="center">pos=1.0</td>
+<td align="center">laneIndex=0</td>
+<td align="center">duration=-1073741824.0</td>
+<td align="center">flags=0</td>
+<td align="center">startPos=-1073741824.0</td>
+<td align="center">until=-1073741824.0</td>
+</tr>
+</tbody>
+</table>
+<p>Replaces stop at the given index with a new stop. Automatically modifies the route if the replacement stop is at another location</p>
+<h3 id="resume_0x19">resume (0x19)<a class="headerlink" href="#resume_0x19" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">integer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">item number (always 0)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="change_target_0x31">change target (0x31)<a class="headerlink" href="#change_target_0x31" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>string</em></td>
+<td align="center">Edge ID</td>
+</tr>
+</tbody>
+</table>
+<h3 id="change_route_by_id_0x54">change route by id (0x54)<a class="headerlink" href="#change_route_by_id_0x54" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>string</em></td>
+<td align="center">Route ID</td>
+</tr>
+</tbody>
+</table>
+<h3 id="change_route_0x57">change route (0x57)<a class="headerlink" href="#change_route_0x57" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>string list</em></td>
+<td align="center">number of elements</td>
+<td align="center">Edge ID</td>
+</tr>
+</tbody>
+</table>
+<h3 id="change_edge_travel_time_information_0x58">change edge travel time information (0x58)<a class="headerlink" href="#change_edge_travel_time_information_0x58" title="Permanent link">#</a></h3>
+<p>This command can be sent using 4, 2, or 1 parameters. In the first form,
+it adds a new override of edge information to the list of existing
+overrides for the given vehicle, valid from begin time to end time. In
+the second form, it adds a new override that is valid throughout the
+simulation, replacing an earlier one for the same edge. In the third
+form, it removes as earlier override for the given edge, valid
+throughout the simulation.</p>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=4)</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">begin time (in seconds)</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">end time (in seconds)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">edge id</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">travel time value (in s)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=2)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">edge id</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">travel time value (in s)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=1)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">edge id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="change_edge_effort_information_0x59">change edge effort information (0x59)<a class="headerlink" href="#change_edge_effort_information_0x59" title="Permanent link">#</a></h3>
+<p>This command can be sent using 4, 2, or 1 parameters. In the first form,
+it adds a new override of edge information to the list of existing
+overrides for the given vehicle, valid from begin time to end time. In
+the second form, it adds a new override that is valid throughout the
+simulation, replacing an earlier one for the same edge. In the third
+form, it removes as earlier override for the given edge, valid
+throughout the simulation.</p>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=4)</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">begin time (in seconds)</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">end time (in seconds)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">edge id</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">effort value (abstract)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=2)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">edge id</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">effort value (abstract)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=1)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">edge id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reroute_compute_new_route_by_travel_time_0x90">reroute (compute new route) by travel time (0x90)<a class="headerlink" href="#reroute_compute_new_route_by_travel_time_0x90" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=0)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reroute_compute_new_route_by_effort_0x91">reroute (compute new route) by effort (0x91)<a class="headerlink" href="#reroute_compute_new_route_by_effort_0x91" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=0)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="speed_mode_0xb3">speed mode (0xb3)<a class="headerlink" href="#speed_mode_0xb3" title="Permanent link">#</a></h3>
+<p>This command controls how speeds set with the command <em>setSpeed (0x40)</em>
+and <em>slowDown (0x14</em>) are used. Per default, the vehicle may only drive
+slower than the speed that is deemed safe by the car following model and
+it may not exceed the bounds on acceleration and deceleration.
+Furthermore, vehicles follow the right-of-way rules when approaching an
+intersection and if necessary they brake hard to avoid driving across a
+red light. One can control this behavior using the speed mode (0xb3)
+command. The given integer is a bitset (bit0 is the least significant
+bit) with the following fields:</p>
+<ul>
+<li>bit0: Regard safe speed</li>
+<li>bit1: Regard maximum acceleration</li>
+<li>bit2: Regard maximum deceleration</li>
+<li>bit3: Regard right of way at intersections</li>
+<li>bit4: Brake hard to avoid passing a red light</li>
+</ul>
+<p>Setting the bit enables the check (the according value is regarded),
+keeping the bit==zero disables the check.</p>
+<p>Examples:</p>
+<ul>
+<li>all checks off -> [0 0 0 0 0] -> Speed Mode = 0</li>
+<li>disable right of way check -> [1 0 1 1 1] -> Speed Mode = 23</li>
+<li>all checks on -> [1 1 1 1 1] -> Speed Mode = 31</li>
+<li>run a red light [0 0 1 1 1] = 7 (also requires setSpeed or
+  slowDown)</li>
+</ul>
+<h3 id="lane_change_mode_0xb6">lane change mode (0xb6)<a class="headerlink" href="#lane_change_mode_0xb6" title="Permanent link">#</a></h3>
+<p>The
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types">laneChangeModel</a>
+discriminates four reasons to change lanes:</p>
+<ul>
+<li>strategic (change lanes to continue the route)</li>
+<li>cooperative (change in order to allow others to change)</li>
+<li>speed gain (the other lane allows for faster driving)</li>
+<li>obligation to drive on the right</li>
+</ul>
+<p>During each simulation step the laneChangeModel computes an <em>internal</em>
+request to change the lane or to stay on the current lane.</p>
+<p>If an <em>external</em> change lane command (0x13) command is in conflict with
+the <em>internal</em> request this is resolved by the current value of the
+vehicles <em>lane change mode</em>. The given integer is interpreted as a
+bitset (bit0 is the least significant bit) with the following fields:</p>
+<ul>
+<li>bit1, bit0: 00 = do no strategic changes; 01 = do strategic changes
+if not in conflict with a TraCI request; 10 = do strategic change
+even if overriding TraCI request</li>
+<li>bit3, bit2: 00 = do no cooperative changes; 01 = do cooperative
+changes if not in conflict with a TraCI request; 10 = do cooperative
+change even if overriding TraCI request</li>
+<li>bit5, bit4: 00 = do no changes; 01 = do speed gain changes if not in
+conflict with a TraCI request; 10 = do speed gain change even if
+overriding TraCI request</li>
+<li>bit7, bit6: 00 = do no right drive changes; 01 = do right drive
+changes if not in conflict with a TraCI request; 10 = do right drive
+change even if overriding TraCI request</li>
+</ul>
+<ul>
+<li>bit9, bit8:<ul>
+<li>00 = do not respect other drivers when following TraCI requests,
+  adapt speed to fulfill request</li>
+<li>01 = avoid immediate collisions when following a TraCI request,
+  adapt speed to fulfill request</li>
+<li>10 = respect the speed / brake gaps of others when changing
+  lanes, adapt speed to fulfill request</li>
+<li>11 = respect the speed / brake gaps of others when changing
+  lanes, no speed adaption</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>bit11, bit10: 00 = do no sublane changes; 01 = do sublane changes if
+not in conflict with a TraCI request; 10 = do sublane change even if
+overriding TraCI request</li>
+</ul>
+<p>The default lane change mode is 0b011001010101 = <strong>1621</strong> which means
+that the laneChangeModel may execute all changes unless in conflict with
+TraCI. Requests from TraCI are handled urgently (with cooperative speed
+adaptations by the ego vehicle and surrounding traffic) but with full
+consideration for safety constraints.</p>
+<p>To disable all autonomous changing but still handle safety checks in the
+simulation, either one of the modes <strong>256</strong> (collision avoidance) or
+<strong>512</strong> (collision avoidance and safety-gap enforcement) may be used.</p>
+<h3 id="add_legacy_0x80">add (legacy) (0x80)<a class="headerlink" href="#add_legacy_0x80" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">double</th>
+<th align="center">byte</th>
+<th align="center">byte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=6)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">vehicle type ID (must exist)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">route ID (must exist)</td>
+<td align="center">value type <em>integer</em></td>
+<td align="center">depart time (ms)</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">depart position</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">depart speed</td>
+<td align="center">value type <em>byte</em></td>
+<td align="center">depart lane</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that the values are not checked in a very elaborated way. Make sure they are correct before sending.</p>
+</div>
+<p>If a negative departure time is set, one of the following fixed time
+settings will be used:</p>
+<ul>
+<li>-1: "triggered"</li>
+<li>-2: "containerTriggered"</li>
+</ul>
+<p>If a negative departure speed is set, one of the following fixed speed
+settings will be used:</p>
+<ul>
+<li>-2: "random"</li>
+<li>-3: "max"</li>
+</ul>
+<p>If a negative departure position is set, one of the following position
+settings will be used:</p>
+<ul>
+<li>-2: "random"</li>
+<li>-3: "free"</li>
+<li>-4: "base"</li>
+<li>-5: "last"</li>
+<li>-6: "random_free"</li>
+</ul>
+<p>Please note that giving 0 as depart position will result in the vehicle
+starting with its front at the begin of lane (unlike the simulation
+default which is the vehicle placed completely on the lane "base")</p>
+<p>If a negative departure lane is set, one of the following lane settings
+will be used:</p>
+<ul>
+<li>-2: "random"</li>
+<li>-3: "free"</li>
+<li>-4: "allowed"</li>
+<li>-5: "best"</li>
+<li>-6: "first"</li>
+</ul>
+<p>If an empty routeID is given, the vehicle will be placed on an route
+that consists of a single arbitrary edge (with suitalbe vClass
+permissions). This can be used to simply the initialization of remote
+controlled vehicle (moveToXY).</p>
+<h3 id="add_full_0x85">add_full (0x85)<a class="headerlink" href="#add_full_0x85" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">string</th>
+<th align="center">byte</th>
+<th align="center">int</th>
+<th align="center">byte</th>
+<th align="center">int</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of elements (always=14)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">route ID (must exist)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">vehicle type ID (must exist)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">depart time</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">depart lane</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">depart position</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">depart speed</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">arrival lane</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">arrival position</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">arrival speed</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">from taz (origin district)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">to taz (destination district)</td>
+<td align="center">value type <em>string</em></td>
+<td align="center">line (for public transport)</td>
+<td align="center">value type <em>integer</em></td>
+<td align="center">person capacity</td>
+<td align="center">value type <em>integer</em></td>
+<td align="center">person number</td>
+</tr>
+</tbody>
+</table>
+<p>If an empty routeID is given, the vehicle will be placed on an route
+that consists of a single arbitrary edge (with suitable vClass
+permissions). This can be used to simply the initialization of remote
+controlled vehicle (moveToXY).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that the values are not checked in a very elaborated way. Make sure they are correct before sending.</p>
+</div>
+<h3 id="remove_0x81">remove (0x81)<a class="headerlink" href="#remove_0x81" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">byte</th>
+<th align="center">byte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>byte</em></td>
+<td align="center">reason</td>
+</tr>
+</tbody>
+</table>
+<p>The following reasons may be given:</p>
+<ul>
+<li>0: NOTIFICATION_TELEPORT</li>
+<li>1: NOTIFICATION_PARKING</li>
+<li>2: NOTIFICATION_ARRIVED</li>
+<li>3: NOTIFICATION_VAPORIZED</li>
+<li>4: NOTIFICATION_TELEPORT_ARRIVED</li>
+</ul>
+<h3 id="highlight_0x6c">highlight (0x6c)<a class="headerlink" href="#highlight_0x6c" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">ubyte</th>
+<th align="center">int</th>
+<th align="center">ubyte</th>
+<th align="center">color</th>
+<th align="center">ubyte</th>
+<th align="center">double</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">double</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">value type <em>compound</em></td>
+<td align="center">number of items in {0,1,2,3,4,5}</td>
+<td align="center">value type <em>color</em></td>
+<td align="center">color</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">size (radius in m.)</td>
+<td align="center">value type <em>ubyte</em></td>
+<td align="center">maximal alpha value</td>
+<td align="center">value type <em>double</em></td>
+<td align="center">duration (in secs.)</td>
+<td align="center">value type <em>ubyte</em></td>
+<td align="center">type ID (allows different highlight categories)</td>
+</tr>
+</tbody>
+</table>
+<p>The highlight method adds a circle of the specified size and color
+centered at the vehicle. The circles alpha value is animated over the
+specified duration (fade in and out) if a positive value is given,
+maxAlpha &lt;= 0 implies persistent highlighting without animation.</p>
+<h1 id="setting_device_and_lanechangemodel_parameters_0x7e">Setting Device and LaneChangeModel Parameters (0x7e)<a class="headerlink" href="#setting_device_and_lanechangemodel_parameters_0x7e" title="Permanent link">#</a></h1>
+<p>Vehicles supports setting of device parameters using the <a href="GenericParameters.html#set_parameter">generic
+parameter setting
+call</a>.</p>
+<h2 id="supported_device_parameters">Supported Device Parameters<a class="headerlink" href="#supported_device_parameters" title="Permanent link">#</a></h2>
+<ul>
+<li>device.battery.actualBatteryCapacity (double literal)</li>
+<li>device.battery.maximumBatteryCapacity (double literal)</li>
+<li>device.battery.vehicleMass (double literal)</li>
+<li>device.rerouting.period (double literal, set rerouting period in
+  seconds)</li>
+<li>device.rerouting.edge:EDGE_ID (double literal, set assumed travel
+  time for rerouting for <strong>all</strong> vehicles (where EDGE_ID is the id if
+  a network edge). This value is overwritten at the next update
+  interval (<strong>--device.rerouting.adaptation-interval</strong>).</li>
+<li>device.driverstate.awareness</li>
+<li>device.driverstate.errorState</li>
+<li>device.driverstate.errorTimeScale</li>
+<li>device.driverstate.errorNoiseIntensity</li>
+<li>device.driverstate.minAwareness</li>
+<li>device.driverstate.initialAwareness</li>
+<li>device.driverstate.errorTimeScaleCoefficient</li>
+<li>device.driverstate.errorNoiseIntensityCoefficient</li>
+<li>device.driverstate.speedDifferenceErrorCoefficient</li>
+<li>device.driverstate.headwayErrorCoefficient</li>
+<li>device.driverstate.speedDifferenceChangePerceptionThreshold</li>
+<li>device.driverstate.headwayChangePerceptionThreshold</li>
+<li>device.driverstate.maximalReactionTime</li>
+<li>device.driverstate.originalReactionTime</li>
+<li>device.example.customValue1 (double literal)</li>
+<li>has.rerouting.device ("true"): can be used to dynamically enable
+  <a href="../Demand/Automatic_Routing.html">automatic rerouting</a></li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If the vehicles does not carry the respective device an error is returned.</p>
+</div>
+<h2 id="supported_lanechangemodel_parameters">Supported LaneChangeModel Parameters<a class="headerlink" href="#supported_lanechangemodel_parameters" title="Permanent link">#</a></h2>
+<ul>
+<li>laneChangeModel.&lt;ATTRNAME> , (double literal): &lt;ATTRNAME> must be
+  one of the <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#lane-changing_models">parameters supported by the
+  laneChangeModel</a>
+  of the vehicle. i.e. <em>lcStrategic</em>)</li>
+</ul>
+<h1 id="application_order_of_traci_commands_and_simulation_step">Application order of traci commands and simulation step<a class="headerlink" href="#application_order_of_traci_commands_and_simulation_step" title="Permanent link">#</a></h1>
+<p>Step <strong>n</strong>:</p>
+<ol>
+<li><em>traci.vehicle.getPosition</em> and <em>traci.vehicle.getSpeed</em> show the
+    values from step <strong>n-1</strong></li>
+<li>when calling <em>traci.vehicle.moveTo</em> the vehicle is instantly placed
+    (and still moves in this step)</li>
+<li><em>vNext</em> (the speed for this step) is computed based on the values of
+    the previous step (<em>traci.vehicle.setSpeed</em> overrides this)</li>
+<li>vehicle position is updated based on <em>vNext</em> (either by adding
+    <em>vNext</em> or by adding <em>(vPrev + vNext) / 2</em> depending on the value of
+    option <strong>--step-method.ballistic</strong>)</li>
+<li>the value given to <em>traci.vehicle.moveToXY</em> overrides the previously
+    computed position</li>
+<li>GUI is updated to show final state of step <strong>n</strong>, outputs like
+    <em>fcd-output</em> also show this state for step <strong>n</strong></li>
+</ol>
+<p>Step <strong>n+1</strong></p>
+<p>This means, that the position given to <em>moveToXY</em> in step <strong>n</strong> will be
+visible in the outputs for step <strong>n</strong> whereas
+<em>traci.vehicle.getPosition</em> will always show the value from the previous
+step.</p>
+<h2 id="vehicle_insertion">Vehicle insertion<a class="headerlink" href="#vehicle_insertion" title="Permanent link">#</a></h2>
+<p>When a vehicle is added using method <em>add</em> or <em>addFull</em> it is not
+immediately inserted into the network. Only after the next call to
+<em>simulationStep</em> does the simulation try to insert it (and this may fail
+when in conflict with other traffic). The result of <em>getIDList</em> only
+contains vehicles that have been inserted into the network which means
+the vehicle will not be listed immediately. You can force a vehicle to
+be inserted instantly by calling the function <em>vehicle.moveTo</em> or
+<em>vehicle.moveToXY</em> after adding it to the simulation.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 20 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

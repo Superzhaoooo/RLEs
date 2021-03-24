@@ -1,0 +1,48 @@
+%description:
+Test assertions in the send() call: gate must be connected
+
+%file: test.ned
+
+simple Simple
+{
+    gates:
+        output out;
+}
+
+network Test
+{
+    submodules:
+        a: Simple;
+    connections allowunconnected:
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+class Simple : public cSimpleModule
+{
+  public:
+    Simple() : cSimpleModule(16384) { }
+    virtual void activity() override;
+};
+
+Define_Module(Simple);
+
+void Simple::activity()
+{
+    cMessage *msg = new cMessage("msg");
+    send(msg, "out");
+}
+
+}; //namespace
+
+%exitcode: 1
+
+%contains-regex: stderr
+Gate 'out' not connected
+

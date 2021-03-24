@@ -1,0 +1,95 @@
+%description:
+
+Test logging class name.
+
+%inifile: test.ini
+[General]
+network = TestModule
+cmdenv-log-prefix = "[%b %z] "
+
+%file: test.ned
+
+simple TestModule
+{
+    parameters:
+        @isNetwork;
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+static void testNonClassFunction() {
+    EV_DEBUG << "Hello from a plain function\n";
+}
+
+class NonCObject {
+    public:
+        void test() {
+            EV_DEBUG << "Hello from NonCObject\n";
+        }
+};
+
+class LoggableNonCObject {
+    public:
+        const LoggableNonCObject *getThisPtr() const { return this; }
+        const char *getClassName() {return "LoggableNonCObject"; }
+
+        void test() {
+            EV_DEBUG << "Hello from LoggableNonCObject\n";
+        }
+};
+
+class Object : public cObject {
+    public:
+        void test() {
+            EV_DEBUG << "Hello from Object\n";
+        }
+
+    protected:
+        virtual const char *getName() const { return "objectName"; }
+};
+
+class TestModule : public cSimpleModule {
+    public:
+        TestModule() : cSimpleModule(16384) { }
+
+        void testNonStaticMemberFunction() {
+            EV_DEBUG << "Hello from TestModule method\n";
+        }
+
+        static void testStaticMemberFunction() {
+            EV_STATICCONTEXT;
+            EV_DEBUG << "Hello from TestModule static method\n";
+        }
+
+    protected:
+        virtual void activity() override {
+            setName("testModuleName");
+            testNonClassFunction();
+            testStaticMemberFunction();
+            testNonStaticMemberFunction();
+            Object object;
+            object.test();
+            NonCObject nonCObject;
+            nonCObject.test();
+            LoggableNonCObject loggableNonCObject;
+            loggableNonCObject.test();
+        }
+};
+
+Define_Module(TestModule);
+
+}
+
+%contains: stdout
+[ ] Hello from a plain function
+[ ] Hello from TestModule static method
+[testModuleName TestModule] Hello from TestModule method
+[objectName cLog_12::Object] Hello from Object
+[ ] Hello from NonCObject
+[ ] Hello from LoggableNonCObject

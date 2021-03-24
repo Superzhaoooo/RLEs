@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Students_And_Support.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Students And Support - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Students_And_Support.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#master_bachelor_or_diploma_theses">Master, Bachelor, or Diploma Theses</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#topics_related_to_traffic_science" class="nav-link">• Topics related to Traffic Science</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#pollutant_emission_modelling_and_evaluation_eco-mobility" class="nav-link">&rarr; Pollutant Emission Modelling and Evaluation ("eco-mobility")</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traffic_lights" class="nav-link">&rarr; Traffic Lights</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#route_choice_and_demand_modelling" class="nav-link">&rarr; Route Choice and Demand Modelling</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#short-term_traffic_forecast" class="nav-link">&rarr; Short-term Traffic Forecast</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traffic_simulation_models" class="nav-link">&rarr; Traffic Simulation Models</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#v2x_vehicular_communication" class="nav-link">&rarr; V2X (vehicular communication)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#topics_related_to_information_science" class="nav-link">• Topics related to Information Science</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#algorithms_and_theoretical_information_science" class="nav-link">&rarr; Algorithms and theoretical Information Science</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#software_engineering" class="nav-link">&rarr; Software Engineering</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#xml" class="nav-link">&rarr; XML</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#other" class="nav-link">• Other</a>
+                </li>
+            <li class="nav-item main"><a href="#other_issues">Other Issues</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#documentation" class="nav-link">• Documentation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#validation" class="nav-link">• Validation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#models" class="nav-link">• Models</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routing" class="nav-link">• Routing</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#interoperability" class="nav-link">• Interoperability</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#tests" class="nav-link">• Tests</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Students And Support<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>Please find below a list of possible work items. It includes both,
+topics for long-term (3-6 months) academic theses and short-term
+things/issues of which we think that they would improve SUMO.</p>
+<h1 id="master_bachelor_or_diploma_theses">Master, Bachelor, or Diploma Theses<a class="headerlink" href="#master_bachelor_or_diploma_theses" title="Permanent link">#</a></h1>
+<p>In the following, you may find ideas for student work - Bachelor,
+Master, or Diploma theses. The topics you may find below are those we
+are interested in and some of them are already covered by previous
+scientific work. We assume them to be relevant for extending the current
+state-of-the art in traffic science and information science.</p>
+<p>In the case you are interested in one of the topics, we - the employees
+of the German Aerospace Center - would accompany, review and judge your
+work. Nonetheless, you will need an academic institution which will
+accept your work. This means, you normally have to contact your
+professor / advisor and ask him whether he will accept a topic. You
+should do this before starting the work on one of the topics. One of us
+will then act as the second reader/redactor and will guide you along
+your work. Of course, an initial discussion between the professor /
+advisor and us is wished for clarifying the work. Further regulations
+and legal issues are a matter of your home university / organization.</p>
+<p>The following list contains proposals only. If you have an own idea, you
+can present it to us, too. There is also <a href="DiplomStudArb.html">a more verbose list of the
+topics, in German</a>.</p>
+<h2 id="topics_related_to_traffic_science">Topics related to Traffic Science<a class="headerlink" href="#topics_related_to_traffic_science" title="Permanent link">#</a></h2>
+<h3 id="pollutant_emission_modelling_and_evaluation_eco-mobility">Pollutant Emission Modelling and Evaluation ("eco-mobility")<a class="headerlink" href="#pollutant_emission_modelling_and_evaluation_eco-mobility" title="Permanent link">#</a></h3>
+<ul>
+<li>Implementation and Evaluation of Pollutant Emission Models</li>
+</ul>
+<h3 id="traffic_lights">Traffic Lights<a class="headerlink" href="#traffic_lights" title="Permanent link">#</a></h3>
+<ul>
+<li>Methods for Green Light District Computation</li>
+<li>A Methodology for Comparing Traffic Lights Algorithm</li>
+</ul>
+<h3 id="route_choice_and_demand_modelling">Route Choice and Demand Modelling<a class="headerlink" href="#route_choice_and_demand_modelling" title="Permanent link">#</a></h3>
+<ul>
+<li>Evaluation of one-shot Traffic Assignment Approaches</li>
+<li>Evaluation of Gawron's Dynamic User Assignment Algorithm</li>
+<li>Alternate Methods for shortest-path Search in large Networks</li>
+<li>Ad-hoc Demand Generation</li>
+<li>Using Induction Loop Values for Highway Demand Generation</li>
+<li>Extrapolation of Routes based on Induction Loop Values</li>
+</ul>
+<h3 id="short-term_traffic_forecast">Short-term Traffic Forecast<a class="headerlink" href="#short-term_traffic_forecast" title="Permanent link">#</a></h3>
+<ul>
+<li>Forecast of Demand Time-Lines</li>
+</ul>
+<h3 id="traffic_simulation_models">Traffic Simulation Models<a class="headerlink" href="#traffic_simulation_models" title="Permanent link">#</a></h3>
+<ul>
+<li>Simulation Validation (should be concretised)</li>
+<li>Emergency Vehicle Simulation</li>
+<li>Using the opposite Lane for Overtaking - a Microsim Approach</li>
+<li>Left-Hand Traffic (includes both, work on the simulation and network
+  preparation)</li>
+<li>Pedestrian Movement Simulation (... for the open source Traffic
+  Simulation SUMO)</li>
+</ul>
+<h3 id="v2x_vehicular_communication">V2X (vehicular communication)<a class="headerlink" href="#v2x_vehicular_communication" title="Permanent link">#</a></h3>
+<ul>
+<li>Approaches for Communication Simulation Speed-Up</li>
+<li>Replication of ETSI's Basic Set of Applications (BSA)</li>
+<li>Estimation of Travel Time using V2X Communication</li>
+<li>Traffic Management based on sparse Knowledge</li>
+</ul>
+<h2 id="topics_related_to_information_science">Topics related to Information Science<a class="headerlink" href="#topics_related_to_information_science" title="Permanent link">#</a></h2>
+<h3 id="algorithms_and_theoretical_information_science">Algorithms and theoretical Information Science<a class="headerlink" href="#algorithms_and_theoretical_information_science" title="Permanent link">#</a></h3>
+<ul>
+<li>Evaluation of the Usability of the Optimal Network Flow Algorithm
+  for Demand Modelling (war: Analyse und Implementation eines
+  Netzwerkflussalgorithmus zur Routenfindung)</li>
+<li>Evaluation of the Usability of the Quickest Flows Algorithm for
+  Demand Modelling</li>
+<li>Matching Road Networks</li>
+</ul>
+<h3 id="software_engineering">Software Engineering<a class="headerlink" href="#software_engineering" title="Permanent link">#</a></h3>
+<ul>
+<li>Checkstyle for c++</li>
+<li>Fixed point vs. Floating point</li>
+<li>Multi-Core Parallelisation (Simulation and Routing Modules)</li>
+<li>Parallelisation for Computer Clusters (Simulation and Routing
+  Modules)</li>
+<li>SUMO-as-a-Service – SOA-based traffic simulation</li>
+</ul>
+<h3 id="xml">XML<a class="headerlink" href="#xml" title="Permanent link">#</a></h3>
+<ul>
+<li>Efficient Import and Export of XML using schema-based Compression</li>
+<li>Modular XML</li>
+</ul>
+<h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">#</a></h2>
+<ul>
+<li>OpenSource Marketing and Community Building</li>
+</ul>
+<h1 id="other_issues">Other Issues<a class="headerlink" href="#other_issues" title="Permanent link">#</a></h1>
+<p>In the following, you may find a list of tasks which are too
+short-termed or too well-elaborated for being a part of an academic
+work. They have to be done, but we could not find the time, yet, to work
+on them honestly. If you have some spare time, it would be very nice if
+you would invest it in one of them. Please contact us then for further
+details.</p>
+<p>Also, some of the items are assumed to be a good base for short-term
+student topics, within seminars, or programming / software engineering
+courses. Evaluating models could for instance be done by a set of
+students, assigning one model per student, and the same would for
+example also count for routing algorithms. Extending the test suites
+would be a nice programming course topic, too.</p>
+<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">#</a></h2>
+<ul>
+<li>Converting our wiki-pages into PDFs</li>
+<li>Ideas/Designs for a documentation</li>
+<li>Improved search</li>
+<li>XML schemata for files</li>
+<li>a data catalogue for SUMO files</li>
+</ul>
+<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">#</a></h2>
+<ul>
+<li>using real-world data (rather a topic for a seminar)</li>
+<li>using traffic engineering handbooks (rather a topic for a seminar)</li>
+</ul>
+<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">#</a></h2>
+<ul>
+<li>lane-change models evaluation (rather a topic for a seminar)</li>
+<li>car-following models evaluation (rather a topic for a seminar)</li>
+</ul>
+<h2 id="routing">Routing<a class="headerlink" href="#routing" title="Permanent link">#</a></h2>
+<ul>
+<li>multi-criteria-routing (pareto-routing)</li>
+<li>high-performance-routing (Hub-Labeling etc.)</li>
+<li>state-of-the-art public transport routing (RAPTOR, Transfer Patterns, etc)</li>
+</ul>
+<h2 id="interoperability">Interoperability<a class="headerlink" href="#interoperability" title="Permanent link">#</a></h2>
+<ul>
+<li>interoperability with other publicly available tools</li>
+</ul>
+<h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">#</a></h2>
+<ul>
+<li>Extend the unit-test - suite (would be a nice practical work for an
+  according software engineering seminar)</li>
+<li>Extend the texttest - suite (would be a nice practical work for an
+  according software engineering seminar)</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

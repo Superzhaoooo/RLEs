@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Z/Changes_from_version_0.9.8_to_version_0.9.9.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Z/Changes from version 0.9.8 to version 0.9.9 - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Z/Changes_from_version_0.9.8_to_version_0.9.9.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Z/Changes from version 0.9.8 to version 0.9.9<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<ul>
+<li>All<ul>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1976405&amp;group_id=45607&amp;atid=443421">bug 1976405 Saving invalid dump
+  configuration</a>;
+  Was a false encoding in Option_IntVector</li>
+<li>builds under 64bit Linux (solved bugs
+  <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1927822&amp;group_id=45607&amp;atid=443421">bug 1927822</a>,
+  <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1928370&amp;group_id=45607&amp;atid=443421">bug 1928370</a>,
+  <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1930444&amp;group_id=45607&amp;atid=443421">bug 1930444</a>,
+  <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1931468&amp;group_id=45607&amp;atid=443421">bug 1931468</a>,
+  <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1932961&amp;group_id=45607&amp;atid=443421">bug 1932961</a>,
+  <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1933569&amp;group_id=45607&amp;atid=443421">bug 1933569</a>,
+  <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1934635&amp;group_id=45607&amp;atid=443421">bug 1934635</a>;
+  thanks to Ronald Nippold for being persistent in supplying the
+  build logs</li>
+<li>encapsulated xerces-attributes; makes value retrieval so much
+  more comfortable; retrieve a attribute using
+  attrs.getTYPENAME(id) instead of getTYPENAME(attrs, id)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Simulation<ul>
+<li>Hidden state loading/saving completely from the microsim</li>
+<li>Vehicle may now end their route at a certain position of the
+  route's last edge (see
+  <a href="../Specification.html">Specification</a>)</li>
+<li>The route may be now given as an attribute (<em>route</em>) within the
+  vehicle definition (see
+  <a href="../Specification.html">Specification</a>)</li>
+<li>The vehicle now stores most of its definition parameters in
+  <em>myParameter</em>, not as atomar values</li>
+<li>Solved problems with multiple stop on same edge and with stops
+  on lanes which can not be used for continuing the route; thanks
+  to Friedemann Wesner and Gerrit Lammert for reporting them</li>
+<li>Reworked mean data output. The vehicle movements are now
+  weighted by the time the vehicle was on an edge/lane. Additional
+  constraints for output
+  (<strong>--exclude-empty-edges</strong>/<strong>--exclude-empty-lanes</strong>) allow to
+  dump only information about edges/lanes which were occupied by
+  vehicles.</li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1964433&amp;group_id=45607&amp;atid=443421">bug 1964433 different simulation results for different starting times</a>;
+  The issue was a false computation of WAUT switching and TLS
+  offset times when choosing a different simulation begin time
+  than 0</li>
+<li>replaced MSVehicle::getInTransit and MSVehicle::running by
+  MSVehicle::isOnRoad</li>
+<li>removed MSEdge::isSource; was used only once and can be easily
+  replaced by comparing the result of MSEdge::getPurpose()</li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1932105&amp;group_id=45607&amp;atid=443421">bug 1932105 second stop on the same edge confuses vehicles</a></li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1941846&amp;group_id=45607&amp;atid=443421">bug 1941846 repeatable crash with sumo r5378</a></li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1912547&amp;group_id=45607&amp;atid=443421">bug 1912547 linux 64 bit compile error for sumo svn 5143</a></li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1913655&amp;group_id=45607&amp;atid=443421">bug 1913655 command line sumo throws unknown exception</a></li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1924989&amp;group_id=45607&amp;atid=443421">bug 1924989 sumo r5186 crashs by pure virtual function call</a></li>
+<li>begun work on <a href="../Specification.html">Specification</a><ul>
+<li>all vehicles are emitted at position=0, with speed=0</li>
+</ul>
+</li>
+<li>removed usage of NLLoadFilter</li>
+<li>added an option to quit the simulation if a number of vehicles
+  is exceeded (<strong>--too-many-vehicles &lt;INT></strong>)</li>
+<li>fully integrated Tino Morenz's MSVTypeProbe; moved it from
+  microsim/trigger to microsim/output; tests added; a vtypeprobe
+  is now defined within additional files this way:
+  <code>&lt;vtypeprobe id="test1" type="" freq="10" file="vtypeprobe.xml"/&gt;</code>
+  ("test1" is the vehicle type to report, leave empty in order to
+  get information about all vehicles)</li>
+<li>replaced usage of "Command" by encapsulating methods in
+  "WrappingCommand" wherever possible</li>
+<li>"debugged" usage of actuated/agentbased tls; should be covered
+  by tests, in fact</li>
+<li>further work on devices-consolidation</li>
+<li>implemented a one-shot / multi-shot routing device</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>sumo-gui<ul>
+<li>Removed opening an additional command line window from the
+  release version</li>
+<li>Title is now set properly</li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2021454&amp;group_id=45607&amp;atid=443421">bug 2021454 Discarding View settings resets them</a>;
+  The editor now uses the settings that were used when it was
+  opened as the one to apply when "cancel" is pressed</li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2021464&amp;group_id=45607&amp;atid=443421">bug 2021464 view settings are not saved</a>;
+  The button is now removed, all the interaction will be done via
+  the top buttons</li>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2015792&amp;group_id=45607&amp;atid=443421">bug 2015792 Save List of selected Items</a>;
+  The proper extension (mostly ".txt") is now appended if no
+  extension is given. Affects saving breakpoints, additional
+  weights, tracked parameter, and selections.</li>
+<li><a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1919509&amp;group_id=45607&amp;atid=443421">bug 1919509 guisim crashed</a>
+    is invalid, the issue was a buggy opengl driver</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>netconvert<ul>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1993928&amp;group_id=45607&amp;atid=443421">bug 1993928 --keep-edges.input-file does not remove empty nodes</a>;
+  as soon as one edge-removal(keeping) option occures, nodes are
+  rechecked whether they contain any further edge. If not, the
+  node is removed.</li>
+<li>VISUM-import: debugged failures due to false district node
+  position computation</li>
+<li>Connection building: made storing outgoing edge connections
+  sane; replaced three strange storages by one</li>
+<li>Disabled the support for setting an "edge function" - because
+  vehicles are emitted the same (parametrised) way on each edge,
+  we do not need a distinction between source and normal edges;
+  sink edges were never distinguished.</li>
+<li>Refactored the way edge types are stored in netconvert</li>
+<li>removed "name" attribute from NBEdge; was not written anyway</li>
+<li>work on SUMO-networks reimport
+  <font color="red">(unfinished)</font></li>
+<li>documentation: debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1909685&amp;group_id=45607&amp;atid=443421">bug 1909685 option "omit-corrupt-edges" not recognized</a>
+  (use <strong>--dismiss-loading-errors</strong> instead of
+  <strong>--omit-corrupt-edges</strong>)</li>
+<li>removed usage of NLLoadFilter</li>
+<li>thanks to Christoph Sommer, the OSM importer now handles speed
+  and lanes information; default OS values are now used, too</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>duarouter / jtrrouter<ul>
+<li>Removed option <strong>--move-on-short</strong>. It got obsolete as vehicles
+  may start on edges which are shroter than they are, now.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>duarouter<ul>
+<li>debugged <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1981921&amp;group_id=45607&amp;atid=443421">bug 1981921 duarouter truncates routes</a>;
+  Now, <strong>--remove-loops</strong> only prunes the route if the vehicle
+  would have to take a turnaround at the begin or end.</li>
+<li>reworked handling of broken routes; longer routes are not
+  replaced; incomplete routes may be corrected using the new
+  <strong>--repair</strong> option</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>jtrrouter<ul>
+<li>Removed possibility to specify turning percentages using CSV
+  files</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>dfrouter<ul>
+<li>Definition of emitters, vss, etc. are now written into the same
+  folder as the declaration</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>TraCI<ul>
+<li>TraCI is now enabled as default</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>od2trips<ul>
+<li>due to being used for macroscopic demand definitions, od2trips
+  now emits vehicles using departlane="best" and departspeed="max"</li>
+<li>removed option to parse list of tables from a vissim file; they
+  may be given at the command line (<strong>--vissim</strong> is no longer
+  supported)</li>
+<li>added the possibility to omit writing the vehicle type
+  (<strong>--no-vtype</strong>)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="../Tools.html">Tools/Main</a><ul>
+<li>added some tools for output visualization
+  (mpl_dump_twoAgainst.py, mpl_tripinfos_twoAgainst.py,
+  mpl_dump_timeline.py) (see
+  <a href="../Tools/Visualization.html">Tools/Visualization</a>)</li>
+</ul>
+</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,12 @@
+prefix=/mingw64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: liburiparser
+Description: URI parsing and handling library
+
+Version: 0.8.4
+URL: http://uriparser.sourceforge.net/
+Libs: -L${libdir} -luriparser
+Cflags: -I${includedir}

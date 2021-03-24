@@ -1,0 +1,14 @@
+# pkg-config source file
+
+prefix=/mingw64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: openscenegraph-osg
+Description: 3D scenegraph
+Version: 3.5.5
+Requires: openthreads
+Conflicts:
+Libs: -L${libdir} -losg
+Cflags: -I${includedir}

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Other/File_Extensions.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Other/File Extensions - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Other/File_Extensions.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#native_sumo_files">Native SUMO Files</a></li>
+            <li class="nav-item main"><a href="#imported_files">Imported Files</a></li>
+            <li class="nav-item main"><a href="#exported_files">Exported Files</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Other/File Extensions<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="native_sumo_files">Native SUMO Files<a class="headerlink" href="#native_sumo_files" title="Permanent link">#</a></h2>
+<p>To ease the usage of the supplied files, all of which are within a
+XML-derivate, we use a naming convention for the file extensions to
+allow a distinction between the contents at first sight. The list of
+used extensions is shown below. We of course highly encourage you to use
+this pattern.</p>
+<ul>
+<li>Configuration files (always the first four letters of the
+corresponding executable with "cfg" appended)<ul>
+<li><strong>*.sumocfg</strong> (formerly .sumo.cfg): Configuration file for
+  <a href="../sumo.html">sumo</a> and <a href="../sumo-gui.html">sumo-gui</a>
+  (<a href="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">xsd</a>)</li>
+<li><strong>*.netccfg</strong> (formerly .netc.cfg): Configuration file for
+  <a href="../netconvert.html">netconvert</a>
+  (<a href="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">xsd</a>)</li>
+<li><strong>*.netgcfg</strong> (formerly .netg.cfg): Configuration file for
+  <a href="../netgenerate.html">netgenerate</a>
+  (<a href="http://sumo.dlr.de/xsd/netgenerateConfiguration.xsd">xsd</a>)</li>
+<li><strong>*.duarcfg</strong> (formerly .rou.cfg): Configuration file for
+  <a href="../duarouter.html">duarouter</a>
+  (<a href="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">xsd</a>)</li>
+<li><strong>*.jtrrcfg</strong> (formerly .jtr.cfg): Configuration file for
+  <a href="../jtrrouter.html">jtrrouter</a>
+  (<a href="http://sumo.dlr.de/xsd/jtrrouterConfiguration.xsd">xsd</a>)</li>
+<li><strong>*.dfrocfg</strong> (formerly .df.cfg): Configuration file for
+  <a href="../dfrouter.html">dfrouter</a>
+  (<a href="http://sumo.dlr.de/xsd/dfrouterConfiguration.xsd">xsd</a>)</li>
+<li><strong>*.od2tcfg</strong> (formerly .od2t.cfg): Configuration file for
+  <a href="../od2trips.html">od2trips</a>
+  (<a href="http://sumo.dlr.de/xsd/od2tripsConfiguration.xsd">xsd</a>)</li>
+<li><strong>*.acticfg</strong> (formerly .act.cfg): Configuration file for
+  <a href="../activitygen.html">activitygen</a>
+  (<a href="http://sumo.dlr.de/xsd/activitygenConfiguration.xsd">xsd</a>)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Data files<ul>
+<li><strong>*.net.xml</strong>: network file
+  (<a href="http://sumo.dlr.de/xsd/net_file.xsd">xsd</a>,
+  <a href="../Networks/SUMO_Road_Networks.html">description</a>)</li>
+<li><strong>*.rou.xml</strong>: routes file
+  (<a href="http://sumo.dlr.de/xsd/routes_file.xsd">xsd</a>,
+  <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">description</a>)</li>
+<li><strong>*.rou.alt.xml</strong>: route alternatives file
+  (<a href="http://sumo.dlr.de/xsd/routes_file.xsd">xsd</a>,
+  <a href="../Demand/Dynamic_User_Assignment.html#general_behavior">description</a>)</li>
+<li><strong>*.add.xml</strong>:
+  <a href="../sumo.html">sumo</a>/<a href="../sumo-gui.html">sumo-gui</a> - <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a>
+  (<a href="http://sumo.dlr.de/xsd/additional_file.xsd">xsd</a>, missing description)<ul>
+<li>traffic lights only
+  (<a href="http://sumo.dlr.de/xsd/tllogic_file.xsd">xsd</a>, missing
+  description)</li>
+</ul>
+</li>
+<li><strong>*.edg.xml</strong>: <a href="../netconvert.html">netconvert</a> - edges file
+  (<a href="http://sumo.dlr.de/xsd/edges_file.xsd">xsd</a>,
+  <a href="../Networks/PlainXML.html#edge_descriptions">description</a>)</li>
+<li><strong>*.nod.xml</strong>: <a href="../netconvert.html">netconvert</a> - nodes file
+  (<a href="http://sumo.dlr.de/xsd/nodes_file.xsd">xsd</a>,
+  <a href="../Networks/PlainXML.html#node_descriptions">description</a>)</li>
+<li><strong>*.con.xml</strong>: <a href="../netconvert.html">netconvert</a>- connection
+  file (<a href="http://sumo.dlr.de/xsd/connections_file.xsd">xsd</a>,
+  <a href="../Networks/PlainXML.html#connection_descriptions">description</a>)</li>
+<li><strong>*.typ.xml</strong>: <a href="../netconvert.html">netconvert</a>- edge types
+  file (<a href="http://sumo.dlr.de/xsd/types_file.xsd">xsd</a>,
+  <a href="../SUMO_edge_type_file.html">description</a>)</li>
+<li><strong>*.trips.xml</strong>: trip definitions for
+  <a href="../duarouter.html">duarouter</a>,<a href="../sumo.html">sumo</a>
+  (<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#incomplete_routes_trips_and_flows">description</a>)</li>
+<li><strong>*.flows.xml</strong>: flow definitions for
+  <a href="../jtrrouter.html">jtrrouter</a>,<a href="../duarouter.html">duarouter</a>,<a href="../sumo.html">sumo</a>
+  (<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#incomplete_routes_trips_and_flows">description</a>)</li>
+<li><strong>*.turns.xml</strong>: turn and sink definitions for
+  <a href="../jtrrouter.html">jtrrouter</a>
+  (<a href="http://sumo.dlr.de/xsd/turns_file.xsd">xsd</a>,
+  <a href="../Demand/Routing_by_Turn_Probabilities.html">description</a>)</li>
+<li><strong>*.taz.xml</strong>: traffic analysis zones (or districts) file
+  mainly for
+  <a href="../od2trips.html">od2trips</a>,<a href="../duarouter.html">duarouter</a>,<a href="../sumo.html">sumo</a>
+  (<a href="http://sumo.dlr.de/xsd/taz_file.xsd">xsd</a>)
+  (<a href="../Demand/Importing_O/D_Matrices.html#describing_the_taz">description</a>)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Output files<ul>
+<li><strong>*.xml</strong>: inductive loop output
+  (<a href="http://sumo.dlr.de/xsd/det_e1_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/Induction_Loops_Detectors_(E1).html">description</a></li>
+<li><strong>*.xml</strong>: areal lane detector output
+  (<a href="http://sumo.dlr.de/xsd/det_e2_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/Lanearea_Detectors_(E2).html">description</a>)</li>
+<li><strong>*.xml</strong>: areal lane detector output
+  (<a href="http://sumo.dlr.de/xsd/det_e3_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/Multi-Entry-Exit_Detectors_(E3).html">description</a>)</li>
+<li><strong>*.xml</strong>: emissions output
+  (<a href="http://sumo.dlr.de/xsd/emission_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/EmissionOutput.html">description</a>)</li>
+<li><strong>*.xml</strong>: fcd output
+  (<a href="http://sumo.dlr.de/xsd/fcd_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/FCDOutput.html">description</a>)</li>
+<li><strong>*.xml</strong>: full output
+  (<a href="http://sumo.dlr.de/xsd/full_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/FullOutput.html">description</a>)</li>
+<li><strong>*.xml</strong>: meandata output
+  (<a href="http://sumo.dlr.de/xsd/meandata_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/VTypeProbe.html">description</a>)</li>
+<li><strong>*.xml</strong>: netstate output
+  (<a href="http://sumo.dlr.de/xsd/netstate_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/VTypeProbe.html">description</a>)</li>
+<li><strong>*.xml</strong>: queue output
+  (<a href="http://sumo.dlr.de/xsd/queue_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/QueueOutput.html">description</a>)</li>
+<li><strong>*.xml</strong>: summary output
+  (<a href="http://sumo.dlr.de/xsd/summary_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/Summary.html">description</a>)</li>
+<li><strong>*.xml</strong>: tripinfo output
+  (<a href="http://sumo.dlr.de/xsd/tripinfo_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/TripInfo.html">description</a>)</li>
+<li><strong>*.xml</strong>: vtypeprobe output
+  (<a href="http://sumo.dlr.de/xsd/vtypeprobe_file.xsd">xsd</a>,
+  <a href="../Simulation/Output/VTypeProbe.html">description</a>)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Other files<ul>
+<li><strong>*.xml</strong>: edge diff
+  (<a href="http://sumo.dlr.de/xsd/edgediff_file.xsd">xsd</a>, missing
+  description)</li>
+</ul>
+</li>
+</ul>
+<h2 id="imported_files">Imported Files<a class="headerlink" href="#imported_files" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>*.osm</strong>: OpenStreetMap XML databases as imported by
+<a href="../netconvert.html">netconvert</a> and
+<a href="../polyconvert.html">polyconvert</a>, see <a href="../OpenStreetMap_file.html">OpenStreetMap
+file</a></li>
+<li><strong>*.xodr</strong>: OpenDRIVE XML network files as imported by
+<a href="../netconvert.html">netconvert</a></li>
+<li><strong>*.inp</strong>: VISSIM network files as imported by
+<a href="../netconvert.html">netconvert</a></li>
+<li><strong>*.net</strong>: VISUM network files as imported by
+<a href="../netconvert.html">netconvert</a> and
+<a href="../polyconvert.html">polyconvert</a>, see
+<a href="../Networks/Import/VISUM.html">Networks/Import/VISUM</a></li>
+<li><strong>*.shp, *.shx, *.dbf</strong>: ArcView-network descriptions (shapes,
+shape indices, definitions) as imported by
+<a href="../netconvert.html">netconvert</a> and
+<a href="../polyconvert.html">polyconvert</a></li>
+<li><strong>*.xml</strong>:<ul>
+<li>MATSim road networks as imported by
+  <a href="../netconvert.html">netconvert</a>, see
+  <a href="../Networks/Import/MATsim.html">Networks/Import/MATsim</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="exported_files">Exported Files<a class="headerlink" href="#exported_files" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>*.xml</strong>:<ul>
+<li>MATSim road networks, see <a href="../Networks/Further_Outputs.html">Networks/Further Outputs</a></li>
+<li>OMNET: mobility-traces, see
+  <a href="../Tools/TraceExporter.html">Tools/TraceExporter</a></li>
+<li>Shawn: snapshot-files, see
+  <a href="../Tools/TraceExporter.html">Tools/TraceExporter</a></li>
+</ul>
+</li>
+<li><strong>*.xodr</strong>: OpenDRIVE XML network, see <a href="../Networks/Further_Outputs.html">Networks/Further
+Outputs</a></li>
+<li><strong>*.tcl</strong>: ns2/ns3 trace-files, activity-files, and mobility-files,
+see <a href="../Tools/TraceExporter.html">Tools/TraceExporter</a></li>
+<li><strong>*.dri</strong>, <strong>*.str</strong>, <strong>*.fzp</strong>, <strong>*.flt</strong>: PHEM input files,
+see <a href="../Tools/TraceExporter.html">Tools/TraceExporter</a></li>
+<li><strong>unknown</strong>:<ul>
+<li>GPSDAT, see
+  <a href="../Tools/TraceExporter.html">Tools/TraceExporter</a></li>
+</ul>
+</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

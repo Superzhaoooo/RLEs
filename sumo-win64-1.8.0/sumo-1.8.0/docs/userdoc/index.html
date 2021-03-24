@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        <meta name="description" content="SUMO Documentation">
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/index.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem active">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/index.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+            <li class="nav-item main"><a href="#basic_usage">Basic Usage</a></li>
+            <li class="nav-item main"><a href="#network_building">Network Building</a></li>
+            <li class="nav-item main"><a href="#demand_modelling">Demand Modelling</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#data_sources_for_demand_generation" class="nav-link">• Data sources for demand generation</a>
+                </li>
+            <li class="nav-item main"><a href="#simulation">Simulation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#output" class="nav-link">• Output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traci_on-line_interaction" class="nav-link">• TraCI (On-line Interaction)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traffic_management_and_other_structures" class="nav-link">• Traffic Management and Other Structures</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traffic_modes" class="nav-link">• Traffic Modes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#additional_features" class="nav-link">• Additional Features</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#model_details" class="nav-link">• Model details</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#common_problems" class="nav-link">• Common Problems</a>
+                </li>
+            <li class="nav-item main"><a href="#additional_tools">Additional Tools</a></li>
+            <li class="nav-item main"><a href="#theory">Theory</a></li>
+            <li class="nav-item main"><a href="#application_manuals">Application Manuals</a></li>
+            <li class="nav-item main"><a href="#appendices">Appendices</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  <!-- <a href="Downloads.html" style="display: inline-block; margin-top: 20px; margin-bottom:10px;"><img src="images/release-note.png" alt="SUMO 1.5.0 is here!" style="width: 100%; border-radius: 20px; pointer-events: none;"></a>-->
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  
+
+<p><hTitles >SUMO User Documentation<hr style="border: 0.5px solid #338033;"></hTitles></p>
+<p>"<strong>S</strong>imulation of <strong>U</strong>rban <strong>MO</strong>bility" (SUMO) is an open source, highly portable, microscopic and continuous traffic simulation package designed to handle large networks. It allows for intermodal simulation including pedestrians and comes with a large set of tools for scenario creation. It is mainly developed by employees of the <a href="https://www.dlr.de/ts">Institute of Transportation Systems</a> at the <a href="https://www.dlr.de">German Aerospace Center</a>. SUMO is licensed under the <a href="https://eclipse.org/legal/epl-v20.html">EPL 2.0</a>.</p>
+<p>Please use the <a href="Contact.html">mailing lists</a> for sharing your results or for asking questions. Answers to some common questions may also be found in the <a href="FAQ.html">FAQ</a>.</p>
+<p>If You use SUMO, please tell us about your
+<a href="Publications.html">Publications</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When citing SUMO in general please use our current reference publication: <a href="https://elib.dlr.de/127994/">"Microscopic Traffic Simulation using SUMO"</a>; Pablo Alvarez Lopez, Michael Behrisch, Laura Bieker-Walz, Jakob Erdmann, Yun-Pang Flötteröd, Robert Hilbrich, Leonhard Lücken, Johannes Rummel, Peter Wagner, and Evamarie Wießner. IEEE Intelligent Transportation Systems Conference (ITSC), 2018.</p>
+</div>
+<p>The content of this Documentation is freely editable according to the <a href="https://en.wikipedia.org/wiki/Wiki">wiki style</a>. In order to edit this Documentation, click on the "Edit on GitHub" button on the upper right corner and submit a Pull Request.
+Here is a short help on <a href="Editing_Articles.html">editing articles</a>.</p>
+<p>This Documentation is continuously updated and always refers to the latest development version. Documentation for a specific release version of SUMO is included in the download of that version.</p>
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="SUMO_at_a_Glance.html">The traffic simulation SUMO</a></li>
+</ul>
+<h1 id="basic_usage">Basic Usage<a class="headerlink" href="#basic_usage" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="Basics/Notation.html">Notation in this Documentation</a></li>
+<li><a href="Basics/Basic_Computer_Skills.html">Needed, basic Computer
+  Skills</a></li>
+<li><a href="Installing.html">Installing SUMO</a></li>
+<li><a href="Basics/Using_the_Command_Line_Applications.html">Using SUMO Command Line Applications</a></li>
+<li><a href="Tutorials.html">Tutorials</a></li>
+<li><a href="XMLValidation.html">Validating application inputs</a></li>
+</ul>
+<h1 id="network_building">Network Building<a class="headerlink" href="#network_building" title="Permanent link">#</a></h1>
+<ul>
+<li>Introduction to <a href="Networks/SUMO_Road_Networks.html">SUMO Road Networks</a></li>
+<li><a href="Networks/Abstract_Network_Generation.html">Abstract networks generation</a></li>
+<li>Importing networks with <a href="netconvert.html">netconvert</a><ul>
+<li><a href="Networks/PlainXML.html">Defining own networks using XML</a></li>
+<li><a href="Networks/Import.html">Importing non-SUMO networks</a><ul>
+<li><a href="Networks/Import/OpenStreetMap.html">from OpenStreetMap</a><ul>
+<li><a href="Networks/Import/OpenStreetMap.html#3-click_scenario_generation">3-Click Scenario Generator</a></li>
+</ul>
+</li>
+<li><a href="Networks/Import/VISUM.html">from VISUM</a></li>
+<li><a href="Networks/Import/Vissim.html">from Vissim</a></li>
+<li><a href="Networks/Import/OpenDRIVE.html">from OpenDRIVE</a></li>
+<li><a href="Networks/Import/MATsim.html">from MATsim</a></li>
+<li><a href="Networks/Import/ArcView.html">from ArcView (shapefiles)</a></li>
+<li><a href="Networks/Import/DlrNavteq.html">from DlrNavTeq</a></li>
+<li><a href="Networks/Import/RoboCup.html">from Robocup Simulation League</a></li>
+</ul>
+</li>
+<li><a href="Networks/Import/SUMO_Road_Networks.html">Importing SUMO networks</a></li>
+<li><a href="Simulation/Motorways.html#building_a_network_for_motorway_simulation">Building networks for motorway simulation</a></li>
+<li><a href="Simulation/Pedestrians.html#building_a_network_for_pedestrian_simulation">Building networks for pedestrian simulation</a></li>
+<li><a href="Networks/Further_Options.html">Further netconvert options</a></li>
+<li><a href="Networks/Further_Outputs.html">Additional output</a></li>
+</ul>
+</li>
+<li><a href="netedit.html">Creating and modifying networks with netedit</a></li>
+<li><a href="Networks/Elevation.html">Including elevation data</a></li>
+<li><a href="Geo-Coordinates.html">Geo-Coordinates</a></li>
+</ul>
+<h1 id="demand_modelling">Demand Modelling<a class="headerlink" href="#demand_modelling" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="Demand/Introduction_to_demand_modelling_in_SUMO.html">Introduction to SUMO Demand Modelling</a></li>
+<li><a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">Definition of Vehicles, Vehicle Types, and Routes</a></li>
+<li><a href="Simulation/Public_Transport.html">Simulation of public transport</a></li>
+<li><a href="Specification/Persons.html">Simulation of individual persons and trip chains</a></li>
+<li><a href="Specification/Logistics.html">Simulation of logistics</a></li>
+<li><a href="Demand/Shortest_or_Optimal_Path_Routing.html">Shortest or Optimal Path Routing</a></li>
+<li><a href="IntermodalRouting.html">Intermodal Routing</a></li>
+<li><a href="Demand/Automatic_Routing.html">Routing in the Simulation</a></li>
+<li><a href="Demand/Dynamic_User_Assignment.html">Computing Dynamic User Assignment</a></li>
+<li><a href="Simulation/Pedestrians.html#generating_pedestrian_demand">Generating pedestrian traffic demand</a></li>
+<li><a href="Tools/Misc.html#createvehtypedistributionspy">Generate a vehicle type distribution to model the fleet</a></li>
+</ul>
+<h3 id="data_sources_for_demand_generation">Data sources for demand generation<a class="headerlink" href="#data_sources_for_demand_generation" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="Demand/Importing_O/D_Matrices.html">Importing O/D Matrices</a><ul>
+<li><a href="Demand/Further_Ways_to_import_VISUM_Demand_Definitions.html">Other VISUM Demand Importers</a></li>
+<li><a href="Demand/Further_Ways_to_import_Vissim_Demand_Definitions.html">Other Vissim Demand Importers</a></li>
+</ul>
+</li>
+<li><a href="Demand/Routes_from_Observation_Points.html">Routes from Counting Data (road counts, turn counts)</a></li>
+<li><a href="Demand/Routing_by_Turn_Probabilities.html">Routing by Turn Probabilities</a></li>
+<li><a href="Demand/Activity-based_Demand_Generation.html">Activity-based Demand Generation</a></li>
+<li><a href="Tools/Trip.html#randomtripspy">Random Trips</a></li>
+<li><a href="Tools/Import/OSM.html#osmwebwizardpy">Multi-modal random traffic</a></li>
+</ul>
+<h1 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="Simulation/Basic_Definition.html">Basic Definition</a></li>
+<li><a href="Simulation/SaveAndLoad.html">Saving and Loading Simulation State</a></li>
+</ul>
+<h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Simulation/Output.html">Simulation output overview</a></li>
+</ul>
+<h2 id="traci_on-line_interaction">TraCI (On-line Interaction)<a class="headerlink" href="#traci_on-line_interaction" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="TraCI.html">TraCI overview</a></li>
+</ul>
+<h2 id="traffic_management_and_other_structures">Traffic Management and Other Structures<a class="headerlink" href="#traffic_management_and_other_structures" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Simulation/Traffic_Lights.html">Traffic Lights</a></li>
+<li><a href="Simulation/Public_Transport.html">Public Transport</a></li>
+<li><a href="Simulation/Variable_Speed_Signs.html">Variable Speed Signs</a></li>
+<li><a href="Simulation/Rerouter.html">Rerouter / Alternative Route Signage</a></li>
+<li><a href="Simulation/Vaporizer.html">Vaporizer</a> (deprecated, use Calibrator instead)</li>
+<li><a href="Simulation/Calibrator.html">Dynamic calibration of flow and speed and type</a></li>
+<li><a href="Simulation/ParkingArea.html">Parking areas</a></li>
+</ul>
+<h2 id="traffic_modes">Traffic Modes<a class="headerlink" href="#traffic_modes" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Simulation/Pedestrians.html">Pedestrian simulation</a></li>
+<li><a href="Simulation/Bicycles.html">Bicycle simulation</a></li>
+<li><a href="Simulation/Railways.html">Railway simulation</a></li>
+<li><a href="Simulation/Waterways.html">Waterway simulation</a></li>
+</ul>
+<h2 id="additional_features">Additional Features<a class="headerlink" href="#additional_features" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Models/Emissions.html">Emissions</a></li>
+<li><a href="Models/Electric.html">Electric Vehicles</a></li>
+<li><a href="Models/ElectricHybrid.html">Electric Hybrid Vehicles, overhead lines, power substations</a></li>
+<li><a href="Specification/Logistics.html">Logistics</a></li>
+<li><a href="Simulation/GenericParameters.html">Generic Parameters</a></li>
+<li><a href="Simulation/Shapes.html">Shapes Visualisation</a></li>
+<li><a href="Simulation/Bluetooth.html">Wireless Device Detection</a></li>
+<li><a href="Simulation/Emergency.html">Emergency Vehicles</a></li>
+<li><a href="Simpla.html">Simple Platooning (Simpla)</a></li>
+<li><a href="Simulation/Taxi.html">Demand Responsive Transport (Taxis)</a></li>
+</ul>
+<h2 id="model_details">Model details<a class="headerlink" href="#model_details" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Simulation/VehicleSpeed.html">Vehicle speed</a></li>
+<li><a href="Simulation/VehicleInsertion.html">Vehicle insertion</a></li>
+<li><a href="Simulation/VehiclePermissions.html">Vehicle permissions (access restrictions)</a></li>
+<li><a href="Simulation/Intersections.html">Intersection dynamics</a></li>
+<li><a href="Simulation/Randomness.html">Randomness</a></li>
+<li><a href="Simulation/Routing.html">Routing and Re-routing</a></li>
+<li><a href="Simulation/SublaneModel.html">Sublane Model</a></li>
+<li><a href="Simulation/OppositeDirectionDriving.html">Opposite Direction Driving</a></li>
+<li><a href="Simulation/Safety.html">Safety</a></li>
+<li><a href="Simulation/Meso.html">Mesoscopic model</a></li>
+<li><a href="Simulation/Distances.html">Lengths and Distances</a></li>
+</ul>
+<h2 id="common_problems">Common Problems<a class="headerlink" href="#common_problems" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Simulation/Why_Vehicles_are_teleporting.html">Why Vehicles are teleporting</a></li>
+<li><a href="FAQ.html#the_simulation_has_lots_of_jamsdeadlocks_what_can_i_do">Unexpected jamming</a></li>
+<li><a href="Simulation/Turnarounds.html">Too many turn-arounds</a></li>
+<li><a href="FAQ.html#why_do_the_vehicles_perform_unexpected_lane-changing_maneuvers">Unexpected lane-changing maneuvers?</a></li>
+<li><a href="FAQ.html#how_do_i_get_high_flowsvehicle_densities">How to get high flows?</a></li>
+</ul>
+<h1 id="additional_tools">Additional Tools<a class="headerlink" href="#additional_tools" title="Permanent link">#</a></h1>
+<p>For an index of all tools see</p>
+<ul>
+<li><a href="Tools.html">Tool index</a></li>
+</ul>
+<p>In addition to the <a href="SUMO_at_a_Glance.html#included_applications">main applications (sumo, sumo-gui, netedit, netconvert, etc.)</a>, there are
+over 150 additional tools. They cover topics from traffic network
+analysis, demand generation, demand modification to output analysis.
+Most of them are written in <a href="https://www.python.org/">python</a>. All tools
+can be found in the SUMO-distribution under <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools.</p>
+<p>Below are links to some of the most important tools:</p>
+<ul>
+<li><a href="Tools/Import/OSM.html#osmwebwizardpy">osmWebWizard</a></li>
+<li><a href="TraCI/Interfacing_TraCI_from_Python.html">TraCI/Interfacing TraCI from Python</a></li>
+<li><a href="Tools/Sumolib.html">Reading SUMO networks and outputs with Python (sumolib)</a></li>
+<li><a href="Tools/Xml.html">Tools for converting SUMO outputs to CSV/Spreadsheet</a></li>
+<li><a href="Tools/TraceExporter.html">Exporting mobility Traces (traceExporter)</a></li>
+<li><a href="Tools/Net.html#netdiffpy">Determining the differences between two networks</a></li>
+<li><a href="Tools/Visualization.html">Tools/Visualization</a></li>
+</ul>
+<h1 id="theory">Theory<a class="headerlink" href="#theory" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="Theory/Traffic_Simulations.html">Traffic simulations in general</a></li>
+</ul>
+<h1 id="application_manuals">Application Manuals<a class="headerlink" href="#application_manuals" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="sumo.html">sumo</a></li>
+<li><a href="sumo-gui.html">sumo-gui</a></li>
+<li><a href="netconvert.html">netconvert</a></li>
+<li><a href="netedit.html">netedit</a></li>
+<li><a href="netgenerate.html">netgenerate</a></li>
+<li><a href="od2trips.html">od2trips</a></li>
+<li><a href="duarouter.html">duarouter</a></li>
+<li><a href="jtrrouter.html">jtrrouter</a></li>
+<li><a href="dfrouter.html">dfrouter</a></li>
+<li><a href="marouter.html">marouter</a></li>
+<li><a href="polyconvert.html">polyconvert</a></li>
+<li><a href="activitygen.html">activitygen</a></li>
+<li><a href="Tools/Emissions.html#emissionsmap">emissionsMap</a></li>
+<li><a href="Tools/Emissions.html#emissionsdrivingcycle">emissionsDrivingCycle</a></li>
+</ul>
+<h1 id="appendices">Appendices<a class="headerlink" href="#appendices" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="ChangeLog.html">ChangeLog</a></li>
+<li><a href="Other/Glossary.html">Glossary</a></li>
+<li><a href="FAQ.html">FAQ</a></li>
+<li><a href="Other/File_Extensions.html">Known File Extensions</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 02 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2020-12-01 23:08:29
+-->

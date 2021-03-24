@@ -1,0 +1,221 @@
+2020-01-06  ------ omnetpp-5.6 released ------
+
+2019-05-15  ------ omnetpp-5.5 released ------
+
+2018-11-05  Zoltan Bojthe
+
+	* Fix: event number printf format: remove extra tail "d"
+
+2018-06-25  ------ omnetpp-5.4.1 released ------
+
+2018-06-20  Rudolf Hornig
+
+	* Added opp_eventlogtool as an alias for eventlogtool
+
+2018-06-11  ------ omnetpp-5.4 released ------
+
+2018-04-11  ------ omnetpp-5.3 released ------
+
+2017-12-08  ------ omnetpp-5.2.1 released ------
+
+2017-09-18  ------ omnetpp-5.2 released ------
+
+2017-04-06  Andras Varga
+
+	* Modernizing: use C++11's range-based for loops where applicable, using
+	clang-tidy's modernize-loop-convert.
+
+	* Modernizing: replace INT64_PRINTF_FORMAT and LL with C++11's PRId64.
+	Note: PRId64 includes the "d" that was not part of INT64_PRINTF_FORMAT
+	alias LL.
+
+2017-05-25  Rudolf Hornig
+
+	* Updated makefiles for speeding up the build:
+	- generated files are created only once, even when using parallel build
+	- binaries are copied to their final destination using proper makefile
+	  targets
+
+2017-05-08  ------ omnetpp-5.1.1 released ------
+
+2017-03-31  ------ omnetpp-5.1 released ------
+
+2017-02-06  ------ omnetpp-5.1pre3 released ------
+
+2016-12-23  ------ omnetpp-5.1pre2 released ------
+
+2016-11-30  Rudolf Hornig
+
+	* build: Makefile refactored. Added clang-c2 support and optimized
+	the build process.
+
+	* build: removed Makefile.vc, as Visual C++ builds are now handled
+	by the standard Makefiles.
+
+2016-07-25  Andras Varga
+
+	* Added 'discard' field to SendHopEntry in eventlogentries.txt.
+	See related cEnvir::messageSendHop() change in the simulation
+	kernel.
+
+2016-06-23  Rudolf Hornig
+
+	* The makefile now uses compiler-generated dependency files.
+
+2016-04-13  ------ omnetpp-5.0 released ------
+
+2016-04-06  Levente Meszaros
+
+	* Fixed a bug that broke transmission delay drawing in the sequence chart
+
+2016-03-10  ------ omnetpp-5.0rc released ------
+
+2015-12-07  ------ omnetpp-5.0b3 released ------
+
+2015-11-23  Levente Meszaros
+
+	* Support for fingerprint recording: added 'fingerprint' to EventEntry,
+	see eventlogentries.txt.
+
+2015-10-16  Andras Varga
+
+	* omnetpp namespace made permanent (cannot be turned off):
+	- removed configure option and preprocessor symbol USE_NAMESPACE
+	- removed related macros: NAMESPACE_BEGIN, NAMESPACE_END,
+	  USING_NAMESPACE, OPP, OPP_STR, OPP_PREFIX etc.
+
+2015-07-20  ------ omnetpp-5.0b2 released ------
+
+2015-06-16  Andras Varga
+
+	* Cleanup: prefer ++it to it++ (less copying)
+
+2015-06-08  Andras Varga
+
+	* Cleanup: longer header guards
+
+2015-06-11  Andras Varga
+
+	* if(dynamic_cast) refactoring: change code like
+
+	    if (dynamic_cast<cComponent *>(object) != nullptr) {
+	        cComponent *component = (cComponent *)object;
+	        ...
+	    }
+
+	To:
+
+	    if (cComponent *component = dynamic_cast<cComponent *>(object)) {
+	        ...
+	    }
+
+2015-06-08  Andras Varga
+
+	* Cleanup: code formatting
+
+2015-05-15  Andras Varga
+
+	* Cleanup: use per-folder nested namespaces: omnetpp::envir, omnetpp::tkenv,
+	omnetpp::layout, omnetpp::common, omnetpp::eventlog, etc.
+
+2015-05-22  Andras Varga
+
+	* Modernizing: added the 'override' keyword (C++11) to overridden methods;
+	it becomes blank when using with an older compiler.
+
+2015-05-21  Rudolf Hornig
+
+	* Modernizing: replaced NULLs by 'nullptr' (C++11); it is defined as 0
+	when using an older compiler.
+
+2015-05-11  Andras Varga
+
+	* Cleanup: data members renamed to camelCase
+
+2015-04-20  Andras Varga
+
+	* Cleanup: use C++ names of C headers (e.g. <cstdio> instead of <stdio.h>)
+
+2015-04-12  Andras Varga
+
+	* Cleanup: copyright years updated
+
+2015-04-08  Andras Varga
+
+	* Modernizing:
+
+	- Use a fixed include path (-Iinclude -Isrc) for all source folders
+	  under src/, and qualify cross-folder #includes with the folder
+	  name (e.g. change #include "stringutil.h" to #include "common/stringutil.h").
+	  This increases readbility and reduces the chance of including a wrong
+	  header.
+
+	- In source files, sort #include statements by folder.
+
+2015-03-04  ------ omnetpp-5.0b1 released ------
+
+2014-01-28  Andras Varga
+
+	* Removed eventlog support for module reparenting (i.e. logging of
+	cModule::changeParentTo()), because tools cannot easily support it
+
+2014-11-27  ------ omnetpp-4.6 released ------
+
+2014-06-30  ------ omnetpp-4.5 released ------
+
+2014-02-13  ------ omnetpp-4.4.1 released ------
+
+2013-12-20  ------ omnetpp-4.4 released ------
+
+2013-11-14  Rudolf Hornig
+
+	* Fixes for compiling with clang
+
+2013-09-12  ------ omnetpp-4.3.1 released ------
+
+2013-04-02  ------ omnetpp-4.3 released ------
+
+2013-02-08  ------ omnetpp-4.3rc1 released ------
+
+2012-03-13  ------ omnetpp-4.2.2 released ------
+
+2012-01-17  ------ omnetpp-4.2.1 released ------
+
+2011-10-28  ------ omnetpp-4.2 released ------
+
+2011-09-11  ------ omnetpp-4.2rc1 released ------
+
+2011-05-05  ------ omnetpp-4.2b2 released ------
+
+2011-02-23  ------ omnetpp-4.2b1 released ------
+
+2010-06-11  ------ omnetpp-4.1 released ------
+
+2010-05-31  ------ omnetpp-4.1rc2 released ------
+
+2010-04-20  ------ omnetpp-4.1b4 released ------
+
+2010-03-14  ------ omnetpp-4.1b3 released ------
+
+2009-11-09  Levente Meszaros
+
+	* Fixed handling eventlog-recording-intervals, recording stopped at the first non recorded
+	event and did not start afterwards.
+
+2009-03-12  ------ omnetpp-4.0 released ------
+
+2009-02-27  ------ omnetpp-4.0rc2 released ------
+
+2008-12-12  ------ omnetpp-4.0rc1 released ------
+
+2008-11-26  Andras Varga
+
+	* library renamed to oppeventlog
+
+2008-02-23  Andras Varga
+
+	* Started the ChangeLog. The Eventlog library was added in omnetpp-4.0.
+	It implements reading and traversing eventlog files recorded by
+	simulations, and also provides a command-line tool (eventlogtool).
+	Files >2GB are supported. The lib is used by Sequence Charts
+	in the IDE. Author: Levente Meszaros.

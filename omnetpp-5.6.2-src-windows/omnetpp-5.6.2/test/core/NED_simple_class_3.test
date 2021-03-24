@@ -1,0 +1,47 @@
+%description:
+Test @class property inheritance.
+
+%file: test.ned
+
+simple Super
+{
+    parameters:
+        @class(SuperClass);
+}
+
+simple SimpleInherit extends Super
+{
+}
+
+network Test
+{
+    submodules:
+        a: SimpleInherit;
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+class SuperClass : public cSimpleModule
+{
+  public:
+    SuperClass() : cSimpleModule(16384) { }
+    virtual void activity() override;
+};
+
+Define_Module(SuperClass);
+
+void SuperClass::activity()
+{
+    EV << "SuperClass\n";
+}
+
+};
+
+%contains: stdout
+SuperClass

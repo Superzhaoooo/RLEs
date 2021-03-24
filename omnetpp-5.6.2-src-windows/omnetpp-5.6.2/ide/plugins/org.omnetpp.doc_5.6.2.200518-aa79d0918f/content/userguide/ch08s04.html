@@ -1,0 +1,16 @@
+<html><head><link rel="STYLESHEET" href="../book.css"  type="text/css"/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Using Tkenv with a Debugger</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="index.html" title="OMNeT&#8288;+&#8288;+ User Guide"><link rel="up" href="ch08.html" title="Chapter 8. The Tkenv Graphical Runtime Environment"><link rel="prev" href="ch08s03.html" title="Using Tkenv"><link rel="next" href="ch08s05.html" title="Parts of the Tkenv UI"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Using Tkenv with a Debugger</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch08s03.html">Prev</a> </td><th width="60%" align="center">Chapter 8. The Tkenv Graphical Runtime Environment</th><td width="20%" align="right"> <a accesskey="n" href="ch08s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idm2940"></a>Using Tkenv with a Debugger</h2></div></div></div><p>You  can use Tkenv together with a C&#8288;+&#8288;+ debugger, which is mainly useful when
+      developing new models. When you do that, there are a few things you need to know.
+    </p><p>Tkenv is a library that runs as part of the simulation program. This has
+      a lot of implications, the most apparent being that when the simulation crashes
+      (due to a bug in the model's C&#8288;+&#8288;+ code), it will bring down the whole OS process,
+      including the Tkenv GUI.
+    </p><p>The second consequence is that suspending the simulation program in a debugger
+      will also freeze the GUI until it is resumed. Also, Tkenv is also single-theaded
+      and runs in the same thread as the simulation program, so even if you only suspend
+      the simulation's thread in the debugger, the UI will freeze.
+    </p><p>The Tkenv UI deals with <code class="literal">cObject</code>s (the C&#8288;+&#8288;+ methods that the GUI relies
+      on are defined on <code class="literal">cObject</code>). All other data such as primitive variables,
+      non-cObject classes and structs, STL containers etc, are hidden from Tkenv.
+      You may wrap objects into cObjects to make them visible for Tkenv, that's what
+      e.g. the WATCH macros do as well.
+    </p><p>The following sections go into detail about various parts and functions of the Tkenv UI.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch08s03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch08.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch08s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Using Tkenv </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Parts of the Tkenv UI</td></tr></table></div></body></html>

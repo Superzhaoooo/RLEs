@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Z/Changes_from_Version_0.17.1_to_Version_0.18.0.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Z/Changes from Version 0.17.1 to Version 0.18.0 - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Z/Changes_from_Version_0.17.1_to_Version_0.18.0.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#version_0180_28082013">Version 0.18.0 (28.08.2013)</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#bugfixes" class="nav-link">• Bugfixes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#enhancements" class="nav-link">• Enhancements</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#other" class="nav-link">• Other</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Z/Changes from Version 0.17.1 to Version 0.18.0<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="version_0180_28082013">Version 0.18.0 (28.08.2013)<a class="headerlink" href="#version_0180_28082013" title="Permanent link">#</a></h2>
+<h3 id="bugfixes">Bugfixes<a class="headerlink" href="#bugfixes" title="Permanent link">#</a></h3>
+<ul>
+<li>Simulation<ul>
+<li>fixed crash/hangup if a step-length below the minimum of 0.001
+  is given</li>
+<li>fixed bug that caused visual collisions (vehicles on different
+  lanes occupying the same space while on a junction)</li>
+<li>fixed bug where vehicles were inserted with unsafe speeds on
+  minor roads causing collisions</li>
+<li>removed arrival attribute from vehicle routes output for non
+  arrived vehicles</li>
+<li>now saving all routes if a vehicle is rerouted multiple times</li>
+<li>fixed crash when using calibrators</li>
+</ul>
+</li>
+<li>TraCI<ul>
+<li>the return values for link direction and link state are now
+  working for lane variable: link (0x33)</li>
+<li>routes are now preloaded before the first simulation step such
+  that getMinExpectedNumber gives good results from the very start</li>
+<li>Fixed documentation bug that stated geodetic positions have the
+  format LAT,LON whereas they actually use LON,LAT. TraCI behavior
+  remains unchanged.</li>
+<li>Fixed rerouting for not departed vehicles (change target, change
+  route and change route id)</li>
+</ul>
+</li>
+<li>netconvert<ul>
+<li>street-names will no longer be missing from the output when
+  importing a net.xml or edg.xml file which has them</li>
+<li>using option <strong>--ramps.no-split</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> no longer creates networks with faulty
+  connections.</li>
+<li>fixed bug that caused invalid connections to be generated where
+  roads split or merge</li>
+<li>fixed invalid traffig light logics and occasional crashes when
+  importing a .net.xml file along with split elements</li>
+<li>when importing sumo networks, dangerous connections (multiple
+  connections from the same edge to the same lane) are no longer
+  silently discarded</li>
+<li>fixed bug that caused invalid node geometries when using <strong>--junctions.join</strong> together with ramp building options <strong>--ramps.*</strong>.</li>
+</ul>
+</li>
+<li>duarouter<ul>
+<li>option <strong>--ignore-errors</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> now works correctly when a vehicle is not allowed to
+  drive on its depart edge</li>
+</ul>
+</li>
+<li>sumo-gui<ul>
+<li>vehicles with guiShape="pedestrian" now have the same size in
+  all levels of detail</li>
+<li>traffic lights and lane-to-lane connections are now drawn for
+  railways</li>
+</ul>
+</li>
+</ul>
+<h3 id="enhancements">Enhancements<a class="headerlink" href="#enhancements" title="Permanent link">#</a></h3>
+<ul>
+<li>Simulation<ul>
+<li>improved simulation speed</li>
+<li>added option <strong>--link-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> for recording the approach of vehicles at
+  junctions. This option addresses the need of developers when
+  investigating junction control.</li>
+<li>added new abstract vehicle classes "custom1" and "custom2" for
+  user defined purposes.</li>
+<li>drivers on a minor road now grow impatient while waiting for a
+  gap in the traffic. After a while they will drive even if it
+  means that another car has to slow down to accommodate them (as
+  before, they will only drive if it is safe to do so).</li>
+<li>added vType attribute <strong>impatience</strong> which affects the
+  willingness of drivers to cut into traffic even if it forces
+  other drives to brake.</li>
+<li>added support for stop-signs at minor roads</li>
+<li>added support for the intersection type <em>allway_stop</em>. <a href="https://en.wikipedia.org/wiki/All-way_stop">This corresponds to an intersection type found in north america</a></li>
+<li>added option <strong>--fcd-output.signals</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> for including a vehicles signal state in the
+  output (brake lights etc.)</li>
+<li>implemented "expected" attribute for stops, which expects IDs of
+  people that have to enter the vehicle to allow the vehicle to
+  leave the stop. Should be used with "triggered='true'" (would
+  not work otherwise). Thanks to Shubham Jain for pointing out the
+  wrong description of the possibilities in
+  <a href="http://sumo.sourceforge.net/cite.bib">[1]</a>.</li>
+<li>added options for saving and loading simulation states.
+  Simulation states can be saved at predetermined times and then loaded to initialize a new
+  simulation (this also requires loading the network and routes of the
+  original simulation). When the filename for saving ends with <strong>.sbx</strong>
+  the file will be saved in a binary format instead of xml.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<ul>
+<li><strong>--save-state.times</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> [,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>...]</li>
+<li><strong>--save-state.files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> [,<a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>]*</li>
+<li><strong>--save-state.prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></li>
+<li><strong>--load-state</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></li>
+<li><strong>--load-state.offset</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a></li>
+<li>option <strong>--sloppy-insert</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> is marked deprecated because the behavior is now the
+  default, use <strong>--eager-insert</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> to get the old behavior</li>
+<li>vehicle route output for persons now includes complete plans</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>sumo-gui<ul>
+<li>it is now possible to toggle the simulation time display between
+  'seconds' and 'hour-minute-seconds' by clicking on the
+  'Time'-button next to the time display. The state of this
+  setting persists across GUI sessions.</li>
+<li>it is now possible to toggle between alternate delay values by
+  clicking on the 'Delay'-button next to the delay dial. Clicking
+  causes the current delay value to be saved as the alternative
+  value. The alternative delay value persists across GUI sessions.</li>
+<li>parking vehicles are now being drawn (at the side of the road)</li>
+<li>the vehicle parameter table now contains information about the
+  status of stopped vehicles</li>
+<li>vehicles can now be colored by their selection state</li>
+<li>added option for selecting a vehicles foes at the next junction
+  to the vehicle popup menu (useful when coloring by selecting)</li>
+<li>brake lights will no longer be triggered when the route ends
+  unless the vehicle actually has to slow down.</li>
+<li>now providing separate options for customizing the visualization
+  of persons</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>netconvert<ul>
+<li>when using the option <strong>--no-internal-links</strong> the edge lengths are now increased to
+  compensate for the missing internal links. Thus, route lengths
+  will correspond better to physical distances and roundabouts are
+  less prone to congestions.</li>
+<li>added option <strong>--keep-edges.in-geo-boundary</strong> which works similar to option <strong>--keep-edges.in-boundary</strong> but uses geodetic
+  coordinates instead of cartesian.</li>
+<li>added new node type <em>priority_stop</em>. This works similar to type
+  <em>priority</em> but minor links now require a stop</li>
+<li>added new node type <em>allway_stop</em>. <a href="https://en.wikipedia.org/wiki/All-way_stop">This corresponds to an intersection type found in north America</a></li>
+<li>added option <strong>--ignore-errors.edge-type</strong> for ignoring unknown edge types during loading.
+  This happens frequently when dealing with plain xml files based
+  on OSM data.</li>
+<li>now parsing the <em>OSM</em>-Attribute "tracks" to determine whether a
+  railway element is unidirectional or bidirectional.</li>
+<li>added option <strong>--osm.railway.oneway-default</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> for setting the default behavior when importing
+  railways without "tracks" attribute. The appropriate value
+  depends on the mapping style of the regional <em>OSM</em> comunity.</li>
+<li>added option <strong>--geometry.max-angle</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> which warns about sharp turns on an edge. This is
+  enabled by default for turns above 99 Degrees.</li>
+<li>added option <strong>--geometry.min-radius</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> which warns about sharp turns at the start and end
+  of an edge. This is enabled by default for radii below 9 meters</li>
+<li>added option <strong>--geometry.min-radius.fix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> which prunes geometry to avoid sharp turns at the
+  start and end of an edge. This is disabled by default.</li>
+<li>added option <strong>--check-lane-foes.all</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> (default=false) for lifting junction restrictions
+  for vehicles which exit on different lanes of the same edge
+  without crossing paths. This improves junction throughput in
+  many cases but is a more aggressive interpretation of german
+  traffic laws.</li>
+<li>added option <strong>--check-lane-foes.roundabout</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a> (default=true) for lifting some junction
+  restrictions at roundabouts. This conforms to the typical layout
+  of roundabouts where restrictions on lane-changing allow such
+  movements.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>TraCI<ul>
+<li>added optional flags for cmd stop (0x12) to set the parking and
+  triggered status</li>
+<li>added command stop state (id 0xb5) for retrieving the
+  stopped,parking and triggered status</li>
+<li>added command resume (0x19) for resuming from the current stop</li>
+<li>reduced verbosity on connection close (no more good byes)</li>
+</ul>
+</li>
+</ul>
+<h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">#</a></h3>
+<ul>
+<li>Simulation<ul>
+<li>The elements <strong>&lt;vehicle></strong>, <strong>&lt;flow></strong> and <strong>&lt;vType></strong> now
+  support child elements of the form <strong>&lt;param key="myKey"
+  value="myValue/></strong>. These can be used when implementing custom
+  functionality (see
+  <a href="../Developer/How_To/Device.html">Developer/How_To/Device</a>).</li>
+<li>code for messaging functionality removed (was disabled by
+  default anyway)</li>
+</ul>
+</li>
+<li><a href="../Contributed/SmallMaps.html">Contributed/SmallMaps</a> tools was
+removed because it was outdated</li>
+<li>switched all references in code and documentation to sumo-sim.org</li>
+<li>TraCI version is now 6</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

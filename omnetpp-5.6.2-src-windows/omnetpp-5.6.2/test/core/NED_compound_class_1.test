@@ -1,0 +1,36 @@
+%description:
+Test @class property without C++ namespace.
+
+%file: package.ned
+
+// don't use @namespace
+
+%file: test.ned
+
+module CompoundModule
+{
+    @class(CompoundModuleClassWithoutNamespace);
+}
+
+network Test
+{
+    submodules:
+        a: CompoundModule;
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+class CompoundModuleClassWithoutNamespace : public cModule
+{
+  protected:
+    void initialize() override {EV << "Hello from " << getClassName() << "\n";}
+};
+
+Define_Module(CompoundModuleClassWithoutNamespace);
+
+%contains: stdout
+Hello from CompoundModuleClassWithoutNamespace

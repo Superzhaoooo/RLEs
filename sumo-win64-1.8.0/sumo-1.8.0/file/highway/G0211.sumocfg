@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="G0211.net.xml"/>
+        <route-files value="G0211.rou.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <end value="1000"/>
+		<step-length value="0.01"/>
+    </time>
+	
+	<Report>
+		<no-warnings value = "true"/>
+	</Report>
+	
+	<gui_only>
+	  <start value = "t"/>
+	  <quit-on-end value = "e"/>
+	  <gui-settings-file value = "G0211.settings.xml"/>
+	</gui_only>
+
+    <processing>
+        <time-to-teleport value="-1"/>
+    </processing>
+	
+
+</configuration>

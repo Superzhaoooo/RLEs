@@ -1,0 +1,43 @@
+%description:
+Test @class property without C++ namespace.
+
+%file: package.ned
+
+// don't use @namespace
+
+%file: test.ned
+
+simple SimpleWithoutNamespace
+{
+    parameters:
+        @class(ClassWithoutNamespace);
+}
+
+network Test
+{
+    submodules:
+        a: SimpleWithoutNamespace;
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+class ClassWithoutNamespace : public cSimpleModule
+{
+  public:
+    ClassWithoutNamespace() : cSimpleModule(16384) { }
+    virtual void activity() override;
+};
+
+Define_Module(ClassWithoutNamespace);
+
+void ClassWithoutNamespace::activity()
+{
+    EV << "ClassWithoutNamespace\n";
+}
+
+%contains: stdout
+ClassWithoutNamespace

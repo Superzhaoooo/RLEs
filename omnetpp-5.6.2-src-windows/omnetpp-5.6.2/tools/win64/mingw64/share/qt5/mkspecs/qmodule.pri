@@ -1,0 +1,12 @@
+EXTRA_INCLUDEPATH += C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include/dbus-1.0 C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/lib/dbus-1.0/include C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include/libxml2 C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include/freetype2 C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include/libpng16 C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include/harfbuzz C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include/glib-2.0 C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/lib/glib-2.0/include C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include/mariadb
+QT_CPU_FEATURES.x86_64 = cx16 mmx sse sse2 sse3
+QT.global_private.enabled_features = alloca_malloc_h alloca sse2 dbus dbus-linked gui network qml-debug release_tools sql system-zlib testlib widgets xml
+QT.global_private.disabled_features = alloca_h android-style-assets private_tests libudev posix_fallocate reduce_exports reduce_relocations stack-protector-strong
+PKG_CONFIG_EXECUTABLE = C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/bin/pkg-config.exe
+QMAKE_LIBS_DBUS = -LC:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/lib -ldbus-1
+QMAKE_INCDIR_DBUS = C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/include/dbus-1.0 C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/tools/win64/mingw64/lib/dbus-1.0/include
+QT_COORD_TYPE = double
+QMAKE_LIBS_ZLIB = -lz
+CONFIG += sse2 sse3 ssse3 sse4_1 sse4_2 avx avx2 avx512f avx512bw avx512cd avx512dq avx512er avx512ifma avx512pf avx512vbmi avx512vl compile_examples f16c largefile optimize_debug precompile_header
+QT_BUILD_PARTS += libs examples tools
+QT_HOST_CFLAGS_DBUS += 

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Data/Scenarios/TAPASCologne.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Data/Scenarios/TAPASCologne - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Data/Scenarios/TAPASCologne.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#tapas_cologne_scenario">"TAPAS Cologne" Scenario</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#availability" class="nav-link">• Availability</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#about" class="nav-link">• About</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#brief_description" class="nav-link">&rarr; Brief Description</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#contents" class="nav-link">&rarr; Contents</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#changelog" class="nav-link">&rarr; ChangeLog</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#quality" class="nav-link">• Quality</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#next_steps" class="nav-link">• Next Steps</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Data/Scenarios/TAPASCologne<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="tapas_cologne_scenario">"TAPAS Cologne" Scenario<a class="headerlink" href="#tapas_cologne_scenario" title="Permanent link">#</a></h1>
+<h2 id="availability">Availability<a class="headerlink" href="#availability" title="Permanent link">#</a></h2>
+<p><img alt="88x31.png" src="../../images/88x31.png" title="88x31.png" /> The data is available under the
+<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons</a>
+license. You <strong>must tell where the data is from</strong>, it is <strong>not allowed
+to use it for commercial</strong> purposes, as soon as you use it <strong>we want to
+be informed</strong> about it (use the
+<a href="https://dev.eclipse.org/mailman/listinfo/sumo-user">sumo-user</a>.</p>
+<p>The data can be <a href="http://sourceforge.net/projects/sumo/files/traffic_data/scenarios/TAPASCologne">downloaded from our scenario
+repository</a>.
+There also vehicle traces available from the <a href="http://kolntrace.project.citi-lab.fr/">KolnTrace project at CITI
+Lab</a>.</p>
+<h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">#</a></h2>
+<h3 id="brief_description">Brief Description<a class="headerlink" href="#brief_description" title="Permanent link">#</a></h3>
+<p>The "TAPAS Cologne" simulation scenario describes the traffic within the
+city of Cologne (Germany) for a whole day. The original demand data
+stems from TAPAS, a system which computes mobility wishes for an area
+population generated based on information about travelling habits of
+Germans and on information about the infrastructure of the area they
+live in. More information about the system can be found within this
+<a href="http://elib.dlr.de/45058/02/SRL_81_-_Beitrag_Varschen.pdf">publication on
+TAPAS</a>. The
+original data was using a closed-source road network and was mapped onto
+one stemming from the <a href="http://www.openstreetmap.de/">OpenStreetMap
+project</a>.</p>
+<p>As is, TAPASCologne is only hardly usable. Work must be put into
+improving the network quality, as well as into verification of the
+process how routes were mapped on the OSM network and on the routes
+themselves. We hope to gain participants responsible for the works that
+must be done. A list of possible <a href="#next_steps">work packages on
+TAPASCologne</a> is available.</p>
+<h3 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">#</a></h3>
+<p>The TAPASCologne scenario package includes:</p>
+<ul>
+<li>Road networks imported from OSM</li>
+<li>POIs and Polygons imported from OSM</li>
+<li>The mapped trips for time between 6:00 and 8:00 (am)</li>
+<li>The mapped trips for time between 00:00 and 24:00 (in a separate file)</li>
+<li>The SUMO-configuration file</li>
+</ul>
+<p>As OSM data contains information about streets, railways, ways for
+pedestrians only, etc. Release 0.0.3 only includes the network for road
+vehicles (road). Other network selections can be created with the script
+build.py in the release.</p>
+<ul>
+<li>"passenger_*" which contains only roads passenger vehicles are
+  allowed to use</li>
+<li>"roadvehicles_*" which contains roads for road vehicles (those
+  used by pedestrians, trains, and bicycles were removed)</li>
+<li>"all_*" which contains all roads</li>
+</ul>
+<p>The idea behind this is to have a fast road network ("passenger_*")
+for DUA computation and for scenarios which only consider passenger
+traffic retrieved by TAPAS. Then, in a second step, which is not yet
+started, additional traffic such as public transport or delivery
+vehicles may be added and used in combination with "roadvehicles_*"
+networks. "all_*" networks are meant to be used by people who want it
+all......</p>
+<p>Each of the road networks is again available in two versions - one with
+internal lanes (default since version 0.10.1) and one without. Again,
+choosing the proper network is a matter of personal interest.</p>
+<p>The supplied routes are given for the "passenger_*"-network. Though
+not tested, yet, we assume that they can not be used directly with other
+networks from the package. Still, computing correct routes should be
+possible by starting <a href="../../duarouter.html">duarouter</a> with the
+appropriate network and <strong>--repair</strong> option.</p>
+<p>The following images show the scenario area with polygons and points of
+interest. Because we assume that the networks differ in size, for each
+network type (passenger, roadvehicles, all), a shape file is included.</p>
+<p><img alt="" src="../../images/Tapas_0_0_2_shapes1.gif" /> <img alt="" src="../../images/Tapas_0_0_2_shapes2.gif" />
+<img alt="" src="../../images/Tapas_0_0_2_shapes3.gif" /></p>
+<h3 id="changelog">ChangeLog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h3>
+<p><strong>Version 0.0.1 to version 0.0.2</strong></p>
+<ul>
+<li>Solved problems on importing OSM road networks, including
+  <a href="https://github.com/eclipse/sumo/issues/17">defect 17: OSM network importer creates large
+  junctions</a></li>
+<li>Includes joined tls (solves few synchronization problems)</li>
+<li>Patched import of shapes (POIs/Polygons) and included them</li>
+<li>Remapped the routes</li>
+</ul>
+<h2 id="quality">Quality<a class="headerlink" href="#quality" title="Permanent link">#</a></h2>
+<p>In the current version, we even have not tested the data, completely.
+The assumptions made on the quality are shown below. We decided not to
+use a numeric ranking, because we do not have real world numbers for
+most of the issues. The rank tries to distinguish between "good" (arrow
+upwards, green) and "bad" (arrow downwards, red) influences on the
+overall simulation quality.</p>
+<ul>
+<li><img alt="Image:level16px_00.gif" src="../../images/Level16px_00.gif" title="Image:level16px_00.gif" /> Network Topology and Edge Parameter (from OSM)<ul>
+<li><img alt="Image:level16px_+3.gif" src="../../images/level16px_+3.gif" title="Image:level16px_+3.gif" /> Completeness<ul>
+<li>Seems to be quite complete (including even minor roads) when
+  compared to other (commercial or administral) road networks;
+  still, there is no information about "black spots";</li>
+<li><strong>todo:</strong> build density plot comparing commercial and this
+  network (legal?)</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-3.gif" src="../../images/Level16px_-3.gif" title="Image:level16px_-3.gif" /> Junction topology<ul>
+<li>Lots of complex junctions which should be simplified
+  (automatic joining failed)</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-3.gif" src="../../images/Level16px_-3.gif" title="Image:level16px_-3.gif" /> Lane Number Information<ul>
+<li>The information about lane numbers is stored via types,
+  mainly. For several roads, an explicit lane number is
+  given. It can be safely assumed that many turning-lanes are
+  missing.</li>
+<li><strong>todo:</strong> evaluate how much information is given explicitly</li>
+<li><strong>todo:</strong> compare to images, write down lane number per
+  street</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-2.gif" src="../../images/Level16px_-2.gif" title="Image:level16px_-2.gif" /> Maximum Speed Information<ul>
+<li>Again, mostly available via types, as for lane numbers; is
+  assumed to be mismatching on some places</li>
+<li>Where can one get better information from?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-2.gif" src="../../images/Level16px_-2.gif" title="Image:level16px_-2.gif" /> Traffic Management Artifacts<ul>
+<li><img alt="Image:level16px_-2.gif" src="../../images/Level16px_-2.gif" title="Image:level16px_-2.gif" /> Traffic Light Positions<ul>
+<li>Given for some junctions (nodes); Still, there seem to be no
+  information whether a node not marked as controlled is
+  really uncontrolled</li>
+<li><strong>todo:</strong> Try to find further controlled junctions or
+  improve guessing</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-3.gif" src="../../images/Level16px_-3.gif" title="Image:level16px_-3.gif" /> Traffic Light Programs<ul>
+<li>Ungiven</li>
+<li><strong>todo:</strong> Ask about the default cycle time (if there is one)
+  in Cologne; apply at least this one to the generated tls
+  logics</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-1.gif" src="../../images/Level16px_-1.gif" title="Image:level16px_-1.gif" /> Other Traffic Management Artifacts<ul>
+<li>completely ungiven</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-1.gif" src="../../images/Level16px_-1.gif" title="Image:level16px_-1.gif" /> Closures, Roads At Work<ul>
+<li>completely ungiven</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-2.gif" src="../../images/Level16px_-2.gif" title="Image:level16px_-2.gif" /> Public Transport<ul>
+<li>completely ungiven</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-1.gif" src="../../images/Level16px_-1.gif" title="Image:level16px_-1.gif" /> Demand Data<ul>
+<li><img alt="Image:level16px_+5.gif" src="../../images/level16px_+5.gif" title="Image:level16px_+5.gif" /> Activity-Based single Person Trips<ul>
+<li><img alt="Image:level16px_+5.gif" src="../../images/level16px_+5.gif" title="Image:level16px_+5.gif" /> No Time Aggregation</li>
+<li><img alt="Image:level16px_+5.gif" src="../../images/level16px_+5.gif" title="Image:level16px_+5.gif" /> No Start/End Position Aggregation</li>
+</ul>
+</li>
+<li><img alt="Image:level16px_-2.gif" src="../../images/Level16px_-2.gif" title="Image:level16px_-2.gif" /> unverified</li>
+<li><img alt="Image:level16px_-1.gif" src="../../images/Level16px_-1.gif" title="Image:level16px_-1.gif" /> starts partially at highways</li>
+<li><img alt="Image:level16px_-2.gif" src="../../images/Level16px_-2.gif" title="Image:level16px_-2.gif" /> ad-hoc, errorneous mapping to OSM</li>
+<li><img alt="Image:level16px_-2.gif" src="../../images/Level16px_-2.gif" title="Image:level16px_-2.gif" /> shortest path routing, no <a href="../../duarouter.html">DUE</a> as of release 0.0.3</li>
+</ul>
+</li>
+</ul>
+<p>The below images show the structure of demand data over 24 hour period.
+This shows normal behavior of mobility. Peak hours like ~8-9am ,
+~4-6pm during which the number of trips are usually high. More
+information of the city of cologne can be found in the link
+<a href="http://www.stadt-koeln.de/mediaasset/content/pdf15/stadtkoeln_zahlenspiegel_e_bfrei.pdf">[1]</a>.
+The total number of trips (made by cars) over 24h is very close to the
+number of registered cars*3 (3 trips per registered car). There are
+around ~420415*3 (~1.2 million) trips which matchs the number in the
+plots.</p>
+<p><img alt="" src="../../images/Average_24h.jpg" /> <img alt="" src="../../images/Per_second_dep.jpg" /></p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Due to the above problems with the simulation network, the configuration file included with the scenario uses the option <strong>--scale 0.3</strong>. This reduces the demand to 30% of the realistic value to avoid network-wide traffic jams.</p>
+</div>
+<p><strong>Summary:</strong> The TAPAS Cologne scenario is assumed to be one of the
+largest - if not THE largest - freely available traffic simulation data
+set. Regarding the scenario size, both the road network and the traffic
+demand are given in a good quality. Nonetheless, many important
+information is missing or wrong and much further effort is needed to
+make the scenario realistic and complete.</p>
+<h2 id="next_steps">Next Steps<a class="headerlink" href="#next_steps" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Description</th>
+<th>Priority</th>
+<th>Assigned To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Synchronize Traffic Lights</td>
+<td></td>
+<td>very high</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Check Right-of-way Rules</td>
+<td></td>
+<td>very high</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Check Lane Numbers, esp. within Junctions</td>
+<td></td>
+<td>high</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Check whether all traffic lights are given</td>
+<td></td>
+<td>high</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Compute Assignment</td>
+<td></td>
+<td>high</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Add Public Transport</td>
+<td></td>
+<td>low</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Help on Visualisation of POIs/Polygons</td>
+<td></td>
+<td>low</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

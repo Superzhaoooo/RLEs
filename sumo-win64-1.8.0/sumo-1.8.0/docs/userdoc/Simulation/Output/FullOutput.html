@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Output/FullOutput.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Simulation/Output/FullOutput - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Output/FullOutput.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#instantiating_within_the_simulation">Instantiating within the Simulation</a></li>
+            <li class="nav-item main"><a href="#generated_output">Generated Output</a></li>
+            <li class="nav-item main"><a href="#notes">Notes</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Output/FullOutput<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>The idea behind this option is to improve the capabilities of the
+existing netstate-dump option. The produced XML Structure contains
+information about the edges, lanes, vehicles and traffic lights. The
+intention for this option was to check the simulation results without
+having to record all the simulation commands e.g. traci.</p>
+<h2 id="instantiating_within_the_simulation">Instantiating within the Simulation<a class="headerlink" href="#instantiating_within_the_simulation" title="Permanent link">#</a></h2>
+<p>To force SUMO to build a file that contains the full dump, extend your
+command line parameter by <strong>--full-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>. <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> is the name of the file the output will be
+written to. Any other file with this name will be overwritten, the
+destination folder must exist.</p>
+<h2 id="generated_output">Generated Output<a class="headerlink" href="#generated_output" title="Permanent link">#</a></h2>
+<p>The full dump is a xml-file containing informtation about every edge,
+lane, vehicle and traffic light for each time step. A full dump-file
+looks like this:</p>
+<pre><code>&lt;full-export&gt;
+    &lt;data timestep=&quot;&lt;TIME_STEP&gt;&quot;&gt;
+
+    &lt;vehicles&gt;
+        &lt;vehicle id=&quot;&lt;VEHICLE_ID&gt;&quot; eclass=&quot;&lt;VEHICLE_ECLASS&gt;&quot; co2=&quot;&lt;VEHICLE_CO2&gt;&quot; co=&quot;&lt;VEHICLE_CO&gt;&quot; hc=&quot;&lt;VEHICLE_HC&gt;&quot;
+        nox=&quot;&lt;VEHICLE_NOX&gt;&quot; pmx=&quot;&lt;VEHICLE_PMX&gt;&quot; fuel=&quot;&lt;VEHICLE_FUEL&gt;&quot; electricity=&quot;&lt;VEHICLE_ELECTRICITY&gt;&quot; noise=&quot;&lt;VEHICLE_NOISE&gt;&quot; route=&quot;&lt;VEHICLE_ROUTE&gt;&quot; type=&quot;&lt;VEHICLE_TYPE&gt;&quot;
+        waiting=&quot;&lt;VEHICLE_WAITING&gt;&quot; lane=&quot;&lt;VEHICLE_LANE&gt;&quot; pos_lane=&quot;&lt;VEHICLE_POS_LANE&gt;&quot; speed=&quot;&lt;VEHICLE_SPEED&gt;&quot;
+        angle=&quot;&lt;VEHICLE_ANGLE&gt;&quot; x=&quot;&lt;VEHICLE_POS_X&gt;&quot; y=&quot;&lt;VEHICLE_POS_Y&gt;&quot;/&gt;
+
+        ... more vehicles ...
+
+    &lt;/vehicles&gt;
+
+    &lt;edges&gt;
+
+        &lt;edge id=&quot;&lt;EDGE_ID&gt;&quot; traveltime=&quot;&lt;EDGE_TRAVELTIME&gt;&quot;&gt;
+
+        &lt;lane id=&quot;&lt;LANE_ID&gt;&quot; co=&quot;&lt;LANE_CO&gt;&quot; co2=&quot;&lt;LANE_CO2&gt;&quot; nox=&quot;&lt;LANE_NOX&gt;&quot; pmx=&quot;&lt;LANE_CO&gt;&quot;
+        hc=&quot;&lt;LANE_HC&gt;&quot; noise=&quot;&lt;LANE_NOISE&gt;&quot; fuel=&quot;&lt;LANE_FUEL&gt;&quot; electricity=&quot;&lt;LANE_ELECTRICITY&gt;&quot; maxspeed=&quot;&lt;LANE_MAXSPEED&gt;&quot; meanspeed=&quot;&lt;LANE_MEANSPEED&gt;&quot;
+        occupancy=&quot;&lt;LANE_OCCUPANCY&gt;&quot; vehicle_count=&quot;&lt;LANE_VEHICLES_COUNT&gt;&quot;/&gt;
+
+            ... more lanes of the edge if exists
+
+        &lt;/edge&gt;
+
+            ... more edges of the network
+
+    &lt;/edges&gt;
+
+    &lt;tls&gt;
+        &lt;trafficlight id=&quot;0/0&quot; state=&quot;GgGr&quot;/&gt;
+        ... more traffic lights
+
+    &lt;/tls&gt;
+
+&lt;/data&gt;
+
+... the next timestep ...
+
+&lt;/full-export&gt;
+</code></pre>
+
+<p>The meanings of the written values are given in the following table.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time_step</td>
+<td>(simulation) seconds</td>
+<td>The time step described by the values within this timestep-element</td>
+</tr>
+<tr>
+<td>id</td>
+<td>id</td>
+<td>The id of the vehicle/lane/edge/trafficlight</td>
+</tr>
+<tr>
+<td>eclass</td>
+<td>id</td>
+<td>The id of the specific emission class of the vehicle</td>
+</tr>
+<tr>
+<td>co2@vehicle</td>
+<td>mg/s</td>
+<td>The amount of CO2 emitted by the vehicle in the actual simulation step</td>
+</tr>
+<tr>
+<td>co2@lane</td>
+<td>mg/s</td>
+<td>The complete amount of CO2 emitted by the vehicles on this lane during the actual simulation step</td>
+</tr>
+<tr>
+<td>co@vehicle</td>
+<td>mg/s</td>
+<td>The amount of CO emitted by the vehicle in the actual simulation step</td>
+</tr>
+<tr>
+<td>co@lane</td>
+<td>mg/s</td>
+<td>The complete amount of CO emitted by the vehicles on this lane during the actual simulation step</td>
+</tr>
+<tr>
+<td>hc@vehicle</td>
+<td>mg/s</td>
+<td>The amount of HC emitted by the vehicle in the actual simulation step</td>
+</tr>
+<tr>
+<td>hc@lane</td>
+<td>mg/s</td>
+<td>The complete amount of HC emitted by the vehicles on this lane during the actual simulation step</td>
+</tr>
+<tr>
+<td>nox@vehicle</td>
+<td>mg/s</td>
+<td>The amount of NOX emitted by the vehicle in the actual simulation step</td>
+</tr>
+<tr>
+<td>nox@lane</td>
+<td>mg/s</td>
+<td>The complete amount of NOX emitted by the vehicles on this lane during the actual simulation step</td>
+</tr>
+<tr>
+<td>pmx@vehicle</td>
+<td>mg/s</td>
+<td>The amount of PMX emitted by the vehicle in the actual simulation step</td>
+</tr>
+<tr>
+<td>pmx@lane</td>
+<td>mg/s</td>
+<td>The complete amount of PMX emitted by the vehicles on this lane during the actual simulation step</td>
+</tr>
+<tr>
+<td>noise@vehicle</td>
+<td>dB</td>
+<td>The noise emitted by the vehicle in the actual simulation step</td>
+</tr>
+<tr>
+<td>noise@lane</td>
+<td>dB</td>
+<td>The noise emitted by the vehicles on the specific lane</td>
+</tr>
+<tr>
+<td>fuel@vehicle</td>
+<td>ml/s</td>
+<td>The fuel consumed by the vehicle in the actual simulation step</td>
+</tr>
+<tr>
+<td>fuel@lane</td>
+<td>ml/s</td>
+<td>The fuel consumed by the vehicles on the specific lane</td>
+</tr>
+<tr>
+<td>electricity@vehicle</td>
+<td>Wh/s</td>
+<td>The electricity consumed by the vehicle in the actual simulation step</td>
+</tr>
+<tr>
+<td>electricity@lane</td>
+<td>Wh/s</td>
+<td>The electricity consumed by the vehicles on the specific lane</td>
+</tr>
+<tr>
+<td>route</td>
+<td>id</td>
+<td>The name of the route</td>
+</tr>
+<tr>
+<td>type</td>
+<td>id</td>
+<td>The name of the vehicle type</td>
+</tr>
+<tr>
+<td>waiting</td>
+<td>seconds</td>
+<td>The total time a vehicle is waiting</td>
+</tr>
+<tr>
+<td>lane</td>
+<td>id</td>
+<td>The name of the lane</td>
+</tr>
+<tr>
+<td>pos</td>
+<td>meters</td>
+<td>The position of the vehicle on a specific lane (distance of the front bumper from the start of the lane)</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>m/s</td>
+<td>The actual speed of the vehicle</td>
+</tr>
+<tr>
+<td>angle</td>
+<td>degree</td>
+<td>The angle of the vehicle</td>
+</tr>
+<tr>
+<td>pos_x</td>
+<td>---</td>
+<td>The absolut X coordinate of the vehicle (center of front bumper). The value depends on the given geographic projection.</td>
+</tr>
+<tr>
+<td>pos_y</td>
+<td>---</td>
+<td>The absolut Y coordinate of the vehicle (center of front bumper). The value depends on the given geographic projection</td>
+</tr>
+<tr>
+<td>traveltime</td>
+<td>seconds</td>
+<td>The mean travel time on the specific lane</td>
+</tr>
+<tr>
+<td>fuel@lane</td>
+<td>l/km/h</td>
+<td>The fuel consumption on the specific lane</td>
+</tr>
+<tr>
+<td>maxspeed</td>
+<td>m/s</td>
+<td>The maximum speed of the vehicles on the specific lane</td>
+</tr>
+<tr>
+<td>meanspeed</td>
+<td>m/s</td>
+<td>The mean speed of the vehicles on the specific lane</td>
+</tr>
+<tr>
+<td>occupancy</td>
+<td>%</td>
+<td>The occupancy of the lane in %</td>
+</tr>
+<tr>
+<td>vehicles_count</td>
+<td>#veh</td>
+<td>The number of vehicles on the lane</td>
+</tr>
+<tr>
+<td>state</td>
+<td>string</td>
+<td>The current <a href="../Traffic_Lights.html">state of a traffic light</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">#</a></h2>
+<p>The generated files will be very large, you may pipe this output
+directly to a compression tool like bzip2. The advantage of this large
+file is that you can write some nice XML Stylesheets to export
+everything what is important to you, for example the states of the
+traffic lights and the travel times for the lanes.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 02 September 2019</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

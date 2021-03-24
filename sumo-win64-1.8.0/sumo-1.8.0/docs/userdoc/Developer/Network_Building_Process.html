@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/Network_Building_Process.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Developer/Network Building Process - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/Network_Building_Process.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#steps">Steps</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#351_modifying_the_sets_of_nodes_and_edges" class="nav-link">• #1: Modifying the sets of nodes and edges</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#352_moving_network_to_origin" class="nav-link">• #2: Moving network to origin</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#353_tls_position_computation" class="nav-link">• #3: TLS position computation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#354_connections_computation" class="nav-link">• #4: Connections Computation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#computing_turning_directions" class="nav-link">&rarr; Computing turning directions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#sorting_nodes_edges" class="nav-link">&rarr; Sorting nodes' edges</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#computing_node_types" class="nav-link">&rarr; Computing node types</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#computing_priorities" class="nav-link">&rarr; Computing priorities</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#355_geometry_computation" class="nav-link">• #5: Geometry computation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#356_computing_right-of-way_and_traffic_light_programs" class="nav-link">• #6: Computing right-of-way and traffic light programs</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#357_finishing_inner_edges_optional" class="nav-link">• #7: Finishing inner edges (optional)</a>
+                </li>
+            <li class="nav-item main"><a href="#old">OLD</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#steps_359-3510_computing_certain_signallingright-of-ways" class="nav-link">• Steps #9-#10: Computing certain signalling/right-of-ways</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#steps_3511-3517_computing_and_setting_lane-to-lane_connections" class="nav-link">• Steps #11-#17: Computing and setting lane-to-lane connections</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#steps_3518-3519_computing_geometries" class="nav-link">• Steps #18-#19: Computing geometries</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#steps_3520-3522_computing_right-of-way_rules" class="nav-link">• Steps #20-#22: Computing right-of-way rules</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#steps_3523_applying_additional_offset" class="nav-link">• Steps #23: Applying additional offset</a>
+                </li>
+            <li class="nav-item main"><a href="#table">Table</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/Network Building Process<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p><a href="../netconvert.html">netconvert</a>,
+<a href="../netgenerate.html">netgenerate</a>, and <a href="../netedit.html">netedit</a>
+share the same process of building networks which is started as soon as
+data are read (in <a href="../netconvert.html">netconvert</a>) or after an
+internal description is generated (in
+<a href="../netgenerate.html">netgenerate</a>).</p>
+<p>The process requires that at least nodes and edges are given, optionally
+also connections between edges and/or lanes and other optional
+information. Hints about how the network shall be built - whether
+turnarounds or highway on/off-ramps shall be added, traffic lights or
+roundabouts shall be guessed, etc. are retrieved from the options.</p>
+<p>Below, you may find a list of all steps performed while building the
+network. Optional steps are in <em>italics</em>.</p>
+<ol>
+<li>Modifying the sets of nodes and edges<ol>
+<li><em>Joining junction clusters</em></li>
+<li>Removing self-loops</li>
+<li><em>Removing isolated roads</em></li>
+<li><em>Removing unwished edges</em></li>
+<li>Removing empty nodes <em>and geometry nodes</em></li>
+<li>Joining similar edges</li>
+<li><em>Splitting geometry edges</em></li>
+<li><em>Guessing and setting on-/off-ramps</em></li>
+</ol>
+</li>
+<li><em>Moving network to origin</em></li>
+<li>TLS position computation<ol>
+<li><em>Assigning nodes to traffic lights</em></li>
+<li><em>Joining traffic light nodes</em></li>
+</ol>
+</li>
+<li>Computing connections between lanes<ol>
+<li>Computing turning directions</li>
+<li>Sorting nodes' edges</li>
+<li>Computing Approached Edges</li>
+<li>Computing Approaching Lanes</li>
+<li>Dividing of Lanes on Approached Lanes</li>
+<li><em>Appending Turnarounds</em></li>
+<li>Rechecking of lane endings</li>
+</ol>
+</li>
+<li>Geometry computation<ol>
+<li>Computing node shapes</li>
+<li>Computing edge shapes</li>
+</ol>
+</li>
+<li>Computing right-of-way and traffic light programs<ol>
+<li>Computing tls logics</li>
+<li>Computing node logics</li>
+<li>Computing traffic light logics</li>
+</ol>
+</li>
+<li>Finishing inner edges</li>
+</ol>
+<p>These computation steps are performed within void
+NBNetBuilder::compute(OptionsCont &amp;oc). These steps are described more
+detailed in the following.</p>
+<h1 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">#</a></h1>
+<ul>
+<li><em>pre-condition</em>: All input is read</li>
+<li><em>pre-condition</em>: Nodes have: id, cartesian coordinates, type
+(optional, may change)</li>
+<li><em>pre-condition</em>: Edges have: valid from/to-nodes, lane number, max.
+speed limits, allowed vehicle classes, geometry (may change),
+typeID, lane spread information, name (optional), priority
+information (optional)</li>
+</ul>
+<h2 id="351_modifying_the_sets_of_nodes_and_edges">#1: Modifying the sets of nodes and edges<a class="headerlink" href="#351_modifying_the_sets_of_nodes_and_edges" title="Permanent link">#</a></h2>
+<p><strong>Purpose</strong>: Remove unwished edges/nodes from the internal
+representation; add geometry nodes if wished
+<em>post-condition</em>: all unwished elements (nodes, edges) are removed,
+geometry nodes are inserted/removed if wished, attributes as above</p>
+<p>The following sub-steps are done:</p>
+<ul>
+<li>
+<p><strong>joinJunctions</strong> ('<code>Joining junction clusters</code>'): build node clusters</p>
+<p><strong>Purpose</strong>: Join network graph nodes which form a single
+intersection.
+<em>post-condition</em>: junction joined, attributes as above
+<em>affects</em>: removes and adds nodes, removes edges, remaps
+connections (tbd)
+<em>state</em>: tbd</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>removeSelfLoops</strong> ('<code>Removing self-loops</code>'): remove all edges
+  where the from-node is the same as the to-node</p>
+<p><em>post-condition</em>: Each edge is a uni-directional connection between
+two different nodes (ok)
+<em>state</em>: green for me, though I am not sure why lists of edges are
+built which are then given to remapping methods; wouldn't it be
+enough to check within the remapping method whether a connection
+exists?</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>joinSimilarEdges</strong> ('<code>Joining similar edges</code>'): "join" edges which
+  connect the same nodes</p>
+<p><em>post-condition</em>: No two edges with same geometry connecting same
+nodes exist
+<em>state</em>: yellow, as there are two comments in the code, one about a
+bug, a second one about a missing check for vclasses; should be
+revisited (why it's here, what would happen if not)
+<em>comment</em>: ? Earlier, only one road could connect same
+intersections; not now. Why, explain, how does it work?
+<em>comment</em>: This method uses two magic numbers to determine whether
+edges are "similar":
+<code>distanceThreshold = 7.;</code> // don't merge edges further apart
+<code>lengthThreshold = 0.10;</code> // don't merge edges with higher relative
+length-difference</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>removeIsolatedRoads</strong> ('<code>Finding isolated roads</code>'): remove edges
+  which are isolated (not part of the network)</p>
+<p><em>post-condition</em>: ? not defined somewhere
+<em>state</em>: yellow; the method is pretty large, and there is no removal
+of edges within the tls control; how does it work?
+<em>comment</em>: Should be revisited</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>removeUnwishedEdges</strong> ('<code>Removing unwished edges</code>'): Removes edges
+  not in myEdges2Keep</p>
+<p><em>post-condition</em>: not wanted edges are no longer in the internal
+containers (ok)
+<em>state</em>: yellow; the complete keep/remove/keep-postload - stuff
+should be revisited</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>removeUnwishedNodes</strong> ('<code>Removing empty nodes and geometry nodes</code>'
+  or '<code>Removing empty nodes</code>'): Removes useless nodes</p>
+<p><em>post-condition</em>: empty nodes, nodes with no incoming/outgoing
+edges, are removed (ok)
+<em>post-condition</em>: nodes which only affect the geometry of an edge
+are removed if wished (ok)
+<em>state</em>: yellow; should be done in two steps for a cleaner code;
+additionally, we had the bug that empty acosta nodes where still in
+the network; is this solved?</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>splitGeometry</strong> ('<code>Splitting geometry edges</code>'): Splits edges at
+  geometry positions</p>
+<p><em>post-condition</em>: If wished, edges have a line-geometry only
+<em>state</em>: yellow; the naming of built nodes is not proper</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>Guessing on-/off-ramps</strong> (<code>Guessing and setting on-/off-ramps</code>)</p>
+<p><strong>Purpose</strong>: Add missing on-/off-ramps
+<em>state</em>: tbd</p>
+</li>
+</ul>
+<p>As a result, the internal representation of the read/generated network
+contains the sets of nodes/edges the user wanted.</p>
+<h2 id="352_moving_network_to_origin">#2: Moving network to origin<a class="headerlink" href="#352_moving_network_to_origin" title="Permanent link">#</a></h2>
+<p><strong>Purpose</strong>: Let network coordinates start at 0,0
+<em>state</em>: green</p>
+<h2 id="353_tls_position_computation">#3: TLS position computation<a class="headerlink" href="#353_tls_position_computation" title="Permanent link">#</a></h2>
+<p><strong>Purpose</strong>: Let nodes know whether they are controlled by traffic
+lights</p>
+<ul>
+<li>
+<p><strong>guessTLs</strong> ('<code>Assigning nodes to traffic lights</code>')</p>
+<p><em>post-condition</em>: empty nodes, nodes with no incoming/outgoing
+edges, are removed (ok)
+<em>state</em>: tbd</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>joinTLS</strong> ('<code>Joining traffic light nodes</code>')</p>
+<p><em>post-condition</em>: empty nodes, nodes with no incoming/outgoing
+edges, are removed (ok)
+<em>state</em>: tbd</p>
+</li>
+</ul>
+<h2 id="354_connections_computation">#4: Connections Computation<a class="headerlink" href="#354_connections_computation" title="Permanent link">#</a></h2>
+<p><strong>Purpose</strong>: Determine and/or assign connections over intersections
+between lanes</p>
+<h3 id="computing_turning_directions">Computing turning directions<a class="headerlink" href="#computing_turning_directions" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>code</strong>: NBTurningDirectionsComputer::computeTurnDirections(...);</li>
+<li><strong>post-condition</strong>: The edge knows its turnaround direction, if
+existing.</li>
+<li><strong>reason</strong>: Turnarounds are treated differently in the following
+steps than other directions of driving.</li>
+<li><strong>how</strong></li>
+</ul>
+<p>For each combination of an incoming and an outgoing edge, which may be
+connected, we compute the angle between them. If this angle is >160°,
+we assume that this may be a turnaround. We add 360° to this angle if
+both edges connect same both nodes in different direction. We store the
+edge pairs with angle into a list sorted decreasing by the angle. After
+all combinations are computed, we go through the list and set those as
+turnarounds which we see at first, marking both the incoming and the
+outgoing edge as already seen what avoids to use them twice. We warn if
+an edge occures twice with an angle >360° - multiple edges connecting
+two same nodes.</p>
+<ul>
+<li>
+<p><strong>state</strong>: yellow</p>
+<p>the check for being connected should be omitted, here, see
+inline-documentation
+as usual, you may find pathological intersections</p>
+</li>
+</ul>
+<h3 id="sorting_nodes_edges">Sorting nodes' edges<a class="headerlink" href="#sorting_nodes_edges" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>code</strong>: NBNodesEdgesSorter::sortNodesEdges(...);</li>
+<li><strong>post-condition</strong>: each node's edges (incoming, outgoing, and all)
+are sorted clockwise, starting at 12 o'clock. Incoming edges with
+same angle as the according outgoing are before the outgoing one in
+the list of all edges.</li>
+<li><strong>reason</strong>: this order is assumed to be given in following
+computation steps</li>
+<li><strong>how</strong></li>
+</ul>
+<p>We sort a node's edge vectors (incoming, outgoing, all), first. Then, we
+go through the vector of all edges and exchange an incoming and an
+outgoing edge if both have the same angle, and the incoming is after the
+outgoing (determined using "isTurningDirection").</p>
+<ul>
+<li>
+<p><strong>state</strong>: yellow</p>
+<p>unvalidated for left-hand networks
+the method uses the method "NBEdge::isTurningDirectionAt(...)"
+which is not a plain usage of the turnaround computation
+performed earlier</p>
+</li>
+</ul>
+<h3 id="computing_node_types">Computing node types<a class="headerlink" href="#computing_node_types" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>code</strong>: NBNodeTypeComputer::computeNodeTypes(...);</li>
+<li><strong>post-condition</strong>: Each node has one of the following types:
+NODETYPE_PRIORITY_JUNCTION, NODETYPE_RIGHT_BEFORE_LEFT,
+NODETYPE_TRAFFIC_LIGHT, NODETYPE_NOJUNCTION(?).</li>
+<li><strong>reason</strong>: We need this to compute the right-of-way rules.</li>
+<li><strong>how</strong></li>
+</ul>
+<p>We investigate each node by itself. We check some special cases, first:</p>
+<ul>
+<li>if the type is already set (myType != NODETYPE_UNKNOWN) -> skip</li>
+<li>if we have only one incoming edge -> set to
+  NODETYPE_PRIORITY_JUNCTION</li>
+<li>if it is a <em>simple continuation</em> -> set to
+  NODETYPE_PRIORITY_JUNCTION</li>
+</ul>
+<p>At first, we assume the intersection is a NODETYPE_RIGHT_BEFORE_LEFT
+intersection. We then go through all incoming edge combinations which
+are not opposite. As soon as we encounter one where the speed limit
+between both edges differs by more than 10km/h (approx.), we set the
+type to NODETYPE_PRIORITY_JUNCTION. This is also the case if one of
+the edges has a speed limit of more than 49km/h (we use this value to
+avoid floating point issues).</p>
+<ul>
+<li>
+<p><strong>state</strong>: yellow</p>
+<p>investigate whether NODETYPE_NOJUNCTION can be set earlier (by
+the user)
+the used method "getOppositeIncoming" should be revalidated</p>
+</li>
+</ul>
+<h3 id="computing_priorities">Computing priorities<a class="headerlink" href="#computing_priorities" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>code</strong>: NBEdgePriorityComputer::computeEdgePriorities(...);</li>
+<li><strong>post-condition</strong>: Each edge has a priority at the node it starts
+and ends at. The priorities at the start and the end node may
+differ. An edge has either the priority 1 (higher prioritized) or 0
+(lower prioritized or all equal).</li>
+<li><strong>reason</strong>: We need this to compute the right-of-way rules.</li>
+<li><strong>how</strong></li>
+</ul>
+<p>All priorities are initialised to 0.</p>
+<ul>
+<li><strong>state</strong>: orange</li>
+</ul>
+<h2 id="355_geometry_computation">#5: Geometry computation<a class="headerlink" href="#355_geometry_computation" title="Permanent link">#</a></h2>
+<h2 id="356_computing_right-of-way_and_traffic_light_programs">#6: Computing right-of-way and traffic light programs<a class="headerlink" href="#356_computing_right-of-way_and_traffic_light_programs" title="Permanent link">#</a></h2>
+<h2 id="357_finishing_inner_edges_optional">#7: Finishing inner edges (optional)<a class="headerlink" href="#357_finishing_inner_edges_optional" title="Permanent link">#</a></h2>
+<h1 id="old">OLD<a class="headerlink" href="#old" title="Permanent link">#</a></h1>
+<h2 id="steps_359-3510_computing_certain_signallingright-of-ways">Steps #9-#10: Computing certain signalling/right-of-ways<a class="headerlink" href="#steps_359-3510_computing_certain_signallingright-of-ways" title="Permanent link">#</a></h2>
+<h2 id="steps_3511-3517_computing_and_setting_lane-to-lane_connections">Steps #11-#17: Computing and setting lane-to-lane connections<a class="headerlink" href="#steps_3511-3517_computing_and_setting_lane-to-lane_connections" title="Permanent link">#</a></h2>
+<h2 id="steps_3518-3519_computing_geometries">Steps #18-#19: Computing geometries<a class="headerlink" href="#steps_3518-3519_computing_geometries" title="Permanent link">#</a></h2>
+<p>I am currently concerned with the edge shapes, because even a eworld or
+a TrafficModeler export stops here in debug mode. It is in
+NBEdge::computeEdgeShape. (Actually, as far as I understand this method,
+it is about the lane shapes of this edge.) In this algorithm, the
+following three cases must be distinguished:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="&lt;File:laneShapeIntersectsWithNodeShape.png&gt;" src="../images/LaneShapeIntersectsWithNodeShape.png" title="File:laneShapeIntersectsWithNodeShape.png" /></td>
+<td>The edge shape intersects with the node shape. Then, the shape is trimmed to the intersection point. This looks quite reasonable.</td>
+</tr>
+<tr>
+<td><img alt="&lt;File:laneShapeOutsideOfNodeShape.png&gt;" src="../images/LaneShapeOutsideOfNodeShape.png" title="File:laneShapeOutsideOfNodeShape.png" /></td>
+<td>The edge shape is outside the node shape. The the present algorithm extrapolates the last line of the edge shape and enlarges the edge to the new intersection point. This looks reasonable to me as well.</td>
+</tr>
+<tr>
+<td><img alt="&lt;File:laneShapeInsideOfNodeShape.png&gt;" src="../images/LaneShapeInsideOfNodeShape.png" title="File:laneShapeInsideOfNodeShape.png" /></td>
+<td>The edge shape is completely within the node shape. What should happen here? (The red dots show, what netconvert does at present.)</td>
+</tr>
+</tbody>
+</table>
+<p>So I am wondering, what the right behavior of netconvert would be in
+the third case.</p>
+<h2 id="steps_3520-3522_computing_right-of-way_rules">Steps #20-#22: Computing right-of-way rules<a class="headerlink" href="#steps_3520-3522_computing_right-of-way_rules" title="Permanent link">#</a></h2>
+<h2 id="steps_3523_applying_additional_offset">Steps #23: Applying additional offset<a class="headerlink" href="#steps_3523_applying_additional_offset" title="Permanent link">#</a></h2>
+<h1 id="table">Table<a class="headerlink" href="#table" title="Permanent link">#</a></h1>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>affects</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong>nodes</strong></td>
+<td><strong>edges</strong></td>
+<td><strong>connections</strong></td>
+</tr>
+<tr>
+<td><strong>Adapting the input</strong></td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+<tr>
+<td>'<code>Building node clusters</code>'</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+<tr>
+<td>'<code>Removing self-loops</code>'</td>
+<td>x</td>
+<td></td>
+<td>x</td>
+</tr>
+<tr>
+<td>'<code>Joining similar edges</code>'</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>'<code>Finding isolated roads</code>'</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>'<code>Removing unwished edges</code>'</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>'<code>Removing empty nodes and geometry nodes</code>' or '<code>Removing empty nodes</code>'</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>'<code>Splitting geometry edges</code>'</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>'<code>Guessing and setting on-/off-ramps</code>'</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Moving network to origin</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>TLS position computation</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Assigning nodes to traffic lights</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Joining traffic light nodes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Computing connections between lanes</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Computing turning directions</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Sorting nodes' edges</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Computing Approached Edges</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Computing Approaching Lanes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Dividing of Lanes on Approached Lanes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Appending Turnarounds (optional)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Rechecking of lane endings</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Geometry computation</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Computing node shapes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Computing edge shapes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Computing right-of-way and traffic light programs</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Computing tls logics</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Computing node logics</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Computing traffic light logics</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Finishing inner edges (optional)</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

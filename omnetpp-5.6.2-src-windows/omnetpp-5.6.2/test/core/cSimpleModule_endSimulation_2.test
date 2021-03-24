@@ -1,0 +1,41 @@
+%description:
+tests that endSimulation() works from handleMessage(), and finish() gets called
+
+%module: Module
+
+class Module : public cSimpleModule
+{
+  public:;
+    virtual void initialize() override;
+    virtual void handleMessage(cMessage *msg) override;
+    virtual void finish() override;
+};
+
+Define_Module(Module);
+
+void Module::initialize()
+{
+    scheduleAt(1.0, new cMessage("msg"));
+}
+
+void Module::handleMessage(cMessage *msg)
+{
+    scheduleAt(simTime()+1.0, msg);
+    endSimulation();
+    EV << "after endSimulation\n";
+}
+
+void Module::finish()
+{
+    EV << "finish called\n";
+}
+
+%contains: stdout
+finish called
+
+%not-contains: stdout
+after endSimulation
+
+%not-contains: stdout
+event after endSimulation
+

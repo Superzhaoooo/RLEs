@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Output.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Output - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Output.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#converting_outputs" class="nav-link">• Converting Outputs</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#separating_outputs_of_repeated_runs" class="nav-link">• Separating outputs of repeated runs</a>
+                </li>
+            <li class="nav-item main"><a href="#available_output_files">Available Output Files</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle-based_information_disaggregated" class="nav-link">• vehicle-based information, disaggregated</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#simulated_detectors" class="nav-link">• simulated detectors</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#values_for_edges_or_lanes" class="nav-link">• values for edges or lanes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#values_for_junctions" class="nav-link">• values for junctions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle-based_information" class="nav-link">• vehicle-based information</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#simulationnetwork-based_information" class="nav-link">• simulation(network)-based information</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traffic_lights-based_information" class="nav-link">• traffic lights-based information</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#additional_debugging_outputs" class="nav-link">• Additional Debugging Outputs</a>
+                </li>
+            <li class="nav-item main"><a href="#commandline_output_verbose">Commandline Output (verbose)</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_counts" class="nav-link">• Vehicle Counts</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#timing_data" class="nav-link">• Timing Data</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#aggregated_traffic_measures" class="nav-link">• Aggregated Traffic Measures</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Output<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<p><a href="../sumo.html">sumo</a> allows to generate a large number of different
+measures. All write the values they collect into files or a socket
+connection following the common rules for <a href="../Basics/Using_the_Command_Line_Applications.html#writing_files">writing files</a>.
+Per default, all are disabled, and have to be triggered individually.
+Some of the available outputs (<a href="Output/RawDump.html">raw vehicle positions
+dump</a>, <a href="Output/TripInfo.html">trip
+information</a>, <a href="Output/VehRoutes.html">vehicle routes
+information</a>, and <a href="Output/Summary.html">simulation
+state statistics</a>) are triggered
+using command line options, the others have to be defined within <a href="/docs/sumo.html#format_of_additional_files"><em>additional-files</em></a>.</p>
+<h2 id="converting_outputs">Converting Outputs<a class="headerlink" href="#converting_outputs" title="Permanent link">#</a></h2>
+<p>All output files written by SUMO are in XML-format by default. However,
+with the python tool <a href="../Tools/Xml.html#xml2csvpy">xml2csv.py</a> you
+can convert any of them to a flat-file (CSV) format which can be opened
+with most spread-sheet software. If you need a more compressed but still
+"standardized" binary version, you can use
+<a href="../Tools/Xml.html#xml2protobufpy">xml2protobuf.py</a>. Furthermore all
+files can use a <a href="Output/Binary.html">custom binary
+format</a> which is triggered by the
+file extension .sbx.</p>
+<h2 id="separating_outputs_of_repeated_runs">Separating outputs of repeated runs<a class="headerlink" href="#separating_outputs_of_repeated_runs" title="Permanent link">#</a></h2>
+<p>To keep the outputs of multiple simulation runs separate, the option <strong>--output-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>
+can be used to prefix <strong>all</strong> output file names. When setting <strong>--output-prefix TIME</strong> all
+outputs will be prefixed using the time at which the simulation was
+started which keeps them separated automatically.</p>
+<h1 id="available_output_files">Available Output Files<a class="headerlink" href="#available_output_files" title="Permanent link">#</a></h1>
+<p>Below, the available outputs are listed, joined into groups of
+topic/aggregation type. Further information about each output can be
+found by following its link.</p>
+<h2 id="vehicle-based_information_disaggregated">vehicle-based information, disaggregated<a class="headerlink" href="#vehicle-based_information_disaggregated" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Output/RawDump.html">raw vehicle positions dump</a>:
+  all vehicle positions over time
+  <em>contains</em>: positions and speeds for all vehicles for all simulated
+  time steps
+  <em>used for</em>: obtaining movements of nodes (V2V, for ns-2)</li>
+<li><a href="Output/EmissionOutput.html">emission output</a>:
+  emission values of all vehicles for every simulation step</li>
+<li><a href="Output/FullOutput.html">full output</a>: various
+  informations for all edges, lanes and vehicles (good for
+  visualisation purposes)</li>
+<li><a href="Output/VTKOutput.html">vtk output</a>: generates
+  Files in the well known <a href="http://www.vtk.org/">VTK</a> (Visualization
+  Toolkit) format, to show the positions the speed value for every
+  vehicle</li>
+<li><a href="Output/FCDOutput.html">fcd output</a>: Floating Car
+  Data includes name, position, angle and type for every vehicle</li>
+<li><a href="Output/AmitranOutput.html">trajectories output</a>:
+  Trajectory Data following includes name, position, speed and
+  acceleration for every vehicle following the Amitran standard</li>
+<li><a href="Output/Lanechange.html">lanechange output</a>: Lane
+  changing events with the associated motivation for changing for
+  every vehicle</li>
+<li><a href="Output/SSM_Device.html">surrogate safety measures
+  (SSM)</a>: Output of safety
+  related measures, headway, brake rates, etc</li>
+<li><a href="Output/VTypeProbe.html">vehicle type probe</a>:
+  positions of vehicles over time for a certain vehicle type
+  (deprecated, use vType filters with FCD-output instead)</li>
+</ul>
+<h2 id="simulated_detectors">simulated detectors<a class="headerlink" href="#simulated_detectors" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Output/Induction_Loops_Detectors_(E1).html">Inductive loop detectors (E1)</a>:
+  simulated induction loops</li>
+<li><a href="Output/Instantaneous_Induction_Loops_Detectors.html">Instant induction loops</a>:
+  simulated unaggregated induction loops</li>
+<li><a href="Output/Lanearea_Detectors_(E2).html">Lane area detectors (E2)</a>:
+  detectors that capture a lane segment (i.e. simulated vehicle
+  tracking cameras)</li>
+<li><a href="Output/Multi-Entry-Exit_Detectors_(E3).html">Multi-Entry-Exit detectors (E3)</a>:
+  simulators that track traffic in an area by detecting entry and exit
+  events at defined locations</li>
+<li><a href="Output/RouteProbe.html">Route Detectors</a>: detector
+  for sampling route distributions</li>
+</ul>
+<h2 id="values_for_edges_or_lanes">values for edges or lanes<a class="headerlink" href="#values_for_edges_or_lanes" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Output/Lane-_or_Edge-based_Traffic_Measures.html">edgelane traffic</a>:
+  edge/lane-based network performance measures</li>
+<li><a href="Output/Amitran_Traffic_Measures.html">aggregated Amitran measures</a>:
+  edge/lane-based network performance measures following the Amitran
+  standard</li>
+<li><a href="Output/Lane-_or_Edge-based_Emissions_Measures.html">edgelane emissions</a>:
+  edge/lane-based vehicular pollutant emission</li>
+<li><a href="Output/Lane-_or_Edge-based_Noise_Measures.html">edgelane noise</a>:
+  edge/lane-based vehicular noise emission; based on Harmonoise</li>
+<li><a href="Output/QueueOutput.html">queue output</a>: lane-based
+  calculation of the actual tailback in front of a junction</li>
+</ul>
+<h2 id="values_for_junctions">values for junctions<a class="headerlink" href="#values_for_junctions" title="Permanent link">#</a></h2>
+<p>There is no dedicated output format for traffic at junctions. Instead junction related traffic can be measured by placing detectors that measure traffic at the intersection.</p>
+<ul>
+<li><a href="../Tools/Output.html#generatetlse1detectorspy">Tools/Output#generateTLSE1Detectors.py</a>
+  script for generating induction loop detectors around all
+  TLS-controlled intersections (point-based detected on individual lanes)</li>
+<li><a href="../Tools/Output.html#generatetlse2detectorspy">Tools/Output#generateTLSE2Detectors.py</a>
+  script for generating lane-area detectors around all TLS-controlled
+  intersections (area-based detection on individual lanes)</li>
+<li><a href="../Tools/Output.html#generatetlse3detectorspy">Tools/Output#generateTLSE3Detectors.py</a>
+  script for generating multi-entry-exit detectors around all
+  TLS-controlled intersections or for an arbitrary list of
+  intersections. The detectors can be configured to either aggregate
+  or separate the approaching edges and to include or exclude the
+  junction interior. (area-based detection on edges)</li>
+</ul>
+<p>Alternatively, the <a href="Output.html#values_for_edges_or_lanes">values for edges or lanes</a> can be manually aggregated to obtain the flow at at a junction.</p>
+<h2 id="vehicle-based_information">vehicle-based information<a class="headerlink" href="#vehicle-based_information" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Output/TripInfo.html">trip information</a>:
+  aggregated information about each vehicle's journey (optionally with
+  emission data)</li>
+<li><a href="Output/VehRoutes.html">vehicle routes
+  information</a>: information
+  about each vehicle's routes over simulation run</li>
+<li><a href="Output/StopOutput.html">stop output</a>: information
+  about vehicle
+  <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#stops">stops</a>
+  and loading/unloading of persons and containers</li>
+<li><a href="../Models/Electric.html#battery-output">battery usage</a>:
+  information about battery state for electric vehicles</li>
+</ul>
+<h2 id="simulationnetwork-based_information">simulation(network)-based information<a class="headerlink" href="#simulationnetwork-based_information" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Output/Summary.html">simulation state statistics</a>:
+  information about the current state of the simulation (vehicle count etc.)</li>
+<li><a href="Output/PersonSummary.html">simulation state person statistics</a>:
+  information about the current state of persons the simulation (person count etc.)</li>
+</ul>
+<h2 id="traffic_lights-based_information"><a href="Output/Traffic_Lights.html">traffic lights-based information</a><a class="headerlink" href="#traffic_lights-based_information" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="Output/Traffic_Lights.html#tls_states">traffic light states</a>:
+  information about the state (lights) of a traffic light</li>
+<li><a href="Output/Traffic_Lights.html#tls_switches">stream-based traffic light switches</a>:
+  information about the switches of a traffic light signal responsible
+  for a certain link</li>
+<li><a href="Output/Traffic_Lights.html#tls_switch_states">traffic light states, by switch</a>:
+  information about the states (lights) of a traffic light signal,
+  written only when changed</li>
+<li><a href="Output/Traffic_Lights.html#coupled_areal_detectors">areal detectors coupled to tls</a>:
+  simulated vehicle tracking cameras triggered by tls</li>
+</ul>
+<h2 id="additional_debugging_outputs">Additional Debugging Outputs<a class="headerlink" href="#additional_debugging_outputs" title="Permanent link">#</a></h2>
+<ul>
+<li>The option <strong>--link-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> saves debugging data for the intersection model. This
+data reveals how long each vehicle intends to occupy an upcoming
+intersection.</li>
+<li>The option <strong>--movereminder-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> saves debugging data for the interaction between vehicle
+devices, lanes and output facilities. It is only available when
+compiling <a href="../sumo.html">sumo</a> with debug flags.</li>
+<li>The option <strong>--railsignal-block-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> saves information about rail signal blocks. For each
+controlled railSignal link the following information is generated:<ul>
+<li><strong>forwardBlock</strong>: all lanes that are reached from the signalized
+  link in forward direction up to the next rail signal</li>
+<li><strong>bidiBlock</strong>: all lanes that make up the reverse-direction
+  track encountered within the forward block and followed up to
+  the next railSignal beyond a railway switch which allows passing</li>
+<li><strong>backwardBlock</strong>: all lanes that enter the forwardBlock or
+  bidiBlock from outside followed upstream to the entry rail
+  signal</li>
+<li><strong>conflictLinks</strong>: all controlled links that enter the conflict
+  area (forwardBlock, bidiBlock, backwardBlock) from outside,
+  encoded as <em>&lt;SIGNALID>_&lt;LINKINDEX></em></li>
+</ul>
+</li>
+</ul>
+<h1 id="commandline_output_verbose">Commandline Output (verbose)<a class="headerlink" href="#commandline_output_verbose" title="Permanent link">#</a></h1>
+<p>When running the simulation with option <strong>--verbose</strong> (short <strong>-v</strong>) the following data
+will be printed (unless explicitly disabled with option <strong>--duration-log false</strong>):</p>
+<h2 id="vehicle_counts">Vehicle Counts<a class="headerlink" href="#vehicle_counts" title="Permanent link">#</a></h2>
+<ul>
+<li>Inserted: number vehicles that entered the simulation network</li>
+<li>Loaded: number of vehicles that were loaded from route files. This
+may differ from emitted for two reason:<ul>
+<li>Running with option <strong>--scale</strong> with a value less than 1.0</li>
+<li>Having a congested network where not all vehicles could be
+  inserted before the simulation time ended</li>
+</ul>
+</li>
+<li>Running: number of vehicles currently active in the network at
+simulation end</li>
+<li>Waiting: number of vehicles which could not yet be inserted into the
+network due to congestion</li>
+<li>Teleports: number of of times that vehicles were teleported for any
+of the following reasons (These reasons are given whenever a
+teleport warning is issued)<ul>
+<li><a href="Why_Vehicles_are_teleporting.html#collisions">Collision</a>:
+  a vehicle violated its minGap requirement in relation to its
+  leader vehicle</li>
+<li><a href="Why_Vehicles_are_teleporting.html#waiting_too_long_aka_grid-locks">Timeout</a>:
+  a vehicle was unable to move for --time-to-teleport seconds
+  (default 300)<ul>
+<li>wrong lane: a vehicle was unable to move because it could
+  not continue its route on the current lane and was unable to
+  change to the correct lane</li>
+<li>yield: a vehicle was unable to cross an intersection where
+  it did not have priority</li>
+<li>jam: a vehicle could not continue because there was no space
+  on the next lane</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>If the simulation contained persons the following output will be added:</p>
+<ul>
+<li>Inserted: number of persons that were loaded from route files</li>
+<li>Running: number of persons active in the network at simulation end</li>
+<li>Jammed: number of times a person was jammed</li>
+</ul>
+<h2 id="timing_data">Timing Data<a class="headerlink" href="#timing_data" title="Permanent link">#</a></h2>
+<ul>
+<li>Duration: The amount of elapsed time (as measure by a clock hanging
+  on the wall) while computing the simulation.</li>
+<li>"Real time factor": The quotient of <em>simulated time</em> / <em>computation
+  time</em>. If one hour is simulated in 360 seconds the real time factor
+  is 10.</li>
+<li>UPS: (updates per second). The number of vehicle updates that were
+  performed on average per second of computation time. If a single 
+  vehicle update takes on average one millisecond, this will be 1000.</li>
+</ul>
+<p>If routing took place in the simulation, Each routing algorithm instance
+will report</p>
+<ul>
+<li>The number of routing queries</li>
+<li>The number of edges that were checked in order to find the best
+  route</li>
+<li>The total time spend routing and the average time per routing call</li>
+</ul>
+<h2 id="aggregated_traffic_measures">Aggregated Traffic Measures<a class="headerlink" href="#aggregated_traffic_measures" title="Permanent link">#</a></h2>
+<p>When setting the option <strong>--duration-log.statistics</strong>, (shortcut <strong>-t</strong>) verbose output is automatically enabled
+(unless explicitly set to <em>false</em>) and the following averages for all
+vehicle trips will be printed:</p>
+<ul>
+<li>RouteLength: average route length</li>
+<li>Duration: average trip duration</li>
+<li>WaitingTime: average time spent standing (involuntarily)</li>
+<li>TimeLoss: average time lost due to driving slower than desired
+  (includes WaitingTime). The desired speed takes the vehicles
+  <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#speed_distributions">speedFactor</a>
+  into account.</li>
+<li>
+<p>DepartDelay: average time vehicle departures were <a href="VehicleInsertion.html">delayed due to
+  lack of road space</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, only vehicles that have arrived are included in these statistics. If the option <strong>--tripinfo-output.write-unfinished</strong> is set, running vehicles will be included as well.</p>
+</div>
+</li>
+</ul>
+<ul>
+<li>DepartDelayWaiting: average waiting time of vehicles which could not
+  be inserted due to lack of road space by the end of the simulation.
+  (only present if the option <strong>--tripinfo-output.write-unfinished</strong> is set)</li>
+</ul>
+<p>If the simulation contained pedestrians (walking persons) the following
+output will be added:</p>
+<ul>
+<li>walks: the number of distinct <code>&lt;walk&gt;</code>-elements in the input</li>
+<li>RouteLength: average walk length</li>
+<li>Duration: average walk duration</li>
+</ul>
+<p>If the simulation contained passengers (persons riding in vehicles) the
+following output will be added:</p>
+<ul>
+<li>Rides: the number of distinct <code>&lt;ride&gt;</code>-elements in the input</li>
+<li>Duration: average ride duration</li>
+<li>Bus rides: number of rides with a public transport vehicle driving
+  on roads (public transport is identified by having the
+  <em>line</em>-attribute set).</li>
+<li>Train rides number of rides with a public transport vehicle driving
+  on rails</li>
+<li>Bike rides: number of rides with vehicle class <em>bicycle</em></li>
+<li>Aborted rides: rides that could not be completed because no suitable
+  vehicle was available</li>
+</ul>
+<p>When setting this option and using <a href="../sumo-gui.html">sumo-gui</a>, the
+network parameter dialog will also show a running average for these
+traffic measures (The dialog is accessible by right-clicking on the
+network background).</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

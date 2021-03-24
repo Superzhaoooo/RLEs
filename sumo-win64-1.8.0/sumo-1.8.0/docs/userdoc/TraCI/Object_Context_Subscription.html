@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/TraCI/Object_Context_Subscription.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>TraCI/Object Context Subscription - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/TraCI/Object_Context_Subscription.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+            <li class="nav-item main"><a href="#command_0x8x_subscribe_context">Command 0x8X: Subscribe ... Context</a></li>
+            <li class="nav-item main"><a href="#response_0x9x_subscription_response">Response 0x9X: ... Subscription Response</a></li>
+            <li class="nav-item main"><a href="#command_0x7e_add_context_subscription_filter">Command 0x7E: Add Context Subscription Filter</a></li>
+            <li class="nav-item main"><a href="#client_library_methods">Client library methods</a></li>
+            <li class="nav-item main"><a href="#notes">Notes</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>TraCI/Object Context Subscription<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<p>Context subscriptions are allowing the obtaining of specific values from
+surrounding objects of a certain so called "EGO" object. With these
+data one can determine the traffic status around that EGO object. Such
+an EGO Object can be any possible Vehicle, inductive loop,
+points-of-interest, and such like. A vehicle driving through a city, for
+example, is surrounded by a lot of different and changing vehicles,
+lanes, junctions, or points-of-interest along his ride. Context
+subscriptions can provide selected variables of those objects that
+surround the EGO object within a certain range.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The EGO object itself is included in the context subscription result when its domain is queried (e.g. a vehicle is always in the set of all vehicles in range of itself).</p>
+</div>
+<p>The subscription for a structure's context is initiated using a
+"Subscribe ... Context" command (0x80-0x8e). The command is evaluated
+immediately on request, verifying it this way. It returns a "Subscribe
+... Context" response (0x90-0x9e). If EGO is a vehicle, the subscription
+is descheduled as soon as the vehicle leaves the simulation.</p>
+<p>As soon as the subscription was accepted, it is executed after each call
+of <a href="Control-related_commands.html#command_0x02_simulation_step">Simulation
+Step(2)</a>
+command.</p>
+<p>The command ID describes the type of the EGO-object which is the center
+of the context; currently, the following EGO-objects are supported:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Command ID</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inductive loops</td>
+<td>0x80</td>
+<td></td>
+</tr>
+<tr>
+<td>lanes</td>
+<td>0x83</td>
+<td></td>
+</tr>
+<tr>
+<td>vehicles</td>
+<td>0x84</td>
+<td></td>
+</tr>
+<tr>
+<td>points-of-interest</td>
+<td>0x87</td>
+<td></td>
+</tr>
+<tr>
+<td>polygons</td>
+<td>0x88</td>
+<td></td>
+</tr>
+<tr>
+<td>junctions</td>
+<td>0x89</td>
+<td></td>
+</tr>
+<tr>
+<td>edges</td>
+<td>0x8a</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>For a given EGO-structure, each subscription allows to address multiple
+variables from structures of a certain kind. This means, if you have an
+EGO-vehicle, you may ask for speeds and positions of vehicles in range
+of EGO. If you also need information about surrounding
+points-of-interest, you have to add a further context subscription for
+PoIs. Vehicles, and PoIs belong to different "context domains". The
+following domains are available:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Context Domain ID</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inductive loops</td>
+<td>0xa0</td>
+<td><a href="Induction_Loop_Value_Retrieval.html">retrievable variables</a></td>
+</tr>
+<tr>
+<td>lanes</td>
+<td>0xa3</td>
+<td><a href="Lane_Value_Retrieval.html">retrievable variables</a></td>
+</tr>
+<tr>
+<td>vehicles</td>
+<td>0xa4</td>
+<td><a href="Vehicle_Value_Retrieval.html">retrievable variables</a></td>
+</tr>
+<tr>
+<td>points-of-interest</td>
+<td>0xa7</td>
+<td><a href="POI_Value_Retrieval.html">retrievable variables</a></td>
+</tr>
+<tr>
+<td>polygons</td>
+<td>0xa8</td>
+<td><a href="Polygon_Value_Retrieval.html">retrievable variables</a></td>
+</tr>
+<tr>
+<td>junctions</td>
+<td>0xa9</td>
+<td><a href="Junction_Value_Retrieval.html">retrievable variables</a></td>
+</tr>
+<tr>
+<td>edges</td>
+<td>0xaa</td>
+<td><a href="Edge_Value_Retrieval.html">retrievable variables</a></td>
+</tr>
+</tbody>
+</table>
+<p>For each domain, the same variables can be retrieved as using the Get
+... Variable commands (see above).</p>
+<h1 id="command_0x8x_subscribe_context">Command 0x8<em>X</em>: Subscribe ... Context<a class="headerlink" href="#command_0x8x_subscribe_context" title="Permanent link">#</a></h1>
+<table>
+<thead>
+<tr>
+<th align="center">time</th>
+<th align="center">time</th>
+<th align="center">string</th>
+<th align="center">ubyte</th>
+<th align="center">double</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte[n]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">begin Time</td>
+<td align="center">end Time</td>
+<td align="center">Object ID</td>
+<td align="center">Context Domain</td>
+<td align="center">Context Range</td>
+<td align="center">Variable Number</td>
+<td align="center">The list of variables to return</td>
+</tr>
+</tbody>
+</table>
+<p>Some notes:</p>
+<ul>
+<li>begin Time: the subscription is executed only in time steps >= this
+  value; in ms</li>
+<li>end Time: the subscription is executed in time steps &lt;= this value;
+  the subscription is removed if the simulation has reached a higher
+  time step; in ms</li>
+<li>Context Domain: the type of objects in the addressed object's
+  surrounding to ask values from</li>
+<li>Context Range: the radius of the surrounding</li>
+<li>The size of the variables list must be equal to the field "Variable
+  Number".</li>
+</ul>
+<h1 id="response_0x9x_subscription_response">Response 0x9<em>X</em>: ... Subscription Response<a class="headerlink" href="#response_0x9x_subscription_response" title="Permanent link">#</a></h1>
+<table>
+<thead>
+<tr>
+<th align="center">string</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">int</th>
+<th align="center">string</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">&lt;return_type></th>
+<th align="center">...</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">&lt;return_type></th>
+<th align="center">...</th>
+<th align="center">string</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">&lt;return_type></th>
+<th align="center">...</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">ubyte</th>
+<th align="center">&lt;return_type></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Object ID</td>
+<td align="center">Context Domain</td>
+<td align="center">Variable Count</td>
+<td align="center">Objects Count</td>
+<td align="center">Object #1 ID</td>
+<td align="center">Object #1 / Variable #1 Id</td>
+<td align="center">Object #1 / Variable #1 status</td>
+<td align="center">Object #1 / Return type of the variable #1</td>
+<td align="center">Object #1 / &lt;VALUE#1></td>
+<td align="center">...</td>
+<td align="center">Object #1 / Variable #n Id</td>
+<td align="center">Object #1 / Variable #n status</td>
+<td align="center">Object #1 / Return type of the variable #n</td>
+<td align="center">Object #1 / &lt;VALUE#n></td>
+<td align="center">...</td>
+<td align="center">Object #m ID</td>
+<td align="center">Object #m / Variable #1 Id</td>
+<td align="center">Object #m / Variable #1 status</td>
+<td align="center">Object #m / Return type of the variable #1</td>
+<td align="center">Object #m / &lt;VALUE#1></td>
+<td align="center">...</td>
+<td align="center">Object #m / Variable #n Id</td>
+<td align="center">Object #m / Variable #n status</td>
+<td align="center">Object #m / Return type of the variable #n</td>
+<td align="center">Object #m / &lt;VALUE#n></td>
+</tr>
+</tbody>
+</table>
+<p>The response to a <strong>"Subscribe ... Variable"</strong>.</p>
+<p>The status is 0x00 (RTYPE_OK) if the variable could be retrieved
+successfully. If not, the status is 0xff (RTYPE_ERR). In the second
+case, the variable type is set to string and the variable value contains
+the error message. Please note, that the status should be ok in all
+cases.</p>
+<ul>
+<li><strong><em>Variable Count</em></strong> is the number of returned variables per object</li>
+<li><strong><em>Objects Count</em></strong> is the number of objects in range</li>
+</ul>
+<p>This implies that n*m values are returned (Variable Count * Objects
+Count).</p>
+<h1 id="command_0x7e_add_context_subscription_filter">Command 0x7E: Add Context Subscription Filter<a class="headerlink" href="#command_0x7e_add_context_subscription_filter" title="Permanent link">#</a></h1>
+<table>
+<thead>
+<tr>
+<th align="center">ubyte</th>
+<th align="center">[ubyte]</th>
+<th align="center">[double/list(byte)/list(string)]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">filter type</td>
+<td align="center">parameter type</td>
+<td align="center">parameter value</td>
+</tr>
+</tbody>
+</table>
+<p>For the parameter, different value types are possible depending on the
+filter type. The lanes filter (FILTER_TYPE_LANES) takes a list of
+bytes, vType (FILTER_TYPE_VTYPE) and vClass filter
+(FILTER_TYPE_VCLASS) take a list of strings, the downstream/upstream/lateral
+filters, as well as the field of vision filter take a double (FILTER_TYPE_DOWNSTREAM_DIST,
+FILTER_TYPE_UPSTREAM_DIST, FILTER_TYPE_LATERAL_DIST, FILTER_TYPE_FIELD_OF_VISION),
+and no parameters are expected for the no-opposite filter (FILTER_TYPE_NOOPPOSITE),
+the lead/follow filter (FILTER_TYPE_LEAD_FOLLOW), and the turn filter (FILTER_TYPE_TURN).</p>
+<h1 id="client_library_methods">Client library methods<a class="headerlink" href="#client_library_methods" title="Permanent link">#</a></h1>
+<ul>
+<li>In the <a href="Interfacing_TraCI_from_Python.html#context_subscriptions">python
+  library</a>,
+  all domains support the methods <a href="http://sumo.dlr.de/daily/pydoc/traci.domain.html#Domain"><em>subscribeContext</em> and
+  <em>unsubscribeContext</em></a></li>
+<li>For the python client several <a href="http://sumo.dlr.de/daily/pydoc/traci._vehicle.html#VehicleDomain-addSubscriptionFilterCFManeuver">methods for adding context filters
+  for vehicle-to-vehicle context
+  subscriptions</a>
+  are included.</li>
+<li>In the <a href="C++TraCIAPI.html">C++ library</a>, the method
+  <em>simulation.subscribeContext</em> takes an additional argument that
+  encodes the source domain</li>
+</ul>
+<h1 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">#</a></h1>
+<ul>
+<li>When asking for domains "point-of-interest" and "polygon", the
+  current version does not support asking for these structures when
+  their position was changed using TraCI</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

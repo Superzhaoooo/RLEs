@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Installing/Windows_Build.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Installing/Windows Build - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Installing/Windows_Build.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#recommended_windows_setup">Recommended Windows setup</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#optional_but_still_recommended_steps" class="nav-link">• optional but still recommended steps</a>
+                </li>
+            <li class="nav-item main"><a href="#further_notes">Further notes</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#adapting_settings" class="nav-link">• Adapting settings</a>
+                </li>
+            <li class="nav-item main"><a href="#libraries">Libraries</a></li>
+            <li class="nav-item main"><a href="#tests">Tests</a></li>
+            <li class="nav-item main"><a href="#troubleshooting">Troubleshooting</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#linker_reports_something_similar_to_link_fatal_error_lnk1104_cannot_open_file_c92programobj" class="nav-link">• Linker reports something similar to "LINK : fatal error LNK1104: cannot open file 'C:\Program.obj'"</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#failure_on_pre-build_event_missing_versionh_or_42typemaph" class="nav-link">• Failure on pre-build event (missing version.h or *typemap.h)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#execution_cannot_proceed_because_msvcr120dllmsvcr140dll_was_not_found" class="nav-link">• Execution cannot proceed because MSVCR120.dll/MSVCR140.dll was not found</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#in_debug_mode_execution_cannot_proceed_because_msvcr120ddllmsvcr140ddll_was_not_found" class="nav-link">• In debug mode, execution cannot proceed because MSVCR120D.dll/MSVCR140D.dll was not found</a>
+                </li>
+            <li class="nav-item main"><a href="#available_configurations">Available configurations</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Installing/Windows Build<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This document describes how to build SUMO under MS-Windows using only
+freely available (this does <strong>not</strong> mean "open source") tools.
+Instructions on how to build SUMO on Windows using an Open Source
+toolchain are included in our <a href="Linux_Build.html">building on
+Linux</a> pages. Please note that you
+may also <a href="../Downloads.html">download pre-build Windows binaries</a>.</p>
+<h2 id="recommended_windows_setup">Recommended Windows setup<a class="headerlink" href="#recommended_windows_setup" title="Permanent link">#</a></h2>
+<ul>
+<li>Download <a href="https://www.visualstudio.com/vs/community/">Visual Studio Community Edition</a><ul>
+<li>Start the installer and select:<ul>
+<li>Python development (including native tools)</li>
+<li>Desktop development with C++</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="../images/VSInstall.png" /></p>
+<ul>
+<li>clone <a href="https://github.com/eclipse/sumo">https://github.com/eclipse/sumo</a> or open your existing local SUMO folder</li>
+<li>go to team explorer<ul>
+<li>choose Manage Connections, then "Local Git"-&gt;Clone <a href="https://github.com/DLR-TS/SUMOLibraries">https://github.com/DLR-TS/SUMOLibraries</a></li>
+</ul>
+</li>
+<li>now be patient until CMake starts configuring<ul>
+<li>if it does not or you want to reconfigure choose Project-&gt;"Generate Cache" (if this option is not there you may need to wait a little longer until Visual Studio has picked up everything)</li>
+</ul>
+</li>
+<li>Select Build-&gt;BuildAll (CMake-&gt;BuildAll in earlier versions)</li>
+<li>set SUMO_HOME</li>
+<li>Install Texttest <a href="https://sourceforge.net/projects/texttest/files/latest/download">https://sourceforge.net/projects/texttest/files/latest/download</a></li>
+</ul>
+<h3 id="optional_but_still_recommended_steps">optional but still recommended steps<a class="headerlink" href="#optional_but_still_recommended_steps" title="Permanent link">#</a></h3>
+<ul>
+<li>Install notepad++</li>
+<li>Install TortoiseGit</li>
+<li>Install <a href="https://git-scm.com/download/win">Git command line tools</a> (this is mandatory if you install TortoiseGit)</li>
+<li>If you decide to use the Python which comes with Visual Studio<ul>
+<li>Test start a python script and add association</li>
+<li>Add Python to the path (also the Scripts dir), find it at C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64</li>
+<li>Install pyautogui, matplotlib, rtree, pyproj, lxml following the instructions <a href="https://docs.microsoft.com/en-us/visualstudio/python/tutorial-working-with-python-in-visual-studio-step-05-installing-packages?view=vs-2019">https://docs.microsoft.com/en-us/visualstudio/python/tutorial-working-with-python-in-visual-studio-step-05-installing-packages?view=vs-2019</a></li>
+</ul>
+</li>
+<li>If not use <code>pip install pyautogui, matplotlib, pyproj, lxml</code></li>
+<li>Download <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#rtree">rtree from here</a> and install it using pip or Visual Studio</li>
+<li>(after 30 days) Setup a Microsoft account (if you do not already have one) and register your Visual Studio</li>
+</ul>
+<h2 id="further_notes">Further notes<a class="headerlink" href="#further_notes" title="Permanent link">#</a></h2>
+<p>If you need a different python version or want to test with multiple pythons you can either install them directly from Visual Studio or <a href="http://www.python.org/download/">Download Python for Windows</a> and install it. Most SUMO tools should work with Python 2 and 3. Please make sure that you install the recommend python modules as above.</p>
+<p>If you want to clone / checkout a special sumo version, you can of course do it from the ommand line (if you have installed the command line tools)
+using <code>git clone --recursive https://github.com/eclipse/sumo</code> or download and extract a source package, see <a href="../Downloads.html">Downloads</a></p>
+<p>The command for the <a href="#libraries">#Libraries</a> is: <code>git clone --recursive https://github.com/DLR-TS/SUMOLibraries</code>. If you do not place the libraries in the same folder as sumo, you will need to set the SUMO_LIBRARIES environment variable to the directory.</p>
+<p>It Visual Studio fails at first try (maybe SUMOLibraries are not cloned yet or are in an unusual location, the errors talk about not finding Xerces)
+  - Select Project-&gt;"Generate Cache" to try again (it is CMake-&gt;Generate in earlier Visual Studio versions) or see below</p>
+<h3 id="adapting_settings">Adapting settings<a class="headerlink" href="#adapting_settings" title="Permanent link">#</a></h3>
+<p>If you need to modify settings, you can edit the CMakeCache.txt by opening it in your favorite text editor or via the Project-&gt;Cmake-Cache menu. The following things might be useful</p>
+<p>- If the libraries are not found, set SUMO_LIBRARIES:PATH to something like C:/Users/testus/source/repos/SUMOLibraries) and retry
+  - If the wrong python interpreter or library is found, edit the PYTHON_* variables
+  - If you want to disable the build of the GUI (Fox) or usage of Proj, set the according library entries to the empty string</p>
+<p>To make a debug build, you should <em>not</em> change CMAKE_BUILD_TYPE in the cache file. You should choose a different configuration in the GUI instead.</p>
+<h2 id="libraries">Libraries<a class="headerlink" href="#libraries" title="Permanent link">#</a></h2>
+<p>We provide a central location for getting all dependent libraries at
+<a href="https://github.com/DLR-TS/SUMOLibraries">https://github.com/DLR-TS/SUMOLibraries</a>. The easiest way is to clone
+this repository and define an environment variable <code>SUMO_LIBRARIES</code>
+pointing to the resulting directory. They are build with Visual Studio
+2017, but may be used with earlier and later versions as well. You may
+need to install the Visual C++ 2017 Runtime Distributable for running
+SUMO then (tested with Visual Studio 2013). </p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When cloning SUMOLibraries you must initialized all submodules with <code>git submoudle update --init</code></p>
+</div>
+<p>For details on building your
+own and also on how to use different versions and additional libraries
+see <a href="Windows_Libraries.html">Installing/Windows_Libraries</a>.
+Make sure that the subdirectories <code>fox-1.6.54/lib</code>, <code>proj_gdal-1911/bin</code>
+and <code>xerces-c-3.2.0/bin</code> are in PATH. Note: for 32 bits compilations
+folders are <code>32bits/fox-1.6.54/lib</code>, <code>32bits/proj_gdal-1911/bin</code> and
+<code>32bits/xerces-c-3.2.0/bin</code>. You can add both to the path but always add the
+64 bit version first.</p>
+<h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">#</a></h2>
+<ul>
+<li>If you plan to extend SUMO yourself, or just want to know whether
+  everything compiled OK, it is strongly recommended to have a look at
+  <a href="../Developer/Tests.html">Developer/Tests</a>. This tool makes it
+  easier to check whether some existing functionality was broken by
+  the extensions.</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
+<ul>
+<li>Note on installation paths: MSVC seems to have difficulties with
+  include and library paths containing spaces (for instance
+  <code>C:\Program Files</code>). Thus try to avoid installing SUMO or any of the
+  libraries in such paths.</li>
+</ul>
+<h3 id="linker_reports_something_similar_to_link_fatal_error_lnk1104_cannot_open_file_c92programobj">Linker reports something similar to "LINK : fatal error LNK1104: cannot open file 'C:\Program.obj'"<a class="headerlink" href="#linker_reports_something_similar_to_link_fatal_error_lnk1104_cannot_open_file_c92programobj" title="Permanent link">#</a></h3>
+<p>You probably have installed a library to a path containing white spaces
+in its name. In such a case, the according environment variable should
+be embedded in quotes (").</p>
+<p>Example: set FOX="D:\my libs\fox-1.6.36".</p>
+<h3 id="failure_on_pre-build_event_missing_versionh_or_42typemaph">Failure on pre-build event (missing version.h or *typemap.h)<a class="headerlink" href="#failure_on_pre-build_event_missing_versionh_or_42typemaph" title="Permanent link">#</a></h3>
+<p>If Visual Studio reports a failed pre-build event you can safely ignore
+this, unless you are building from the <a href="../FAQ.html#how_do_i_access_the_code_repository">source code
+repository</a>. In
+this case you should probably install Python. Even if python is
+installed the file associations may be broken which causes the
+generation of src/version.h via tools/build/version.py to fail. Either
+repair your file associations or undefine HAVE_VERSION_H in
+src/windows_config.h.</p>
+<p>If you did install Python correctly, double check that it passes
+<a href="http://stackoverflow.com/questions/2640971/windows-is-not-passing-command-line-arguments-to-python-programs-executed-from-t">command line
+arguments</a>.
+For a quick fix, you can also execute the following commands manually:</p>
+<pre><code>tools\build\version.py
+tools\build\typemap.py
+</code></pre>
+
+<h3 id="execution_cannot_proceed_because_msvcr120dllmsvcr140dll_was_not_found">Execution cannot proceed because MSVCR120.dll/MSVCR140.dll was not found<a class="headerlink" href="#execution_cannot_proceed_because_msvcr120dllmsvcr140dll_was_not_found" title="Permanent link">#</a></h3>
+<p>Install Microsoft <a href="https://www.microsoft.com/en-US/download/details.aspx?id=30679">Visual C++ Redistributable Packages for Visual
+Studio 2012</a>
+(for MSVCR120.dll) or <a href="https://www.visualstudio.com/downloads/">Microsoft Visual C++ Redistributable Packages for
+Visual Studio 2015</a> (for
+MSVCR140.dll). You can check if all dependencies are correct using
+<a href="https://lucasg.github.io/Dependencies/">Dependencies</a></p>
+<p><img alt="" src="../images/Dependencies.png" /></p>
+<h3 id="in_debug_mode_execution_cannot_proceed_because_msvcr120ddllmsvcr140ddll_was_not_found">In debug mode, execution cannot proceed because MSVCR120D.dll/MSVCR140D.dll was not found<a class="headerlink" href="#in_debug_mode_execution_cannot_proceed_because_msvcr120ddllmsvcr140ddll_was_not_found" title="Permanent link">#</a></h3>
+<p>Your version of Visual Studio doesn't support Debugging, only can be
+compiled in release mode.</p>
+<h2 id="available_configurations">Available configurations<a class="headerlink" href="#available_configurations" title="Permanent link">#</a></h2>
+<p>The release build is used for the distribution of sumo. The Debug build
+allows all debugging features. Keep in mind that
+<a href="../Developer/Tests.html">Texttest</a> usually picks up the release
+build.</p>
+<ul>
+<li>Release: All optimizations, assertions disabled, no debugging
+  symbols, links against external release libs</li>
+<li>Debug: No optimizations, assertions enabled, debugging symbols
+  included, links against external debug libs</li>
+</ul>
+<p>Left clicking over Solution/Properties/Configuration Manager allow to
+change between configurations:</p>
+<p><img alt="" src="../images/SwichDebugRelease.png" /></p>
+<p>To switch to a different platform (e.g. 32bit instead of 64 bit) please
+run cmake again with a different generator.</p>
+<p>Naming Conventions: 64bit executables have the same name as their 32bit
+counterpart. The Debug build additionally carries the suffix 'D'.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 06 October 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

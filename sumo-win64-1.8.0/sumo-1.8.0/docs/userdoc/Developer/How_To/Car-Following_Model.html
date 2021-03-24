@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/How_To/Car-Following_Model.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Developer/How To/Car-Following Model - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/How_To/Car-Following_Model.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#the_car-following_models_class">The car-following model's class</a></li>
+            <li class="nav-item main"><a href="#loading_into_simulation">Loading into simulation</a></li>
+            <li class="nav-item main"><a href="#xml_validation">XML Validation</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/How To/Car-Following Model<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This short document describes how a new car-following model can be added
+to SUMO. We'll do this by implementing a test model named "smartSK".
+When implementing your own model, you should also grep (look for) occurrences of the name we use, here.</p>
+<h2 id="the_car-following_models_class">The car-following model's class<a class="headerlink" href="#the_car-following_models_class" title="Permanent link">#</a></h2>
+<p>The best thing is to start with an already existing model. Models are
+located in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/microsim/cfmodels and new added models should reside
+here, too. Copy both MSCFModel_KraussOrig1.h and
+MSCFModel_KraussOrig1.cpp and rename them. The name should be
+"MSCFModel_&lt;YOUR_MODELS_NAME>", in our case "MSCFModel_SmartSK"</p>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>Car-following model implementations are located in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/microsim/cfmodels.</p>
+</div>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>A car-following class' name should start with "MSCFModel_".</p>
+</div>
+<p>Now, open both files and rename all occurrences of MSCFModel_KraussOrig1
+into your class' name.</p>
+<p>Add the files to the <a href="https://github.com/eclipse/sumo/blob/master/src/microsim/cfmodels/CMakeLists.txt"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/microsim/cfmodels/CMakeLists.txt</a>.</p>
+<h2 id="loading_into_simulation">Loading into simulation<a class="headerlink" href="#loading_into_simulation" title="Permanent link">#</a></h2>
+<p>We now add the XML-elements which allow us to define and parse the
+model's parameter. Extend the list of known elements
+"SUMOXMLDefinitions::tags" located in <a href="https://github.com/eclipse/sumo/blob/master/src/utils/xml/SUMOXMLDefinitions.cpp"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/utils/xml/SUMOXMLDefinitions.cpp</a>.
+In SUMOXMLDefinitions.h:</p>
+<pre><code>SUMO_TAG_CF_SMART_SK,
+</code></pre>
+
+<p>In SUMOXMLDefinitions.cpp:</p>
+<pre><code>{ &quot;carFollowing-SmartSK&quot;,     SUMO_TAG_CF_SMART_SK },
+</code></pre>
+
+<p>Furthermore you need to add an entry to
+SUMOXMLDefinitions::carFollowModelValues[] also in
+SUMOXMLDefinitions.cpp:</p>
+<pre><code>{ &quot;SmartSK&quot;,     SUMO_TAG_CF_SMART_SK },
+</code></pre>
+
+<p>Car-following models are instantiated in MSVehicleType::build(...)
+located in <a href="https://github.com/eclipse/sumo/blob/master/src/microsim/MSVehicleType.cpp"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/microsim/MSVehicleType.cpp</a>. You'll find a switch, here
+where you have to put the call to your model's constructor into.</p>
+<pre><code>case SUMO_TAG_CF_SMART_SK:
+  model = new MSCFModel_SmartSK(vtype,
+                                from.get(SUMO_ATTR_ACCEL, SUMOVTypeParameter::getDefaultAccel(from.vehicleClass)),
+                                from.get(SUMO_ATTR_DECEL, SUMOVTypeParameter::getDefaultDecel(from.vehicleClass)),
+                                from.get(SUMO_ATTR_SIGMA, SUMOVTypeParameter::getDefaultImperfection(from.vehicleClass)),
+                                from.get(SUMO_ATTR_TAU, 1.),
+                                from.get(SUMO_ATTR_TMP1, 1.),
+                                from.get(SUMO_ATTR_TMP1, 1.),
+                                from.get(SUMO_ATTR_TMP1, 1.),
+                                from.get(SUMO_ATTR_TMP1, 1.),
+                                from.get(SUMO_ATTR_TMP1, 1.));
+</code></pre>
+
+<p>You may note that the constructor is read with values from "from". The
+first parameter, starting with SUMO_ATTR_ denotes the XML-attribute
+which names the parameter. These attributes, if new, have to be added to <strong><em>&lt;SUMO_HOME&gt;</em></strong>. In SUMOXMLDefinitions.h:</p>
+<pre><code>SUMO_ATTR_TMP1,
+SUMO_ATTR_TMP2,
+SUMO_ATTR_TMP3,
+SUMO_ATTR_TMP4,
+SUMO_ATTR_TMP5,
+</code></pre>
+
+<p>In SUMOXMLDefinitions.cpp:</p>
+<pre><code>{ &quot;tmp1&quot;,           SUMO_ATTR_TMP1 },
+{ &quot;tmp2&quot;,           SUMO_ATTR_TMP2 },
+{ &quot;tmp3&quot;,           SUMO_ATTR_TMP3 },
+{ &quot;tmp4&quot;,           SUMO_ATTR_TMP4 },
+{ &quot;tmp5&quot;,           SUMO_ATTR_TMP5 },
+</code></pre>
+
+<p>The second parameter denotes the default value. There are two different
+mechanisms to define default values. Either they are vehicle class
+independent (they are the same for passenger cars and for trucks for
+instance) then you can simply state the number here or you want a
+different default for the different vehicle classes then insert the
+relevant code into <a href="https://github.com/eclipse/sumo/blob/master/src/utils/vehicle/SUMOVTypeParameter.cpp"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/utils/vehicle/SUMOVTypeParameter.cpp</a>. You can only
+have floating point values as model parameters at the moment.</p>
+<p>You also have to define which parameter must be read in <a href="https://github.com/eclipse/sumo/blob/master/src/utils/vehicle/SUMOVehicleParserHelper.cpp"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/utils/vehicle/SUMOVehicleParserHelper.cpp</a>, method getAllowedCFModelAttrs():</p>
+<pre><code>std::set&lt;SumoXMLAttr&gt; smartSKParams;
+smartSKParams.insert(SUMO_ATTR_ACCEL);
+smartSKParams.insert(SUMO_ATTR_DECEL);
+smartSKParams.insert(SUMO_ATTR_SIGMA);
+smartSKParams.insert(SUMO_ATTR_TAU);
+smartSKParams.insert(SUMO_ATTR_TMP1);
+smartSKParams.insert(SUMO_ATTR_TMP2);
+smartSKParams.insert(SUMO_ATTR_TMP3);
+smartSKParams.insert(SUMO_ATTR_TMP4);
+smartSKParams.insert(SUMO_ATTR_TMP5);
+allowedCFModelAttrs[SUMO_TAG_CF_SMART_SK] = smartSKParams;
+</code></pre>
+
+<p>Note, that we have to adapt the constructor to retrieve the additional
+parameter (tmp1-tmp5). We have also to adapt the copy constructor
+located in our class in MSCFModel_SmartSK::duplicate(...).</p>
+<p>For further interaction, you also have to adapt the "id" of the model in
+the model's .h class:</p>
+<pre><code>virtual int getModelID() const {
+ return SUMO_TAG_CF_SMART_SK;
+}
+</code></pre>
+
+<h2 id="xml_validation">XML Validation<a class="headerlink" href="#xml_validation" title="Permanent link">#</a></h2>
+<p>Sumo performs <a href="../../XMLValidation.html">xml validation</a>. If you add new
+XML elements or attributes you either need to adapt the XML schema files
+in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/xsd or add the option</p>
+<pre><code>--xml-validation never
+</code></pre>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

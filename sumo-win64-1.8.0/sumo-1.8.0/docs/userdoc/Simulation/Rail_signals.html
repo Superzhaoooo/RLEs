@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Rail_signals.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Rail signals - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Rail_signals.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#loading_a_rail_signal">Loading a rail signal</a></li>
+            <li class="nav-item main"><a href="#usage">Usage</a></li>
+            <li class="nav-item main"><a href="#behavior">Behavior</a></li>
+            <li class="nav-item main"><a href="#output">Output</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Rail signals<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>Rail signals are
+<a href="../Networks/PlainXML.html#node_descriptions">node</a>
+types for controllig rail traffic.</p>
+<h1 id="loading_a_rail_signal">Loading a rail signal<a class="headerlink" href="#loading_a_rail_signal" title="Permanent link">#</a></h1>
+<p>One simply has to define a node to have the
+<code>type</code> <em>rail_signal</em>, as in the following
+example:</p>
+<pre><code>&lt;nodes&gt; &lt;!-- The opening tag --&gt;
+
+    &lt;node id=&quot;1&quot; x=&quot;-500.0&quot; y=&quot;0.0&quot; type=&quot;rail_signal&quot;/&gt;
+    &lt;node id=&quot;2&quot; x=&quot;+500.0&quot; y=&quot;0.0&quot; type=&quot;rail_signal&quot;/&gt;
+
+&lt;/nodes&gt; &lt;!-- The closing tag --&gt;
+</code></pre>
+
+<h1 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">#</a></h1>
+<p>If one uses a rail network (here, we mean a network consisting
+exclusively of <a href="../Networks/PlainXML.html#edge_descriptions">edges that allow
+only</a>
+trains) within its simulation, it is not required to use rail signals.
+Instead one could choose all junctions withing this network to be of the
+type <em>priority</em>, which results, however, in an unrealistic behavior of
+the rail traffic. To achieve a more realistic behavior, one can make
+use of rail signals. For that, one can split a longer rail section
+without any junctions in between into so called <em>blocks</em>, by choosing
+nodes within this section to have rail signals. Then, a <em>block</em> is the
+set of edges between two rail signals. The rail signal will then
+indicate green (we use green and red as for traffic lights) if there is
+no train in the block after the rail signal. A train will move from one
+block to the next one, and each time it wants to enter a block, the rail
+signal will state if this block is free and the train is allowed to
+enter, or if the block is occupied and the train has to wait until the
+block is empty.</p>
+<p>If one uses one rail signal within its simulation, it is required to use
+rail signals for every junction/railroad switch with more than two
+tracks for which there exists a path from an existing rail signal.
+Otherwise, a warning will be issued. This is required as a rail signal
+depends on its adjacent rail signals (or rather the blocks between the
+adjacent rail signals and itself). For rail sections without
+junctions/railroad switches, one can split them into as many blocks as
+one desires, but a block length of a few hundred metres can be
+reasonable size. Too large block lengths can result in long waiting times
+for trains waiting to enter a block. Too short block lengths can result
+in trains following each other very closely.</p>
+<h1 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">#</a></h1>
+<p>Rail signals are essentially traffic lights, however their state does
+not depend on TLS-programs. Instead, the state of a rail signal depends
+on the occupation of certain blocks. At every simulation step, the state
+of a rail signal will be updated based on the occupation.</p>
+<p>The logic of the rail signals shall guarantee the following points:</p>
+<ul>
+<li>Each block of a rail network is occupied by at most one train.</li>
+<li>If several trains approach the same junction/railroad switch from
+  different lanes/edges and want to enter the same lane, at most one
+  of these trains gets a green signal and all other trains get a red
+  signal, even before one of these trains has entered the targeted
+  lane. This will avoid that trains approach a rail signal with high
+  velocity and receive suddenly a red signal without having enough
+  space to break before the rail signal.</li>
+</ul>
+<p>A rail signal indicates green or red for each
+<a href="../Networks/PlainXML.html#connection_descriptions">connection</a>
+of the node individually. A connection <em>c</em> consists of one incoming lane
+<em>i</em> and one outgoing lane <em>o</em>. The signal for <em>c</em> depends on the
+occupation of:</p>
+<ul>
+<li>The outgoing block. That is the block leading from the current rail
+  signal over <em>o</em> to the next rail signal.</li>
+<li>All blocks leading to <em>o</em>. A block leading to <em>o</em> is a block that is
+  leading to the current rail signal for whose last lane there exists
+  a connection to <em>o</em>. Clearly, the block to which <em>i</em> belongs is one
+  of the blocks leading to <em>o</em>. We denote the set of the blocks
+  leading to <em>o</em> by <em>O</em>.</li>
+</ul>
+<p>If there is only one block leading to <em>o</em>, namely the one <em>i</em> belongs
+to, the signal of <em>c</em> is green if and only if the outgoing block of <em>c</em>
+is not occupied by a train. If there is more than one block leading to
+<em>o</em>, i.e. <em>|O|>1</em>, we consider all connections to <em>o</em>. These
+connections correspond exactly to the blocks in <em>O</em>, and we denote the
+set of these connections by <em>C</em>. Moreover, we denote the set of
+connections in <em>C</em>, whose corresponding approaching blocks are occupied,
+by <em>D</em>. If the outgoing block of <em>c</em> is occupied by a train, then the
+signals for all connections in <em>C</em> are red. If the outgoing block of <em>c</em>
+is not occupied by a train and all blocks leading to <em>o</em> are not
+occupied, i.e. <em>|D|=0</em>, then the signals for all connections in <em>C</em> are
+green. If the outgoing block of <em>c</em> is not occupied by a train, and at
+least one block leading to <em>o</em> is occupied by a train, i.e. <em>|D|>0</em>,
+then exactly one connection in <em>D</em> has a green signal and all other
+connections in <em>C</em> have a red signal.</p>
+<p><img alt="" src="../images/Outgoing_rail.png" title="Fig. 1" /></p>
+<p>Fig. 1: A rail signal for a railroad switch with one incoming lane from
+the left and three outgoing lanes to the right. The signal for the
+occupied outgoing block is red, all other signals green.</p>
+<p><img alt="" src="../images/Incoming_rail.png" title="Fig. 2" /></p>
+<p>Fig. 2: A rail signal for a railroad switch with three incoming lanes
+from the left and one outgoing lane to the right. As all approaching
+blocks are occupied, only one signals is green.</p>
+<h1 id="output">Output<a class="headerlink" href="#output" title="Permanent link">#</a></h1>
+<p>For logging the states of a rail signal, the same method as for <a href="Output/Traffic_Lights.html#tls_states">logging
+TLS states of traffic
+lights</a> can be
+used. The attribute <code>source</code> has to be the ID
+of the junction the rail signal belongs to.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

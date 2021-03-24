@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Installing/MacOS_Build.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Installing/macOS Build - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Installing/MacOS_Build.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#the_homebrew_approach">The Homebrew Approach</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#prerequisites" class="nav-link">• Prerequisites</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#dependencies" class="nav-link">• Dependencies</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#troubleshooting_the_fox_library_on_macos_catalina" class="nav-link">&rarr; Troubleshooting the fox library on macOS Catalina</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#git_cloning_and_building" class="nav-link">• Git Cloning and Building</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#optional_steps" class="nav-link">• Optional Steps</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traci_as_a_service_traas" class="nav-link">&rarr; TraCI as a Service (TraaS)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#examples_and_unit_tests" class="nav-link">&rarr; Examples and Unit Tests</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#integration_tests_with_texttest" class="nav-link">&rarr; Integration Tests with TextTest</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#code_editor" class="nav-link">&rarr; Code Editor</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#python_for_libsumo_on_macos" class="nav-link">&rarr; Python for libsumo on macOS</a>
+                </li>
+            <li class="nav-item main"><a href="#the_macports_approach_legacy">The Macports Approach (legacy)</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Installing/macOS Build<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This document describes how to install and build SUMO on macOS from its source code. If you don't want to <strong>extend</strong> SUMO, but just <strong>use</strong> it, you may want to simply follow the <a href="../Installing.html#macos">installation instructions for macOS</a> instead.</p>
+<p>You may use one of two ways to build and install SUMO on macOS: <strong>Homebrew</strong> (recommended) and <strong>MacPorts</strong>.</p>
+<h1 id="the_homebrew_approach">The Homebrew Approach<a class="headerlink" href="#the_homebrew_approach" title="Permanent link">#</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
+<p>The installation requires <a href="http://brew.sh">Homebrew</a>. If you did not already install homebrew, do so by invoking</p>
+<pre><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)&quot;
+</code></pre>
+
+<p>and make sure your homebrew db is up-to-date.</p>
+<pre><code>brew update
+</code></pre>
+
+<p>In order to compile the C++ source code files of SUMO, a C++ compiler is needed. On macOS the default C/C++ compiler is Clang. If you want to install the Clang compilers, please use the following command:</p>
+<pre><code>xcode-select --install
+</code></pre>
+
+<p>After the successful installation, you can test Clang with the following command:</p>
+<pre><code>clang --version
+</code></pre>
+
+<p>SUMO uses <a href="https://cmake.org/">CMake</a> to manage the software compilation process. You can install CMake with homebrew easily.</p>
+<pre><code>brew install cmake
+</code></pre>
+
+<h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">#</a></h2>
+<p>In order to compile and execute SUMO, there are several libraries that need to be installed. You can install these dependencies with homebrew with the following commands:</p>
+<pre><code>brew cask install xquartz
+brew install xerces-c fox proj gdal gl2ps
+</code></pre>
+
+<p>Depending on the SUMO features you want to enable during compilation, you may want to additional libraries. Most libraries are available in homebrew and should be recognized with CMake. Here is what you need to prepare some more features such as libsumo and the testing environment:</p>
+<pre><code>brew install python swig eigen pygobject3 gtk+3 adwaita-icon-theme
+python3 -m pip install texttest
+</code></pre>
+
+<h3 id="troubleshooting_the_fox_library_on_macos_catalina">Troubleshooting the fox library on macOS Catalina<a class="headerlink" href="#troubleshooting_the_fox_library_on_macos_catalina" title="Permanent link">#</a></h3>
+<p>If you encounter segmentation faults on macOS Catalina, please follow the following steps (see <a href="https://github.com/eclipse/sumo/issues/6242#issuecomment-553458710">Issue 6242</a>).</p>
+<ol>
+<li>
+<p>Uninstall Catalina bottle of fox:
+<code>$ brew uninstall --ignore-dependencies fox</code></p>
+</li>
+<li>
+<p>Edit brew Formula of fox:
+<code>$ brew edit fox</code></p>
+</li>
+<li>
+<p>Comment out or delete the following line:
+<code>sha256 "c6697be294c9a0458580564d59f8db32791beb5e67a05a6246e0b969ffc068bc" =&gt; :catalina</code></p>
+</li>
+<li>
+<p>Install Mojave bottle of fox:
+<code>$ brew install fox</code></p>
+</li>
+</ol>
+<h2 id="git_cloning_and_building">Git Cloning and Building<a class="headerlink" href="#git_cloning_and_building" title="Permanent link">#</a></h2>
+<p>The source code of SUMO can be cloned with the following command to the directory <code>./sumo</code>. The environment variable <code>SUMO_HOME</code> should also be set to this directory.</p>
+<pre><code>git clone --recursive https://github.com/eclipse/sumo
+export SUMO_HOME=&quot;$PWD/sumo&quot;
+</code></pre>
+
+<p>SUMO is usually build as an out-of-source build. You need to create a directory for your build and invoke CMake to trigger the configuration from there. </p>
+<pre><code>cd $SUMO_HOME
+mkdir build/cmake-build
+cd build/cmake-build
+cmake ../..
+</code></pre>
+
+<p>The output of the CMake configuration process will show you which libraries have been found on your system and which SUMO features have been enabled accordingly.
+The build process can now be triggered with the following command</p>
+<pre><code>cd $SUMO_HOME/build/cmake-build
+cmake --build . --parallel $(sysctl -n hw.ncpu)
+</code></pre>
+
+<h2 id="optional_steps">Optional Steps<a class="headerlink" href="#optional_steps" title="Permanent link">#</a></h2>
+<h3 id="traci_as_a_service_traas">TraCI as a Service (TraaS)<a class="headerlink" href="#traci_as_a_service_traas" title="Permanent link">#</a></h3>
+<p>TraaS is a java library for working with TraCI. Building TraaS can be triggered with the following commands.</p>
+<pre><code>cd $SUMO_HOME/build/cmake-build
+cmake --build . --target traas --parallel
+</code></pre>
+
+<h3 id="examples_and_unit_tests">Examples and Unit Tests<a class="headerlink" href="#examples_and_unit_tests" title="Permanent link">#</a></h3>
+<p>SUMO provides unit tests to be used with Google's Testing and Mocking Framework - Googletest. In order to execute these tests you need to install Googletest first.</p>
+<pre><code>git clone https://github.com/google/googletest
+cd googletest
+git checkout release-1.10.0
+mkdir build
+cd build
+cmake ..
+make
+make install
+</code></pre>
+
+<p>The creation of the examples and the execution of the tests can be triggered as follows</p>
+<pre><code>cd $SUMO_HOME/build/cmake-build
+make CTEST_OUTPUT_ON_FAILURE=1 examples test
+</code></pre>
+
+<p>More information is provided <a href="../Developer/Unit_Tests.html">here</a>.</p>
+<h3 id="integration_tests_with_texttest">Integration Tests with TextTest<a class="headerlink" href="#integration_tests_with_texttest" title="Permanent link">#</a></h3>
+<p>SUMO uses an application called TextTest to manage and execute and extensive set of integration tests. If you plan to extend SUMO with new features, we would like to encourage you to also add tests for your code to the SUMO testsuite and to make sure that existing functionality is not affected. </p>
+<p>The installation of TextTest on macOS is documented <a href="../Developer/Tests.html">here</a>.</p>
+<h3 id="code_editor">Code Editor<a class="headerlink" href="#code_editor" title="Permanent link">#</a></h3>
+<p>Finally, you may also want to use a code editor or integrated development environment. There is a great variety of suitable tools available. If you are unsure which tool to pick, we would suggest to have a look at <a href="https://code.visualstudio.com/">Visual Studio Code</a> for macOS. The configuration of Visual Studio Code for the CMake setup is documented <a href="../Developer/VisualStudioCode.html">here</a>.</p>
+<h3 id="python_for_libsumo_on_macos">Python for libsumo on macOS<a class="headerlink" href="#python_for_libsumo_on_macos" title="Permanent link">#</a></h3>
+<p>There are usually three Python versions available on a mac with brew.
+- Python 2.7 (shipped with macOS) - (<code>/usr/bin/python</code>)
+- Python 3.8.2 (shipped with Xcode) - (<code>/usr/bin/python3</code>)
+- Python 3.8.6 (installed with Brew) - (<code>/usr/local/bin/python3.8</code>)</p>
+<p>If you do not configure anything "special" during <code>cmake</code>, it will find the Python 2.7 installation and use that version of the Python framework for building libsumo. In your cmake output, you will find something like this:</p>
+<pre><code>-- Found PythonInterp: /usr/bin/python (found version &quot;2.7.16&quot;) 
+-- Found Python: /usr/bin/python
+...
+-- Found PythonLibs: /usr/lib/libpython2.7.dylib (found version &quot;2.7.16&quot;) 
+</code></pre>
+
+<p>You should be able to just use python 2.7 and import libsumo.</p>
+<pre><code>Python 2.7.16 (default, Jun  5 2020, 22:59:21) 
+[GCC 4.2.1 Compatible Apple LLVM 11.0.3 (clang-1103.0.29.20) (-macos10.15-objc- on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import libsumo
+&gt;&gt;&gt;
+</code></pre>
+
+<p>If you want to use Python <strong>3.x</strong>, we recommend to use the Python version shipped with Brew (e.g. <code>brew install python@3.8</code>). In order to use this Python version, you have to tell CMake to use this particular Python interpreter:</p>
+<pre><code>cd $SUMO_HOME
+mkdir -p out/build-python3.8
+cd out/build-python3.8
+cmake -DPYTHON_EXECUTABLE=/usr/local/bin/python3.8 ../..
+</code></pre>
+
+<p>In the CMake configuration output, you should see lines like the following:</p>
+<pre><code>-- Found PythonInterp: /usr/local/bin/python3.8 (found version &quot;3.8.6&quot;)
+... 
+-- Found PythonLibs: /usr/local/Frameworks/Python.framework/Versions/3.8/lib/libpython3.8.dylib (found version &quot;3.8.6&quot;) 
+</code></pre>
+
+<p>After building, you should be able to load <code>libsumo</code></p>
+<pre><code>$ python3.8                                                                                                           
+Python 3.8.6 (default, Oct 27 2020, 08:57:44) 
+[Clang 12.0.0 (clang-1200.0.32.21)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import libsumo
+&gt;&gt;&gt; 
+</code></pre>
+
+<p>If you do not want to use Python 2.7 (from macOS) or Python 3 (from Brew), but instead want to use Python 3.x from Xcode, you will need to tell <code>cmake</code> where to find the Python installation of the command line tools of Xcode. The following path settings work on macOS Catalina with the command line tools of Xcode 12.1.</p>
+<pre><code>cmake \
+-DPYTHON_EXECUTABLE=/usr/bin/python3 \
+-DPYTHON_INCLUDE_DIR:PATH=/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Headers \
+-DPYTHON_LIBRARY:FILEPATH=/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/Current/lib/libpython3.8.dylib \
+../..
+</code></pre>
+
+<p>After the build, you should be able to load libsumo.</p>
+<pre><code>/usr/bin/python3
+Python 3.8.2 (default, Sep 24 2020, 19:37:08) 
+[Clang 12.0.0 (clang-1200.0.32.21)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import libsumo
+&gt;&gt;&gt; 
+</code></pre>
+
+<h1 id="the_macports_approach_legacy">The Macports Approach (legacy)<a class="headerlink" href="#the_macports_approach_legacy" title="Permanent link">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This uses a pre-packaged version of sumo which is convenient but may lag behind the latest official release of SUMO.</p>
+</div>
+<p>You should start by <a href="https://www.macports.org/install.php">installing Macports</a>. Afterwards start a terminal session and run</p>
+<pre><code>sudo port install sumo
+</code></pre>
+
+<p>While this will install a SUMO version you maybe do not want to use, it will pull in all dependencies you need.</p>
+<p>If you want to build from a repository checkout you should additionally do</p>
+<pre><code>sudo port install automake autoconf
+</code></pre>
+
+<p>After obtaining the <a href="Linux_Build.html#installing_required_tools_and_libraries">required libraries</a>
+you can follow the build steps of <a href="Linux_Build.html#getting_the_source_code">building under Linux</a>, you
+might want to add another --prefix=/opt/sumo to the configure line.</p>
+<p>If you wish to use clang rather than gcc for compilation do:</p>
+<pre><code>./configure CXX=clang++ CXXFLAGS=&quot;-stdlib=libstdc++&quot;
+</code></pre>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 24 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

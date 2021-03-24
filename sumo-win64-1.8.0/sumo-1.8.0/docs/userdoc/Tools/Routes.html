@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tools/Routes.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tools/Routes - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tools/Routes.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#routecheckpy">routecheck.py</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#known_caveats" class="nav-link">• Known caveats</a>
+                </li>
+            <li class="nav-item main"><a href="#analyzepersonplanspy">analyzePersonPlans.py</a></li>
+            <li class="nav-item main"><a href="#routes_joinpy">routes_Join.py</a></li>
+            <li class="nav-item main"><a href="#sort_routespy">sort_routes.py</a></li>
+            <li class="nav-item main"><a href="#cutroutespy">cutRoutes.py</a></li>
+            <li class="nav-item main"><a href="#routestatspy">routeStats.py</a></li>
+            <li class="nav-item main"><a href="#route2polypy">route2poly.py</a></li>
+            <li class="nav-item main"><a href="#route2selpy">route2sel.py</a></li>
+            <li class="nav-item main"><a href="#route_departoffset">route_departOffset</a></li>
+            <li class="nav-item main"><a href="#showdepartsandarrivalsperedge">showDepartsAndArrivalsPerEdge</a></li>
+            <li class="nav-item main"><a href="#addstops2routespy">addStops2Routes.py</a></li>
+            <li class="nav-item main"><a href="#tracemapperpy">tracemapper.py</a></li>
+            <li class="nav-item main"><a href="#tlscycleadaptationpy">tlsCycleAdaptation.py</a></li>
+            <li class="nav-item main"><a href="#implausibleroutespy">implausibleRoutes.py</a></li>
+            <li class="nav-item main"><a href="#addstopdelaypy">addStopDelay.py</a></li>
+            <li class="nav-item main"><a href="#checkstoporderpy">checkStopOrder.py</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tools/Routes<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>The tools' names accord to their function.</p>
+<h1 id="routecheckpy">routecheck.py<a class="headerlink" href="#routecheckpy" title="Permanent link">#</a></h1>
+<p>Allows to verify whether routes within the given route-file(s) are valid
+for the given network. Call(s):</p>
+<pre><code>routecheck.py &lt;net&gt; &lt;vehicletypes&gt; [-f|--fix] &lt;routes&gt;+
+</code></pre>
+
+<pre><code>routecheck.py &lt;net&gt; &lt;vehicletypes+routes&gt;
+</code></pre>
+
+<p>If a route is broken (or disconnected), the tool writes something like the
+following to cout:</p>
+<p>If <strong>--fix</strong> (<strong>-f</strong>) is given, routes are tried to be repaired
+(assuming only one link is missing). The name of the output file(s) is
+generated by appending ".fixed". These file contain repaired routes (if
+it was possible), each appended link is written in comments after the
+vehicle.</p>
+<h2 id="known_caveats">Known caveats<a class="headerlink" href="#known_caveats" title="Permanent link">#</a></h2>
+<ul>
+<li>The tool does not deal with vehicle types; it only checks whether
+  routes are connected</li>
+<li>When working in <strong>--fix</strong>-mode a vehicle type file must be given</li>
+<li>No tests for dealing with networks that have internal edges</li>
+</ul>
+<h1 id="analyzepersonplanspy">analyzePersonPlans.py<a class="headerlink" href="#analyzepersonplanspy" title="Permanent link">#</a></h1>
+<p>Count the different types of person plans according to the sequence of used modes. Private rides are distinguished from public transport rides using the assumption that the name of the private vehicle will start with the name of the person (as happens for <a href="../duarouter.html">duarouter</a>-generated person plans).</p>
+<pre><code>tools\route\analyzePersonPlans.py -r routes.xml
+</code></pre>
+
+<p>example output:</p>
+<pre><code>34: walk public walk
+55: car walk
+90: walk
+</code></pre>
+
+<h1 id="routes_joinpy">routes_Join.py<a class="headerlink" href="#routes_joinpy" title="Permanent link">#</a></h1>
+<p>Joins routes belonging to two networks. A map file with the following
+syntax is read first:</p>
+<pre><code>&lt;EDGE_ID&gt;-&gt;&lt;EDGE_ID&gt;
+</code></pre>
+
+<p>It describes at which edges the networks overlapped and which edge was
+kept in the resulting one. Vehicles from both given route files starting
+at the first of those edges will be at first not regarded, but their
+routes are kept in memory. All other vehicles are kept, but if they pass
+one of the mapped edges, the route is continued by choosing a random
+route from the list of previously discarded ones which start at the
+corresponding edge.</p>
+<pre><code>routes_Join.py &lt;prefix#1&gt; &lt;routes#1&gt; &lt;prefix#2&gt; &lt;routes#2&gt; &lt;mapfile&gt;
+</code></pre>
+
+<ul>
+<li>&lt;prefix#1>: The prefix to use for vehicles from the first routes
+  file</li>
+<li>&lt;routes#1>: The first routes file</li>
+<li>&lt;prefix#2>: The prefix to use for vehicles from the second routes
+  file</li>
+<li>&lt;routes#2>: The second routes file</li>
+<li>&lt;mapfile>: The edge mapping</li>
+</ul>
+<p>Attention! The routes are not sorted in time!</p>
+<h1 id="sort_routespy">sort_routes.py<a class="headerlink" href="#sort_routespy" title="Permanent link">#</a></h1>
+<p>This script sorts the vehicles in the given route file by their depart
+time. If the option <strong>--big</strong> is supplied, a slow but memory efficient algorithm
+is used.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/sort_routes.py input.rou.xml -o output.rou.xml
+</code></pre>
+
+<h1 id="cutroutespy">cutRoutes.py<a class="headerlink" href="#cutroutespy" title="Permanent link">#</a></h1>
+<p>This script cuts down routes from a large scenario to a sub-scenario.
+This assumes the existence of a big scenario (<em>orig.net.xml</em> and
+<em>orig.rou.xml</em>). The goal is to simulate only a smaller part of the
+network (<em>reduced.net.xml</em>) keeping all of the routes that pass through
+the reduced network. Output can be a route file or a trip file.
+Depending on the given options the new departure times can be computed
+from exitTimes (see <a href="../sumo.html">sumo</a> option <strong>--vehroute-output.exit-times</strong>), extrapolated from
+the original network or simply copied from the original departure times.
+If the option <strong>--big</strong> is supplied, a slow but memory efficient algorithm is used
+for sorting the output by departure time. Example usage</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/cutRoutes.py reduced.net.xml orig.rou.xml 
+  --routes-output output.rou.xml --orig-net orig.net.xml
+</code></pre>
+
+<p>Filtering stopping places is also supported by setting the options <strong>--additional-input</strong> and <strong>--stops-output</strong>.</p>
+<h1 id="routestatspy">routeStats.py<a class="headerlink" href="#routestatspy" title="Permanent link">#</a></h1>
+<p>Compute a length-histogram for all routes in a given route file.
+Alternatively, compute the difference in lengths for two route files
+with the same vehicles. Routes must be child elements of <code>&lt;vehicle&gt;</code>-elements.
+Output for plotting may also be generated (see <strong>--help</strong>).</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/routeStats.py myNet.net.xml myRoutes.rou.xml
+</code></pre>
+
+<p>When setting option <strong>--attribute depart</strong> a histogram on departure times (or departure time
+differences) is generated instead.</p>
+<h1 id="route2polypy">route2poly.py<a class="headerlink" href="#route2polypy" title="Permanent link">#</a></h1>
+<p>Transform routes into polygons for visualization in
+<a href="../sumo-gui.html">sumo-gui</a>. Using the options <strong>--hue, --saturation, --brightness</strong> the colors can be
+controlled. Each of these options supports values from [0, 1] as well
+as the special value <em>random</em>.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/route2poly.py myNet.net.xml myRoutes.rou.xml
+</code></pre>
+
+<h1 id="route2selpy">route2sel.py<a class="headerlink" href="#route2selpy" title="Permanent link">#</a></h1>
+<p>Transform routes into an edge selection file which contains all edges
+used in any of the routes, trips or person plans. This file may be used
+for visualization in <a href="../sumo-gui.html">sumo-gui</a> or pruning a
+network via <a href="../netconvert.html">netconvert</a>.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route2sel.py myRoutes.rou.xml -o usedEdges.txt
+</code></pre>
+
+<pre><code>netconvert --net-file myNet.net.xml --keep-edges.input-file usedEdges.txt --output reduced.net.xml
+</code></pre>
+
+<h1 id="route_departoffset">route_departOffset<a class="headerlink" href="#route_departoffset" title="Permanent link">#</a></h1>
+<p>Shifts the departure times of <code>&lt;vehicle&gt;</code>, <code>&lt;trip&gt;</code>, and <code>&lt;flow&gt;</code> elements by a specified amount.
+When setting the option <strong>--depart-edges Edge1,Edge2,...</strong>, only vehicles that depart on one of the given
+edges are affected.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/route_departOffset.py --input-file myRoutes.rou.xml --output-file shifted.rou.xml --depart-offset 900
+</code></pre>
+
+<p>The option <strong>--depart-interval a,b,c,d</strong> shifts all departures within the interval [a,b[ to the
+interval [c,d[.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/route_departOffset.py --input-file myRoutes.rou.xml --output-file shifted.rou.xml --depart-interval 3600,7200,0,500
+</code></pre>
+
+<h1 id="showdepartsandarrivalsperedge">showDepartsAndArrivalsPerEdge<a class="headerlink" href="#showdepartsandarrivalsperedge" title="Permanent link">#</a></h1>
+<p>Generates a visualization file for investigating traffic patterns in a
+route file.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/showDepartsAndArrivalsPerEdge.py myRoutes.rou.xml --output-file results.xml
+</code></pre>
+
+<p>The option <strong>--intermediate</strong> may be used to include the total number of passing vehicles
+for each edge in the generated output.</p>
+<p>The generated file <em>result.xml</em> can be loaded in <a href="../sumo-gui.html#visualizing_edge-related_data">sumo-gui to color
+edges by number of departs, arrivals or total number of passing
+vehicles</a></p>
+<p>When investigating routes that pass a particular edge or intersection,
+the input routes may be filtered using the option <strong>--subpart</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>:</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/showDepartsAndArrivalsPerEdge.py myRoutes.rou.xml --output-file results.xml --subpart edge3,edge4,edge5
+</code></pre>
+
+<p>This will only generate results for routes that contain the edge
+sequence <em>edge3 edge4 edge5</em>.</p>
+<h1 id="addstops2routespy">addStops2Routes.py<a class="headerlink" href="#addstops2routespy" title="Permanent link">#</a></h1>
+<p>To declare a vehicle that stops in a parkingArea, a &lt;stop>-definition
+must be part of the vehicle or it's route. This script adds stops to
+routes.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/addStops2Routes.py -r &lt;route-file&gt; -p &lt;parking-areas&gt; -d &lt;duration in seconds&gt; [-o &lt;output-file&gt;]
+</code></pre>
+
+<p>Stops in one or more parking areas (separated by comma) are added to the
+vehicles route, if they are part of the vehicles id. Example:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vehicle id=&quot;0_parkingAreaA&quot; depart=&quot;0&quot;&gt;
+      &lt;route edges=&quot;e1 e2 e3&quot;/&gt;
+    &lt;/vehicle&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/addStops2Routes.py -r &lt;route-file&gt; -p ParkingAreaA -d 3600 [-o &lt;output-file&gt;]
+</code></pre>
+
+<pre><code>&lt;routes&gt;
+    &lt;vehicle id=&quot;0_parkingAreaA&quot; depart=&quot;0&quot;&gt;
+      &lt;route edges=&quot;e1 e2 e3&quot;/&gt;
+      &lt;stop parkingArea=&quot;parkingAreaA&quot; duration=&quot;3600&quot;&gt;
+    &lt;/vehicle&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>Note, that the lane of that parking area must belong to one of the edges
+"e1, e2, e3" of the vehicles route.</p>
+<h1 id="tracemapperpy">tracemapper.py<a class="headerlink" href="#tracemapperpy" title="Permanent link">#</a></h1>
+<p>This script maps a list of (geo) coordinates to a consecutive list of
+edges in a given network (a route)</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/tracemapper.py -n &lt;net-file&gt; -t &lt;trace-file&gt; -o &lt;route-output-file&gt;
+</code></pre>
+
+<p>The input contains the coordinates for every vehicle in a single line.
+Example:</p>
+<pre><code>vehicle1:363.66,497.79 2008.64,498.82
+vehicle2:363.66,497.79 1498.46,989.78 2008.64,498.82
+</code></pre>
+
+<p>The output is a standard sumo route file</p>
+<pre><code>&lt;routes&gt;
+    &lt;route id=&quot;vehicle1&quot; edges=&quot;beg rend&quot;/&gt;
+    &lt;route id=&quot;vehicle2&quot; edges=&quot;beg left2end rend&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>The option --geo enables the conversion of the input coordinates with
+the parameters given in the network. The mapping algorithm is also
+available in the python library function sumolib.route.mapTrace.</p>
+<h1 id="tlscycleadaptationpy">tlsCycleAdaptation.py<a class="headerlink" href="#tlscycleadaptationpy" title="Permanent link">#</a></h1>
+<p>This script is to adapt the cycle lengths of the signalized
+intersections according to a given network and route file. The Webster's
+equation is used to optimize the cycle length and the green times of the
+traffic lights. Only one hour traffic volume is considered and PCE is
+used instead of the number of vehicles when calculating traffic volumes.
+The output will be saved in a xml-file and can be directly used as
+additional file in SUMO. The call is</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/tlsCycleAdaptation.py -n &lt;net-file&gt; -r &lt;route-file&gt; -b &lt;begin&gt;
+</code></pre>
+
+<p>The signalization parameters, such as minimal green time, lost time,
+yellow time, maximal and minimal cycles, can be adjusted with the use of
+options. Option R is to restrict the maximal cycle length as the given
+one, while Option u is to use the calculated max cycle length as the
+cycle length for all intersections. With Option e only the green time
+splits will be adapted.</p>
+<h1 id="implausibleroutespy">implausibleRoutes.py<a class="headerlink" href="#implausibleroutespy" title="Permanent link">#</a></h1>
+<p>This tool analyzes a give route file and computes a implausibility score for each route.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/implausibleRoutes.py &lt;net-file&gt; &lt;route-file&gt;
+</code></pre>
+
+<p>The implausibility score is a weighted sum of individual measures of implausibility (with configurable weights):
+- The quotient of (routeLength / airDistance)
+- The relative detour time: (routeDuration / shortestRouteDuration)
+- The absolute detour time: (routeDuration - shortestRouteDuration)
+- Short route penalty: max(0, minimumDistanceParameter - routeDistance)
+- Short air-distance penalty: max(0, minimumAirDistanceParameter - routeAirDistance)</p>
+<p>The tool reports routes with an implausibility score above a given threshold.
+It can also be used to generated restrictions for <a href="Detector.html#flowrouterpy">flowrouter</a>.</p>
+<h1 id="addstopdelaypy">addStopDelay.py<a class="headerlink" href="#addstopdelaypy" title="Permanent link">#</a></h1>
+<p>This tool adds a random delay to some or all stops that have a 'duration' value by increasing the duration</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/addStopDelay.py -r &lt;route-file&gt; -o &lt;output-route-file&gt;
+</code></pre>
+
+<p>The delays are sampled from a <a href="https://en.wikipedia.org/wiki/Truncated_normal_distribution">truncated Normal distribution</a> with parameters set via options
+<strong>--mean FLOAT, --dev FLOAT, --min FLOAT, --max FLOAT</strong>. In the special case where min=max, a fixed delay is added.
+By setting option <strong>--probability FLOAT</strong>, stops only receive a delay with the given probability.#</p>
+<h1 id="checkstoporderpy">checkStopOrder.py<a class="headerlink" href="#checkstoporderpy" title="Permanent link">#</a></h1>
+<p>This tool reads a <a href="../Simulation/Public_Transport.html#single_vehicles_and_trips">public transport schedule for vehicles or trips</a> and checks whether the time spent at the same stop by different vehicles is overlapping. This occurence may be expected for bus lines but typically indicates a data error for a railway schedule (unless <a href="../Simulation/Railways.html#portion_working">portion working</a> takes place).</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route/checkStopOrder.py -r &lt;route-file&gt;
+</code></pre>
+
+<p>When setting option <strong>--stop-table STOP_ID</strong> a time table for all vehicles that service the given <code>&lt;busStop&gt;</code>-id is written to standard output.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 16 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

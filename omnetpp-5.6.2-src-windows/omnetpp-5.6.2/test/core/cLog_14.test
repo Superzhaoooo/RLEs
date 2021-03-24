@@ -1,0 +1,63 @@
+%description:
+
+Test logging: adaptive tab stops (%|) and fingerprint (%g)
+
+%inifile: test.ini
+[General]
+network = TestModule
+cmdenv-log-prefix = "%ts%| %v%| %g : "
+cmdenv-event-banners = false
+fingerprint = 0000-0000
+
+%file: test.ned
+
+simple TestModule
+{
+    parameters:
+        @isNetwork;
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+class TestModule : public cSimpleModule {
+    protected:
+        virtual void initialize() override {
+#ifdef USE_OMNETPP4x_FINGERPRINTS
+            EV << "#UNRESOLVED: USE_OMNETPP4x_FINGERPRINTS mode produces different fingerprints from the expected ones\n";
+#endif
+            scheduleAt(0, new cMessage("Foo"));
+            scheduleAt(.9, new cMessage("Bar"));
+            scheduleAt(0.999, new cMessage("Foobar"));
+            scheduleAt(1.0, new cMessage("Fubar"));
+            scheduleAt(1.9999, new cMessage("Bazz"));
+            scheduleAt(2.1, new cMessage("Foo"));
+            scheduleAt(3, new cMessage("Foobar"));
+            scheduleAt(3.23, new cMessage("Foo"));
+            scheduleAt(3.999, new cMessage("Bazz"));
+        }
+        virtual void handleMessage(cMessage *msg) override {
+            EV << "Received " << msg->getName() << endl;
+            delete msg;
+        }
+};
+
+Define_Module(TestModule);
+
+}
+
+%contains: stdout
+0s Foo 3b05-2ea7/tplx : Received Foo
+0.9s Bar 9942-7cc0/tplx : Received Bar
+0.999s Foobar 83ee-d1fd/tplx : Received Foobar
+1s     Fubar  0c8e-165a/tplx : Received Fubar
+1.9999s Bazz  9f84-1b64/tplx : Received Bazz
+2.1s    Foo   d796-cd7b/tplx : Received Foo
+3s      Foobar 172f-940a/tplx : Received Foobar
+3.23s   Foo    6efd-7865/tplx : Received Foo
+3.999s  Bazz   8b3d-5f13/tplx : Received Bazz

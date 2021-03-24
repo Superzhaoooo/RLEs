@@ -1,0 +1,30 @@
+%description:
+check backslash handling in cDisplayString
+
+
+%activity:
+
+#define P(s) {ds.parse(s); EV << "'" << s << "' --> t[0]='" << ds.getTagArg("t",0) << "'" << endl; }
+
+cDisplayString ds;
+P("t=foo");
+P("t=foo,bar");
+P("t=foo\\,bar");
+P("t=foo;bar=1");
+P("t=foo\\;bar=1");
+P("t=fo\\o\\\\b\\ar");
+P("t=foo\\,bar;baz=1;t2=more stuff");
+
+
+EV << ".\n";
+
+%contains: stdout
+'t=foo' --> t[0]='foo'
+'t=foo,bar' --> t[0]='foo'
+'t=foo\,bar' --> t[0]='foo,bar'
+'t=foo;bar=1' --> t[0]='foo'
+'t=foo\;bar=1' --> t[0]='foo;bar=1'
+'t=fo\o\\b\ar' --> t[0]='foo\bar'
+'t=foo\,bar;baz=1;t2=more stuff' --> t[0]='foo,bar'
+.
+

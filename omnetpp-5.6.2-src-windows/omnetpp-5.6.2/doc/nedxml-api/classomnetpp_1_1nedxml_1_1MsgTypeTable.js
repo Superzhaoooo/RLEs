@@ -1,0 +1,25 @@
+var classomnetpp_1_1nedxml_1_1MsgTypeTable =
+[
+    [ "ClassInfo", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1ClassInfo.html", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1ClassInfo" ],
+    [ "EnumInfo", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1EnumInfo.html", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1EnumInfo" ],
+    [ "EnumItem", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1EnumItem.html", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1EnumItem" ],
+    [ "FieldInfo", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1FieldInfo.html", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1FieldInfo" ],
+    [ "Properties", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1Properties.html", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1Properties" ],
+    [ "Property", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1Property.html", "classomnetpp_1_1nedxml_1_1MsgTypeTable_1_1Property" ],
+    [ "StringVector", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#ab8e1ede88e2ff1c3b448334e6cbd3533", null ],
+    [ "MsgTypeTable", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a93d8c9aeed2b12dadb696f1d624251a8", null ],
+    [ "~MsgTypeTable", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#af3935e20b4d92cf6d0f096682c7a20a5", null ],
+    [ "initDescriptors", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a63d43797eb0527e99d9ed8f6d564fb43", null ],
+    [ "prefixWithNamespace", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a1a57ac9d515f7db788346390058ac691", null ],
+    [ "lookupExistingEnumName", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a8b9ad9cd810ed592d79460d83454761d", null ],
+    [ "isClassDefined", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a5de3f3c8327122d10916f19223be4d0c", null ],
+    [ "isEnumDefined", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a23f9ac8cf592236d6b0145834d1b705f", null ],
+    [ "findClassInfo", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#ae353b9aba34ec0c97cc40e9723e65c51", null ],
+    [ "getClassInfo", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a872913c2c1f8c2fb4565ed825e35b77d", null ],
+    [ "getEnumInfo", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a693ea52a55c826040b624e1473794b00", null ],
+    [ "getGlobalProperties", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a7f297afdb12f9ffa34c6ce08577a0811", null ],
+    [ "storeMsgFile", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a3f87a6b8f5f403bb60dd5854af3fa1ea", null ],
+    [ "addGlobalProperty", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#afa5ccb83348ed3713214f8aae208ef3f", null ],
+    [ "addClass", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#a3a3c4d43bd63bd791ff2bb1d2b010de3", null ],
+    [ "addEnum", "classomnetpp_1_1nedxml_1_1MsgTypeTable.html#aebdcce5beeb8e4917dd69cb89fd2eb5c", null ]
+];

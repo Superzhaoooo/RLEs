@@ -1,0 +1,56 @@
+%NAME%
+mingw-w64-x86_64-poppler
+
+%VERSION%
+0.55.0-1
+
+%BASE%
+mingw-w64-poppler
+
+%DESC%
+PDF rendering library based on xpdf 3.0 (mingw-w64)
+
+%URL%
+https://poppler.freedesktop.org/
+
+%ARCH%
+any
+
+%BUILDDATE%
+1497955241
+
+%INSTALLDATE%
+1499676135
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+15932416
+
+%REASON%
+1
+
+%LICENSE%
+GPL
+
+%VALIDATION%
+pgp
+
+%DEPENDS%
+mingw-w64-x86_64-cairo
+mingw-w64-x86_64-curl
+mingw-w64-x86_64-freetype
+mingw-w64-x86_64-icu
+mingw-w64-x86_64-libjpeg
+mingw-w64-x86_64-libpng
+mingw-w64-x86_64-libtiff
+mingw-w64-x86_64-nss
+mingw-w64-x86_64-openjpeg
+mingw-w64-x86_64-poppler-data
+mingw-w64-x86_64-zlib
+
+%OPTDEPENDS%
+mingw-w64-x86_64-glib2: libpoppler-glib
+mingw-w64-x86_64-qt5: libpoppler-qt5
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+     <loc>https://sumo.dlr.de/docs/index.html</loc>
+     <lastmod>2020-12-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://sumo.dlr.de/docs/Tutorials.html</loc>
+     <lastmod>2020-12-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://sumo.dlr.de/docs/FAQ.html</loc>
+     <lastmod>2020-12-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://sumo.dlr.de/docs/Downloads.html</loc>
+     <lastmod>2020-12-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://sumo.dlr.de/docs/Publications.html</loc>
+     <lastmod>2020-12-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://sumo.dlr.de/docs/Developer/Main.html</loc>
+     <lastmod>2020-12-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://sumo.dlr.de/docs/ChangeLog.html</loc>
+     <lastmod>2020-12-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc></loc>
+     
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc></loc>
+     
+     <changefreq>daily</changefreq>
+    </url>
+</urlset>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Driver_State.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Driver State - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Driver_State.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#overview">Overview</a></li>
+            <li class="nav-item main"><a href="#equipping_a_vehicle_with_a_driver_state">Equipping a Vehicle with a Driver State</a></li>
+            <li class="nav-item main"><a href="#modeling_of_perception_errors">Modeling of Perception Errors</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Driver State<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
+<p>The driver state provides a generic mechanism to induce imperfection
+into car-following and lane change models. Although errors may enter the
+driving process at many stages [see Figure 1], SUMO only applies
+errors at the perception stage, see
+<a href="#modeling_of_perception_errors">below</a> for details.</p>
+<p><img alt="" src="images/DriverErrors.png" title="File:DriverErrors.png" /></p>
+<p><em>Figure 1: Errors in the driving process.</em></p>
+<p>Practically, errors are added to the input quantities of the
+car-following model's input parameters of spacing and speed difference
+(for an integration in <a href="Developer/How_To/Car-Following_Model.html">contributed car-following
+models</a>, the
+<a href="https://github.com/eclipse/sumo/blob/master/src/microsim/cfmodels/MSCFModel_Krauss.cpp">implementation in the standard
+model</a>
+can be adopted (see <code>MSCFModel_Krauss::stopSpeed()</code> and
+<code>MSCFModel_Krauss::followSpeed()</code>).</p>
+<h2 id="equipping_a_vehicle_with_a_driver_state">Equipping a Vehicle with a Driver State<a class="headerlink" href="#equipping_a_vehicle_with_a_driver_state" title="Permanent link">#</a></h2>
+<p>To apply the imperfect driving functionality for a vehicle it is
+equipped with a <strong>Driver State Device</strong>, see <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#devices">the description of
+equipment
+procedures</a>
+(and use <device name><code>=driverstate</code>). The minimal definition required
+to equip one vehicle with a Driver State has the following form:</p>
+<pre><code>&lt;routes&gt;
+    ...
+    &lt;vehicle id="v0" route="route0" depart="0"&gt;
+        &lt;param key="has.driverstate.device" value="true"/&gt;
+    &lt;/vehicle&gt;
+    ....
+&lt;/routes&gt;
+</code></pre>
+<p>In this case all parameters (<a href="#modeling_of_perception_errors">see below</a>) of the driver state
+are set to their default values. The following table gives the full list
+of possible parameters for the Driver State Device. Each of these
+parameters must be specified as a child element of the form
+<code>&lt;param key=&lt;PARAMETER NAME&gt; value=&lt;PARAMETER VALUE&gt;</code> of the
+appropriate demand definition element (e.g. <code>&lt;vehicle ... /&gt;</code>, <code>&lt;vType
+... /&gt;</code>, or <code>&lt;flow ... /&gt;</code>). See <a href="#modeling_of_perception_errors">Modeling of Perception
+Errors</a> for details of the
+error dynamics.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>initialAwareness</td>
+<td>float</td>
+<td>1.0</td>
+<td>The initial awareness assigned to the driver state.</td>
+</tr>
+<tr>
+<td>errorTimeScaleCoefficient</td>
+<td>float</td>
+<td>100.0</td>
+<td>Time scale constant that controls the time scale of the underlying error process.</td>
+</tr>
+<tr>
+<td>errorNoiseIntensityCoefficient</td>
+<td>float</td>
+<td>0.2</td>
+<td>Noise intensity constant that controls the noise intensity of the underlying error process.</td>
+</tr>
+<tr>
+<td>speedDifferenceErrorCoefficient</td>
+<td>float</td>
+<td>0.15</td>
+<td>Scaling coefficient for the error applied to the speed difference input of the car-following model.</td>
+</tr>
+<tr>
+<td>headwayErrorCoefficient</td>
+<td>float</td>
+<td>0.75</td>
+<td>Scaling coefficient for the error applied to the distance input of the car-following model.</td>
+</tr>
+<tr>
+<td>speedDifferenceChangePerceptionThreshold</td>
+<td>float</td>
+<td>0.1</td>
+<td>Constant controlling the threshold for the perception of changes in the speed difference</td>
+</tr>
+<tr>
+<td>headwayChangePerceptionThreshold</td>
+<td>float</td>
+<td>0.1</td>
+<td>Constant controlling the threshold for the perception of changes in the distance input.</td>
+</tr>
+<tr>
+<td>minAwareness</td>
+<td>float</td>
+<td>0.1</td>
+<td>The minimal value for the driver awareness (a technical parameter to avoid a blow up of the term <code>1/minAwareness</code>).</td>
+</tr>
+<tr>
+<td>maximalReactionTime</td>
+<td>float (s)</td>
+<td>original action step length</td>
+<td>The value for the driver's actionStepLength atained at minimal awareness. The actionStepLength scales linearly between this and the original value with the awareness between minAwareness and 1.0.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="modeling_of_perception_errors">Modeling of Perception Errors<a class="headerlink" href="#modeling_of_perception_errors" title="Permanent link">#</a></h2>
+<p>An underlying
+<a href="https://en.wikipedia.org/wiki/Ornstein%E2%80%93Uhlenbeck_process">Ornstein-Uhlenbeck</a>
+process drives the errors which are applied to the inputs of the
+car-following model perception. The characteristic time scale and
+driving noise intensity of the process are determined by the driver
+state awareness, which is meant to function as an interface between the
+traffic situation and the driver state dynamics. We have</p>
+<ul>
+<li><code>errorTimeScale = errorTimeScaleCoefficient*awareness(t)</code></li>
+<li><code>errorNoiseIntensity =
+  errorNoiseIntensityCoefficient*(1.-awareness(t))</code></li>
+</ul>
+<p>[Figure: Ornstein-Uhlenbeck]</p>
+<p>The error's state error(t) at time t is scaled and added to input
+parameters of the car-following model as follows</p>
+<ul>
+<li><code>perceivedSpeedDifference = trueSpeedDifference +
+  speedDifferenceError(t)</code>, where <code>speedDifferenceError(t) =
+  speedDifferenceErrorCoefficient*headway(t)*error(t)</code></li>
+<li><code>perceivedHeadway = trueHeadway + headwayError(t)</code>, where
+  <code>headwayError(t) = headwayErrorCoefficient*headway(t)*error(t)</code></li>
+</ul>
+<p>Note that the state <code>error(t)</code> of the error process is not directly
+scaled with the awareness, which only controls the errors indirectly by
+affecting the processes parameters. Further, the scale of the perception
+error is assumed to grow linearly with the distance to the perceived
+object.</p>
+<p>[Figure: Schematic representation]</p>
+<p>Finally, the driver state induces an update of the input to the
+car-following model only if the perceived values have changed to a
+sufficient degree. The conditions for updating the car-following input
+are:</p>
+<ul>
+<li>headway: <code>|perceivedHeadway - expectedHeadway| &gt;
+  headwayChangePerceptionThreshold*trueGap*(1.0-awareness)</code></li>
+<li>speed difference: <code>|perceivedSpeedDifference -
+  expectedSpeedDifference| &gt;
+  speedDifferenceChangePerceptionThreshold*trueGap*(1.0-awareness)</code></li>
+</ul>
+<p>Here, the expected quantities are</p>
+<ul>
+<li><code>expectedHeadway = lastRecognizedHeadway -
+  expectedSpeedDifference*elapsedTimeSinceLastRecognition</code></li>
+<li><code>expectedSpeedDifference = lastRecognizedSpeedDifference</code></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 02 June 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

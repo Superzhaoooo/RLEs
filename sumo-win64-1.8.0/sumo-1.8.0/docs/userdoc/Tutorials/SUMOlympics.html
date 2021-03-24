@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tutorials/SUMOlympics.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tutorials/SUMOlympics - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tutorials/SUMOlympics.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#building_the_net">Building the Net</a></li>
+            <li class="nav-item main"><a href="#defining_competing_vehicle_types">Defining Competing Vehicle Types</a></li>
+            <li class="nav-item main"><a href="#defining_a_start_signal_traffic_light_and_pedestrians">Defining a Start Signal (Traffic Light) and Pedestrians</a></li>
+            <li class="nav-item main"><a href="#references">References</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tutorials/SUMOlympics<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This tutorial sets up a competition (a collective 100 meter sprint) for
+different traffic modes. You will learn how to create special lanes and
+(very simple) traffic lights in netedit, use different vehicle classes
+to define vehicle types and you will create flows for the different
+types. All files can also be found in the <strong><em>&lt;SUMO_HOME&gt;</em></strong>/docs/tutorial/sumolympics
+directory.</p>
+<p>This tutorial is a reconstruction of a <a href="https://www.youtube.com/watch?v=IpaNLxrtHOs">VISSIM Scenario devised
+by the PTV Group</a>.</p>
+<h1 id="building_the_net">Building the Net<a class="headerlink" href="#building_the_net" title="Permanent link">#</a></h1>
+<p><img alt="editEdgeAttr.png" src="../images/EditEdgeAttr.png" title="Editing the location of the edge's startpoint" />Open
+<a href="../netedit.html">netedit</a> and create a new network and add a single
+edge by pressing <code>e</code> for entering the edge creation mode and clicking on
+two different locations in the editing area. Change to inspection mode
+(press <code>i</code>) and click on the starting point of the edge (at the location
+of your first click). Now enter <code>0,0</code> in the textfield labeled <code>pos</code> in
+the inspector panel on the left (see figure). Do the same for the edge's
+endpoint, setting its position to <code>1000,0</code>. Now save your network under
+the name <code>sumolypics.net.xml</code> (press <code>Ctrl+Shift-S</code>).</p>
+<p>Now we have a long road, which will be the stage of our competition. The
+participants in the competition will be transportation modes, i.e.,
+busses, trams, bicycles, passenger cars, and feet. They should travel on
+different lanes side-by-side. Thus, we have to add lanes for each mode.
+To do so, right-click on the edge and hover over "add restricted lane"
+in the context menu. This will show you three choices for the creation
+of special purpose lanes: Sidewalk, Bikelane, and Buslane. Add one lane
+for each type. <img alt="addSpecialLane.png" src="../images/AddSpecialLane.png" title="Adding special lanes" /></p>
+<p>To create a tram, we add a new lane by clicking on "Duplicate lane" in
+the same context menu. For that lane, we have to restrict the allowed
+vehicle class to trams. To do this, first uncheck the "select edges"-box
+just right of the edit mode dropdown menu in the toolbar (the mode
+should still be set to "(i)Inspect"). Then click on the newly created
+lane and on the button "allow" in the inspector panel. This opens a
+dialog with check boxes for all possible vehicle classes. Uncheck all
+but "rail_urban" and click on "accept". Now edit the allowances for the
+remaining lane (it is currently allowed for all vehicle classes) and
+reserve it to the class "passenger" (i.e. passenger
+cars).<img alt="EditVClassRestrictions.png" src="../images/EditVClassRestrictions.png" title="Editing vehicle class restrictions" /></p>
+<p>Now let us split the edge to create a starting point for the
+competitors: Right-click somewhere on the edge and select "Split edge
+here" from the context menu. Then click on the created node (in SUMO
+terminology this is already a "junction"). Set its x-coordinate to 900
+and its y-coordinate to 0 in the <code>pos</code>-field just as you did above when
+creating the edge. Effectively, we have created a 100 meter running
+track for the competitors with a 900 meter holding area for each of the
+competing modes. Now check the check box "select edges" again and rename
+the two edges to "beg" and "end" (in the inspector panel). Save your
+network (<code>Ctrl-S</code>).</p>
+<h1 id="defining_competing_vehicle_types">Defining Competing Vehicle Types<a class="headerlink" href="#defining_competing_vehicle_types" title="Permanent link">#</a></h1>
+<p>As a next step, we define the competing vehicle types. Open a new file
+called <code>sumolympics.rou.xml</code> and insert the following vehicle type
+definitions:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vType id=&quot;pkw&quot; length=&quot;5&quot; maxSpeed=&quot;50&quot; accel=&quot;2.6&quot; decel=&quot;4.5&quot; sigma=&quot;0.2&quot; speedDev=&quot;0.2&quot; vClass=&quot;passenger&quot;/&gt;
+    &lt;vType id=&quot;bus&quot; length=&quot;15&quot; maxSpeed=&quot;30&quot; accel=&quot;1.2&quot; decel=&quot;2.5&quot; sigma=&quot;0.1&quot; speedDev=&quot;0.1&quot; vClass=&quot;bus&quot;/&gt;
+    &lt;vType id=&quot;tram&quot; length=&quot;40&quot; maxSpeed=&quot;13&quot; accel=&quot;0.8&quot; decel=&quot;0.5&quot; sigma=&quot;0.1&quot; speedDev=&quot;0.1&quot; vClass=&quot;rail_urban&quot;/&gt;
+    &lt;vType id=&quot;bike&quot; length=&quot;1.8&quot; width=&quot;0.8&quot; maxSpeed=&quot;7.5&quot; accel=&quot;0.8&quot; decel=&quot;1.5&quot; sigma=&quot;0.5&quot; speedDev=&quot;0.5&quot; vClass=&quot;bicycle&quot;/&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>Take a look at the <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types">vehicle type attributes
+description</a>
+for details on these definitions.</p>
+<p>For each vehicle type, we schedule and position vehicles transporting
+100 people by adding the following <code>&lt;flow .../&gt;</code> elements just below the
+vType definitions (within the <code>&lt;routes&gt;</code> element!):</p>
+<pre><code>        ...
+    &lt;flow id=&quot;pkw&quot; type=&quot;pkw&quot; from=&quot;beg&quot; to=&quot;end&quot; begin=&quot;0&quot; end=&quot;0&quot; number=&quot;66&quot; departPos=&quot;last&quot;/&gt;
+    &lt;flow id=&quot;bus&quot; type=&quot;bus&quot; from=&quot;beg&quot; to=&quot;end&quot; begin=&quot;0&quot; end=&quot;0&quot; number=&quot;5&quot; departPos=&quot;last&quot;/&gt;
+    &lt;flow id=&quot;tram&quot; type=&quot;tram&quot; from=&quot;beg&quot; to=&quot;end&quot; begin=&quot;0&quot; end=&quot;0&quot; number=&quot;2&quot; departPos=&quot;last&quot;/&gt;
+    &lt;flow id=&quot;bike&quot; type=&quot;bike&quot; from=&quot;beg&quot; to=&quot;end&quot; begin=&quot;0&quot; end=&quot;0&quot; number=&quot;100&quot; departPos=&quot;last&quot;/&gt;
+        ...
+</code></pre>
+
+<p>Note that this assumes that the average vehicle occupation is 1.5.<a href="#references">[1]</a>
+For details on the meaning of the attributes of the flows, see the
+section <a href="../Demand/Shortest_or_Optimal_Path_Routing.html#flow_definitions">Flow
+Definitions</a>.</p>
+<p>To start the simulation, create a SUMO configuration file (name it
+<code>sumolympics.sumocfg</code>):</p>
+<pre><code>&lt;configuration&gt;
+   &lt;input&gt;
+       &lt;net-file value=&quot;sumolympics.net.xml&quot;/&gt;
+       &lt;route-files value=&quot;sumolympics.rou.xml&quot;/&gt;
+   &lt;/input&gt;
+   &lt;processing&gt;
+    &lt;lateral-resolution value=&quot;1.&quot; /&gt;
+   &lt;/processing&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<p><img alt="sumolympic_run1.png" src="../images/Sumolympic_run1.png" title="First test run without pedestrians and start signals" />Here
+we give the processing argument <code>lateral-resolution</code> with a value
+corresponding to the sub-lane width in meters to achieve a more
+realistic behavior of bicyclists utilizing the whole lane width to
+overtake each other (see <a href="../Simulation/SublaneModel.html">Sublane
+Model</a> and <a href="../Simulation/Bicycles.html">Bicycle
+simulation</a>). Start the simulation by
+double-clicking on the configuration file <code>sumolympics.sumocfg</code>
+(Windows) or running <code>sumo-gui -c sumolympics.sumocfg</code> from a terminal.
+Adjust the step delay to 100 ms and press the run button
+(<img alt="Image:play.gif" src="../images/Play.gif" title="Image:play.gif" />).</p>
+<h1 id="defining_a_start_signal_traffic_light_and_pedestrians">Defining a Start Signal (Traffic Light) and Pedestrians<a class="headerlink" href="#defining_a_start_signal_traffic_light_and_pedestrians" title="Permanent link">#</a></h1>
+<p>There are two things left to do for a fair and complete competition: 1)
+All competitors should be allowed to position freely in front of the
+scratch line (the bicyclists are inserted in a row, though they could
+achieve a much better result by grouping more densely using the whole
+lane width) 2) We wish to include pedestrians into the competition.</p>
+<p><img alt="sumolympics_TLSediting.png" src="../images/Sumolympics_TLSediting.png" title="Editing traffic lights" />First we create a traffic light on the
+junction between the edges "beg" and "end" with netedit: Press <code>t</code> to
+enter the traffic light editing mode. Click on the junction, then on
+"Create TLS" in the left panel. Below, under the label phases, type
+"rrrrr" for the first phase ("r" for red) and set its duration to 100
+(secs.). This will give enough time for the bicyclists to group more
+densely. For the second phase enter "GGGGG" (yes, "G" for green) and set
+its duration to 1000 (i.e. until the end of the simulation run). Now run
+the simulation again to see the bikes outrun the cars. See? We should
+all use our bikes more often!</p>
+<p>If you have noticed a warning (like "Warning: Missing yellow phase in
+tlLogic 'gneJ2', program '0' for tl-index 0 when switching to phase 0")
+in the Message Window, don't worry. SUMO routinely checks tls-phases for
+basic consistency and missing yellow phases may lead to crashes if you
+have intersecting flows. However, this is a special situation and we
+don't need to care about this, obviously. If you want to learn more
+about traffic light control, see the TraCI-Tutorials
+<a href="TraCIPedCrossing.html">TraCIPedCrossing</a> and
+<a href="TraCI4Traffic_Lights.html">TraCI4Traffic_Lights</a> or
+the main section on <a href="../Simulation/Traffic_Lights.html">traffic
+lights</a>.</p>
+<p>What do you think, will pedestrians be slower or faster? Let's see. You
+can already guess that the approach is a little different for
+pedestrians. This is because they are no vehicle class (not any more),
+but constitute an own class called "person". For instance, there is no
+such element as a person flow analogous to vehicle flows, yet (though it
+is coming, see <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1515" title="GitHub Issue eclipse/sumo #1515">#1515</a>). So, we are going to write a python script to generate
+a routefile <code>sumolympic_walking.rou.xml</code>. (Note that there is a little
+script in the <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools folder called <code>pedestrianFlow.py</code>, which can be
+useful if you would like to do more sophisticated things.)</p>
+<p>Here's the simple script (call the file something like
+<code>makeSumolympicWalkers.py</code>):</p>
+<pre><code>#!/usr/bin/python
+#parameters
+outfile = &quot;sumolympicWalks.rou.xml&quot;
+startEdge = &quot;beg&quot;
+endEdge = &quot;end&quot;
+departTime = 0. #time of departure
+departPos = -30. #position of departure
+arrivalPos = 100. #position of arrival
+numberTrips = 100 #number of persons walking
+#generate XML
+xml_string = &quot;&lt;routes&gt;\n&quot;  
+for i in range(numberTrips):
+    xml_string += '    &lt;person depart=&quot;%f&quot; id=&quot;p%d&quot; departPos=&quot;%f&quot; &gt;\n' % (departTime, i, departPos)
+    xml_string += '        &lt;walk edges=&quot;%s %s&quot; arrivalPos=&quot;%f&quot;/&gt;\n' % (startEdge, endEdge, arrivalPos)
+    xml_string += '    &lt;/person&gt;\n'
+xml_string += &quot;&lt;/routes&gt;\n&quot;
+with open(outfile, &quot;w&quot;) as f:
+    f.write(xml_string)
+</code></pre>
+
+<p>Execute the script by double-clicking (or from the command line with
+<code>python makeSumolympicWalkers.py</code>). If you don't have python on your
+computer, install it before doing anything else!
+(<a href="https://www.python.org/downloads/">get it from here</a>) We have to
+include the generated route file <code>sumolympicWalks.rou.xml</code> in the config
+file <code>sumolympic.sumocfg</code> to let the simulation know about them. Several
+route files can be included by merely separating them by a comma.
+Therefore, modify the <code>&lt;route-files .../&gt;</code>-entry of our config to look
+like this (be sure to put no spaces between the filenames!):</p>
+<pre><code>    ...
+    &lt;route-files value=&quot;sumolympics.rou.xml,sumolympicWalks.rou.xml&quot;/&gt;
+    ...
+</code></pre>
+
+<p>Get the popcorn and start the simulation!</p>
+<h1 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h1>
+<ol>
+<li><a href="https://www.forschungsinformationssystem.de/servlet/is/79638/">https://www.forschungsinformationssystem.de/servlet/is/79638/</a></li>
+</ol>
+<p>Back to <a href="../Tutorials.html">Tutorials</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

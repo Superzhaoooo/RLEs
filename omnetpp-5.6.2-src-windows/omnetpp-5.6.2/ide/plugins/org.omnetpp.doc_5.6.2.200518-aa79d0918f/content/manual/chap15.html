@@ -1,0 +1,1017 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap14.html">[Prev]</A>&nbsp;<a href="chap16.html">[Next]</A>&nbsp;<a href="toc.html#toc_15.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:testing"/>15 Testing<a class="headerlink" href="#cha:testing" title="Permalink to this headline">¶</a></h1>
+
+<p><h2><a name="sec:testing:overview"/>15.1 Overview<a class="headerlink" href="#sec:testing:overview" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:testing:verification-validation"/>15.1.1 Verification, Validation<a class="headerlink" href="#sec:testing:verification-validation" title="Permalink to this headline">¶</a></h3>
+
+<p>Correctness of the simulation model is a primary concern of the developers
+and users of the model, because they want to obtain credible simulation
+results. Verification and validation are activities conducted during the
+development of a simulation model with the ultimate goal of producing an
+accurate and credible model.
+
+<p><ul>
+<li> <b>Verification</b> of a model is the process of confirming that it is
+    correctly implemented with respect to the conceptual model, that is, it
+    matches specifications and assumptions deemed acceptable for the given
+    purpose of application. During verification, the model is tested to find
+    and fix errors in the implementation of the model.
+<li> <b>Validation</b> checks the accuracy of the model's representation of
+    the real system. Model validation is defined to mean &#8220;substantiation that
+    a computerized model within its domain of applicability possesses a
+    satisfactory range of accuracy consistent with the intended application of
+    the model&#8221;. A model should be built for a specific purpose or set of
+    objectives and its validity determined for that purpose.
+</ul>
+
+<p>Of the two, verification is essentially a software engineering issue, so it
+can be assisted with tools used for software quality assurance, for example
+testing tools. Validation is not a software engineering issue.
+
+<p><h3><a name="sec:testing:unit-testing-regression-testing"/>15.1.2 Unit Testing, Regression Testing<a class="headerlink" href="#sec:testing:unit-testing-regression-testing" title="Permalink to this headline">¶</a></h3>
+
+<p>As mentioned above, software testing techniques can be of significant help
+during model verification. Testing can also help to ensure that
+a simulation model that once passed validation and verification will also
+remain correct for an extended period.
+
+<p>Software testing is an art on its own, with several techniques and
+methodologies. Here we'll only mention two types that are important for us,
+regression testing and unit testing.
+
+<p><ul>
+<li> <b>Regression testing</b> is a technique that seeks to uncover new
+    software bugs, or regressions, in existing areas of a system after changes
+    such as enhancements, patches or configuration changes, have been made to
+    them.
+<li> <b>Unit testing</b> is a method by which individual units of
+    source code are tested to determine if they are fit for use. In an
+    object-oriented environment, this is usually done at the class level.
+</ul>
+
+<p>The two may overlap; for example, unit tests are also useful for discovering
+regressions.
+
+<p>One way of performing regression testing on an OMNeT++ simulation model is
+to record the log produced during simulation, and compare it to a
+pre-recorded log. The drawback is that code refactoring may nontrivially
+change the log as well, making it impossible to compare to the pre-recorded
+one. Alternatively, one may just compare the result files or only certain
+simulation results and be free of the refactoring effects, but then certain
+regressions may escape the testing. This type of tradeoff seems to be
+typical for regression testing.
+
+<p>Unit testing of simulation models may be done on class level or module
+level. There are many open-source unit testing frameworks for C++, for
+example CppUnit, Boost Test, Google Test, UnitTest++, just to name a few.
+They are well suited for class-level testing. However, they are usually
+cumbersome to apply to testing modules due to the peculiarities of the
+domain (network simulation) and OMNeT++.
+
+<p>A test in an <i>xUnit</i>-type testing framework (a collective name for
+CppUnit-style frameworks) operates with various assertions to test
+function return values and object states. This approach is difficult to
+apply to the testing of OMNeT++ modules that often operate in a complex
+environment (cannot be easily instantiated and operated in isolation),
+react to various events (messages, packets, signals, etc.), and have
+complex dynamic behavior and substantial internal state.
+
+<p>Later sections will introduce <tt>opp_test</tt>, a tool OMNeT++ provides
+for assisting various testing task; and summarize various testing methods
+useful for testing simulation models.
+
+<p>
+<h2><a name="sec:testing:opptest"/>15.2 The opp_test Tool<a class="headerlink" href="#sec:testing:opptest" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:testing:opptest:introduction"/>15.2.1 Introduction<a class="headerlink" href="#sec:testing:opptest:introduction" title="Permalink to this headline">¶</a></h3>
+
+<p>This section documents the <tt>opp_test</tt>, a versatile tool that is
+helpful for various testing scenarios. <tt>opp_test</tt> can be used for
+various types of tests, including unit tests and regression tests. It was
+originally written for testing the OMNeT++ simulation kernel, but it is
+equally suited for testing functions, classes, modules, and whole
+simulations.
+
+<p><tt>opp_test</tt> is built around a simple concept: it lets one define
+simulations in a concise way, runs them, and checks that the output (result
+files, log, etc.) matches a predefined pattern or patterns. In many cases,
+this approach works better than inserting various assertions into the code
+(which is still also an option).
+
+<p>Each test is a single file, with the <tt>.test</tt> file extension. All NED
+code, C++ code, ini files and other data necessary to run the test case as
+well as the PASS criteria are packed together in the test file. Such
+self-contained tests are easier to handle, and also encourage authors to
+write tests that are compact and to the point.
+
+<p>Let us see a small test file, <tt>cMessage_properties_1.test</tt>:
+
+<pre class="filelisting">
+%description:
+Test the name and length properties of <a href="../api/classomnetpp_1_1cPacket.html">cPacket</a>.
+
+%activity:
+<a href="../api/classomnetpp_1_1cPacket.html">cPacket</a> *pk = new <a href="../api/classomnetpp_1_1cPacket.html">cPacket</a>();
+pk-&gt;setName("ACK");
+pk-&gt;setByteLength(64);
+EV &lt;&lt; "name: " &lt;&lt; pk-&gt;getName() &lt;&lt; endl;
+EV &lt;&lt; "length: " &lt;&lt; pk-&gt;getByteLength() &lt;&lt; endl;
+delete pk;
+
+%contains: stdout
+name: ACK
+length: 64
+</pre>
+<p>
+What this test says is this: create a simulation with a simple module
+that has the above C++ code block as the body of the <tt>activity()</tt> method,
+and when run, it should print the text after the <tt>%contains</tt> line.
+
+<p>To run this test, we need a <i>control script</i>, for example
+<tt>runtest</tt> from the <tt>omnetpp/test/core</tt> directory. <tt>runtest</tt>
+itself relies on the <tt>opp_test</tt> tool.
+
+<p><ul class="note"><b>NOTE</b><br>
+The control script is not part of OMNeT++ because it is somewhat specific to
+the simulation model or framework being tested, but it is usually trivial
+to write. A later section will explain how write the control script.
+</ul>
+
+<p>The output will be similar to this one:
+
+<pre class="filelisting">
+$ ./runtest cMessage_properties_1.test
+opp_test: extracting files from *.test files into work...
+Creating Makefile in omnetpp/test/core/work...
+cMessage_properties_1/test.cc
+Creating executable: out/gcc-debug/work
+opp_test: running tests using work.exe...
+*** cMessage_properties_1.test: PASS
+========================================
+PASS: 1   FAIL: 0   UNRESOLVED: 0
+
+Results can be found in work/
+</pre>
+<p>
+This was a passing test. What would constitute a fail?
+
+<p><ul>
+<li> crash
+<li> simulation runtime error
+<li> nonzero exit code (a simulation runtime error is also detected by nonzero exit code)
+<li> the output doesn't match the expectation (there are several possibilities
+   for expressing what is expected: multiple match criteria, literal string vs regex,
+   positive vs negative match, matching against the standard output, standard error
+   or any file, etc.)
+</ul>
+
+<p>One normally wants to run several tests together. The <tt>runtest</tt> script accepts
+several <tt>.test</tt> files on the command line, and when started without
+arguments, it defaults to <tt>*.test</tt>, all test files in the current
+directory. At the end of the run, the tool prints summary statistics
+(number of tests passed, failed, and being unresolved).
+
+<p>An example run from <tt>omnetpp/test/core</tt> (some lines were removed from
+the output, and one test was changed to show a failure):
+
+<pre class="filelisting">
+$ ./runtest <a href="../api/classomnetpp_1_1cSimpleModule.html">cSimpleModule</a>-*.test
+opp_test: extracting files from *.test files into work...
+Creating Makefile in omnetpp/test/core/work...
+[...]
+Creating executable: out/gcc-debug/work
+opp_test: running tests using work...
+*** cSimpleModule_activity_1.test: PASS
+*** cSimpleModule_activity_2.test: PASS
+[...]
+*** cSimpleModule_handleMessage_2.test: PASS
+*** cSimpleModule_initialize_1.test: PASS
+*** cSimpleModule_multistageinit_1.test: PASS
+*** cSimpleModule_ownershiptransfer_1.test: PASS
+*** cSimpleModule_recordScalar_1.test: PASS
+*** cSimpleModule_recordScalar_2.test: FAIL (test-1.sca fails %contains-regex(2) rule)
+expected pattern:
+&gt;&gt;&gt;&gt;run General-1-.*?
+scalar Test 	one 	24.2
+scalar Test 	two 	-1.5888&lt;&lt;&lt;&lt;
+actual output:
+&gt;&gt;&gt;&gt;version 2
+run General-1-20141020-11:39:34-1200
+attr configname General
+attr datetime 20141020-11:39:34
+attr experiment General
+attr inifile _defaults.ini
+[...]
+scalar Test 	one 	24.2
+scalar Test 	two 	-1.5
+&lt;&lt;&lt;&lt;
+*** cSimpleModule_recordScalar_3.test: PASS
+*** cSimpleModule_scheduleAt_notowner_1.test: PASS
+*** cSimpleModule_scheduleAt_notowner_2.test: PASS
+[...]
+========================================
+PASS: 36   FAIL: 1   UNRESOLVED: 0
+FAILED tests: cSimpleModule_recordScalar_2.test
+
+Results can be found in work/
+</pre>
+<p>
+Note that code from all tests were linked to form a single executable, which saves
+time and disk space compared to per-test executables or libraries.
+
+<p>A test file like the one above is useful for unit testing of classes or functions.
+However, as we will see, the test framework provides further facilities that make
+it convenient for testing modules and whole simulations as well.
+
+
+The following sections go into details about the syntax and features of <tt>.test</tt> files,
+about writing the control script, and give advice on how to cover several use
+cases with the <tt>opp_test</tt> tool.
+
+<p>
+<h3><a name="sec:testing:opptest:terminology"/>15.2.2 Terminology<a class="headerlink" href="#sec:testing:opptest:terminology" title="Permalink to this headline">¶</a></h3>
+
+<p>The next sections will use the following language:
+
+<p><ul>
+<li> <i>test file</i>: A file with the <tt>.test</tt> extension that <tt>opp_test</tt> understands.
+<li> <i>test tool</i>: The <tt>opp_test</tt> program
+<li> <i>control script</i>: A script that relies on <tt>opp_test</tt> to run the tests.
+  The control script is not part of OMNeT++ because it usually needs to be somewhat
+  specific to the simulation model or framework being tested.
+<li> <i>test program</i>: The simulation program whose output is checked by the test.
+  It is usually <tt>work/work</tt> (<tt>work/work.exe</tt> on Windows). However, it is
+  also possible to let the control script build a dynamic library from the test code, and
+  then use e.g. <tt>opp_run</tt> as test program.
+<li> <i>test directory</i>: The directory where a <tt>.test</tt> file
+  is extracted; usually <tt>work/&lt;testname&gt;/</tt>. It is also set as working
+  directory for running the test program.
+</ul>
+
+<p>
+<h3><a name="sec:testing:opptest:test-file-syntax"/>15.2.3 Test File Syntax<a class="headerlink" href="#sec:testing:opptest:test-file-syntax" title="Permalink to this headline">¶</a></h3>
+
+<p>Test files are composed of %-directives of the syntax:
+
+<pre class="filelisting">
+%&lt;directive&gt;: &lt;value&gt;
+&lt;body&gt;
+</pre>
+<p>
+The body extends up to the next directive (the next line starting with %),
+or to the end of the file. Some directives require a value, others a body, or both.
+
+<p>Certain directives, e.g. <tt>%contains</tt>, may occur several times in the file.
+
+<p><h3><a name="sec:testing:opptest:test-description"/>15.2.4 Test Description<a class="headerlink" href="#sec:testing:opptest:test-description" title="Permalink to this headline">¶</a></h3>
+
+<p>Syntax:
+<pre class="filelisting">
+%description:
+&lt;test-description-lines&gt;
+</pre>
+
+<p><tt>%description</tt> is customarily written at the top of the <tt>.test</tt>
+file, and lets one provide a multi-line comment about the purpose of the
+test. It is recommended to invest time into well-written descriptions,
+because they make determining the original purpose of a test that has
+become broken significantly easier.
+
+<p>
+<h3><a name="sec:testing:opptest:test-code-generation"/>15.2.5 Test Code Generation<a class="headerlink" href="#sec:testing:opptest:test-code-generation" title="Permalink to this headline">¶</a></h3>
+
+<p>This section describes the directives used for creating C++ source and
+other files in the test directory.
+
+<p><h4><a name="sec:testing:opptest:activity"/>15.2.5.1 %activity<a class="headerlink" href="#sec:testing:opptest:activity" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%activity:
+&lt;body-of-activity()&gt;
+</pre>
+<p>
+<tt>%activity</tt> lets one write test code without much boilerplate. The
+directive generates a simple module that contains a single <tt>activity()</tt>
+method with the given code as method body.
+
+<p>A NED file containing the simple module's (barebones) declaration, and an
+ini file to set up the module as a network are also generated.
+
+<p>
+<h4><a name="sec:testing:opptest:module"/>15.2.5.2 %module<a class="headerlink" href="#sec:testing:opptest:module" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%module: &lt;modulename&gt;
+&lt;simple-module-C++-definition&gt;
+</pre>
+<p>
+<tt>%module</tt> lets one define a module class and run it as the only module
+in the simulation.
+
+<p>A NED file containing the simple module's (barebones) declaration, and an
+ini file to set up the module as a network are also generated.
+
+<p>
+<h4><a name="sec:testing:opptest:includes-and-global"/>15.2.5.3 %includes, %global<a class="headerlink" href="#sec:testing:opptest:includes-and-global" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%includes:
+&lt;#include directives&gt;
+</pre>
+<p>
+<pre class="filelisting">
+%global:
+&lt;global-code-pasted-before-activity&gt;
+</pre>
+
+<p><tt>%includes</tt> and <tt>%global</tt> are helpers for <tt>%activity</tt>
+and <tt>%module</tt>, and let one insert additional lines into the
+generated C++ code.
+
+<p>Both directives insert the code block above the module C++ declaration. The only
+difference is in their relation to the C++ namespace: the body of <tt>%includes</tt>
+is inserted above (i.e. outside) the namespace, and the body of <tt>%globals</tt>
+is inserted inside the namespace.
+
+<p>
+<h4><a name="sec:testing:opptest:default-ini-file"/>15.2.5.4 The Default Ini File<a class="headerlink" href="#sec:testing:opptest:default-ini-file" title="Permalink to this headline">¶</a></h4>
+
+<p>The following ini file is always generated:
+
+<pre class="inifile">
+[General]
+network = &lt;network-name&gt;
+cmdenv-express-mode = false
+</pre>
+<p>
+The network name in the file is chosen to match the module
+generated with <tt>%activity</tt> or <tt>%module</tt>; if they
+are absent, it will be <tt>Test</tt>.
+
+<p><h4><a name="sec:testing:opptest:network"/>15.2.5.5 %network<a class="headerlink" href="#sec:testing:opptest:network" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%network: &lt;network-name&gt;
+</pre>
+<p>
+This directive can be used to override the network name in the default ini file.
+
+<p>
+<h4><a name="sec:testing:opptest:file-and-inifile"/>15.2.5.6 %file, %inifile<a class="headerlink" href="#sec:testing:opptest:file-and-inifile" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%file: &lt;file-name&gt;
+&lt;file-contents&gt;
+</pre>
+<p>
+<pre class="filelisting">
+%inifile: [&lt;inifile-name&gt;]
+&lt;inifile-contents&gt;
+</pre>
+
+<p><tt>%file</tt> saves a file with the given file name and content into the test's
+extraction folder in the preparation phase of the test run. It is customarily
+used for creating NED files, MSG files, ini files, and extra data files
+required by the test. There can be several <tt>%file</tt> sections in the test file.
+
+<p><tt>%inifile</tt> is similar to <tt>%file</tt> in that it also saves a file with the
+given file name and content, but it additionally also adds the file to the simulation's
+command line, causing the simulation to read it as an (extra) ini file.
+There can be several <tt>%inifile</tt> sections in the test file.
+
+<p>The default ini file is always generated.
+
+<p>
+<h4><a name="sec:testing:opptest:testname-macro"/>15.2.5.7 The @TESTNAME@ Macro<a class="headerlink" href="#sec:testing:opptest:testname-macro" title="Permalink to this headline">¶</a></h4>
+
+<p>In test files, the string <tt>@TESTNAME@</tt> will be replaced with the test
+case name. Since it is substituted everywhere (C++, NED, msg and ini
+files), one can also write things like <tt>@TESTNAME@_function()</tt>, or
+<tt>printf("this is @TESTNAME@\n")</tt>.
+
+<p><h4><a name="sec:testing:opptest:avoiding-cpp-name-clashes"/>15.2.5.8 Avoiding C++ Name Clashes<a class="headerlink" href="#sec:testing:opptest:avoiding-cpp-name-clashes" title="Permalink to this headline">¶</a></h4>
+
+<p>Since all sources are compiled into a single test executable, actions have
+to be taken to prevent accidental name clashes between C++ symbols in
+different test cases. A good way to ensure this is place all code into
+namespaces named after the test cases.
+
+<pre class="filelisting">
+namespace @TESTNAME@ {
+   ...
+};
+</pre>
+<p>
+This is done automatically for the <tt>%activity</tt>, <tt>%module</tt>,
+<tt>%global</tt> blocks, but for other files (e.g. source files generated
+via <tt>%file</tt>, that needs to be done manually.
+
+<p>
+<h3><a name="sec:testing:opptest:pass-criteria"/>15.2.6 PASS Criteria<a class="headerlink" href="#sec:testing:opptest:pass-criteria" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:testing:opptest:contains-and-co"/>15.2.6.1 %contains, %contains-regex, %not-contains, %not-contains-regex<a class="headerlink" href="#sec:testing:opptest:contains-and-co" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%contains: &lt;output-file-to-check&gt;
+&lt;multi-line-text&gt;
+</pre>
+<p>
+<pre class="filelisting">
+%contains-regex: &lt;output-file-to-check&gt;
+&lt;multi-line-regexp&gt;
+</pre>
+
+<pre class="filelisting">
+%not-contains: &lt;output-file-to-check&gt;
+&lt;multi-line-text&gt;
+</pre>
+<p>
+<pre class="filelisting">
+%not-contains-regex: &lt;output-file-to-check&gt;
+&lt;multi-line-regexp&gt;
+</pre>
+
+<p>These directives let one check for the presence (or absence) of certain text in
+the output. One can check a file, or the standard output or standard error of
+the test program; for the latter two, <tt>stdout</tt> and <tt>stderr</tt> needs to be
+specified as file name, respectively. If the file is not found, the test will be marked
+as <i>unresolved</i>. There can be several <tt>%contains</tt>-style directives
+in the test file.
+
+<p>The text or regular expression can be multi-line. Before match is attempted,
+trailing spaces are removed from all lines in both the pattern and the
+file contents; leading and trailing blank lines in the patterns are removed;
+and any substitutions are performed (see <tt>%subst</tt>). Perl-style regular
+expressions are accepted.
+
+<p>To facilitate debugging of tests, the text/regex blocks are saved into
+the test directory.
+
+<p>
+<h4><a name="sec:testing:opptest:subst"/>15.2.6.2 %subst<a class="headerlink" href="#sec:testing:opptest:subst" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%subst: /&lt;search-regex&gt;/&lt;replacement&gt;/&lt;flags&gt;
+</pre>
+<p>
+It is possible to apply text substitutions to the output before it is
+matched against expected output. This is done with <tt>%subst</tt>
+directive; there can be more than one <tt>%subst</tt> in a test file. It
+takes a Perl-style regular expression to search for, a replacement text,
+and flags, in the <i>/search/replace/flags</i> syntax. Flags can be empty
+or a combination of the letters <tt>i</tt>, <tt>m</tt>, and <tt>s</tt>, for
+case-insensitive, multi-line or single-string match (see the Perl regex
+documentation.)
+
+<p><tt>%subst</tt> was primarily invented to deal with differences in printf
+output across platforms and compilers: different compilers print infinite
+and not-a-number in different ways: <tt>1.#INF</tt>, <tt>inf</tt>, <tt>Inf</tt>,
+<tt>-1.#IND</tt>, <tt>nan</tt>, <tt>NaN</tt> etc. With <tt>%subst</tt>, they can be
+brought to a common form:
+
+<pre class="filelisting">
+%subst: /-?1\.#INF/inf/
+%subst: /-?1\.#IND/nan/
+%subst: /-?1\.#QNAN/nan/
+%subst: /-?NaN/nan/
+%subst: /-?nan/nan/
+</pre>
+<p>
+<h4><a name="sec:testing:opptest:exitcode"/>15.2.6.3 %exitcode, %ignore-exitcode<a class="headerlink" href="#sec:testing:opptest:exitcode" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+<pre class="filelisting">
+%exitcode: &lt;one-or-more-numeric-exit-codes&gt;
+</pre>
+
+<pre class="filelisting">
+%ignore-exitcode: 1
+</pre>
+<p>
+<tt>%exitcode</tt> and <tt>%ignore-exitcode</tt> let one test the exit code of the
+test program. The former checks that the exit code is one of the numbers specified in
+the directive; the other makes the test framework ignore the exit code.
+
+<p>OMNeT++ simulations exit with zero if the simulation terminated
+without an error, and some &gt;0 code if a runtime error occurred. Normally,
+a nonzero exit code makes the test fail. However, if the expected outcome
+is a runtime error (e.g. for some negative test cases), one can use either
+<tt>%exitcode</tt> to express that, or specify <tt>%ignore-exitcode</tt>
+and test for the presence of the correct error message in the output.
+
+<p>
+
+<p><h4><a name="sec:testing:opptest:file-exists"/>15.2.6.4 %file-exists, %file-not-exists<a class="headerlink" href="#sec:testing:opptest:file-exists" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%file-exists: &lt;filename&gt;
+</pre>
+<p>
+<pre class="filelisting">
+%file-not-exists: &lt;filename&gt;
+</pre>
+
+<p>These directives test for the presence or absence of a certain file in
+the test directory.
+
+<p><h3><a name="sec:testing:opptest:extra-processing-steps"/>15.2.7 Extra Processing Steps<a class="headerlink" href="#sec:testing:opptest:extra-processing-steps" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:testing:opptest:env-extraargs-testprog"/>15.2.7.1 %env, %extraargs, %testprog<a class="headerlink" href="#sec:testing:opptest:env-extraargs-testprog" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%env: &lt;environment-variable-name&gt;=&lt;value&gt;
+</pre>
+<p>
+<pre class="filelisting">
+%extraargs: &lt;argument-list&gt;
+</pre>
+
+<pre class="filelisting">
+%testprog: &lt;executable&gt;
+</pre>
+<p>
+The <tt>%env</tt> directive lets one set an environment variable that will
+be defined when the test program and the potential pre- and post-processing
+commands run. There can be multiple <tt>%env</tt> directives in the test
+file.
+
+<p><tt>%extraargs</tt> lets one add extra command-line arguments to the
+test program (usually the simulation) when it is run.
+
+<p>The <tt>%testprog</tt> directive lets one replace the test program.
+<tt>%testprog</tt> also slightly alters the arguments the test program is
+run with. Normally, the test program is launched with the following command
+line:
+
+<pre class="filelisting">
+$ &lt;default-testprog&gt; -u Cmdenv &lt;test-extraargs&gt; &lt;global-extraargs&gt; &lt;inifiles&gt;
+</pre>
+<p>
+When <tt>%testprog</tt> is present, it becomes the following:
+
+<pre class="filelisting">
+$ &lt;custom-testprog&gt; &lt;test-extraargs&gt; &lt;global-extraargs&gt;
+</pre>
+<p>
+That is, <tt>-u Cmdenv</tt> and <tt>&lt;inifilenames&gt;</tt> are removed; this allows one
+to invoke programs that do not require or understand them, and puts the test author
+in complete command of the arguments list.
+
+<p>Note that <tt>%extraargs</tt> and <tt>%testprog</tt> have an equivalent
+command-line option in <tt>opp_test</tt>. (In the text above,
+<tt>&lt;global-extraargs&gt;</tt> stands for extra args specified to
+<tt>opp_test</tt>.)  <tt>%env</tt> doesn't need an option in
+<tt>opp_test</tt>, because the test program inherits the environment
+variables from <tt>opp_test</tt>, so one can just set them in the control
+script, or in the shell one runs the tests from.
+
+<p>
+<h4><a name="sec:testing:opptest:prerun-postrun-commands"/>15.2.7.2 %prerun-command, %postrun-command<a class="headerlink" href="#sec:testing:opptest:prerun-postrun-commands" title="Permalink to this headline">¶</a></h4>
+
+<p>Syntax:
+
+<pre class="filelisting">
+%prerun-command: &lt;command&gt;
+</pre>
+<p>
+<pre class="filelisting">
+%postrun-command: &lt;command&gt;
+</pre>
+
+<p>These directives let one run extra commands before/after running the test
+program (i.e. the simulation). There can be multiple pre- and post-run
+commands. The post-run command is useful when the test outcome cannot be determined
+by simple text matching, but requires statistical evaluation or other processing.
+
+<p>If the command returns a nonzero exit code, the test framework will assume that
+it is due to a technical problem (as opposed to test failure), and count the
+test as <i>unresolved</i>. To make the test fail, let the command write a
+file, and match the file's contents using <tt>%contains</tt> &amp; co.
+
+<p>If the post-processing command is a short script, it is practical
+to add it into the <tt>.test</tt> file via the <tt>%file</tt> directive,
+and invoke it via its interpreter. For example:
+
+<pre class="filelisting">
+%postrun-command: python test.py
+%file: test.py
+&lt;Python script&gt;
+</pre>
+<p>
+Or:
+
+<pre class="filelisting">
+%postrun-command: R CMD BATCH test.R
+%file: test.R
+&lt;R script&gt;
+</pre>
+<p>
+If the script is very large or shared among several tests, it is more practical
+to place it into a separate file. The test command can find the script e.g.
+by relative path, or by referring to an environment variable that contains
+its location or full path.
+
+<p>
+<h3><a name="sec:testing:opptest:unresolved"/>15.2.8 Unresolved<a class="headerlink" href="#sec:testing:opptest:unresolved" title="Permalink to this headline">¶</a></h3>
+
+<p>A test case is unresolved if the test program cannot be executed at all, the
+output cannot be read, or if the test case declares so. The latter is done
+by printing <tt>#UNRESOLVED</tt> or <tt>#UNRESOLVED:some-explanation</tt> on the
+standard output, at the beginning of the line.
+
+<p>
+<h3><a name="sec:testing:opptest:synopsys"/>15.2.9 opp_test Synopsys<a class="headerlink" href="#sec:testing:opptest:synopsys" title="Permalink to this headline">¶</a></h3>
+
+<p>Little has been said so far what <tt>opp_test</tt> actually does, or how it
+is meant to be run. <tt>opp_test</tt> has two modes: file generation and
+test running. When running a test suite, <tt>opp_test</tt> is actually run
+twice, once in file generation mode, then in test running mode.
+
+<p>File generation mode has the syntax <tt>opp_test gen <i>&lt;options&gt;
+&lt;testfiles&gt;</i></tt>. For example:
+
+<pre class="filelisting">
+$ opp_test gen *.test
+</pre>
+<p>
+This command will extract C++ and NED files, ini files, etc., from
+the <tt>.test</tt> files into separate files. All files will be created
+in a work directory (which defaults to <tt>./work/</tt>),
+and each test will have its own subdirectory under <tt>./work/</tt>.
+
+<p>The second mode, test running, is invoked as <tt>opp_test run <i>&lt;options&gt;
+&lt;testfiles&gt;</i></tt>. For example:
+
+<pre class="filelisting">
+$ opp_test run *.test
+</pre>
+<p>
+In this mode, <tt>opp_test</tt> will run the simulations, check the
+results, and report the number of passes and failures. The way of invoking
+simulations (which executable to run, the list of command-line arguments to
+pass, etc.) can be specified to <tt>opp_test</tt> via command-line options.
+
+<p><ul class="note"><b>NOTE</b><br>
+Run <tt>opp_test</tt> in your OMNeT++ installation to get the exact list of
+command-line options.
+</ul>
+
+<p>The simulation needs to have been built from source before <tt>opp_test
+run</tt> can be issued. Usually one would employ a command similar to
+
+<pre class="filelisting">
+$ cd work; opp_makemake --deep; make
+</pre>
+<p>
+to achieve that.
+
+<p><h3><a name="sec:testing:opptest:writing-control-script"/>15.2.10 Writing the Control Script<a class="headerlink" href="#sec:testing:opptest:writing-control-script" title="Permalink to this headline">¶</a></h3>
+
+<p>Usually one writes a control script to automate the two invocations of <tt>opp_test</tt>
+and the build of the simulation model between them.
+
+<p>A basic variant would look like this:
+
+<pre class="filelisting">
+#! /bin/sh
+opp_test gen -v *.test || exit 1
+(cd work; opp_makemake -f --deep; make) || exit 1
+opp_test run -v *.test
+</pre>
+<p>
+For any practical use, the test suite needs to refer to the codebase being
+tested. This means that the codebase must be added to the include path,
+must be linked with, and the NED files must be added to the NED path. The
+first two can be achieved by the appropriate parameterization of
+<tt>opp_makemake</tt>; the last one can be done by setting and exporting
+the <tt>NEDPATH</tt> environment variable in the control script.
+
+<p>For inspiration, check out <tt>runtest</tt> in the <tt>omnetpp/test/core</tt>
+directory, and a similar script used in the INET Framework.
+
+<p><br><br>
+<center>
+* * *
+</center>
+<br><br>
+
+<p>Further sections describe how one can implement various types of tests in
+OMNeT++.
+
+<p><h2><a name="sec:testing:smoke-tests"/>15.3 Smoke Tests<a class="headerlink" href="#sec:testing:smoke-tests" title="Permalink to this headline">¶</a></h2>
+
+<p>Smoke tests are a tool for very basic verification and regression testing.
+Basically, the simulation is run for a while, and it must not crash or stop
+with a runtime error. Naturally, smoke test provide very low confidence in
+the model, but in turn they are very easy to implement.
+
+<p>Automation is important. The INET Framework contains a script that runs all
+or selected simulations defined in a CSV file (with columns like the working
+directory and the command to run), and reports the results. The script can
+be easily adapted to other models or model frameworks.
+
+<p>
+<h2><a name="sec:testing:fingerprint-tests"/>15.4 Fingerprint Tests<a class="headerlink" href="#sec:testing:fingerprint-tests" title="Permalink to this headline">¶</a></h2>
+
+<p>Fingerprint tests are a low-cost but effective tool for regression testing
+of simulation models. A fingerprint is a hash computed from various properties
+of simulation events, messages and statistics. The hash value is continuously
+updated as the simulation executes, and thus, the final fingerprint value is
+a characteristic of the simulation's trajectory. For regression testing, one
+needs to compare the computed fingerprints to that from a reference run --
+if they differ, the simulation trajectory has changed. In general, fingerprint
+tests are very useful for ensuring that a change (some refactoring, a bugfix,
+or a new feature) didn't break the simulation.
+
+<p><h3><a name="sec:testing:fingerprint-computation"/>15.4.1 Fingerprint Computation<a class="headerlink" href="#sec:testing:fingerprint-computation" title="Permalink to this headline">¶</a></h3>
+
+<p>Technically, providing a <b><tt>fingerprint</tt></b> option in the config file or
+on the command line (<tt>-fingerprint=...</tt>) will turn on fingerprint
+computation in the OMNeT++ simulation kernel. When the simulation terminates,
+OMNeT++ compares the computed fingerprints with the provided ones, and
+if they differ, an error is generated.
+
+<p><h4><a name="sec:testing:fingerprint-ingredients"/>15.4.1.1 Ingredients<a class="headerlink" href="#sec:testing:fingerprint-ingredients" title="Permalink to this headline">¶</a></h4>
+
+<p>The fingerprint computation algorithm allows controlling what is included
+in the hash value. Changing the <i>ingredients</i> allows one to make the
+fingerprint sensitive for certain changes while keeping it immune to
+others.
+
+<p>The ingredients of a fingerprint are usually indicated after a <tt>/</tt> sign
+following the hexadecimal hash value. Each ingredient is identified with a
+letter. For example, <b>t</b> stands for simulation time. Thus, the following
+<tt>omnetpp.ini</tt> line
+
+<pre class="inifile">
+fingerprint = 53de-64a7/tplx
+</pre>
+<p>
+means that a fingerprint needs to be computed with the simulation time, the
+module full path, received packet's bit length and the extra data included
+for each event, and the result should be <tt>53de-64a7</tt>.
+
+<p>The full list of fingerprint ingredients:
+
+<p>
+<ul>
+  <li><b><b>e</b></b> : event number
+  <li><b><b>t</b></b> : simulation time
+  <li><b><b>n</b></b> : message/event full name
+  <li><b><b>c</b></b> : message/event class name
+  <li><b><b>k</b></b> : message kind
+  <li><b><b>l</b></b> : message (packet) bit length
+  <li><b><b>o</b></b> : message control info class name
+  <li><b><b>d</b></b> : message data
+  <li><b><b>i</b></b> : module id
+  <li><b><b>m</b></b> : module full name (name with index)
+  <li><b><b>p</b></b> : module full path (hierarchical name)
+  <li><b><b>a</b></b> : module class name
+  <li><b><b>r</b></b> : random numbers drawn
+  <li><b><b>s</b></b> : scalar results
+  <li><b><b>z</b></b> : statistic results (histogram, etc.)
+  <li><b><b>v</b></b> : vector results
+  <li><b><b>x</b></b> : extra data added programmatically
+</ul>
+
+<p>
+Ingredients may also be specified with the
+<b><tt>fingerprint-ingredients</tt></b> configuration option. However, that is
+rarely necessary, because the ingredients list included in the fingerprints
+take precedence, and are also more convenient to use.
+
+<p><h4><a name="sec:testing:multiple-fingerprints-alternative-values"/>15.4.1.2 Multiple Fingerprints, Alternative Values<a class="headerlink" href="#sec:testing:multiple-fingerprints-alternative-values" title="Permalink to this headline">¶</a></h4>
+
+<p>It is possible to specify more than one fingerprint, separated by
+<i>commas</i>, each with different ingredients. This will cause OMNeT++ to
+compute multiple fingerprints, and all of them must match for the test to
+pass. An example:
+
+<pre class="inifile">
+fingerprint = 53de-64a7/tplx, 9a3f-7ed2/szv
+</pre>
+<p>
+Occasionally, the same simulation gives a different fingerprint when run on
+a different processor architecture or platform. This is due to subtle
+differences in floating point arithmetic across platforms.<br><ul><font size=-1>[There
+are differences between the floating point operations of AMD and Intel
+CPUs. Running under a processor emulator like <tt>valgrind</tt> may also
+produce a different fingerprint. This is normal. Hint: see gcc options
+<tt>-mfpmath=sse -msse2</tt>.]</font></ul> Acknowledging this fact, OMNeT++ lets one list
+several values for a fingerprint, separated by <i>spaces</i>, and will
+accept whichever is produced by the simulation. The following example lists
+two alternative values for both fingerprints.
+
+<pre class="inifile">
+fingerprint = 53de-64a7/tplx 63dc-ff21/tplx, 9a3f-7ed2/szv da39-91fc/szv
+</pre>
+<p>
+Note that fingerprint computation has been changed and significantly
+extended in OMNeT++ version 5.0.<br><ul><font size=-1>[The old (OMNeT++ 4.x) fingerprint
+was computed from the module ID and simulation time of each event. To
+reproduce a 4.x fingerprint on OMNeT++ 5.0 or later, compile OMNeT++ and the
+model with <tt>USE_OMNETPP4x_FINGERPRINTS</tt> defined. Simply setting the
+ingredients to <b>ti</b> is not enough because of additional, subtle changes
+in the simulation kernel.]</font></ul>
+
+<p>
+<h4><a name="sec:testing:fingerprint-further-filtering"/>15.4.1.3 Further Filtering<a class="headerlink" href="#sec:testing:fingerprint-further-filtering" title="Permalink to this headline">¶</a></h4>
+
+<p>It is also possible to filter which modules, statistics, etc. are included
+in the fingerprints. The <b><tt>fingerprint-events</tt></b>,
+<b><tt>fingerprint-modules</tt></b>, and <b><tt>fingerprint-results</tt></b> options
+filter by events, modules, and statistical results, respectively. These
+options take wildcard expressions that are matched against the
+corresponding object before including its property in the fingerprint.
+These filters are mainly useful to limit fingerprint computation to certain
+parts of the simulation.
+
+<p><h4><a name="sec:testing:fingerprint-programmatic-access"/>15.4.1.4 Programmatic Access<a class="headerlink" href="#sec:testing:fingerprint-programmatic-access" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cFingerprintCalculator.html">cFingerprintCalculator</a></tt> is the class responsible for fingerprint computation.
+The current fingerprint computation object can be retrieved from
+<tt><a href="../api/classomnetpp_1_1cSimulation.html">cSimulation</a></tt>, using the <tt>getFingerprintCalculator()</tt> member function.
+This method will return <tt>nullptr</tt> if fingerprint computation is turned
+off for the current simulation run.
+
+<p>To contribute data to the fingerprint, <tt><a href="../api/classomnetpp_1_1cFingerprintCalculator.html">cFingerprintCalculator</a></tt> has several
+<tt>addExtraData()</tt> methods for various data types (string, <tt>long</tt>,
+<tt>double</tt>, byte array, etc.)
+
+<p>An example (note that we check the pointer for <tt>nullptr</tt> to decide
+whether a fingerprint is being computed):
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cFingerprintCalculator.html">cFingerprintCalculator</a> *fingerprint = getSimulation()-&gt;getFingerprintCalculator();
+if (fingerprint) {
+    fingerprint-&gt;addExtraData(retryCount);
+    fingerprint-&gt;addExtraData(rttEstimate);
+}
+</pre>
+<p>
+Data added using <tt>addExtraData()</tt> will only be counted in the
+fingerprint if the list of fingerprint ingredients contains <b>x</b>
+(otherwise <tt>addExtraData()</tt> does nothing).
+
+<p><h3><a name="sec:testing:creating-fingerprint-tests"/>15.4.2 Fingerprint Tests<a class="headerlink" href="#sec:testing:creating-fingerprint-tests" title="Permalink to this headline">¶</a></h3>
+
+<p>The INET Framework contains a script for automated fingerprint tests as
+well. The script runs all or selected simulations defined in a CSV file
+(with columns like the working directory, the command to run, the
+simulation time limit, and the expected fingerprints), and reports the
+results. The script is extensively used during INET Framework development
+to detect regressions, and can be easily adapted to other models or model
+frameworks.
+
+<p>Exerpt from a CSV file that prescribes fingerprint tests to run:
+
+<pre class="filelisting">
+examples/aodv/, ./run -f omnetpp.ini -c Static,   50s,  4c29-95ef/tplx
+examples/aodv/, ./run -f omnetpp.ini -c Dynamic,  60s,  8915-f239/tplx
+examples/dhcp/, ./run -f omnetpp.ini -c Wired,    800s, e88f-fee0/tplx
+examples/dhcp/, ./run -f omnetpp.ini -c Wireless, 500s, faa5-4111/tplx
+</pre>
+<p>
+
+<p><h2><a name="sec:testing:unit-tests"/>15.5 Unit Tests<a class="headerlink" href="#sec:testing:unit-tests" title="Permalink to this headline">¶</a></h2>
+
+<p>If a simulation models contains units of code (classes, functions) smaller
+than a module, they are candidates for unit testing. For a network simulation
+model, examples of such classes are network addresses, fragmentation reassembly
+buffers, queues, various caches and tables, serializers and deserializers,
+checksum computation, etc.
+
+<p>Unit tests can be implemented as <tt>.test</tt> files using the <tt>opp_test</tt>
+tool (the <tt>%activity</tt> directive is especially useful here), or
+with potentially any other C++ unit testing framework.
+
+<p>When using <tt>.test</tt> files, the <i>build</i> part of the control script
+needs to be set up so that it adds the tested library's source folder(s)
+to the include path, and also links the library to the test code.
+
+<p>
+
+<p><h2><a name="sec:testing:module-tests"/>15.6 Module Tests<a class="headerlink" href="#sec:testing:module-tests" title="Permalink to this headline">¶</a></h2>
+
+<p>OMNeT++ modules are not as easy to unit test as standalone classes, because
+they typically assume a more complex environment, and, especially modules
+that implement network protocols, participate in more complex interactions
+than the latter.
+
+<p>To test a module in isolation, one needs to place it into a simulation
+where the module's normal operation environment (i.e. other modules it
+normally communicates with) are replaced by mock objects. Mock objects are
+responsible for providing stimuli for the module under test, and (partly)
+for checking the response.
+
+<p>Module tests may be implemented in <tt>.test</tt> files using the <tt>opp_test</tt>
+tool. A <tt>.test</tt> file allows one to place the test description, the test setup
+and the expected output into a single, compact file, while large files or files shared
+among several tests may be factored out and only referenced by <tt>.test</tt> files.
+
+<p>
+<h2><a name="sec:testing:statistical-tests"/>15.7 Statistical Tests<a class="headerlink" href="#sec:testing:statistical-tests" title="Permalink to this headline">¶</a></h2>
+
+<p>Statistical tests are those where the test outcome is decided on
+some statistical property or properties of the simulation results.
+
+<p>Statistical tests may be useful as validation as well as regression testing.
+
+<p><h3><a name="sec:testing:validation-tests"/>15.7.1 Validation Tests<a class="headerlink" href="#sec:testing:validation-tests" title="Permalink to this headline">¶</a></h3>
+
+<p>Validation tests aim to verify that simulation results correspond to some
+reference values, ideally to those obtained from the real system. In
+practice, reference values may come from physical measurements, theoretical
+values, or another simulator's results.
+
+<p><h3><a name="sec:testing:statistical-regression-tests"/>15.7.2 Statistical Regression Tests<a class="headerlink" href="#sec:testing:statistical-regression-tests" title="Permalink to this headline">¶</a></h3>
+
+<p>After a refactoring that changes the simulation trajectory (e.g. after
+eliminating or introducing extra events, or changes in RNG usage), there
+may be no other way to do regression testing than checking that the model
+produces <i>statistically</i> the same results as before.
+
+<p>For statististical regression tests, one needs to perform several
+simulation runs with the same configuration but different RNG seeds, and
+verify that the results are from the same distributions as before. One can
+use <i>Student's t-test</i> (for mean) and the <i>F-test</i> (for
+variance) to check that the &#8220;before&#8221; and the &#8220;after&#8221; sets of results
+are from the same distribution.
+
+<p><h3><a name="sec:testing:statistical-tests-implementation"/>15.7.3 Implementation<a class="headerlink" href="#sec:testing:statistical-tests-implementation" title="Permalink to this headline">¶</a></h3>
+
+<p>Statistical software like <i>GNU R</i> is extremely useful for these
+tests.
+
+<p>Statistical tests may also be implemented in <tt>.test</tt> files. To let the
+tool run several simulations within one test, one may use
+<tt>%extraargs</tt> to pass the <tt>-r &lt;runs&gt;</tt> option to Cmdenv;
+alternatively, one may use <tt>%testprog</tt> to have the test tool run
+<tt>opp_runall</tt> instead of the normal simulation program. For doing the
+statistical computations, one may use <tt>%postrun-command</tt> to run an R
+script. The R script may rely on the <tt>omnetpp</tt> R package for reading
+the result files.
+
+<p>The INET Framework contains statistical tests where one can look for
+inspiration.
+
+<p>
+
+<hr class='pgbr'><p><hr><b><a href="chap14.html">[Prev]</A>&nbsp;<a href="chap16.html">[Next]</A>&nbsp;<a href="toc.html#toc_15.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

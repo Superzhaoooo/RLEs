@@ -1,0 +1,16 @@
+<html><head><link rel="STYLESHEET" href="../book.css"  type="text/css"/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Using Qtenv with a Debugger</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="index.html" title="OMNeT&#8288;+&#8288;+ User Guide"><link rel="up" href="ch07.html" title="Chapter 7. The Qtenv Graphical Runtime Environment"><link rel="prev" href="ch07s03.html" title="Using Qtenv"><link rel="next" href="ch07s05.html" title="Parts of the Qtenv UI"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Using Qtenv with a Debugger</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s03.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The Qtenv Graphical Runtime Environment</th><td width="20%" align="right"> <a accesskey="n" href="ch07s05.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idm2067"></a>Using Qtenv with a Debugger</h2></div></div></div><p>You  can use Qtenv together with a C&#8288;+&#8288;+ debugger, which is mainly useful when
+      developing new models. When you do that, there are a few things you need to know.
+    </p><p>Qtenv is a library that runs as part of the simulation program. This has
+      a lot of implications, the most apparent being that when the simulation crashes
+      (due to a bug in the model's C&#8288;+&#8288;+ code), it will bring down the whole OS process,
+      including the Qtenv GUI.
+    </p><p>The second consequence is that suspending the simulation program in a debugger
+      will also freeze the GUI until it is resumed. Also, Qtenv is single-theaded and
+      runs in the same thread as the simulation program, so even if you only suspend
+      the simulation's thread in the debugger, the UI will freeze.
+    </p><p>The Qtenv UI deals with <code class="literal">cObject</code>s (the C&#8288;+&#8288;+ methods that the GUI relies
+      on are defined on <code class="literal">cObject</code>). All other data such as primitive variables,
+      non-cObject classes and structs, STL containers etc, are hidden from Qtenv.
+      You may wrap objects into <code class="literal">cObject</code>s to make them visible for Qtenv, that's what
+      e.g. the <code class="literal">WATCH</code> macros do as well.
+    </p><p>The following sections go into detail about various parts and functions of the Qtenv UI.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch07s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Using Qtenv </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Parts of the Qtenv UI</td></tr></table></div></body></html>

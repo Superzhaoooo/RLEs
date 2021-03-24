@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Calibrator.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Calibrator - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Calibrator.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#calibrators">Calibrators</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#decision_to_insert_new_vehicles" class="nav-link">• Decision to insert new vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#routes_of_generated_vehicles" class="nav-link">• Routes of generated Vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#calibrating_vehicle_types" class="nav-link">• Calibrating vehicle types</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#mapping_between_vtypedistributions" class="nav-link">&rarr; Mapping between vTypeDistributions</a>
+                </li>
+            <li class="nav-item main"><a href="#building_a_scenario_without_knowledge_of_routes_based_on_flow_measurements">Building a scenario without knowledge of routes, based on flow measurements</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Calibrator<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="calibrators">Calibrators<a class="headerlink" href="#calibrators" title="Permanent link">#</a></h1>
+<p>These trigger-type objects may be specified within an <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a> and allow the
+dynamic adaption of traffic flows, speeds and vehicle parameters (vTypes). The syntax for such an
+object is: <code>&lt;calibrator id="&lt;ID&gt;" lane="&lt;LANE_ID&gt;" output="&lt;OUTPUT_FILE&gt;"/\&gt;</code>. They can be used to modify simulation
+scenario based on induction loop measurements. They can also be used to model location-base change in driving behavior.</p>
+<p>A calibrator will remove vehicles in excess of the specified flow and it will insert new vehicles (of the specified type)
+if the normal traffic demand of the simulation does not meet the
+specified number of <code>vehsPerHour</code>. Furthermore, the speed on the edge will be
+adjusted to the specified <code>speed</code> similar to the workings of a <a href="Variable_Speed_Signs.html">variable speed
+sign</a>. </p>
+<p>Calibrators will also remove vehicles if the traffic on their lane is jammed beyond what
+would be expected given the specified flow and speed. This ensures that
+invalid jams do not grow upstream past a calibrator. This behavior can be controlled with attribute 'jamThreshold' (see below).</p>
+<p>If no target flow is given, the provided type information will instead be used to modify the type of vehicles that are passing the calibrator.</p>
+<pre><code>&lt;additional&gt;
+  &lt;vType id=&quot;t0&quot; speedDev=&quot;0.1&quot; speedFactor=&quot;1.2&quot; sigma=&quot;0&quot;/&gt;
+  &lt;route id=&quot;c1&quot; edges=&quot;beg middle end rend&quot;/&gt;
+
+  &lt;calibrator id=&quot;calibtest_edge&quot; edge=&quot;beg&quot; pos=&quot;0&quot; output=&quot;detector.xml&quot;&gt;
+    &lt;flow begin=&quot;0&quot;    end=&quot;1800&quot; route=&quot;c1&quot; vehsPerHour=&quot;2500&quot; speed=&quot;27.8&quot; type=&quot;t0&quot; departPos=&quot;free&quot; departSpeed=&quot;max&quot;/&gt;
+    &lt;flow begin=&quot;1800&quot; end=&quot;3600&quot; route=&quot;c1&quot; vehsPerHour=&quot;2500&quot; speed=&quot;15.0&quot; type=&quot;t0&quot; departPos=&quot;free&quot; departSpeed=&quot;max&quot;/&gt;
+  &lt;/calibrator&gt;
+
+  &lt;calibrator id=&quot;calibtest_lane&quot; edge=&quot;middle_1&quot; pos=&quot;0&quot; output=&quot;detector.xml&quot;&gt;
+    &lt;flow begin=&quot;0&quot;    end=&quot;1800&quot; route=&quot;c1&quot; vehsPerHour=&quot;600&quot; speed=&quot;27.8&quot; type=&quot;t0&quot; departPos=&quot;free&quot; departSpeed=&quot;max&quot;/&gt;
+    &lt;flow begin=&quot;1800&quot; end=&quot;3600&quot; route=&quot;c1&quot; vehsPerHour=&quot;800&quot; speed=&quot;15.0&quot; type=&quot;t0&quot; departPos=&quot;free&quot; departSpeed=&quot;max&quot;/&gt;
+  &lt;/calibrator&gt;
+
+&lt;/additional&gt;
+</code></pre>
+
+<p>The following attributes/elements are used within the calibrator
+element:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>id (string)</td>
+<td>The id of the calibrator</td>
+</tr>
+<tr>
+<td>edge</td>
+<td>id (string)</td>
+<td>The id of an edge for measuring and calibrating flow. (Either <em>edge</em> or <em>lane</em> must be specified)</td>
+</tr>
+<tr>
+<td>lane</td>
+<td>id (string)</td>
+<td>The id of a lane for measuring and calibrating flow (Either <em>edge</em> or <em>lane</em> must be specified)</td>
+</tr>
+<tr>
+<td><strong>pos</strong></td>
+<td>float</td>
+<td>The position of the calibrator on the specified lane (currently ignored, see <a href="https://github.com/eclipse/sumo/issues/1331">[1]</a></td>
+</tr>
+<tr>
+<td>freq</td>
+<td>float</td>
+<td>The aggregation interval in which to calibrate the flows. default is step-length</td>
+</tr>
+<tr>
+<td>routeProbe</td>
+<td>id (string)</td>
+<td>The id of the <a href="Output/RouteProbe.html">routeProbe</a> element from which to determine the route distribution for generated vehicles.</td>
+</tr>
+<tr>
+<td>jamTheshold</td>
+<td>float</td>
+<td>A threshold value to detect and clear unexpected jamming if the mean edge speed drops below FLOAT * speedLimit. Range [0, 1]. Default: 0.5 (0.8 in meso)</td>
+</tr>
+<tr>
+<td>output</td>
+<td>file (string)</td>
+<td>The output file for writing calibrator information or <em>NULL</em></td>
+</tr>
+<tr>
+<td>vTypes</td>
+<td>string</td>
+<td>space separated list of vehicle type ids to consider (for counting/removal/type-modification), "" means all; default "".</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>flow</code> elements which are defined as children of the calibrator definition
+follow the general <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#repeated_vehicles_flows">format of flow
+definitions</a>.
+As the only difference, either the attribute <code>vehsPerHour</code> or <code>speed</code> or <code>type</code> (or any combination of these) must be
+given.</p>
+<p>By default edge calibrators will use <code>departLane="free"</code> whereas lane calibrators will use <code>departLane="x"</code>
+where <em>x</em> is the lane index of the calibrator lane. All calibrators
+default to <code>departSpeed="max"</code>.</p>
+<h2 id="decision_to_insert_new_vehicles">Decision to insert new vehicles<a class="headerlink" href="#decision_to_insert_new_vehicles" title="Permanent link">#</a></h2>
+<p>The interval (<em>begin</em>, <em>end</em>) defines the time in which calibration
+takes place. The length of the interval also defines the aggregation
+period for comparing observed and desired flows. The goal of the
+calibration is to ensure that the correct number of vehicles are
+inserted by the end of the interval. At the same time, the space-time
+structure of existing traffic should be preserved as much as possible.</p>
+<p>There is a trade-off between using shorter or longer calibration
+intervals.</p>
+<ul>
+<li>With shorter consecutive intervals it may happen that vehicles will
+  be removed first and later inserted because they did not arrive with
+  uniform density</li>
+<li>With longer intervals it may happen that vehicles are inserted very
+  lated because the calibrator tries to wait for existing vehicles
+  that might still appear</li>
+</ul>
+<p>The <em>freq</em> attribute defines how often a check for inserting vehicles
+takes place. This value defaults to the simulation step-length. Larger
+values conserve computation time but may also lead to a tigher
+clustering of inserted vehicles.</p>
+<p>The algorithm for deciding when exactly to insert (and remove) vehicles
+is described in <a href="http://elib.dlr.de/79428/">Erdmann, Jakob (2012) Online-Kalibrierung einer
+Mikroskopischen Verkehrssimulation. ViMOS 2012, 29.11.2012, Dresden,
+Deutschland.</a></p>
+<h2 id="routes_of_generated_vehicles">Routes of generated Vehicles<a class="headerlink" href="#routes_of_generated_vehicles" title="Permanent link">#</a></h2>
+<p>Whenever the measured flow in a given interval is lower than the
+specified flow, new vehicles are inserted. If the <code>routeProbe</code> attribute is
+specified, a route is sampled from the distribution of the named <a href="Output/RouteProbe.html">route
+probe detector</a>. Otherwise the <code>route</code>
+attribute of the flow is used. Note, that this value may also specify
+the name of a route distribution.</p>
+<h2 id="calibrating_vehicle_types">Calibrating vehicle types<a class="headerlink" href="#calibrating_vehicle_types" title="Permanent link">#</a></h2>
+<p>When a calibrator flow is defined without attribute <code>vehsPerHour</code> but with attribute <code>type</code>, this defines a type-calibrator.
+This type of calibrator will modify the types of all passing vehicles (or all vehicles that match the <code>vTypes</code> attribute of the calibrator).
+The normal behavior is to replace the type of the passing vehicles with the type set in the flow element.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When calibrating types, the 'route' attribute can be omitted from the flow definition    </p>
+</div>
+<h3 id="mapping_between_vtypedistributions">Mapping between vTypeDistributions<a class="headerlink" href="#mapping_between_vtypedistributions" title="Permanent link">#</a></h3>
+<p>A special behavior is activated if the following conditions are met:
+- the <code>type</code> in the flow element references a <code>vTypeDistribution</code>
+- the passing vehicle was defined with a type drawn from a <code>vTypeDistribution</code>
+- both vTypeDistributions have the same number of member types
+In this case, the new type of the passing vehicle will be mapped to a specific type in the vType distribution:
+- the index of the actual vehicle type in the original vTypeDistribution will be computed
+- the type with that index in the new vTypeDistribution will be used as the new vehicle type</p>
+<p>Example route-file input:</p>
+<pre><code>    &lt;vTypeDistribution id=&quot;dist1&quot;&gt;
+        &lt;vType id=&quot;car&quot; probability=&quot;70&quot;/&gt;
+        &lt;vType id=&quot;truck&quot; maxSpeed=&quot;10&quot; probability=&quot;30&quot; vClass=&quot;truck&quot;/&gt;
+    &lt;/vTypeDistribution&gt;
+</code></pre>
+
+<p>Example additional-file input: </p>
+<pre><code>    &lt;vTypeDistribution id=&quot;bad_weather&quot;&gt;
+        &lt;vType id=&quot;car2&quot; speedFactor=&quot;0.8&quot; decel=&quot;3&quot;/&gt;
+        &lt;vType id=&quot;truck2&quot; decel=&quot;2&quot; tau=&quot;1.5&quot; vClass=&quot;truck&quot;/&gt;
+    &lt;/vTypeDistribution&gt;
+
+    &lt;calibrator id=&quot;c1&quot; lane=&quot;middle_0&quot; pos=&quot;0&quot; output=&quot;detector.xml&quot;&gt;
+        &lt;flow begin=&quot;900&quot;    end=&quot;1800&quot; route=&quot;r1&quot; type=&quot;bad_weather&quot;/&gt;
+    &lt;/calibrator&gt;`      
+</code></pre>
+
+<p>In this example, all cars will be mapped to slower cars (type 'car' to 'car2') and all trucks will be mapped to trucks that keep larger distances.</p>
+<h1 id="building_a_scenario_without_knowledge_of_routes_based_on_flow_measurements">Building a scenario without knowledge of routes, based on flow measurements<a class="headerlink" href="#building_a_scenario_without_knowledge_of_routes_based_on_flow_measurements" title="Permanent link">#</a></h1>
+<p>Due to their ability of adapting higher as as well as lower flows to a
+specified value, calibrators may be used to adapt (almost) arbitrary
+traffic demand to a given set of measurements. One strategy for building
+a scenario from measurements is therefore, to <a href="../Tools/Trip.html#randomtripspy">generated random
+traffic</a> and use Calibrators in
+conjunction with <a href="Output/RouteProbe.html">route probe
+detectors</a>. While this can in
+principle be done with <a href="../dfrouter.html">dfrouter</a> as well, the
+method described here is more robust for highly meshed networks as found
+in cities.</p>
+<p>Each edge where measurements are given should receive a calibrator and a
+route probe detector. As soon as the first vehicle has passed the route
+probe detector, the calibrator will be able to use that vehicles route.
+For the calibrator to be able to function before the first vehicle, it
+needs a <em>fall back</em> route which just needs to consist of a single edge
+(i.e. the edge on which the calibrator is placed).</p>
+<p>Example <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a>:</p>
+<pre><code>&lt;additional&gt;
+   &lt;vType id=&quot;t0&quot; speedDev=&quot;0.1&quot;/&gt;
+   &lt;routeProbe id=&quot;cali_edge1_probe&quot; edge=&quot;edge1&quot; freq=&quot;60&quot; file=&quot;output.xml&quot;/&gt;
+   &lt;calibrator id=&quot;cali_edge1&quot; lane=&quot;edge1_0&quot; pos=&quot;0&quot; output=&quot;detector.xml&quot; freq=&quot;60&quot; routeProbe=&quot;cali_edge1_probe&quot;&gt;
+      &lt;route id=&quot;cali1_fallback&quot; edges=&quot;edge1&quot;/&gt;
+      &lt;flow begin=&quot;0&quot;    end=&quot;1800&quot; route=&quot;cal1_fallback&quot; vehsPerHour=&quot;2500&quot; speed=&quot;27.8&quot; type=&quot;t0&quot; departPos=&quot;free&quot; departSpeed=&quot;max&quot;/&gt;
+      &lt;flow begin=&quot;1800&quot; end=&quot;3600&quot; route=&quot;cal1_fallback&quot; vehsPerHour=&quot;2500&quot; speed=&quot;15.0&quot; type=&quot;t0&quot; departPos=&quot;free&quot; departSpeed=&quot;max&quot;/&gt;
+   &lt;/calibrator&gt;
+&lt;/additional&gt;
+</code></pre>
+
+<p>Running the simulation with the random demand as well as these <code>&lt;calibrator&gt;</code> and <code>&lt;routeProbe&gt;</code>
+definitions will achieve a simulation in which traffic matches the
+specified flows at each calibrator edge. However, the realism of traffic
+flow behind (or between) calibrators depends on the fit between random
+routes and real-world routes. The importance of this fit increases with
+the size and complexity of the network between calibrator edges.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 19 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

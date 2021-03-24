@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Railways.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Railways - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Railways.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#train_simulation">Train Simulation</a></li>
+            <li class="nav-item main"><a href="#building_a_network_for_train_simulation">Building a network for train simulation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#railways" class="nav-link">• Railways</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#osm" class="nav-link">&rarr; OSM</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#bidirectional_track_usage" class="nav-link">• Bidirectional track usage</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#bidirectional_rails_in_sumo-gui" class="nav-link">&rarr; Bidirectional rails in sumo-gui</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#working_with_bidirectional_tracks_in_netedit" class="nav-link">&rarr; Working with bidirectional tracks in netedit</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#importing_bidirectional_tracks_from_osm" class="nav-link">&rarr; Importing bidirectional tracks from OSM</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#handling_problems_in_bidirectional_railway_networks" class="nav-link">&rarr; Handling Problems in bidirectional railway networks</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#rail_signals" class="nav-link">• Rail Signals</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#rail_crossings" class="nav-link">• Rail Crossings</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#kilometrage_mileage_chainage" class="nav-link">• Kilometrage (Mileage, Chainage)</a>
+                </li>
+            <li class="nav-item main"><a href="#routing_on_bidirectional_tracks">Routing on Bidirectional Tracks</a></li>
+            <li class="nav-item main"><a href="#modelling_trains">Modelling Trains</a></li>
+            <li class="nav-item main"><a href="#train_interaction">Train Interaction</a></li>
+            <li class="nav-item main"><a href="#reversing_direction">Reversing Direction</a></li>
+            <li class="nav-item main"><a href="#portion_working">Portion working</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#splitting_a_train" class="nav-link">• Splitting a train</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#joining_two_trains" class="nav-link">• Joining two trains</a>
+                </li>
+            <li class="nav-item main"><a href="#rail_signal_behavior">Rail Signal Behavior</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#schedule_constraints" class="nav-link">• Schedule Constraints</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#predecessor_constraint" class="nav-link">&rarr; predecessor constraint</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#insertionpredecessor_constraint" class="nav-link">&rarr; insertionPredecessor constraint</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#generaterailsignalconstraintspy" class="nav-link">&rarr; generateRailSignalConstraints.py</a>
+                </li>
+            <li class="nav-item main"><a href="#traci">TraCI</a></li>
+            <li class="nav-item main"><a href="#visualisation">Visualisation</a></li>
+            <li class="nav-item main"><a href="#miscellaneous">Miscellaneous</a></li>
+            <li class="nav-item main"><a href="#limitations">Limitations</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Railways<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="train_simulation">Train Simulation<a class="headerlink" href="#train_simulation" title="Permanent link">#</a></h1>
+<p>This page describes simulations of trains in SUMO. To build an
+intermodal simulation scenario with trains, additional steps have to be
+taken in comparison to a plain vehicular simulation.</p>
+<h1 id="building_a_network_for_train_simulation">Building a network for train simulation<a class="headerlink" href="#building_a_network_for_train_simulation" title="Permanent link">#</a></h1>
+<h2 id="railways">Railways<a class="headerlink" href="#railways" title="Permanent link">#</a></h2>
+<p>Railways can be imported from
+<a href="../Networks/Import/OpenStreetMap.html">OSM</a>. They can also be
+explicitly specified using the existing <em>vClasses</em>.</p>
+<h3 id="osm">OSM<a class="headerlink" href="#osm" title="Permanent link">#</a></h3>
+<h4 id="types">Types<a class="headerlink" href="#types" title="Permanent link">#</a></h4>
+<p>When importing from OSM the following railway types are distinguished by
+default (via <a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvert.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvert.typ.xml</a>):</p>
+<ul>
+<li>tram</li>
+<li>subway</li>
+<li>light_rail</li>
+<li>rail</li>
+<li><a href="https://en.wikipedia.org/wiki/High-speed_rail">highspeed</a></li>
+</ul>
+<h4 id="electrification">Electrification<a class="headerlink" href="#electrification" title="Permanent link">#</a></h4>
+<p>Whenever a railway is electrified, the vClasses <em>rail</em>, <em>rail_electric</em>
+and <em>rail_fast</em> are permitted to drive there. Otherwise, only vClass
+<em>rail</em> is allowed.</p>
+<h4 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">#</a></h4>
+<p>By loading the additional typemap <a href="https://github.com/eclipse/sumo/blob/master/data/typemap/osmNetconvertRailUsage.typ.xml"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/data/typemap/osmNetconvertRailUsage.typ.xml</a>, additional <a href="https://wiki.openstreetmap.org/wiki/Key:usage#With_railways">usage
+information</a>
+is exported for the edge types:</p>
+<ul>
+<li>main</li>
+<li>branch</li>
+<li>industrial</li>
+<li>military</li>
+<li>test</li>
+<li>tourism</li>
+</ul>
+<p>This will lead to compound edge type ids such as
+<em>railway.rail|usage.main</em>.</p>
+<h4 id="track_numbers">Track numbers<a class="headerlink" href="#track_numbers" title="Permanent link">#</a></h4>
+<p>Local track numbers (mostly in train stations) are exported as edge
+parameter <em>track_ref</em>. These values are shown in the edge parameter
+dialog and can also be used for coloring (<em>color by param, streetwise</em>).</p>
+<h2 id="bidirectional_track_usage">Bidirectional track usage<a class="headerlink" href="#bidirectional_track_usage" title="Permanent link">#</a></h2>
+<p>In reality all tracks can be used in either direction if the need arises
+but many rails are used in only one direction most of the time. In SUMO,
+bidirectional track usage must be enabled explicitly. This simplifies
+routing as rails will only be used in their preferred direction most of
+the time.</p>
+<p>Bidirectional track usage is modeled by two edges that have their
+geometries exactly reversed and using the attribute <code>spreadType="center"</code>. This will result
+in lane geometries that are overlayed exactly. These edges are referred
+to as <em>superposed</em> (alternatively as bidirectional rail edges). In the
+.net.xml file these edges are marked with <code>bidi="&lt;REVERSE_EDGE_ID&gt;"</code> but this is a generated
+attribute and not to be set by the user.</p>
+<p>When Rail signals are placed at both ends of a bidirectional track they
+will restrict it's usage to one direction at a time.</p>
+<h3 id="bidirectional_rails_in_sumo-gui">Bidirectional rails in <a href="../sumo-gui.html">sumo-gui</a><a class="headerlink" href="#bidirectional_rails_in_sumo-gui" title="Permanent link">#</a></h3>
+<p>sumo-gui automatically shows only one of both edges to avoid duplicate
+drawing of cross-ties. The visualisation option <em>show lane direction</em>
+can be used to identify superposed edges. (arrows in both directions
+will be show).</p>
+<h3 id="working_with_bidirectional_tracks_in_netedit">Working with bidirectional tracks in <a href="../netedit.html">netedit</a><a class="headerlink" href="#working_with_bidirectional_tracks_in_netedit" title="Permanent link">#</a></h3>
+<ul>
+<li>To show both edges that constitute a bidirectional track, activate
+  edge visualisation option <em>spread superposed</em>. Both edges will be
+  drawn narrower and with a side-offset to make them both visible
+  without overlap.</li>
+<li>To find (and highlight) all bidirectional tracks, use <a href="../netedit.html#match_attribute">attribute
+  selection</a> and search for
+  attribute <em>bidi</em> with a value of <em>1</em></li>
+<li>Create bidirectional tracks <a href="../netedit.html#creating_bidirectional_railway_tracks">as explained
+  here</a></li>
+</ul>
+<h3 id="importing_bidirectional_tracks_from_osm">Importing bidirectional tracks from OSM<a class="headerlink" href="#importing_bidirectional_tracks_from_osm" title="Permanent link">#</a></h3>
+<p>When importing networks from
+<a href="../Networks/Import/OpenStreetMap.html">OSM</a>, rails tagged with <code>railway:preferred_direction:both</code> are
+automatically imported as superposed edges.</p>
+<h3 id="handling_problems_in_bidirectional_railway_networks">Handling Problems in bidirectional railway networks<a class="headerlink" href="#handling_problems_in_bidirectional_railway_networks" title="Permanent link">#</a></h3>
+<p>Commonly, rail networks import from OSM are incomplete in regard to
+bidirectional track usage. One example would be terminal tracks which a
+train can only leave by reversing direction. A large number of these
+issues can be fixed automatically be setting the
+<a href="../netconvert.html">netconvert</a>-option <strong>--railway.topology.repair</strong>. To analyze problems with
+bidirectional tracks, the option <strong>--railway.topology.output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> can be used to identify problematic
+tracks. The option <strong>--railway.topology.all-bidi</strong> can be used to make all tracks usable in both
+directions.</p>
+<h2 id="rail_signals">Rail Signals<a class="headerlink" href="#rail_signals" title="Permanent link">#</a></h2>
+<p>The <a href="../Networks/PlainXML.html#node_descriptions">node type</a>
+<code>rail_signal</code> may be used to define signals which implement <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling">Automatic Block
+Signaling</a>.</p>
+<p>By setting the <a href="../netconvert.html">netconvert</a>-option <strong>--railway.signals.discard</strong> all signals
+can be removed from a network.</p>
+<h2 id="rail_crossings">Rail Crossings<a class="headerlink" href="#rail_crossings" title="Permanent link">#</a></h2>
+<p>The <a href="../Networks/PlainXML.html#node_descriptions">node type</a>
+<code>rail_crossing</code> may be used to define railway crossings. At these nodes trains will
+always have the right of way and road vehicles get a red light until
+there is a safe gap between approaching trains.</p>
+<p>When importing networks from
+<a href="../Networks/Import/OpenStreetMap.html">OpenStreetMap</a>, rail
+crossings will be imported automatically. For other input data sources
+the crossings may have to be specified <a href="../Tutorials/ScenarioGuide.html#modifying_an_imported_network_via_plainxml">via additional xml
+files</a>
+or set via <a href="../netedit.html">netedit</a> after importing.</p>
+<h2 id="kilometrage_mileage_chainage">Kilometrage (Mileage, Chainage)<a class="headerlink" href="#kilometrage_mileage_chainage" title="Permanent link">#</a></h2>
+<p>Edges support the attribute <em>distance</em> to denote the distance at the
+start of the edge relative to some point of reference for a <a href="https://en.wikipedia.org/wiki/Linear_referencing">linear
+referencing scheme</a>.
+When the distance metric decreases along the forward direction of the edge, this is indicated by using a negative sign for the distance value.</p>
+<p>The distance value along an edge is computed as: </p>
+<pre><code>  |edgeDistance + vehiclePos|
+</code></pre>
+
+<p>Edge distance is imported from OSM and can also be be set along a route in <a href="../netedit.html#route">netedit</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Negative distance values are not currently supported (pending introduction of another attribute)</p>
+</div>
+<h1 id="routing_on_bidirectional_tracks">Routing on Bidirectional Tracks<a class="headerlink" href="#routing_on_bidirectional_tracks" title="Permanent link">#</a></h1>
+<p>When train tracks can be used in both directions, there is considerable freedom for trains when search a path through the network. To reduce the number of conflicts (when two vehicles want to use the same track in opposite directions), the preferred direction for each track can be defined and factored into the routing decision.</p>
+<p>When routes are computed in the simulation, this is done by setting the option <strong>--device.rerouting.priority-factor FLOAT</strong>. This causes the priority values of edges to be factored into the routing decision with higher values being preferred. 
+At the default value of 0. Edge priority is ignored when routing. When setting a positive value, the edges with the lowest priority receive a penalty factor to their estimated travel time of 1 + FLOAT whereas the edges with the highest priority receive no penalty. Edges with medium priority will receive a penality of 1 + x * FLOAT where </p>
+<pre><code>  x = (edgePriority - minPriority) / (maxPriority - minPriority)
+</code></pre>
+
+<p>The priority values can either be assigned by the user or computed heuristically by <a href="../netconvert.html">netconvert</a> by setting the option <strong>--railway.topology.direction-priority</strong>. This requires that some of the tracks in the network are uni-directional (to unambiguously define the main direction). The assigned priority values are:</p>
+<ul>
+<li>4: unidirectional track</li>
+<li>3: main direction of bidirectional track</li>
+<li>2: undetermined main direction (straight continuation from different directions of unidirectional track)</li>
+<li>1: undetermined main direction (no continuation from unidirectional track)</li>
+<li>0: reverse of main direction of bidirectional track</li>
+</ul>
+<h1 id="modelling_trains">Modelling Trains<a class="headerlink" href="#modelling_trains" title="Permanent link">#</a></h1>
+<p>There is a dedicated carFollowMode for trains which can be actived by
+setting <code>carFollowModel="Rail" trainType="&lt;TYPE&gt;"</code> in the <code>&lt;vType&gt;</code> definition. Allowed values for trainType are</p>
+<ul>
+<li>Freight</li>
+<li>ICE1</li>
+<li>ICE3</li>
+<li>RB425</li>
+<li>RB628</li>
+<li>REDosto7</li>
+<li>NGT400</li>
+<li>NGT400_16</li>
+</ul>
+<p>These types model traction and rolling resistance for particular trains.
+Alternatively, any other car following model may be used and configured
+with appropriate acceleration / deceleration parameters.</p>
+<h1 id="train_interaction">Train Interaction<a class="headerlink" href="#train_interaction" title="Permanent link">#</a></h1>
+<p>When simulation trains on a network with railway signals, trains will
+only enter a block (a section of edges between signals) if it is free of
+other trains. When there are no rail signals or multiple trains have
+been inserted in the same block, they will automatically keep a safe
+distance according to their car following model. When using <code>carFollowModel="Rail"</code>, trains
+will always keep enough distance to the leading train to come to a safe
+stop even if the lead train was to stop instantly.</p>
+<h1 id="reversing_direction">Reversing Direction<a class="headerlink" href="#reversing_direction" title="Permanent link">#</a></h1>
+<p>Trains will reverse direction if all of the following conditions are
+met:</p>
+<ul>
+<li>The head of the train is on a normal edge (not on an intersection /
+  railway switch)</li>
+<li>The whole length of the train is located on rail-edges that allow
+  bidirectional use.</li>
+<li>The speed of the train is below 0.1m/s.</li>
+<li>The train does not have any further stops on the current edge</li>
+<li>The succeeding edges in the train's route are the reverse-direction
+  edges of those it is currently on</li>
+<li>
+<p>There is a "turn-around" connection from the current train edge to
+  the reverse direction edge</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When importing public transport stops with option <strong>--ptstop-output</strong>, all bidirectional edges with a public transport stop will have the necessary turn-around connection and thus be eligible for reversing.</p>
+</div>
+</li>
+</ul>
+<h1 id="portion_working">Portion working<a class="headerlink" href="#portion_working" title="Permanent link">#</a></h1>
+<p>Trains can be split and joined (divided and coupled) at stops.</p>
+<h2 id="splitting_a_train">Splitting a train<a class="headerlink" href="#splitting_a_train" title="Permanent link">#</a></h2>
+<p>To split a train, the following input definition can be used. The rear half of the train is defined as a new vehicle which depart value <strong>split</strong>. The train train that is being split must define the 'split' attribute in its stop definition referencing the id of the rear half.</p>
+<pre><code>&lt;vType id=&quot;train&quot; vClass=&quot;rail&quot;/&gt;
+    &lt;vType id=&quot;splitTrain&quot; vClass=&quot;rail&quot; length=&quot;50&quot;/&gt;
+    &lt;trip id=&quot;t0&quot; type=&quot;train&quot; depart=&quot;0.00&quot; from=&quot;a&quot; to=&quot;c&quot;&gt;
+        &lt;stop busStop=&quot;B&quot; duration=&quot;60.00&quot; split=&quot;t1&quot;/&gt;
+    &lt;/trip&gt;
+    &lt;trip id=&quot;t1&quot; type=&quot;splitTrain&quot; depart=&quot;split&quot; departPos=&quot;last&quot; from=&quot;b&quot; to=&quot;e&quot;&gt;
+        &lt;stop busStop=&quot;B&quot; duration=&quot;60.00&quot;/&gt;
+    &lt;/trip&gt;
+</code></pre>
+
+<p>When defined this way, The rear part of the train will be created as a new simulation vehicle once the first part has reached the stop. After stopping, The front half of the train will continue with reduced length.</p>
+<h2 id="joining_two_trains">Joining two trains<a class="headerlink" href="#joining_two_trains" title="Permanent link">#</a></h2>
+<p>To join two trains, the following input definition can be used. The front half of the train must define a stop trigger with value <strong>join</strong>. The rear half othe train must define attribute 'join' referencing the id of the front half.</p>
+<pre><code>&lt;vType id=&quot;train&quot; vClass=&quot;rail&quot;/&gt;
+    &lt;vType id=&quot;splitTrain&quot; vClass=&quot;rail&quot; length=&quot;50&quot;/&gt;
+    &lt;trip id=&quot;t0&quot; type=&quot;splitTrain&quot; depart=&quot;0.00&quot; from=&quot;a&quot; to=&quot;c&quot;&gt;
+        &lt;stop busStop=&quot;B&quot; duration=&quot;60.00&quot; triggered=&quot;join&quot;/&gt;
+    &lt;/trip&gt;
+    &lt;trip id=&quot;t1&quot; type=&quot;splitTrain&quot; depart=&quot;30&quot; from=&quot;d&quot; to=&quot;b&quot;&gt;
+        &lt;stop busStop=&quot;B&quot; duration=&quot;5.00&quot; join=&quot;t0&quot;/&gt;
+    &lt;/trip&gt;
+</code></pre>
+
+<p>The rear part of the train will be joined to the front part if the followign conditions are met:
+- the rear part has fulfilled its stopping duration
+- the front part the train is present and it's back is on the same lane as the front of the rear part
+- the gap between the trains is less than 5 meters
+After being joined to the front part, the rear part will no longer be part of the simulation.
+The front half of the train will stop until the rear part is joined to it. Afterwards it will continue with increased length. </p>
+<h1 id="rail_signal_behavior">Rail Signal Behavior<a class="headerlink" href="#rail_signal_behavior" title="Permanent link">#</a></h1>
+<p>Rail signals perform the following safety functions automatically</p>
+<ul>
+<li>guard the track up to the next rail signal (signal block) so that only one train can enter this section at a time. This prevents rear-end collisions.</li>
+<li>guard the track so that vehicles from different branches (flanks) cannot enter the same section. This prevents flanking collisions.</li>
+<li>guard the track so that vehicles cannot enter bidirectional sections at the same time. This prevents head-on collisions.</li>
+<li>prevent deadlocks on bidirectional sections</li>
+</ul>
+<h2 id="schedule_constraints">Schedule Constraints<a class="headerlink" href="#schedule_constraints" title="Permanent link">#</a></h2>
+<p>Additionally rail signals can enforce train ordering to ensure that a scheduled order at stations can be kept.
+To make use of this, the following elements can be loaded from an additional file:</p>
+<pre><code>   &lt;railSignalConstraints id=&quot;A&quot;&gt;
+        &lt;predecessor tripId=&quot;t0&quot; tl=&quot;D&quot; foes=&quot;t1&quot; limit=&quot;2&quot;/&gt;
+        &lt;predecessor tripId=&quot;t0&quot; tl=&quot;C&quot; foes=&quot;t2&quot;/&gt;        
+        &lt;insertionPredecessor tripId=&quot;t3&quot; tl=&quot;E&quot; foes=&quot;t4&quot;/&gt;
+    &lt;/railSignalConstraints&gt;
+</code></pre>
+
+<h3 id="predecessor_constraint">predecessor constraint<a class="headerlink" href="#predecessor_constraint" title="Permanent link">#</a></h3>
+<p>This constrain defines that a given vehicle id (or tripId) can only pass the current signal after some other vehicle ('foe') with the given id or tripId has passed signal 'tl'. The foe vehicle must have been the last vehicle to do so or it must have been one of the last 'limit' vehicles at the time of switching green.</p>
+<h3 id="insertionpredecessor_constraint">insertionPredecessor constraint<a class="headerlink" href="#insertionpredecessor_constraint" title="Permanent link">#</a></h3>
+<p>This constrain defines that a given vehicle id (or tripId) can only be inserted on the block leading up to the current signal after some other vehicle ('foe') with the given id or tripId has passed signal 'tl'. The foe vehicle must have been the last vehicle to do so or it must have been one of the last 'limit' vehicles at the time of switching green.</p>
+<h3 id="generaterailsignalconstraintspy">generateRailSignalConstraints.py<a class="headerlink" href="#generaterailsignalconstraintspy" title="Permanent link">#</a></h3>
+<p>Constraints can be generated using the tool <code>generateRailSignalConstraints.py</code>. Example:</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/generateRailSignalConstraints.py -r &lt;input-route-file&gt; -n &lt;input-net-file&gt; -a &lt;input-stop-file&gt; -o &lt;output-file&gt;
+</code></pre>
+
+<p>The tool will analyze the order of arrival at stations (stops). </p>
+<ul>
+<li>If vehicles have successive stops at the same station but reach this station via different tracks, constraints will be generated for the signals ahead of the merging switch. The vehicle that comes later has to wait for the vehicle that comes earlier (<code>predecessorConstraint</code>).</li>
+<li>If vehicles are inserted on the edge of their first stop, a <code>insertionPredecessor</code>-constraint is generated so that insertion is delayed until the train that stops earlier has passed the signal subsequent to the station.</li>
+</ul>
+<h1 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h1>
+<p>Rail signals and rail crossings can be controlled with function <em>traci.trafficlight.setRedYellowGreenState</em>. They can also be switched off with <em>traci.trafficlight.setProgram(tlsID, "off")</em>. In either case, normal operations can be resumed by reactivating the default program "0": <em>traci.trafficlight.setProgram(tlsID, "0")</em>.</p>
+<p>Trains can be controlled just like cars by using the <em>traci.vehicle</em> functions. 
+Furthermore the following functions are available for rail signals:</p>
+<ul>
+<li>traci.trafficlight.getBlockingVehicles(tlsID, linkIndex): Returns the list of vehicles that are blocking the subsequent block for the given tls-linkIndex from the perspective of the closest vehicle upstream of the signal</li>
+<li>traci.trafficlight.getRivalVehicles(tlsID, linkIndex): Returns the list of vehicles that also wish to enter the subsequent block for the given tls-linkIndex (regardless of priority) from the perspective of the closest vehicle upstream of the signal</li>
+<li>traci.trafficlight.getPriorityVehicles(tlsID, linkIndex): Returns the list of vehicles that also wish to enter the subsequent block for the given tls-linkIndex (only those with higher priority) from the perspective of the closest vehicle upstream of the signal</li>
+</ul>
+<h1 id="visualisation">Visualisation<a class="headerlink" href="#visualisation" title="Permanent link">#</a></h1>
+<p>The length of railway carriages, locomotive and the gap between the
+carriages can be configured using the following <a href="GenericParameters.html">generic vType
+parameters</a>:</p>
+<ul>
+<li>carriageLength</li>
+<li>locomotiveLength</li>
+<li>carriageGap</li>
+</ul>
+<h1 id="miscellaneous">Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permanent link">#</a></h1>
+<ul>
+<li>Error checking for <a href="Public_Transport.html#single_vehicles_and_trips">railway schedules</a> can be done with the tool <a href="../Tools/Routes.html#checkstoporderpy">checkStopOrder.py</a> </li>
+</ul>
+<h1 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">#</a></h1>
+<ul>
+<li>Individual rail cars / coupling / uncoupling cannot currently be
+  modeled</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 24 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

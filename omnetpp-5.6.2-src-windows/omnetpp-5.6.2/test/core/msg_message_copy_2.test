@@ -1,0 +1,73 @@
+%description:
+Copying and assignment for messages: struct and class members
+
+%file: test.msg
+
+namespace @TESTNAME@;
+
+struct MyStruct
+{
+    int bb;
+}
+
+class MyClass
+{
+    int bb;
+}
+
+message Base
+{
+    MyStruct ms;
+    MyClass mc;
+    omnetpp::cQueue q;
+}
+
+message MyMessage extends Base
+{
+    MyStruct ms2;
+    MyClass mc2;
+    omnetpp::cQueue q2;
+}
+
+%includes:
+#include "test_m.h"
+
+%global:
+void print(const char *what, MyMessage& x)
+{
+   EV << what << ":";
+   EV << x.getMs().bb << ":" << x.getMc().getBb() << ":"
+        << x.getQ().getName() << ":" << x.getQ().getLength() << ":";
+   EV << x.getMs2().bb << ":" << x.getMc2().getBb() << ":"
+        << x.getQ2().getName() << ":" << x.getQ2().getLength();
+   EV << "." << endl;
+}
+
+%activity:
+
+// set up tester classes
+MyMessage x;
+x.getMsForUpdate().bb=11;
+x.getMcForUpdate().setBb(12);
+x.getQForUpdate().setName("q"); x.getQForUpdate().insert(new cMessage);
+x.getMs2ForUpdate().bb=21;
+x.getMc2ForUpdate().setBb(22);
+x.getQ2ForUpdate().setName("q2"); x.getQ2ForUpdate().insert(new cMessage); x.getQ2ForUpdate().insert(new cMessage);
+
+print("x", x);
+
+// copy constructor
+MyMessage x1(x);
+print("x1(x)",x1);
+
+// assigment
+MyMessage x2;
+x2 = x;
+print("x2=x",x2);
+
+%contains: stdout
+x:11:12:q:1:21:22:q2:2.
+x1(x):11:12:q:1:21:22:q2:2.
+x2=x:11:12:q:1:21:22:q2:2.
+
+

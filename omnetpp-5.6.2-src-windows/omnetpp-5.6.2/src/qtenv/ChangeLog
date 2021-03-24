@@ -1,0 +1,2332 @@
+2020-01-06  ------ omnetpp-5.6 released ------
+
+2019-11-07  Attila Torok
+
+	* Make info text of connections (the "t" display string tag) to be
+	left/right/center aligned as well.
+
+2019-11-21  Attila Torok
+
+	* Don't use cObject* item data when the inspectors aren't fresh.
+	This caused a crash when gathering tooltips in Fast mode, and the object
+	pointer set on some figure was stale.
+
+2019-12-03  Attila Torok
+
+	* Implemented cLabelFigure::angle.
+
+2019-11-11  Attila Torok
+
+	* LogInspector: Fix assertion failure when the simulation is restarted with
+	an empty Log buffer.
+
+2019-05-29  Attila Torok
+
+	* Allow dragging submodules around by holding Shift, changing their
+	DisplayStrings.
+
+2019-11-10  Andras Varga
+
+	* Fix copy/paste bug in Find Object dialog's code.
+
+2019-10-30  Attila Torok
+
+	* Add some sideways offset to methodcall animation lines and text, to
+	reduce overlap with connection arrows.
+
+2019-10-25  Attila Torok
+
+	* Connection items: Make the "m=[nesw]" display string tag work better
+	with "border-to-border" connections.
+
+2019-10-30  Attila Torok
+
+	* Fix crashes on inspector close / network rebuild / quit.
+
+2019-11-05  Andras Varga
+
+	* Object inspector: Display null pointers as "nullptr" instead of "NULL"
+
+2019-10-24  Attila Torok
+
+	* Minor layout tweak in PreferencesDialog.
+
+2019-10-21  Attila Torok
+
+	* Add option to export module graphics to an image, and a dialog to
+	select the exported area.
+
+2019-10-22  Attila Torok
+
+	* TextViewerWidget: Give one less chance for too deep recursion in
+	updateScrollbars().
+
+2019-10-22  Attila Torok
+
+	* Message animator: Fix a crash in complicated methodcall/messagesend
+	combinations, discovered in the INET queueing tutorial.
+
+2019-10-17  Gyorgy Szaszko
+
+	* Fix assertion failure in TextViewerWidget when inspected object is
+	deleted.
+
+2019-09-20  Attila Torok
+
+	* Fix DisplayUpdateController::skipToNextEvent(). It did not really skip
+	if there was a non-holding animation in progress.
+
+2019-09-20  Attila Torok
+
+	* Start the simulation at t=0, not right before the first event.
+
+2019-09-10  Attila Torok
+
+	* Fix assertion failure in LogInspector when restarting the	simulation.
+
+2019-09-09  Attila Torok
+
+	* Do not allow endSend() right after beginSend(), no sendDirect() or
+	sendHop() calls in between. This caused a crash, so we now explicitly
+	disallow and avoid it.
+
+2019-09-16  Attila Torok
+
+	* Fix a crash when closing inspector windows with Qt >=5.12.
+
+	Before, the inspector was deleted by us manually, right inside the
+	closeEvent() callback. With older Qt versions, this caused no problems,
+	because no widget member was accessed after the event. Not so long ago
+	this changed, so we now have to rely on Qt for deleting the Inspector
+	when it is closed, but it works well.
+
+	See: https://bugreports.qt.io/browse/QTBUG-78314
+
+2019-09-20  Attila Torok
+
+	* Align the lines of info text of submodule graphics items
+	appropriately in the left/top/right positions.
+
+2019-08-27  Andras Varga
+
+	* Performance: cache min(animSpeed) in cCanvas, so that Qtenv doesn't
+	have to compute it every time.
+
+2019-08-26  Attila Torok
+
+	* Prevent user from manually calling finish() twice after error.
+
+2019-08-16  Andras Varga
+
+	* Fix possible duplicate LF_END_RUN notification.
+
+2019-08-26  Attila Torok
+
+	* Generic Object Inspector: When counting/collectiong cObject children,
+	catch exceptions and show the error.
+
+2019-08-27  Attila Torok
+
+	* Put "Qtenv" into argv instead of "app" - it is visible in some
+	window managers.
+
+2019-08-26  Attila Torok
+
+	* Set a busy indicator (spinny cursor) during more potentionally
+	long operations.
+
+2019-08-26  Attila Torok
+
+	* When the layouting process takes a long time (more than five seconds),
+	ask the user what to do (wait or finish).
+
+2019-07-17  Attila Torok
+
+	* Internal renames: performAnimations() -> performHoldAnimations(),
+	endAnimations() -> skipHoldAnimations().
+
+2019-07-16  Attila Torok
+
+	* Keep caret (cursor) near the same event when switching
+	LogInspector modes.
+
+2019-07-16  Attila Torok
+
+	* Remove the unused scrollbackLimit option. Update the Preferences
+	dialog accordingly.
+
+2019-08-07  Attila Torok
+
+	* Add a "Debug Now" option to the Simulate menu.
+
+2019-07-03  Andras Varga
+
+	* Fix aborting when user enters invalid log prefix in Preferences.
+
+2019-07-03  Andras Varga
+
+	* Added "%<" (trim preceding whitespace) directive to the log prefix format.
+
+2019-07-02  Andras Varga
+
+	* Default log prefix format changed to use %K instead of %C. (%K only prints
+	the context component if it is different from the event's module; %C always
+	prints it.)
+
+	%K results in shorter log, without losing information (event's module is
+	already part of the event banner). In case the user wants to turn off
+	event banners and/or produce grep-friendly log, s/he will likely want to
+	adjust the log prefix format as well, to include more information.
+
+2019-07-02  Andras Varga
+
+	* Logging: omit adding the context component to the line, because it is
+	typically also printed as part of the log prefix (%C or %K format tags).
+
+2019-06-13  Attila Torok
+
+	* Add an option to disable logging from refreshDisplay().
+
+2019-06-13  Attila Torok
+
+	* Color log output prefix according to LogLevel.
+
+2019-05-15  ------ omnetpp-5.5 released ------
+
+2019-03-21  Attila Torok
+
+	* Fix connection info string (dest gate name) in context menus.
+
+2019-03-20  Andras Varga
+
+	* Fix: search in lists brought up by the Inspect->Available Components command
+	was not possible. The Find Objects dialog did not find the object to search in.
+
+2019-03-20  Andras Varga
+
+	* Prevent the Debug dialog from kicking in when inputting a wrong
+	value in the Object Inspector.
+
+2019-03-07  Attila Torok
+
+	* Catch cRuntimeErrors coming from message printers in TextViewerProvider
+	of LogInspector.
+
+2019-01-28  Attila Torok
+
+	* Fix a crash in MessageAnimator when a marked module is deleted.
+
+2019-01-25  Andras Varga
+
+	* HistogramInspector: tolerate inf as bin value
+	* ChartTickDecimal: reject conversion from inf/nan; fix comparison with inf
+
+2018-11-30  Attila Torok
+
+	* Make sure video crop area is never invalid (out of bounds). By clipping
+	it to the content area of the module inspector.
+
+2018-10-04  Attila Torok
+
+	* Rework video recording dialog, with added options.
+
+	* Only resize the MainWindow to a multiple of 2, not 4, when
+	recording video. Turns out, this is enough for yuv420p subsampling, and
+	we don't plan to use any other.
+
+2018-10-09  Attila Torok
+
+	* Fix video recording getting stuck with holding built-in animations.
+	* Do not animate messages from different sources concurrently.
+	* Add getSourceModuleId() to Animations.
+
+2018-10-04  Attila Torok
+
+	* Store the settings in the .qtenvrc file when the preferences
+	dialog is accepted.
+
+	Not only on exit. This fixes the issue where an improper shutdown
+	(crash on network teardown, etc) will not save the settings changes.
+
+2018-11-05  Attila Torok
+
+	* Fix crash when Qtenv is closed with an OutputVectorInspector open.
+
+2018-10-04  Attila Torok
+
+	* Always update the next event marker on inspector refresh.
+
+	This fixes the "red rectangle lagging behind" problem with moving
+	submodules, when stopping after express mode, or when running in normal
+	mode at higher speeds.
+
+2018-06-25  ------ omnetpp-5.4.1 released ------
+
+2018-06-21  Attila Torok
+
+	* Close any "Find Objects" dialogs when the Main Window is closed.
+
+	This avoids a crash that happened because the deleted network components
+	caused the selection in the still open dialog to change, which tried to
+	propagate the change to the built-in object inspector, but that was
+	already deleted. I think.
+
+2018-06-19  Attila Torok
+
+	* Fix: The cTerminationException message dialog was not displayed.
+
+2018-06-12  Attila Torok
+
+	* Do not store inspector windows for objects with empty full path.
+	This caused an enormous number of inspector windows to be opened after an
+	inspector for an inet::RouteEntry (IIRC) - which has no name or owner, so
+	its fullPath is "" - was open previously, was stored. Because of this,
+	the next time Qtenv was started, the 'stored inspector' matched every
+	single inet::RouteEntry instance created anywhere, so an inspector for
+	all of them was opened. It took a long time to close them all.
+
+2018-06-15  Attila Torok
+
+	* Fix crash when animating method call at shutdown
+
+2018-06-11  ------ omnetpp-5.4 released ------
+
+2018-06-08  Attila Torok
+
+	* Improved debug-on-error, debugger detection and attachment
+
+	- New menu item: Simulate -> [] Debug on Errors
+
+	- When an error occurs, it offers to launch a debugger.
+
+	- See envir/ChangeLog for related improvements
+
+2018-06-04  Attila Torok
+
+	* Workaround for crash in GOI with Qt 5.11. Seems like changing the
+	source model regressed with this Qt version.
+
+2018-04-11  ------ omnetpp-5.3 released ------
+
+2018-03-14  Attila Torok
+
+	* Fix circular_buffer::grow(). One memcpy is not enough.
+	This caused shuffled log output when the simulation was run for a while,
+	then the network was rebuilt, then run again for a bit longer.
+
+2018-03-06  Attila Torok
+
+	* Entirely new animation algorithm in DisplayUpdateController.
+
+	* Animation Parameters dialog: If there is no animation speed,
+	  display "not set" instead of 0.
+
+	* Animation Parameters dialog: Display current simulation speed.
+	  It is colored red if the simulation cannot keep up with the
+	  requested animation speed (simulationSpeed < animationSpeed *
+	  playbackSpeed, by some margin)
+
+2018-03-01  Attila Torok
+
+	* Log Viewer: added support for ANSI control sequences: bold/italic/
+	underline on/off, foreground/background color (16-color palette,
+	256-color palette, RGB), reset foreground/background color, reset all.
+
+2018-03-01  Attila Torok
+
+	* Generic Object Inspector: Use the new cMessagePrinter Options API,
+	add config dialog.
+
+2018-03-12  Attila Torok
+
+	* Generic Object Inspector: Disable packet mode if the inspected object
+	is not cPacket.
+
+2018-01-10  Levente Mészáros
+
+	* Generic Object Inspector: Don't call getDynamicTypeString for fields with
+	nullptr value. This fixes the std::bad_typeid exceptions when clicking
+	on previous messages in the LogInspector in some INET simulations.
+
+2018-02-15  Attila Torok
+
+	* OSG: Add missing include to fix build with newer osgEarth versions.
+
+2018-02-13  Attila Torok
+
+	* Generic Object Inspector: Catch cRuntimeErrors thrown by getFieldValueAsString()
+
+2018-03-01  Attila Torok
+
+	* HistogramInspector: More fixes (tick drawing with large values)
+
+2018-01-26  Attila Torok
+
+	* HistogramInspector: Visualize outlier bins (drawn with a different
+	color than normal bins), and show info about them.
+
+2018-01-24  Attila Torok
+
+	* HistogramInspector: Fixes (weighted mode, rendering of subpixel-wide cells)
+
+2018-01-26  Andras Varga
+
+	* Follow histogram API changes.
+
+2018-01-04  Andras Varga
+
+	* Follow cPar INT-related changes
+
+2018-01-24  Rudolf Hornig
+
+	* Adjusted inspector and log window colors for better visibility on dark themes.
+
+2017-12-15  Attila Torok
+
+	* Follow cEnvir change: Implemented getZoomLevel().
+
+2017-12-13  Attila Torok
+
+	* Generic Object Inspector: Group the mode switching actions into an ActionGroup.
+	This way, when the button of the already active mode is clicked (again),
+	it won't pop out (become "unchecked"), causing confusion.
+
+2017-12-15  Attila Torok
+
+	* Generic Object Inspector: "Packet" mode added. It is similar to the
+	"Flat", but only displays fields that have the @packetData property on them.
+
+2017-01-16  Andras Varga
+
+	* Replace gettimeofday() occurrences with opp_get_monotonic_clock_usecs(),
+	and struct timeval with plain int64_t.
+
+2017-11-28  Andras Varga
+
+	* osg/osg.msg: Updated to recent message compile changes (property names
+	camelized, etc).
+
+2017-11-26  Andras Varga
+
+	* Follow NED->Ned naming change in class/function names
+
+2017-12-12  Andras Varga
+
+	* Follow cPar longValue()->intValue() method rename and other changes.
+
+2017-12-08  ------ omnetpp-5.2.1 released ------
+
+2017-11-27  Attila Torok
+
+	* Module Log view: fix occasional ASSERT failure. Fix was to add missing
+	index reconstruction to getTabStops() in ModuleOutputProvider.
+
+2017-10-01  Attila Torok
+
+	* Activate the MainWindow and toplevel Inspectors when needed.
+	Activation means that the given window now "has focus". The MainWindow as
+	re-activated after the saved inspectors are restored after network setup.
+	The top level inspectors are activated when they need to be given
+	attention - when their object is "inspected" again.
+
+2017-10-06  Attila Torok
+
+	* Enable horizontal scrolling in the Object Tree (the top left one)
+
+2017-11-27  Attila Torok
+
+	* Generic Object Inspector: fix crash on closing an inspector
+
+2017-10-06  Attila Torok
+
+	* Generic Object Inspector: Stretch the highlight rectangle to viewport width.
+
+2017-09-29  Andras Varga
+
+	* Fix exit behavior after simulation error.
+	Do not ask for confirmation or offer calling finish. This is consistent
+	with both Tkenv behavior and the label of the Preferences checkbox
+	("Ask for confirmation when simulation is in progress" -- a failed
+	simulation does not count as "in progress")
+
+2017-09-18  ------ omnetpp-5.2 released ------
+
+2017-09-15  Attila Torok
+
+	* The AnimationControllerDialog is not hidden on network rebuild,
+	just updated.
+
+	* Fix: Submodule shape size is affected by zoom level again.
+
+2017-09-13  Attila Torok
+
+	* Quit confirmation: Do not ask when there is no simulation in progress.
+
+2017-08-24  Attila Torok
+
+	* Handle SIGINT and SIGTERM better.
+
+2017-06-28  Attila Torok
+
+	* MainWindow: Display stats in BUSY state as well.
+
+	Needed for example for the sockets sample, when the cRTSocketScheduler is
+	calling cEnvir::idle() in which Qtenv updates the display, and we don't
+	want to see just three "n/a"-s.
+
+2017-07-27  Attila Torok
+
+	* LogInspector: Actually apply the module exclusion filter after it
+	is restored.
+
+2017-04-06  Andras Varga
+
+	* Modernizing: use C++11's range-based for loops where applicable, using
+	clang-tidy's modernize-loop-convert.
+
+	* Modernizing: replace INT64_PRINTF_FORMAT and LL with C++11's PRId64.
+	Note: PRId64 includes the "d" that was not part of INT64_PRINTF_FORMAT
+	alias LL.
+
+2017-07-07  Rudolf Hornig
+
+	* Fixed a typo in Makefiles that prevented building on Windows.
+
+2017-07-03  Attila Torok
+
+	* GenericObjectInspector: Fall back to the descriptor of the statically
+	declared type of object fields when a descriptor for their dynamic type
+	cannot be found.
+
+2017-05-25  Attila Torok
+
+	* Fixed a few issues reported by the Clang static analyzer.
+
+2017-06-14  Attila Torok
+
+	* Fix tab order (focus traversal) of widgets in	AnimationControllerDialog.
+
+	* Make the RunSelectionDialog big enough initially so all Configuration
+	names/descriptions fit in the ComboBox.
+
+2017-06-08  Attila Torok
+
+	* OSG Viewer is in a separate library, loaded at runtime.
+
+	Motivation:
+
+	OSG and especially osgEarth added a huge number of dependencies to Qtenv,
+	and to all simulation executables independent of whether or not 3D was
+	actually used by the simulation. This increased load time and made
+	debugging harder.
+
+	Change:
+
+	Qtenv and the sim library does not depend at all on OSG or osgEarth. OSG
+	support is in a separate library loaded at runtime. If the model uses
+	OSG, then it needs to link with the necessary libraries.
+
+	Sim API change:
+
+	One must use cOsgCanvas::EarthViewpoint instead of osgEarth::Viewpoint in
+	models.
+
+	Details:
+
+	The library is called oppqtenv-osg. It is looked for in the same places
+	as the other libraries specified by the -l command line argument of
+	opp_run. It is loaded with dlopen/LoadLibrary, so the rules of their
+	operation apply.
+
+	If the library could not be loaded, dummy viewers will be created in
+	place of the real ones. The dummy viewers just print a short message
+	about the failed loading of the library. The class descriptor for
+	cOsgCanvas, its inner classes, and for osg::Node and osg::Group are
+	also loaded from this support library.
+
+	No WITH_OSG or WITH_OSGEARTH conditionals anywhere in omnetpp or qtenv.
+	The only difference with WITH_OSG is whether or not the support library
+	gets built. Inside that, there are WITH_OSGEARTH conditionals still.
+
+	Additionally, OSG frame rate was decreased from 60 to 30 fps.
+
+2017-05-25  Attila Torok
+
+	* GenericObjectInspector: Fixed some crashes when inspecting dynamically
+	changing object hierarchies. Editing a value in the inspector while the
+	simulation runs is now easier, and pauses the simulation momentarily.
+
+	Technical details:
+
+	Until now, the QAbstractItemModel implementation (GenericObjectTreeModel)
+	was basically a single-use throw-away object: it was recreated each time
+	the inspector was refreshed. This was not optimal for many reasons (one
+	is performance, an other one is usability - since the selection was not
+	preserved between refreshes, editing was nearly impossible in Run mode,
+	and a few others). It was also just a thin "proxy" layer between the Qt
+	layouting/painting/etc. mechanisms and the simulation model objects (plus
+	some caching...), which affected stability in some cases, especially in
+	Express mode. From now on, the model is only deleted and recreated when
+	the inspected object, or the inspector "mode" changes. On any regular
+	refresh other than these, the item model detects changes both in node
+	data and tree structure, and notifies Qt about the changes accordingly.
+	It now also stores all presented data internally, taking care to only
+	access the simulation model when it is considered "safe", and not at all
+	during Qt event processing. This should improve stability substantially.
+
+2017-06-02  Attila Torok
+
+	* ModuleInspector: When a figure is clicked, it is now put in the history
+	of the embedded object inspector before its associated object.
+
+2017-05-30  Attila Torok
+
+	* Miscellaneous cleanups, performance improvements and fixes.
+
+2017-05-31  Attila Torok
+
+	* Fixed an issue where modules and figures were not consistent with the
+	simulation time display right after the network was built and
+	initialize() was called, or when the "Run until..." target was reached.
+
+2017-05-25  Attila Torok
+
+	* ModuleInspector: Refined network graphics updates based on change
+	callbacks. It is more incremental now, should be faster.
+
+	* Some tweaks to the implementation of basic Inspector functionality.
+
+2017-05-31  Attila Torok
+
+	* Higher factory default for minimum value in the spinboxes in the
+	'Animation parameters' dialog.
+
+	* Canvas layers (tag filter) dialog geometry is now persistent.
+
+	* Show (debug) or (release) in the window title based on NDEBUG.
+
+2017-05-19  Attila Torok
+
+	* Fixed a few random memory leaks (especially in the network layouter).
+
+2017-05-25  Attila Torok
+
+	* Figures with NaNs in their bounds should no longer break canvas rendering.
+
+2017-05-17  Attila Torok
+
+	* Fixed Bezier segment rendering (especially smooth continuations) in path figures.
+
+	* A bit more spacing around text in module items and on the timeline.
+
+2017-05-11  Attila Torok
+
+	* Inspector crash fixes, internal simplifications.
+
+2017-05-10  Attila Torok
+
+	* The size of arrowheads on connections and line figures is now more
+	reasonable with many combinations of zoom level, line width, and the
+	"zoomLineWidth" property.
+
+2017-05-10  Attila Torok
+
+	* Completely overhauled figure rendering. This should improve performance
+	and fix many issues.
+
+	* The effective zIndex of figures is now global in a canvas, so it can
+	cross figure tree branches. It is also relative (additive) to the
+	effective zIndex of the parent figure. See the documentation of cFigure.
+
+	* Implemented panel figure rendering correctly.
+
+2017-04-18  Attila Torok
+
+	* Figures without a tooltip inherit it from their nearest ancestor
+	that has one. Empty strings break this inheritance, but are not shown.
+	The own tooltip of the figure now overrides that of its associated object.
+
+2017-04-07  Attila Torok
+
+	* Fixed some graphics glitches when rendering outlined text (in network
+	graphics and figures with halo).
+
+2017-05-02  Attila Torok
+
+	* Fixes for the generic Object Inspector:
+	- Use the right font in the tree, and align the text better vertically.
+	- The tree can now be scrolled horizontally too when needed.
+	- Fixed an inconsistency in the model that caused broken branch
+	  lines in the view.
+
+2017-05-02  Attila Torok
+
+	* The list of excluded components in the Log Output is now persistent.
+
+	* The default name and location of the file when saving the log output
+	was made more reasonable.
+
+2017-05-12  Attila Torok
+
+	* Saving run mode profiles (animation settings for the different run
+	modes) to the local .qtenvrc file, as opposed to the global one.
+
+2017-04-06  Attila Torok
+
+	* Changed the contents and layout, and improved the usability of the
+	'Animation Parameters' dialog. The spinboxes in it are now adjustable
+	with steps proportional to the current value.
+
+	* When recording a video, the first frame (which is visible exactly
+	when the recording is started) is no longer omitted from the resulting
+	image sequence.
+
+2017-05-05  Attila Torok
+
+	* The special value "kind" is now also accepted as a color in the "i" tag
+	of display strings of messages as well.
+
+2017-04-19  Attila Torok
+
+	* Fix image colorization (tinting) of pixmap figures. Possible performance
+	improvement of tinted images by increasing the cache size.
+
+2017-05-08  ------ omnetpp-5.1.1 released ------
+
+2017-03-31  ------ omnetpp-5.1 released ------
+
+2017-03-27  Attila Torok
+
+	* macOS fixes: global menu did not appear; floating inspector windows
+	could go behind the main window.
+
+2017-03-14  Attila Torok
+
+	* Fix: Always recompute module path in SendDirectAnimation because
+	the modules referenced in it might have been deleted. Fixes a
+	crash in the dyna sample, when a process in the server ends, while a
+	graphical inspector is open for the server.
+
+2017-03-14  Attila Torok
+
+	* Remove deleted objects from the FindObjectDialog.
+
+2017-03-13  Attila Torok
+
+	* TextViewerWidget: Allow 0 height viewport.
+
+	This happens mostly when a new inspector is opened, and output is
+	appended to the backing buffer at the same time. Without this shortcut,
+	the ASSERT a few lines below could fail.
+
+2017-03-13  Attila Torok
+
+	* Disable BSP cache for ModuleCanvasViewer.
+
+	This avoids a crash inside Qt when traversing the tree. The proper
+	solution would be to pedantically call prepareGeometryChange() in every
+	custom item when needed. However, this might also improve performance.
+
+2017-03-13  Attila Torok
+
+	* Terminate the simulation right away when we run out of events.
+
+	Instead of just stopping and terminating later, when the user tries to
+	continue simulating. This relies on guessNextEvent too much. It really
+	shouldn't.
+
+2017-03-14  Attila Torok
+
+	* Implement and enable HistogramInspector and OutVectorInspector
+	[author Mihaly Palenik; refinements by Attila Török].
+
+	* Make graphical inspectors pop up when double clicking in the
+	general object inspector. This will make the Histogram and OutVector
+	inspectors easily discoverable.
+
+2017-02-06  ------ omnetpp-5.1pre3 released ------
+
+2017-02-02  Attila Torok
+
+	* Replace ColorizeEffect with cached pixmap tinting.
+	The effect made child figures of image figures colorized
+	and pixelated, this was undesirable.
+	Also, this should be faster in most cases.
+
+2017-02-02  Attila Torok
+
+	* MessageItem: Different arrowhead (small triangle), explicit line mode, fixed width.
+
+2017-02-02  Attila Torok
+
+	* Fix mouse selection of SelfTransformingPixmapItem.
+	And a tiny simplification in usage.
+
+2017-02-02  Attila Torok
+
+	* Disable HistogramInspector and OutputVectorInspector skeletons.
+	Temporarily, until they are completed, and work well enough.
+
+2017-02-01  Attila Torok
+
+	* Only show next event number if simulation is not running.
+	When running, always show the number of the last event to avoid
+	oscillation between the two in some situations.
+
+2017-02-01  Attila Torok
+
+	* Fixed image figure anchoring/resizing/transformation.
+	When anchored and/or resized (with width/height) it
+	messed up the coordinate system for child figures.
+
+2017-02-01  Attila Torok
+
+	* Added SelfTransformingPixmapFigure.
+
+2017-02-01  Attila Torok
+
+	* parseColor() implementation moved to the right place.
+
+2017-02-01  Attila Torok
+
+	* Only process Qt events once in a while in Express mode.
+	Should improve Ev/Sec performance, while keeping the Stop dialog responsive.
+
+2017-02-01  Attila Torok
+
+	* ArrowheadItem painting glitches fixed.
+
+2017-02-01  Attila Torok
+
+	* ModuleInspector: Arrowhead and module name preferences made more consistent and cleaner.
+
+2017-02-01  Attila Torok
+
+	* Added isTwoWayConnection utility function.
+
+2017-02-01  Attila Torok
+
+	* msgitem: Don't switch to "non-line" mode if too short.
+	Clamp length to at least width instead.
+
+2017-01-31  Attila Torok
+
+	* Avoid assertion failure with degenerate connection lines.
+
+2017-02-01  Attila Torok
+
+	* Fixed logging when "Print event banners" is disabled.
+
+2017-01-20  Attila Torok
+
+	* Object Inspector: Field editor positioning improved
+
+2017-01-19  Attila Torok
+
+	* Fix double-click zoom
+
+2017-01-18  Attila Torok
+
+	* Fix passing events from Qt to OSG; this fixes some camera manipulator
+	mouse problems.
+
+2017-01-16  Attila Torok
+
+	* Apply figure tag filters instantly. Also, make the dialog a child of
+	the Inspector. This way it won't appear	on the taskbar and similar gadgets.
+
+2017-01-27  Attila Torok
+
+	* Fixed/streamlined applying and storing log level.
+
+2017-01-16  Attila Torok
+
+	* Indent the "Short event banners" checkbox in the Preferencesdialog.
+
+2017-01-16  Attila Torok
+
+	* Added build-time Qt version check to qtenvdefs.h.
+
+2017-01-18  Attila Torok
+
+	* Module Inspector: Reduce painting glitches by calling update() in a
+	few more places. This should fix the glitches when switching
+	connection arrowhead drawing on/off, or between OSG and 2D mode.
+
+2017-01-13  Attila Torok
+
+	* Object tree text and tooltip formatting made prettier.
+
+2017-01-26  Attila Torok
+
+	* Log viewer: Update scrollbars on header resize, zero out offset if
+	they are hidden.
+
+2017-01-23  Attila Torok
+
+	* Log viewer: Fixed copying single line selection, added copying to
+	primary buffer.
+
+2017-01-13  Attila Torok
+
+	* Always store object IDs as 'long'
+
+2017-01-09  Attila Torok
+
+	* A few pointer checks added to OsgViewer.
+
+2017-01-10  Attila Torok
+
+	* Fixed OsgViewers getting stuck when the simulation is restarted.
+	The key is the removeView call. Calling viewer->realise no longer seems
+	necessary.
+
+2017-01-05  Attila Torok
+
+	* Do not immediately redraw the module when its layout changed, only
+	set a flag.
+
+2017-01-05  Attila Torok
+
+	* Clear animations also when switching from normal Run to Fast mode.
+
+2017-01-05  Attila Torok
+
+	* Submodule positions are now updated if their DisplayString changes.
+	And we only run the layouter if there are any submodules without a
+	position.
+
+2017-01-04  Attila Torok
+
+	* TextViewerWidget header/toolbar layout changed.
+	The toolbar is no longer laid out as a child of the viewport, but the
+	header and the toolbar are both children of the viewer widget itself, in
+	a grid layout. This reduces flickering in some corner cases.
+
+2016-11-22  Attila Torok
+
+	* TextViewerWidget can be scrolled vertically with pixel
+	granularity. Also, there should be no more infinite scrollbar
+	configuration show/hide	loops.
+
+2017-01-06  Attila Torok
+
+	* Perform holding animations at the end too when animating until the
+	next event.
+
+	This should fix the ASSERT failure in chopHoldingTail (from >
+	currentPart). Also do not move the next event marker until they are done.
+	For example in the routing example, the final part of the animation
+	between to nodes (inside the receiving node) is a holding one, but
+	follows a nonholding anim. To truly arrive right before delivery, we have
+	to do that too, right after the first two parts.
+
+2017-01-06  Attila Torok
+
+	* Clear message delivery animations when the simulation is stopped.
+	It looked really weird when the event was already done, and the next
+	event marker moved on, but after starting again, the delivery was still
+	animated.
+
+2017-01-05  Attila Torok
+
+	* Fix crash when drawing unconnected gates with "Arrange connections
+	on vector gates parallel..." enabled.
+
+2017-01-03  Attila Torok
+
+	* Remove workaround for Qt4 on Mac from ModuleInspector.
+	The floating toolbar could not paint over the OpenGL widget
+	(OsgViewer), but with Qt5 this is no longer an issue.
+
+2017-01-11  Attila Torok
+
+	* Don't strip namespaces for internal uses like storing inspector
+	windows and preferences, and appending to the message filter.
+	This should fix the bug when the "exclude messages like
+	this from animation" appended to the filter with the class name stripped
+	according to the user setting in the preferences dialog, but the filter
+	engine did not accept it that way. Also a small, now redundant idMatches
+	function was removed.
+
+2017-01-11  Attila Torok
+
+	* Added namespace stripping mode parameter to getShortObjectTypeName().
+
+2017-01-11  Attila Torok
+
+	* MessageFilter: Fixed message name sanitization.
+
+2017-01-12  Attila Torok
+
+	* Added icon resource file aliases to make their references shorter.
+
+2017-01-12  Attila Torok
+
+	* Call refreshDisplay() after editing in the object inspector.
+
+	Also some slightly related random formatting...
+
+2017-01-12  Attila Torok
+
+	* The "View | Show Status Details" menu item is now checkable.
+
+2017-01-12  Attila Torok
+
+	* Don't put duplicate objects into the context menu of the timeline.
+
+2017-01-11  Attila Torok
+
+	* Made the "STOP" dialog in Express mode more responsive.
+
+	Before even input events were only handled with the frequency of
+	inspector updates. This still does not make it significantly slower.
+
+2017-01-06  Attila Torok
+
+	* Added 'Canvases, figures' category to 'Find objects' dialog
+
+2017-01-03  Attila Torok
+
+	* Changed the end year in copyright headers to 2017.
+
+2016-12-21  Attila Torok
+
+	* Renamed a few classes related to object search.
+
+	Namely:	InspectorListBox -> ObjectListModel; InspectorListBoxView ->
+	ObjectListView (they had nothing to do with inspectors);
+	FilteredObjectListDialog -> FindObjectsDialog
+
+	And some data members and local variables too.
+
+2016-12-22  Attila Torok
+
+	* Fix: Single / double click events were swapped when passing them to OSG.
+
+2016-12-22  Attila Torok
+
+	* Pass event timestamps from Qt to OSG in OsgViewer.
+
+	This should resolve the issue where "flicking" the camera using the
+	"Earth" manipulator made it spin with an insane speed.
+
+2016-12-23  ------ omnetpp-5.1pre2 released ------
+
+2016-12-19  Attila Torok
+
+	* ImageFigureRenderer: Don't use offset for positioning.
+
+	Somehow internally it works with integers only, so for low resolution
+	pixmaps scaled up, the position was rounded to the size of a pixel, which
+	can be very coarse.
+
+	Also removed version check for Qt 5.2.0.
+
+2016-12-19  Attila Torok
+
+	* The 'Run until...' button is now popped out if the dialog is cancelled.
+
+2016-12-19  Attila Torok
+
+	* MessageAnimator: Message animation update fixed.
+
+	Don't begin any holding anims before deliveries, just update the playing
+	ones, and advance reft after them.
+
+2016-12-15  Attila Torok
+
+	* Fix OutlinedTextItem painting glitches.
+
+	By informing Qt about changing boundingRect(). Previously changing the
+	text of text figures did not properly repaint.
+
+2016-12-16  Attila Torok
+
+	* Make PreferencesDialog a child of MainWindow.
+
+	This will stop it from appearing as a separate window on task bars /
+	window list applets / app switcher panels / etc. In most cases. I hope.
+
+2016-12-16  Attila Torok
+
+	* Added the "Rebuild network" action to the main toolbar.
+
+	Made a new icon for it, and changed the tooltip.
+
+2016-12-16  Attila Torok
+
+	* Remove the "logo128w" icon, and all references to it.
+
+	That's the one with the little window on top of the logo in the corner.
+
+2016-12-16  Attila Torok
+
+	* MessageAnimator: Use map instead of unordered_map.
+
+	The compiler on our mac builder is too old for it...
+
+2016-12-16  Rudolf Hornig
+
+	* Updated logo immages and toolbar icons.
+
+2016-12-15  Attila Torok
+
+	* "Next event markers" fixed. Sometimes they were missing.
+
+	Like when the user just got out of fast/express mode.
+
+2016-12-15  Attila Torok
+
+	* MessageAnimator::update() renamed to updateAnimations()
+
+2016-12-14  Attila Torok
+
+	* Animate until before the next event when running until
+	message/module.
+
+2016-12-14  Attila Torok
+
+	* Fixes for simulations with no events (and for when we reach termination)
+
+2016-12-15  Attila Torok
+
+	* SimTime starts from right before the first event, not 0. Press F4
+	N times -> execute N events.
+
+2016-12-14  Attila Torok
+
+	* Added DUC::rightbeforeevent
+
+2016-12-14  Attila Torok
+
+	* Make SendOnConn message anims visible right after (in the instance
+	of) sending.
+
+2016-12-14  Attila Torok
+
+	* msgAnim shorthand added to duc
+
+2016-12-15  Attila Torok
+
+	* Update MessageAnimator after stepping.
+
+2016-12-14  Attila Torok
+
+	* Show the next Event# on the toolbar if we just stepped and
+	animated until right before it.
+
+2016-12-14  Attila Torok
+
+	* Stop simulation when the main window is closed... D'oh!
+
+	In hopefully the right order.
+
+2016-12-13  Attila Torok
+
+	* More refreshDisplay and refreshInspectors calls,
+	callRefreshDisplaySafe() added.
+
+	Also changed assert in finishSimulation() to allow for running and busy
+	states.
+
+2016-12-12  Attila Torok
+
+	* FindObjectsDialog: Persistent sorting, pref handling cleanup, some
+	UI tweaks.
+
+	Refresh button moved closer to the list. The label next to it says
+	'Please push Refresh to execute search' initially.
+
+2016-12-12  Attila Torok
+
+	* DUC: Set SimTime to that of the next event after animating to it.
+
+	Even with no animationSpeed.
+
+2016-12-12  Attila Torok
+
+	* Make messages sent in initialize() appear as waiting to be
+	delivered.
+
+	* Adjust animating flag. ModuleInsp: Remove unnecessary message
+	redrawing. Also remove a comment about the now-obsolete "bgl" tag.
+
+2016-12-12  Attila Torok
+
+	* One-stepping now stops right before events, not after them.
+
+2016-12-13  Attila Torok
+
+	* Rethought exiting behaviour, like calling finish() and showing
+	confirmation dialogs.
+
+2016-12-12  Attila Torok
+
+	* MainWindow: Focus is on 'Yes' when finishing simulation, some
+	cleanups.
+
+2016-12-12  Attila Torok
+
+	* PreferencesDialog tweaks.
+
+	Some checkboxes indented in the Animation tab, a few form layouts
+	converted into grid layouts.
+
+2016-12-13  Attila Torok
+
+	* OsgViewer: Avoid double rendering while recording video, disable
+	MSAA with Qt <5.6.0.
+
+2016-12-06  Attila Torok
+
+	* Removed support of Qt versions before 5.4 from OsgViewer.
+
+2016-12-06  Attila Torok
+
+	* Removed QT5 check in qtenvdefs.h.
+
+	As it is now required.
+
+2016-12-06  Attila Torok
+
+	* Added QTENV_API to (almost) every class, and a few functions.
+
+	Except for InspectorFactories, internal classes not defined in headers,
+	and a few small utilities.
+
+2016-12-14  Attila Torok
+
+	* Don't show arrows for sendDirect anims if disabled, not just
+	initially.
+
+2016-12-15  Attila Torok
+
+	* Clear layout of deleted modules.
+
+	This will fix this glitch: After selecting "Rebuild network", some
+	modules had the positions of some random modules in the old instance of
+	the network, others had random positions.
+
+2016-12-13  Attila Torok
+
+	* SubmoduleItem stacking order fixes.
+
+	Always keep icon above shape, and decoration icon above both, regardless
+	of the order in which they were set up.
+
+2016-12-13  Attila Torok
+
+	* Submodule bounds calculation with zoom level and icon scale.
+
+	See the novel in the comments of Qtenv::getSubmoduleBounds()
+
+2016-12-15  Attila Torok
+
+	* Moved next event markers from ModuleCanvasViewer to
+	MessageAnimator.
+
+2016-12-15  Attila Torok
+
+	* Added proper (internal) getSubmodRect.
+
+	Module size calculation takes 'is' tag into account even without an 'i'
+	tag. Considering zoom factor and icon scale of a selected "primary"
+	inspector Introduced SubmoduleItem::DEFAULT_ICON, etc. Also finished a
+	sentence in a small comment.
+
+2016-12-13  Rudolf Hornig
+
+	* The RunSelectionDialog does not change the application icon now.
+
+2016-12-06  Attila Torok
+
+	* Respect the "Show sendDirect arrows" option.
+
+2016-12-05  Attila Torok
+
+	* Formatting/cleanup/comment smallies.
+
+2016-12-02  Attila Torok
+
+	* One-Stepping (F4) behaviour change, assertion failure fixes.
+
+	Step mode-specific code path removed.
+
+	The rough goal was this, when pressing the F4 key (or Step button on the
+	toolbar...):
+
+	 - If still running (run or step mode): Skip to and perform next event,
+	animating it, then stop.
+	- If stopped but not completed (during after-event holding anim, or
+	between events): continue and stop before next event. (I think this one
+	works differently, but might be better...)
+	 If not running at all (stopped right before or after an event): Just
+	perform the next event (after simtime arrived to it with smooth
+	animation) and animate that one too, then stop.
+
+	This change also required some adjustments to the workings of
+	DisplayUpdateController.
+
+2016-12-02  Attila Torok
+
+	* Some useless/duplicate functions removed from MainWindow and
+	Qtenv.
+
+2016-11-29  Attila Torok
+
+	* Printing code moved to ModuleCanvasViewer, QPrinter resolution bug
+	workaround.
+
+2016-11-30  Attila Torok
+
+	* Run filters are now accepted, all logic done in the dialog.
+
+	initialSetUpConfiguration() moved to Qtenv from MainWindow. Qtenv option
+	and RunSelectionDialog parameter is now a run filter instead of a run
+	number. default-configname preference key renamed to last-configname, and
+	default-runnumber to last-runnumber. Various hacks to make the
+	RunSelectionDialog (more likely to) appear centered over the MainWindow
+	at startup.
+
+	another runseldial
+
+2016-12-02  Attila Torok
+
+	* FilteredObjectListDialog: Remember sorting state after refresh,
+	cleanups.
+
+2016-12-01  Attila Torok
+
+	* Notice of Uselessness added to qtenv.pro, plus some clarification.
+
+2016-12-08  Rudolf Hornig
+
+	* build: made the main targets depend on Makefile.inc so any change in it
+	will trigger a rebuild.
+
+2016-11-30  Rudolf Hornig
+
+	* build: Makefile refactored. Added clang-c2 support and optimized
+	the build process.
+
+	* build: removed Makefile.vc, as Visual C++ builds are now handled
+	by the standard Makefiles.
+
+2016-11-30  Attila Torok
+
+	* Stop initial network layouting when MainWindow is closed.
+
+	If the main window was closed while the first layoutign of the network
+	was still running, the environment didn't quit, but the saved open
+	Inspectors popped up without a main window after it finished.
+
+2016-11-29  Attila Torok
+
+	* Refactoring
+
+2016-11-30  Attila Torok
+
+	* Global module layouting, persistent seeds, modulesize calculation
+	fixes, misc tweaks.
+
+2016-11-30  Attila Torok
+
+	* Refactoring
+
+2016-11-29  Attila Torok
+
+	* Image loading improved, related cEnvir API implemented.
+
+2016-11-29  Attila Torok
+
+	* Connections on vector gates can be arranged.
+
+2016-11-28  Attila Torok
+
+	* Fixed stripNamespace(), the method behind the "Hide namespace prefix"
+	preference. The old version failed at stripping template types, such as
+	std::vector<inet::RoutingTable *>.
+
+2016-11-18  Attila Torok
+
+	* .gitignore files created by the new (common, qmake-less) build
+	system in clangc2 branch.
+
+2016-11-21  Andras Varga
+
+	* Tooltips: 1. eliminate continuous redraw (and thus, flashing) of
+	tooltips over animated areas of the canvas 2. drop trailing "," for empty
+	info strings
+
+2016-11-18  Andras Varga
+
+	* Follow cEnvir API change: implemented appendToImagePath(), loadImage(),
+	getSubmodulePosition()
+
+2016-11-16  Attila Torok
+
+	* Add message animation crash guards.
+
+2016-11-16  Attila Torok
+
+	* MessageAnimation comments, renaming, formatting.
+
+2016-11-16  Attila Torok
+
+	* DisplayUpdateController::isExplicitAnimationSpeed removed, more
+	fixes...
+
+2016-11-16  Attila Torok
+
+	* Animate the bodies of silent methodcalls.
+
+2016-11-16  Attila Torok
+
+	* Broadcast animation #0.
+
+2016-11-15  Attila Torok
+
+	* Respect cModule::getBuiltinAnimations().
+
+2016-11-11  Attila Torok
+
+	* DisplayUpdateController fixes.
+
+	Switching into Express mode, recording in Fast mode, etc...
+
+2016-11-11  Attila Torok
+
+	* Not drawing static messages if message animation is disabled.
+
+2016-11-09  Attila Torok
+
+	* playbackSpeed: SpinBox in AnimCtrlDialog, Slider snaps to 1,
+	affects recording.
+
+2016-11-07  Attila Torok
+
+	* RunModeProfiles in DisplayUpdateController made persistent.
+
+2016-11-04  Attila Torok
+
+	* Some comments and cleanups in MessageAnimator and
+	DisplayUpdateController.
+
+2016-11-14  Attila Torok
+
+	* AnimationSpeed computation cleaned up. holdExpired added. Hold
+	time: remaining -> end.
+
+2016-11-14  Attila Torok
+
+	* Properly clear and reset everything (for example when a new
+	network is set up).
+
+2016-11-15  Attila Torok
+
+	* Message animation rework.
+
+	Born from these (and many more) WIP commits:
+
+	Do inter-event animation after the message anims are updated.
+	Only a single currentMessageSend in MessageAnimator, more comments.
+	Broadcast animation, senddirect tweaked, updateInInspector plugged.
+	Disable arrowhead when the start of the message line is not visible.
+	DeliveryAnimation added, SendAnimMode removed. Small fixes to message
+	animation. WIP animation using the LogBuffer privateDup()'d messages.
+	methodCall and messageSend animations merged, deliveries deduplicated.
+	Animation::advance(). MethodcallAnimation cleanup. SendOnConn fixes,
+	Delivery cleanups. MessageAnimation introduced DeliveryAnimation tweaks.
+	End animations in update() if they become empty. * Don't use the
+	privatedup as key in MessageAnimator. Less flicker before message
+	delivery, animationspeed computed differently for message animations.
+	SendDirect behavior changed, much simplified code, more stuff moved
+	to MessageAnimation.
+
+2016-11-04  Attila Torok
+
+	* LogBuffer: Keep a map of privateDup'd messages, also duplicate on
+	delivery.
+
+2016-10-24  Attila Torok
+
+	* OrderedMultiMap container added.
+
+2016-11-09  Attila Torok
+
+	* RunModeProfiles, other fixes.
+
+2016-10-11  Attila Torok
+
+	* Animation: Ability to display the message as a line added.
+
+2016-11-09  Attila Torok
+
+	* Removed a few preference options. Default for confirm-exit is on.
+	Some text moved into tooltips.
+
+	Removed: Minimum icon size, reusing inspectors, keep inspectors on top,
+	update frequency in fast mode, resize inspector windows.
+
+2016-11-09  Attila Torok
+
+	* TreeItemModel performance improvement.
+
+	Although this will make it forget the expansion state of the currently
+	invisible nodes between refreshes.
+
+2016-10-14  Attila Torok
+
+	* TextViewerWidget: scrollbar conflict (hangup) resolved + crash fix.
+
+	Explicit (internal) 'scroll lock', scrollbar setup improved.
+
+2016-10-24  Attila Torok
+
+	* Bubble()s deferred to refresh(), not creating QTimers, enabled in
+	Express mode.
+
+	At most one after every refresh per component.
+
+2016-11-14  Andras Varga
+
+	* MainWindow tooltip, label, and layout tweaks.
+
+2016-11-09  Andras Varga
+
+	* Error messages refined (start with capital letter, use apostrophes
+	for quoting, etc.)
+
+2016-10-26  Attila Torok
+
+	* Clearing the alpha buffer to 1 at the end of each frame in OsgViewer.
+
+	It was necessary because any transparent items (such as transmission
+	rings/spheres, obstacles, labels) drawn on the canvas made the window
+	itself transparent (on Wayland/Weston at least), and we don't want that.
+
+2016-10-24  Attila Torok
+
+	* Reduced video recording glitches with alpha.
+
+2016-10-11  Attila Torok
+
+	* ConnectionItem: Some formatting and simplifications.
+
+	Click threshold removed, it's implemented in ModuleCanvasViewer.
+
+2016-10-21  Attila Torok
+
+	* GenericObjectInspector formatting fix.
+
+2016-10-24  Attila Torok
+
+	* << operators for printing std::string and SimTime values to
+	QDebug.
+
+2016-10-11  Attila Torok
+
+	* Object inspector: Display the @hint property of fields as a tooltip.
+
+2016-10-11  Attila Torok
+
+	* Better support for editable objects in the object inspector.
+
+2016-10-21  Attila Torok
+
+	* Removed conditions checking for Qt version 5 from qtenv.pro.
+
+2016-10-25  Attila Torok
+
+	* build: Preliminary support for using a Qt bundle in a custom location.
+
+2016-10-21  Attila Torok
+
+	* Wording clarified in the video recording info window.
+
+2016-10-27  Andras Varga
+
+	* Follow cEnvir API change: getImageSize() / getTextExtent(): use doubles for size
+
+2016-10-19  Andras Varga
+
+	* Follow cEnvir API change regarding askyesno(), putsmsg(), alert() etc
+
+2016-10-03  Attila Torok
+
+	* Many graphics items from qtutil.[h|cc] and GraphicsPathArrowItem
+	moved into graphicsitems.[h|cc], the latter renamed to ArrowheadItem.
+
+2016-09-30  Attila Torok
+
+	* Fixed [submodules] figure stacking order.
+
+2016-09-30  Attila Torok
+
+	* Implementation of smooth animation.
+
+	Changes include:
+	- Animator renamed to MessageAnimator
+	- Animation primitives moved to separate files
+	- Added DisplayUpdateController
+	- Added AnimationParameters window
+
+	Operation in various run modes:
+
+	- "Run" mode:
+	If no animationSpeed is specified, the old behaviour
+	of alternating frames and events is emulated in Run mode.
+	If there is a given animationSpeed:
+	Holds are effective, built-in message animations are performed
+	(if enabled), the playback speed can be controlled by a slider.
+
+	- "Fast" mode:
+	Holds and animationSpeed are ignored, message animations are off,
+	the playback speed slider is ineffective, there are no delays
+	between events, framerate will be mostly kept near the minimum
+	setting. Typically several events are processed between frames.
+
+	- "Express" mode:
+	Exactly the same as before.
+
+2016-09-08  Rudolf Hornig
+
+	* Build: Added qtenv.pri file template to the configure process
+
+2016-08-08  Andras Varga
+
+	* Follow cEnvir API change: added placeholders for future implementations
+	of getAnimationTime(), getAnimationSpeed(), getRemainingAnimationHoldTime()
+
+2016-09-28  Attila Torok
+
+	* ModuleInspector: Improved refreshing.
+
+2016-09-27  Attila Torok
+
+	* Removed some old cruft, inlined a couple functions
+	(mainwin,moduleinsp).
+
+2016-09-21  Attila Torok
+
+	* Enable multisampling antialiasing by default in OsgViewer.
+
+2016-09-22  Attila Torok
+
+	* QtenvOptions defaults moved into the class.
+
+2016-09-20  Attila Torok
+
+	* Some performance improvements throughout.
+
+2016-09-07  Attila Torok
+
+	* Connect the objects of embedded inspectors early enough.
+
+2016-09-07  Attila Torok
+
+	* Prevent setting up a new configuration while the simulation is running.
+
+2016-09-07  Attila Torok
+
+	* Only show the initial 'Set up configuration' dialog once.
+
+2016-09-01  Attila Torok
+
+	* ToolTip is updated upon refresh even if the cursor was not moved.
+
+2016-09-01  Attila Torok
+
+	* Crash fix in CanvasRenderer.
+
+2016-09-05  Rudolf Hornig
+
+	* Obey WITH_OSGEARTH: allow disabling the osgEarth integration in
+	configure.user while still using OpenSceneGraph.
+
+2016-06-16  Attila Torok
+
+	* OsgViewer rewrite, works with both Qt4 and Qt5. Based on osgQt and
+	https://github.com/Submanifold/QtOSG. osgQt is no longer used, it's not
+	Qt5 compatible at all. Only tested on Fedora 23/24 x86_64.
+
+2016-08-24  Rudolf Hornig
+
+	* Workaround to make the menubar work on Mac OS right after launch.
+
+2016-08-23  Rudolf Hornig
+
+	* Default fonts on Qt5 fixed.
+
+2016-08-31  Andras Varga
+
+	* Added support for self-refreshing figures (cFigure::refreshDisplay())
+
+2016-08-26  Andras Varga
+
+	* Follow Canvas API changes
+
+2016-08-24  Andras Varga
+
+	* Object inspector refinements:
+	  1. no "=" for array elements
+	  2. fix: no empty quote pair for string arrays
+	  3. display info string for root element
+
+2016-08-23  Andras Varga
+
+	* Follow change: info() renamed to str()
+
+2016-08-22  Attila Torok
+
+	* Fixes for 'Find Objects' dialog, added as menu option. Inspector
+	menus renamed: context -> dropdown.
+
+2016-08-22  Attila Torok
+
+	* Main ObjectInspector always follows inspected object change in
+	main ModuleInspector.
+
+2016-08-19  Attila Torok
+
+	* Fixes for SubmoduleItem parsing from DisplayString (range circles,
+	position change).
+
+2016-08-08  Attila Torok
+
+	* Avoid setting values unnecessarily in QSettings at every event.
+
+2016-08-03  Attila Torok
+
+	* Module inspector: Not zooming when entering a submodule with double
+	click.
+
+2016-08-05  Attila Torok
+
+	* Canvas: implemented setHalo() to text items
+
+2016-08-05  Andras Varga
+
+	* Canvas: implemented cFigure's "zIndex" field
+
+2016-08-03  Attila Torok
+
+	* Text figures now use OutlinedTextItem for rendering.
+
+2016-08-19  Attila Torok
+
+	* Disable default tooltip for cFigures (was not too useful).
+
+2016-08-22  Andras Varga
+
+	* qtenv-extra-stack increased to 80K. Somewhat tested with
+	USE_PORTABLE_COROUTINES that can display actual stack usage
+	in Qtenv (in module inspector), seems to be enough.
+
+2016-08-10  Attila Torok
+
+	* Canvas: implemented figure tooltip and assocatedObject support
+
+	- Figure tooltip fallback chain:
+	   1. Use cFigure::getTooltip() if not empty, else:
+	   2. Use tooltip of figure's associatedObject (e.g. associated module's
+	      "tt" display string tag) if not empty, else:
+	   3. Use assciateObject's default tooltip (name, class, info string)
+
+2016-08-03  Attila Torok
+
+	* Pieslice figure renderer fixed.
+
+2016-07-25  Mihály Palenik
+
+	* FilteredObjectListDialog: fix crash
+
+2016-08-01  Attila Torok
+
+	* Only call refreshDisplay and performAnimations occasionally in
+	fast mode.
+
+2016-08-02  Attila Torok
+
+	* Improved arc figure rendering.
+
+2016-08-02  Attila Torok
+
+	* Figures have flat caps and miter joins where not customizable.
+
+2016-08-02  Attila Torok
+
+	* ModuleInspector no longer crashes when the inspected object is
+	deleted.
+
+2016-08-01  Attila Torok
+
+	* Content caching in TextViewer* classes.
+
+2016-08-01  Attila Torok
+
+	* Log inspector: Align message info into multiple columns at tab
+	characters.
+
+2016-08-01  Attila Torok
+
+	* Minor tweaks on animations and ConnectionItem.
+
+2016-08-01  Attila Torok
+
+	* Restored inspectors not reopened with old object upon stepping
+	after navigation.
+
+2016-07-29  Attila Torok
+
+	* Image-type figures keep their resolution when width/height is
+	specified.
+
+2016-07-29  Attila Torok
+
+	* Zoom shortcuts changed: N -> minus, M -> plus.
+
+2016-07-29  Attila Torok
+
+	* Correct anchoring of label and icon figures.
+
+2016-07-29  Attila Torok
+
+	* ModuleInspector action hotkeys working.
+
+2016-07-21  Attila Torok
+
+	* Canvas: implemented cEnvir's getImageSize() and getTextExtent() methods
+
+2016-07-20  Attila Torok
+
+	* 'View in Embedded...' option in Inspector context menu.
+
+2016-07-26  Attila Torok
+
+	* Object inspector: Display full path of objects if they are shown in
+	the tree not under their owner.
+
+2016-07-27  Attila Torok
+
+	* Incomplete history notification in LogInspector.
+
+2016-07-27  Attila Torok
+
+	* Message deletion displayed in LogInspector.
+
+2016-07-26  Attila Torok
+
+	* Message deletion properly handled by Animator.
+
+2016-07-26  Attila Torok
+
+	* LogBuffer: Message duplication in endSend, and on hop with
+	discard.
+
+2016-07-26  Attila Torok
+
+	* Text viewer: Matching tab expansion in [un]selected text.
+
+2016-07-25  Attila Torok
+
+	* LogInspector improvements in messages mode.
+
+2016-07-25  Andras Varga
+
+	* Follow change: messageSendHop(): added "discard" parameter; also: moved call
+	site to include message's last hop. Needed for Qtenv's message log view
+	(we want to clone the msg while it still exists)
+
+2016-07-26  Attila Torok
+
+	* Timeline: Tick label formatting corrected.
+
+2016-07-22  Attila Torok
+
+	* Toolbar style and icon tweaks.
+
+2016-07-22  Attila Torok
+
+	* refreshDisplay() before performAnimations().
+
+2016-07-20  Attila Torok
+
+	* Module inspector: added module name and arrowhead visibility switches.
+
+2016-07-21  Attila Torok
+
+	* Action hotkey fixes in inspectors.
+
+2016-07-20  Attila Torok
+
+	* Better arrowhead size for thick lines.
+
+2016-07-21  Rudolf Hornig
+
+	* Main toolbar restored and style adjusted on Mac. (Attila)
+
+2016-07-20  Attila Torok
+
+	* 'Filter Main Window Contents' action removed.
+
+2016-07-11  Attila Torok
+
+	* Two-way connections drawn as two half-long lines.
+
+2016-07-15  Mihaly Palenik
+
+	* Inspector: fix toolbar's dropdown menu position
+
+2016-07-08  Mihály Palenik
+
+	* Fix closing behaviour of Find Objects dialog
+
+2016-07-20  Andras Varga
+
+	* Indentation & formatting using _scripts/reformat + manual review
+
+2016-07-19  Attila Torok
+
+	* Object Inspector: Correct highlight for compound array fields.
+
+2016-07-18  Attila Torok
+
+	* Object Inspector: getFieldDynamicTypeString support.
+
+2016-07-18  Attila Torok
+
+	* Object selection and inspection in toplevel inspectors. This means
+	that if a cObject is clicked in any (embedded or toplevel) inspector, the
+	embedded object inspector will be set to that object. Also if any cObject
+	is double clicked in any (embedded or toplevel) inspector, it will be
+	inspected appropriately.
+
+2016-07-18  Attila Torok
+
+	* Bigger connection line arrowheads.
+
+2016-07-18  Attila Torok
+
+	* GenericObjectTreeModel: hasChildren optimized.
+
+2016-07-14  Attila Torok
+
+	* GenericObjectTreeModel::mode is a single enum, not three bools.
+
+2016-07-14  Attila Torok
+
+	* Data caching in GenericObjectTreeModel.
+
+2016-07-14  Attila Torok
+
+	* Prevent status row ToolTips inheriting wrong stylesheet.
+
+2016-07-11  Attila Torok
+
+	* GenericObjectInspector: Root node displays object full path.
+
+2016-07-11  Attila Torok
+
+	* Module inspector: Crash fix in getSubmodRect.
+
+2016-07-11  Attila Torok
+
+	* Arrowheads on figures now respect zoomLineWidth.
+
+2016-07-11  Attila Torok
+
+	* Better font handling in TextViewerWidget.
+
+2016-07-08  Attila Torok
+
+	* Fixed getMessageShortInfoString.
+
+2016-07-08  Attila Torok
+
+	* UI font respected on inspector submenus.
+
+2016-07-08  Attila Torok
+
+	* putsmsg() and confirm() use printf() before Qt init.
+
+2016-07-08  Attila Torok
+
+	* Object list truncation in inspector context menus.
+
+2016-06-20  Attila Torok
+
+	* Tooltips for cObjectNodes in OsgViewer.
+
+2016-07-06  Attila Torok
+
+	* Main window: Toolbar and status layout tweaks.
+
+2016-07-06  Attila Torok
+
+	* Log inspector: Info banners are now displayed.
+
+2016-07-06  Attila Torok
+
+	* Object inspector: Nodes in flat mode are sorted alphabetically.
+
+2016-07-06  Attila Torok
+
+	* Smooth scaling for submodule (decor)image
+
+2016-07-05  Attila Torok
+
+	* Module inspector: Context menu with drag, added a few px threshold
+	for clicking.
+
+2016-07-05  Attila Torok
+
+	* Unfilled figures can be clicked through now.
+
+2016-07-11  Attila Torok
+
+	* Animator: Message deliveries fixed.
+
+2016-07-07  Attila Torok
+
+	* Crash fix in Animator on message deletion.
+
+2016-07-06  Attila Torok
+
+	* Animation tree pruning, shortcut for empty animations.
+
+2016-07-04  Attila Torok
+
+	* Broadcast animation.
+
+2016-07-01  Attila Torok
+
+	* ParallelAnimation, SequentialAnimation.
+
+2016-07-01  Attila Torok
+
+	* animate* functions and PathVec stuff moved from Qtenv to Animator.
+
+2016-06-27  Attila Torok
+
+	* Animation types split into separate classes.
+
+2016-04-19  Andras Varga
+
+	* Follow change: removed messageSent_OBSOLETE(), a relic from OMNeT++ 3.x
+
+2016-07-18  Attila Torok
+
+	* .qtenvrc grouping cleanup, key changes, nicer font format.
+
+2016-06-29  Attila Torok
+
+	* Inspector windows made persistent between runs.
+
+2016-06-29  Attila Torok
+
+	* Silenced a sign-compare warning.
+
+2016-07-07  Andras Varga
+
+	* Fine-tuned simtime end event number context menu and formatting
+
+2016-07-07  Mihaly Palenik
+
+	* Added context menu to eventNumLabel
+
+2016-07-06  Mihaly Palenik
+
+	* Moved RunMode to toplevel
+
+2016-07-06  Mihaly Palenik
+
+	* Moved stopOnMsgCancel from QtenvOptions to RunUntil
+
+2016-07-06  Andras Varga
+
+	* Merged two runMode enums
+
+2016-07-05  Mihály Palenik
+
+	* Fix behaviour of exit messages
+
+2016-07-06  Andras Varga
+
+	* RunUntilDialog: store/restore msg
+
+2016-04-25  Mihaly Palenik
+
+	* FilteredObjectListDialog: store/restore geometry
+
+2016-07-06  Andras Varga
+
+	* Fix and refactoring related to config/run selection and network
+	selection dialogs
+
+2016-07-06  Andras Varga
+
+	* Added simTimeLabel context menu
+
+2016-06-23  Andras Varga
+
+	* Main window: fix "run until message"
+
+2016-06-23  Mihály Palenik
+
+	* FilteredObjectListDialog: Fix crash
+
+2016-06-23  Rudolf Hornig
+
+	Makefile now uses compiler-generated dependency files.
+
+2016-05-06  Mihaly Palenik
+
+	* Added tooltip to treeitemmodel's entry
+
+2016-05-04  Mihály Palenik
+
+	* Added tooltip to submodules in moduleinspector
+
+2016-06-20  Andras Varga
+
+	* Format time display string + add time font to preferences dialog
+
+	* Improves layouting of simTimeLabel and eventNumLabel
+
+2016-06-13  Mihaly Palenik
+
+	* Fix PathFigureRenderer
+
+2016-04-27  Mihaly Palenik
+
+	* Implemented marquee zoom for module inspector, changed double click
+	zoom
+
+2016-04-25  Mihaly Palenik
+
+	* Implemented double-click zoom-in and zoom-out in module inspector
+
+2016-04-25  Mihaly Palenik
+
+	* Changed Run Until dialog's title
+
+2016-04-25  Mihaly Palenik
+
+	* Capitalized items in "Set Log Level for ..." submenu
+
+2016-04-13  Andras Varga
+
+	* Fix: "Update now" button in Express dialog did nothing e.g.
+	in Aloha (refreshDisplay() methods were not called)
+
+2016-04-13  ------ omnetpp-5.0 released ------
+
+2016-04-13  Andras Varga
+
+	* Display scheduler info() string on status bar
+
+2016-03-23  Zoltan Bojthe
+
+	* Added markup to config option descriptions
+
+2016-04-01  Mihaly Palenik
+
+	* Added tooltip to timeline messages
+	* Added tooltips to Preferences dialog and Find Objects dialog
+	* Deactivated dummy GateInspector
+	* GenericObjectInspector not to open a new window when double-clicking
+	  on an object
+
+2016-04-01  Andras Varga
+
+	* osg: fix: earth scenes did not display in the osg-intro sample
+
+	Root cause: zNear/zFar was not set explicitly in these demos, so it stuck
+	with the default values in cOsgCanvas: 1 and 1000.  This caused basically
+	all of the scene to be clipped away (out of z range).
+
+	Solution: cOsgCanvas does NOT contain any zNear/zFar by default, only
+	when explicitly set. In the viewer, activate near/far autocompute mode
+	when cOsgCanvas has no zNear/zFar, otherwise set DO_NOT_COMPUTE_NEAR_FAR.
+
+	Adjusting the aspect ratio in OsgViewer::resizeEvent() is not needed when
+	setProjectionResizePolicy(HORIZONTAL) is set.
+
+2016-03-11  Mihaly Palenik
+
+	* Set margin on layout of simTimeLabel and eventNumLabel
+
+2016-03-11  Mihaly Palenik
+
+	* Add tooltips to status
+
+2016-03-23  Rudolf Hornig
+
+	* osg: Following the changing osgEarth::Viewpoint API.
+
+2016-03-21  Andras Varga
+
+	* "#undef emit" no longer needed in simkerneldefs.h
+
+2016-03-21  Andras Varga
+
+	* Fix: clear componentHistory between runs
+
+2016-03-10  ------ omnetpp-5.0rc released ------
+
+2016-02-29  Levente Meszaros
+
+	* Changed the background color of the simtime and eventnum labels to
+	white.
+
+2016-02-28  Attila Torok
+
+	* StopDialog default position is under the floating toolbar. And its
+	  geometry can easily be made persistent.
+	* Toolbar event status appearance modified. (layout, frame, font size)
+	* Renamed .qtenv.ini to .qtenvrc.
+
+2016-02-26  Mihaly Palenik
+
+	* Follow recent Tkenv changes
+
+2016-02-22  Andras Varga
+
+	* Added fields to the toolbar that display the *current* simulation time
+	and event number. Refactored the status bars, and added a status line at
+	the bottom. The status bar displays the simulation time of the next event
+	along with the difference from the last event. Moved network description
+	and message info to the new status line.
+
+	* With the recent simulation kernel changes, printEventBanner() needs to be
+	called inside simulationEvent() so that it prints the correct (updated)
+	simulation time and event number.
+
+	* When animating, updateStatusDisplay() also needs to be called in
+	simulationEvent() so that the correct (updated) simulation time is displayed
+	during the animation.
+
+2016-02-14  Attila Torok
+
+	* GenericObjectInspector works with Qt5 now.
+	* Added load(moc) to qtenv.pro.
+	* Added Qt version information to the About dialog.
+	* Fixed crashes when compiled without OSG.
+	* Resolved issues with config and run selection from .ini, args and dialog.
+	* Small changes to make the code compile with Qt5.
+	* Undo wrong fix for run until message, apply correct one. Oops.
+	* osg: Switching between camera manipulators doesn't reset the viewpoint
+	  anymore.
+
+2016-02-10  Attila Torok
+
+	* logging: LogLevel of Components can be changed, and is saved/restored.
+	* Also a small fix regarding switching of run modes.
+	* Separate inspector preferences for toplevel and embedded inspectors.
+	  The toplevel inspectors will default to the prefs of the embedded ones
+	  if they don't have their own values.
+	* Restored StopDialog button font size.
+	* Context menu in LogInspector for messages, express run until message fixed.
+
+2016-02-08  Rudolf Hornig
+
+	* ColorizeEffect fixed, image figures use it now, zoomLabel painting
+	fixed, other small corrections.
+
+2016-02-08  Attila Torok
+
+	* CompoundModuleItem: Border now takes width and height independently
+	  from the bgb tag.
+	* Correct status display when single stepping.
+
+2016-02-04  Attila Torok
+
+	* Style and layout fixes and adjustments (some are Mac-specific).
+
+2016-02-03  Rudolf Hornig
+
+	* osgEarth: made it compile with osgEarth 2.7 (in Fedora 23).
+
+2016-02-01  Attila Torok
+
+	* Inspector preferences.
+	* Multiple ModuleInspectors in OSG mode should work better.
+	* Closing the StopDialog in Express mode stops the simulation.
+	* Double-clicking on a cObjectNode in the OSG canvas sets the object
+	  to be inspected.
+
+2016-01-27  Attila Torok
+
+	* GenericObjectInspector: The default mode for container-like objects
+	is now children. Scrolling fixed yet again. Context menu on green
+	background.
+
+2016-01-27  Levente Meszaros
+
+	* OSG: Added call to setComputeNearFarMode() to prevent automatically
+	updating zNear and zFar.
+
+2016-01-20  Attila Torok
+
+	* Fixed the interpolation mode of pixmap figures.
+	* The zoom label on the module canvas uses the canvas font now.
+	* Added hasChildren() to GenericObjectTreeModel. This should make it
+	  a bit faster in some cases.
+
+2016-01-13  Attila Torok
+
+	* Double confirmation dialog on Ctrl+Q fixed.
+	* ModuleCanvasViewer: Scroll region correction and figure rendering fixes.
+	* ModuleCanvasViewer now redraws the compound module upon refresh.
+	* Context menu positions corrected.
+	* Fixes and improvements to figure and arrowhead rendering.
+
+2016-01-08  Attila Torok
+
+	* Minor corrections in ConnectionItem and OutlinedTextItem.
+	* textviewerwidget: Another improvement to scrollbar handling.
+	* submoduleitem: Icons are no longer colored if the weight is an empty string.
+	* fileeditor: Changed the handling of QActions, F3 works now.
+	* Flip window layout action fixed.
+	* Implemented *:askyesno().
+	* Splitter ratio now correctly saved and restored in both orientations.
+	* Fixed a few compiler warnings here and there.
+	* Increase/Decrease icon size shortcuts now work, fixed crashes when
+	  no network is set up.
+
+2015-12-07  Rudolf Hornig
+
+	* Fixed a build error on Windows
+
+2015-12-03  Rudolf Hornig
+
+	* A workaround for a bug where the floating toolbar was not properly
+	refreshed on MAC OS X when the inspector window was scrolled.
+	Right now we are putting the toolbar above the window on MAC OS X. We
+	could switch back to floating toolbar once the refresh issue is solved.
+
+2015-12-07  ------ omnetpp-5.0b3 released ------
+
+2015-12-02  Andras Varga
+
+	* Qtenv is ready for the OMNeT++ 5.0 beta 3 release.
+
+	Most of Qtenv was implemented by Attila Torok and Mihaly Palenik
+	between April and August 2015, using Tkenv code as scaffolding.
+	It was then refined by them during fall 2015.
+
+	OpenSceneGraph integration was mostly coded by Andras Varga.
+	The build system is largely the work of Rudolf Hornig.
+
+2015-04-21  Andras Varga
+
+	* * Added defunct Tkenv code as scaffolding for the code.
+	(Tcl_VarEval() and other Tcl API functions have been replaced with
+	dummy functions, so the original Tkenv code compiles but does
+	nothing for the moment.)
+
+2015-03-16  Rudolf Hornig
+
+	* Qtenv development started: Initial Qt code by Attila Torok.

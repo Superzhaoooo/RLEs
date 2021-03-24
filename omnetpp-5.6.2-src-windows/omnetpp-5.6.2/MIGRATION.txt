@@ -1,0 +1,25 @@
+MIGRATING SIMULATION MODELS FROM EARLIER OMNeT++ VERSIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+From version OMNeT++ 3.x to 4.0, the NED language, the simulation kernel and
+other parts of OMNeT++ were completely revised. Hence, simulation models
+written for OMNeT++ 3.x cannot be used directly with OMNeT++ 4.0 or later,
+and must be ported.
+
+If you have a model written for OMNeT++ 3.x that needs to be ported to the
+latest version, we recommend that you do it in two steps: first port it to
+OMNeT++ 4.0, 4.6 or some other 4.x version, and then to 5.0 or later.
+OMNeT++ 4.x contains a Migration Guide and several migration scripts to
+help you with the process. (This 3.x -> 4.0 Migration Guide, along with the
+scripts and compatibility features in the simulation kernel, have been
+removed in version 5.0.)
+
+Porting models from 4.x to 5.0 is significantly easier. Changes only affect
+C++ code (and to a smaller extent, ini files), and are of much smaller scale.
+Please refer to doc/API-Changes.txt (also part of the generated API doc) for
+details.
+
+Breaking changes within the 4.x and 5.x series are kept to the minimal, and
+tend to only affect rarely used or recently introduced feaures. Those changes
+are also described in doc/API-Changes.txt.
+

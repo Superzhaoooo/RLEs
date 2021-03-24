@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tutorials/Hello_World.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tutorials/Hello World - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tutorials/Hello_World.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#requirements">Requirements</a></li>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+            <li class="nav-item main"><a href="#creating_the_network_in_netedit">Creating the Network in netedit</a></li>
+            <li class="nav-item main"><a href="#demand_generation_in_netedit">Demand Generation in netedit</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#creating_a_route" class="nav-link">• Creating a Route</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#adding_a_vehicle" class="nav-link">• Adding a Vehicle</a>
+                </li>
+            <li class="nav-item main"><a href="#visualizing_in_sumo-gui">Visualizing in sumo-gui</a></li>
+            <li class="nav-item main"><a href="#further_reading">Further Reading</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tutorials/Hello World<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Make sure to have (at least) SUMO 1.4.0 installed to be able to use all the features shown in this tutorial</p>
+</div>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="../sumo-gui.html">sumo-gui</a> and <a href="../netedit.html">netedit</a> version ≥ 1.4.0</li>
+</ul>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
+<p>This tutorial is for first-time SUMO users. We are going to build the
+simplest net possible and let a single car drive on it.</p>
+<p>In order to perform a very basic simulation in SUMO, it is required to have at least the following elements (files):</p>
+<ul>
+<li>Network</li>
+<li>Route</li>
+<li>SUMO configuration file</li>
+</ul>
+<p>In SUMO a street network consists of nodes
+(junctions) and edges (streets connecting the junctions). In this tutorial we will use <a href="../netedit.html">netedit</a> to create our basic net.</p>
+<p>Routes are defined by connecting edges and assigning Vehicles that pass through them. In this tutorial we will use <a href="../netedit.html">netedit</a> to create this.</p>
+<p>The SUMO Configuration file is where certain options and all files (Network, Route, etc.) are being listed, so that SUMO can find and use them.</p>
+<h2 id="creating_the_network_in_netedit">Creating the Network in netedit<a class="headerlink" href="#creating_the_network_in_netedit" title="Permanent link">#</a></h2>
+<p>Open <a href="../netedit.html">netedit</a> and create a new network by selecting <em>File->New Network</em> or using the shortcut <code>Ctrl + N</code></p>
+<p>Make sure that <strong>Network</strong> is selected.
+<img alt="" src="../images/neteditNetworkMode.png" /></p>
+<p>Enter <strong>Edge Mode</strong> by selecting <em>Edit->Edge mode</em>, using the shortcut <code>E</code> or by clicking on the <img alt="" src="../images/ModeCreateEdge.gif" /> button.
+In Edge Mode, make sure that <strong><em>Chain</em></strong> is selected (in newer versions, <em>Chain</em> is the following icon: <img alt="" src="../images/checkbox_chain.png" />). This will facilitate creating multiple nodes and their connecting edges with fewer clicks.</p>
+<p><img alt="" src="../images/neteditChainSelected.png" /></p>
+<p>Nodes are created by clicking on empty spaces (when in Edge Mode). Insert 3 nodes (aka Junctions) by clicking on three different places at the white blank space.
+After inserting the last Node, press &lt;ESC> to unselect that last node.</p>
+<p><img alt="" src="../images/HelloWorld_1.gif" /></p>
+<div class="admonition note">
+<p class="admonition-title">Tip</p>
+<p>In netedit you can use Ctrl + Z to undo</p>
+</div>
+<p>Now we want to rename our recently inserted Junctions and Edges (which get arbitrary id's when created) and also make our simple network prettier, by aligning all nodes.
+To do so, enter <strong>Inspect Mode</strong> by selecting <em>Edit->Inspect mode</em>, using the shortcut <code>I</code> or by clicking on the <img alt="" src="../images/ModeInspect.gif" /> button.</p>
+<p>In Inspect mode you can select different type of elements, such as Nodes and Edges. If an element is selected, its properties will appear on the left side.
+Let's rename (change their <strong>id</strong>) the nodes to "1", "2" and "3" (from left to right) and the edges to "1to2" and "out" (also left to right).</p>
+<p>Replace the position (<strong>pos</strong>) of the nodes with the following values:</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>pos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>-100,50</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0,50</td>
+</tr>
+<tr>
+<td>3</td>
+<td>100,50</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="../images/HelloWorld_2.gif" /></p>
+<p>Our very basic network is done! We just need to save it <img alt="" src="../images/Save.gif" />. Use <em>File -> Save Network</em> (Ctrl + S) or <em>File -> Save Network As</em> (Ctrl + Shift + S) and give it a proper name (such as <code>helloWorld.net.xml</code>).</p>
+<p>Do not close netedit yet, the demand still needs to be generated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In SUMO, Networks must have the following file extension -&gt; <strong>.net.xml</strong> (example: <em>myNetwork.net.xml</em>)</p>
+</div>
+<h2 id="demand_generation_in_netedit">Demand Generation in netedit<a class="headerlink" href="#demand_generation_in_netedit" title="Permanent link">#</a></h2>
+<p>Now, select the <strong>Demand</strong> supermode in netedit.
+<img alt="" src="../images/neteditDemandMode.png" /></p>
+<h3 id="creating_a_route">Creating a Route<a class="headerlink" href="#creating_a_route" title="Permanent link">#</a></h3>
+<p>Enter <strong>Route Mode</strong> by selecting <em>Edit->Route mode</em>, using the shortcut <code>R</code> or by clicking on the <img alt="" src="../images/Route.gif" /> button.</p>
+<p>Creating a route is as simple as clicking on the Edges that will compose it. When selecting an Edge, its color will change.</p>
+<ul>
+<li><span style="color:#004000; background:#004000">FOO</span> Selected Edge</li>
+<li><span style="color:#00ff00; background:#00ff00">FOO</span> Possible selectable edges</li>
+</ul>
+<p>After selecting all the edges that will compose the desired route, click on <em>Create route</em>.</p>
+<p><img alt="" src="../images/HelloWorld_3.gif" /></p>
+<h3 id="adding_a_vehicle">Adding a Vehicle<a class="headerlink" href="#adding_a_vehicle" title="Permanent link">#</a></h3>
+<p>Finally, enter <strong>Vehicle Mode</strong> by selecting <em>Edit->Vehicle mode</em>, using the shortcut <code>V</code> or by clicking on the <img alt="" src="../images/Vehicle.gif" /> button.
+To insert a Vehicle, just click on the beginning of the route. A car will appear. On the left side bar you can change the vehicle's attributes such as id and even the color (just for fun change it to blue).</p>
+<p><img alt="" src="../images/HelloWorld_4.gif" /></p>
+<p>Now save the Demand (route + vehicle) file <img alt="" src="../images/Save.gif" />.
+Use <em>File -> Demand elements -> Save demand elements</em> (Ctrl + Shift + D) or <em>File -> Demand elements -> Save demand elements as</em> and give it a proper name (such as <code>helloWorld.rou.xml</code>).</p>
+<p>Do not close netedit yet.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This demand element file <strong>must</strong> have the <strong>.rou.xml</strong> file extension!</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Important</p>
+<p>Save all simulation related files (Network, Demand and SUMO Configuration file) in the same directory.</p>
+</div>
+<h2 id="visualizing_in_sumo-gui">Visualizing in sumo-gui<a class="headerlink" href="#visualizing_in_sumo-gui" title="Permanent link">#</a></h2>
+<p>We will open sumo-gui from netedit. To do so, go to <em>Edit -> Open in sumo-gui</em> (Ctrl + T). This will open sumo-gui and load our recently created network and demand files.</p>
+<p>As soon as sumo-gui opens, let's save the SUMO configuration file (that relates the network and demand files) <img alt="" src="../images/Save.gif" />.
+<em>File -> Save Configuration</em> (Ctrl + Shift + S). Give it a proper name (such as <code>helloWorld.sumocfg</code>).</p>
+<p>Now you can close netedit if you wish.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SUMO Configuration files have the following file extension -&gt; <strong>.sumocfg</strong> (example: <em>myScenario.sumocfg</em>)</p>
+</div>
+<p>Before starting the simulation, make sure that the Delay (<img alt="" src="../images/Delay.png" />) is set to at least 80 ms, otherwise, the simulation would happen very fast and we would not be able to see our only vehicle in our tiny network.</p>
+<p>Click on Run <img alt="" src="../images/Play.gif" /> (Ctrl + A) to start the simulation.</p>
+<p><img alt="" src="../images/HelloWorld_5.gif" /></p>
+<p>From now on, if we want to run this scenario again we only have to open the SUMO Configuration file (*.sumocfg) in <a href="../sumo-gui.html">sumo-gui</a> or <a href="../sumo.html">sumo</a>.</p>
+<p>That's it! You have your first simulation scenario in SUMO :)</p>
+<h2 id="further_reading">Further Reading<a class="headerlink" href="#further_reading" title="Permanent link">#</a></h2>
+<p>Do you want to do this exercise again, but using a text editor instead of the netedit graphic interface? Visit <a href="Hello_SUMO.html">this tutorial</a>.</p>
+<p>More <a href="../Tutorials.html">Tutorials</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 02 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

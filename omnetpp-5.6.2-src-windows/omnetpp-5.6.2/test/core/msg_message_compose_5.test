@@ -1,0 +1,47 @@
+%description:
+Check external non-cObject class as message member
+
+%file: test.msg
+
+namespace @TESTNAME@;
+
+cplusplus {{
+
+  class A {
+    private:
+      int a;
+    public:
+      int getA() const {return a;}
+      void setA(int newa) {a=newa;}
+  };
+
+}}
+
+class A
+{
+    @existingClass;
+    int a;
+}
+
+message MyMessage
+{
+    A b;
+    char c;
+};
+
+%includes:
+#include "test_m.h"
+
+%activity:
+
+#define PRINT(X) EV << #X << ":" << X << endl
+
+MyMessage x;
+
+x.getBForUpdate().setA(11); PRINT(x.getB().getA());
+x.setC('x'); PRINT(x.getC());
+
+%contains: stdout
+x.getB().getA():11
+x.getC():x
+

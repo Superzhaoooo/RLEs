@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Networks/Import/ArcView.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Networks/Import/ArcView - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Networks/Import/ArcView.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#defining_the_input">Defining the Input</a></li>
+            <li class="nav-item main"><a href="#arcview_import_options">ArcView Import Options</a></li>
+            <li class="nav-item main"><a href="#examples">Examples</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#36_new_york_from_tiger_database" class="nav-link">• '36_NEW_YORK' from TIGER database</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#frida_network_city_of_osnabruck" class="nav-link">• 'Frida' network (city of Osnabrück)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#data_quality" class="nav-link">&rarr; Data Quality</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#demand" class="nav-link">&rarr; Demand</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#conclusion" class="nav-link">&rarr; Conclusion</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Networks/Import/ArcView<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p><a href="../../netconvert.html">netconvert</a> is able to directly read binary
+ArcView databases ("shapefiles"). To convert such databases, at least
+three files are needed: a file with the extension ".dbf", one with the
+extension ".shp" and one with the extension ".shx". Additionally, having
+a projection file with the extension ".proj" is of benefit. The option
+to load a shape-file into <a href="../../netconvert.html">netconvert</a> in order
+to convert it into a SUMO-network is named <strong>--shapefile-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>. Because shape-file
+descriptions use more than a single file, one has to supply the file
+name without extension, only. So, the following call to
+<a href="../../netconvert.html">netconvert</a> should be used to import the road
+network stored in "my_shape_files.shp", "my_shape_files.shx",
+"my_shape_files.proj", and "my_shape_files.dbf":</p>
+<pre><code>netconvert --shapefile-prefix my_shape_files
+</code></pre>
+
+<p>Unfortunately, shape files describe how information is stored
+physically, but neither which is stored nor how the entries of the
+according database (*.dbf) are named. Due to this, one has to examine
+how a given road network is stored within the database file and give
+this information to <a href="../../netconvert.html">netconvert</a>; a plain call
+almost always fails.</p>
+<h1 id="defining_the_input">Defining the Input<a class="headerlink" href="#defining_the_input" title="Permanent link">#</a></h1>
+<p>The table below shows which information
+<a href="../../netconvert.html">netconvert</a> is trying to read from the given
+input files, what the standard values are, and how they can be changed.
+Also, it shows whether the information is mandatory - must be given - or
+optional.</p>
+<p><center></p>
+<p><strong>Table: Information <a href="../../netconvert.html">netconvert</a> reads from
+shape-files</strong></p>
+<p></center></p>
+<table>
+<thead>
+<tr>
+<th>Information</th>
+<th>Mandatory</th>
+<th>Default field name</th>
+<th>Option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The id of an edge</td>
+<td>y</td>
+<td><strong>LINK_ID</strong></td>
+<td><strong>--shapefile.street-id &lt;FIELD_NAME></strong></td>
+</tr>
+<tr>
+<td>The street name of an edge (need not be unique, for displaying)</td>
+<td>n</td>
+<td><strong>ST_NAME</strong></td>
+<td><strong>--shapefile.name &lt;FIELD_NAME></strong></td>
+</tr>
+<tr>
+<td>The name of the node the edge starts at</td>
+<td>y</td>
+<td><strong>REF_IN_ID</strong></td>
+<td><strong>--shapefile.from-id &lt;FIELD_NAME></strong></td>
+</tr>
+<tr>
+<td>The name of the node the edge ends at</td>
+<td>y</td>
+<td><strong>NREF_IN_ID</strong></td>
+<td><strong>--shapefile.to-id &lt;FIELD_NAME></strong></td>
+</tr>
+<tr>
+<td>The type of the street</td>
+<td>n</td>
+<td><strong>ST_TYP_AFT</strong></td>
+<td><strong>--shapefile.type-id &lt;FIELD_NAME></strong></td>
+</tr>
+<tr>
+<td>Speed category</td>
+<td>n (see below)</td>
+<td><strong>SPEED_CAT</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Lane category</td>
+<td>n (see below)</td>
+<td><strong>LANE_CAT</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Road class, used to determine the priority</td>
+<td>n (see below)</td>
+<td><strong>FUNC_CLASS</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Allowed speed on a road</td>
+<td>n (see below)</td>
+<td><strong>SPEED</strong> or <strong>speed</strong></td>
+<td><strong>--shapefile.speed &lt;FIELD_NAME></strong></td>
+</tr>
+<tr>
+<td>Number of lanes a road has</td>
+<td>n (see below)</td>
+<td><strong>NOLANES</strong>, <strong>nolanes</strong> or <strong>rnol</strong></td>
+<td><strong>--shapefile.laneNumber &lt;FIELD_NAME></strong></td>
+</tr>
+<tr>
+<td>Direction of travel ("B": both, "F": forward, "T": backward)</td>
+<td>n</td>
+<td><strong>DIR_TRAVEL</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>If being familiar with NavTeq, you may have noticed that the defaults
+are the ones that are used by NavTeq.</p>
+<p>Some shape file databases do not contain explicit information about the
+edges' attributes (number of lanes, priority, allowed speed) at all. It
+is possible use <a href="../../SUMO_edge_type_file.html">SUMO edge type file</a>
+for describing the edges' attributes. In this case, the column to
+retrieve an according street's type name from must be named using <strong>--shapefile.type-id</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;ID&gt;</em></a> and a
+<a href="../../SUMO_edge_type_file.html">SUMO edge type file</a> must be given to
+<a href="../../netconvert.html">netconvert</a> using <strong>--type-files</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>. If something fails with the
+types or the explicit values, it can be catched using <strong>--shapefile.use-defaults-on-failure</strong>. In these cases,
+the default <a href="../../netconvert.html">netconvert</a> values are used. Besides
+this, it is possible to load own <a href="../PlainXML.html#connection_descriptions">connection
+descriptions</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>One can insert own attributes into the database using a GIS. This means, one can also insert own fields for the number of lanes, priority, or allowed speed, naming them as described above.</p>
+</div>
+<p>ArcView-networks are encoded using geocoordinates which have to be
+converted to the cartesian coordinates system used by SUMO. To describe
+how to convert the coordinates, one should know in which UTM-zone your
+network is located. Use projection
+options to set the correct one.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Road geometries must be encoded with type 'linestring'</p>
+</div>
+<h1 id="arcview_import_options">ArcView Import Options<a class="headerlink" href="#arcview_import_options" title="Permanent link">#</a></h1>
+<p>The complete list of options used for reading shapefiles is given in the
+table below. You may find further options which control the import
+behavior on <a href="../../netconvert.html">netconvert</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>--shapefile-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a></td>
+<td>Read shapefiles (ArcView, Tiger, ...) from files starting with 'FILE'</td>
+</tr>
+<tr>
+<td><strong>--shapefile.street-id</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Read edge ids from column STR</td>
+</tr>
+<tr>
+<td><strong>--shapefile.from-id</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Read from-node ids from column STR</td>
+</tr>
+<tr>
+<td><strong>--shapefile.to-id</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Read to-node ids from column STR</td>
+</tr>
+<tr>
+<td><strong>--shapefile.type-id</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a></td>
+<td>Read type ids from column STR</td>
+</tr>
+<tr>
+<td><strong>--shapefile.use-defaults-on-failure</strong></td>
+<td>Uses edge type defaults on problems; <em>default: <strong>false</strong></em></td>
+</tr>
+<tr>
+<td><strong>--shapefile.all-bidirectional</strong></td>
+<td>Insert edges in both directions; <em>default: <strong>false</strong></em></td>
+</tr>
+<tr>
+<td><strong>--shapefile.guess-projection</strong></td>
+<td>Guess the proper projection; <em>default: <strong>false</strong></em></td>
+</tr>
+</tbody>
+</table>
+<h1 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h1>
+<h2 id="36_new_york_from_tiger_database">'36_NEW_YORK' from TIGER database<a class="headerlink" href="#36_new_york_from_tiger_database" title="Permanent link">#</a></h2>
+<p>The network is available from the <a href="https://www2.census.gov/geo/tiger/TIGER2008/36_NEW_YORK/36061_New_York_County/">US Census Bureau ftp server</a>.
+TIGER data is freely available because U.S. Government publications are
+required to be released into the public domain.</p>
+<p>Opening the edges-dbf (<em>tl_2008_36061_edges.dbf</em>) of which we hope
+that it contains information about roads shows us, that:</p>
+<ul>
+<li>the from- and the to-nodes of the streets are described in fields
+  named <strong>TNIDF</strong> and <strong>TNIDT</strong>, respectively.</li>
+<li>the field <strong>tlid</strong> may be stored as the one to name the edges by</li>
+<li>there is a further information about the type (mtfcc)</li>
+</ul>
+<p>As a begin, we try to import the road graph. We use the information we
+have found and apply a projection:</p>
+<pre><code>netconvert -v --shapefile-prefix tl_2008_36061_edges -o net.net.xml \
+   --shapefile.from-id TNIDF --shapefile.to-id TNIDT --arcview.street-id tlid \
+   --shapefile.use-defaults-on-failure
+</code></pre>
+
+<p>As a result, we obtain the network shown below.</p>
+<p><img alt="tl_2008_36061_edges.gif" src="../../images/Tl_2008_36061_edges.gif" title="tl_2008_36061_edges.gif" /></p>
+<p><strong>Figure 1.1. The converted network of New York</strong></p>
+<p>There are several issues one should note:</p>
+<ul>
+<li>The types were not used - no information about their meanings was
+  investigated</li>
+<li>All roads are unidirectional</li>
+<li>The projection has not been verified (though it should be valid)</li>
+<li>Maybe the further files which are included in the zip contain
+  additional information. This has not been investigated.</li>
+</ul>
+<h2 id="frida_network_city_of_osnabruck">'Frida' network (city of Osnabrück)<a class="headerlink" href="#frida_network_city_of_osnabruck" title="Permanent link">#</a></h2>
+<p>The network is available at the
+<a href="http://frida.intevation.org/">Frida-homepage</a> and is licensed under the
+GPL.</p>
+<p>Our main interest is of course the street network. The following files
+describe this: <em>strassen.dbf</em>, <em>strassen.shp</em>, <em>strassen.shx</em>
+("strassen" is the german word for "streets"). When opening
+"strassen.dbf" we have to realize that there is only a few information
+stored herein - neither the node names are given nor the street
+attributes. Instead, the street attributes seem to be stored in an
+additional database and are references by type names (column "strTypID"
+- strassen_typ_id = street_type_id). Also, the names of this
+database's columns have other names than expected.</p>
+<p>Ok, let's solve these problems one after another.</p>
+<ul>
+<li>
+<p>Different field naming</p>
+<p>The only problem with this is that we can not extract street names
+properly. Still, within <a href="http://frida.intevation.org/">FRIDA</a>, the
+edges are numbered, and we may use the street id as name.
+The call has to be extended by: <strong>--arcview.street-id strShapeID</strong></p>
+</li>
+</ul>
+<ul>
+<li>
+<p>Missing node names</p>
+<p><a href="../../netconvert.html">netconvert</a> can deal with networks which do
+not have node names (since version 0.9.4).</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>Parsing street attributes from a <a href="../../SUMO_edge_type_file.html">SUMO edge type
+  file</a></p>
+<p>The possibility to describe edges using attributes was already
+available in <a href="../../netconvert.html">netconvert</a> and may be used in
+combination with ArcView files since version 0.9.4. Still, the types
+have to be translated into XML. The generated file (<em>frida.typ.xml</em>)
+looks like this:</p>
+</li>
+</ul>
+<pre><code>&lt;types&gt;
+  &lt;!-- &quot;noch nicht attributiert&quot; (= not yet attributed) --&gt;
+  &lt;type id=&quot;0&quot;  priority=&quot;1&quot; numLanes=&quot;1&quot; speed=&quot;13.89&quot;/&gt;
+  &lt;!-- &quot;Autobahn&quot; (highway) --&gt;
+  &lt;type id=&quot;1&quot;  priority=&quot;5&quot; numLanes=&quot;3&quot; speed=&quot;41.67&quot;/&gt;
+  &lt;!-- &quot;Bundesstrasse&quot; (motorway) --&gt;
+  &lt;type id=&quot;2&quot;  priority=&quot;4&quot; numLanes=&quot;1&quot; speed=&quot;22.22&quot;/&gt;
+  &lt;!-- &quot;Hauptstrasse&quot; (main (city) road) --&gt;
+  &lt;type id=&quot;3&quot;  priority=&quot;3&quot; numLanes=&quot;2&quot; speed=&quot;13.89&quot;/&gt;
+  &lt;!-- &quot;Nebenstrasse&quot; (lower priorised (city) road) --&gt;
+  &lt;type id=&quot;4&quot;  priority=&quot;2&quot; numLanes=&quot;1&quot; speed=&quot;13.89&quot;/&gt;
+  &lt;!-- &quot;Weg&quot; (path) --&gt;
+  &lt;type id=&quot;5&quot;  priority=&quot;1&quot; numLanes=&quot;1&quot; speed=&quot;5&quot;/&gt;
+  &lt;!-- &quot;Zone 30&quot; (lower street with a speed limit of 30km/h) --&gt;
+  &lt;type id=&quot;6&quot;  priority=&quot;2&quot; numLanes=&quot;1&quot; speed=&quot;8.33&quot;/&gt;
+  &lt;!-- &quot;Spielstrasse&quot; (a street where children may play (10km/h)) --&gt;
+  &lt;type id=&quot;7&quot;  priority=&quot;1&quot; numLanes=&quot;1&quot; speed=&quot;1.39&quot;/&gt;
+  &lt;!-- &quot;Fussgaengerzone&quot; (pedestrains zone) --&gt;
+  &lt;type id=&quot;8&quot;  priority=&quot;0&quot; numLanes=&quot;1&quot; speed=&quot;0.1&quot;/&gt;
+  &lt;!-- &quot;gesperrte Strasse&quot; (closed street) --&gt;
+  &lt;type id=&quot;9&quot;  priority=&quot;0&quot; numLanes=&quot;1&quot; speed=&quot;0.1&quot;/&gt;
+  &lt;!-- &quot;sonstige Strasse&quot; (something else) --&gt;
+  &lt;type id=&quot;10&quot; priority=&quot;0&quot; numLanes=&quot;1&quot; speed=&quot;0.1&quot;/&gt;
+  &lt;!-- &quot;Fussweg&quot; (way for pedestrians) --&gt;
+  &lt;type id=&quot;11&quot; priority=&quot;0&quot; numLanes=&quot;1&quot; speed=&quot;0.1&quot;/&gt;
+&lt;/types&gt;
+</code></pre>
+
+<p>The call has to be extended by: <strong>-t frida.typ.xml --arcview.type-id strTypID</strong></p>
+<p>After having applied all those changes, the network was buildable, but
+looked quite messy. After having played with geocoordinate projections,
+this was fixed. So the call (so far) looks like this:</p>
+<pre><code>netconvert --arcview strassen -o frida.net.xml \
+  --arcview.street-id strShapeID -t frida.typ.xml \
+  --arcview.type-id strTypID --use-projection
+</code></pre>
+
+<h3 id="data_quality">Data Quality<a class="headerlink" href="#data_quality" title="Permanent link">#</a></h3>
+<p>Looking a bit deeper at the network, we had to realise two further
+problems. At first, highway on- and off-ramps are marked as "highway".
+this yields in a network where on- and offramps have the same number of
+lanes as the highways themselves. And it's definitely not fitting to
+reality, as the next picture shows:</p>
+<p><img alt="frida_uni_highway_ramp.png" src="../../images/Frida_uni_highway_ramp.png" title="frida_uni_highway_ramp.png" /></p>
+<p><strong>Figure 2.2. Detail view showing problems with (unidirectional) highway
+on-/off-ramps</strong></p>
+<p>Furthermore, all streets are unidirectional - even highways. This makes
+the network not usable for traffic simulations when left in the orignal
+state. Trying to convert the network with <strong>--arcview.all-bidi</strong>, that means trying to insert
+edges bidirectional, makes the city usable, but the highways are even
+worse, now, because also the on-/off-ramps are bidirectional, then...</p>
+<p><img alt="frida_bidi_highway_ramp.png" src="../../images/Frida_bidi_highway_ramp.png" title="frida_bidi_highway_ramp.png" /></p>
+<p><strong>Figure 2.3. Detail view showing problems with (bidirectional) highway
+on-/off-ramps</strong></p>
+<h3 id="demand">Demand<a class="headerlink" href="#demand" title="Permanent link">#</a></h3>
+<p>There is no demand available for Frida - at least none we know about.</p>
+<h3 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">#</a></h3>
+<p>Using the current features we are able to parse the network from the
+Frida-project but we can not state it is completely usable for traffic
+simulations. At least areas around highways are not realistic, because
+on-/offramps lack an explicit declaration and are due to this as wide as
+the highways themselves. Furthermore, all streets within the network are
+coded in just one direction. Extending them to be bidirectional solves
+the problem in inner-city areas, but yields in an unacceptable result
+for highways.</p>
+<p style="border:1px solid #909090; padding:1px 4px 3px 4px"><img src="../../images/CC-BY-SA-small.png" alt="Creative Commons License">
+This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>. The authors are listed in the history.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+%description:
+Choose class from the correct namespace.
+
+%file: types.h
+// same classname in 3 namespaces:
+class IPAddress5 {};
+namespace inet5 { class IPAddress5 {}; }
+namespace foreign5 { class IPAddress5 {}; }
+
+%file: test.msg
+cplusplus {{
+#include "types.h"
+}}
+
+class IPAddress5 {@existingClass;@opaque;}
+class inet5::IPAddress5 {@existingClass;@opaque;}
+class foreign5::IPAddress5 {@existingClass;@opaque;}
+
+namespace inet5;
+
+class TestMsg extends cObject {
+    ::IPAddress5 addr;
+
+    IPAddress5 inetAddr1; // Note: this means inet5::IPAddress5! 
+    inet5::IPAddress5 inetAddr2;
+    ::inet5::IPAddress5 inetAddr3;
+
+    foreign5::IPAddress5 foreignAddr1;
+    ::foreign5::IPAddress5 foreignAddr2;
+}
+
+%includes:
+#include "test_m.h"
+
+%activity:
+inet5::TestMsg *dummy = new inet5::TestMsg();
+
+dummy->setAddr(::IPAddress5());
+dummy->setInetAddr1(inet5::IPAddress5());
+dummy->setInetAddr2(inet5::IPAddress5());
+dummy->setInetAddr3(inet5::IPAddress5());
+
+dummy->setForeignAddr1(foreign5::IPAddress5());
+dummy->setForeignAddr2(foreign5::IPAddress5());
+
+cClassDescriptor *desc = dummy->getDescriptor();
+ASSERT(desc);
+for (int i = 0; i < desc->getFieldCount(); i++)
+    EV << desc->getFieldName(i) << ": " << desc->getFieldTypeString(i) << "\n";
+
+%subst: /omnetpp:://
+%contains: stdout
+className: string
+fullName: string
+fullPath: string
+info: string
+addr: IPAddress5
+inetAddr1: inet5::IPAddress5
+inetAddr2: inet5::IPAddress5
+inetAddr3: inet5::IPAddress5
+foreignAddr1: foreign5::IPAddress5
+foreignAddr2: foreign5::IPAddress5
+

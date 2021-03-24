@@ -1,0 +1,115 @@
+%description:
+Test using types and enums from other namespaces as base class,
+member, and field enum.
+
+%file: test_globalnamespace.msg
+enum @TESTNAME@_Enum { FIRST=1; SECOND=2; THIRD=3; }
+class @TESTNAME@_Base extends cObject { int i=9; int e=FIRST @enum(@TESTNAME@_Enum); }
+
+%file: test_othernamespace.msg
+namespace @TESTNAME@_other;
+enum Enum { FIRST=10; SECOND=20; THIRD=30; }
+class Base extends cObject { int i=90; int e=SECOND @enum(Enum); }
+
+%file: test_samenamespace.msg
+namespace @TESTNAME@;
+enum Enum { FIRST=100; SECOND=200; THIRD=300; }
+class Base extends cObject { int i=900; int e=THIRD @enum(Enum); }
+
+
+%file: test.msg
+import test_globalnamespace;
+import test_othernamespace;
+import test_samenamespace;
+
+namespace @TESTNAME@;
+
+// use stuff from other namespace
+class Msg1 extends @TESTNAME@_other::Base {
+    @TESTNAME@_other::Base member;
+    int ee=@TESTNAME@_other::FIRST @enum(@TESTNAME@_other::Enum);
+};
+
+// use stuff from global namespace
+class Msg2 extends @TESTNAME@_Base {
+    @TESTNAME@_Base member;
+    int ee=::FIRST @enum(@TESTNAME@_Enum);
+};
+
+// use stuff from same namespace
+class Msg3 extends Base {
+    Base member;
+    int ee=@TESTNAME@::FIRST @enum(Enum);
+};
+
+%includes:
+#include "test_m.h"
+#include <envir/objectprinter.h>   // from src/envir
+using omnetpp::envir::ObjectPrinter;
+
+%activity:
+
+::@TESTNAME@::Msg1 msg1;
+::@TESTNAME@::Msg2 msg2;
+::@TESTNAME@::Msg3 msg3;
+
+EV << ObjectPrinter().printObjectToString(&msg1);
+EV << ObjectPrinter().printObjectToString(&msg2);
+EV << ObjectPrinter().printObjectToString(&msg3);
+EV << ".\n";
+
+%subst: /omnetpp:://
+%contains: stdout
+class @TESTNAME@::Msg1 {
+    string className = @TESTNAME@::Msg1
+    string fullName = ""
+    string fullPath = ""
+    string info = ""
+    int i = 90
+    int e = "20 (SECOND)"
+    @TESTNAME@_other::Base member = class @TESTNAME@_other::Base {
+        string className = @TESTNAME@_other::Base
+        string fullName = ""
+        string fullPath = ""
+        string info = ""
+        int i = 90
+        int e = "20 (SECOND)"
+    }
+    int ee = "10 (FIRST)"
+}
+class @TESTNAME@::Msg2 {
+    string className = @TESTNAME@::Msg2
+    string fullName = ""
+    string fullPath = ""
+    string info = ""
+    int i = 9
+    int e = "1 (FIRST)"
+    @TESTNAME@_Base member = class @TESTNAME@_Base {
+        string className = @TESTNAME@_Base
+        string fullName = ""
+        string fullPath = ""
+        string info = ""
+        int i = 9
+        int e = "1 (FIRST)"
+    }
+    int ee = "1 (FIRST)"
+}
+class @TESTNAME@::Msg3 {
+    string className = @TESTNAME@::Msg3
+    string fullName = ""
+    string fullPath = ""
+    string info = ""
+    int i = 900
+    int e = "300 (THIRD)"
+    @TESTNAME@::Base member = class @TESTNAME@::Base {
+        string className = @TESTNAME@::Base
+        string fullName = ""
+        string fullPath = ""
+        string info = ""
+        int i = 900
+        int e = "300 (THIRD)"
+    }
+    int ee = "100 (FIRST)"
+}
+.
+

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Installing/Linux_Build.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Installing/Linux Build - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Installing/Linux_Build.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#installing_required_tools_and_libraries">Installing required tools and libraries</a></li>
+            <li class="nav-item main"><a href="#getting_the_source_code">Getting the source code</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#repository_checkout_recommended" class="nav-link">• repository checkout (recommended)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#release_version_or_nightly_tarball" class="nav-link">• release version or nightly tarball</a>
+                </li>
+            <li class="nav-item main"><a href="#definition_of_sumo_home">Definition of SUMO_HOME</a></li>
+            <li class="nav-item main"><a href="#building_the_sumo_binaries_with_cmake">Building the SUMO binaries with cmake</a></li>
+            <li class="nav-item main"><a href="#building_with_clang">Building with clang</a></li>
+            <li class="nav-item main"><a href="#installing_the_sumo_binaries">Installing the SUMO binaries</a></li>
+            <li class="nav-item main"><a href="#uninstalling">Uninstalling</a></li>
+            <li class="nav-item main"><a href="#frequent_rebuilds">(Frequent) Rebuilds</a></li>
+            <li class="nav-item main"><a href="#troubleshooting">Troubleshooting</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#problems_with_the_socket_subsystem" class="nav-link">• Problems with the socket subsystem</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#ld_cannot_find_an_existing_library_fedora-23" class="nav-link">• ld cannot find an existing library (Fedora-23)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#additional_notes_for_cygwin_users" class="nav-link">• Additional notes for Cygwin users</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Installing/Linux Build<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This document describes how to install SUMO on Linux from sources. If
+you don't want to <strong>extend</strong> SUMO, but merely <strong>use</strong> it, you might want
+to <a href="../Installing.html">download one of our pre-built binary
+packages</a> instead.</p>
+<p>To be able to run SUMO on Linux, just follow these steps:</p>
+<ol>
+<li>Install all of the required tools and libraries</li>
+<li>Get the source code</li>
+<li>Build the SUMO binaries</li>
+</ol>
+<p>For ubuntu this boils down to</p>
+<pre><code> sudo apt-get install cmake python g++ libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev libgl2ps-dev
+ git clone --recursive https://github.com/eclipse/sumo
+ export SUMO_HOME=&quot;$PWD/sumo&quot;
+ mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
+ cmake ../..
+ make -j$(nproc)
+</code></pre>
+
+<p>Each of these steps is described in more detail and with possible
+alternatives below.</p>
+<h2 id="installing_required_tools_and_libraries">Installing required tools and libraries<a class="headerlink" href="#installing_required_tools_and_libraries" title="Permanent link">#</a></h2>
+<ul>
+<li>For the build infrastructure you will need cmake together with a moderately
+  recent g++ (4.8 will do) or clang++ (or any other C++11 enabled compiler).</li>
+<li>The library Xerces-C is always needed. To use
+  <a href="../sumo-gui.html">sumo-gui</a> you also need Fox Toolkit in version
+  1.6.x. It is highly recommended to also install Proj to have support
+  for geo-conversion and referencing. Another common requirement is
+  network import from shapefile (arcgis). This requires the GDAL
+  library. To compile you will need the devel versions of all packages.
+  For openSUSE this means installing libxerces-c-devel, libproj-devel,
+  libgdal-devel, and fox16-devel. For ubuntu the call is:
+  <code>sudo apt-get install cmake python g++ libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev libgl2ps-dev</code>.
+  There are some outdated <a href="Linux_Build_Libraries.html">platform specific
+  and manual build instructions for the
+  libraries</a></li>
+<li>Optionally you may want to add</li>
+<li>ffmpeg-devel (for video output),</li>
+<li>libOpenSceneGraph-devel (for the experimental 3D GUI),</li>
+<li>python-devel and swig (for running TraCI pythons scripts without a socket connection),</li>
+<li>libeigen3 (for the overheadwire model)</li>
+<li>gtest (for unit testing)</li>
+<li>texttest (for the acceptance tests)
+  The package names above are for openSUSE, for ubuntu the call to get all optional libraries and tools is:
+  <code>sudo apt-get install libavformat-dev libswscale-dev libopenscenegraph-dev python3-dev swig libgtest-dev libeigen3-dev python3-pip python3-setuptools default-jdk
+  sudo pip3 install texttest</code></li>
+</ul>
+<h2 id="getting_the_source_code">Getting the source code<a class="headerlink" href="#getting_the_source_code" title="Permanent link">#</a></h2>
+<p>For the correct setting of SUMO_HOME you have to remember the correct
+path, where you build your SUMO, the SUMO build path. This path is shown
+with pwd at the end of getting the source code. If you want to develop
+actively on sumo we strongly recommend to use the git repository. Please
+build the tarball version if you need for some reason a specific version
+of sumo.</p>
+<h3 id="repository_checkout_recommended">repository checkout (recommended)<a class="headerlink" href="#repository_checkout_recommended" title="Permanent link">#</a></h3>
+<p>The following commands should be issued:</p>
+<pre><code>git clone --recursive https://github.com/eclipse/sumo
+cd sumo
+git fetch origin refs/replace/*:refs/replace/*
+pwd
+</code></pre>
+
+<p>The additional fetch of the replacements is necessary to get a full
+local project history.</p>
+<h3 id="release_version_or_nightly_tarball">release version or nightly tarball<a class="headerlink" href="#release_version_or_nightly_tarball" title="Permanent link">#</a></h3>
+<p>Download
+<a href="https://sumo.dlr.de/releases/1.8.0/sumo-src-1.8.0.tar.gz">sumo-src-1.8.0.tar.gz</a> or <a href="http://sumo.dlr.de/daily/sumo-src-git.tar.gz">http://sumo.dlr.de/daily/sumo-src-git.tar.gz</a></p>
+<pre><code>tar xzf sumo-src-&lt;version&gt;.tar.gz
+cd sumo-&lt;version&gt;/
+pwd
+</code></pre>
+
+<h2 id="definition_of_sumo_home">Definition of SUMO_HOME<a class="headerlink" href="#definition_of_sumo_home" title="Permanent link">#</a></h2>
+<p>Before compiling is advisable to
+define the environment variable SUMO_HOME. SUMO_HOME must be set to
+the SUMO build path from the previous step. Assuming that you placed
+SUMO in the folder "<em>/home/&lt;user>/sumo-&lt;version></em>", if you want to
+define only for the current session, type in the console</p>
+<pre><code>export SUMO_HOME=&quot;/home/&lt;user&gt;/sumo-&lt;version&gt;&quot;
+</code></pre>
+
+<p>If you want to define for all sessions (i.e. for every time that you run
+your Linux distribution), go to your HOME folder, and find one of the
+next three files (depending of your Linux distribution):
+<strong>.bash_profile</strong>, <strong>.bash_login</strong> or <strong>.profile</strong> (Note that these
+files can be hidden). Then edit the file, add the line from above at the
+end and restart your session.</p>
+<p>You can check that SUMO_HOME was successfully set if you type</p>
+<pre><code>echo $SUMO_HOME
+</code></pre>
+
+<p>and console shows "/home/&lt;user>/sumo-&lt;version>"</p>
+<h2 id="building_the_sumo_binaries_with_cmake">Building the SUMO binaries with cmake<a class="headerlink" href="#building_the_sumo_binaries_with_cmake" title="Permanent link">#</a></h2>
+<p>To build with cmake version 3 or higher is required.</p>
+<p>Create a build folder for cmake (in the sumo root folder)</p>
+<pre><code>mkdir build/cmake-build
+cd build/cmake-build
+</code></pre>
+
+<p>to build sumo with the full set of available options just like GDAL and
+OpenSceneGraph support (if the libraries are installed) just run:</p>
+<pre><code>cmake ../..
+</code></pre>
+
+<p>to build the debug version just use</p>
+<pre><code>cmake -D CMAKE_BUILD_TYPE=Debug ../..
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On some platforms the required cmake executable is called <em>cmake3</em>.</p>
+</div>
+<p>after this is finished, run</p>
+<pre><code>make -j $(nproc)
+</code></pre>
+
+<p>The <code>nproc</code> command gives you the number of logical cores on your
+computer, so that make will start parallel build jobs which makes the
+build a lot faster. If <code>nproc</code> is not available on your system, insert a
+fixed number here or leave the option out. You may also try</p>
+<pre><code>make -j $(grep -c ^processor /proc/cpuinfo)
+</code></pre>
+
+<p>Other useful cmake options:</p>
+<ul>
+<li><code>-D PROFILING=ON</code> enable profiling instrumentation for gprof (gcc
+  build only)</li>
+<li><code>-D COVERAGE=ON</code> enable coverage instrumentation for lcov (gcc build
+  only)</li>
+<li><code>-D CHECK_OPTIONAL_LIBS=OFF</code> disable all optional libraries (only
+  include EPL compatible licensed code)</li>
+<li><code>-D CMAKE_BUILD_TYPE=RelWithDebInfo</code> enable debug symbols for
+  debugging the release build or using a different profiler</li>
+<li><code>-D PROJ_LIBRARY=</code> disable PROJ</li>
+<li><code>-D FOX_CONFIG=</code> disable FOX toolkit (GUI and multithreading)</li>
+</ul>
+<h2 id="building_with_clang">Building with clang<a class="headerlink" href="#building_with_clang" title="Permanent link">#</a></h2>
+<p>If you want to use a different compiler (just for the fun of it or
+because it has additional features) you can enable it at configure time.
+Our current clang configuration for additional static code checking
+enables the following CXXFLAGS:</p>
+<pre><code>-stdlib=libstdc++ -fsanitize=undefined,address,integer,unsigned-integer-overflow -fno-omit-frame-pointer -fsanitize-blacklist=$SUMO_HOME/build/clang_sanitize_blacklist.txt
+</code></pre>
+
+<p>You may of course leave out all the sanitizer-checks you don't want but
+the stdlib option has to be set. The blacklist filters out a known bug
+in the cstdlib. For details see the clang documentation.</p>
+<p>The current CMake configuration already contains this for the debug
+build, so for building with CMake and clang just change to your build
+dir and use</p>
+<pre><code>CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Debug ../..
+</code></pre>
+
+<h2 id="installing_the_sumo_binaries">Installing the SUMO binaries<a class="headerlink" href="#installing_the_sumo_binaries" title="Permanent link">#</a></h2>
+<p>This (optional) step will copy the SUMO binaries to another path, so
+that you can delete all source and intermediate files afterwards. If you
+do not want (or need) to do that, you can simply skip this step and run
+SUMO from the bin subfolder (bin/sumo-gui and bin/sumo).</p>
+<p>If you want to install the SUMO binaries into your system, run</p>
+<pre><code>sudo make install
+</code></pre>
+
+<p>You have to adjust your SUMO_HOME variable to the install dir (usually
+/usr/local/share/sumo)</p>
+<pre><code>export SUMO_HOME=/usr/local/share/sumo
+</code></pre>
+
+<h2 id="uninstalling">Uninstalling<a class="headerlink" href="#uninstalling" title="Permanent link">#</a></h2>
+<p>CMake provides no <code>make uninstall</code> so if you ever want to uninstall, run</p>
+<pre><code>sudo xargs rm &lt; install_manifest.txt
+</code></pre>
+
+<p>from the same folder you ran <code>make install</code>. This will leave some empty
+directories, so if you want to remove them as well, double check that
+$SUMO_HOME points to the right directory (see above) and run</p>
+<pre><code>sudo xargs rm -r $SUMO_HOME
+</code></pre>
+
+<h2 id="frequent_rebuilds">(Frequent) Rebuilds<a class="headerlink" href="#frequent_rebuilds" title="Permanent link">#</a></h2>
+<p>If you did a repository clone you can simply update it by doing <code>git pull</code>
+from inside the SUMO_HOME folder. Then change to the buil directory and run
+<code>make -j $(nproc)</code> again.</p>
+<p>If your underlying system changed (updated libraries) or you experience other
+build problems please try a clean build first by removing the build directory (or at
+least the CMakeCache.txt) and running cmake and make again before reporting a bug.</p>
+<p>If you find yourself building very often after minor changes, consider installing
+ccache and run cmake again. It will be picked up automatically and can dramatically
+improve build speed.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
+<h3 id="problems_with_the_socket_subsystem">Problems with the socket subsystem<a class="headerlink" href="#problems_with_the_socket_subsystem" title="Permanent link">#</a></h3>
+<p>Problem:</p>
+<pre><code>recv ./foreign/tcpip/libtcpip.a(socket.o) (symbol belongs to implicit dependency /usr/lib/libsocket.so.1)
+</code></pre>
+
+<p>Solution:
+<a href="http://lists.danga.com/pipermail/memcached/2005-September/001611.html">http://lists.danga.com/pipermail/memcached/2005-September/001611.html</a></p>
+<h3 id="ld_cannot_find_an_existing_library_fedora-23">ld cannot find an existing library (Fedora-23)<a class="headerlink" href="#ld_cannot_find_an_existing_library_fedora-23" title="Permanent link">#</a></h3>
+<p>Problem:</p>
+<pre><code>/usr/bin/ld: cannot find -lfreetype
+ls -lah /usr/lib64/libfreetype*
+ lrwxrwxrwx. 1 root root   21 Jul 28 15:54 /usr/lib64/libfreetype.so.6 -&gt; libfreetype.so.6.12.0
+ lrwxr-xr-x. 1 root root 689K Jul 28 15:54 /usr/lib64/libfreetype.so.6.12.0
+</code></pre>
+
+<p>Solution: Install the dev package; for fedora:</p>
+<pre><code>sudo yum install freetype-devel
+</code></pre>
+
+<p>For details see
+<a href="http://stackoverflow.com/questions/335928/ld-cannot-find-an-existing-library">stackoverflow</a>
+discussion.</p>
+<h3 id="additional_notes_for_cygwin_users">Additional notes for Cygwin users<a class="headerlink" href="#additional_notes_for_cygwin_users" title="Permanent link">#</a></h3>
+<p>At the moment GUI building is still troublesome. It depends whether you
+want to use the X-Server or native Windows GUI. We tried native Windows
+GUI only and had to change the installed libFOX-1.4.la such that it
+contains</p>
+<pre><code>dependency_libs=' -lgdi32 -lglaux -ldl -lcomctl32 -lwsock32 -lwinspool -lmpr
+-lpthread -lpng /usr/lib/libtiff.la /usr/lib/libjpeg.la -lz -lbz2 -lopengl32 -lglu32'
+</code></pre>
+
+<p>Your mileage may vary.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 30 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

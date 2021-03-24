@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/TraCI/Lane_Value_Retrieval.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>TraCI/Lane Value Retrieval - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/TraCI/Lane_Value_Retrieval.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#command_0xa3_get_lane_variable">Command 0xa3: Get Lane Variable</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#response_0xb3_lane_variable" class="nav-link">• Response 0xb3: Lane Variable</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#command_links_0x33_compound_response_value" class="nav-link">&rarr; command links 0x33 compound response value</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#extended_retrieval_messages" class="nav-link">• Extended retrieval messages</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>TraCI/Lane Value Retrieval<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="command_0xa3_get_lane_variable">Command 0xa3: Get Lane Variable<a class="headerlink" href="#command_0xa3_get_lane_variable" title="Permanent link">#</a></h1>
+<table>
+<thead>
+<tr>
+<th align="center">ubyte</th>
+<th align="center">string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Variable</td>
+<td align="center">Lane ID</td>
+</tr>
+</tbody>
+</table>
+<p>Asks for the value of a certain variable of the named lane.</p>
+<p>The following variable values can be retrieved, the type of the return
+value is also shown in the table.</p>
+<p><center>
+<strong>Overview Retrievable Lane Variables</strong>
+</center></p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>ValueType</th>
+<th>Description</th>
+<th><a href="Interfacing_TraCI_from_Python.html">Python Method</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id list (0x00)</td>
+<td>stringList</td>
+<td>Returns a list of ids of all lanes within the scenario (the given Lane ID is ignored)</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getIDList">getIDList</a></td>
+</tr>
+<tr>
+<td>count (0x01)</td>
+<td>int</td>
+<td>Returns the number of lanes within the scenario (the given Lane ID is ignored)</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getIDCount">getIDCount</a></td>
+</tr>
+<tr>
+<td>link number (0x30)</td>
+<td>ubyte</td>
+<td>Returns the number of links outgoing from this lane [#]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLinkNumber">getLinkNumber</a></td>
+</tr>
+<tr>
+<td>edge id (0x31)</td>
+<td>string</td>
+<td>Returns the id of the edge this lane belongs to</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getEdgeID">getEdgeID</a></td>
+</tr>
+<tr>
+<td>links (0x33)</td>
+<td>compound</td>
+<td>Returns descriptions of the links outgoing from this lane [m]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLinks">getLinks</a></td>
+</tr>
+<tr>
+<td>allowed vehicle classes (0x34)</td>
+<td>stringList</td>
+<td>Returns the mml-definitions of vehicle classes allowed on this lane</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getAllowed">getAllowed</a></td>
+</tr>
+<tr>
+<td>disallowed vehicle classes (0x35)</td>
+<td>stringList</td>
+<td>Returns the mml-definitions of vehicle classes not allowed on this lane</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getDisallowed">getDisallowed</a></td>
+</tr>
+<tr>
+<td>length (0x44)</td>
+<td>double</td>
+<td>Returns the length of the named lane [m]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLength">getLength</a></td>
+</tr>
+<tr>
+<td>vmax (0x41)</td>
+<td>double</td>
+<td>Returns the maximum speed allowed on this lane [m/s]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getMaxSpeed">getMaxSpeed</a></td>
+</tr>
+<tr>
+<td>shape (0x4e)</td>
+<td>shape</td>
+<td>Returns this lane's shape</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getShape">getShape</a></td>
+</tr>
+<tr>
+<td>width (0x4d)</td>
+<td>double</td>
+<td>Returns the width of the named lane [m]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getWidth">getWidth</a></td>
+</tr>
+<tr>
+<td>CO2 emissions (id 0x60)</td>
+<td>double</td>
+<td>Sum of CO2 emissions on this lane in mg during this time step.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getCO2Emission">getCO2Emission</a></td>
+</tr>
+<tr>
+<td>CO emissions (id 0x61)</td>
+<td>double</td>
+<td>Sum of CO emissions on this lane in mg during this time step.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getCOEmission">getCOEmission</a></td>
+</tr>
+<tr>
+<td>HC emissions (id 0x62)</td>
+<td>double</td>
+<td>Sum of HC emissions on this lane in mg during this time step.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getHCEmission">getHCEmission</a></td>
+</tr>
+<tr>
+<td>PMx emissions (id 0x63)</td>
+<td>double</td>
+<td>Sum of PMx emissions on this lane in mg during this time step.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getPMxEmission">getPMxEmission</a></td>
+</tr>
+<tr>
+<td>NOx emissions (id 0x64)</td>
+<td>double</td>
+<td>Sum of NOx emissions on this lane in mg during this time step.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getNOxEmission">getNOxEmission</a></td>
+</tr>
+<tr>
+<td>fuel consumption (id 0x65)</td>
+<td>double</td>
+<td>Sum of fuel consumption on this lane in ml during this time step.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getFuelConsumption">getFuelConsumption</a></td>
+</tr>
+<tr>
+<td>noise emission (id 0x66)</td>
+<td>double</td>
+<td>Sum of noise generated on this lane in dBA.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getNoiseEmission">getNoiseEmission</a></td>
+</tr>
+<tr>
+<td>electricity consumption (id 0x71)</td>
+<td>double</td>
+<td>Sum of electricity consumption on this lane in kWh during this time step.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getElectricityConsumption">getElectricityConsumption</a></td>
+</tr>
+<tr>
+<td>last step vehicle number (0x10)</td>
+<td>int</td>
+<td>The number of vehicles on this lane within the last time step.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLastStepVehicleNumber">getLastStepVehicleNumber</a></td>
+</tr>
+<tr>
+<td>last step mean speed (0x11)</td>
+<td>double</td>
+<td>Returns the mean speed of vehicles that were on this lane within the last simulation step [m/s]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLastStepMeanSpeed">getLastStepMeanSpeed</a></td>
+</tr>
+<tr>
+<td>last step vehicle ids (0x12)</td>
+<td>stringList</td>
+<td>Returns the list of ids of vehicles that were on this lane in the last simulation step</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLastStepVehicleIDs">getLastStepVehicleIDs</a></td>
+</tr>
+<tr>
+<td>last step occupancy (0x13)</td>
+<td>double</td>
+<td>Returns the total lengths of vehicles on this lane during the last simulation step divided by the length of this lane</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLastStepOccupancy">getLastStepOccupancy</a></td>
+</tr>
+<tr>
+<td>last step mean vehicle length (0x15)</td>
+<td>double</td>
+<td>The mean length of vehicles which were on this lane in the last step [m]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLastStepLength">getLastStepLength</a></td>
+</tr>
+<tr>
+<td>waiting time (0x7a)</td>
+<td>double</td>
+<td>Returns the waiting time for all vehicles on the lane [s]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getWaitingTime">getWaitingTime</a></td>
+</tr>
+<tr>
+<td>traveltime (0x5a)</td>
+<td>double</td>
+<td>Returns the estimated travel time for the last time step on the given lane [s]</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getTraveltime">getTraveltime</a></td>
+</tr>
+<tr>
+<td>last step halting number (0x14)</td>
+<td>int</td>
+<td>Returns the total number of halting vehicles for the last time step on the given lane. A speed of less than 0.1 m/s is considered a halt.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLastStepHaltingNumber">getLastStepHaltingNumber</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="response_0xb3_lane_variable">Response 0xb3: Lane Variable<a class="headerlink" href="#response_0xb3_lane_variable" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">ubyte</th>
+<th align="center">string</th>
+<th align="center">ubyte</th>
+<th align="center">&lt;return_type></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Variable</td>
+<td align="center">Lane ID</td>
+<td align="center">Return type of the variable</td>
+<td align="center">&lt;VARIABLE_VALUE></td>
+</tr>
+</tbody>
+</table>
+<p>The respond to a <strong>"Command Get Lane Variable"</strong>.</p>
+<h3 id="command_links_0x33_compound_response_value">command <em>links</em> 0x33 compound response value<a class="headerlink" href="#command_links_0x33_compound_response_value" title="Permanent link">#</a></h3>
+<p>If you request the list of links, an compound object is returned,
+structured as following. Attention, each part is forwarded by a byte
+which represents its data type, except "length".</p>
+<table>
+<thead>
+<tr>
+<th align="center">integer</th>
+<th align="center">type + integer</th>
+<th align="center">link</th>
+<th align="center">...</th>
+<th align="center">link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Length</td>
+<td align="center">Number of links</td>
+<td align="center">Link 1</td>
+<td align="center">...</td>
+<td align="center">Link n</td>
+</tr>
+</tbody>
+</table>
+<p>where <strong>length</strong> is the total number of following elements -- counting
+each element of <strong>link</strong> separately -- and <strong>link</strong> is described by:</p>
+<table>
+<thead>
+<tr>
+<th align="center">type + string</th>
+<th align="center">type + string</th>
+<th align="center">type + ubyte</th>
+<th align="center">type + ubyte</th>
+<th align="center">type + ubyte</th>
+<th align="center">type + string</th>
+<th align="center">type + string</th>
+<th align="center">type + double</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">consecutive not internal lane</td>
+<td align="center">consecutive internal lane</td>
+<td align="center">has priority (=1) or not (=0)</td>
+<td align="center">is opened (=1) or not (=0)</td>
+<td align="center">has approaching foe (=1) or not (=0)</td>
+<td align="center"><a href="../Networks/SUMO_Road_Networks.html#plain_connections">(current) state</a></td>
+<td align="center"><a href="../Networks/SUMO_Road_Networks.html#plain_connections">direction</a></td>
+<td align="center">length [m] - only valid if not using internal lanes</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Please note that the information "is opened" and "has approaching foe" currently refer to the current time step; this is rather inappropriate and will be probably changed in the next future.</p>
+</div>
+<h2 id="extended_retrieval_messages">Extended retrieval messages<a class="headerlink" href="#extended_retrieval_messages" title="Permanent link">#</a></h2>
+<p>Some further messages require additional parameters.</p>
+<p><center>
+<strong>Overview Extended Variables Retrieval</strong>
+</center></p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Request ValueType</th>
+<th>Response ValueType</th>
+<th>Description</th>
+<th><a href="Interfacing_TraCI_from_Python.html">Python Method</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>foes (0x37)</td>
+<td>toLane (string)</td>
+<td>stringVector</td>
+<td>Returns the list of foe lanes. There are two modes for calling this method. If <strong>toLane</strong> is a normal road lane that is reachable from the laneID argument, the list contains all lanes that are the origin of a connection with right-of-way over the connection between <strong>laneID</strong> and <strong>toLane</strong>. If <strong>toLane</strong> is empty and <strong>laneID</strong> is an internal lane, the list contains all internal lanes that intersect with <em>laneID</em>.</td>
+<td><a href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getFoes">getFoes</a></td>
+</tr>
+</tbody>
+</table>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

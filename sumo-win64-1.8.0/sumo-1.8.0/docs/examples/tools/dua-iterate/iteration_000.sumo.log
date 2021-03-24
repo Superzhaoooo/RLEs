@@ -1,0 +1,20 @@
+Loading net-file from 'C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\input_net.net.xml' ... done (5ms).
+Loading additional-files from 'C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\dua_dump_000.add.xml' ... done (4ms).
+Loading done.
+Warning: Cannot read local schema 'C:\Users\jwj\Desktop\sumo-win64-1.8.0/data/xsd/routes_file.xsd', will try website lookup.
+Error: unable to open file 'https://sumo.dlr.de/xsd/routes_file.xsd'
+ In file 'C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\input_trips_000.rou.xml'
+ At line/column 1/0.
+
+Quitting (on error).
+Simulation ended at time: 0.00
+Reason: All vehicles have left the simulation.
+Performance: 
+ Duration: 42.91s
+ Real time factor: 0
+ UPS: 0.000000
+Vehicles: 
+ Inserted: 0
+ Running: 0
+ Waiting: 0
+

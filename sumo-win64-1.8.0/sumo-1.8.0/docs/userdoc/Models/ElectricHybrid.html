@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Models/ElectricHybrid.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Models/ElectricHybrid - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Models/ElectricHybrid.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#overview">Overview</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#defining_partial_trolleybuses" class="nav-link">• Defining Partial Trolleybuses</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traction_substation" class="nav-link">• Traction Substation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#overhead_wires" class="nav-link">• Overhead Wires</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#electric_substation_output" class="nav-link">&rarr; Electric Substation output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#electrichybrid_output" class="nav-link">• ElectricHybrid output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#emission_output" class="nav-link">• Emission Output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#model_details" class="nav-link">• Model Details</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#known_limitations" class="nav-link">• Known Limitations</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#charging_stations" class="nav-link">&rarr; Charging Stations</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#saving_and_loading_simulation_state" class="nav-link">&rarr; Saving and Loading Simulation State</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traci" class="nav-link">&rarr; TraCI</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#other_limitations" class="nav-link">&rarr; Other Limitations</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#publications" class="nav-link">&rarr; Publications</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Models/ElectricHybrid<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h1>
+<p>Since version 1.5.0 SUMO extends the original <a href="Electric.html">electric</a> vehicle model with a model that simulates
+also internal electric parameters of an partial trolleybus, i.e. a vehicle that is being powered by overhead wires and
+has also a battery pack installed, that is being charged from the overhead wires. The model allows not only for vehicle 
+simulation, but the simulation may also include detailed electrical simulation of the overhead wire circuit behavior.
+It was implemented by Jakub Ševčík and Jan Přikryl from the <a href="https://rice.zcu.cz/en">RICE FEL UWB Pilen</a>. 
+The core of the model is implemented in the <a href="../Developer/How_To/Device.html">vehicle device</a> <em>device.elechybrid</em>. Additional
+features are a set of overhead wires (which can be placed on any lane in the
+network) including wire clamps, a traction substation powering these wires, and a new output options
+<strong>--elechybrid-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>, <strong>--overheadwiresegments-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and <strong>--substations-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>.</p>
+<p>You can find a test case for these implementations at
+<a href="?????">[1]</a></p>
+<h2 id="defining_partial_trolleybuses">Defining Partial Trolleybuses<a class="headerlink" href="#defining_partial_trolleybuses" title="Permanent link">#</a></h2>
+<p>To define an electric vehicle with in-motion charging system, it must be equipped with a hybrid electric device.
+This may be done using the option <strong>--device.elechybrid.explicit &lt;vehID1,vehID2,...></strong> or simply setting
+<strong>--device.elechybrid.probability 1</strong> to equip all vehicles. Alternatively, the device may be specified using
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#devices">Generic vehicle parameters</a>.</p>
+<p>Additional properties of the vehicle and its electrical components must then be defined via
+<a href="../Simulation/GenericParameters.html">parameters of the vehicle or its type</a>.</p>
+<p>These values have the following meanings:</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>Value Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>maximumBatteryCapacity</td>
+<td>float</td>
+<td>0 (Wh)</td>
+<td>Maximum battery capacity <em>E<sub>max</sub></em></td>
+</tr>
+<tr>
+<td>overheadWireChargingPower</td>
+<td>float</td>
+<td>0 (W)</td>
+<td>Constant power drawn from an overhead wire if charging a battery</td>
+</tr>
+<tr>
+<td>maximumPower</td>
+<td>float</td>
+<td>100000 (W)</td>
+<td>Maximum power of the vehicle electric <strong>drive</strong></td>
+</tr>
+<tr>
+<td>vehicleMass</td>
+<td>float</td>
+<td>1000 (kg)</td>
+<td>Vehicle mass <em>m<sub>veh</sub></em></td>
+</tr>
+<tr>
+<td>frontSurfaceArea</td>
+<td>float</td>
+<td>5 (m2)</td>
+<td>Front surface area <em>A<sub>veh</sub></em></td>
+</tr>
+<tr>
+<td>airDragCoefficient</td>
+<td>float</td>
+<td>0.6</td>
+<td>Air drag coefficient <em>c<sub>w</sub></em></td>
+</tr>
+<tr>
+<td>internalMomentOfInertia</td>
+<td>float</td>
+<td>0.01 (kg·m2)</td>
+<td>Mom. of inertia of int. rot. elements <em>J<sub>int</sub></em></td>
+</tr>
+<tr>
+<td>radialDragCoefficient</td>
+<td>float</td>
+<td>0.5</td>
+<td>Radial drag coefficient c<sub>rad</sub></td>
+</tr>
+<tr>
+<td>rollDragCoefficient</td>
+<td>float</td>
+<td>0.01</td>
+<td>Rolling resistance coefficient <em>c<sub>roll</sub></em></td>
+</tr>
+<tr>
+<td>constantPowerIntake</td>
+<td>float</td>
+<td>1000 (W)</td>
+<td>Avg. (constant) power of consumers <em>P<sub>const</sub></em></td>
+</tr>
+<tr>
+<td>propulsionEfficiency</td>
+<td>float</td>
+<td>0.9</td>
+<td>Drive efficiency <em>η<sub>prop</sub></em></td>
+</tr>
+<tr>
+<td>recuperationEfficiency</td>
+<td>float</td>
+<td>0.8</td>
+<td>Recuperation efficiency (constant) <em>η<sub>recup</sub></em></td>
+</tr>
+<tr>
+<td>recuperationEfficiencyByDecel</td>
+<td>float</td>
+<td>0.0</td>
+<td>Recuperation efficiency (by deceleration)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In comparison with battery device, focuse attention on maximumPower variable, which defines maximum motor (drive) power of hybrid electric vehicle. The rest of parameters in the table are common for model of electric energy consumption and have the same meaning.</p>
+</div>
+<p>An example of a vehicle with hybrid electric attribute is almost identical with that of an electric vehicle:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vType id=&quot;trolleybus&quot; accel=&quot;0.8&quot; decel=&quot;1.0&quot; length=&quot;12&quot; maxSpeed=&quot;18.0&quot; sigma=&quot;0.0&quot; minGap=&quot;2.5&quot;
+           emissionClass=&quot;Energy/unknown&quot;  vClass=&quot;bus&quot; guiShape=&quot;bus/trolley&quot; color=&quot;0,1,0&quot;&gt;
+      &lt;param key=&quot;maximumBatteryCapacity&quot; value=&quot;50000&quot;/&gt;
+      &lt;param key=&quot;overheadWireChargingPower&quot; value=&quot;10000&quot;/&gt;
+      &lt;param key=&quot;maximumPower&quot; value=&quot;200000&quot;/&gt;
+      &lt;param key=&quot;vehicleMass&quot; value=&quot;10000&quot;/&gt;
+      &lt;param key=&quot;frontSurfaceArea&quot; value=&quot;7.5&quot;/&gt;
+      &lt;param key=&quot;airDragCoefficient&quot; value=&quot;0.59&quot;/&gt;
+      &lt;param key=&quot;internalMomentOfInertia&quot; value=&quot;0.01&quot;/&gt;
+      &lt;param key=&quot;radialDragCoefficient&quot; value=&quot;0.5&quot;/&gt;
+      &lt;param key=&quot;rollDragCoefficient&quot; value=&quot;0.061&quot;/&gt;
+      &lt;param key=&quot;constantPowerIntake&quot; value=&quot;5000&quot;/&gt;
+      &lt;param key=&quot;propulsionEfficiency&quot; value=&quot;0.9&quot;/&gt;
+      &lt;param key=&quot;recuperationEfficiency&quot; value=&quot;0.9&quot;/&gt;
+      &lt;param key=&quot;recuperationEfficiencyByDecel&quot; value=&quot;0.&quot;/&gt;
+      &lt;param key=&quot;&quot; value=&quot;&quot;/&gt;
+    &lt;/vType&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<p>The initial energy content of the battery (in (Wh) by default 0.0 Wh) can be set in the vehicle definitions</p>
+<pre><code>&lt;routes&gt;
+    &lt;vehicle id=&quot;0&quot; type=&quot;trolleybus&quot; depart=&quot;0&quot; route=&quot;route1&quot; color=&quot;1,0,0&quot;&gt;
+        &lt;param key=&quot;actualBatteryCapacity&quot; value=&quot;5000&quot;/&gt;
+    &lt;/vehicle&gt;
+&lt;/routes&gt;
+</code></pre>
+
+<h2 id="traction_substation">Traction Substation<a class="headerlink" href="#traction_substation" title="Permanent link">#</a></h2>
+<p>A traction substation represents a transformer station that is responsible for powering a certain
+set of overhead wire circuits. The current implementation of this element is quite simple: the
+substation provides information about the nominal voltage of the overhead wire and it also specifies
+the maximum current that can be drawn from the feeder (this imposes a maximum power limit on that
+substation). </p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>Value Type</th>
+<th>Value range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>id</td>
+<td></td>
+<td>Traction substation ID (Must be unique)</td>
+</tr>
+<tr>
+<td><strong>voltage</strong></td>
+<td>float</td>
+<td>voltage > 0</td>
+<td>600 (V)</td>
+<td>Voltage of at connection point for the overhead wire</td>
+</tr>
+<tr>
+<td><strong>currentLimit</strong></td>
+<td>float</td>
+<td>currentLimit > 0</td>
+<td>400 (A)</td>
+<td>Current limit of the feeder line</td>
+</tr>
+</tbody>
+</table>
+<pre><code>&lt;additionals&gt;
+    &lt;tractionSubstation id=&quot;Sub1&quot; voltage=&quot;600&quot; currentLimit=&quot;1000&quot;/&gt;
+&lt;/additionals&gt;
+</code></pre>
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The parameter <strong>currentLimit</strong> does not cause any power limit of the feeder in SUMO v1.4.</p>
+</div>
+<h2 id="overhead_wires">Overhead Wires<a class="headerlink" href="#overhead_wires" title="Permanent link">#</a></h2>
+<p>An overhead wire circuit is a set of overhead wires that are connected to a certain traction substation.
+The circuit may contain clamps that interconnect diferent parts of the circuit (typically wires for
+vehicles moving in opposite directions on the same street) and that improve electric parameters of the
+circuit when it is under higher load (TODO: feeder wires from the substation to more than a single
+place in the circuit).</p>
+<p>In SUMO, the overhead wire circuit consists of segments that are defined on lanes of the SUMO network.
+Each segment may be shorten than the lane length, and a beginning or ending offset may be specified (this
+is typically used in trolleybus network to start or end the overhead wire at bus stops where the KLACKY
+are put on/off the overhead wire). At least one of the segments that will form a circuit has to be
+connected to a substation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Segments are automatically created for internal lanes of an intersection, unless the lane is 
+explicitly prohibited using forbiddenInnerLanes in overhead circuit/section definition (see below).</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>Value Type</th>
+<th>Value range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>id</td>
+<td></td>
+<td>Overhead wire segment ID (must be unique)</td>
+</tr>
+<tr>
+<td><strong>lane</strong></td>
+<td>string</td>
+<td>valid lane id</td>
+<td></td>
+<td>Lane over which the segment is placed</td>
+</tr>
+<tr>
+<td><strong>voltageSource</strong></td>
+<td>boolean</td>
+<td>true or false</td>
+<td>false</td>
+<td>If true, the beginning point of the segment is connected to a substation</td>
+</tr>
+<tr>
+<td>startPos</td>
+<td>float</td>
+<td>0 &lt;= x &lt; lane.length</td>
+<td>0</td>
+<td>Starting position in the specified lane</td>
+</tr>
+<tr>
+<td>endPos</td>
+<td>float</td>
+<td>0 &lt; x &lt;= lane.length</td>
+<td>lane.length</td>
+<td>Ending position in the specified lane</td>
+</tr>
+</tbody>
+</table>
+<p>Overhead wire segments are defined in an additional file using the following format:</p>
+<pre><code>&lt;additionals&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_gneE0_0&quot; lane=&quot;gneE0_0&quot; voltageSource=&quot;true&quot; /&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_gneE1_0&quot; lane=&quot;gneE1_0&quot; /&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_gneE3_0&quot; lane=&quot;gneE3_0&quot; /&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_gneE4_0&quot; lane=&quot;gneE4_0&quot; /&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_gneE5_0&quot; lane=&quot;gneE5_0&quot; voltageSource=&quot;true&quot;/&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_-gneE3_0&quot; lane=&quot;-gneE3_0&quot; /&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_-gneE1_0&quot; lane=&quot;-gneE1_0&quot; /&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_-gneE0_0&quot; lane=&quot;-gneE0_0&quot;  startPos=&quot;0.0&quot; endPos=&quot;40.&quot; /&gt;
+&lt;/additionals&gt;
+</code></pre>
+
+<p>We can also try to improve electric parameters of the circuit by specifying <em>overhead wire clamps</em> that interconnect 
+selected overhead wire segments (these are typically overhead wire segments in the opposite directions on the same street):</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>Value Type</th>
+<th>Value range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>id</td>
+<td></td>
+<td>Overhead wire clamp ID (must be unique)</td>
+</tr>
+<tr>
+<td><strong>substationId</strong></td>
+<td>string</td>
+<td>valid substation id</td>
+<td></td>
+<td>Substation which can employ the overhead wire clamp</td>
+</tr>
+<tr>
+<td>idSegmentStartClamp</td>
+<td>string</td>
+<td>valid segment id</td>
+<td></td>
+<td>id of the overhead wire segment, to the start of which the overhead wire clamp is connected</td>
+</tr>
+<tr>
+<td>idSegmentEndClamp</td>
+<td>string</td>
+<td>valid segment id</td>
+<td></td>
+<td>id of the overhead wire segment, to the end of which the overhead wire clamp is connected</td>
+</tr>
+</tbody>
+</table>
+<pre><code>&lt;additionals&gt;
+    &lt;overheadWireClamp id=&quot;clamp1&quot; substationId=&quot;Sub1&quot; idSegmentStartClamp=&quot;ovrhdSgmnt_-gneE0_0&quot; idSegmentEndClamp=&quot;ovrhdSgmnt_gneE0_0&quot; /&gt;
+&lt;/additionals&gt;
+</code></pre>
+
+<p>Once the overhead wire segments (and overhead wire clamps) have been specified, an electric circuit can be defined:  </p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>Value Type</th>
+<th>Value range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>segments</strong></td>
+<td>string</td>
+<td>list of overhead wire segment IDs</td>
+<td></td>
+<td>Segments that form the given circuit</td>
+</tr>
+<tr>
+<td><strong>substationId</strong></td>
+<td>string</td>
+<td>valid substation id</td>
+<td></td>
+<td>Substation to which the circuit is connected</td>
+</tr>
+<tr>
+<td>clamps</td>
+<td>string</td>
+<td>list of overhead wire clamps</td>
+<td></td>
+<td>Overhead wire clamps which interconnect overhead wire segments</td>
+</tr>
+<tr>
+<td>forbiddenInnerLanes</td>
+<td>string</td>
+<td>list of forbidden lanes</td>
+<td></td>
+<td>Inner lanes, where placing of overhead wire is restricted</td>
+</tr>
+</tbody>
+</table>
+<pre><code>&lt;additionals&gt;
+    &lt;overheadWire segments=&quot;ovrhdSgmnt_gneE0_0 ovrhdSgmnt_gneE1_0 ovrhdSgmnt_gneE3_0 ovrhdSgmnt_gneE4_0 ovrhdSgmnt_gneE5_0 ovrhdSgmnt_-gneE3_0 ovrhdSgmnt_-gneE1_0 ovrhdSgmnt_-gneE0_0&quot;
+                  substationId=&quot;Sub1&quot; clamps=&quot;clamp1&quot; forbiddenInnerLanes=&quot;:gneJ4_2_0&quot; /&gt;
+&lt;/additionals&gt;
+</code></pre>
+
+<p>The overhead wire powering/charging system is represented in the graphical user interface as two-wire system:</p>
+<p><img alt="" src="../images/overheadWire_gui_labeled.png" title="Representation of the ovrehead wire in GUI" />
+Representation of the overhead wire in GUI</p>
+<p>If a vehicle equipped with ElectricHybrid device drives under the wire, the color of the <em>circuit or section (?)</em> changes
+according to the power consumed <em>(the colormap is currently hardcoded)</em></p>
+<p><img alt="" src="../images/overheadWire_withElecHybrid_gui_labeled.png" title="Color change of an overhead wire" />
+Color of overhead wire in case that some power is supplied to a vehicle</p>
+<h3 id="electric_substation_output">Electric Substation output<a class="headerlink" href="#electric_substation_output" title="Permanent link">#</a></h3>
+<p>Option --substations-output "nameOfFile.xml" generates a full report of energy provided by substations:</p>
+<pre><code>&lt;output&gt;
+    &lt;substations-output value=&quot;substations.out.xml&quot;/&gt;
+&lt;/output&gt;
+</code></pre>
+
+<p>File <code>substations.out.xml</code> has the following structure:</p>
+<pre><code>&lt;substations-export&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_gneE0_0&quot; tractionSubstationId=&quot;Sub1&quot; totalEnergyCharged=&quot;0.00&quot; chargingSteps=&quot;0&quot;/&gt;
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_gneE1_0&quot; tractionSubstationId=&quot;&quot; totalEnergyCharged=&quot;0.00&quot; chargingSteps=&quot;0&quot;/&gt;
+    ...
+    &lt;overheadWireSegment id=&quot;ovrhdSgmnt_gneE5_0&quot; tractionSubstationId=&quot;Sub1&quot; totalEnergyCharged=&quot;250.92&quot; chargingSteps=&quot;11&quot;&gt;
+        &lt;vehicle id=&quot;test1&quot; type=&quot;trolleybus&quot; totalEnergyChargedIntoVehicle=&quot;250.92&quot; chargingBegin=&quot;1.00&quot; chargingEnd=&quot;11.00&quot; maximumBatteryCapacity=&quot;46000.00&quot;&gt;
+            &lt;step time=&quot;1.00&quot; chargingStatus=&quot;charging&quot; energyCharged=&quot;16.17&quot; partialCharge=&quot;16.17&quot; voltage=&quot;699.98&quot; actualBatteryCapacity=&quot;23011.11&quot;/&gt;
+            &lt;step time=&quot;2.00&quot; chargingStatus=&quot;charging&quot; energyCharged=&quot;20.66&quot; partialCharge=&quot;36.83&quot; voltage=&quot;699.94&quot; actualBatteryCapacity=&quot;23022.22&quot;/&gt;
+            ...
+        &lt;/vehicle&gt;
+        ...
+    &lt;/overheadWireSegment&gt;
+    ...
+    &lt;overheadWireSegment id=&quot;ovrhd_inner_:gneJ1_0_1&quot; tractionSubstationId=&quot;Sub2&quot; totalEnergyCharged=&quot;30.15&quot; chargingSteps=&quot;1&quot;&gt;
+        &lt;vehicle id=&quot;test1&quot; type=&quot;trolleybus&quot; totalEnergyChargedIntoVehicle=&quot;30.15&quot; chargingBegin=&quot;12.00&quot; chargingEnd=&quot;12.00&quot; maximumBatteryCapacity=&quot;46000.00&quot;&gt;
+            &lt;step time=&quot;12.00&quot; chargingStatus=&quot;charging&quot; energyCharged=&quot;30.15&quot; partialCharge=&quot;30.15&quot; voltage=&quot;698.54&quot; actualBatteryCapacity=&quot;23133.33&quot;/&gt;
+        &lt;/vehicle&gt;
+    &lt;/overheadWireSegment&gt;
+    ...
+&lt;/substations-export&gt;
+</code></pre>
+
+<p>For the entire overhead wire segment:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>ChargingStation ID</td>
+</tr>
+<tr>
+<td>totalEnergyCharged</td>
+<td>float</td>
+<td>Total energy charged in W during the entire simulation</td>
+</tr>
+<tr>
+<td>chargingSteps</td>
+<td>int</td>
+<td>Number of steps in which charginStation was charging energy</td>
+</tr>
+</tbody>
+</table>
+<p>For a vehicle on the given segment:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>ID of vehicle that is being powered by the segment</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>type of vehicle</td>
+</tr>
+<tr>
+<td>totalEnergyChargedIntoVehicle</td>
+<td>double</td>
+<td>Energy provided during the travel on the segment (Wh)</td>
+</tr>
+<tr>
+<td>chargingBegin</td>
+<td>float</td>
+<td>TimeStep in which vehicle starts with the charge (in seconds)</td>
+</tr>
+<tr>
+<td>chargingEnd</td>
+<td>float</td>
+<td>TimeStep in which vehicle ends with the charge (in seconds)</td>
+</tr>
+<tr>
+<td>maximumBatteryCapacity</td>
+<td>float</td>
+<td>Maximum battery capacity <em>E<sub>max</sub></em></td>
+</tr>
+</tbody>
+</table>
+<p>For every time step that a vehicle is being powereb by the segment:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time</td>
+<td>float</td>
+<td>Current timestep (s)</td>
+</tr>
+<tr>
+<td>energyCharged</td>
+<td>float</td>
+<td>Energy charged in the current time step (Wh)</td>
+</tr>
+<tr>
+<td>partialCharge</td>
+<td>float</td>
+<td>Energy charged by the segment since vehicle entered the segment (Wh)</td>
+</tr>
+<tr>
+<td>voltage</td>
+<td>float</td>
+<td>Current voltage in the overhead wire (V)</td>
+</tr>
+<tr>
+<td>actualBatteryCapacity</td>
+<td>float</td>
+<td>Current battery capacity of vehicle (Wh)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="electrichybrid_output">ElectricHybrid output<a class="headerlink" href="#electrichybrid_output" title="Permanent link">#</a></h2>
+<p>There are three output parameters to be set in the SUMO configuration to
+use the battery device:</p>
+<pre><code>&lt;configuration&gt;
+    &lt;input&gt;
+        &lt;net-file value=&quot;netFile.xml&quot;/&gt;
+        &lt;route-files value=&quot;routeFile.xml&quot;/&gt;
+        &lt;additional-files value=&quot;additionalFile.xml&quot;/&gt;
+    &lt;/input&gt;
+    &lt;output&gt;
+        &lt;battery-output value=&quot;Battery.out.xml&quot;/&gt;
+        &lt;battery-output.precision value=&quot;4&quot;/&gt;
+        &lt;device.battery.probability value=&quot;1&quot;/&gt;
+        &lt;summary-output value=&quot;summary_100.xml&quot;/&gt;
+    &lt;/output&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<p>This will activate an aggregated ElectricHybrid output:</p>
+<pre><code>&lt;elecHybrid-export-aggregated&gt;
+    &lt;timestep time=&quot;0.00&quot;&gt;
+        &lt;vehicle id=&quot;test1&quot; maximumBatteryCapacity=&quot;46000.0000&quot; actualBatteryCapacity=&quot;23000.0000&quot; energyConsumed=&quot;0.0000&quot; energyCharged=&quot;0.0000&quot; power=&quot;-nan(ind)&quot; overheadWireId=&quot;&quot; tractionSubstationId=&quot;&quot; current=&quot;-nan(ind)&quot; circuitVoltage=&quot;-nan(ind)&quot; alphaCircuitSolver=&quot;-nan(ind)&quot; speed=&quot;0.0000&quot; acceleration=&quot;0.0000&quot; distance=&quot;0.0000&quot; x=&quot;-1.4500&quot; y=&quot;46.3800&quot; z=&quot;0.0000&quot; slope=&quot;0.0000&quot; lane=&quot;gneE0_0&quot; posOnLane=&quot;0.0000&quot;/&gt;
+        &lt;vehicle id=&quot;test2&quot; maximumBatteryCapacity=&quot;46000.0000&quot; actualBatteryCapacity=&quot;23000.0000&quot; energyConsumed=&quot;0.0000&quot; energyCharged=&quot;0.0000&quot; power=&quot;-nan(ind)&quot; overheadWireId=&quot;&quot; tractionSubstationId=&quot;&quot; current=&quot;-nan(ind)&quot; circuitVoltage=&quot;-nan(ind)&quot; alphaCircuitSolver=&quot;-nan(ind)&quot; speed=&quot;0.0000&quot; acceleration=&quot;0.0000&quot; distance=&quot;0.0000&quot; x=&quot;36.1600&quot; y=&quot;33.7600&quot; z=&quot;0.0000&quot; slope=&quot;0.0000&quot; lane=&quot;-gneE10_0&quot; posOnLane=&quot;0.0000&quot;/&gt;
+    &lt;/timestep&gt;
+    &lt;timestep time=&quot;1.00&quot;&gt;
+        &lt;vehicle id=&quot;test1&quot; maximumBatteryCapacity=&quot;46000.0000&quot; actualBatteryCapacity=&quot;23011.1111&quot; energyConsumed=&quot;5.0570&quot; energyCharged=&quot;11.1111&quot; power=&quot;58205.3716&quot; overheadWireId=&quot;ovrhdSgmnt_gneE0_0_0&quot; tractionSubstationId=&quot;trSubstation1&quot; current=&quot;83.1523&quot; circuitVoltage=&quot;699.9850&quot; alphaCircuitSolver=&quot;1.0000&quot; speed=&quot;0.8000&quot; acceleration=&quot;0.8000&quot; distance=&quot;0.8000&quot; x=&quot;-0.6502&quot; y=&quot;46.3729&quot; z=&quot;0.0000&quot; slope=&quot;0.0000&quot; lane=&quot;gneE0_0&quot; posOnLane=&quot;0.8000&quot;/&gt;
+        &lt;vehicle id=&quot;test2&quot; maximumBatteryCapacity=&quot;46000.0000&quot; actualBatteryCapacity=&quot;23011.1111&quot; energyConsumed=&quot;5.0570&quot; energyCharged=&quot;11.1111&quot; power=&quot;58205.3716&quot; overheadWireId=&quot;ovrhdSgmnt_-gneE10_0_6&quot; tractionSubstationId=&quot;trSubstation2&quot; current=&quot;97.0738&quot; circuitVoltage=&quot;599.5992&quot; alphaCircuitSolver=&quot;1.0000&quot; speed=&quot;0.8000&quot; acceleration=&quot;0.8000&quot; distance=&quot;0.8000&quot; x=&quot;36.1308&quot; y=&quot;32.9604&quot; z=&quot;0.0000&quot; slope=&quot;0.0000&quot; lane=&quot;-gneE10_0&quot; posOnLane=&quot;0.8000&quot;/&gt;
+    &lt;/timestep&gt;
+    ...
+&lt;/elecHybrid-export-aggregated&gt;    
+</code></pre>
+
+<p>Time step parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time</td>
+<td>int</td>
+<td>Current timestep</td>
+</tr>
+</tbody>
+</table>
+<p>Vehicle parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>ID of vehicle that is being powered by the segment</td>
+</tr>
+<tr>
+<td>maximumBatteryCapacity</td>
+<td>float</td>
+<td>Maximum battery capacity <em>E<sub>max</sub></em></td>
+</tr>
+<tr>
+<td>actualBatteryCapacity</td>
+<td>float</td>
+<td>Energy content of the battery in this timestep in <strong>Wh</strong></td>
+</tr>
+<tr>
+<td>energyConsumed</td>
+<td>float</td>
+<td>Energy consumption in this timestep in <strong>Wh</strong></td>
+</tr>
+<tr>
+<td>energyCharged</td>
+<td>float</td>
+<td>Charge received in the current time step from a charging station (Only != 0 if vehicle is exactly at a charging station)</td>
+</tr>
+<tr>
+<td>power</td>
+<td>float</td>
+<td>Power demand requested from the overhead wire in <strong>W</strong></td>
+</tr>
+<tr>
+<td>overheadWireId</td>
+<td>string</td>
+<td>The id of an overhead wire that is currently powering the vehicle, empty if not under a wire</td>
+</tr>
+<tr>
+<td>tractionSubstationId</td>
+<td>string</td>
+<td>The substation that is feeding the current overhead wire, empty if not under a wire</td>
+</tr>
+<tr>
+<td>current</td>
+<td>float</td>
+<td>Current drawn from the overhead wire in <strong>A</strong></td>
+</tr>
+<tr>
+<td>circuitVoltage</td>
+<td>float</td>
+<td>The actual voltage at the connection point of the pantograph / trolley poles in <strong>V</strong></td>
+</tr>
+<tr>
+<td>alphaCircuitSolver</td>
+<td>float</td>
+<td>Circuit solver stabilisation parameter, <code>0 &lt;= alpha &lt;= 1</code>, 1 in case that the substation is not overloaded and all power demands were satistifed, NaN if not applicable.</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>float</td>
+<td>Speed of vehicle in this timestep</td>
+</tr>
+<tr>
+<td>acceleration</td>
+<td>float</td>
+<td>Acceleration of vehicle in this timestep</td>
+</tr>
+<tr>
+<td>x</td>
+<td>float</td>
+<td>absolute position x of vehicle in the map</td>
+</tr>
+<tr>
+<td>y</td>
+<td>float</td>
+<td>absolute position y of vehicle in the map</td>
+</tr>
+<tr>
+<td>z</td>
+<td>float</td>
+<td>absolute position z of vehicle in the map</td>
+</tr>
+<tr>
+<td>slope</td>
+<td>float</td>
+<td>slope of the edge in degrees</td>
+</tr>
+<tr>
+<td>lane</td>
+<td>string</td>
+<td>id of the lane that the vehicle is currently on</td>
+</tr>
+<tr>
+<td>posOnLane</td>
+<td>float</td>
+<td>Position of vehicle on its current lane</td>
+</tr>
+</tbody>
+</table>
+<p>If a detailed output of the vehicles has been requiested using <code>&lt;elecHybrid-output.aggregated value="false"/&gt;</code>, the ElectricHybrid output
+generates a file with the following structure:</p>
+<pre><code>&lt;elecHybrid-export maximumBatteryCapacity=&quot;46000.00&quot; vehicle=&quot;test1&quot;&gt;
+    &lt;timestep time=&quot;0.00&quot; actualBatteryCapacity=&quot;23000.0000&quot; energyConsumed=&quot;0.0000&quot; energyCharged=&quot;0.0000&quot; power=&quot;-nan(ind)&quot; overheadWireId=&quot;&quot; tractionSubstationId=&quot;&quot; current=&quot;-nan(ind)&quot; circuitVoltage=&quot;-nan(ind)&quot; alphaCircuitSolver=&quot;-nan(ind)&quot; speed=&quot;0.0000&quot; acceleration=&quot;0.0000&quot; distance=&quot;0.0000&quot; x=&quot;-1.4500&quot; y=&quot;46.3800&quot; z=&quot;0.0000&quot; slope=&quot;0.0000&quot; lane=&quot;gneE0_0&quot; posOnLane=&quot;0.0000&quot;/&gt;
+    &lt;timestep time=&quot;1.00&quot; actualBatteryCapacity=&quot;23011.1111&quot; energyConsumed=&quot;5.0570&quot; energyCharged=&quot;11.1111&quot; power=&quot;58205.3716&quot; overheadWireId=&quot;ovrhdSgmnt_gneE0_0_0&quot; tractionSubstationId=&quot;trSubstation1&quot; current=&quot;83.1523&quot; circuitVoltage=&quot;699.9850&quot; alphaCircuitSolver=&quot;1.0000&quot; speed=&quot;0.8000&quot; acceleration=&quot;0.8000&quot; distance=&quot;0.8000&quot; x=&quot;-0.6502&quot; y=&quot;46.3729&quot; z=&quot;0.0000&quot; slope=&quot;0.0000&quot; lane=&quot;gneE0_0&quot; posOnLane=&quot;0.8000&quot;/&gt;
+    &lt;timestep time=&quot;2.00&quot; actualBatteryCapacity=&quot;23022.2222&quot; energyConsumed=&quot;9.5487&quot; energyCharged=&quot;11.1111&quot; power=&quot;74375.3992&quot; overheadWireId=&quot;ovrhdSgmnt_gneE0_0_0&quot; tractionSubstationId=&quot;trSubstation1&quot; current=&quot;106.2593&quot; circuitVoltage=&quot;699.9424&quot; alphaCircuitSolver=&quot;1.0000&quot; speed=&quot;1.6000&quot; acceleration=&quot;0.8000&quot; distance=&quot;2.4000&quot; x=&quot;0.9494&quot; y=&quot;46.3586&quot; z=&quot;0.0000&quot; slope=&quot;0.0000&quot; lane=&quot;gneE0_0&quot; posOnLane=&quot;2.4000&quot;/&gt;
+    ...
+&lt;/elecHybrid-export&gt;
+</code></pre>
+
+<p>Vehicle parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vehicle</td>
+<td>string</td>
+<td>ID of vehicle</td>
+</tr>
+<tr>
+<td>maximumBatteryCapacity</td>
+<td>float</td>
+<td>Maximum battery capacity <em>E<sub>max</sub></em> (Wh)</td>
+</tr>
+</tbody>
+</table>
+<p>Timestep parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time</td>
+<td>int</td>
+<td>Current timestep</td>
+</tr>
+<tr>
+<td>actualBatteryCapacity</td>
+<td>float</td>
+<td>Energy content of the battery in this timestep in <strong>Wh</strong></td>
+</tr>
+<tr>
+<td>energyConsumed</td>
+<td>float</td>
+<td>Energy consumption in this timestep in <strong>Wh</strong></td>
+</tr>
+<tr>
+<td>energyCharged</td>
+<td>float</td>
+<td>Charge received in the current time step from a charging station (Only != 0 if vehicle is exactly at a charging station)</td>
+</tr>
+<tr>
+<td>power</td>
+<td>float</td>
+<td>Power demand requested from the overhead wire in <strong>W</strong></td>
+</tr>
+<tr>
+<td>overheadWireId</td>
+<td>string</td>
+<td>The id of an overhead wire that is currently powering the vehicle, empty if not under a wire</td>
+</tr>
+<tr>
+<td>tractionSubstationId</td>
+<td>string</td>
+<td>The substation that is feeding the current overhead wire, empty if not under a wire</td>
+</tr>
+<tr>
+<td>current</td>
+<td>float</td>
+<td>Current drawn from the overhead wire in <strong>A</strong></td>
+</tr>
+<tr>
+<td>circuitVoltage</td>
+<td>float</td>
+<td>The actual voltage at the connection point of the pantograph / trolley poles in <strong>V</strong></td>
+</tr>
+<tr>
+<td>alphaCircuitSolver</td>
+<td>float</td>
+<td>Circuit solver stabilisation parameter, <code>0 &lt;= alpha &lt;= 1</code>, 1 in case that the substation is not overloaded and all power demands were satistifed, NaN if not applicable.</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>float</td>
+<td>Speed of vehicle in this timestep</td>
+</tr>
+<tr>
+<td>acceleration</td>
+<td>float</td>
+<td>Acceleration of vehicle in this timestep</td>
+</tr>
+<tr>
+<td>x</td>
+<td>float</td>
+<td>absolute position x of vehicle in the map</td>
+</tr>
+<tr>
+<td>y</td>
+<td>float</td>
+<td>absolute position y of vehicle in the map</td>
+</tr>
+<tr>
+<td>z</td>
+<td>float</td>
+<td>absolute position z of vehicle in the map</td>
+</tr>
+<tr>
+<td>slope</td>
+<td>float</td>
+<td>slope of the edge in degrees</td>
+</tr>
+<tr>
+<td>lane</td>
+<td>string</td>
+<td>id of the lane that the vehicle is currently on</td>
+</tr>
+<tr>
+<td>posOnLane</td>
+<td>float</td>
+<td>Position of vehicle on its current lane</td>
+</tr>
+</tbody>
+</table>
+<h2 id="emission_output">Emission Output<a class="headerlink" href="#emission_output" title="Permanent link">#</a></h2>
+<p>As with electric vehicles, the <a href="Emissions.html#outputs">Emission model</a>-outputs of
+SUMO can be used together with the ElectricHybrid device when setting the
+<code>&lt;vType&gt;</code>-parameter <code>emissionClass="Energy/unknown"</code>.</p>
+<h2 id="model_details">Model Details<a class="headerlink" href="#model_details" title="Permanent link">#</a></h2>
+<p>All information about the implemented device can be found in our SUMO 2019 paper.</p>
+<h2 id="known_limitations">Known Limitations<a class="headerlink" href="#known_limitations" title="Permanent link">#</a></h2>
+<h3 id="charging_stations">Charging Stations<a class="headerlink" href="#charging_stations" title="Permanent link">#</a></h3>
+<p>As the ElectricHybrid device is based on Battery, standard chargers may be in theory used for opportunity charging the vehicle internal
+energy storage. This functionality is however not yet supported.</p>
+<h3 id="saving_and_loading_simulation_state">Saving and Loading Simulation State<a class="headerlink" href="#saving_and_loading_simulation_state" title="Permanent link">#</a></h3>
+<p>The ElectricHybrid device does not currently support saving and loading its internal state.</p>
+<h3 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h3>
+<p>TraCI connection has not been tested yet and it is probably not functional.</p>
+<h3 id="other_limitations">Other Limitations<a class="headerlink" href="#other_limitations" title="Permanent link">#</a></h3>
+<p>As of SUMO 1.4.0 we are aware of the following:</p>
+<ul>
+<li>current limits are ignore by the traction substations</li>
+<li>colormap for coloring the overhead wire voltage is hardcoded</li>
+<li>mesoscopic mode has not been thoroughly tested</li>
+<li>placing more than one overhead wire segment on the specific lane has not been thoroughly tested and is not supported yet</li>
+</ul>
+<h3 id="publications">Publications<a class="headerlink" href="#publications" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://wvvw.easychair.org/publications/download/bhmq">Ševčík, J., Přikryl, J., A Vehicle Device Tailored for Hybrid Trolleybuses 
+   and Overhead Wires Implementation in SUMO. In: Weber, M., Bieker-Walz, L.,
+   Hilbrich, R., Behrisch, M. (eds.), SUMO2019. EPiC Series in Computing, vol. 62, 
+   pp. 145--157. EasyChair (2019)</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

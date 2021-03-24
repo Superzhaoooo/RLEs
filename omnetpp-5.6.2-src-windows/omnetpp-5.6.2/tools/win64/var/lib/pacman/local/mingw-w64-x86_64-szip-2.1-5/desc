@@ -1,0 +1,36 @@
+%NAME%
+mingw-w64-x86_64-szip
+
+%VERSION%
+2.1-5
+
+%BASE%
+mingw-w64-szip
+
+%DESC%
+Extended-Rice lossless compression algorithm implementation (mingw-w64)
+
+%URL%
+https://www.hdfgroup.org/doc_resource/SZIP/
+
+%ARCH%
+any
+
+%BUILDDATE%
+1485151368
+
+%INSTALLDATE%
+1499676082
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+166912
+
+%REASON%
+1
+
+%VALIDATION%
+pgp
+

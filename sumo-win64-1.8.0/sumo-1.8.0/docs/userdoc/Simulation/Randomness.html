@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Randomness.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Randomness - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Randomness.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#random_number_generation_rng">Random number generation (RNG)</a></li>
+            <li class="nav-item main"><a href="#route_distributions">Route Distributions</a></li>
+            <li class="nav-item main"><a href="#vehicle_type_distributions">Vehicle Type Distributions</a></li>
+            <li class="nav-item main"><a href="#speed_distribution">Speed distribution</a></li>
+            <li class="nav-item main"><a href="#car-following">Car-Following</a></li>
+            <li class="nav-item main"><a href="#departure_times">Departure times</a></li>
+            <li class="nav-item main"><a href="#flows_with_a_fixed_number_of_vehicles">Flows with a fixed number of vehicles</a></li>
+            <li class="nav-item main"><a href="#flows_with_a_random_number_of_vehicles">Flows with a random number of vehicles</a></li>
+            <li class="nav-item main"><a href="#departure_and_arrival_attributes">Departure and arrival attributes</a></li>
+            <li class="nav-item main"><a href="#lateral_variation">Lateral Variation</a></li>
+            <li class="nav-item main"><a href="#further_sources_of_randomness">Further sources of randomness</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Randomness<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>Stochasticity is an important aspect of reproducing reality in a
+simulation scenario. There are multiple ways of adding stochasticity to
+a simulation. They are described below.</p>
+<h1 id="random_number_generation_rng">Random number generation (RNG)<a class="headerlink" href="#random_number_generation_rng" title="Permanent link">#</a></h1>
+<p>Sumo implements the <a href="http://en.wikipedia.org/wiki/Mersenne_twister">Mersenne
+Twister</a> algorithm for
+generating random numbers. This random number generator (RNG) is
+initialized with a seed value which defaults to the (arbitrary) value
+<strong>23423</strong>. This setup makes all applications deterministic by default as
+the sequence of random numbers is fixed for a given seed. The seed may
+be changed using the option <strong>--seed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>. When using the option <strong>--random</strong> the seed will be
+chosen based on the current system time resulting in truly random
+behavior.</p>
+<p>The simulation uses multiple RNG instances to decouple different
+simulation aspects</p>
+<ul>
+<li>randomness when loading vehicles (typeDistribution, speed
+  deviation,...)</li>
+<li>probabilistic flows</li>
+<li>vehicle driving dynamics</li>
+<li>vehicle devices</li>
+</ul>
+<p>The decoupling is done to ensure that loading vehicles does not affect
+simulation behavior of earlier vehicles. All RNGs use the same seed.</p>
+<h1 id="route_distributions">Route Distributions<a class="headerlink" href="#route_distributions" title="Permanent link">#</a></h1>
+<p>Vehicles can be added to the simulation with a fixed route (<code>&lt;vehicle&gt;</code>) or with an origin-destination pair (<code>&lt;trip&gt;</code>).
+A third alternative is to specify a set of routes (<code>&lt;routeDistribution&gt;</code>) and let the vehicle draw a random route from such a distribution. For details, see <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#route_distributions">route distributions</a>.</p>
+<h1 id="vehicle_type_distributions">Vehicle Type Distributions<a class="headerlink" href="#vehicle_type_distributions" title="Permanent link">#</a></h1>
+<p>A simple way of of modelling a heterogeneous vehicle fleet works by defining a <code>&lt;vTypeDistribution&gt;</code> and let each vehicle pick it's type randomly from this distribution. For details, see <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_type_distributions">vehicle type distributions</a>.</p>
+<h1 id="speed_distribution">Speed distribution<a class="headerlink" href="#speed_distribution" title="Permanent link">#</a></h1>
+<p>By default, vehicles in SUMO adhere to the maximum speed defined for the
+lane they are driving on (if the maximumSpeed of their vehicle type
+allows it). This behavior can be modified using the <code>&lt;vType&gt;</code>-attribute <code>speedFactor</code> which
+makes vehicles drive with that factor of the current speed limit. The
+attribute also allows the specification of the parameters of a normal
+distribution with optional cutoffs. The random value is selected once
+for each vehicle at the time of its creation. Using a speed deviation is
+the recommended way for getting a heterogenous mix of vehicle speeds.
+By default, a speed distribution with a standard deviation of 10% is active.
+For details, see <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#speed_distributions">speed distribution</a></p>
+<h1 id="car-following">Car-Following<a class="headerlink" href="#car-following" title="Permanent link">#</a></h1>
+<p>The default <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#car-following_models">car-following model
+<em>Krauss</em></a>
+supports stochastic driving behavior through the <code>vType</code>-attribute <code>sigma</code> (default
+0.5). When this value is non-zero drivers will randomly vary their speed
+based on the RNG described above. Other car-following models also use
+this attribute.</p>
+<h1 id="departure_times">Departure times<a class="headerlink" href="#departure_times" title="Permanent link">#</a></h1>
+<p>The departure times of all vehicles may be varied randomly by using the
+option <strong>--random-depart-offset</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>. When this option is used each vehicle receives a random offset
+to its departure time, equidistributed on [0, <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>].</p>
+<h1 id="flows_with_a_fixed_number_of_vehicles">Flows with a fixed number of vehicles<a class="headerlink" href="#flows_with_a_fixed_number_of_vehicles" title="Permanent link">#</a></h1>
+<p>The <a href="../duarouter.html">duarouter</a>, <a href="../dfrouter.html">dfrouter</a>
+and <a href="../jtrrouter.html">jtrrouter</a> applications support the option <strong>--randomize-flows</strong>.
+When this option is used, each vehicle defined by a <code>&lt;flow&gt;</code>-element will be
+given a random departure time which is equidistributed within the time
+interval of the flow. (By default vehicles of a flow are spaced equally
+in time).</p>
+<h1 id="flows_with_a_random_number_of_vehicles">Flows with a random number of vehicles<a class="headerlink" href="#flows_with_a_random_number_of_vehicles" title="Permanent link">#</a></h1>
+<p>Both <a href="../duarouter.html">duarouter</a> and <a href="../sumo.html">sumo</a>
+support loading of <code>&lt;flow&gt;</code> elements with attribute <code>probability</code>. When this attribute is
+used (instead of <code>vehsPerHour,number</code>, or <code>period</code>), a vehicle will be emitted randomly with the
+given probability each second. This results in a <a href="https://en.wikipedia.org/wiki/Binomial_distribution">binomially
+distributed</a> flow
+(which approximates a <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson
+Distribution</a> for
+small probabilities). When modeling such a flow on a multi-lane road it
+is recommended to define a <code>&lt;flow&gt;</code> for each individual lane.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The effective flow may be higher at lower step-length because the discretization error is reduced (vehicles usually cannot be inserted in subsequent seconds due to safety constraints and insertion in every other second does not achieve maximum flow).</p>
+</div>
+<h1 id="departure_and_arrival_attributes">Departure and arrival attributes<a class="headerlink" href="#departure_and_arrival_attributes" title="Permanent link">#</a></h1>
+<p>The <code>&lt;flow&gt;</code>, <code>&lt;trip&gt;</code> and <code>&lt;vehicle&gt;</code> elements support the value "random" for their attributes <code>departLane</code>, <code>departPos</code>,
+<code>departSpeed</code> and <code>arrivalPos</code>. The value will be chosen randomly on every insertion try (for the
+departure attributes) or whenever there is a need to revalidate the
+arrival value (i.e. after rerouting). The attribute <code>departPosLat</code> also supports the value "random". 
+The lateral offset at departue will only affect simulatoin behavior when using the <a href="SublaneModel.html">sublane model</a> though it will be visible without this model too.</p>
+<h1 id="lateral_variation">Lateral Variation<a class="headerlink" href="#lateral_variation" title="Permanent link">#</a></h1>
+<p>When setting the lane change mode attribute <code>lcSigma</code> to a positive value, Vehicles will exhibit some random lateral drift.</p>
+<h1 id="further_sources_of_randomness">Further sources of randomness<a class="headerlink" href="#further_sources_of_randomness" title="Permanent link">#</a></h1>
+<ul>
+<li>The tool <a href="../Tools/Trip.html#randomtripspy">randomTrips.py</a> allows generating traffic between random edges. It also supports randomizing arrival rates.</li>
+<li><a href="../od2trips.html">od2trips</a> randomly selecting depart and arrival edges for each trip when disaggregating the O/D-Matrix</li>
+<li><a href="../duarouter.html">duarouter</a> adds randomness when performing <a href="../Demand/Dynamic_User_Assignment.html">Demand/Dynamic_User_Assignment</a></li>
+<li><a href="../duarouter.html">duarouter</a> can randomly disturb the fastest-paths by setting option <strong>--weights.random-factor</strong></li>
+<li><a href="../Demand/Automatic_Routing.html#randomness">Simulation routing can be randomized</a> to ensure usage of alternative routes.</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 24 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

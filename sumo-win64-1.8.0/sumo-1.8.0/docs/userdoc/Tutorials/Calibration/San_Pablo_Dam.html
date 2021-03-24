@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tutorials/Calibration/San_Pablo_Dam.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Tutorials/Calibration/San Pablo Dam - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tutorials/Calibration/San_Pablo_Dam.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#description">Description</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#prerequisites" class="nav-link">• Prerequisites</a>
+                </li>
+            <li class="nav-item main"><a href="#network_preparation">Network Preparation</a></li>
+            <li class="nav-item main"><a href="#demand_preparation">Demand Preparation</a></li>
+            <li class="nav-item main"><a href="#simulation_settings">Simulation Settings</a></li>
+            <li class="nav-item main"><a href="#calibration">Calibration</a></li>
+            <li class="nav-item main"><a href="#execution">Execution</a></li>
+            <li class="nav-item main"><a href="#references">References</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tutorials/Calibration/San Pablo Dam<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This tutorial describes the execution of the simulation in a loop using
+a control script. The aim is to calibrate the simulation to a given
+real-world dataset. This tutorial may be used for further research on
+car-following models or on optimization algorithms.</p>
+<p>It is assumed that road network building and routes definition is known
+from other tutorials, as <a href="../Hello_SUMO.html">Tutorials/Hello
+SUMO</a>, <a href="../quick_start.html">Tutorials/quick
+start</a> or <a href="../Quick_Start_old_style.html">Tutorials/Quick Start old
+style</a>.</p>
+<p>All files mentioned here can also be found in the
+<strong><em>&lt;SUMO_HOME&gt;</em></strong>/docs/tutorial/san_pablo_dam directory. The most recent version can be
+found in the repository at <a href="https://github.com/eclipse/sumo/blob/master/tests/complex/tutorial/san_pablo_dam/data/"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/complex/tutorial/san_pablo_dam/data/</a>.</p>
+<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h1>
+<p>Models for vehicle movement have usually several parameters which
+control the behaviour of the vehicle. Their default values are usually
+set based on assumptions or measures or by adapting them to a given data
+set. When moving to a different scenario, they often have to be
+re-adapted for being valid. Due to this, calibration is a crucial step
+in preparing a traffic simulation scenario.</p>
+<p>This tutorial shows one possibility to calibrate a car-following model
+to match a set of data gained from the real world. The data set we use
+was collected on the San Pablo Dam Road "from 6:45 a.m. to 9:00 a.m. on
+Tuesday, November 18 and again on Thursday, November 20, 1997"
+([Smilowitz1999]). Please look <a href="http://www.openstreetmap.org/?lat=37.9191&amp;lon=-122.2439&amp;zoom=13&amp;layers=M">here
+(OpenStreetMap)</a>
+or <a href="http://maps.google.de/maps?q=San+Pablo+Reservoir,+Contra+Costa,+Kalifornien,+Vereinigte+Staaten&amp;hl=de&amp;ll=37.923482,-122.244015&amp;spn=0.097632,0.118618&amp;sll=51.151786,10.415039&amp;sspn=19.919551,30.366211&amp;vpsrc=6&amp;geocode=FZu4QgId6rO2-A&amp;t=m&amp;z=13">here
+(GoogleMaps)</a>
+for the location. The data set's pages are
+<a href="http://www.ce.berkeley.edu/~daganzo/spdr.html">here</a>. It was also used
+for benchmarking car-following models, see [Brockfeld2003a]. The data
+set consists of times at which vehicles pass count points and is assumed
+to be quite clean.</p>
+<p>Having the passing times of vehicles, we want to calibrate our
+car-following model so that the difference between real and simulated
+travel times across all vehicles is minimized.</p>
+<p>In order to obtain the passing times from the simulation, we use
+<a href="../../Simulation/Output/Induction_Loops_Detectors_(E1).html">induction
+loops</a>
+with a frequency of 1s. They are defined in "input_det.add.xml".
+Additionally, we use a <a href="../../Simulation/Variable_Speed_Signs.html">variable speed
+sign</a> for constraining the
+outflow velocity so that the original (real world) network's outflow
+condition is preserved.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
+<p>In order to execute this tutorial, you need</p>
+<ul>
+<li>a runnable SUMO simulation</li>
+<li>Python 2.x (tested with Python 2.7)<ul>
+<li>SciPy</li>
+</ul>
+</li>
+</ul>
+<h1 id="network_preparation">Network Preparation<a class="headerlink" href="#network_preparation" title="Permanent link">#</a></h1>
+<p>Optimization requires several - many - iterations, and
+<a href="../../sumo.html">sumo</a>'s execution speed highly depends on the number
+of edges a network is made of. Due to this we model the San Pablo Dam
+Road using two edges only. We build an edge file, and a node file as
+already discussed in previous (<a href="../Hello_SUMO.html">Tutorials/Hello
+SUMO</a>, <a href="../Quick_Start_old_style.html">Tutorials/Quick
+Start</a>) tutorials.</p>
+<h1 id="demand_preparation">Demand Preparation<a class="headerlink" href="#demand_preparation" title="Permanent link">#</a></h1>
+<p>We use the function genDemand in "runner.py" for building the demand.
+Here, times at observation point 1 are used as our vehicle departure
+times. The route consists of the two edges the network consists of. All
+vehicles have the same type. The values for this type - the
+car-following parameter to optimize - are documented in the function gof
+in "runner.py". Please note that we keep "minGap" at 2.5m constantly -
+this should be changed for other models than the used SUMO-Krauß-model.
+If wished, they may be set to the default parameter values before
+performing the calibration (see the end of runner.py).</p>
+<h1 id="simulation_settings">Simulation Settings<a class="headerlink" href="#simulation_settings" title="Permanent link">#</a></h1>
+<p>Our configuration looks like this:</p>
+<pre><code>&lt;configuration&gt;
+    &lt;input&gt;
+        &lt;net-file value=&quot;spd-road.net.xml&quot;/&gt;
+        &lt;route-files value=&quot;spd-road.rou.xml&quot;/&gt;
+        &lt;additional-files value=&quot;input_vss.add.xml,input_det.add.xml,input_types.add.xml&quot;/&gt;
+    &lt;/input&gt;
+    &lt;time&gt;
+        &lt;begin value=&quot;24420&quot;/&gt;
+    &lt;/time&gt;
+        &lt;processing&gt;
+        &lt;time-to-teleport value=&quot;0&quot;/&gt;
+    &lt;/processing&gt;
+    &lt;report&gt;
+        &lt;no-duration-log value=&quot;true&quot;/&gt;
+        &lt;no-step-log value=&quot;true&quot;/&gt;
+    &lt;/report&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<p>This means: we load the network from "spd-road.net.xml", routes from
+"spd-road.rou.xml", and three additional files, "input_vss.add.xml"
+including the variable speed sign, "input_det.add.xml" containing
+definitions of induction loops to simulate, and "input_types.add.xml"
+containing the definition of our current vehicle type. The begin time is
+set to the departure time of the first vehicle. We ignore possible
+waiting times by setting <strong>time-to-teleport</strong> to 0 and disable simulation outputs.</p>
+<p>Please note that "spd-road.rou.xml" is created from the input
+measurements on the start of runner.py, "input_types.add.xml" is
+created on every simulation loop with the new parameters and all the
+other files are completely static.</p>
+<h1 id="calibration">Calibration<a class="headerlink" href="#calibration" title="Permanent link">#</a></h1>
+<p>We use SciPy's "COBYLA" implementation. It requires callbacks for
+determining the error which we have to supply. Our callback (function
+<code>gof</code> in "runner.py") works as following:</p>
+<ol>
+<li>Write the current vehicle type with the parameters supported by the
+    optimizer into a file named "input_types.add.xml"</li>
+<li>Start the validation script "validate.py" and return the error value
+    computed by it</li>
+</ol>
+<p>The validation step, implemented in "validate.py" is not much more
+complicated:</p>
+<ol>
+<li>Execute the simulation</li>
+<li>Read the real-world observations and the vehicle crossing times from
+    the simulation</li>
+<li>Convert both from observation times to travel times</li>
+<li>Compute the RMSE (root mean square error) between both for all
+    vehicles and observation points and return it</li>
+</ol>
+<h1 id="execution">Execution<a class="headerlink" href="#execution" title="Permanent link">#</a></h1>
+<p>In order to perform the calibration, you need to call only:</p>
+<pre><code>python runner.py
+</code></pre>
+
+<p>This is what it is doing:</p>
+<ul>
+<li>
+<p>first it calls netconvert -n=spd-road.nod.xml -e=spd-road.edg.xml
+  -o=spd-road.net.xml</p>
+<p>Build the network using nodes from "spd-road.nod.xml" and edges from
+"spd-road.edg.xml"; write to "spd-road.net.xml"; generates
+"spd-road.net.xml"</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>calls the function buildVSS</p>
+<p>Build the speed limits for the end boundary; generates
+"spd-road.vss.xml" which is referenced by "input_vss.add.xml"</p>
+</li>
+</ul>
+<ul>
+<li>Starts the calibration</li>
+</ul>
+<p>For each calibration step, the following output should appear:</p>
+<pre><code># simulation with: vMax:22.000 aMax:2.000 bMax:2.000 lCar:5.000 sigA:0.500 tTau:1.500
+Loading configuration... done.
+#### yields rmse: 212.6411
+</code></pre>
+
+<p>Of course, the values differ between the steps. 80 iterations need about
+ten minutes to be executed.</p>
+<p>"runner.py" generates a file named "results.csv" which includes for each
+iteration the parameter and the error, line by line.</p>
+<h1 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h1>
+<p>[Smilowitz1999] K. Smilowitz, C. Daganzo, M.J. Cassidy and R.L.
+Bertini. 1999. Some observations of highway traffic in long queues.
+Transportation Research Records, 1678, pp. 225-233; available at
+<a href="http://www.its.berkeley.edu/publications/UCB/98/RR/UCB-ITS-RR-98-6.pdf">[1]</a></p>
+<p>[Brockfeld2003a] E. Brockfeld, R. Kühne, A. Skabardonis, P. Wagner.
+2003 Towards a benchmarking of Microscopic Traffic Flow Models.
+Transportation Research Records, 1852 (TRB2003-001164), pp. 124-129;
+available at <a href="http://elib.dlr.de/6646/">[2]</a></p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

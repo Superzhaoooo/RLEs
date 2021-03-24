@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tools/Turns.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tools/Turns - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tools/Turns.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#jtcrouterpy">jtcrouter.py</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#turn_count_data_format" class="nav-link">• Turn count data format</a>
+                </li>
+            <li class="nav-item main"><a href="#routesamplerpy">routeSampler.py</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#turn_counts" class="nav-link">• turn counts</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#edge_counts" class="nav-link">• edge counts</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#obtaining_initial_routes" class="nav-link">• Obtaining initial routes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#generalized_route_restrictions" class="nav-link">• Generalized route restrictions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#origin-destination_restrictions" class="nav-link">• Origin-Destination restrictions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#output_styles" class="nav-link">• Output Styles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_attributes" class="nav-link">• Vehicle attributes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sampling" class="nav-link">• Sampling</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#optimization" class="nav-link">• Optimization</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#further_calibration" class="nav-link">• Further Calibration</a>
+                </li>
+            <li class="nav-item main"><a href="#generateturnratiospy">generateTurnRatios.py</a></li>
+            <li class="nav-item main"><a href="#generateturndefspy">generateTurnDefs.py</a></li>
+            <li class="nav-item main"><a href="#turncount2edgecountpy">turnCount2EdgeCount.py</a></li>
+            <li class="nav-item main"><a href="#turnfile2edgerelationspy">turnFile2EdgeRelations.py</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tools/Turns<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="jtcrouterpy">jtcrouter.py<a class="headerlink" href="#jtcrouterpy" title="Permanent link">#</a></h1>
+<p>The <strong>J</strong>unction<strong>T</strong>urn<strong>C</strong>ountRouter generates vehicle routes from turn-count data.
+It does so by converting the turn counts into into flows and turn-ratio files that are suitable as <a href="../jtrrouter.html">jtrrouter</a> input.
+Then it calls jtrrouter in the background. The turn</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/jtcrouter.py -n &lt;net-file&gt; -t &lt;turn-file&gt; -o &lt;output-file&gt;
+</code></pre>
+
+<p>There are three basic styles of converting turn-counts to routes:</p>
+<ul>
+<li>Flows start at all turn-count locations in the network but end when reaching the next count location</li>
+<li>Flows start at all turn-count locations in the network and are discounted when reaching the next count location (<strong>--discount-sources</strong>)</li>
+<li>Flows only start on the fringe of the network (<strong>--fringe-flows</strong>)</li>
+</ul>
+<h2 id="turn_count_data_format">Turn count data format<a class="headerlink" href="#turn_count_data_format" title="Permanent link">#</a></h2>
+<p>The turn-count data must be provided in the format:</p>
+<pre><code>&lt;interval id=&quot;generated&quot; begin=&quot;0.0&quot; end=&quot;99.0&quot;&gt;
+        &lt;edgeRelation from=&quot;-58.121.42&quot; to=&quot;64&quot; count=&quot;1&quot;/&gt;
+        &lt;edgeRelation from=&quot;-58.121.42&quot; to=&quot;-31&quot; count=&quot;3&quot;/&gt;
+        &lt;edgeRelation from=&quot;45&quot; to=&quot;-68&quot; count=&quot;3&quot;/&gt;
+        &lt;edgeRelation from=&quot;-31.80.00&quot; to=&quot;31&quot; count=&quot;1&quot;/&gt;
+        &lt;edgeRelation from=&quot;-31.80.00&quot; to=&quot;37&quot; count=&quot;1&quot;/&gt;
+        &lt;edgeRelation from=&quot;-31.80.00&quot; to=&quot;-23&quot; count=&quot;13&quot;/&gt;
+        &lt;edgeRelation from=&quot;-92.180.00&quot; to=&quot;-60&quot; count=&quot;1&quot;/&gt;
+&lt;/interval&gt;
+</code></pre>
+
+<h1 id="routesamplerpy">routeSampler.py<a class="headerlink" href="#routesamplerpy" title="Permanent link">#</a></h1>
+<p>The script generates routes from turn-count data, edge-count and even origin-destination-count data. It requires a route file as input that defines possible routes. Routes are sampled (heuristically) from the input so that
+the resulting routes fulfill the counting data</p>
+<h2 id="turn_counts">turn counts<a class="headerlink" href="#turn_counts" title="Permanent link">#</a></h2>
+<p>The turn-count data format is the same as as described <a href="#turn-count-data-format">above</a>.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/routeSampler.py -r &lt;input-route-file&gt; --turn-files &lt;turn-files -o &lt;output-file&gt;
+</code></pre>
+
+<p>The attributes for reading the counts from the turn-data file can be set with option <strong>--turn-attribute</strong> (default 'count')</p>
+<h2 id="edge_counts">edge counts<a class="headerlink" href="#edge_counts" title="Permanent link">#</a></h2>
+<p>In addition to loading a turn-count file, routeSampler can also load an <a href="../Simulation/Output/Lane-_or_Edge-based_Traffic_Measures.html">edgeData
+file</a> using option <strong>--edgedata-files</strong>.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/routeSampler.py -r &lt;input-route-file&gt; --edgedata-files &lt;edgedata-files -o &lt;output-file&gt;
+</code></pre>
+
+<p>The attributes for reading the counts from edge-data file can be set with option <strong>--edgedata-attribute</strong> (default 'entered')</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using routeSampler as a replacement for <a href="../dfrouter.html">dfrouter</a> or <a href="Detector.html#flowrouterpy">flowrouter.py</a>, the flow input files can be converted to edgeData files with the tool <a href="Detector.html#edgedatafromflowpy">edgeDataFromFlow.py</a>    </p>
+</div>
+<h2 id="obtaining_initial_routes">Obtaining initial routes<a class="headerlink" href="#obtaining_initial_routes" title="Permanent link">#</a></h2>
+<p>Routes generated by randomTrips.py (<strong>--route-output</strong>) can be a good input source. The following randomTrips.py options may be helpful:</p>
+<ul>
+<li><strong>--fringe-factor</strong>: setting a high value will generated lots of through-traffic which is plausible for small networks</li>
+<li><strong>--min-distance</strong>: restricting short routes increases the chance that routes passing multiple counting locations are generated</li>
+<li><strong>--speed-exponent</strong>, <strong>--lanes</strong>: both options can be used to increase routes starting and ending on "important" roads. This combines well with the <strong>--fringe-factor</strong>-option to generate many routes that enter and leave the network on major roads.</li>
+</ul>
+<p>Example:</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/randomTrips.py -n &lt;input-net-file&gt; -r sampleRoutes.rou.xml
+&lt;SUMO_HOME&gt;/tools/routeSampler.py -r sampleRoutes.rou.xml --edgedata-files &lt;edgedata-files -o &lt;output-file&gt;
+</code></pre>
+
+<h2 id="generalized_route_restrictions">Generalized route restrictions<a class="headerlink" href="#generalized_route_restrictions" title="Permanent link">#</a></h2>
+<p>By default, the input options --edgedata-files and --turn-files allow restricting counts for single edges and pairs of consecutive edges. </p>
+<p>To define count restrictions for longer consecutive edge sequences the optional 'via' attribute can be used for <code>&lt;edgeRelation&gt;</code> elements:</p>
+<pre><code>   &lt;edgeRelation from=&quot;A&quot; to=&quot;D&quot; via=&quot;B C&quot; count=&quot;42&quot;/&gt;
+</code></pre>
+
+<p>To define count restrictions on non-consecutive edges the option <strong>--turn-max-gap <INT></strong> can be used. Example:
+When setting option <strong>--turn-max-gap 2</strong>, the edgeRelation <code>&lt;edgeRelation from="A" to="D" .../&gt;</code> would apply to routes containing "A B", "A X D" or "A X Y D" but not "A X Y Z D".</p>
+<h2 id="origin-destination_restrictions">Origin-Destination restrictions<a class="headerlink" href="#origin-destination_restrictions" title="Permanent link">#</a></h2>
+<p>When loading an edgeRelation file with the option <strong>--od-files</strong>, origin-destination counts will be added.
+This can be used to combine (edge-based) OD-relations with other counting data.</p>
+<h2 id="output_styles">Output Styles<a class="headerlink" href="#output_styles" title="Permanent link">#</a></h2>
+<p>By default, routeSampler will generate individual vehicles with embedded routes. This can be changed with the following options (which can also be combined):</p>
+<ul>
+<li><strong>--write-route-ids</strong>: write named routes and let vehicles reference the route via it's id</li>
+<li><strong>--wroute-route-distribution STR</strong>: put all routes into a route distribution (with appropriate route probabilities) and let a all vehicles reference this distribution (Simulation counts will then vary due to sampling from the distribution)</li>
+<li><strong>--write-flows number</strong>: write <code>&lt;flow&gt;</code>-definitions instead of vehicles. The exact number of flow vehicles will be spaced evenly between the earliest and latest vehicle departures that would have been generated by default</li>
+<li><strong>--write-flows probability</strong>: write <code>&lt;flow&gt;</code>-definitions instead of vehicles. Flows will be defined with attribute 'probability' so that the expected number of vehicles is equal to the number of vehicles that would have been generated by default but the specific number will vary due to sampling effects</li>
+</ul>
+<h2 id="vehicle_attributes">Vehicle attributes<a class="headerlink" href="#vehicle_attributes" title="Permanent link">#</a></h2>
+<p>With the option <strong>--attributes</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>, additional parameters can be given to the generated
+vehicles (note, usage of the quoting characters).</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/randomTrips.py -n input_net.net.xml 
+  --attributes=&quot;departLane=\&quot;best\&quot; departSpeed=\&quot;max\&quot; departPos=\&quot;random\&quot;&quot;
+</code></pre>
+
+<p>This would make the rvehicles be distributed randomly on their
+starting edges and inserted with high speed on a reasonable lane.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Quoting of trip attributes on Linux must use the style <strong>--attributes 'departLane="best" departSpeed="max" departPos="random"'</strong></p>
+</div>
+<h2 id="sampling">Sampling<a class="headerlink" href="#sampling" title="Permanent link">#</a></h2>
+<p>By default, sampling will be performed iteratively by 
+1) selecting a random counting location that has not yet reached it's count (and which still has viable routes)
+2) selecting a random route that passes this counting location</p>
+<p>until all counting locations have reached their measured count or there are no viable routes (routes which have all their passed counting locations below the input count)</p>
+<p>By setting the option <strong>--weighted</strong>. The sampling algorithm is changed. For each route a probability value is loaded from the input. The probabilty can either be specified explicitly using route attribute 'probability' or implicitly if a route with the same sequence of edges appears multiple times in the the route input. Sampling will be performed iteratively by
+1) selecting a random viable route sampled by probability</p>
+<p>until all counting locations have reached their measured count or there are no viable routes (routes which have all their passed counting locations below the input count)</p>
+<h2 id="optimization">Optimization<a class="headerlink" href="#optimization" title="Permanent link">#</a></h2>
+<p>By default, routes will be sampled from the input route set until no further routes can be added without exceeding one of the counts. This may still leave some counts below their target values. At this point an ILP-Solver can be used to swap out routes and get closer to the target values or even reach the exact numbers.
+By setting option <strong>--optimize <INT></strong>. The number of times that a route is used can be changed by up to <strong><INT></strong> times. This defines a trade-off between using routes in the same distribution as found in the input and optimizing the counts.
+When setting option <strong>--optimize full</strong>. No constraints on the route distribution are set and any route can be used as often as needed to reach the counts.</p>
+<h2 id="further_calibration">Further Calibration<a class="headerlink" href="#further_calibration" title="Permanent link">#</a></h2>
+<p>It is possible to load the resulting output into routeSampler.py for another round of optimization. By setting the option <strong>--optimize-input</strong> the sampling step is skipped and the optimizer is run directly on the input route set.</p>
+<p>By removing specific routes or adding new ones, the user can thus tailor the generating traffic in an iterative manner.</p>
+<h1 id="generateturnratiospy">generateTurnRatios.py<a class="headerlink" href="#generateturnratiospy" title="Permanent link">#</a></h1>
+<p>This script is used to calculate the turn ratios from a
+an edge to its downstream edge with a given route file. The output file
+can be directly used as input in <a href="../jtrrouter.html">jtrrouter</a>. The time interval will span the minimum and maximum departure times of the route file.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/generateTurnRatios.py -r &lt;route-file&gt;
+</code></pre>
+
+<p>The standard output is the traffic volumes (which jtrrouter normalizes automatically). With the option <strong>-p</strong>,  turning ratios will be written as values from [0,1].</p>
+<h1 id="generateturndefspy">generateTurnDefs.py<a class="headerlink" href="#generateturndefspy" title="Permanent link">#</a></h1>
+<p>This script allows generation of the turn definitions based on the
+number of lanes allowing particular turns. The basic functionality
+distributes the traffic uniformly, that is:</p>
+<ol>
+<li>distribute the incoming traffic uniformly across the lanes forming
+    the road</li>
+<li>distribute the amount of traffic assigned to each lane uniformly
+    among the destinations that the lane allows turns to.</li>
+<li>sum up the values for each of the destinations that the road being
+    processed allows turning to.</li>
+</ol>
+<p>Example use</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/turn-defs/generateTurnDefs.py --connections-file connections.con.xml --turn-definitions-file output.turndefs.xml
+</code></pre>
+
+<p>The script allows to be extended with new traffic distribution policies
+(for example, based on Gaussian distribution) easily. See the
+<em>DestinationWeightCalculator</em> class for details.</p>
+<p>The script processes the connections given in the provided <em>*.con.xml</em>
+file. For usage details, execute the <em>generateTurnDefs.py</em> script with
+<em>--help</em> option.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can generate a connections file with all the connections in the network using <a href="../netconvert.html">netconvert</a> - see the <em>--plain-output-prefix</em> option.</p>
+</div>
+<h1 id="turncount2edgecountpy">turnCount2EdgeCount.py<a class="headerlink" href="#turncount2edgecountpy" title="Permanent link">#</a></h1>
+<p>This script converts turn-count data into <a href="../Simulation/Output/Lane-_or_Edge-based_Traffic_Measures.html">edgeData</a>.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/turn-defs/turnCount2EdgeCount.py -t &lt;turn-file&gt; -o &lt;output-file&gt;
+</code></pre>
+
+<h1 id="turnfile2edgerelationspy">turnFile2EdgeRelations.py<a class="headerlink" href="#turnfile2edgerelationspy" title="Permanent link">#</a></h1>
+<p>This script converts the deprecated turn-file format into edgeRelation format</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/turn-defs/turnFile2EdgeRelations.py -t &lt;turn-file&gt; -o &lt;output-file&gt;
+</code></pre>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 September 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

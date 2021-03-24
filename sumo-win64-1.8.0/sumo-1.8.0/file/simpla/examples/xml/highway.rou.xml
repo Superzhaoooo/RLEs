@@ -1,0 +1,31 @@
+<routes>
+	<vType id="vtypeauto" accel="2.5" decel="8" sigma="0.5" length="4"
+		   minGap="0" maxSpeed="36" color="1,0,0" probability="1"
+		   carFollowModel="CC" tauEngine="0.5" omegaN="0.2" xi="1" c1="0.5"
+		   lanesCount="4" ccAccel="1.5" ploegKp="0.2" ploegKd="0.7"
+		   ploegH="0.5" />
+	<vType id="passenger" accel="1.5" decel="4.5" sigma="0.5" length="4"
+		   minGap="10" maxSpeed="36.11" color="0.16,0.33,0.42" vClass="passenger"
+		   guiShape="passenger" speedFactor="1" departSpeed="max"
+		   carFollowModel="IDM" />
+	<vType id="passenger2" accel="1.5" decel="4.5" sigma="0.5" length="4"
+		   minGap="10" maxSpeed="20" color="0.16,0.33,0.42" vClass="passenger"
+		   guiShape="passenger" speedFactor="1" departSpeed="max"
+	       carFollowModel="IDM" />
+	<route id="platoon_route" edges="r1 r2 r3 r4 r5 r6 r7 r8 r9 r11"/>
+	
+  
+  
+  
+  <route id="route01" edges="r1 r2 r3 r4 r5 r6 r7 r8 r9 r11"/>
+  <route id="route02" edges="r1 r2 r3 r4 r5 r6 r7 r8 r9 r12"/>
+  <route id="route03" edges="l1 l4 l5 l6 l7 l8 l9 l10 l11 l12 l14"/>
+  <route id="route04" edges="l1 l4 l5 l6 l7 l8 l9 l10 l11 l12 l15"/>
+  <route id="route05" edges="l2 l4 l5 l6 l7 l8 l9 l10 l11 l12 l14"/>
+  <route id="route06" edges="l2 l4 l5 l6 l7 l8 l9 l10 l11 l12 l15"/>
+  
+  <flow id="carFollow1" type="passenger2" begin="0" end="1000" number="300" from="r2" to="r11" departPos="random" departLane="best" speedFactor="1.0" minGap="4" delta="4" stepping="1.5" lcSpeedGain="10" lcStrategic="1000" lcCooperative="1.0" arrivalSpeed="0"/>
+  <flow id="carFollow2" type="passenger" begin="0" end="1000" number="500" from="l1" to="l15" departPos="random" departLane="best" speedFactor="1.0" minGap="4" delta="4" stepping="1.5" lcSpeedGain="10" lcStrategic="10" lcCooperative="1.0" arrivalSpeed="0"/>
+  <flow id="carFollow3" type="passenger2" begin="0" end="1000" number="100" from="r9" to="r11" departPos="random" departLane="0" speedFactor="1.0" minGap="4" delta="4" stepping="1.5" lcSpeedGain="10" lcStrategic="10" lcCooperative="1.0" arrivalSpeed="0"/>
+  
+</routes>

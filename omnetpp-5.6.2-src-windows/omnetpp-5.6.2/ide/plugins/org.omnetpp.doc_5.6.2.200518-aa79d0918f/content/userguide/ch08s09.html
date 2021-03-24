@@ -1,0 +1,42 @@
+<html><head><link rel="STYLESHEET" href="../book.css"  type="text/css"/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="index.html" title="OMNeT&#8288;+&#8288;+ User Guide"><link rel="up" href="ch08.html" title="Chapter 8. The Tkenv Graphical Runtime Environment"><link rel="prev" href="ch08s08.html" title="Tkenv and C&#8288;+&#8288;+"><link rel="next" href="ch09.html" title="Chapter 9. Sequence Charts"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Reference</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch08s08.html">Prev</a> </td><th width="60%" align="center">Chapter 8. The Tkenv Graphical Runtime Environment</th><td width="20%" align="right"> <a accesskey="n" href="ch09.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idm3472"></a>Reference</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm3474"></a>Command-Line Options</h3></div></div></div><p>A simulation program built with Tkenv accepts the following command line switches:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><code class="literal">-h</code>: The program prints a help message and exits.
+        </li><li class="listitem"><code class="literal">-u Tkenv</code>: Causes the program to start with Tkenv. (This is the default, unless the program
+          hasn't been linked with Tkenv, or has another, custom environment library with a higher priority
+          than Tkenv.)
+        </li><li class="listitem"><code class="literal">-f fileName</code>: Specifies the name of the configuration file. The default is <code class="literal">omnetpp.ini</code>. Multiple <code class="literal">-f</code>
+          switches can be given; this allows you to partition your configuration file. For example, one file can
+          contain your general settings, another one most of the module parameters, and a third one the module
+          parameters you change frequently. The <code class="literal">-f</code> switch is optional and can be omitted.
+        </li><li class="listitem"><code class="literal">-l fileName</code>: Loads a shared library (<code class="literal">.so</code> file on Unix, <code class="literal">.dll</code> on Windows,
+          and <code class="literal">.dylib</code> on Mac OS X). Multiple <code class="literal">-l</code> switches are accepted. Shared libraries
+          may contain simple modules and other, arbitrary code. File names may be specified without
+          the file extension and the <code class="literal">lib</code> name prefix (i.e. <code class="literal">foo</code> instead of <code class="literal">libfoo.so</code>).
+        </li><li class="listitem"><code class="literal">-n filePath</code>: When present, overrides the <code class="literal">NEDPATH</code> environment variable and sets
+          the source locations for simulation NED files.
+        </li><li class="listitem"><code class="literal">-c configname</code>: Selects an INI configuration for execution.
+        </li><li class="listitem"><code class="literal">-r run-number</code>: It has the same effect as (but takes priority over) the <span class="emphasis"><em>tkenv-default-run=</em></span>
+          INI file configuration option.
+        </li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm3504"></a>Environment Variables</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><code class="literal">OMNETPP_TKENV_DIR</code>: In case of nonstandard installation, it may be necessary to
+          set this environment variable to point to <code class="literal">&lt;omnetpp&gt;/src/tkenv</code>
+          so that Tkenv can find its parts written in Tcl.</li><li class="listitem"><code class="literal">OMNETPP_IMAGE_PATH</code>: It controls where Tkenv will load images for network
+          graphics (modules, background, etc.) from. The value should be a semicolon-separated
+          list of directories, but on non-Windows systems, the colon is also accepted as separator.
+          The default is <code class="literal">&lt;omnetpp&gt;/images;./images</code>, that is, by default Tkenv looks
+          into the <code class="literal">images</code> folder of your installation, and <code class="literal">images</code> folder
+          in the working directory of the simulation. The directories will be scanned recursively,
+          and subdirectory names become part of the icon name; for example, if an <code class="literal">images/</code> directory
+          is listed, the file <code class="literal">images/misc/foo.png</code> will be registered as icon <code class="literal">misc/foo</code>.
+          PNG an GIF files are accepted.</li><li class="listitem"><code class="literal">OMNETPP_PLUGIN_PATH</code>: Certain aspects of Tkenv can be extended with plugins written in Tcl.
+          The path where such plugins are looked for is taken from this environment variable.
+          It is expected to contain a semicolon-separated list of directories, and defaults to <code class="literal">./plugins</code>.
+          (Again, colon is also accepted as separator on non-Windows systems.)</li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm3521"></a>Configuration Options</h3></div></div></div><p> Tkenv accepts the following configuration options in the INI file.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><code class="literal">tkenv-extra-stack</code>: Specifies the extra amount of stack (in kilobytes) that is reserved for each
+          <code class="literal">activity()</code> simple module when the simulation is run under Tkenv. This value is significantly
+          higher than the similar one for Cmdenv (handling GUI events requires a large amount of stack space).
+        </li><li class="listitem"><code class="literal">tkenv-default-config</code>: Specifies which INI file configuration Tkenv should set up automatically after
+          startup. If there is no such option, Tkenv will ask which configuration to set up.
+        </li><li class="listitem"><code class="literal">tkenv-default-run</code>: Specifies which run of the selected configuration Tkenv should set up
+          after startup. If there is no such option, Tkenv will ask.
+        </li><li class="listitem"><code class="literal">tkenv-plugin-path</code>: Tkenv will append this value to the value of the <code class="literal">OMNETPP_PLUGIN_PATH</code>
+          or its built-in default value to get the list of directories to be scanned for plugins written in Tcl.
+        </li></ul></div><p>All other Tkenv settings can be changed via the GUI, and are saved into the <code class="literal">.tkenvrc</code> file
+      in the user's home directory or in the current directory.
+      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch08s08.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch08.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch09.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Tkenv and C&#8288;+&#8288;+ </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 9. Sequence Charts</td></tr></table></div></body></html>

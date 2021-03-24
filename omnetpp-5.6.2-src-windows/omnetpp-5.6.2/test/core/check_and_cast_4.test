@@ -1,0 +1,29 @@
+%description:
+Test the const version of the check_and_cast<T>() function.
+
+%activity:
+
+// create a cPacket as cMessage
+const cOwnedObject *msg = new cMessage();
+
+// this should succeed
+const cMessage *p1 = check_and_cast<const cMessage *>(msg);
+EV << "p1:" << (p1!=nullptr) << endl;
+
+// and this one not
+const cQueue *p2 = check_and_cast<const cQueue *>(msg);
+(void)p2;
+EV << "fell through" << endl;
+
+%exitcode: 1
+
+%contains: stdout
+p1:1
+
+%contains: stderr
+Cannot cast
+
+%not-contains: stdout
+fell through
+
+

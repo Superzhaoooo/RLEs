@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/CodeStyle.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Developer/CodeStyle - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/CodeStyle.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#c_code">C++ Code</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#templates" class="nav-link">• Templates</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#whitespace" class="nav-link">• Whitespace</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#class_names" class="nav-link">• Class Names</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#variable_names" class="nav-link">• Variable Names</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#enums" class="nav-link">• Enums</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#encoding" class="nav-link">• Encoding</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#35include-statements" class="nav-link">• #include-statements</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#using_namespace_-statements" class="nav-link">• "using namespace ..."-statements</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#throw-declarations" class="nav-link">• Throw-declarations</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#object_handling" class="nav-link">• Object Handling</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#integer_types" class="nav-link">• Integer Types</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#conditionals" class="nav-link">• Conditionals</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#loops" class="nav-link">• Loops</a>
+                </li>
+            <li class="nav-item main"><a href="#python_code">Python Code</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#python3_compatibility" class="nav-link">• Python3 compatibility</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#template" class="nav-link">• Template</a>
+                </li>
+            <li class="nav-item main"><a href="#line_endings_and_keyword_replacement">Line endings and keyword replacement</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/CodeStyle<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="c_code">C++ Code<a class="headerlink" href="#c_code" title="Permanent link">#</a></h1>
+<p>We try to have the code compatible to a wide range of C++11 compatible
+compilers and test every commit / pull request against <a href="https://travis-ci.org/eclipse/sumo">gcc and clang on
+macOS and Linux</a>, and <a href="https://ci.appveyor.com/project/eclipsewebmaster/sumo">Visual
+Studio 2013 - 2017 on
+Windows</a>. For the
+C++ code we use <a href="http://astyle.sourceforge.net/">AStyle</a> to keep
+indentation and other whitespace usage consistent throughout the
+project. In order to make your code appear same as the original SUMO
+code use the following call to AStyle (or execute
+tools/build/checkStyle.py --fix &lt;FILE_NAME> before committing):</p>
+<pre><code class="sh">astyle --style=java --unpad-paren --pad-header --pad-oper --add-brackets --indent-switches --align-pointer=type -n &lt;FILE_NAME&gt;
+</code></pre>
+
+<p>Still, there are several other things you should keep in mind (The
+<a href="https://google.github.io/styleguide/cppguide.html">Google C++ Style
+Guide</a> is a good read
+as well):</p>
+<h2 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">#</a></h2>
+<p>Use the following templates for your files:</p>
+<ul>
+<li><a href="CppFileTemplate.html">Developer/CppFileTemplate</a></li>
+<li><a href="HFileTemplate.html">Developer/HFileTemplate</a></li>
+</ul>
+<h2 id="whitespace">Whitespace<a class="headerlink" href="#whitespace" title="Permanent link">#</a></h2>
+<ul>
+<li>Never use <em>tab stop</em>. Always use 4 <em>spaces</em> for indentation. In
+  Visual Studio <em>tab stop</em> can be disabled in Tools/Options/Text
+  Editor/All languages/Tabs.</li>
+</ul>
+<h2 id="class_names">Class Names<a class="headerlink" href="#class_names" title="Permanent link">#</a></h2>
+<ul>
+<li>All class names must start with capital letter</li>
+<li>The first capital letters of a class should be used to indicate
+  their module (<strong>NB</strong>Edge -> <strong>N</strong>et <strong>B</strong>uild module,
+  <strong>MS</strong>ChargingStation -> <strong>M</strong>icro <strong>S</strong>imulation module</li>
+<li>If a class name is composed of multiple words, every word must start
+  with capital letter (Micro simulation charging station ->
+  <strong>MSC</strong>harging<strong>S</strong>tation)</li>
+<li>please do not arbitrarily introduce new namespaces</li>
+</ul>
+<h2 id="variable_names">Variable Names<a class="headerlink" href="#variable_names" title="Permanent link">#</a></h2>
+<ul>
+<li>Variables used within methods should be named using "camel-caps",
+  f.e. "currentCarVelocity"</li>
+<li>Member variables should additionally have the prefix "my", f.e.
+  "myMaximumVehicleVelocity"</li>
+<li>try not to abbreviate variable names (myMaximumVehicleVelocity
+  instead of myMVV)</li>
+<li>give names to variables which describe its purpose within the
+  context</li>
+<li>do not reuse variables for different purposes</li>
+</ul>
+<h2 id="enums">Enums<a class="headerlink" href="#enums" title="Permanent link">#</a></h2>
+<ul>
+<li>All enum names must start with capital letter, and If their name is
+  composed of multiple words, every word must start with capital
+  letter</li>
+<li>Every definition must be written using capital letters (SumoXMLTag {
+  <strong>SUMO_TAG_EDGE</strong>, <strong>SUMO_TAG_LANE</strong>, ... } )</li>
+</ul>
+<h2 id="encoding">Encoding<a class="headerlink" href="#encoding" title="Permanent link">#</a></h2>
+<p>Only use the plain <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>
+characters in <em>cpp</em> and <em>h</em> files. (0x20 - 0x7E). If you need to convey
+extended character information use TeX or HTML notation instead.</p>
+<h2 id="35include-statements">#include-statements<a class="headerlink" href="#35include-statements" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>do not use backslashes (\)!</strong> use slashes (/) only</li>
+<li><strong>do not use absolute paths!</strong>; something like #include
+  "/home/daniel/mylibs/include_me.h" will never work somewhere else!
+  Use relative paths and tell the compiler where the other libraries
+  may be found. If you have problems on this, please tell us, we'll
+  write some further documentation!</li>
+<li>in general we mention the standard library includes first (like
+  #include &lt;vector>), then the includes of libraries used by SUMO
+  (FOX / Xerces) and later our own headers</li>
+<li>brackets ("&lt;" and ">") are preferred for files not residing in the
+  same directory, while quotation marks are usually used for files in
+  the same directory.</li>
+</ul>
+<h2 id="using_namespace_-statements">"using namespace ..."-statements<a class="headerlink" href="#using_namespace_-statements" title="Permanent link">#</a></h2>
+<ul>
+<li>Avoid them whenever possible and especially <strong>do not use "using
+  namespace ..."-statements within the .h-files!</strong> It's possible that
+  an included library tries to use a different implementation - who
+  knows? Using a "using namespace ..."-statement within your .h-file
+  may yield in an unexpected behaviour.</li>
+</ul>
+<h2 id="throw-declarations">Throw-declarations<a class="headerlink" href="#throw-declarations" title="Permanent link">#</a></h2>
+<ul>
+<li>We are not using throw-declarations, see:
+  <a href="http://www.gotw.ca/publications/mill22.htm">http://www.gotw.ca/publications/mill22.htm</a> (thanks to Björn
+  Hendriks); we'll remove the existing ones subsequently.</li>
+</ul>
+<h2 id="object_handling">Object Handling<a class="headerlink" href="#object_handling" title="Permanent link">#</a></h2>
+<ul>
+<li>If the structure you are implementing has an id, then derive the
+  object from <code>Named</code> (<strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/utils/common/Named.h). This class supports
+  the <code>std::string getID()</code>-method.</li>
+<li>If you want to store something in a map pointing from string ids to
+  object instances, then use <code>NamedObjectCont</code>
+  (<strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/utils/common/NamedObjectCont.h).</li>
+</ul>
+<h2 id="integer_types">Integer Types<a class="headerlink" href="#integer_types" title="Permanent link">#</a></h2>
+<ul>
+<li>Use simple int whenever possible. There are probably lots of places
+  in the sumo code which rely on the fact that this has at least 32
+  bits, so you may too.</li>
+<li>Try to avoid unsigned ints whenever possible. It is sometimes not
+  possible when calling Xerces-C and GL functions or using
+  std::string::npos but try to limit it to those cases.</li>
+<li>If you need at least 64 bit, use long long int.</li>
+</ul>
+<h2 id="conditionals">Conditionals<a class="headerlink" href="#conditionals" title="Permanent link">#</a></h2>
+<ul>
+<li>Do not use redundant condition checks. Example: <strong><em>if</em></strong>
+  <em>(myCondition)</em> instead of <strong><em>if</em></strong> (<em>myCondition</em> == <strong><em>true</em></strong>)</li>
+</ul>
+<h2 id="loops">Loops<a class="headerlink" href="#loops" title="Permanent link">#</a></h2>
+<ul>
+<li>Use the C++ 11 range loop syntax whenever possible. Example:
+  <strong><em>for</em></strong> <em>(element&amp; it : myContainer)</em> instead of <strong><em>for</em></strong>
+  <em>(container::iterator it = myContainer.begin(); it !=
+  myContainer.end(); it++)</em>. Still try to name the element type
+  explicitly instead of using "auto" at least when iterating over
+  lists / vectors.</li>
+</ul>
+<h1 id="python_code">Python Code<a class="headerlink" href="#python_code" title="Permanent link">#</a></h1>
+<p>We try to adhere to the <a href="http://www.python.org/dev/peps/pep-0008/">PEP 8 Style
+Guide</a> and use
+<a href="https://github.com/hhatto/autopep8">autopep8</a> and
+<a href="https://gitlab.com/pycqa/flake8">flake8</a> to check this. If you have
+both modules installed, you can run <a href="../Tools/Build.html#checkstylepy">tools/build/checkStyle.py
+&lt;FILENAME></a> to check this and also
+fix some of the errors. We run both tools without any special options
+except for the line length which we limit to 120.</p>
+<p>Please remember to make your file executable if (and only if) the file
+should be executable (i.e. is not a module to be imported by others).
+Windows users please follow this
+<a href="https://stackoverflow.com/questions/21691202/how-to-create-file-execute-mode-permissions-in-git-on-windows">recipe</a>.
+Executable files should also contain a so called shebang in the first
+line:</p>
+<pre><code>!#/usr/bin/env python
+</code></pre>
+
+<p>If your script needs Python 3 then state python3 there.</p>
+<h2 id="python3_compatibility">Python3 compatibility<a class="headerlink" href="#python3_compatibility" title="Permanent link">#</a></h2>
+<p>Our main development still focuses on Python 2.7 but we strive for
+Python 3 compatibility. When writing or editing scripts, keep the
+following in mind:</p>
+<ul>
+<li>use <em>print</em> as a function (<code>from __future__ import print_function</code>)</li>
+<li>use <em>items</em> instead of iteritems, which will return a list under
+  Python 2.7 and an iterator in Python 3(<code>for item in dict.items()</code>)</li>
+<li>use <em>values</em> instead of <em>itervalues</em>, which will return a list under
+  Python 2.7 and an iterator in Python 3(<code>for val in dict.values()</code>)</li>
+<li>use <em>//</em> instead of <em>/</em> for integer division because <em>/</em> will do a
+  floating point division under Python 3 (<code>4/3 = 1.3333333</code>)</li>
+<li>the floating point division with <em>/</em> can be included in Python 2 by (<code>from __future__ import division</code>)</li>
+<li>while iterating over unsorted lists or iterators Python 2 and Python
+  3 do not work in the same order. Therefore add a explicit <em>sorted</em>
+  before iteration when you write e.g. a xml file (<code>for item in sorted(list)</code>)</li>
+<li>use argparse library instead for optparse due to optparse wont be
+  updated for Python 3 anymore. The use of most functions stayed the
+  same, only some names differ. For further information please check
+  <a href="https://docs.python.org/3/library/argparse.html">https://docs.python.org/3/library/argparse.html</a></li>
+<li>if you want to use different code for Python 2 and Python 3, which
+  can be necessary since not all libraries exist for both versions,
+  you can use a simple if else statement with the PY3 boolean defined
+  by(<code>PY3 = sys.version_info &gt; (3,)</code>)</li>
+<li>use byte type in Python 3 wherever you use binary data and string
+  type wherever you used unicode strings before. This can be made by
+  if else statements using the PY3 boolean. See a list for the
+  different methods possible on bytes and strings at
+  <a href="https://docs.python.org/3/howto/pyporting.html#text-versus-binary-data">https://docs.python.org/3/howto/pyporting.html#text-versus-binary-data</a></li>
+</ul>
+<p>For further information about possible error sources and difficulties
+resulting in Python 3 compatibility see also
+<a href="http://python3porting.com/">http://python3porting.com/</a> and
+<a href="https://docs.python.org/3/howto/pyporting.html">https://docs.python.org/3/howto/pyporting.html</a></p>
+<h2 id="template">Template<a class="headerlink" href="#template" title="Permanent link">#</a></h2>
+<p>Use the following template for your files:</p>
+<ul>
+<li><a href="PythonFileTemplate.html">Developer/PythonFileTemplate</a></li>
+</ul>
+<h1 id="line_endings_and_keyword_replacement">Line endings and keyword replacement<a class="headerlink" href="#line_endings_and_keyword_replacement" title="Permanent link">#</a></h1>
+<p>We enforce special line endings for the following file types (overriding
+core.autocrlf settings of git) using <a href="https://github.com/eclipse/sumo/blob/master/.gitattributes"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/.gitattributes</a>:</p>
+<ul>
+<li>LF for<ul>
+<li>source files (".h", ".cpp", ".py", ...),</li>
+<li>Test files (".xml", ".prog", ".complex", ".dfrouter",
+  ".duarouter", ".jtrrouter", ".netconvert", ".sumo", ".meso",
+  ...)</li>
+</ul>
+</li>
+<li>CRLF for Windows only files (".bat", ".props", ".vcxproj",
+  ".filters", ...)</li>
+</ul>
+<p>Git has no equivalent to the svn:keywords property. We use a custom
+script to handle the $Id$ keyword like before but it has to be enabled
+manually by adding the following lines to your global .gitconfig
+(usually in your home directory)</p>
+<pre><code>  [filter &quot;keywords&quot;]
+      clean  = .git_filters/keywords.py clean
+      smudge = .git_filters/keywords.py %f
+</code></pre>
+
+<p>The filter is enabled for Python and C++ source files.</p>
+<p>For the current settings you can always look at <a href="https://github.com/eclipse/sumo/blob/master/.gitattributes"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/.gitattributes</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 06 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

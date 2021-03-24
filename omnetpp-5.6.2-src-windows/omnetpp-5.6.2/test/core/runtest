@@ -1,0 +1,27 @@
+#! /bin/sh
+#
+# usage: runtest [<testfile>...]
+# without args, runs all *.test files in the current directory
+#
+
+MAKE="make -j6 MODE=debug"
+
+TESTFILES=$*
+if [ "x$TESTFILES" = "x" ]; then TESTFILES='*.test'; fi
+if [ ! -d work ];  then mkdir work; fi
+rm -rf work/lib
+cp -pPR lib work/       # OSX dos not support cp -a
+export NEDPATH=.:../lib
+EXTRA_INCLUDES="-I../../../src"
+#OPT="--debugger-attach-on-error=true"
+
+$MAKE -C signalreg
+
+opp_test gen -v --args $OPT -- $TESTFILES || exit 1
+echo
+(cd work; opp_makemake -f -o work --deep --no-deep-includes -i ../makefrag $EXTRA_INCLUDES; $MAKE) || exit 1
+echo
+opp_test run -p work_dbg -v --args $OPT -- $TESTFILES || exit 1
+echo
+echo Results can be found in ./work
+

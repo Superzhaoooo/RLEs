@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/sumo-gui.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>sumo-gui - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/sumo-gui.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#from_30000_feet">From 30.000 feet</a></li>
+            <li class="nav-item main"><a href="#usage_description">Usage Description</a></li>
+            <li class="nav-item main"><a href="#interaction_with_the_view">Interaction with the View</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#basic_navigation" class="nav-link">• Basic Navigation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#breakpoints" class="nav-link">• Breakpoints</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#keyboard_shortcuts" class="nav-link">• Keyboard Shortcuts</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#object_properties_right-click-functions" class="nav-link">• Object Properties / Right-Click-Functions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#selecting_objects" class="nav-link">• Selecting Objects</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#locating_objects" class="nav-link">• Locating Objects</a>
+                </li>
+            <li class="nav-item main"><a href="#influencing_the_simulation">Influencing the simulation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#switching_traffic_lights" class="nav-link">• Switching Traffic Lights</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#closing_and_opening_edges_and_lanes" class="nav-link">• Closing and Opening Edges and Lanes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#scaling_the_amount_of_traffic" class="nav-link">• Scaling the amount of Traffic</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#setting_vehicle_speed_factor" class="nav-link">• Setting Vehicle Speed Factor</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#setting_rerouter_probabilities" class="nav-link">• Setting Rerouter Probabilities</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#starting_and_stopping_vehicles" class="nav-link">• Starting and Stopping Vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#removing_vehicles" class="nav-link">• Removing Vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#planned_interactions" class="nav-link">• Planned Interactions</a>
+                </li>
+            <li class="nav-item main"><a href="#understanding_what_you_see">Understanding what you see</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#right_of_way" class="nav-link">• Right of way</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#road_access_permissions" class="nav-link">• Road Access Permissions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#default_coloring" class="nav-link">&rarr; Default Coloring</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#color_by_permission_code" class="nav-link">&rarr; Color by permission code</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#show_permissions_for_a_specific_vehicle_class" class="nav-link">&rarr; Show permissions for a specific vehicle class</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#connectivity" class="nav-link">• Connectivity</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#check_connected_components" class="nav-link">&rarr; Check connected components</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#color_by_reachability" class="nav-link">&rarr; Color by reachability</a>
+                </li>
+            <li class="nav-item main"><a href="#changing_the_appearancevisualisation_of_the_simulation">Changing the appearance/visualisation of the simulation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#common_visualization_settings" class="nav-link">• Common Visualization Settings</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#vehicle_visualisation_settings" class="nav-link">• Vehicle Visualisation Settings</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#edgelane_visualisation_settings" class="nav-link">• Edge/Lane Visualisation Settings</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#loading_shapes_and_pois" class="nav-link">• Loading Shapes and POIs</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#showing_background_images" class="nav-link">• Showing Background Images</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#transparency" class="nav-link">• Transparency</a>
+                </li>
+            <li class="nav-item main"><a href="#configuration_files">Configuration Files</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#screenshots" class="nav-link">• Screenshots</a>
+                </li>
+            <li class="nav-item main"><a href="#multiple_views">Multiple Views</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#3d_visualization" class="nav-link">• 3D Visualization</a>
+                </li>
+            <li class="nav-item main"><a href="#visualizing_edge-related_data">Visualizing edge-related data</a></li>
+            <li class="nav-item main"><a href="#usage_examples">Usage Examples</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#visualizing_shapes_and_points_of_interest" class="nav-link">• Visualizing Shapes and Points of Interest</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#showing_routes_and_route-related_information" class="nav-link">• Showing routes and route-related information</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#investigating_internal_edges_and_lanes" class="nav-link">• Investigating internal edges and lanes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#investigation_stopping_at_intersections" class="nav-link">• Investigation Stopping At Intersections</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>sumo-gui<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="from_30000_feet">From 30.000 feet<a class="headerlink" href="#from_30000_feet" title="Permanent link">#</a></h1>
+<p><strong>sumo-gui</strong> is basically the same application as
+<a href="sumo.html">sumo</a>, just extended by a graphical user interface.</p>
+<ul>
+<li><strong>Purpose:</strong> Simulates a defined scenario</li>
+<li><strong>System:</strong> portable (Linux/Windows is tested); opens a window</li>
+<li><strong>Input (mandatory):</strong> A SUMO-configuration file (see <a href="sumo.html">sumo</a>)</li>
+<li><strong>Output:</strong> sumo-gui generates the same output as <a href="sumo.html">sumo</a></li>
+<li><strong>Programming Language:</strong> C++</li>
+</ul>
+<h1 id="usage_description">Usage Description<a class="headerlink" href="#usage_description" title="Permanent link">#</a></h1>
+<p><img alt="guisim_empty.png" src="images/Guisim_empty.png" /></p>
+<p><em>Initial appearance of sumo-gui; may differ from what you see</em></p>
+<p>Being a window-based application, sumo-gui is started by a double click
+with the left mouse button on Windows, on Linux probably with a single
+click. After this, an empty window should show up, similar to the one
+shown in the image.</p>
+<p>Using either the "File->Open Simulation..." menu entry or by using the
+"open"-icon (<img alt="Image:open_sim.gif" src="images/Open_sim.gif" />),
+you should be able to load an existing <a href="sumo.html">sumo</a>
+<a href="Basics/Using_the_Command_Line_Applications.html#configuration_files">configuration
+file</a>,
+if it has the proper <a href="Other/File_Extensions.html">extension</a>
+<em>".sumocfg"</em>. If the <a href="sumo.html">sumo</a> <a href="Basics/Using_the_Command_Line_Applications.html#configuration_files">configuration
+file</a>
+is erroneous, the errors are reported, otherwise your network referenced
+within the configuration file should be shown. Now you can start to
+simulate by pressing the "play" button (<img alt="Image:play.gif" src="images/Play.gif" />). The simulation works as if being started on the
+command line. The simulation can be halted using the "stop" button
+(<img alt="Image:stop.gif" src="images/Stop.gif" />) and continued by pressing
+the "play" button again. When stopped, also single steps may be
+performed by pressing the "single step" button
+(<img alt="Image:step.gif" src="images/Step.gif" title="Image:step.gif" />).</p>
+<p>If the simulation is running, the current simulation second is shown in
+the "digital digits" field, right to "Time:"
+(<img alt="Image:Current_step_example.png" src="images/Current_step_example.png" title="Image:Current_step_example.png" />). By clicking on the word "Time:", the
+display can be toggled between showing &lt;seconds> and
+&lt;hour:minute:seconds>.</p>
+<p>Next to the time display is the delay control
+(<img alt="Image:delay.png" src="images/Delay.png" title="Image:delay.png" />). This allows you to
+slow down the simulation by waiting for the given number of milliseconds
+between simulation steps.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default the <em>delay</em> is set to 0. This can result in a simulation that runs too fast to see any vehicles. Increase the delay value if this happens.</p>
+</div>
+<p>Besides loading simulation configurations, it is also possible to load
+networks by using either the "File->Open Network..." menu entry or by
+using the "open network"-icon (<img alt="Image:open_net.gif" src="images/Open_net.gif" title="Image:open_net.gif" />). Please note, that normally
+<strong>sumo-gui</strong> assumes networks have the
+<a href="Other/File_Extensions.html">extension</a> <em>".net.xml"</em>, but also
+accepts other extensions.</p>
+<p>Both, the loaded simulation or the loaded network may be reloaded using
+the "reload" button (<img alt="Image:reload.gif" src="images/Reload.gif" title="Image:reload.gif" />)
+or the menu entry "File->Reload".</p>
+<p>If a network or a simulation are loaded, the navigation through the
+network is possible with the mouse or with the keyboard. One can drag
+the network with the left mouse button pressed into all directions and
+zoom either by using the mouse wheel or by pressing the right mouse
+button and moving the mouse up and down. For fine grained zooming (half
+zoom speed) press the "Control" key while using the mouse wheel, for
+double speed use "Shift".</p>
+<h1 id="interaction_with_the_view">Interaction with the View<a class="headerlink" href="#interaction_with_the_view" title="Permanent link">#</a></h1>
+<h2 id="basic_navigation">Basic Navigation<a class="headerlink" href="#basic_navigation" title="Permanent link">#</a></h2>
+<p><img alt="Viewport_editor.png" src="images/Viewport_editor.png" title="Viewport_editor.png" /></p>
+<p>As soon as a network is displayed, one can interact with the view.
+Pressing the left mouse button within the view and moving the mouse with
+the button pressed, will shift the network. Moving the mouse up and down
+while pressing the right mouse button changes the zoom of the network.
+It is also possible to change the zoom by using the mouse wheel (holding
+<em>&lt;SHIFT></em> increases the zooming speed and holding <em>&lt;CTRL></em> lowers it).
+Zooming is either focused on the center of the screen or on the cursor
+position. The zoom style can be selected with the
+<img alt="Image:zoomstyle.png" src="images/Zoomstyle.png" title="Image:zoomstyle.png" /> button.</p>
+<p>You can also control which part of the network is visible by directly
+setting the network coordinates which shall be at the center of the
+screen along with the zoom (given a value of 100 the whole network will
+fit onto the screen). These settings can be changed by opening the
+viewport editor using the
+<img alt="Image:open_viewport_editor.gif" src="images/Open_viewport_editor.gif" title="Image:open_viewport_editor.gif" /> button. From this editor, it is
+possible to save the current settings (<img alt="Image:save.gif" src="images/Save.gif" title="Image:save.gif" />) or load previously saved ones
+(<img alt="Image:open_sim.gif" src="images/Open_sim.gif" /> within the
+viewport editor).</p>
+<p>The viewport is defined as following:
+<code>&lt;viewport zoom="&lt;ZOOM&gt;" x="&lt;X&gt;" y="&lt;Y&gt;"/&gt;</code>. It can be loaded as a part of viewsettings.</p>
+<p>Pressing the center-button (<img alt="Image:center.gif" src="images/Center.gif" title="Image:center.gif" />) from the menu bar at the top of the view, will
+reset the viewport so that the complete network is shown.</p>
+<h2 id="breakpoints">Breakpoints<a class="headerlink" href="#breakpoints" title="Permanent link">#</a></h2>
+<p>The simulation can be stopped automatically to allow investigating
+specific points in time. Breakpoints can be set via any of the following
+methods:</p>
+<ul>
+<li>via menu <em>Edit->Breakpoints</em></li>
+<li>by setting option <strong>--breakpoints TIME1,TIME2,...</strong></li>
+<li>by loading #Configuration_Files with breakpoint information</li>
+</ul>
+<h2 id="keyboard_shortcuts">Keyboard Shortcuts<a class="headerlink" href="#keyboard_shortcuts" title="Permanent link">#</a></h2>
+<p>Various menu items are accessible via keyboard shortcuts. These are
+documented directly in the menu. (i.e. Ctrl-l Ctrl-e opens the edge
+locator, Ctrl-d performs a single simulation step). Additional shortcuts
+are listed below:</p>
+<ul>
+<li>Ctrl-LeftClick: toggle selection status of object under cursor</li>
+<li>Arrow Keys: move the view</li>
+<li>Ctrl + Arrow keys: move the view less</li>
+<li>PageUp / PageDow: move the view up/down (a lot)</li>
+<li>Shift + PageUp / PageDow: move the view left/right (a lot)</li>
+<li>+/-, Keypad +/-: zoom in/out</li>
+<li>Home/Keypad Home: recenter view</li>
+<li>F9: open view settings dialog</li>
+<li>Shift-LeftClick: <ul>
+<li>vehicle: start tracking</li>
+<li>rerouter: change routeProbReroute probabilities</li>
+</ul>
+</li>
+</ul>
+<h2 id="object_properties_right-click-functions">Object Properties / Right-Click-Functions<a class="headerlink" href="#object_properties_right-click-functions" title="Permanent link">#</a></h2>
+<p>Right-clicking simulation objects gives access to additional
+information:</p>
+<ul>
+<li>copy object id</li>
+<li>object parameter dialog (menu item <em>Show Parameter</em>)</li>
+<li>position information (x,y and lat,lon)</li>
+<li>select/deselect object</li>
+</ul>
+<p>The following objects can be accessed by right-click:</p>
+<ul>
+<li>Vehicles (some attributes are only availabe when using a specific
+  simulation model, i.e. <a href="Simulation/Meso.html">MESO</a> or <a href="Simulation/SublaneModel.html#New_Parameters">sublane
+  model</a>)</li>
+<li>Persons</li>
+<li>Lanes</li>
+<li>Junctions</li>
+<li>Traffic Lights (by clicking on the green/red colored bars)</li>
+<li>Detectors</li>
+<li>Rerouters</li>
+<li>Variable Speed Signs</li>
+<li>POIs</li>
+<li>Polygons</li>
+<li>
+<p>Simulation (by clicking the background where there is no other
+  object). Also accessible by clicking the
+  <img alt="Image:simulationParameters.png" src="images/SimulationParameters.png" title="Image:simulationParameters.png" /> button.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Simulation Parameters include all values available via <a href="Simulation/Output.html#commandline_output_verbose">verbose output</a> such as departed, running and arrived vehicles. It also includes network statistics such as number of edges and nodes.</p>
+</div>
+</li>
+</ul>
+<p>The following additional functions are available via right-click:</p>
+<ul>
+<li>
+<p>Tracking movements (vehicles and persons)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Tracking can be disabled via double-click or via context menu.</p>
+</div>
+</li>
+</ul>
+<ul>
+<li>Activate additional visualizations (persons and vehicles)</li>
+<li>Select junction foe vehicles (vehicles). Requires coloring vehicles
+  <em>by selection</em> to be visible</li>
+<li>Close for traffic (edges and lanes)</li>
+<li>Switch programs (traffic lights)</li>
+<li>Set speed limit (variable speed sign)</li>
+</ul>
+<h2 id="selecting_objects">Selecting Objects<a class="headerlink" href="#selecting_objects" title="Permanent link">#</a></h2>
+<p><strong>sumo-gui</strong> allows for the selection of arbitrary
+network elements such as edges, lanes and junctions, which can be saved
+to a file (and also loaded from a file) for further processing.
+Selection is done by either choosing "Add To Selected" from the context
+menu (right click) of the element or by clicking left on an element
+while pressing the "Control" key.</p>
+<p>The selected elements can be saved / loaded and looked at in the "Edit
+Selected" dialog available from the edit menu. The list contains entries
+of the form objectType:objectId with each of these entries on a separate
+line:</p>
+<pre><code>edge:someEdge
+edge:someOtherEdge
+junction:myJunction
+</code></pre>
+
+<p>Most network objects can be colored according to their selection status
+(<em>color by selection</em>) and selected network elements may be manipulated
+as a group in <a href="netedit.html">netedit</a>.</p>
+<h2 id="locating_objects">Locating Objects<a class="headerlink" href="#locating_objects" title="Permanent link">#</a></h2>
+<p>All simulation objects can be located based on their ID by using the
+locate dialog <img alt="Image:Locate.png" src="images/Locate.png" title="Image:Locate.png" />. By
+clicking this button a sub-menu for selecting the object type is
+opened. The following types are available:</p>
+<ul>
+<li><a href="Networks/PlainXML.html#node_descriptions">Junction</a></li>
+<li><a href="Networks/PlainXML.html#edge_descriptions">Edge</a></li>
+<li><a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">Vehicle</a></li>
+<li><a href="Specification/Persons.html">Person</a></li>
+<li><a href="Simulation/Traffic_Lights.html">Traffic light</a></li>
+<li>Additional infrastructure for
+  <a href="Simulation/Output.html#simulated_detectors">detecting</a> or for
+  <a href="index.html#traffic_management_and_other_structures">influencing
+  traffic</a>.</li>
+<li><a href="Simulation/Shapes.html#poi_point_of_interest_definitions">Point of Interest
+  (PoI)</a></li>
+<li><a href="Simulation/Shapes.html#polygon_definitions">Polygon</a></li>
+</ul>
+<p>After selecting the object type, a dialog opens that provides a text box
+for entering the object ID. Search for objects starts after the first
+characters are entered until an object ID that starts with these
+characters is found. Once selected in the object list, the view can be
+centered on that object.</p>
+<p>The button <em>Hide unselected</em>, restricts the object list to <a href="#selecting_objects">selected
+objects of that type</a>. The <em>Locate Menu</em>
+in the main menu bar also contains a check-box that toggles whether
+<a href="Networks/SUMO_Road_Networks.html#internal_edges">internal edges</a>
+and <a href="Networks/SUMO_Road_Networks.html#internal_junctions">internal
+junctions</a>
+shall be listed in the object locator dialog.</p>
+<h1 id="influencing_the_simulation">Influencing the simulation<a class="headerlink" href="#influencing_the_simulation" title="Permanent link">#</a></h1>
+<p>Currently, there is only limited interaction that can be done from
+the GUI. This will change in the future (see below)</p>
+<h2 id="switching_traffic_lights">Switching Traffic Lights<a class="headerlink" href="#switching_traffic_lights" title="Permanent link">#</a></h2>
+<p>By right-clicking on the <a href="#right_of_way">colored bars</a> at an
+intersection, a popup-menu allows switching between all <a href="Simulation/Traffic_Lights.html#loading_a_new_program">signal plans
+that have been
+loaded</a>. The
+special program <em>off</em> is always available and can be used to switch the
+intersection into a priority-intersection.</p>
+<h2 id="closing_and_opening_edges_and_lanes">Closing and Opening Edges and Lanes<a class="headerlink" href="#closing_and_opening_edges_and_lanes" title="Permanent link">#</a></h2>
+<p>By right clicking on a lane, each lane (or the corresponding edge) can
+be closed for all traffic (except vClass <em>authority</em> and <em>ignoring</em>) by
+selecting the option <em>Close lane</em> or <em>Close edge</em>. In the same way lanes
+or edges can be reopened for traffic by selecting <em>Reopen lane</em> or
+<em>Reopen edge</em>.</p>
+<h2 id="scaling_the_amount_of_traffic">Scaling the amount of Traffic<a class="headerlink" href="#scaling_the_amount_of_traffic" title="Permanent link">#</a></h2>
+<p>The 'Scale Traffic' input in the top menu bar allows scaling the amount of traffic up and down. This works as for the sumo option <strong>--scale</strong>. The frequency / probability of any loaded flows is scaled in proportion and any newly loaded vehicles will be scaled as well.</p>
+<h2 id="setting_vehicle_speed_factor">Setting Vehicle Speed Factor<a class="headerlink" href="#setting_vehicle_speed_factor" title="Permanent link">#</a></h2>
+<p>When tracking a vehicle (Shift-Click on Vehicle or Vehicle context menu option 'Start Tracking'), a new speedFactor slider is shown.
+This slider allows setting the speedFactor to values between 0 and 2.</p>
+<h2 id="setting_rerouter_probabilities">Setting Rerouter Probabilities<a class="headerlink" href="#setting_rerouter_probabilities" title="Permanent link">#</a></h2>
+<p>When loading <a href="Simulation/Rerouter.html#assigning_a_new_route">Rerouters with routeProbReroute definitions</a>, directional arrows will be shown where the available routes diverge. Shift-Clicking on the rerouter icon or the directional arrows will set 100% probability to one of the available routes. Clicking repeatedly will cycle through the routes and again set 100% to a route.</p>
+<h2 id="starting_and_stopping_vehicles">Starting and Stopping Vehicles<a class="headerlink" href="#starting_and_stopping_vehicles" title="Permanent link">#</a></h2>
+<p>From the vehicle context menu, the current vehicle can be made to stop (at the earliest possible location with maximum deceleration). If the vehicle is currently stopped it can also be made to abort the current stop.</p>
+<h2 id="removing_vehicles">Removing Vehicles<a class="headerlink" href="#removing_vehicles" title="Permanent link">#</a></h2>
+<p>From the vehicle context menu, the current vehicle can be removed from the simulation.</p>
+<h2 id="planned_interactions">Planned Interactions<a class="headerlink" href="#planned_interactions" title="Permanent link">#</a></h2>
+<p>In the future more interactions are planned for exploratory simulation:</p>
+<ul>
+<li>changing simulation options dynamically (i.e. <strong>--scale, --time-to-teleport, ....</strong>)</li>
+<li>adding traffic</li>
+<li>changing vehicle or vehicle type parameters</li>
+<li>testing TraCI function calls</li>
+</ul>
+<h1 id="understanding_what_you_see">Understanding what you see<a class="headerlink" href="#understanding_what_you_see" title="Permanent link">#</a></h1>
+<h2 id="right_of_way">Right of way<a class="headerlink" href="#right_of_way" title="Permanent link">#</a></h2>
+<p>At the end of every lane and at the outset of a junction there is a
+little colored bar which indicates right of way. When there are multiple
+target lanes from one lane, the bar is split in smaller parts each
+indication the rules for one connection. The colors a defined as
+follows:</p>
+<ul>
+<li><span style="color:#00FF00; background:#00FF00">FOO</span> Traffic
+  light, green phase, vehicle has right of way</li>
+<li><span style="color:#00B300; background:#00B300">FOO</span> Traffic
+  light, green phase, vehicle has to yield to some streams</li>
+<li><span style="color:#FF0000; background:#FF0000">FOO</span> Traffic
+  light, red phase, vehicle has to wait</li>
+<li><span style="color:#FF8000; background:#FF8000">FOO</span> Traffic
+  light, red/yellow phase, indicates upcoming green phase, vehicle has
+  to wait</li>
+<li><span style="color:#FFFF00; background:#FFFF00">FOO</span> Traffic
+  light, yellow phase, vehicle should stop if possible</li>
+<li><span style="color:#804000; background:#804000">FOO</span> Traffic
+  light, off-blinking, vehicle has to yield</li>
+<li><span style="color:#00FFFF; background:#00FFFF">FOO</span> Traffic
+  light, off-no-signal, vehicle has right of way</li>
+<li><span style="color:#FFFFFF; background:#FFFFFF">FOO</span>
+  uncontrolled, vehicle has right of way</li>
+<li><span style="color:#333333; background:#333333">FOO</span>
+  uncontrolled, vehicle has to yield to some streams</li>
+<li><span style="color:#808080; background:#808080">FOO</span>
+  uncontrolled, right-before-left rules, all vehicles yield to the
+  rightmost incoming lane</li>
+<li><span style="color:#800080; background:#800080">FOO</span>
+  uncontrolled, stop-sign / controlled, right-turn arrow, vehicle has
+  to stop and then yield</li>
+<li><span style="color:#0000C0; background:#0000C0">FOO</span>
+  uncontrolled, allway-stop, all vehicles have to stop and then drive
+  in the order of arrival</li>
+<li><span style="color:#c08140; background:#c08140">FOO</span>
+  uncontrolled, zipper, vehicles have to perform <a href="https://en.wikipedia.org/wiki/Merge_%28traffic%29">zipper
+  merging</a></li>
+<li><span style="color:#000000; background:#000000">FOO</span> dead-end,
+  vehicle may not drive there</li>
+<li><span style="color:#FF00FF; background:#FF00FF">FOO</span> suspicious dead-end,
+  there are outgoing edges but the vehicle may not continue anywhere</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a vehicle is braking in the simulation, the responsible foe vehicle (if any) can also be identified directly by taking the following steps:</p>
+<ul>
+<li>set vehicle coloring to <em>color</em> by <em>selection</em></li>
+<li>right-click the braking vehicle and then click <em>Select Foes</em>
+The foe vehicles will then be color with the selection color (typically blue).</li>
+</ul>
+</div>
+<h2 id="road_access_permissions">Road Access Permissions<a class="headerlink" href="#road_access_permissions" title="Permanent link">#</a></h2>
+<p><a href="Simulation/VehiclePermissions.html">Road access permissions</a> are
+an important tool for building multi-modal scenarios. To better
+understand the road network configuration there are various ways to
+support coloring according to permissions.</p>
+<h3 id="default_coloring">Default Coloring<a class="headerlink" href="#default_coloring" title="Permanent link">#</a></h3>
+<p>The default coloring scheme (<em>uniform</em>) aims to color roads in a
+realistic way and also show some basic <a href="Simulation/VehiclePermissions.html">access
+permissions</a>. The road colors
+have the following meanings:</p>
+<ul>
+<li><span style="color:#808080; background:#808080">FOO</span> sidewalk (<code>allow="pedestrian"</code>)</li>
+<li><span style="color:#C0422C; background:#C0422C">FOO</span> bike lane (<code>allow="bicycle"</code>)</li>
+<li><span style="color:#5C5C5C; background:#5C5C5C">FOO</span> bus lane (<code>allow="bus"</code>)</li>
+<li><span style="color:#96C8C8; background:#96C8C8">FOO</span> waterway (<code>allow="ship"</code>)</li>
+<li><span style="color:#FF0000; background:#FF0000">FOO</span> closed lane (<code>allow="authority"</code>)</li>
+<li><span style="color:#C8FFC8; background:#C8FFC8">FOO</span> green verge (<code>disallow="all"</code>)</li>
+<li><span style="color:#5C5C5C; background:#5C5C5C">FOO</span> anything
+  else that does not allow passenger</li>
+<li><span style="color:#000000; background:#000000">FOO</span> anything
+  else</li>
+</ul>
+<h3 id="color_by_permission_code">Color by <em>permission code</em><a class="headerlink" href="#color_by_permission_code" title="Permanent link">#</a></h3>
+<p>Each possible set of access combinations is represented by a unique
+numerical code. The code for each lane can be retrieved from the lane
+parameter dialog (permission code). The lane coloring scheme <em>permission
+code</em> allows assigning an individual color for each of code. This can be
+used for arbitrary coloring according to the users needs (the default
+coloring scheme can be regarded as a special case of this coloring
+type).</p>
+<h3 id="show_permissions_for_a_specific_vehicle_class">Show permissions for a specific vehicle class<a class="headerlink" href="#show_permissions_for_a_specific_vehicle_class" title="Permanent link">#</a></h3>
+<p>To investigate connectivity in the network, it is often useful to
+quickly highlight lanes that allow a specific vehicle class. This can be
+done from the main menu by selecting <em>Edit</em>-><em>Select lanes which allow
+...</em>-><em>the desired vehicle class</em>.</p>
+<p>This changes the current selection to the set of all lanes that allow
+the specified vehicle class and also changes the coloring scheme to
+<em>color by selection</em>. All lanes that allow the selected vehicle class
+will be shown in blue (by default).</p>
+<h2 id="connectivity">Connectivity<a class="headerlink" href="#connectivity" title="Permanent link">#</a></h2>
+<p>At each intersection all incoming lanes that allow driving across the
+intersection have one or more white arrows to show the allowed driving
+directions. However, these arrows only give partial information since
+every lane may have more connections than the number of arrows. For
+example, when a lane targets two lanes one the same edge beyond the
+intersection, only one arrow will be drawn even though two distinct
+connections exist.</p>
+<ul>
+<li>To see all connections, activate the junction visualization option
+  <em>Show lane to lane connections</em>. The colors of the connection lines
+  correspond to the
+  <a href="#right_of_way">#Right_of_way</a>-colors.</li>
+<li>Each connection at an intersection has a unique index starting at 0
+  and going clockwise around the intersection. These indices can be
+  shown using the junction visualization option <em>Show link junction
+  index</em>.</li>
+<li>Each connection that is controlled by a traffic light has a unique
+  index with regard to that traffic light. By default each traffic
+  light controls one intersection and these indices are identical to
+  the <em>link junction index</em> mentioned above. In the case of joined
+  traffic lights which control multiple intersections, the indices are
+  different. Also, the indices may be freely customized by the user
+  (e.g. to define signal groups). These indices are shown using the
+  junction visualization option <em>Show link tls index</em>.</li>
+</ul>
+<h3 id="check_connected_components">Check connected components<a class="headerlink" href="#check_connected_components" title="Permanent link">#</a></h3>
+<p>You can show all network components that are reachable from a particular lane by right-clicking on a lane and then using the 'select reachable' menu option. A new menu opens where you have to select the vehicle class to check. After choosing a vehicle class, all reachable lanes will be added to the lane selection and the edge coloring mode will be set to 'color by selection'. 
+Consequently, all reachable lanes will be colored blue and all unreachable lanes will be gray.</p>
+<h3 id="color_by_reachability">Color by reachability<a class="headerlink" href="#color_by_reachability" title="Permanent link">#</a></h3>
+<p>After using the <a href="#check_connected_components">'select reachable' function</a>, you can also set edge-coloring mode to 'color by reachability'.
+This will color each edge according to the travel time from the point of origin.
+The following coloring options are useful in this regard:</p>
+<ul>
+<li>Recalibrate Rainbow: Configure colors to the data range of encountered travel times</li>
+<li>'hide below threshold' (0): color unreachable edges grey as their value is set to -1. (must be activated before using 'Recalibrate Rainbow')</li>
+<li>'show edge color value': show the actual travel times for each edge</li>
+<li>disable 'constant text size' for 'show edge color value': avoid cluttering the display when zoomed out</li>
+</ul>
+<h1 id="changing_the_appearancevisualisation_of_the_simulation">Changing the appearance/visualisation of the simulation<a class="headerlink" href="#changing_the_appearancevisualisation_of_the_simulation" title="Permanent link">#</a></h1>
+<p>The View Settings menu allows to change and customize the simulations'
+appearance and visualization. To open the visualization settings use
+<img alt="Image:colorwheel.gif" src="images/Colorwheel.gif" title="Image:colorwheel.gif" /> in the
+menu bar at the top of the view.</p>
+<p>For customizing the simulation one can make changes e.g. to the
+background coloring, streets and vehicle appearance as well as the
+visualization of POIs. Furthermore one can save
+(<img alt="Image:Save_to_registry.gif" src="images/Save_to_registry.gif" title="Image:Save_to_registry.gif" />) and delete
+(<img alt="Image:Delete_from_registry.gif" src="images/Delete_from_registry.gif" title="Image:Delete_from_registry.gif" />‎) settings to the registry or export
+(<img alt="Image:Save.gif" src="images/Save.gif" title="Image:Save.gif" />) custom made settings
+files and load previews settings again
+<img alt="Image:Open_sim.gif" src="images/Open_sim.gif" />. So one can
+use different favorite settings files for any simulation.</p>
+<p>The current settings file is shown in a drop down menu in the top bar of
+the View Settings window where you can switch back to default settings.</p>
+<h2 id="common_visualization_settings">Common Visualization Settings<a class="headerlink" href="#common_visualization_settings" title="Permanent link">#</a></h2>
+<p>Separate settings exist for different simulation objects such as
+vehicle, lanes, persons and detectors. Some options exist for all (or
+most) of these objects:</p>
+<ul>
+<li>Size options<ul>
+<li><em>Exaggerate by</em>: Draws objects bigger to make them more visible</li>
+<li><em>Minimum Size</em>: Do not draw objects below a minimum size</li>
+<li><em>Draw with constant size when zoomed out</em>: Automatically
+  increase the drawing size when zooming out to keep the visual
+  size constant.</li>
+</ul>
+</li>
+<li>Name options<ul>
+<li><em>Show name</em>: Disable drawing of object IDs</li>
+<li><em>Size</em>: Size of the drawn ID (visual size will stay constant
+  when zooming)</li>
+<li><em>Color</em>: Color of drawn ID</li>
+</ul>
+</li>
+<li>Coloring options: Color by some attribute and change the color
+value/range<ul>
+<li>Show color value: show the numerical value that is used for
+  coloring</li>
+</ul>
+</li>
+</ul>
+<h2 id="vehicle_visualisation_settings">Vehicle Visualisation Settings<a class="headerlink" href="#vehicle_visualisation_settings" title="Permanent link">#</a></h2>
+<p><strong>Table 1.1 Vehicle shape schemes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>triangle</td>
+<td>All vehicles are shaped triangular</td>
+</tr>
+<tr>
+<td>boxes</td>
+<td>All vehicles are shaped square</td>
+</tr>
+<tr>
+<td>simple shapes</td>
+<td>All vehicles have simple car shape</td>
+</tr>
+<tr>
+<td>raster images</td>
+<td>All vehicles are drawn with a loaded bitmap defined for their type using attribute <code>imgFile</code> (using <em>simple shapes</em> as fallback)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 1.2 Vehicle coloring schemes and boundaries</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Measure</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>given vehicle/type/route color</td>
+<td>-</td>
+<td>The color given within the vehicle definition with fallback to type and then to route color</td>
+</tr>
+<tr>
+<td>uniform</td>
+<td>-</td>
+<td>All vehicles are colored uniformly</td>
+</tr>
+<tr>
+<td>given/assigned vehicle color</td>
+<td>-</td>
+<td>The color given within the vehicle definition</td>
+</tr>
+<tr>
+<td>given/assigned type color</td>
+<td>-</td>
+<td>The color given within the vehicle type definition</td>
+</tr>
+<tr>
+<td>given/assigned route color</td>
+<td>-</td>
+<td>The color given within the vehicle route definition</td>
+</tr>
+<tr>
+<td>depart position as HSV</td>
+<td>-</td>
+<td>The depart position of each vehicle, relative to the network center, is used to color the vehicle. Direction will be used as H(ue), distance from the center as S(aturation), V(alue) is always 1.</td>
+</tr>
+<tr>
+<td>arrival position as HSV</td>
+<td>-</td>
+<td>The arrival position of each vehicle, relative to the network center, is used to color the vehicle. Direction will be used as H(ue), distance from the center as S(aturation), V(alue) is always 1.</td>
+</tr>
+<tr>
+<td>direction/distance as HSV</td>
+<td>-</td>
+<td>The direction and distance between a vehicle's departure and arrival position, are used to color the vehicle. Direction will be used as H(ue), distance from the center as S(aturation), V(alue) is always 1.</td>
+</tr>
+<tr>
+<td>by speed</td>
+<td>m/s</td>
+<td>The current vehicle speed</td>
+</tr>
+<tr>
+<td>by action step</td>
+<td>-</td>
+<td>Action in current step, next stop or otherwise</td>
+</tr>
+<tr>
+<td>by waiting time</td>
+<td>s</td>
+<td>The time for which a vehicle is halting</td>
+</tr>
+<tr>
+<td>by accumulated waiting time</td>
+<td>s</td>
+<td>The total time for which a vehicle has been halting recently (default: within the last 300s.)</td>
+</tr>
+<tr>
+<td>by time since last lanechange</td>
+<td>s</td>
+<td>The time since the last lane change. The color also indicates the direction of the last lane-change (negative values indicated a change to the right).</td>
+</tr>
+<tr>
+<td>by max speed</td>
+<td>m/s</td>
+<td>Vehicle's maximum velocity</td>
+</tr>
+<tr>
+<td>by CO2 emissions</td>
+<td>g/s</td>
+<td>The amount of CO2 currently emitted by the vehicle</td>
+</tr>
+<tr>
+<td>by CO emissions</td>
+<td>g/s</td>
+<td>The amount of CO currently emitted by the vehicle</td>
+</tr>
+<tr>
+<td>by PMx emissions</td>
+<td>g/s</td>
+<td>The amount of PMx currently emitted by the vehicle</td>
+</tr>
+<tr>
+<td>by NOx emissions</td>
+<td>g/s</td>
+<td>The amount of NOx currently emitted by the vehicle</td>
+</tr>
+<tr>
+<td>by HC emissions</td>
+<td>g/s</td>
+<td>The amount of HC currently emitted by the vehicle</td>
+</tr>
+<tr>
+<td>by fuel consumption</td>
+<td>l/s</td>
+<td>The consumed fuel</td>
+</tr>
+<tr>
+<td>by electricity consumption</td>
+<td>kWh/s</td>
+<td>The consumed electricity (for electric vehicles only)</td>
+</tr>
+<tr>
+<td>by noise emissions</td>
+<td>dbA</td>
+<td>The noise produced by the vehicle</td>
+</tr>
+<tr>
+<td>by reroute number</td>
+<td>count</td>
+<td>The number of times this vehicle has bee rerouted</td>
+</tr>
+<tr>
+<td>by selection</td>
+<td>-</td>
+<td>Colors selected and unselected vehicles differently</td>
+</tr>
+<tr>
+<td>by offset from best lane</td>
+<td>count</td>
+<td>The number of immediate lane changes the vehicle must perform in order to follow its route</td>
+</tr>
+<tr>
+<td>by acceleration</td>
+<td>m/s^2</td>
+<td>The xurrent vehicle acceleration</td>
+</tr>
+<tr>
+<td>by time gap</td>
+<td>s</td>
+<td>The time to collide with the leader vehicle assuming constant speeds</td>
+</tr>
+<tr>
+<td>by depart delay</td>
+<td>s</td>
+<td>The difference of actual insertion time and intended depart time</td>
+</tr>
+<tr>
+<td>by time loss</td>
+<td>s</td>
+<td>The total time loss from driving slower than desired since departure</td>
+</tr>
+<tr>
+<td>by stop delay</td>
+<td>s</td>
+<td>The departure delay for next (or current) public transport stop (with defined 'until' time)</td>
+</tr>
+<tr>
+<td>by stop arrival delay</td>
+<td>s</td>
+<td>The arrival delay for next (or current) public transport stop (with defined 'arrival' time)</td>
+</tr>
+<tr>
+<td>by lateral speed</td>
+<td>m/s</td>
+<td>The lateral speed of the vehicle</td>
+</tr>
+<tr>
+<td>by param (numerical)</td>
+<td>value</td>
+<td>The numerical value of the given vehicle, <a href="TraCI/Vehicle_Value_Retrieval.html#device_and_lanechangemodel_parameter_retrieval_0x7e">device or model</a> parameter</td>
+</tr>
+<tr>
+<td>random</td>
+<td>-</td>
+<td>Random vehicle color</td>
+</tr>
+<tr>
+<td>by angle</td>
+<td>-</td>
+<td>Color by heading angle of the vehicle</td>
+</tr>
+</tbody>
+</table>
+<p>In addition to the vehicle shape and coloring one can display blinker
+and brake lights, the minimum gap, and the vehicle name. The vehicle
+names will always be scaled to the chosen size, no matter which zoom
+step is chosen.</p>
+<h2 id="edgelane_visualisation_settings">Edge/Lane Visualisation Settings<a class="headerlink" href="#edgelane_visualisation_settings" title="Permanent link">#</a></h2>
+<p><strong>Table 2.1 Lane coloring schemes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Measure</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uniform</td>
+<td>-</td>
+<td>All road edges are drawn using the same color. Bicycle lanes are drawn in brown, sidewalks in grey and prohibited lanes (allowing no vehicle classes) are transparent.</td>
+</tr>
+<tr>
+<td>by selection (lane-/streetwise)</td>
+<td>-</td>
+<td>selected lanes are drawn different than those that are not</td>
+</tr>
+<tr>
+<td>by permission code</td>
+<td>-</td>
+<td>all lanes are colored according to the permitted vehicle classes. The code for each lane can be retrieved from the lane parameter dialog (permission code).</td>
+</tr>
+<tr>
+<td>by allowed speed (lanewise)</td>
+<td>m/s</td>
+<td>The maximum velocity allowed on this lane</td>
+</tr>
+<tr>
+<td>by current occupancy (lanewise, brutto)</td>
+<td>% / 100</td>
+<td>By the amount of place that is covered by vehicles (including minGap)</td>
+</tr>
+<tr>
+<td>by current occupancy (lanewise, netto)</td>
+<td>% / 100</td>
+<td>By the amount of place that is covered by vehicles (excluding minGap)</td>
+</tr>
+<tr>
+<td>by first vehicle waiting time (lanewise)</td>
+<td>s</td>
+<td>By the time the first vehicle on the lane waits</td>
+</tr>
+<tr>
+<td>by lane number (streetwise)</td>
+<td>-</td>
+<td>By the number of lanes this edge has</td>
+</tr>
+<tr>
+<td>by CO2 emissions</td>
+<td>g/s</td>
+<td>The mean amount of CO2 emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by CO emissions</td>
+<td>g/s</td>
+<td>The mean amount of CO emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by PMx emissions</td>
+<td>g/s</td>
+<td>The mean amount of PMx emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by NOx emissions</td>
+<td>g/s</td>
+<td>The mean amount of NOx emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by HC emissions</td>
+<td>g/s</td>
+<td>The mean amount of HC emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by fuel consumption</td>
+<td>l/s</td>
+<td>The mean amount of consumed fuel per a lane's meter</td>
+</tr>
+<tr>
+<td>by electricity consumption</td>
+<td>kWh/s</td>
+<td>The mean amount of consumed electricity per a lane's meter</td>
+</tr>
+<tr>
+<td>by noise emission</td>
+<td>dBa</td>
+<td>The noise generated by the vehicles on the lane</td>
+</tr>
+<tr>
+<td>by global travel time</td>
+<td>s</td>
+<td>The travel time on that edge loaded from a weight file</td>
+</tr>
+<tr>
+<td>by global speed percentage</td>
+<td>%</td>
+<td>By the fraction of the maximum speed that the edge allows based on travel times from a loaded weight file</td>
+</tr>
+<tr>
+<td>by given length/geometrical length</td>
+<td></td>
+<td>The factor by which the geometrical length differs from the user-specified edge length</td>
+</tr>
+<tr>
+<td>by angle</td>
+<td></td>
+<td>The angle of the edge measured from start to end (excluding in-between geometry)</td>
+</tr>
+<tr>
+<td>by loaded weight</td>
+<td></td>
+<td>By the value loaded using options <strong>--weight-files, --weight-attribute</strong></td>
+</tr>
+<tr>
+<td>by priority</td>
+<td></td>
+<td>By the right-of-way priority using during network building</td>
+</tr>
+<tr>
+<td>by height at start</td>
+<td>m</td>
+<td>By the z-coordinate at the start of the lane</td>
+</tr>
+<tr>
+<td>by height at segment start</td>
+<td>m</td>
+<td>By the z-coordinate at the start of each geometry segment</td>
+</tr>
+<tr>
+<td>by inclination</td>
+<td>%</td>
+<td>By the average change in height between start and end of the lane per m</td>
+</tr>
+<tr>
+<td>by segment inclination</td>
+<td>%</td>
+<td>By the average change in height between start and end of each geometry segment</td>
+</tr>
+<tr>
+<td>by average speed</td>
+<td>m/s</td>
+<td>By the average speed of vehicles on the lane</td>
+</tr>
+<tr>
+<td>by average relative speed</td>
+<td>%</td>
+<td>By the average speed of vehicles on the lane as percentage of the allowed speed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2.2 Lane scaling schemes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Measure</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>by selection (lane-/streetwise)</td>
+<td>-</td>
+<td>selected lanes are drawn different than those that are not</td>
+</tr>
+<tr>
+<td>by allowed speed (lanewise)</td>
+<td>m/s</td>
+<td>The maximum velocity allowed on this lane</td>
+</tr>
+<tr>
+<td>by current occupancy (lanewise, brutto)</td>
+<td>% / 100</td>
+<td>By the amount of place that is covered by vehicles (including minGap)</td>
+</tr>
+<tr>
+<td>by current occupancy (lanewise, netto)</td>
+<td>% / 100</td>
+<td>By the amount of place that is covered by vehicles (excluding minGap)</td>
+</tr>
+<tr>
+<td>by first vehicle waiting time (lanewise)</td>
+<td>s</td>
+<td>By the time the first vehicle on the lane waits</td>
+</tr>
+<tr>
+<td>by lane number (streetwise)</td>
+<td>-</td>
+<td>By the number of lanes this edge has</td>
+</tr>
+<tr>
+<td>by CO2 emissions</td>
+<td>g/s</td>
+<td>The mean amount of CO2 emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by CO emissions</td>
+<td>g/s</td>
+<td>The mean amount of CO emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by PMx emissions</td>
+<td>g/s</td>
+<td>The mean amount of PMx emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by NOx emissions</td>
+<td>g/s</td>
+<td>The mean amount of NOx emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by HC emissions</td>
+<td>g/s</td>
+<td>The mean amount of HC emitted per a lane's meter</td>
+</tr>
+<tr>
+<td>by fuel consumption</td>
+<td>l/s</td>
+<td>The mean amount of consumed fuel per a lane's meter</td>
+</tr>
+<tr>
+<td>by electricity consumption</td>
+<td>kWh/s</td>
+<td>The mean amount of consumed electricity per a lane's meter</td>
+</tr>
+<tr>
+<td>by noise emission</td>
+<td>dBa</td>
+<td>The noise generated by the vehicles on the lane</td>
+</tr>
+<tr>
+<td>by global travel time</td>
+<td>s</td>
+<td>The travel time on that edge loaded from a weight file</td>
+</tr>
+<tr>
+<td>by global speed percentage</td>
+<td>%</td>
+<td>By the fraction of the maximum speed that the edge allows based on travel times from a loaded weight file</td>
+</tr>
+<tr>
+<td>by given length/geometrical length</td>
+<td></td>
+<td>The factor by which the geometrical length differs from the user-specified edge length</td>
+</tr>
+<tr>
+<td>by angle</td>
+<td></td>
+<td>The angle of the edge measured from start to end (excluding in-between geometry)</td>
+</tr>
+<tr>
+<td>by loaded weight</td>
+<td></td>
+<td>By the value loaded using options <strong>--weight-files, --weight-attribute</strong></td>
+</tr>
+<tr>
+<td>by priority</td>
+<td></td>
+<td>By the right-of-way priority using during network building</td>
+</tr>
+<tr>
+<td>by average speed</td>
+<td>m/s</td>
+<td>By the average speed of vehicles on the lane</td>
+</tr>
+<tr>
+<td>by average relative speed</td>
+<td>%</td>
+<td>By the average speed of vehicles on the lane as percentage of the allowed speed</td>
+</tr>
+</tbody>
+</table>
+<p>In addition to the lane / edge coloring one can display lane borders,
+link decals, rails, edge names, street names, internal edge names, and
+hide macro connectors. The edge names as well as the street and internal
+edge names will always be scaled to the chosen size, no matter which
+zoom step is chosen.</p>
+<h2 id="loading_shapes_and_pois">Loading Shapes and POIs<a class="headerlink" href="#loading_shapes_and_pois" title="Permanent link">#</a></h2>
+<p><a href="Simulation/Shapes.html">Polygonal shapes and Points of Interests
+(POIs)</a> can either be loaded in a
+<em>.sumocfg</em> configuration file or interactively through the <em>Open Shapes</em>
+option in the <em>File</em>-menu.</p>
+<p>Shapes and POIs can be <a href="#locating_objects">located based on their unique
+ID</a> and their appearance can be
+<a href="#changing_the_appearancevisualisation_of_the_simulation">customized as
+well</a>.</p>
+<h2 id="showing_background_images">Showing Background Images<a class="headerlink" href="#showing_background_images" title="Permanent link">#</a></h2>
+<p>In addition to changing the appearance of simulated structures, one may
+also load additional background images ("decals") into
+<strong>sumo-gui</strong>. For this, open the visualisation
+settings using <img alt="Image:colorwheel.gif" src="images/Colorwheel.gif" title="Image:colorwheel.gif" /> and - if you are not yet here - choose the
+"Background" panel (figure 1.1). You will see a table with following
+columns: <strong>picture file</strong>, <strong>center x</strong>, <strong>center y</strong>, <strong>width</strong>,
+<strong>height</strong>, and <strong>rotation</strong>.</p>
+<p><img alt="decals_gui.gif" src="images/Decals_gui.png" title="decals_gui.png" /></p>
+<p><strong>Fig. 1.1: The decals GUI.</strong></p>
+<p>Now, if you click into the first row of the "picture file" column, you
+should be able to enter the complete path of an image file. Confirming
+the path by pressing RETURN should force <strong>sumo-gui</strong>
+to load and display the file below the road network, as shown in figure
+1.2.</p>
+<p><img alt="Background_example.png" src="images/Background_example.png" title="Background_example.png" /></p>
+<p><strong>Fig. 1.2: Example of a background image (decal).</strong></p>
+<p>Currently, <strong>sumo-gui</strong> may load .gif, .png and .bmp
+files. If built with gdal-support further formats such as .tif are also
+usable.</p>
+<p>Now, you may position/stretch/rotate the image using the columns
+<strong>center x</strong>, <strong>center y</strong>, <strong>width</strong>, <strong>height</strong>, and <strong>rotation</strong>.</p>
+<p>When setting the column <strong>relative</strong> to <em>1</em>, position and size values
+will be taken as screen-relative pixel values instead of
+network-relative meter values.</p>
+<p>After aligning your decals, you can save them using the "Save Decals"
+button located in the dialog. Accordingly, previously saved decals can
+be loaded by pressing the "Load Decals" button.</p>
+<p>When defining decals in XML a single line which looks like this:</p>
+<pre><code>&lt;decal file=&quot;background.gif&quot; centerX=&quot;550.00&quot; centerY=&quot;1530.00&quot; width=&quot;64.00&quot; height=&quot;64.00&quot; rotation=&quot;0.00&quot;/&gt;
+</code></pre>
+
+<p>The following attributes are supported</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>file</strong></td>
+<td>path (string)</td>
+<td><em>picture file</em>, the full name of the background image</td>
+</tr>
+<tr>
+<td><strong>centerX</strong></td>
+<td>float</td>
+<td><em>center x</em>, the x-position of the center of the image in network coordinates (in meters)</td>
+</tr>
+<tr>
+<td><strong>centerY</strong></td>
+<td>float</td>
+<td><em>center y</em>, the y-position of the center of the image in network coordinates (in meters)</td>
+</tr>
+<tr>
+<td><strong>width</strong></td>
+<td>float</td>
+<td>The width of the image in network coordinates (in meters)</td>
+</tr>
+<tr>
+<td><strong>height</strong></td>
+<td>float</td>
+<td>The height of the image in network coordinates (in meters)</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>float</td>
+<td>The angle of the image in degrees</td>
+</tr>
+<tr>
+<td>layer</td>
+<td>float</td>
+<td>The layer at which the image is drawn in meters over ground</td>
+</tr>
+<tr>
+<td>screenRelative</td>
+<td>bool</td>
+<td><em>relative</em>, whether the position and size are pixel coordinates relative to the screen rather then the network coordinates</td>
+</tr>
+<tr>
+<td>centerZ</td>
+<td>float</td>
+<td>The z-position of the center of the object in network coordinates (in meters), only used in 3D visualization instead of <em>layer</em></td>
+</tr>
+<tr>
+<td>tilt</td>
+<td>float</td>
+<td>The tilt angle of the object, only used in 3D visualization</td>
+</tr>
+<tr>
+<td>roll</td>
+<td>float</td>
+<td>The roll angle of the object, only used in 3D visualization</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The contents of a decal-configuration can also be embedded in a view-settings file and thus loaded on startup. see <a href="#configuration_files">Configuration Files</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When loading an image file with an embedded geo-reference (i.e. <a href="https://en.wikipedia.org/wiki/GeoTIFF">GeoTIFF</a>) and the simulation network also has a geo-reference, then the image will be positioned automatically.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Background images for a network can be downloaded with the <a href="Tools/Misc.html#tilegetpy">tileGet tool</a>.</p>
+</div>
+<h2 id="transparency">Transparency<a class="headerlink" href="#transparency" title="Permanent link">#</a></h2>
+<p>All image files in the visualization support transparency. For vehicles,
+pois and polygons, this transparency can be set dynamically by changing
+the color via <a href="TraCI.html">TraCI</a> and setting the alpha-channel.</p>
+<p>All objects that have their color set (via input files or visualisation
+settings) support (Red,Green,Blue,Alpha) color values.</p>
+<h1 id="configuration_files">Configuration Files<a class="headerlink" href="#configuration_files" title="Permanent link">#</a></h1>
+<p><strong>sumo-gui</strong> uses the same configuration files as
+SUMO. The recognized options can be obtained by calling <em>sumo --help</em> or
+you save a configuration file with default settings by calling <code>sumo --save-template &lt;file&gt; --save-commented</code>. The option <strong>--gui-settings-file</strong> is specific
+to <strong>sumo-gui</strong>. It allows you to load a previously
+saved gui-settings file. The easiest way to obtain a gui-settings file
+is via the <em>View Settings</em>-Dialog
+<img alt="Image:Open_viewsettings_editor.gif" src="images/Open_viewsettings_editor.gif" title="Image:Open_viewsettings_editor.gif" />. Simply modify the settings and
+save <img alt="Image:save.gif" src="images/Save.gif" title="Image:save.gif" />.</p>
+<p>Note, that the gui-settings-file obtained this way only contain
+information about the viewport (zoom and offset), delay, breakpoints and
+decals if the corresponding check-boxes are activated before saving.
+When you are done the configuration files should look like below:</p>
+<p><em>example.sumocfg</em></p>
+<pre><code>    &lt;configuration&gt;
+        &lt;net-file value=&quot;yournetwork.net.xml&quot;/&gt;
+        &lt;gui-settings-file value=&quot;gui-settings.cfg&quot;/&gt;
+    &lt;/configuration&gt;
+</code></pre>
+
+<p><em>gui-settings.cfg</em></p>
+<pre><code>    &lt;viewsettings&gt;
+        &lt;scheme name=&quot;...
+           ...
+        &lt;/scheme&gt;
+
+        &lt;viewport zoom=&quot;200&quot; x=&quot;100&quot; y=&quot;-100&quot;/&gt;
+        &lt;delay value=&quot;42&quot;/&gt;
+        &lt;decal file=&quot;background.gif&quot; centerX=&quot;550.00&quot; centerY=&quot;1530.00&quot; width=&quot;64.00&quot; height=&quot;64.00&quot; rotation=&quot;0.00&quot;/&gt;
+        &lt;breakpoint value=&quot;42&quot;/&gt;
+        &lt;breakpoint value=&quot;1337&quot;/&gt;
+    &lt;/viewsettings&gt;
+</code></pre>
+
+<p>Alternatively, you can manually add a breakpoint-file definition to your
+settings</p>
+<pre><code>&lt;viewsettings&gt;
+    ...
+    &lt;breakpoints-file value=&quot;breakpoints.txt&quot;/&gt;
+&lt;/viewsettings&gt;
+</code></pre>
+
+<p>A file, suitable for loading breakpoints can be obtained by setting
+breakpoints in the gui and using the menu-option for saving (Edit->Edit
+Breakpoints->save).</p>
+<p>You may either load <em>example.sumocfg</em> using the <em>open simulation</em>-dialog
+or by using the command-line <code>sumo-gui -c example.sumocfg</code>.</p>
+<p>You may use a XML schema definition file for setting up a sumo-gui
+configuration:
+<a href="https://sumo.dlr.de/xsd/sumoConfiguration.xsd">sumoConfiguration.xsd</a>.</p>
+<p>It is also possible to reference a predefined scheme by it's name alone:</p>
+<pre><code>&lt;viewsettings&gt;
+    &lt;scheme name=&quot;real world&quot;/&gt;
+&lt;/viewsettings&gt;
+</code></pre>
+
+<h2 id="screenshots">Screenshots<a class="headerlink" href="#screenshots" title="Permanent link">#</a></h2>
+<p>It is possible to take screenshots at predefined times by adding
+elements to the configuration:</p>
+<pre><code>&lt;viewsettings&gt;
+    &lt;snapshot file=&quot;myScreenshot.png&quot; time=&quot;42&quot;/&gt;
+&lt;/viewsettings&gt;
+</code></pre>
+
+<h1 id="multiple_views">Multiple Views<a class="headerlink" href="#multiple_views" title="Permanent link">#</a></h1>
+<p>Using the (<img alt="Image:NewView.gif" src="images/NewView.gif" title="Image:newView.gif" />)-button, multiple viewing windows can be opened onto the same
+simulation. The visualization settings can be set
+independently for each view. The viewing windows can be managed using
+the <em>Windows</em> menu in the main menu bar.</p>
+<p>When passing multiple files to the <a href="sumo.html">sumo</a>-option <strong>--gui-settings-file</strong>, one
+viewing window is opened for each file at the start of the simulation.</p>
+<h2 id="3d_visualization">3D Visualization<a class="headerlink" href="#3d_visualization" title="Permanent link">#</a></h2>
+<p>When sumo-gui was compiled with <a href="http://www.openscenegraph.org/">OSG
+(OpenSceneGraph)</a> support an additional
+(<img alt="Image:NewView3D.gif" src="images/NewView3D.gif" />)-button is
+present which can be used to open a 3D-View.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The 3D-Visualization is highly experimental</p>
+</div>
+<p>An pre-compiled windows version for testing is available
+<a href="https://sumo.dlr.de/daily/sumo-win64extra-git.zip">here</a>.</p>
+<h1 id="visualizing_edge-related_data">Visualizing edge-related data<a class="headerlink" href="#visualizing_edge-related_data" title="Permanent link">#</a></h1>
+<p>Several applications generated edge-related measures for one or more
+time-intervals.</p>
+<ul>
+<li><a href="Simulation/Output/Lane-_or_Edge-based_Traffic_Measures.html">edgeData-output
+  files</a>  </li>
+<li>edge-probability files generated by
+  <a href="Tools/Trip.html#customized_weights">randomTrips.py</a></li>
+<li><a href="marouter.html#macroscopic_outputs">marouter netload-output</a></li>
+<li><a href="Demand/Automatic_Routing.html">Smoothed traveltimes from
+  device.rerouting</a> when running
+  <a href="sumo.html">sumo</a> with option <strong>--device.rerouting.output</strong>.</li>
+<li><a href="Tools/Routes.html#showdepartsandarrivalsperedge">showDepartsAndArrivalsPerEdge.py</a></li>
+<li><a href="netedit.html#data_specific_modes">netedit</a> can be used to create and modify edgeData files</li>
+</ul>
+<p>These files can be used with
+<a href="Demand/Shortest_or_Optimal_Path_Routing.html#custom_edge_weights">duarouter</a>
+and with <a href="sumo.html">sumo</a> to affect vehicle routing. When running
+<strong>sumo-gui</strong>, these files can be visualized by
+setting the edge coloring <em>by loaded weight</em>.</p>
+<p><strong>sumo-gui</strong> can also be used to visualize the
+contained data to see how various traffic measures changed over time
+(without running a simulation at the same time).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the gui-settings dialog, the function 'Recalibrate Rainbow' can be used to adapt the coloring to the data range of the current attribute.</p>
+</div>
+<p>Edgedata files for visualization can be loaded by setting option <strong>--edgedata-files</strong>. All
+attributes will be loaded and can be selected in the edge visualization
+settings They can also be loaded in <strong>sumo-gui</strong> from
+the menu using <em>File->Open EdgeData</em>. The simulation end time will be
+automatically adjusted to the end of the data range.</p>
+<p>To make use of the loaded data, edge coloring must be set to <strong>color by
+edgeData</strong>. The button <em>Recalibrate Rainbow</em> can be used to generate a
+coloring scheme to show the whole data range.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>edgeData is time based so it will only be shown when the simulation time has advance to the begin time of the respective data interval. Make sure to advance the simulation to time 0 (step once) or to whatever begin time was used for edgeData generation before using <em>Recalibrate Rainbow</em>. To see further data frames, advance the simulation by using delay or breakpoints.</p>
+</div>
+<p>When defining a color scheme, a dedicated color for missing data ('No Data') can always be configured.</p>
+<h1 id="usage_examples">Usage Examples<a class="headerlink" href="#usage_examples" title="Permanent link">#</a></h1>
+<h2 id="visualizing_shapes_and_points_of_interest">Visualizing Shapes and Points of Interest<a class="headerlink" href="#visualizing_shapes_and_points_of_interest" title="Permanent link">#</a></h2>
+<p>see <a href="Simulation/Shapes.html">Using additional Polygons and POIs within the
+Simulation</a></p>
+<h2 id="showing_routes_and_route-related_information">Showing routes and route-related information<a class="headerlink" href="#showing_routes_and_route-related_information" title="Permanent link">#</a></h2>
+<ul>
+<li>To show the route(s) of a vehicle in the simulation, right-click and
+  select <em>Show Current Route</em> or <em>Show all Routes</em>. <ul>
+<li>To show only the remaining portion of the current route, select <em>Show Future Route</em>.</li>
+<li>The upcoming stops and their planned timing (or trigger condition) is automatically shown along the route. To show only the next round of a cyclic route (i.e. for public transport), disable the checkbox 'show looped route'</li>
+<li>Direction reversal of rail vehicles will be shown along the route with the text 'reverse' and an index.</li>
+<li>To show the index of each edge along the route, the vehicle visualization option 'Show route index' can be activated</li>
+</ul>
+</li>
+<li>Thow show the route of person, right click and select <em>Show Current
+  Route</em>. To show the trajectory on a walkingarea, select <em>Show
+  Walkingarea Path</em>.</li>
+<li>To highlight an arbitrary set of edges in the simulation create a
+  <a href="#selecting_objects">selection file</a> and <a href="#edgelane_visualisation_settings">color edges <em>by
+  selection</em></a></li>
+<li>To Visualize all routes in a route file use the tool
+  <a href="Tools/Routes.html#route2polypy">Tools/Routes#route2poly.py</a>
+  or
+  <a href="Tools/Routes.html#route2selpy">Tools/Routes#route2sel.py</a></li>
+<li>To Visualize the number of vehicles arriving or departing at any
+  edge use the tool
+  <a href="Tools/Routes.html#showdepartsandarrivalsperedge">Tools/Routes#showDepartsAndArrivalsPerEdge</a></li>
+</ul>
+<h2 id="investigating_internal_edges_and_lanes">Investigating internal edges and lanes<a class="headerlink" href="#investigating_internal_edges_and_lanes" title="Permanent link">#</a></h2>
+<p><a href="Networks/SUMO_Road_Networks.html#internal_edges">Internal Edges</a>
+define the movements across an intersection. By default they are hidden
+behind the shape of the junction to give a prettier visualisation.
+Occasionally it is of interest to understand which internal lane
+corresponds to which movement as their IDs may be referenced in the
+output or in error messages. The following visualisation settings are
+helpful:</p>
+<ul>
+<li>Junction settings:<ul>
+<li>disable <em>draw junction shape</em></li>
+<li><em>show internal edge name</em></li>
+<li><em>show internal junction name</em></li>
+<li><em>show link junction index</em> (to see the correspondence between
+  IDs and link indices)</li>
+</ul>
+</li>
+<li>Edge settings:<ul>
+<li><em>Exaggerate width by 0.1</em> (otherwise the shapes overlap which
+  makes it hard to understand them)</li>
+<li><em>Color by selection</em> (coloring individual lanes makes it easier
+  to understand geometry before and after <a href="Networks/SUMO_Road_Networks.html#internal_junctions">internal
+  junctions</a>)</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="investigation_stopping_at_intersections">Investigation Stopping At Intersections<a class="headerlink" href="#investigation_stopping_at_intersections" title="Permanent link">#</a></h2>
+<ol>
+<li>Select Vehicle visualization settings "color by selection"</li>
+<li>Right-Click on a vehicle and activate "Select Foes"</li>
+</ol>
+<p>The foe vehicles which cause a vehicle to stop or slow down will be
+highlighted.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 24 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

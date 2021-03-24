@@ -1,0 +1,35 @@
+%description:
+Tests that errors in activity() are properly caught and displayed in Cmdenv,
+and finish() doesn't get called.
+
+%module: Module
+
+class Module : public cSimpleModule
+{
+  public:
+    Module() : cSimpleModule(32768) { }
+    virtual void activity() override;
+    virtual void finish() override;
+};
+
+Define_Module(Module);
+
+void Module::activity()
+{
+    throw cRuntimeError("test exception");
+}
+
+void Module::finish()
+{
+    EV << "finish called\n";
+}
+
+%exitcode: 1
+
+%contains-regex: stderr
+test exception
+
+%not-contains: stdout
+finish called
+
+

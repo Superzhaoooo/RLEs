@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Output/SSM_Device.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Simulation/Output/SSM Device - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Output/SSM_Device.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#equipping_vehicles">Equipping vehicles</a></li>
+            <li class="nav-item main"><a href="#parameters">Parameters</a></li>
+            <li class="nav-item main"><a href="#encounter_types">Encounter types</a></li>
+            <li class="nav-item main"><a href="#space_gap_definitions">Space Gap Definitions</a></li>
+            <li class="nav-item main"><a href="#conflict_definitions">Conflict Definitions</a></li>
+            <li class="nav-item main"><a href="#available_ssms">Available SSMs</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#ttc" class="nav-link">• TTC</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#drac" class="nav-link">• DRAC</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#pet" class="nav-link">• PET</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#br" class="nav-link">• BR</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sgap" class="nav-link">• SGAP</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#tgap" class="nav-link">• TGAP</a>
+                </li>
+            <li class="nav-item main"><a href="#output">Output</a></li>
+            <li class="nav-item main"><a href="#traci">TraCI</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Output/SSM Device<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="equipping_vehicles">Equipping vehicles<a class="headerlink" href="#equipping_vehicles" title="Permanent link">#</a></h2>
+<p>A vehicle can be equipped with an SSM Device which logs the conflicts of the vehicle and other traffic participants (currently only vehicles) and corresponding safety surrogate measures. To attach an SSM device to a vehicle, the <a href="../../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#devices">standard device-equipment procedures</a> can be applied using <code>&lt;device name&gt;=ssm</code>.</p>
+<p>For instance, a single vehicle can be equipped (with a device parametrized by default values) as in the following minimal example</p>
+<pre><code>&lt;routes&gt;
+    ...
+    &lt;vehicle id=&quot;v0&quot; route=&quot;route0&quot; depart=&quot;0&quot;&gt;
+        &lt;param key=&quot;has.ssm.device&quot; value=&quot;true&quot;/&gt;
+    &lt;/vehicle&gt;
+    ....
+&lt;/routes&gt;
+</code></pre>
+
+<p>The SSM device generates an output file (one for each vehicle named <code>ssm_&lt;vehicleID&gt;.xml</code> per default, but several vehicles may write to the same file). The top level elements of the generated file are </p>
+<p><code>&lt;conflict begin="&lt;log-begin-time&gt;" end="&lt;log-end-time&gt;" ego="&lt;equipped-vehicleID&gt;" foe="&lt;opponent-vehicleID&gt;"&gt; ... &lt;/conflict&gt;</code>.</p>
+<p>The detail of information given for each conflict and the criteria to qualify an encounter as a conflict (i.e., produce a corresponding <code>conflict</code> element in the output) can be customized by a number of generic parameters to the vehicle or device, resp.. A full parametrization (redundantly assigning the default values, here) could look as follows:</p>
+<pre><code>&lt;routes&gt;
+    ...
+    &lt;vehicle id=&quot;v0&quot; route=&quot;route0&quot; depart=&quot;0&quot;&gt;
+        &lt;param key=&quot;has.ssm.device&quot; value=&quot;true&quot;/&gt;
+        &lt;param key=&quot;device.ssm.measures&quot; value=&quot;TTC DRAC PET&quot;/&gt;
+        &lt;param key=&quot;device.ssm.thresholds&quot; value=&quot;3.0 3.0 2.0&quot;/&gt; 
+        &lt;param key=&quot;device.ssm.range&quot; value=&quot;50.0&quot; /&gt;
+        &lt;param key=&quot;device.ssm.extratime&quot; value=&quot;5.0&quot; /&gt;
+        &lt;param key=&quot;device.ssm.file&quot; value=&quot;ssm_v0.xml&quot; /&gt;
+        &lt;param key=&quot;device.ssm.trajectories&quot; value=&quot;false&quot; /&gt;
+        &lt;param key=&quot;device.ssm.geo&quot; value=&quot;false&quot; /&gt;
+    &lt;/vehicle&gt;
+    ....
+&lt;/routes&gt;
+</code></pre>
+
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">#</a></h2>
+<p>The possible parameters are summarized in the following table</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>measures</td>
+<td>list of strings</td>
+<td>All available SSMs</td>
+<td>This space-separated list of SSM-identifiers determines, which encounter-specific SSMs are calculated for the equipped vehicle's encounters and which global measures are recorded (see <a href="#available_ssms">below</a>)</td>
+</tr>
+<tr>
+<td>thresholds</td>
+<td>list of floats</td>
+<td><ul><li>TTC &lt; 3.0[s]</li><li>DRAC &gt; 3.0[m/s^2]</li><li>PET &lt; 2.0[s]</li><li>BR &gt; 0.0[m/s^2]</li><li>SGAP &lt; 0.2[m]</li><li>TGAP &lt; 0.5[s]</li></ul></td>
+<td>This space-separated list of SSM-thresholds determines, which encounters are classified as conflicts (if their measurements exceed a threshold) and thus written to the output file as a <code>&lt;conflict&gt;</code>-element. This list is required to have the same length as the list of measures if given.<br><br><strong>Note:</strong> Currently the global measures are recorded as a single timeline for the whole simulation span and thresholds have only effect insofar a leader is looked for in the distance corresponding to the SGAP and, respectively, TGAP values.</td>
+</tr>
+<tr>
+<td>range</td>
+<td>double</td>
+<td>50.0 [m]</td>
+<td>The devices detection range in meters. Other vehicles are tracked as soon as they are closer than <code>&lt;range&gt;</code> to the the equipped vehicle <em>along the road-network</em>. A tree search is performed to find all vehicles up to range upstream and downstream to the vehicle's current position. Further, for all downstream junctions in range, an upstream search for the given range is performed.</td>
+</tr>
+<tr>
+<td>extratime</td>
+<td>double</td>
+<td>5.0 [s]</td>
+<td>The extra time that an encounter is tracked on after not being associated to a potential conflict (either after crossing the conflict area, deviating from a common route, changing lanes, or because vehicles leave the device range, etc.).</td>
+</tr>
+<tr>
+<td>file</td>
+<td>string</td>
+<td>"ssm_&lt;equipped_vehicleID>.xml"</td>
+<td>The filename for storing the conflict information of the equipped vehicle. Several vehicles may write to the same file. Conflicts of a single vehicle are written in the order of the log-begin of the encounter.</td>
+</tr>
+<tr>
+<td>trajectories</td>
+<td>bool</td>
+<td>false</td>
+<td>Whether the full time lines of the different measured values shall be written to the output. This includes logging the time values, encounter types, vehicle positions and velocities, values of the selected SSMs, and associated conflict point locations. If turned off (default) only the extremal values for the selected SSMs are written.</td>
+</tr>
+<tr>
+<td>geo</td>
+<td>bool</td>
+<td>false</td>
+<td>Whether the positions in the output file shall be given in the original coordinate reference system of the network (if available).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="encounter_types">Encounter types<a class="headerlink" href="#encounter_types" title="Permanent link">#</a></h2>
+<p>Different types of encounters, e.g. crossing, merging, or lead/follow situations, may imply different calculation procedures for the safety measures. Therefore the SSM-device keeps track of these classifications and provides them in the output to allow the correct interpretation of the corresponding values.</p>
+<p>The following table lists the different encounter types along with their codes, which will appear in the output file. </p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Name</th>
+<th>Description</th>
+<th><a href="#space_gap_definitions">Space Gap</a></th>
+<th>Speed Difference</th>
+<th><a href="#conflict_definitions">Conflict Entry Point</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>NOCONFLICT_AHEAD</td>
+<td>Foe vehicle is closer than range, but not on a lane conflicting with the ego's route ahead.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><font color="lightgray">1</td>
+<td><font color="lightgray">FOLLOWING</td>
+<td><font color="lightgray">General follow/lead situation (incomplete type, used only internally).</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>FOLLOWING_FOLLOWER</td>
+<td>Ego vehicle is following the foe vehicle.</td>
+<td>foeBack - egoFront</td>
+<td>egoSpeed - foeSpeed</td>
+<td>foeBack</td>
+</tr>
+<tr>
+<td>3</td>
+<td>FOLLOWING_LEADER</td>
+<td>Foe vehicle is following the ego vehicle.</td>
+<td>egoBack - foeFront</td>
+<td>foeSpeed - egoSpeed</td>
+<td>egoBack</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ON_ADJACENT_LANES</td>
+<td>Foe vehicle is on a neighboring lane of the ego vehicle's lane, driving in the same direction.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><font color="lightgray">5</td>
+<td><font color="lightgray">MERGING</td>
+<td><font color="lightgray">Ego and foe share an upcoming edge of their routes while the merging point for the routes is still ahead (incomplete type, only used internally).</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>MERGING_LEADER</td>
+<td>As 5. The estimated arrival at the merge point is earlier for the foe than for the ego vehicle.</td>
+<td>foeEntryDist</td>
+<td>foeSpeed</td>
+<td>mergePoint</td>
+</tr>
+<tr>
+<td>7</td>
+<td>MERGING_FOLLOWER</td>
+<td>As 5. The estimated arrival at the merge point is earlier for the ego than for the foe vehicle.</td>
+<td>egoEntryDist</td>
+<td>egoSpeed</td>
+<td>mergePoint</td>
+</tr>
+<tr>
+<td>8</td>
+<td>MERGING_ADJACENT</td>
+<td>As 5. The vehicles' current routes lead to adjacent lanes on the same edge.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><font color="lightgray">9</td>
+<td><font color="lightgray">CROSSING</td>
+<td><font color="lightgray">Ego's and foe's routes have crossing edges (incomplete type, only used internally)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>CROSSING_LEADER</td>
+<td>As 6. The estimated arrival of the ego at the conflict point is earlier than for the foe vehicle.</td>
+<td>foeEntryDist</td>
+<td>foeSpeed</td>
+<td>foeCrossingPoint</td>
+</tr>
+<tr>
+<td>11</td>
+<td>CROSSING_FOLLOWER</td>
+<td>As 6. The estimated arrival of the foe at the conflict point is earlier than for the ego vehicle.</td>
+<td>egoEntryDist</td>
+<td>egoSpeed</td>
+<td>egoCrossingPoint</td>
+</tr>
+<tr>
+<td><font color="lightgray">12</td>
+<td><font color="lightgray">EGO_ENTERED_CONFLICT_AREA</td>
+<td><font color="lightgray">The encounter is a possible crossing conflict, and the ego vehicle has entered the conflict area. (Is currently not logged -&gt; TODO)</td>
+<td>foeEntryDist</td>
+<td>foeSpeed</td>
+<td>foeCrossingPoint</td>
+</tr>
+<tr>
+<td><font color="lightgray">13</td>
+<td><font color="lightgray">FOE_ENTERED_CONFLICT_AREA</td>
+<td><font color="lightgray">The encounter is a possible crossing conflict, and the foe vehicle has entered the conflict area. (Is currently not logged -&gt; TODO)</td>
+<td>egoEntryDist</td>
+<td>egoSpeed</td>
+<td>egoCrossingPoint</td>
+</tr>
+<tr>
+<td>14</td>
+<td>EGO_LEFT_CONFLICT_AREA</td>
+<td>The encounter has been a possible crossing conflict, but the ego vehicle has left the conflict area.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td>FOE_LEFT_CONFLICT_AREA</td>
+<td>The encounter has been a possible crossing conflict, but the foe vehicle has left the conflict area.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><font color="lightgray">16</td>
+<td><font color="lightgray">BOTH_ENTERED_CONFLICT_AREA</td>
+<td><font color="lightgray">The encounter has been a possible crossing conflict, and both vehicles have entered the conflict area (auxiliary type, only used internally, is evaluated to BOTH_LEFT_CONFLICT_AREA or to COLLISION).</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>17</td>
+<td>BOTH_LEFT_CONFLICT_AREA</td>
+<td>The encounter has been a possible crossing conflict, but both vehicle have left the conflict area.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td>FOLLOWING_PASSED</td>
+<td>The encounter has been a following situation, but is not active any more.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>19</td>
+<td>MERGING_PASSED</td>
+<td>The encounter has been a merging situation, but is not active any more.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>20</td>
+<td>ONCOMING</td>
+<td>The vehicles are driving <a href="../OppositeDirectionDriving.html">towards each other on the same lane</a>.</td>
+<td>foeFront - egoFront</td>
+<td>egoSpeed + foeSpeed</td>
+<td>midpoint between vehicles</td>
+</tr>
+<tr>
+<td><font color="lightgray">111</td>
+<td><font color="lightgray">COLLISION</td>
+<td><font color="lightgray">Collision (currently not implemented, might be differentiated further).</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="space_gap_definitions">Space Gap Definitions<a class="headerlink" href="#space_gap_definitions" title="Permanent link">#</a></h2>
+<ul>
+<li>front: position of front bumper of the vehicle as offset from the start of its lane</li>
+<li>back: position of back bumper of the vehicle as offset from the start of its lane</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When ego and foe vehicles are on subsequent lanes, the gaps are computed by adding the distances of the intermediate lanes</p>
+</div>
+<h2 id="conflict_definitions">Conflict Definitions<a class="headerlink" href="#conflict_definitions" title="Permanent link">#</a></h2>
+<p>For each conflict there is an entry point. For merging and crossing conflicts there is also an exit point.
+The points may be slightly different for both ego and foe vehicle because the point is computed in reference to the vehicle front or rear bumper whereas a collision could happen with another part of the vehicle.</p>
+<ul>
+<li>entryDist: distance between the front bumper of the vehicle and the entry point along the lane sequence</li>
+<li>exitDist for merging and oncoming encounters: entryDist + vehicleLength</li>
+<li>exitDist for crossing encounters: entryDist + followerLength + leaderWidth</li>
+<li>mergePoint: start of the first common lane of ego and foe vehicle</li>
+<li>crossingPoint: point where the lane geometry sequence (center lines) of both vehicles intersects</li>
+<li>egoCrossingPoint: crossing point shifted upstream along the ego lanes by half of the foe vehicle width</li>
+<li>foeCrossingPoint: crossing point shifted upstream along the foe lanes by half of the ego vehicle width</li>
+</ul>
+<h2 id="available_ssms">Available SSMs<a class="headerlink" href="#available_ssms" title="Permanent link">#</a></h2>
+<p>Currently, the following safety surrogate measures are implemented:</p>
+<ul>
+<li><a href="#ttc">TTC</a> (time to collision)</li>
+<li><a href="#drac">DRAC</a> (deceleration rate to avoid a crash)</li>
+<li><a href="#pet">PET</a> (post encroachment time)</li>
+</ul>
+<p>Further, the following additional safety-relevant output can be generated, which will not be linked to a specific encounter:</p>
+<ul>
+<li><a href="#br">BR</a> (brake rate)</li>
+<li><a href="#sgap">SGAP</a> (spacing)</li>
+<li><a href="#tgap">TGAP</a> (time headway)
+For the selection in the device's output, the abbreviations have to be used.</li>
+</ul>
+<p>Basically, we distinguish between three types of encounters for two vehicles:</p>
+<ul>
+<li>Lead/follow situation</li>
+<li>Crossing situation</li>
+<li>Merging Situation</li>
+</ul>
+<p>Please note that some SSMs only apply to a specific encounter or are computed differently for different encounters.
+For crossing and merging situations, we consider "expected" entry and exit times with respect to the conflict zone. 
+For the calculation of those times for the approaching vehicles, we take into account the current deceleration of the 
+vehicles, if the vehicle is not decelerating, the current speed is extrapolated as a constant (i.e., acceleration is only considered if it is negative).</p>
+<p>For some reference to definitions of SSMs see for instance [Guido et al. (2011) "Safety performance measures: a comparison between microsimulation and observational data"] or [Mahmud et al. (2016) "Application of proximal surrogate indicators for safety evaluation: A review of recent developments and research needs"]</p>
+<h3 id="ttc">TTC<a class="headerlink" href="#ttc" title="Permanent link">#</a></h3>
+<p>The time-to-collision is defined for all follow-lead situations for which the follower is faster than the leader. It is given as</p>
+<pre><code>TTC = space_gap/speed-difference.
+</code></pre>
+
+<p>For a crossing or merging situation the TTC is only considered defined if for the case that the expected conflict area exit time of the vehicle A is larger than the expected conflict area entry time for vehicle B, where A is the vehicle with the smaller expected conflict area entry time. If this is the case the TTC is defined as</p>
+<pre><code>TTC = B’s distance to conflict area entry / B’s current speed.
+</code></pre>
+
+<h3 id="drac">DRAC<a class="headerlink" href="#drac" title="Permanent link">#</a></h3>
+<p>For a lead/follow-situation the DRAC (deceleration to avoid a crash) where the follower vehicle's speed is larger than the leader vehicle's speed is defined as</p>
+<pre><code>DRAC = 0.5*speed_difference^2/space_gap.
+</code></pre>
+
+<p>For a crossing situation the DRAC is considered defined only if the expected conflict area exit time tA for the first vehicle (A) is larger than the <em>linearly extrapolated</em> conflict area entry time for the second vehicle (B). In that case, the DRAC is defined as follows:</p>
+<pre><code>DRAC = 2*(speedB - distConflictB/tA)/tA.
+</code></pre>
+
+<p>This value is chosen such that constant deceleration with the corresponding rate would imply that B enters the conflict area exactly at time tA, when vehicle A leaves it.</p>
+<p>For a merging situation, both variants for the DRAC calculation must be tested and the minimal result should be applied as the appropriate value for the DRAC.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This has still to be implemented, currently only one variant is used.</p>
+</div>
+<h3 id="pet">PET<a class="headerlink" href="#pet" title="Permanent link">#</a></h3>
+<p>For merging and crossing situations, the PET (post encroachment time) is defined as the difference of the leading vehicle's conflict area exit time tA and the following vehicle's conflict area entry time tB:</p>
+<pre><code>PET = tB - tA.
+</code></pre>
+
+<p>For lead/follow situations, no PET is calculated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some deficiencies of the current implementation state:</p>
+<p>1) Currently the geometry of the conflict area is considered simplified, considering crossing lanes to be orthogonal.</p>
+<p>2) The merging area is not treated (the "conflict area" for merging conflicts is actually considered as the cross section at the beginning of the common target lane.</p>
+<p>3) DRAC calculation for merging conflicts is still incomplete</p>
+<p>4) Lateral conflicts for opposite or neighboring lane's traffic are ignored</p>
+</div>
+<h3 id="br">BR<a class="headerlink" href="#br" title="Permanent link">#</a></h3>
+<p>The brake rate is recorded at each simulation step. If the vehicle accelerates, a value of 0.0 is logged.</p>
+<h3 id="sgap">SGAP<a class="headerlink" href="#sgap" title="Permanent link">#</a></h3>
+<p>The spacing is measured as the bumper to bumper distance to the ego vehicle's leader minus the vehicle's <a href="../../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types">minGap</a></p>
+<h3 id="tgap">TGAP<a class="headerlink" href="#tgap" title="Permanent link">#</a></h3>
+<p>The time headway to the leading vehicle equals spacing/speed.</p>
+<h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">#</a></h2>
+<p>The output for an SSM device is written to a file specified by the parameter <code>device.ssm.file</code> in the routes definition file, see <a href="#equipping_vehicles">above</a>.
+The extent of output can be controlled by the parameters <code>device.ssm.measures</code> (which SSMs to report) and <code>device.ssm.trajectories</code> (whether to report complete trajectories for vehicles, the tracked SSMs, and the encounter types).</p>
+<p>The resulting file contains a root element <code>&lt;SSMLog&gt;</code>, which contains several <code>&lt;conflict&gt;</code> elements and one <code>&lt;globalMeasures&gt;</code> element. Each reported <code>&lt;conflict&gt;</code> corresponds to a tracked encounter, during which an SSM's criticality threshold was exceeded during the simulation. The <code>&lt;globalMeasures&gt;</code> element holds a timeline for all simulated times and the corresponding values for the selected measures, which are not associated to specific conflicts, see <a href="#available_ssms">Available_SSMs</a>.</p>
+<p>An example for the contents of an output file:</p>
+<pre><code>&lt;SSMLog&gt;
+     &lt;conflict begin=&quot;6.50&quot; end=&quot;13.90&quot; ego=&quot;ego1&quot; foe=&quot;foe1&quot;&gt;
+         &lt;timeSpan values=&quot;6.50 6.60 6.70 6.80 6.90 7.00 7.10 ...&quot;/&gt;
+         &lt;typeSpan values=&quot;10 10 10 10 10 10 10 ...&quot;/&gt;
+         &lt;egoPosition values=&quot;98.35,61.20 98.35,60.20 98.35,59.25 ...&quot;/&gt;
+         &lt;egoVelocity values=&quot;0.00,-10.23 0.00,-9.78 0.00,-9.33 ...&quot;/&gt;
+         &lt;foePosition values=&quot;76.31,48.35 77.59,48.35 78.82,48.35 ...&quot;/&gt;
+         &lt;foeVelocity values=&quot;13.02,0.00 12.57,0.00 12.12,0.00 ...&quot;/&gt;
+         &lt;conflictPoint values=&quot;99.23,49.46 99.23,49.46 99.23,49.46 ...&quot;/&gt;
+         &lt;TTCSpan values=&quot;1.78 1.74 1.70 1.67 1.63 1.60 1.56 ...&quot;/&gt;
+         &lt;minTTC time=&quot;7.40&quot; position=&quot;99.23,49.46&quot; type=&quot;10&quot; value=&quot;1.48&quot;/&gt;
+         &lt;DRACSpan values=&quot;3.66 3.61 3.56 3.50 3.44 3.37 3.30 ...&quot;/&gt;
+         &lt;maxDRAC time=&quot;6.50&quot; position=&quot;99.23,49.46&quot; type=&quot;10&quot; 
+value=&quot;3.66&quot;/&gt;
+         &lt;PET time=&quot;9.42&quot; position=&quot;99.23,49.46&quot; type=&quot;17&quot; value=&quot;0.72&quot;/&gt;
+     &lt;/conflict&gt;
+     &lt;conflict begin=&quot;21.50&quot; end=&quot;27.20&quot; ego=&quot;ego1&quot; foe=&quot;foe2&quot;&gt;
+         ...
+     &lt;/conflict&gt;
+     ...
+    &lt;globalMeasures ego=&quot;ToC_veh&quot;&gt;
+        &lt;timeSpan values=&quot;0.00 0.10 0.20 0.30 0.40 0.50 0.60 0.70 0.80 0.90 1.00 ...&quot;/&gt;
+        &lt;BRSpan values=&quot;0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 ...&quot;/&gt;
+        &lt;maxBR time=&quot;363.20&quot; position=&quot;1850.01,-4.95&quot; value=&quot;5.53&quot;/&gt;
+        &lt;SGAPSpan values=&quot;27.50 27.50 27.49 27.45 27.38 27.29 27.17 27.02 26.85 26.65 ...&quot;/&gt;
+        &lt;minSGAP time=&quot;365.50&quot; position=&quot;1863.41,-4.95&quot; value=&quot;0.31&quot; leader=&quot;leader&quot;/&gt;
+        &lt;TGAPSpan values=&quot;inf 105.77 52.86 35.19 26.33 20.99 17.41 14.85 12.91 11.39 10.16 ...&quot;/&gt;
+        &lt;minTGAP time=&quot;365.30&quot; position=&quot;1863.14,-4.95&quot; value=&quot;0.23&quot; leader=&quot;leader&quot;/&gt;
+    &lt;/globalMeasures&gt;
+&lt;/SSMLog&gt;
+</code></pre>
+
+<p>Elements of type <code>&lt;conflict&gt;</code> hold the following information in their child elements:</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>timeSpan</td>
+<td>values</td>
+<td>list of floats</td>
+<td>All simulation time points within the duration of the encounter. All other entries of elements with list-type are given with respect to the corresponding time points.</td>
+</tr>
+<tr>
+<td>typeSpan</td>
+<td>values</td>
+<td>list of integers (Encounter type codes)</td>
+<td>Timeseries of classifications for the tracked encounter.</td>
+</tr>
+<tr>
+<td>egoPosition</td>
+<td>values</td>
+<td>list of 2D-coordinates</td>
+<td>Timeseries of the ego vehicle's positions.</td>
+</tr>
+<tr>
+<td>egoVelocity</td>
+<td>values</td>
+<td>list of 2D-vectors</td>
+<td>Timeseries of the ego vehicle's velocity vectors.</td>
+</tr>
+<tr>
+<td>foePosition</td>
+<td>values</td>
+<td>list of 2D-coordinates</td>
+<td>Timeseries of the foe vehicle positions.</td>
+</tr>
+<tr>
+<td>foeVelocity</td>
+<td>values</td>
+<td>list of 2D-vectors</td>
+<td>Timeseries of the foe vehicle velocity vectors.</td>
+</tr>
+<tr>
+<td>conflictPoint</td>
+<td>values</td>
+<td>list of 2D-coordinates</td>
+<td>Timeseries of the (eventually extrapolated) coordinates of the conflict point. The <em>conflict</em> point is taken as the respective <em>entry point to the conflict area</em>.</td>
+</tr>
+<tr>
+<td>TTCSpan</td>
+<td>values</td>
+<td>list of floats</td>
+<td>Timeseries of the calculated TTC values. May contain entries 'NA' corresponding to times, where TTC is not defined.</td>
+</tr>
+<tr>
+<td>DRACSpan</td>
+<td>values</td>
+<td>list of floats</td>
+<td>Timeseries of the calculated DRAC values. May contain entries 'NA' corresponding to times, where DRAC is not defined.</td>
+</tr>
+<tr>
+<td>minTTC</td>
+<td>time</td>
+<td>float</td>
+<td>Time point of the minimal measured value for the TTC.</td>
+</tr>
+<tr>
+<td></td>
+<td>position</td>
+<td>2D-coordinate</td>
+<td>Coordinate of the corresponding conflict point.</td>
+</tr>
+<tr>
+<td></td>
+<td>type</td>
+<td>integer (Encounter type code)</td>
+<td><a href="#encounter_types">Type code</a> of the corresponding encounter type. (Defines the variant of <a href="#ttc">TTC-calculation</a>.)</td>
+</tr>
+<tr>
+<td></td>
+<td>value</td>
+<td>float &gt;= 0</td>
+<td>The minimal measured TTC-value.</td>
+</tr>
+<tr>
+<td>maxDRAC</td>
+<td>time</td>
+<td>float</td>
+<td>Time point of the maximal measured value for the DRAC.</td>
+</tr>
+<tr>
+<td></td>
+<td>position</td>
+<td>2D-coordinate</td>
+<td>Coordinate of the corresponding conflict point.</td>
+</tr>
+<tr>
+<td></td>
+<td>type</td>
+<td>integer (Encounter type code)</td>
+<td><a href="#encounter_types">Type code</a> of the corresponding encounter type. (Defines the variant of <a href="#drac">DRAC-calculation</a>.)</td>
+</tr>
+<tr>
+<td></td>
+<td>value</td>
+<td>float &gt;= 0</td>
+<td>The maximal measured DRAC-value.</td>
+</tr>
+<tr>
+<td>PET</td>
+<td>time</td>
+<td>float</td>
+<td>Time point of the minimal measured value for the PET. (Usually the PET is only measured once, therefore no PETSpan is reported.)</td>
+</tr>
+<tr>
+<td></td>
+<td>position</td>
+<td>2D-coordinate</td>
+<td>Coordinate of the corresponding encroachment point.</td>
+</tr>
+<tr>
+<td></td>
+<td>type</td>
+<td>integer (Encounter type code)</td>
+<td><a href="#encounter_types">Type code</a> of the corresponding encounter type.</td>
+</tr>
+<tr>
+<td></td>
+<td>value</td>
+<td>float &gt;= 0</td>
+<td>The measured PET-value.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>&lt;globalMeasures&gt;</code> element has the following structure:</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>timeSpan</td>
+<td>values</td>
+<td>list of floats</td>
+<td>Simulation time points at which the reported measures are logged.</td>
+</tr>
+<tr>
+<td>BRSpan</td>
+<td>values</td>
+<td>list of floats</td>
+<td>Values of the brake rate at the time points given in timeSpan.</td>
+</tr>
+<tr>
+<td>SGAPSpan</td>
+<td>values</td>
+<td>list of floats</td>
+<td>Values of the spacing at the time points given in timeSpan.</td>
+</tr>
+<tr>
+<td>TGAPSpan</td>
+<td>values</td>
+<td>list of floats</td>
+<td>Values of the time headway at the time points given in timeSpan.</td>
+</tr>
+<tr>
+<td>maxBR</td>
+<td>time</td>
+<td>float</td>
+<td>Time at which the maximal value of the brake rate was recorded.</td>
+</tr>
+<tr>
+<td></td>
+<td>value</td>
+<td>float</td>
+<td>Maximal recorded value for the brake rate.</td>
+</tr>
+<tr>
+<td></td>
+<td>position</td>
+<td>2D-coordinate</td>
+<td>Position of the ego vehicle, where the maximal brake rate was recorded.</td>
+</tr>
+<tr>
+<td>minSGAP</td>
+<td>time</td>
+<td>float</td>
+<td>Time at which the minimal spacing was recorded.</td>
+</tr>
+<tr>
+<td></td>
+<td>value</td>
+<td>float</td>
+<td>Minimal recorded value for the spacing.</td>
+</tr>
+<tr>
+<td></td>
+<td>position</td>
+<td>2D-coordinate</td>
+<td>Position of the ego vehicle, where the minimal spacing was recorded.</td>
+</tr>
+<tr>
+<td>minTGAP</td>
+<td>time</td>
+<td>float</td>
+<td>Time at which the minimal time headway was recorded.</td>
+</tr>
+<tr>
+<td></td>
+<td>value</td>
+<td>float</td>
+<td>Minimal recorded value for the time headway.</td>
+</tr>
+<tr>
+<td></td>
+<td>position</td>
+<td>2D-coordinate</td>
+<td>Position of the ego vehicle, where the minimal time headway was recorded.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="traci">TraCI<a class="headerlink" href="#traci" title="Permanent link">#</a></h2>
+<p>The following values can be retrieved for equipped vehicles if they have enabled the corresponding measures:</p>
+<ul>
+<li>traci.vehicle.getParameter(vehID, "device.ssm.minTTC")</li>
+<li>traci.vehicle.getParameter(vehID, "device.ssm.minPET")</li>
+<li>traci.vehicle.getParameter(vehID, "device.ssm.maxDRAC")</li>
+</ul>
+<p>The values correspond to the current min/max for all currently active encounters.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 01 December 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+%description:
+Check non-cOwnedObject class as member in cOwnedObject class
+
+%file: test.msg
+
+namespace @TESTNAME@;
+
+class Class1 extends cObject
+{
+    int bb;
+}
+
+
+class MyClass extends cOwnedObject
+{
+    Class1 b;
+    char c;
+};
+
+%includes:
+#include "test_m.h"
+
+%activity:
+
+#define PRINT(X) EV << #X << ":" << X << endl
+
+MyClass x;
+
+x.getBForUpdate().setBb(11); PRINT(x.getB().getBb());
+x.setC('x'); PRINT(x.getC());
+
+%contains: stdout
+x.getB().getBb():11
+x.getC():x
+

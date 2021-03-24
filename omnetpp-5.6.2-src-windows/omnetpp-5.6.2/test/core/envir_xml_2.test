@@ -1,0 +1,15 @@
+%description:
+ev.getXMLDocument(): file not found
+
+%activity:
+
+cXMLElement *node = getEnvir()->getXMLDocument("@TESTNAME@qwerty.xml");
+if (!node)
+    EV << "nullptr\n";
+else
+    EV << node->getTagName() << " from " << node->getSourceLocation() << "\n";
+
+%exitcode: 1
+
+%contains: stderr
+Cannot load '@TESTNAME@qwerty.xml': File not found

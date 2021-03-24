@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Built-By: genie.gmf-runtime
+Created-By: Apache Maven 3.6.0
+Build-Jdk: 1.8.0_192
+
+Name: epl-v10.html
+SHA-256-Digest: T9ZK7tNA1ipkqNpLNx7+D20NdF9NLb76y6hsZG02vHI=
+
+Name: feature.xml
+SHA-256-Digest: pLmMia2uG0ZQY6MeDI4cwvQxT6WzFDhYp+DP9HFgDmE=
+
+Name: feature.properties
+SHA-256-Digest: fv4wgw2/tyBA2FGf/qVQND3VilbVSe0c6Uw19g0S510=
+
+Name: license.html
+SHA-256-Digest: X315zLynvdLZ4DaYSopgxruQUUEadA3FOPNviC+YO24=
+
+Name: modeling32.png
+SHA-256-Digest: saSrfvJ79Uzl2BFpCbuVBho1UTuf14LrjD+wGJG44Ok=
+

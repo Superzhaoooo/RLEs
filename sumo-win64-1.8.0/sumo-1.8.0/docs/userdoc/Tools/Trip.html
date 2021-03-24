@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tools/Trip.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tools/Trip - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tools/Trip.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#randomtripspy">randomTrips.py</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#randomization" class="nav-link">• Randomization</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#edge_probabilities" class="nav-link">• Edge Probabilities</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#arrival_rate" class="nav-link">• Arrival rate</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#example" class="nav-link">&rarr; Example</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#validated_routes_and_trips" class="nav-link">• Validated routes and trips</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#generating_vehicles_with_additional_parameters" class="nav-link">• Generating vehicles with additional parameters</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#setting_a_vehicle_type_from_an_external_file" class="nav-link">&rarr; Setting a vehicle type from an external file</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#automatically_generating_a_vehicle_type" class="nav-link">&rarr; Automatically generating a vehicle type</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#generating_different_modes_of_traffic" class="nav-link">• Generating different modes of traffic</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#intermediate_way_points" class="nav-link">• Intermediate Way Points</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#customized_weights" class="nav-link">• Customized Weights</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#saving" class="nav-link">&rarr; Saving</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#visualization" class="nav-link">&rarr; Visualization</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#loading" class="nav-link">&rarr; Loading</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#usage_example" class="nav-link">&rarr; Usage Example</a>
+                </li>
+            <li class="nav-item main"><a href="#route2tripspy">route2trips.py</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tools/Trip<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="randomtripspy">randomTrips.py<a class="headerlink" href="#randomtripspy" title="Permanent link">#</a></h1>
+<p>"randomTrips.py" generates a set of random trips for a given network
+(option <strong>-n</strong>). It does so by choosing source and destination edge either
+uniformly at random or with a modified distribution as described below.
+The resulting trips are stored in an XML file (option <strong>-o</strong>, default
+trips.trips.xml) suitable for <a href="../duarouter.html">duarouter</a> which is
+called automatically if the  option (with a filename for the resulting
+route file) is given. The trips are distributed evenly in an interval
+defined by begin (option <strong>-b</strong>, default 0) and end time (option <strong>-e</strong>, default
+3600) in seconds. The number of trips is defined by the repetition rate
+(option <strong>-p</strong>, default 1) in seconds. Every trip has an id consisting of a
+prefix (option <strong>--prefix</strong>, default "") and a running number. Example call:</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/randomTrips.py -n input_net.net.xml -e 50
+</code></pre>
+
+<p>The script does not check whether the chosen destination may be reached
+from the source. This task is performed by the router. If the network is
+not fully connected some of the trips may be discarded.</p>
+<p>The option <strong>--min-distance</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> ensures a minimum straight-line distance (in meter) between
+start and end edges of a trip. The script will keep sampling from the
+edge distribution until enough trips with sufficient distance are found.</p>
+<h2 id="randomization">Randomization<a class="headerlink" href="#randomization" title="Permanent link">#</a></h2>
+<p>When running <em>randomTrips.py</em> twice with the same parameters, different
+output files will be created due to randomness. The option <strong>--seed</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> can be used
+to get repeatable pseudo-randomness.</p>
+<h2 id="edge_probabilities">Edge Probabilities<a class="headerlink" href="#edge_probabilities" title="Permanent link">#</a></h2>
+<p>The option <strong>--fringe-factor</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> increases the probability that trips will start/end at the
+fringe of the network. If the value <em>10</em> is given, edges that have no
+successor or no predecessor will be 10 times more likely to be chosen as
+start- or endpoint of a trip. This is useful when modelling
+through-traffic which starts and ends at the outside of the simulated
+area.</p>
+<p>The probabilities for selecting an edge may also be weighted by</p>
+<ul>
+<li>edge length (option <strong>-l</strong>),</li>
+<li>by number of lanes (option <strong>-L</strong>)</li>
+<li>edge speed (exponentially, by option <strong>--speed-exponent</strong>)</li>
+<li><a href="../Simulation/GenericParameters.html">generic edge parameter</a> (option <strong>--edge-param</strong>)</li>
+<li>direction of travel (option <strong>--angle-factor</strong> and <strong>--angle</strong>)</li>
+</ul>
+<p>For additional ways to influence edge probabilities call</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/randomTrips.py --help
+</code></pre>
+
+<h2 id="arrival_rate">Arrival rate<a class="headerlink" href="#arrival_rate" title="Permanent link">#</a></h2>
+<p>The arrival rate is controlled by option <strong>--period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (<em>default 1</em>). By default this
+generates vehicles with a constant period and arrival rate of (1/period)
+per second. By using values below 1, multiple arrivals per second can be
+achieved.</p>
+<p>When adding option <strong>--binomial</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a> the arrivals will be randomized using a binomial
+distribution where <em>n</em> (the maximum number of simultaneous arrivals) is
+given by the argument to <strong>--binomial</strong> and the expected arrival rate is 1/period
+<em>(this option is not yet available in version 0.23.0)</em>.</p>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h3>
+<p>To let <em>n</em> vehicles depart between times <em>t0</em> and <em>t1</em> set the options</p>
+<pre><code class="sh">-b t0 -e t1 -p ((t1 - t0) / n)
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The actual number of departures may be lower if the road capacity is insufficient to accommodate that number of vehicles or if the network is not fully connected (in this case some of the generated trips will be invalid).</p>
+</div>
+<h2 id="validated_routes_and_trips">Validated routes and trips<a class="headerlink" href="#validated_routes_and_trips" title="Permanent link">#</a></h2>
+<p>When using the option <strong>--route-file</strong>, an output file with valid vehicle routes will be
+generated. This works by automatically calling
+<a href="../duarouter.html">duarouter</a> in the background to turn the random
+trips into routes and automatically discard disconnected trips. It may
+be necessary to increase the number of generated random trips to account
+for a fraction disconnected, discarded trips.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When using the option <strong>--vehicle-class</strong> the same value should be set for option <strong>--edge-permission</strong></p>
+</div>
+<p>Sometimes it is desirable to obtain validated trips rather than routes
+(i.e. to make use of <a href="../Demand/Dynamic_User_Assignment.html#oneshot-assignment">one-shot route
+assignment</a>.
+In this case the additional option <strong>--validate</strong> may be used to generate validated
+trips (by first generating valid routes and then converting them back
+into trips).</p>
+<h2 id="generating_vehicles_with_additional_parameters">Generating vehicles with additional parameters<a class="headerlink" href="#generating_vehicles_with_additional_parameters" title="Permanent link">#</a></h2>
+<p>With the option <strong>--trip-attributes</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>, additional parameters can be given to the generated
+vehicles (note, usage of the quoting characters).</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/randomTrips.py -n input_net.net.xml 
+  --trip-attributes=&quot;departLane=\&quot;best\&quot; departSpeed=\&quot;max\&quot; departPos=\&quot;random\&quot;&quot;
+</code></pre>
+
+<p>This would make the random vehicles be distributed randomly on their
+starting edges and inserted with high speed on a reasonable lane.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Quoting of trip attributes on Linux must use the style <strong>--trip-attributes 'departLane="best" departSpeed="max" departPos="random"'</strong></p>
+</div>
+<h3 id="setting_a_vehicle_type_from_an_external_file">Setting a vehicle type from an external file<a class="headerlink" href="#setting_a_vehicle_type_from_an_external_file" title="Permanent link">#</a></h3>
+<p>If the generated vehicles should have a specific vehicle type, an <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a> needs
+to be prepared:</p>
+<pre><code>&lt;additional&gt;
+  &lt;vType id=&quot;myType&quot; maxSpeed=&quot;27&quot; vClass=&quot;passenger&quot;/&gt;
+&lt;/additional&gt;
+</code></pre>
+
+<p>Then load this file (assume it was saved as <em>type.add.xml</em>) with the
+option --additional-file</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/randomTrips.py -n input_net.net.xml --trip-attributes=&quot;type=\&quot;myType\&quot;&quot; --additional-file type.add.xml
+   --edge-permission passenger
+</code></pre>
+
+<p>Note the use of the option <strong>--edge-permission</strong> (deprecated alias: <strong>--vclass</strong>) which ensures that
+random start- and arrival-edges allow a specific vehicle class.</p>
+<p>To generate random pedestrian traffic instead of vehicular traffic, the
+option <strong>--pedestrians</strong> may be used. It is recommended to combined this with the option <strong>--max-distance</strong>
+to avoid walks of excessive length. See
+<a href="../Simulation/Pedestrians.html">Simulation/Pedestrians</a> for addition
+information on the simulation of pedestrians.</p>
+<p>Note that the option <strong>--vehicle-class</strong> should only be used as a quick shorthand to
+generate trips for the standard type of the given vehicle class since it
+places a standard vType definition in the generated trips file.</p>
+<h3 id="automatically_generating_a_vehicle_type">Automatically generating a vehicle type<a class="headerlink" href="#automatically_generating_a_vehicle_type" title="Permanent link">#</a></h3>
+<p>By setting the option <strong>--vehicle-class</strong> a vehicle type definition that specifies vehicle
+class will be added to the output files. I.e.</p>
+<pre><code>randomTrips.py --vehicle-class bus ...
+</code></pre>
+
+<p>will add</p>
+<pre><code>&lt;vType id=&quot;bus&quot; vClass=&quot;bus&quot;/&gt;
+</code></pre>
+
+<p>Any <strong>--trip-attributes</strong> that are applicable to a vehicle type rather than a vehicle will be
+placed in the generated <code>vType</code> definition automatically:</p>
+<pre><code>randomTrips.py --vehicle-class bus --trip-attributes=&quot;maxSpeed=\&quot;27.8\&quot;&quot;
+</code></pre>
+
+<p>will add</p>
+<pre><code>&lt;vType id=&quot;bus&quot; vClass=&quot;bus&quot; maxSpeed=&quot;random&quot;/&gt;
+</code></pre>
+
+<p>Alternatively, after <em>randomTrips.py</em> has finished, the created <code>&lt;vType&gt;</code>-element
+can be edited to specify additional parameters. The downside of manual
+editing is that it must be repeated when running <em>randomTrips.py</em> again.</p>
+<h2 id="generating_different_modes_of_traffic">Generating different modes of traffic<a class="headerlink" href="#generating_different_modes_of_traffic" title="Permanent link">#</a></h2>
+<ul>
+<li>Using the option <strong>--pedestrians</strong> will generated pedestrians instead of vehicles.</li>
+<li>Using the option <strong>--persontrips</strong> will generated persons with <code>&lt;persontrip&gt;</code> definitions. This
+allows to specify the available traffic modes and thus use
+<a href="../IntermodalRouting.html">IntermodalRouting</a> to decided whether
+they use public transport, a personal car or walking.<ul>
+<li>walking or public transport: <strong>--trip-attributes "modes=\"public\""</strong></li>
+<li>walking, public transport or car <strong>--trip-attributes "modes=\"public car\""</strong></li>
+</ul>
+</li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Quoting of trip attributes on Linux must use the style <strong>--trip-attributes 'modes="public"'</strong></p>
+</div>
+<h2 id="intermediate_way_points">Intermediate Way Points<a class="headerlink" href="#intermediate_way_points" title="Permanent link">#</a></h2>
+<p>To generate longer trips within a network, intermediate way points may
+be generated using the option <strong>--intermediate</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>. This will add the given number of
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#incomplete_routes_trips_and_flows">via-edges</a>
+to the trip definitions.</p>
+<h2 id="customized_weights">Customized Weights<a class="headerlink" href="#customized_weights" title="Permanent link">#</a></h2>
+<h3 id="saving">Saving<a class="headerlink" href="#saving" title="Permanent link">#</a></h3>
+<p>Using option <strong>weights-output-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a> will cause three <em>weight-files</em> with the given prefix to
+be generated (<em>&lt;prefix>.src.xml, &lt;prefix>.dst.xml, &lt;prefix>.via.xml</em>)
+which contain the used edge probabilities.</p>
+<ul>
+<li><em>.src.xml</em> contains the probabilities for an edge to be selected as <code>from</code>-edge</li>
+<li><em>.dst.xml</em> contains the probabilities for an edge to be selected as <code>to</code>-edge</li>
+<li><em>.via.xml</em> contains the probabilities for an edge to be selected as <code>via</code>-edge (only used when option <strong>--intermediate</strong> is set).</li>
+</ul>
+<h3 id="visualization">Visualization<a class="headerlink" href="#visualization" title="Permanent link">#</a></h3>
+<p>Any of these files can be loaded in <a href="../sumo-gui.html#visualizing_edge-related_data">sumo-gui for
+visualization</a></p>
+<h3 id="loading">Loading<a class="headerlink" href="#loading" title="Permanent link">#</a></h3>
+<p>Files in this format can be used to set customized weights for
+generating random trips by using the option <strong>--weights-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a> with the prefix value as
+argument. The randomTrips script will attempt to load weights for all
+edges and all three file extensions (<em>.src.xml, .dst.xml, .via.xml</em>) but
+will use the following defaults if same values are missing:</p>
+<ul>
+<li>If a loaded weight file does not contain all edges, probability 0
+  will be assumed for the missing edges</li>
+<li>If a file is missing, the probabilities according to the regular
+  options are used when sampling that type of edge (i.e. missing
+  <em>&lt;prefix>.dst.xml</em> will result in probabilities as described in
+  section <a href="#edge_probabilities">#Edge_Probabilities</a> will
+  be used when sampling destination edges)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Probabilities loaded from the <em>weight-files</em> are automatically normalized. Therefore it does not matter whether probabilities are specified as fractions or percentage values.</p>
+</div>
+<h3 id="usage_example">Usage Example<a class="headerlink" href="#usage_example" title="Permanent link">#</a></h3>
+<p>To obtain trips from two specific locations (edges <em>a</em>, and <em>b</em>) to
+random destinations, use</p>
+<pre><code>randomTrips.py --weights-prefix example  ...&lt;other options&gt;...
+</code></pre>
+
+<p>and define only the file <em>example.src.xml</em> as follows:</p>
+<pre><code>&lt;edgedata&gt;
+  &lt;interval begin=&quot;0&quot; end=&quot;10&quot;/&gt;
+    &lt;edge id=&quot;a&quot; value=&quot;0.5&quot;/&gt;
+    &lt;edge id=&quot;b&quot; value=&quot;0.5&quot;/&gt;
+  &lt;/interval&gt;
+&lt;/edgedata&gt;
+</code></pre>
+
+<h1 id="route2tripspy">route2trips.py<a class="headerlink" href="#route2tripspy" title="Permanent link">#</a></h1>
+<p>This script generates a trip file from a route file by stripping all
+route information except for start and end edge. It has a single
+parameter which is the route file and prints the trip file to stdout.
+Example:</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/route2trips.py input_routes.rou.xml
+</code></pre>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 25 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

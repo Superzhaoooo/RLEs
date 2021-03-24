@@ -1,0 +1,27 @@
+var classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo =
+[
+    [ "FieldInfo", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo_1_1FieldInfo.html", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo_1_1FieldInfo" ],
+    [ "Fieldlist", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a44b0d037e0faae6ef8165ef2c76c219e", null ],
+    [ "ClassInfo", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a73309f69b50eaca593b93c9203a21448", null ],
+    [ "nedElement", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#ab2212f01bed5ed1474ab6506526b1cf8", null ],
+    [ "keyword", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#ae2dcf667178b1c1506060e76fa8b88b0", null ],
+    [ "msgname", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a0cfb9a9167aceb4035a5f731a1b4cabe", null ],
+    [ "msgbase", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a9aef67e390d0ac9bd1de9b6f38ac8f09", null ],
+    [ "props", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a211d1549edeaf1dda987e4b1d32698a4", null ],
+    [ "gap", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#abe4b893522c2d79335ba3bb1e1de65f9", null ],
+    [ "omitgetverb", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a9c926d7f6c9a3ead632777e0fd669413", null ],
+    [ "classtype", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a1741ebe5774f50ae9bd57f0f68b7e5a9", null ],
+    [ "msgclass", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a6460004b60a6f6d3457132fd63a45163", null ],
+    [ "realmsgclass", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a9b5e72257aa82c66c17dc8330f36f8d7", null ],
+    [ "msgbaseclass", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#aa9af4f17f40f3abb5d4702cd7c18fdc6", null ],
+    [ "msgdescclass", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#acbdf4ada5df5ee0a9fae1c794c250d68", null ],
+    [ "fieldnamesuffix", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a264d172cb02935757d16fe1566151e74", null ],
+    [ "fieldlist", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#ae8763e6e06dc82740e841c9d199fee75", null ],
+    [ "baseclassFieldlist", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#afa63d45cb88ac07c1512764bce35ffd9", null ],
+    [ "generate_class", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a15fe7744149f8f99919dbc990e27881a", null ],
+    [ "generate_descriptor", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a32c3e196a4fe1b72c54e817a451f24ce", null ],
+    [ "generate_setters_in_descriptor", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a2da770bd096d34e188f9f38a51afc2cc", null ],
+    [ "msgqname", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#ac2994442f90ec0a895764ae27f0d625e", null ],
+    [ "msgbaseqname", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a07764c85f7942f44b94f2dc782864312", null ],
+    [ "implements", "classomnetpp_1_1nedxml_1_1MsgCompilerOld_1_1ClassInfo.html#a9a9347bafa9ba71ae607cbbc03812582", null ]
+];

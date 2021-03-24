@@ -1,0 +1,40 @@
+%description:
+Missing [General]/sim-time-limit= setting.
+
+%module: Module
+
+class Module : public cSimpleModule
+{
+  public:
+    Module() : cSimpleModule(32768) { }
+    virtual void activity() override;
+    virtual void finish() override;
+};
+
+Define_Module(Module);
+
+void Module::activity()
+{
+    wait(2);
+    EV << "time: " << simTime() << endl;
+    wait(3);
+    EV << "time: " << simTime() << endl;
+}
+
+void Module::finish()
+{
+   EV << "finish() at " << simTime() << endl;
+   EV << "-" << endl;
+}
+
+%inifile: test.ini
+[General]
+network = Module
+cmdenv-express-mode = false
+# sim-time-limit =
+
+%contains-regex: stdout
+time: 2
+.*time: 5
+.*finish\(\) at 5
+-

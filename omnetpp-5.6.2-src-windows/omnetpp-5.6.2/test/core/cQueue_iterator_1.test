@@ -1,0 +1,43 @@
+%description:
+basic check for cQueueIterator
+
+%activity:
+
+#define CHECK(cond)  if (!(cond)) {throw cRuntimeError("BUG at line %d, failed condition %s", __LINE__, #cond);}
+
+cQueue q("queue");
+
+// add 5 messages to cQueue
+cMessage *msgs[5];
+int i;
+for (i=0; i<5; i++)
+{
+    char name[20];
+    sprintf(name,"msg-%d", i);
+    msgs[i] = new cMessage(name);
+    q.insert(msgs[i]);
+}
+
+i=0;
+EV << "forward:\n";
+for (cQueue::Iterator it(q); !it.end(); it++, i++)
+{
+    EV << " msg[" << i << "]=" << msgs[i]->getName() << ", *it=" << (*it)->getName() << endl;
+    CHECK(*it==msgs[i]);
+}
+
+i=4;
+EV << "backward:\n";
+for (cQueue::Iterator it(q,true); !it.end(); it--, i--)
+{
+    EV << " msg[" << i << "]=" << msgs[i]->getName() << ", (*it)=" << (*it)->getName() << endl;
+    CHECK((*it)==msgs[i]);
+}
+
+EV << "OK!\n";
+
+%contains: stdout
+OK!
+
+%not-contains: stdout
+BUG

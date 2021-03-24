@@ -1,0 +1,37 @@
+%NAME%
+mingw-w64-x86_64-poppler-data
+
+%VERSION%
+0.4.7-2
+
+%DESC%
+Encoding data for the poppler PDF rendering library
+
+%URL%
+http://poppler.freedesktop.org/
+
+%ARCH%
+any
+
+%BUILDDATE%
+1435924933
+
+%INSTALLDATE%
+1470403684
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+11982848
+
+%REASON%
+1
+
+%LICENSE%
+custom
+GPL2
+
+%VALIDATION%
+pgp
+

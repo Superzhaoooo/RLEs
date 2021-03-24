@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/Implementation_Notes/Error_Handling.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Developer/Implementation Notes/Error Handling - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/Implementation_Notes/Error_Handling.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#failure_types_not_academic">Failure types (not academic)</a></li>
+            <li class="nav-item main"><a href="#command_line_applications">Command line applications</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#philosophy_for_command_line_applications" class="nav-link">• Philosophy for command line applications</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#implementation_in_command_line_applications" class="nav-link">• Implementation in command line applications</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#incorrect_startup_data" class="nav-link">&rarr; Incorrect startup data</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#implementation_bugs" class="nav-link">&rarr; Implementation bugs</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#system_failures" class="nav-link">&rarr; System failures</a>
+                </li>
+            <li class="nav-item main"><a href="#gui_applications">GUI applications</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#philosophy_for_gui_applications" class="nav-link">• Philosophy for gui applications</a>
+                </li>
+            <li class="nav-item main"><a href="#open_issues">Open issues</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sumo" class="nav-link">• SUMO</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/Implementation Notes/Error Handling<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p><center></p>
+<p><font color="red"><strong>Please note that this page describes what is
+currently in work.</strong></font></p>
+<p></center></p>
+<h2 id="failure_types_not_academic">Failure types (not academic)<a class="headerlink" href="#failure_types_not_academic" title="Permanent link">#</a></h2>
+<p>One can distinguish the following types of problems:</p>
+<ul>
+<li>Startup input data is not correct (a mandatory value is not set or
+  is not numeric when it should be etc.)</li>
+<li>Dynamic input data is not correct</li>
+<li>Some things within our design or our implementation are not correct
+  (we try to get an integer from a string option etc., NULL-pointer
+  exceptions, trying to access deleted classes etc.)</li>
+<li>System failures (out of memory etc.)</li>
+</ul>
+<p>The distinction between <em>startup</em> input data and <em>dynamic</em> input data is
+not as easy as one might think. Basically <em>startup</em> refers to everything
+referenced directly on the command line or via a configuration file
+while dynamic refers to interactive input via different interfaces such
+as GUI or socket connections. The problem is that some data given at
+startup is processed with quite a delay by the simulation (notably
+routes) and probably cannot even be checked (e.g. for being well formed
+XML) at startup due to performance problems. This kind of data will be
+considered <em>dynamic</em>.</p>
+<p>Thus the term <em>startup input data</em> refers to every data (file) which is
+processed before the application starts doing something useful (whatever
+that means).</p>
+<h2 id="command_line_applications">Command line applications<a class="headerlink" href="#command_line_applications" title="Permanent link">#</a></h2>
+<h3 id="philosophy_for_command_line_applications">Philosophy for command line applications<a class="headerlink" href="#philosophy_for_command_line_applications" title="Permanent link">#</a></h3>
+<p>We assume that all the input data should be valid. We will not try to
+solve any bugs made by the user. We just inform him what went wrong and
+let him patch the problem. For <em>startup data</em> this means we finish the
+application with an error message if erroneous data is encountered. As
+the input data may be broken on several places, the application should
+try to parse all data, first, reporting all encountered errors, and quit
+then. For <em>dynamic data</em> this means, if we have no possibility to give
+direct feedback (for instance on one way socket connections) we ignore
+the data (with something like a log message), otherwise we try to give
+feedback.</p>
+<p><em>Programming bugs</em> should be catched in a way that allows to retrack
+them. The user shall not be confronted with any segfaults-popups or
+things like that. Rather, an error message about an improper behavior
+shall be printed (currently: "Quitting (on unknown error).") and the
+application should quit correctly.</p>
+<p><em>System errors</em> should be catched and printed to the user. The
+application should then quit correctly.</p>
+<h3 id="implementation_in_command_line_applications">Implementation in command line applications<a class="headerlink" href="#implementation_in_command_line_applications" title="Permanent link">#</a></h3>
+<h4 id="incorrect_startup_data">Incorrect startup data<a class="headerlink" href="#incorrect_startup_data" title="Permanent link">#</a></h4>
+<p>As said in <a href="#philosophy_for_command_line_applications">#Philosophy for command line
+applications</a> we
+just report the problem and quit then (with an information that we could
+not accomplish what was to do).</p>
+<p>For this, the main function of each of our command line applications has
+a try/catch-block and all of the processing done by this application is
+done within this block. What is always catched is the <strong>ProcessError</strong> -
+exception, defined in src/utils/common/UtilExceptions. This class
+contains a message which is reported as soon as the try/catch-block
+located in the main function is reached. As in earlier versions of SUMO,
+a ProcessError could be called with no message (in this case the message
+is set to "Process Error"), we only print the message if the catched
+ProcessError has really one set.</p>
+<pre><code>int
+main(int argc, char **argv)
+{
+    // initialise return code
+    int ret = 0;
+    ... make uncritical initialisation ...
+    try {
+       ... do some critical stuff ...
+    } catch (ProcessError &amp;e) {
+        if(string(e.what())!=string(&quot;Process Error&quot;) &amp;&amp; string(e.what())!=string(&quot;&quot;)) {
+            MsgHandler::getErrorInstance()-&gt;inform(e.what());
+        }
+        MsgHandler::getErrorInstance()-&gt;inform(&quot;Quitting (on error).&quot;, false);
+        // set return code to &quot;failure&quot;
+        ret = 1;
+#ifndef _DEBUG
+    } catch (...) {
+        MsgHandler::getErrorInstance()-&gt;inform(&quot;Quitting (on unknown error).&quot;, false);
+        // set return code to &quot;failure&quot;
+        ret = 1;
+#endif
+    }
+    ... clean up ...
+    // return the return code
+    return ret;
+}
+</code></pre>
+
+<p>The second catch-block will be described later.</p>
+<p>So basically the only thing we have to do is to generate a
+<strong>ProcessError</strong> as soon as something is not as we would have expect it
+and give it a proper message. Still, this is only half of the truth.
+Because we do not want the application to quit immediately when an error
+occurs, but print all errors and quit then, we have to insert a further
+error handling layer. In the current implementation, handler which parse
+the input data are reporting the errors to the error instance of the
+MsgHandler. As soon as reading a file ends, it is checked whether an
+error occured. In this case, a ProcessError is thrown. If the handler is
+not parsing the data himself, but using other structures, these
+structures may throw an <strong>InvalidArgument</strong> which then has to be catched
+and reported to the error instance of the MsgHandler.</p>
+<p>Be aware that some things already allocated have to be deleted before
+throwing a ProcessError.</p>
+<h4 id="implementation_bugs">Implementation bugs<a class="headerlink" href="#implementation_bugs" title="Permanent link">#</a></h4>
+<p>The second catch block within the above snipplet is currently meant to
+catch everything else. In fact, these may be both system failures and
+programming faults. So, we only catch this in the release-version so
+that an end-user will be informed about an error (though with no verbose
+error message). In the case we are debugging the code, the
+exception/fault is not catched - our debugger should stay at the
+position the exception was generated.</p>
+<h4 id="system_failures">System failures<a class="headerlink" href="#system_failures" title="Permanent link">#</a></h4>
+<p>Are currently catched by the later catch-block. Probably, the easiest
+method to handle those would be to give a list of possible failures and
+try to handle them in catch-blocks as it is done with <strong>ProcessErrors</strong>.</p>
+<h2 id="gui_applications">GUI applications<a class="headerlink" href="#gui_applications" title="Permanent link">#</a></h2>
+<h3 id="philosophy_for_gui_applications">Philosophy for gui applications<a class="headerlink" href="#philosophy_for_gui_applications" title="Permanent link">#</a></h3>
+<p>Now hat is lethal for a command line application (false input parameter)
+is not for a gui application which shall report about the error but
+shall still allow the user to patch his inputs and to try to reload the
+settings.</p>
+<h2 id="open_issues">Open issues<a class="headerlink" href="#open_issues" title="Permanent link">#</a></h2>
+<h3 id="sumo">SUMO<a class="headerlink" href="#sumo" title="Permanent link">#</a></h3>
+<ul>
+<li>Network errors<ul>
+<li>There is no check for link consistency; to be exact, it is
+  possible that some combinations of junction/incoming &lt;-> cedge
+  &lt;-> succedge do not match but still are loaded with no errors</li>
+<li>There is no check for unused values</li>
+</ul>
+</li>
+<li>WAUT errors<ul>
+<li>How comes that a tls-switch - output is build though errors
+  occured? (see
+  tests/sumo/errors/wauts/cross3ltl_error_unknown_wautid)</li>
+<li>The programs are checked in a lazy way, the error is reported
+  too late (see
+  tests/sumo/errors/wauts/cross3ltl_error_unknown_to_prog)</li>
+<li>Undescribed behavior for
+  cross3ltl_error_missing_junctiondef,
+  cross3ltl_error_missing_reftime</li>
+</ul>
+</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

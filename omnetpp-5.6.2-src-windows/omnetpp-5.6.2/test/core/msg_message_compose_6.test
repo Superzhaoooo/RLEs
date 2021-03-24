@@ -1,0 +1,32 @@
+%description:
+Check cOwnedObject-based class as message member
+
+%file: test.msg
+
+namespace @TESTNAME@;
+
+message MyMessage
+{
+    omnetpp::cQueue q;
+    char c;
+};
+
+%includes:
+#include "test_m.h"
+
+%activity:
+
+#define PRINT(X) EV << #X << ":" << X << endl
+
+MyMessage x;
+
+cQueue& q = x.getQForUpdate();
+q.setName("queue");
+EV << q.getClassName() << ":" << q.getName() << ":" <<
+      (q.getOwner()==&x ? "owned" : "not owned") << endl;
+x.setC('x'); PRINT(x.getC());
+
+%contains: stdout
+cQueue:queue:owned
+x.getC():x
+

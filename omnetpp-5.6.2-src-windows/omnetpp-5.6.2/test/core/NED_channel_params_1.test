@@ -1,0 +1,29 @@
+%description:
+Tests channel param referring to own parameters.
+
+%file: test.ned
+
+import testlib.Dump;
+
+channel C extends ned.DatarateChannel
+{
+    double length @unit(m);
+    delay = this.length / 200000km * 1s;
+}
+
+module Node { gates: input in[]; output out[]; connections allowunconnected: }
+
+network Test
+{
+    submodules:
+        a: Node;
+        b: Node;
+        dump: Dump {printClassNames=true;}
+    connections allowunconnected:
+        a.out++ --> C {length=200km;} --> b.in++;
+}
+
+%subst: /omnetpp:://
+%contains: stdout
+out[0]: --> b.in[0], (C)channel disabled=false delay=0.001s datarate=0bps ber=0 per=0 length=200000m  (cDatarateChannel)
+

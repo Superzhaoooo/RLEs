@@ -1,0 +1,601 @@
+2020-01-06  ------ omnetpp-5.6 released ------
+
+2019-11-07  Attila Torok
+
+	* stlutil.h: Add contains() for unordered_set.
+
+2019-08-26  Attila Torok
+
+	* stlutil.h: Added small optimization to remove(vector, value).
+	It seemed to help a lot in a Wireless INET simulation, in
+	qtenv::Inspector::removeFromToHistory().
+
+2019-05-15  ------ omnetpp-5.5 released ------
+
+2019-04-25  Andras Varga
+
+	* StringPool: added contains()
+
+2019-04-30  Andras Varga
+
+	* opp_xmlQuote() fix: ampersand must be quoted too
+
+2019-03-03  Andras Varga
+
+	* PatternMatcher: added str()
+
+2019-02-21  Attila Torok
+
+	* LineTokenizer now reallocates its internal buffer for longer lines.
+
+2019-03-08  Andras Varga
+
+	* SQLite scheme: fix inet-#417: remove NOT NULL from vector values
+
+2019-01-29  Andras Varga
+
+	* SqliteVectorFileWriter:fix occasional "db==nullptr" error
+	It happens when Envir calls flush() when the file was not yet opened
+
+2018-12-17  Andras Varga
+
+	* OmnetppVectorFileWriter: fix VectorData leak
+
+2018-06-25  ------ omnetpp-5.4.1 released ------
+
+2018-06-15  Andras Varga
+
+	* Check for write errors when using std::ofstream
+
+2018-06-13  Andras Varga
+
+	* MatchExpression: MatchExpressionLexer was leaked in parsePattern()
+
+2018-06-11  ------ omnetpp-5.4 released ------
+
+2018-06-07  Andras Varga
+
+	* opp_ttoa(): accept positive scale exponents too
+
+2018-06-05  Andras Varga
+
+	* UnitConversion: added K, Ohm, mOhm, kOhm, MOhm, pct (percent)
+
+2018-05-31  Andras Varga
+
+	* UnitConversion: allow casting nan to any unit
+
+2018-06-01  Andras Varga
+
+	* opp_dtoa(): print inf and nan in platform-independent way
+
+2018-05-28  Andras Varga
+
+	* UnitConversion: allow bit<->byte conversion
+
+	* UnitConversion: added logarithmic units:
+	 - dBW (decibel-watt)
+	 - dBm (decibel-milliwatt)
+	 - dBV (decibel-volt)
+	 - dBmV (decibel-millivolt)
+	 - dBA (decibel-ampere)
+	 - dBmA (decibel-milliampere)
+ 	 - dB (decibel) <--> ratio
+
+2018-05-24  Andras Varga
+
+	* UnitConversion: added some less commonly used units:
+	 - binary and decimal multiples of bit: Kib (kibibit),
+	   Mib (mebibit), Gib (gibibit), Tib (tebibit), kb (kilobit)
+	   Mb (megabit), etc.
+	 - uW, nW, pW, fW (microwatt, etc.)
+	 - THz (terahertz)
+	 - kmps (kilometer/sec)
+	 - deg, rad
+
+2018-04-11  ------ omnetpp-5.3 released ------
+
+2018-02-06  Rudolf Hornig
+
+	* OmnetppScalarFileWriter: fix a bug on Windows (only) where the sca
+	file version number was written into the file several times.
+
+2018-02-06  Rudolf Hornig
+
+	* opp_vsscanf(): fixed overflow detection for long long; added support
+	for support for %lld and %llu
+
+2018-01-17  Andras Varga
+
+	* SQLite result files: changes in the "histogramBin" table:
+	- rename colums: "baseValue" -> "lowerEdge", "cellValue" -> "binValue"
+	- "binValue" column changed from INTEGER to NUMERIC (for weighted stats)
+
+2018-01-17  Andras Varga
+
+	* stringutil.cc: refine error messages in opp_strtol() and similar functions
+
+2017-10-17  Andras Varga
+
+	* stlutil.h: added missing contains() function
+
+2017-12-11  Andras Varga
+
+	* stringutil.h/cc: refactoring on opp_strto...() functions
+
+2017-12-12  Andras Varga
+
+	* stringutil.h/cc: added opp_strtoll(), opp_atoll(), opp_strtoull(),
+	opp_atoull()
+
+2017-12-08  ------ omnetpp-5.2.1 released ------
+
+2017-11-10  Andras Varga
+
+	* expression.h/cc: fixed leak in Expression::Elem::operator()= functions
+
+2017-09-18  ------ omnetpp-5.2 released ------
+
+2017-08-22  Andras Varga
+
+	* unitconversion.cc: reordering (for consistency w/ manual)
+
+2017-04-06  Andras Varga
+
+	* Modernizing: use C++11's range-based for loops where applicable, using
+	clang-tidy's modernize-loop-convert.
+
+	* Modernizing: replace INT64_PRINTF_FORMAT and LL with C++11's PRId64.
+	Note: PRId64 includes the "d" that was not part of INT64_PRINTF_FORMAT
+	alias LL.
+
+2017-07-12  Andras Varga
+
+	* New result file writers: added support for recording weighted statistics
+	- Statistics class changed to accommodate weighted statistics
+	- SQLite recorder: added isWeighted column to statistic table
+
+2017-07-03  Andras Varga
+
+	* New result file writers: fix for empty attr names. They occur when
+	@statistic declarations contain extra semicolons inside	the parens
+
+2017-06-30  Andras Varga
+
+	* New result file writers: fix crash in endRecordingForRun() when file was
+	not open
+
+2017-04-06  Andras Varga
+
+	* Refined CsvWriter and JsonWriter classes, used for exporting results
+	in respective formats from scavetool and the IDE.
+
+2017-04-04  Andras Varga
+
+	* New result file writers: save iteration variables separately from
+	run attributes. NOTE: This changes result file format!
+
+	- omnetpp recorders: introduced "itervar" lines
+	- SQLite recorder: added runItervar table
+
+2017-03-31  Andras Varga
+
+	* New result file writers: preserve order of "param" entries. These
+	entries contain a copy of the parameter assignment lines from omnetpp.ini,
+	so their order is important.
+
+	- omnetpp recorders: ensure order of "param" lines in the file mirror the
+	  order in the ini file
+	- SQLite recorder: added a paramOrder column to the RunParam table.
+
+2017-03-30  Andras Varga
+
+	* SQLite result files: histBin table renamed to histogramBin
+
+2017-04-04  Andras Varga
+
+	* stringutils: opp_formatTable() fix: it printed one more LF than needed
+
+2017-03-30  Andras Varga
+
+	* SQLite result files: added "isHistogram" column to "statistic" table.
+
+2017-03-29  Andras Varga
+
+	* SQLite result file reader: loading of vector attrs and run params was missing
+
+2017-03-28  Andras Varga
+
+	* SQLite result file writers:
+	- database schema factored out to separate file to avoid duplication
+	- camelize remaining names in the database (Note: sqlite is case insensitive)
+
+2017-06-22  Andras Varga
+
+	* New result file writers: OmnetppVectorFileWriter produced incorrect index
+	file in certain cases
+
+2017-05-25  Rudolf Hornig
+
+	* Updated makefiles for speeding up the build:
+	- generated files are created only once, even when using parallel build
+	- binaries are copied to their final destination using proper makefile
+	  targets
+
+2017-05-25  Attila Torok
+
+	* common/stlutil: Add containsKey() for unordered_map.
+
+2017-03-30  Andras Varga
+
+	* Result file writers: whitespace changes in the output, for consistency.
+
+2017-05-08  ------ omnetpp-5.1.1 released ------
+
+2017-03-31  ------ omnetpp-5.1 released ------
+
+2017-03-27  Attila Torok
+
+	* opp_stringf buffer size limit removed.
+
+2017-03-16  Andras Varga
+
+	* Added result file writer classes:
+	OmnetppScalarFileWriter, OmnetppVectorFileWriter,
+	SqliteScalarFileWriter, SqliteVectorFileWriter.
+
+	Factored out from envir's result file manager classes.
+
+	This is needed so that the sim kernel, scavetool and the IDE can
+	share the same code for writing result files.
+
+2017-03-04  Andras Varga
+
+	* Added the Statistics and Histogram classes, factored out from the
+	scave library. Needed by the result file writers, see next change.
+
+2017-03-07  Andras Varga
+
+	* stringutil.h: added opp_ttoa(), factored out from the sim library
+	(SimTime::ttoa()).
+
+2017-03-17  Andras Varga
+
+	* Assert() macro:
+	   - fix: qualify opp_runtime_error with namespace
+	   - fix: expand to ((void)0) in release mode
+	   - error message edited for clarity
+
+2017-02-18  Andras Varga
+
+	* Added FormattedPrinter class (useful for printing help in command-line
+	programs)
+
+2017-02-21  Andras Varga
+
+	* stringutil.h: Added opp_split(), opp_formatTable()
+
+2017-02-17  Andras Varga
+
+	* stringutil.h:  added opp_join() for vectors, added quoteChar arg
+
+2017-03-16  Andras Varga
+
+	* Added JsonWriter class (needed for Python export in the scave library)
+
+2017-02-16  Andras Varga
+
+	* Added CsvWriter class (needed for CSV export in the scave library)
+
+2017-02-10  Andras Varga
+
+	* stlutil.h: addAll() functions
+
+2017-03-19  Andras Varga
+
+	* UnitConversion: added missing kW, MW, GW
+
+2017-03-08  Andras Varga
+
+	* StringPool: cosmetics
+
+2017-02-06  ------ omnetpp-5.1pre3 released ------
+
+2016-12-23  ------ omnetpp-5.1pre2 released ------
+
+2016-12-16  Rudolf Hornig
+
+	* Suppress shift/reduce warnings in .y files by specifying the
+	expected number of conflicts (%expect).
+
+2016-12-15  Rudolf Hornig
+
+	* Fixed parser generator warnings (BOM in UTF-8 is now correctly
+	skipped)
+
+2016-11-23  Zoltan Bojthe
+
+	* Added sqlite3.cc/h
+
+2016-11-29  Attila Torok
+
+	* LCGRandom: disallow invalid LCGRandom seeds
+
+2016-11-18  Andras Varga
+
+	* fileutil.h: added isFile()
+
+2016-11-11  Andras Varga
+
+	* CallTracer: output format tweak
+
+2016-10-30  Andras Varga
+
+	* Adjustments on error messages
+
+2016-10-27  Andras Varga
+
+	* stringutil.h: more const std::string& arguments instead of const char *.
+
+	We don't like mixing const char * and std::string in method signatures,
+	as it results in too many .c_str() at call sites, and in some cases
+	prevents optimizing std::string assignments (e.g. refcounting+COW).
+
+2016-10-21  Andras Varga
+
+	* EnumStringIterator (used for resolving run number lists): fix: properly
+	skip empty ranges, tolerate spaces. It used to return the start of the
+	range, e.g. 5..1 expanded to 5.
+
+2016-10-20  Andras Varga
+
+	* expression.y: accept '=' as alternative to '=='
+
+2016-09-30  Levente Mészáros
+
+	* unitconversion.cc: Added coulomb [C] and related units As, mAs, Ah, mAh.
+
+2016-09-25  Andras Varga
+
+	* Added stlutil.h
+
+2016-09-25  Andras Varga
+
+	* matchexpression.h: added MatchableStringMap
+
+	* stringutil.h: opp_indentlines() fix: do not add indent after last line
+
+2016-09-25  Andras Varga
+
+	* stringutil.h: added opp_sanitizeFileName() and opp_filenameencode()
+
+2016-11-30  Rudolf Hornig
+
+	* The updated build system now uses the ./configure file only to detect
+	certain flags and libraries. Most of the build logic is handled by the
+	Makefile.inc file itslef. This allows you to enable/disable optional
+	components (i.e. Tkenv,Qtenv,OSG and osgEarth support) without even
+	re-running the ./configure file.
+
+2016-08-23  Andras Varga
+
+	* stringutil.h: added opp_xmlQuote()
+
+2016-08-22  Andras Varga
+
+	* opp_vsscanf(): %g to mean float not double, for consistency with scanf()
+
+2016-07-15  Andras Varga
+
+	* Expression: evaluator methods made const
+
+2016-07-11  Andras Varga
+
+	* Expression: parser: allow variables with a syntax of module paths,
+	i.e. dot-separated sequence of name or name[index] segments.
+
+2016-07-07  Mihaly Palenik
+
+	* stringutil.h: added opp_format() for formatting integers with digit
+	groups.
+
+2016-06-23  Rudolf Hornig
+
+	* The makefile now uses compiler-generated dependency files.
+
+2016-04-13  ------ omnetpp-5.0 released ------
+
+2016-03-10  ------ omnetpp-5.0rc released ------
+
+2016-02-15  Attila Torok
+
+	* Fixed global colors map, it's guaranteed to be constructed before use.
+
+2016-01-18  Andras Varga
+
+	* Added opp_substringbeforelast() and opp_substringafterlast().
+
+2015-12-07  ------ omnetpp-5.0b3 released ------
+
+2015-11-17  Andras Varga
+
+	* UnitConversion: added femtosecond and attosecond, as they are needed
+	for the new simtime-resolution config option.
+
+2015-10-16  Andras Varga
+
+	* omnetpp namespace made permanent (cannot be turned off):
+	- removed configure option and preprocessor symbol USE_NAMESPACE
+	- removed related macros: NAMESPACE_BEGIN, NAMESPACE_END,
+	  USING_NAMESPACE, OPP, OPP_STR, OPP_PREFIX etc.
+
+2015-08-10  Attila Torok
+
+	Added the colorutil files with SVG color names, currently used by
+	cCanvas and Qtenv.
+
+2015-07-20  ------ omnetpp-5.0b2 released ------
+
+2015-06-30  Andras Varga
+
+	* opp_strnistr() fix (did not match at the end of the string)
+
+2015-06-19  Andras Varga
+
+	* expression.lex: fix #830 "kernel crashes when adding '//' to parameter
+	lines in ini-files". The expression parser was not supposed to support
+	"//" comments in the first place
+
+2015-06-11  Andras Varga
+
+	* UnitConversion: put back kB/MB/GB/TB with the correct (base 10) meaning.
+	Note: base 2 units also exist: KiB, MiB, GiB, TiB.
+
+2015-06-08  Andras Varga
+
+	* Cleanup: longer header guards
+
+2015-06-08  Andras Varga
+
+	* Cleanup: code formatting
+
+2015-05-15  Andras Varga
+
+	* CommonStringPool renamed to StringPool (due to namespaces, it no longer
+	conflicts with StringPools in other source folders)
+
+2015-05-15  Andras Varga
+
+	* Cleanup: use per-folder nested namespaces: omnetpp::envir, omnetpp::tkenv,
+	omnetpp::layout, omnetpp::common, omnetpp::eventlog, etc.
+
+2015-05-22  Andras Varga
+
+	* Modernizing: added the 'override' keyword (C++11) to overridden methods;
+	it becomes blank when using with an older compiler.
+
+2015-05-21  Rudolf Hornig
+
+	* Modernizing: replaced NULLs by 'nullptr' (C++11); it is defined as 0
+	when using an older compiler.
+
+2015-04-20  Andras Varga
+
+	* Cleanup: use C++ names of C headers (e.g. <cstdio> instead of <stdio.h>)
+
+2015-04-12  Andras Varga
+
+	* Cleanup: copyright years updated
+
+2015-04-08  Andras Varga
+
+	* Modernizing:
+
+	- Use a fixed include path (-Iinclude -Isrc) for all source folders
+	  under src/, and qualify cross-folder #includes with the folder
+	  name (e.g. change #include "stringutil.h" to #include "common/stringutil.h").
+	  This increases readbility and reduces the chance of including a wrong
+	  header.
+
+	- In source files, sort #include statements by folder.
+
+2015-03-04  ------ omnetpp-5.0b1 released ------
+
+2015-02-07  Andras Varga
+
+	During development in the 5.0 branch (2013-2014):
+
+	* stringutil.cc/h: new utility functions: opp_strnistr(), opp_urldecode(),
+	opp_makedatetimestring(), opp_join()
+
+	* TRACE macro renamed to TRACE_CALL due to conflict with new module logging API
+
+2014-11-27  ------ omnetpp-4.6 released ------
+
+2014-06-30  ------ omnetpp-4.5 released ------
+
+2014-02-13  ------ omnetpp-4.4.1 released ------
+
+2013-12-20  ------ omnetpp-4.4 released ------
+
+2013-11-21  Rudolf Hornig
+
+	* Updated to compile with both bison 2.3 and 3.0
+
+2013-11-14  Rudolf Hornig
+
+	* Fixes for compiling with clang
+
+2013-09-12  ------ omnetpp-4.3.1 released ------
+
+2013-04-02  ------ omnetpp-4.3 released ------
+
+2013-02-08  ------ omnetpp-4.3rc1 released ------
+
+2013-01-09  Andras Varga
+
+	* Renamed methods of cMatchExpression::Matchable:
+	    getDefaultAttribute() -> getAsString()
+	    getAttribute(const char *name) -> getAsString(const char *attribute)
+
+2012-10-03  Andras Varga
+
+	* fix in Expression: '-2m' was evaluated to '2' (meter was lost)
+
+2012-01-14  Andras Varga
+
+	* MatchExpression: OR operator made optional.
+	E.g. now "Host" or "Router" or "Switch" can be written as "Host Router Switch",
+	which is more natural at places (code that so far took a space-separated
+	list of possible items, like node selectors in INET's configurator,
+	can now be naturally extended to have more power by using
+	MatchExpression, without affecting existing users or making OR mandatory).
+
+2012-03-13  ------ omnetpp-4.2.2 released ------
+
+2012-01-17  ------ omnetpp-4.2.1 released ------
+
+2011-10-28  ------ omnetpp-4.2 released ------
+
+2011-09-11  ------ omnetpp-4.2rc1 released ------
+
+2011-05-06  Andras Varga
+
+	* unitconversion.cc: addressed bug #369:
+	- added "mps" (m/s) and "kmph" (km/h) as recognized units.
+	- several units have been renamed to be more standards compliant:
+	  Kbps -> kbps, KB -> KiB, MB -> MiB, GB -> GiB, TB -> TiB;
+	- added explanations to "Cannot convert" error messages about the
+	renamed units
+
+2011-05-06  Andras Varga
+
+	* fileutil.cc: fix bug #284: isDirectory() should not throw exception
+	if file or directory does not exist
+
+2011-05-05  ------ omnetpp-4.2b2 released ------
+
+2011-02-23  ------ omnetpp-4.2b1 released ------
+
+2010-06-11  ------ omnetpp-4.1 released ------
+
+2010-05-31  ------ omnetpp-4.1rc2 released ------
+
+2010-04-20  ------ omnetpp-4.1b4 released ------
+
+2010-03-14  ------ omnetpp-4.1b3 released ------
+
+2009-03-12  ------ omnetpp-4.0 released ------
+
+2009-02-27  ------ omnetpp-4.0rc2 released ------
+
+2008-12-12  ------ omnetpp-4.0rc1 released ------
+
+2008-11-26  Andras Varga
+
+	* library renamed to oppcommon ("common" was too common)
+
+2008-02-23  Andras Varga
+
+	* Started the ChangeLog. The Common library was added in omnetpp-4.0,
+	and it contains classes and functions used by all parts of OMNeT++.

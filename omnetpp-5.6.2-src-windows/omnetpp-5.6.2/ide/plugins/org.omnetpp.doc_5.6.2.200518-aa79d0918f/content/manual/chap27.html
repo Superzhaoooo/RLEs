@@ -1,0 +1,597 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap26.html">[Prev]</A>&nbsp;<a href="chap28.html">[Next]</A>&nbsp;<a href="toc.html#toc_27.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:result-file-formats"/>27 Appendix I&#58; Result File Formats<a class="headerlink" href="#cha:result-file-formats" title="Permalink to this headline">¶</a></h1>
+
+<p><h2><a name="cha:result-file-formats:opp"/>27.1 Native Result Files<a class="headerlink" href="#cha:result-file-formats:opp" title="Permalink to this headline">¶</a></h2>
+
+<p>The file format described here applies to <i>both output vector and
+output scalar files</i>. Their formats are consistent, only the types of
+entries occurring in them are different. This unified format also
+means that they can be read with a common routine.
+
+<p>Result files are <i>line oriented</i>. A line consists of one or more
+tokens, separated by whitespace. Tokens either do not
+contain whitespace, or whitespace is escaped using a backslash, or
+are quoted using double quotes. Escaping within quotes using
+backslashes is also permitted.
+
+<p>The first token of a line usually identifies the type of the entry. A
+notable exception is an output vector data line, which begins with a
+numeric identifier of the given output vector.
+
+<p>A line starting with # as the first non-whitespace character denotes
+a comment, and is to be ignored during processing.
+
+<p>Result files are written from simulation runs. A simulation run
+generates physically contiguous sets of lines into one or more result
+files. (That is, lines from different runs do not arbitrarily mix in
+the files.)
+
+<p>A run is identified by a unique textual <i>runId</i>, which appears in
+all result files written during that run. The runId may appear on the
+user interface, so it should be somewhat meaningful to the user.
+Nothing should be assumed about the particular format of runId, but it
+will be some string concatenated from the simulated network's name, the
+time/date, the hostname, and other pieces of data to make it unique.
+
+<p>A simulation run will typically write into two result files (.vec and
+.sca). However, when using parallel distributed simulation, the user
+will end up with several .vec and .sca files, because different
+partitions (a separate process each) will write into different files.
+However, all these files will contain the same runId, so it is possible
+to relate data that belong together.
+
+<p>Entry types are:
+
+<p><ul>
+    <li> <b>version</b>: result file version
+    <li> <b>run</b>: simulation run identifier
+    <li> <b>attr</b>: run, vector, scalar or statistics object attribute
+    <li> <b>param</b>: module parameter
+    <li> <b>scalar</b>: scalar data
+    <li> <b>vector</b>: vector declaration
+    <li> <i>vector-id</i>: vector data
+    <li> <b>file</b>: vector file attributes
+    <li> <b>statistic</b>: statistics object
+    <li> <b>field</b>: field of a statistics object
+    <li> <b>bin</b>: histogram bin
+</ul>
+
+<p>
+<h3><a name="sec:result-file-formats:opp:version"/>27.1.1 Version<a class="headerlink" href="#sec:result-file-formats:opp:version" title="Permalink to this headline">¶</a></h3>
+
+<p>Specifies the format of the result file. It is written at the beginning of the file.
+
+<p>Syntax:
+
+<p> <b>version</b> <i>versionNumber</i>
+
+<p>The version described in this document is 2. Version 1 files are produced
+by OMNeT++ 3.3 or earlier.
+
+<p>
+<h3><a name="sec:result-file-formats:opp:run-declaration"/>27.1.2 Run Declaration<a class="headerlink" href="#sec:result-file-formats:opp:run-declaration" title="Permalink to this headline">¶</a></h3>
+
+<p>Marks the beginning of a new run in the file. Entries after this line
+belong to this run.
+
+<p>Syntax:
+
+<p> <b>run</b> <i>runId</i>
+
+<p>Example:
+
+<pre class="filelisting">
+run TokenRing1-0-20080514-18:19:44-3248
+</pre>
+<p>
+Typically there will be one run per file, but this is not mandatory.
+In cases when there are more than one run in a file and it is not feasible
+to keep the entire file in memory during analysis, the offsets of the <i>run</i>
+lines may be indexed for more efficient random access.
+
+<p>The <i>run</i> line may be immediately followed by <i>attribute</i> lines.
+Attributes may store generic data like the network name, date/time of running
+the simulation, configuration options that took effect for the simulation, etc.
+
+<p>Run attribute names used by OMNeT++ include the following:
+
+<p>Generic attribute names:
+
+<p><ul>
+    <li> <b>network</b>: name of the network simulated
+    <li> <b>datetime</b>: date/time associated with the run
+    <li> <b>processid</b>: the PID of the simulation process
+    <li> <b>inifile</b>: the main configuration file
+    <li> <b>configname</b>: name of the inifile configuration
+    <li> <b>seedset</b>: index of the seed-set use for the simulation
+</ul>
+
+<p>Attributes associated with parameter studies (iterated runs):
+
+<p><ul>
+    <li> <b>runnumber</b>: the run number within the parameter study
+    <li> <b>experiment</b>: experiment label
+    <li> <b>measurement</b>: measurement label
+    <li> <b>replication</b>: replication label
+    <li> <b>repetition</b>: the loop counter for repetitions with different seeds
+    <li> <b>iterationvars</b>: string containing the values of the iteration variables
+    <li> <b>iterationvarsf</b>: like <tt>iterationvars</tt>, but sanitized for use as part of file names
+</ul>
+
+<p>An example run header:
+
+<pre class="filelisting">
+run TokenRing1-0-20080514-18:19:44-3248
+attr configname TokenRing1
+attr datetime 20080514-18:19:44
+attr experiment TokenRing1
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr measurement ""
+attr network TokenRing
+attr processid 3248
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+</pre>
+<p>
+
+<p><h3><a name="sec:result-file-formats:opp:attributes"/>27.1.3 Attributes<a class="headerlink" href="#sec:result-file-formats:opp:attributes" title="Permalink to this headline">¶</a></h3>
+
+<p>Contains an attribute for the preceding run, vector, scalar or
+statistics object. Attributes can be used for saving arbitrary
+extra information for objects; processors should ignore unrecognized
+attributes.
+
+<p>Syntax:
+
+<p> <b>attr</b> <i>name</i> <i>value</i>
+
+<p>Example:
+
+<pre class="filelisting">
+attr network "largeNet"
+</pre>
+<p>
+
+<p><h3><a name="sec:result-file-formats:opp:module-parameters"/>27.1.4 Module Parameters<a class="headerlink" href="#sec:result-file-formats:opp:module-parameters" title="Permalink to this headline">¶</a></h3>
+
+<p>Contains a module parameter value for the given run. This is needed so
+that module parameters may be included in the analysis (e.g. to
+identify the load for a &#8220;throughput vs load&#8221; plot).
+
+<p>It may not be practical to simply store all parameters of all modules in the
+result file, because there may be too many. We assume that NED files are
+invariant and do not store parameters defined in them. However, we store
+parameter assignments that come from <tt>omnetpp.ini</tt>, in their original
+wildcard form (i.e. not expanded) to conserve space. Parameter values
+entered interactively by the user are also stored.
+
+<p>When the original NED files are present, it should thus be possible to
+reconstruct all parameters for the given simulation.
+
+<p>Syntax:
+
+<p> <b>param</b> <i>parameterNamePattern</i> <i>value</i>
+
+<p>Example:
+
+<pre class="filelisting">
+param **.gen.sendIaTime  exponential(0.01)
+param **.gen.msgLength   10
+param **.fifo.bitsPerSec 1000
+</pre>
+<p>
+
+<p><h3><a name="sec:result-file-formats:opp:scalar-data"/>27.1.5 Scalar Data<a class="headerlink" href="#sec:result-file-formats:opp:scalar-data" title="Permalink to this headline">¶</a></h3>
+
+<p>Contains an output scalar value.
+
+<p>Syntax:
+
+<p> <b>scalar</b> <i>moduleName</i> <i>scalarName</i> <i>value</i>
+
+<p>Examples:
+
+<pre class="filelisting">
+scalar "net.switchA.relay" "processed frames" 100
+</pre>
+<p>
+Scalar lines may be immediately followed by <i>attribute</i> lines.
+OMNeT++ uses the following attributes for scalars:
+
+<p><ul>
+    <li> <b>title</b>: suggested title on charts
+    <li> <b>unit</b>: measurement unit, e.g. <tt>s</tt> for seconds
+</ul>
+
+<p>
+<h3><a name="sec:result-file-formats:opp:vector-declaration"/>27.1.6 Vector Declaration<a class="headerlink" href="#sec:result-file-formats:opp:vector-declaration" title="Permalink to this headline">¶</a></h3>
+
+<p>Defines an output vector.
+
+<p>Syntax:
+
+<p> <b>vector</b> <i>vectorId</i> <i>moduleName</i> <i>vectorName</i>
+
+<p> <b>vector</b> <i>vectorId</i> <i>moduleName</i> <i>vectorName</i> <i>columnSpec</i>
+
+<p>Where <i>columnSpec</i> is a string, encoding the meaning and ordering
+the columns of data lines. Characters of the string mean:
+
+<p><ul>
+  <li> <b>E</b> event number
+  <li> <b>T</b> simulation time
+  <li> <b>V</b> vector value
+</ul>
+
+<p>Common values are <tt>TV</tt> and <tt>ETV</tt>. The default value is <tt>TV</tt>.
+
+<p>Vector lines may be immediately followed by <i>attribute</i> lines.
+OMNeT++ uses the following attributes for vectors:
+
+<p><ul>
+    <li> <b>title</b>: suggested vector title on charts
+    <li> <b>unit</b>: measurement unit, e.g. <tt>s</tt> for seconds
+    <li> <b>enum</b>: symbolic names for values of the vector;
+          syntax is <tt>"IDLE=0, BUSY=1, OFF=2"</tt>
+    <li> <b>type</b>: data type, one of <tt>int</tt>, <tt>double</tt> and <tt>enum</tt>
+    <li> <b>interpolationmode</b>: hint for interpolation mode on the
+          chart: <tt>none</tt> (=do not connect the dots), <tt>sample-hold</tt>,
+          <tt>backward-sample-hold</tt>, <tt>linear</tt>
+    <li> <b>min</b>: minimum value
+    <li> <b>max</b>: maximum value
+</ul>
+
+<p>
+<h3><a name="sec:result-file-formats:opp:vector-data"/>27.1.7 Vector Data<a class="headerlink" href="#sec:result-file-formats:opp:vector-data" title="Permalink to this headline">¶</a></h3>
+
+<p>Adds a value to an output vector. This is the same as in older output
+vector files.
+
+<p>Syntax:
+
+<p> <i>vectorId</i> <i>column1</i> <i>column2</i> ...
+
+<p>Simulation times and event numbers <i>within an output vector</i> are
+required to be in increasing order.
+
+<p>Performance note: Data lines belonging to the same output vector may be
+written out in clusters (of size roughly a multiple of the disk's
+physical block size). Then, since an output vector file is typically
+not kept in memory during analysis, indexing the start offsets of these
+clusters allows one to read the file and seek in it more efficiently.
+This does not require any change or extension to the file format.
+
+<p><h3><a name="sec:result-file-formats:opp:index-header"/>27.1.8 Index Header<a class="headerlink" href="#sec:result-file-formats:opp:index-header" title="Permalink to this headline">¶</a></h3>
+
+<p>The first line of the index file stores the size and modification date
+of the vector file. If the attributes of a vector file differ from
+the information stored in the index file, then the IDE automatically
+rebuilds the index file.
+
+<p>Syntax:
+
+<p> <b>file</b> <i>filesize</i> <i>modificationDate</i>
+
+<p><h3><a name="sec:result-file-formats:opp:index-data"/>27.1.9 Index Data<a class="headerlink" href="#sec:result-file-formats:opp:index-data" title="Permalink to this headline">¶</a></h3>
+
+<p>Stores the location and statistics of blocks in the vector file.
+
+<p>Syntax:
+
+<p> <i>vectorId offset length firstEventNo lastEventNo
+                       firstSimtime lastSimtime count min max sum sqrsum</i>
+
+<p>where
+
+<p><ul>
+    <li><i>offset</i>: the start offset of the block
+    <li><i>length</i>: the length of the block
+    <li><i>firstEventNo</i>, <i>lastEventNo</i>:
+        the event number range of the block (optional)
+    <li><i>firstSimtime</i>, <i>lastSimtime</i>:
+        the simtime range of the block
+    <li><i>count, min, max, sum, sqrsum</i>:
+        collected statistics of the values in the block
+
+<p></ul>
+
+<p><h3><a name="sec:result-file-formats:opp:statistics-object"/>27.1.10 Statistics Object<a class="headerlink" href="#sec:result-file-formats:opp:statistics-object" title="Permalink to this headline">¶</a></h3>
+
+<p>Represents a statistics object.
+
+<p>Syntax:
+
+<p> <b>statistic</b> <i>moduleName</i> <i>statisticName</i>
+
+<p>Example:
+
+<pre class="filelisting">
+statistic Aloha.server 	"collision multiplicity"
+</pre>
+<p>
+A <i>statistic</i> line may be followed by <i>field</i> and <i>attribute</i> lines,
+and a series of <i>bin</i> lines that represent histogram data.
+
+<p>OMNeT++ uses the following attributes:
+
+<p><ul>
+    <li> <b>title</b>: suggested title on charts
+    <li> <b>unit</b>: measurement unit, e.g. <tt>s</tt> for seconds
+    <li> <b>type</b>: type of the collected values: <tt>int</tt> or <tt>double</tt>;
+                         the default is <tt>double</tt>
+</ul>
+
+<p>A full example with fields, attributes and histogram bins:
+
+<pre class="filelisting">
+statistic Aloha.server 	"collision multiplicity"
+field count 13908
+field mean 6.8510209951107
+field stddev 5.2385484477843
+field sum 95284
+field sqrsum 1034434
+field min 2
+field max 65
+attr type int
+attr unit packets
+bin	-INF	0
+bin	0	0
+bin	1	0
+bin	2	2254
+bin	3	2047
+bin	4	1586
+bin	5	1428
+bin	6	1101
+bin	7	952
+bin	8	785
+...
+bin	52	2
+</pre>
+<p>
+
+<p><h3><a name="sec:result-file-formats:opp:field"/>27.1.11 Field<a class="headerlink" href="#sec:result-file-formats:opp:field" title="Permalink to this headline">¶</a></h3>
+
+<p>Represents a field in a statistics object.
+
+<p>Syntax:
+
+<p> <b>field</b> <i>fieldName</i> <i>value</i>
+
+<p>Example:
+
+<pre class="filelisting">
+field sum 95284
+</pre>
+<p>
+Fields:
+
+<p><ul>
+    <li> <b>count</b>: observation count
+    <li> <b>mean</b>: mean of the observations
+    <li> <b>stddev</b>: standard deviation
+    <li> <b>sum</b>: sum of the observations
+    <li> <b>sqrsum</b>: sum of the squared observations
+    <li> <b>min</b>: minimum of the observations
+    <li> <b>max</b>: maximum of the observations
+</ul>
+
+<p>For weighted statistics, additionally the following fields may be recorded:
+
+<p><ul>
+    <li> <b>weights</b>: sum of the weights
+    <li> <b>weightedSum</b>: the weighted sum of the observations
+    <li> <b>sqrSumWeights</b>:  sum of the squared weights
+    <li> <b>weightedSqrSum</b>: weighted sum of the squared observations
+</ul>
+
+<p>
+<h3><a name="sec:result-file-formats:opp:histogram-bin"/>27.1.12 Histogram Bin<a class="headerlink" href="#sec:result-file-formats:opp:histogram-bin" title="Permalink to this headline">¶</a></h3>
+
+<p>Represents a bin in a histogram object.
+
+<p>Syntax:
+
+<p> <b>bin</b> <i>binLowerBound</i> <i>value</i>
+
+<p>Histogram name and module is defined on the <b>statistic</b> line,
+which is followed by several <b>bin</b> lines to contain data. Any
+non-<b>bin</b> line marks the end of the histogram data.
+
+<p>The <i>binLowerBound</i> column of <b>bin</b> lines represent the
+(inclusive) lower bound of the given histogram cell. <b>Bin</b> lines are in
+increasing <i>binLowerBound</i> order.
+
+<p>The <i>value</i> column of a <b>bin</b> line represents the observation
+count in the given cell: <i>value k</i> is the number of observations
+greater or equal to <i>binLowerBound k</i>, but smaller than
+<i>binLowerBound k+1</i>. <i>Value</i> is not necessarily an
+integer, because the <a href="../api/classomnetpp_1_1cKSplit.html">cKSplit</a> and <a href="../api/classomnetpp_1_1cPSquare.html">cPSquare</a> algorithms produce
+non-integer estimates. The first <b>bin</b> line is the underflow
+cell, and the last <b>bin</b> line is the overflow cell.
+
+<p>Example:
+
+<pre class="filelisting">
+bin -INF  0
+bin 0 4
+bin 2 6
+bin 4 2
+bin 6 1
+</pre>
+<p>
+
+<p><h2><a name="cha:result-file-formats:sqlite"/>27.2 SQLite Result Files<a class="headerlink" href="#cha:result-file-formats:sqlite" title="Permalink to this headline">¶</a></h2>
+
+<p>The database structure in SQLite result files is created with the
+following SQL statements. Scalar and vector files are identical in
+structure, they only differ in data.
+
+<pre class="filelisting">
+CREATE TABLE run 
+( 
+    runId       INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    runName     TEXT NOT NULL, 
+    simtimeExp  INTEGER NOT NULL 
+); 
+
+CREATE TABLE runattr 
+( 
+    runId       INTEGER NOT NULL REFERENCES run(runId) ON DELETE CASCADE, 
+    attrName    TEXT NOT NULL, 
+    attrValue   TEXT NOT NULL 
+); 
+
+CREATE TABLE runparam 
+( 
+    runId       INTEGER NOT NULL REFERENCES run(runId) ON DELETE CASCADE, 
+    parName     TEXT NOT NULL, 
+    parValue    TEXT NOT NULL 
+); 
+
+CREATE TABLE scalar 
+( 
+    scalarId      INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    runId         INTEGER NOT NULL REFERENCES run(runId) ON DELETE CASCADE, 
+    moduleName    TEXT NOT NULL, 
+    scalarName    TEXT NOT NULL, 
+    scalarValue   REAL
+); 
+
+CREATE TABLE scalarattr 
+( 
+    scalarId      INTEGER NOT NULL REFERENCES scalar(scalarId) ON DELETE CASCADE, 
+    attrName      TEXT NOT NULL, 
+    attrValue     TEXT NOT NULL 
+); 
+
+CREATE TABLE statistic 
+( 
+    statId        INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    runId         INTEGER NOT NULL REFERENCES run(runId) ON DELETE CASCADE, 
+    moduleName    TEXT NOT NULL, 
+    statName      TEXT NOT NULL, 
+    statCount     INTEGER NOT NULL, 
+    statMean      REAL, 
+    statStddev    REAL, 
+    statSum       REAL, 
+    statSqrsum    REAL, 
+    statMin       REAL, 
+    statMax       REAL, 
+    statWeights          REAL, 
+    statWeightedSum      REAL, 
+    statSqrSumWeights    REAL, 
+    statWeightedSqrSum   REAL 
+); 
+
+CREATE TABLE histattr 
+( 
+    statId        INTEGER NOT NULL REFERENCES statistic(statId) ON DELETE CASCADE, 
+    attrName      TEXT NOT NULL, 
+    attrValue     TEXT NOT NULL 
+); 
+
+CREATE TABLE histbin 
+( 
+    statId        INTEGER NOT NULL REFERENCES statistic(statId) ON DELETE CASCADE, 
+    baseValue     NUMERIC NOT NULL, 
+    cellValue     INTEGER NOT NULL 
+); 
+
+CREATE TABLE vector 
+( 
+    vectorId        INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    runId           INTEGER  NOT NULL REFERENCES run(runId) ON DELETE CASCADE, 
+    moduleName      TEXT NOT NULL, 
+    vectorName      TEXT NOT NULL, 
+    vectorCount     INTEGER,
+    vectorMin       REAL, 
+    vectorMax       REAL, 
+    vectorSum       REAL, 
+    vectorSumSqr    REAL, 
+    startEventNum   INTEGER, 
+    endEventNum     INTEGER, 
+    startSimtimeRaw INTEGER, 
+    endSimtimeRaw   INTEGER 
+
+); 
+
+CREATE TABLE vectorattr 
+( 
+    vectorId      INTEGER NOT NULL REFERENCES vector(vectorId) ON DELETE CASCADE, 
+    attrName      TEXT NOT NULL, 
+    attrValue     TEXT NOT NULL 
+); 
+
+CREATE TABLE vectordata 
+( 
+    vectorId      INTEGER NOT NULL REFERENCES vector(vectorId) ON DELETE CASCADE, 
+    eventNumber   INTEGER NOT NULL, 
+    simtimeRaw    INTEGER NOT NULL, 
+    value         NUMERIC NOT NULL 
+); 
+</pre>
+<p>
+Notes:
+
+<p><ol>
+  <li> To preserve precision, simulation time is stored in raw form, i.e. 
+        the underlying <tt>int64</tt> is stored as an integer. To get the real
+        value, they have to be multiplied by 10 to the power of the simtime
+        exponent, which is global for the simulation run. The simtime        
+        exponent is stored  in the <tt>simtimeExp</tt> column of the <tt>run</tt>
+        table.
+  <li> Some columns like vector statistics are not marked as <tt>NOT NULL</tt>,
+        because of technical reasons: their values are not available at the
+        time of the insertion, only at the end of the simulation.
+  <li> <tt>REAL</tt> columns are not marked as <tt>NOT NULL</tt>, because
+        SQLite stores floating-point NaN values as <tt>NULL</tt>s.
+</ol>
+
+<p><ul class="caution"><b>CAUTION</b><br>
+SQLite support in OMNeT++ is currently experimental, so the above database
+structure may change in future releases.
+</ul>
+
+<hr class='pgbr'><p><hr><b><a href="chap26.html">[Prev]</A>&nbsp;<a href="chap28.html">[Next]</A>&nbsp;<a href="toc.html#toc_27.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

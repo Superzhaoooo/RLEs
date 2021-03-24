@@ -1,0 +1,29 @@
+%description:
+Test if exception handling works.
+
+%global:
+class Noisy
+{
+  public:
+    Noisy() {EV << "ctor!\n";}
+    virtual ~Noisy() {EV << "dtor!\n";}
+};
+
+
+
+%activity:
+try {
+    EV << "begin\n";
+    Noisy x;
+    throw 42;
+    EV << "after throw???\n";
+    Noisy y;
+} catch (int i) {
+    EV << "caught " << i << "!\n";
+}
+
+%contains: stdout
+begin
+ctor!
+dtor!
+caught 42!

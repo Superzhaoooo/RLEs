@@ -1,0 +1,36 @@
+%NAME%
+mingw-w64-x86_64-json-c
+
+%VERSION%
+0.12-2
+
+%DESC%
+A JSON implementation in C.
+
+%URL%
+https://github.com/json-c/json-c
+
+%ARCH%
+any
+
+%BUILDDATE%
+1437133449
+
+%INSTALLDATE%
+1470403679
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+272384
+
+%REASON%
+1
+
+%LICENSE%
+MIT
+
+%VALIDATION%
+pgp
+

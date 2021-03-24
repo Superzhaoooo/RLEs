@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Specification/Persons.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Specification/Persons - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Specification/Persons.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#persons">Persons</a></li>
+            <li class="nav-item main"><a href="#repeated_persons_personflows">Repeated persons (personFlows)</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#examples" class="nav-link">• Examples</a>
+                </li>
+            <li class="nav-item main"><a href="#simulation_input">Simulation input</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#rides" class="nav-link">• Rides</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#starting_the_simulation_in_a_vehicle" class="nav-link">&rarr; Starting the simulation in a Vehicle</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#walks" class="nav-link">• Walks</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#stops" class="nav-link">• Stops</a>
+                </li>
+            <li class="nav-item main"><a href="#simulation_behavior">Simulation behavior</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#riding" class="nav-link">• Riding</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#walking" class="nav-link">• Walking</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#stopping" class="nav-link">• Stopping</a>
+                </li>
+            <li class="nav-item main"><a href="#router_input">Router input</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#persontrips" class="nav-link">• PersonTrips</a>
+                </li>
+            <li class="nav-item main"><a href="#example">Example</a></li>
+            <li class="nav-item main"><a href="#visualization">Visualization</a></li>
+            <li class="nav-item main"><a href="#person_output">Person Output</a></li>
+            <li class="nav-item main"><a href="#planned_features">Planned features</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Specification/Persons<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="persons">Persons<a class="headerlink" href="#persons" title="Permanent link">#</a></h1>
+<p>A person moves through the net by walking or <a href="../Simulation/Public_Transport.html">using
+vehicles</a>. The walking behavior
+is customizable by selecting a <a href="../Simulation/Pedestrians.html#pedestrian_models">pedestrian
+model</a>. A person
+element has child elements defining stages of its plan. The stages are a
+connected sequence of <a href="Persons.html#rides">ride</a>,
+<a href="Persons.html#walks">walk</a> and
+<a href="Persons.html#stops">stop</a> elements as described
+below. Each person must have at least one stage in its plan.</p>
+<pre><code>&lt;person id=&quot;foo&quot; depart=&quot;0&quot;&gt;
+    &lt;walk edges=&quot;a b c&quot;/&gt;
+    &lt;ride from=&quot;c&quot; to=&quot;d&quot; lines=&quot;busline1&quot;/&gt;
+    &lt;ride .../&gt;
+    &lt;walk .../&gt;
+    &lt;stop .../&gt;
+&lt;/person&gt;
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>valid XML ids</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>depart</td>
+<td>float(s)</td>
+<td>≥0 or 'triggered'</td>
+<td>-</td>
+<td>See <a href="Persons.html#rides">ride</a> for an explanation of 'triggered'</td>
+</tr>
+<tr>
+<td>departPos</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>-</td>
+<td>the distance along the edge that the person is created</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>any declared vType</td>
+<td>DEFAULT_PEDTYPE</td>
+<td>the type should have vClass pedestrian</td>
+</tr>
+<tr>
+<td>width</td>
+<td>float (s)</td>
+<td>≥0</td>
+<td>0,48</td>
+<td>The person's width [m]</td>
+</tr>
+<tr>
+<td>lenght</td>
+<td>float (s)</td>
+<td>≥0</td>
+<td>0,21</td>
+<td>The person's netto-length (length) (in m)</td>
+</tr>
+<tr>
+<td>mingap</td>
+<td>float (s)</td>
+<td>≥0</td>
+<td>0,25</td>
+<td>Empty space after leader [m]</td>
+</tr>
+<tr>
+<td>maxSpeed</td>
+<td>float (s)</td>
+<td>≥0</td>
+<td>1,39</td>
+<td>The person's maximum velocity (in m/s)</td>
+</tr>
+<tr>
+<td>jmDriveAfterRedTime</td>
+<td>float (s)</td>
+<td>≥0</td>
+<td>-1</td>
+<td>This value causes persons to violate a red light if the duration of the red phase is lower than the given threshold. When set to 0, persons will always walk at yellow but will try to stop at red. If this behavior causes a person to walk so fast that stopping is not possible any more it will not attempt to stop.</td>
+</tr>
+</tbody>
+</table>
+<p>When specifying a <code>type</code>, the set of
+attributes which are in effect during simulation depend on the selected
+<a href="../Simulation/Pedestrians.html#pedestrian_models">pedestrian model</a>.
+Attributes such as <code>width</code>, <code>length</code>, <code>imgFile</code> and <code>color</code> are always used for visualization.</p>
+<h1 id="repeated_persons_personflows">Repeated persons (personFlows)<a class="headerlink" href="#repeated_persons_personflows" title="Permanent link">#</a></h1>
+<p>To define multiple persons with the same plan, the element <code>&lt;personFlow&gt;</code> can be used.
+It uses the same parameters and child elements as <code>&lt;person&gt;</code> except for the
+departure time. The id of the created persons is
+"personFlowId.runningNumber" and they are distributed either equally or
+randomly in the given interval. The following additional parameters are
+known:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>begin</td>
+<td>float(s)</td>
+<td>first person departure time</td>
+</tr>
+<tr>
+<td>end</td>
+<td>float(s)</td>
+<td>end of departure interval (if undefined, defaults to 24 hours)</td>
+</tr>
+<tr>
+<td>personsPerHour</td>
+<td>float(#/h)</td>
+<td>number of persons per hour, equally spaced (not together with period or probability)</td>
+</tr>
+<tr>
+<td>period</td>
+<td>float(s)</td>
+<td>insert equally spaced persons at that period (not together with personsPerHour or probability)</td>
+</tr>
+<tr>
+<td>probability</td>
+<td>float([0,1])</td>
+<td>probability for emitting a person each second (not together with personsPerHour or period), see also <a href="../Simulation/Randomness.html#flows_with_a_random_number_of_vehicles">Simulation/Randomness</a></td>
+</tr>
+<tr>
+<td>number</td>
+<td>int(#)</td>
+<td>total number of persons, equally spaced</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
+<pre><code>   &lt;personFlow id=&quot;p&quot; begin=&quot;0&quot; end=&quot;10&quot; period=&quot;2&quot;&gt;
+       &lt;walk from=&quot;beg&quot; to=&quot;end&quot;/&gt;
+   &lt;/personFlow&gt;
+</code></pre>
+
+<pre><code>   &lt;personFlow id=&quot;person&quot; begin=&quot;0&quot; end=&quot;1&quot; number=&quot;4&quot; departPos=&quot;80&quot;&gt;
+       &lt;walk from=&quot;2/3to1/3&quot; to=&quot;1/3to0/3&quot; arrivalPos=&quot;55&quot;/&gt;
+       &lt;ride from=&quot;1/3to0/3&quot; to=&quot;0/4to1/4&quot; lines=&quot;train0&quot;/&gt;
+       &lt;walk from=&quot;0/4to1/4&quot; to=&quot;1/4to2/4&quot; arrivalPos=&quot;45&quot;/&gt;
+       &lt;stop lane=&quot;1/4to2/4_0&quot; duration=&quot;20&quot; startPos=&quot;40&quot; actType=&quot;singing&quot;/&gt;
+       &lt;ride from=&quot;1/4to2/4&quot; to=&quot;3/4to4/4&quot; lines=&quot;car0&quot;/&gt;
+   &lt;/personFlow&gt;
+</code></pre>
+
+<h1 id="simulation_input">Simulation input<a class="headerlink" href="#simulation_input" title="Permanent link">#</a></h1>
+<p>The input for a person consists of a sequence of <em>stages</em> of the 3 types
+given below.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Person plans can also be generated with <a href="../IntermodalRouting.html">intermodal routing</a></p>
+</div>
+<h2 id="rides">Rides<a class="headerlink" href="#rides" title="Permanent link">#</a></h2>
+<p>Rides define the start and end point of a movement with a single mode of
+transport (e.g. a car or a bus). They are child elements of plan
+definitions.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>from</td>
+<td>string</td>
+<td>valid edge ids</td>
+<td>-</td>
+<td>id of the start edge (optional, if it is a subsequent movement)</td>
+</tr>
+<tr>
+<td>to</td>
+<td>string</td>
+<td>valid edge ids</td>
+<td>-</td>
+<td>id of the destination edge</td>
+</tr>
+<tr>
+<td>busStop</td>
+<td>string</td>
+<td>valid bus stop ids</td>
+<td>-</td>
+<td>id of the destination stop</td>
+</tr>
+<tr>
+<td>lines</td>
+<td>list</td>
+<td>valid line or vehicle ids or <em>ANY</em></td>
+<td>-</td>
+<td>list of vehicle alternatives to take for the ride</td>
+</tr>
+<tr>
+<td>arrivalPos</td>
+<td>float(m)</td>
+<td></td>
+<td>-1</td>
+<td>arrival position on the destination edge</td>
+</tr>
+</tbody>
+</table>
+<p>The vehicle to use has to exist already (either public transport or some
+existing passenger car) and the route to take is defined by the vehicle.
+The person enters the vehicle if it stops on the 'from' edge and any of
+the following conditions are met</p>
+<ul>
+<li>the 'line' attribute of the vehicle or the 'id' of the vehicle is
+  given in the list defined by the 'lines' attribute of the ride OR
+  the lines attribute contains 'ANY' and the vehicle stops at the
+  destination 'busStop' of the ride (or at the destination edge if no destination busStop is defined).</li>
+<li>the vehicle has a triggered stop and the person is position within
+  the range of <code>startpos,endPos</code> of the stop.</li>
+<li>the vehicle has a timed stop and the person is waiting within 10m of
+  the vehicle position</li>
+</ul>
+<p>The position of the person is either it's <code>departPos</code> or the arrival position of
+the preceding plan element</p>
+<p>A given bus stop may serve as a replacement for a destination edge and
+arrival position. If an arrival position is given nevertheless it has to
+be inside the range of the stop.</p>
+<h3 id="starting_the_simulation_in_a_vehicle">Starting the simulation in a Vehicle<a class="headerlink" href="#starting_the_simulation_in_a_vehicle" title="Permanent link">#</a></h3>
+<p>To start the simulation while riding in a vehicle, the following conditions must be met:
+- the depart attribute must be set to 'triggered'
+- the first stage of the plan must be a ride
+- the lines attribute of the first ride must contain the ID of the vehicle to start in
+- the starting vehicle must already be loaded in the input file</p>
+<p>The person will then depart at the time of the vehicle departure and appear in the simulation as soon as the vehicle enters the network.</p>
+<h2 id="walks">Walks<a class="headerlink" href="#walks" title="Permanent link">#</a></h2>
+<p>Walks define a <a href="../Simulation/Pedestrians.html">pedestrian movement</a>.
+They are child elements of plan definitions.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>route</td>
+<td>string</td>
+<td>valid route id</td>
+<td>-</td>
+<td>the id of the route to walk</td>
+</tr>
+<tr>
+<td>edges</td>
+<td>list</td>
+<td>valid edge ids</td>
+<td>-</td>
+<td>id of the edges to walk</td>
+</tr>
+<tr>
+<td>from</td>
+<td>string</td>
+<td>valid edge ids</td>
+<td>-</td>
+<td>id of the start edge  (optional, if it is a subsequent movement)</td>
+</tr>
+<tr>
+<td>to</td>
+<td>string</td>
+<td>valid edge ids</td>
+<td>-</td>
+<td>id of the destination edge</td>
+</tr>
+<tr>
+<td>busStop</td>
+<td>string</td>
+<td>valid bus stop ids</td>
+<td>-</td>
+<td>id of the destination stop</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>float(s)</td>
+<td>>0</td>
+<td>-</td>
+<td>(deprecated, determined by the person type and the pedestrian dynamics)</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>float(m/s)</td>
+<td>>0</td>
+<td>-</td>
+<td>(deprecated, determined by the person type and the pedestrian dynamics)</td>
+</tr>
+<tr>
+<td>departPos</td>
+<td>float(m)</td>
+<td></td>
+<td>0</td>
+<td>initial position on the starting edge (deprecated, determined by the departPos of the person or the arrival pos of the previous step)</td>
+</tr>
+<tr>
+<td>arrivalPos</td>
+<td>float(m)</td>
+<td></td>
+<td>-1</td>
+<td>arrival position on the destination edge</td>
+</tr>
+</tbody>
+</table>
+<p>You can define either a <code>route</code>-id, or a list of <code>edges</code> to travel or a <code>from</code> and a <code>to</code> edge.
+In the first and second case the route edges are traveled in the listed
+order. They do not need to be joined in the net. If travelling between
+stops on the same edge then only include the edge once. In the latter
+case a shortest path calculation is performed and it is an error if
+there is no path connecting <code>from</code> and <code>to</code>.</p>
+<p>When given as router input input using the attributes <code>from</code> and <code>to</code> will be
+transformed into a walk using the attribute <code>edges</code> by routing along edges
+permissible for pedestrian (i.e. sidewalks).</p>
+<p>A given bus stop may serve as a replacement for a destination edge and
+arrival position. If an arrival position is given nevertheless, it has
+to be inside the range of the stop.</p>
+<h2 id="stops">Stops<a class="headerlink" href="#stops" title="Permanent link">#</a></h2>
+<p>Stops define a delay until the next element of a plan is started. They
+can be used to model activities such as working or shopping. Stops for
+persons follow the specification at
+<a href="../Specification.html#stops">Specification#Stops</a>. However, only
+the attributes <code>lane</code>, <code>duration</code> and <code>until</code> are evaluated. Using these attributes it is
+possible to model activities with a fixed duration as well as those with
+a fixed end time. If a person needs to be transferred between two
+positions without delay, it is possible to use two stops in conjunction.</p>
+<h1 id="simulation_behavior">Simulation behavior<a class="headerlink" href="#simulation_behavior" title="Permanent link">#</a></h1>
+<p>A person is starting her life at her depart time on the source (resp.
+first) edge of the first walk, ride or stop. She tries to start the next
+step of her plan.</p>
+<h2 id="riding">Riding<a class="headerlink" href="#riding" title="Permanent link">#</a></h2>
+<p>The person checks whether a vehicle with a line from the given list is
+stopping at the given edge. If such a vehicle exists and the person is
+positioned between the start and end position of the vehicle's stop, the
+person will enter the vehicle and start its ride. If such a vehicle
+exists but the person is not positioned between the start and end
+position of the vehicle's stop, the person will still enter if the
+vehicle is triggered by the a person and the distance between person and
+vehicle is at most 10 metres. It does not check whether the vehicle has
+the aspired destination on the current route. The first time the vehicle
+stops (on a well defined stop) at the destination edge, the ride is
+finished and the person proceeds with the next step in the plan.</p>
+<h2 id="walking">Walking<a class="headerlink" href="#walking" title="Permanent link">#</a></h2>
+<p>The walking behavior of a person depends on the selected <a href="../Simulation/Pedestrians.html#pedestrian_models">pedestrian
+model</a>. Generally,
+the person follows the given sequence of edges with a speed bounded by
+the <code>maxSpeed</code> attribute of the persons type. It starts either at the position
+from the previous stage of its plan or at the specified <code>departPos</code> if no previous
+stage exists. The walk concludes at the specified <code>arrivalPos</code> which defaults to the
+end of the final edge. Both position attributes support the special
+values <code>max</code> and <code>random</code> which work as described <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#s_vehicles_depart_and_arrival_parameter">for
+vehicles</a>.</p>
+<h2 id="stopping">Stopping<a class="headerlink" href="#stopping" title="Permanent link">#</a></h2>
+<p>The person stops for the maximum of <em>currentTime+duration</em> and <em>until</em>.</p>
+<h1 id="router_input">Router input<a class="headerlink" href="#router_input" title="Permanent link">#</a></h1>
+<p>The following definitions can be processed with <a href="../duarouter.html">duarouter</a> and <a href="../sumo.html">sumo</a>.</p>
+<h2 id="persontrips">PersonTrips<a class="headerlink" href="#persontrips" title="Permanent link">#</a></h2>
+<p>A personTrip defines the start and end point of a movement with optional
+changes in mode. They are child elements to the person. In order to
+process a personTrip with mode <em>public</em>, the <a href="../IntermodalRouting.html">public transport
+network</a> has to be defined as well.
+Currently bicycle and/or car can only be the first mode. It is not
+possible to switch to a car or bicycle after a different mode.</p>
+<p>If the computed plan starts with a car or bicycle, a vehicle for use by the person will be automatically generated and set to depart="triggered". A car will be named 'PERSON_ID_0' and bicycle will be named 'PERSON_ID_b0' where 'PERSON_ID' is the id of the person. If a vehicle with this id already exists in the simulation, this vehicle will be used instead (and the user has to ensure that it starts at an appropriate location).</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>from</td>
+<td>string</td>
+<td>valid edge ids</td>
+<td>-</td>
+<td>id of the start edge</td>
+</tr>
+<tr>
+<td>to</td>
+<td>string</td>
+<td>valid edge ids</td>
+<td>-</td>
+<td>id of the destination edge</td>
+</tr>
+<tr>
+<td>via</td>
+<td>string</td>
+<td>valid edge ids</td>
+<td>-</td>
+<td>ids of the intermediate edges (not implemented yet)</td>
+</tr>
+<tr>
+<td>busStop</td>
+<td>string</td>
+<td>valid bus stop ids</td>
+<td>-</td>
+<td>id of the destination stop</td>
+</tr>
+<tr>
+<td>vTypes</td>
+<td>list</td>
+<td>valid vType ids</td>
+<td>-</td>
+<td>list of possible vehicle types to take</td>
+</tr>
+<tr>
+<td>modes</td>
+<td>list</td>
+<td>any combination of "public", "car", "bicycle", <a href="../Simulation/Taxi.html">"taxi"</a></td>
+<td>-</td>
+<td>list of possible traffic modes (separated by ' '). Walking is always possible regardless of this value.</td>
+</tr>
+<tr>
+<td>departPos</td>
+<td>float(m)</td>
+<td></td>
+<td>0</td>
+<td>initial position on the starting edge (deprecated, determined by the departPos of the person or the arrival pos of the previous step)</td>
+</tr>
+<tr>
+<td>arrivalPos</td>
+<td>float(m)</td>
+<td></td>
+<td>-eps</td>
+<td>arrival position on the destination edge</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is an error for subsequent trips to be unconnected.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If no itinerary for performing the trip is found and the option <strong>--ignore-route-errors</strong> is set, the trip will be transformed into a walk which consists of the start and arrival edge. The person will teleport to complete the walk.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>when attribute vTypes is used, the person may start with any of the given vehicle types at the from-edge. Including 'car' in modes is equivalent to vTypes="DEFAULT_VEHTYPE". Including 'bicycle' in modes is equivalent to vTypes="DEFAULT_BIKETYPE". The vehicles will be automatically generated when used.</p>
+</div>
+<h1 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h1>
+<p>The following is an example for a person who walks to a train station,
+rides the train, alights and walks for a bit, then stops for an activity
+and finally gets into a car and drives away.</p>
+<pre><code>&lt;routes&gt;
+    &lt;person id=&quot;person0&quot; depart=&quot;0&quot;&gt;
+        &lt;walk from=&quot;2/3to1/3&quot; to=&quot;1/3to0/3&quot; departPos=&quot;80&quot; arrivalPos=&quot;55&quot;/&gt;
+        &lt;ride from=&quot;1/3to0/3&quot; to=&quot;0/4to1/4&quot; lines=&quot;train0&quot;/&gt;
+        &lt;walk from=&quot;0/4to1/4&quot; to=&quot;1/4to2/4&quot; arrivalPos=&quot;30&quot;/&gt;
+        &lt;stop lane=&quot;1/4to2/4_0&quot; duration=&quot;20&quot; startPos=&quot;40&quot; actType=&quot;singing&quot;/&gt;
+        &lt;ride from=&quot;1/4to2/4&quot; to=&quot;3/4to4/4&quot; lines=&quot;car0&quot;/&gt;
+    &lt;/person&gt;
+
+    &lt;vehicle id=&quot;train0&quot; depart=&quot;50&quot;&gt;
+        &lt;route edges=&quot;1/4to1/3 1/3to0/3 0/3to0/4 0/4to1/4 1/4to1/3&quot;/&gt;
+        &lt;stop busStop=&quot;busStop0&quot; until=&quot;120&quot; duration=&quot;10&quot;/&gt;
+        &lt;stop busStop=&quot;busStop1&quot; until=&quot;180&quot; duration=&quot;10&quot;/&gt;
+    &lt;/vehicle&gt;
+
+    &lt;vehicle id=&quot;car0&quot; depart=&quot;triggered&quot;&gt;
+        &lt;route edges=&quot;1/4to2/4 2/4to3/4 3/4to4/4&quot; departPos=&quot;30&quot;/&gt;
+        &lt;stop lane=&quot;1/4to2/4_0&quot; duration=&quot;20&quot; startPos=&quot;40&quot; endPos=&quot;60&quot;/&gt;
+    &lt;/vehicle&gt;
+
+&lt;/routes&gt;
+</code></pre>
+
+<p>You can omit the from attribute in the second and following movements
+and you can use bus stops as destinations. For trains the busStops
+should have access lanes. The movement of person0 in the example above
+could also be written as</p>
+<pre><code>&lt;person id=&quot;person0&quot; depart=&quot;0&quot;&gt;
+    &lt;walk from=&quot;2/3to1/3&quot; busStop=&quot;busStop0&quot; departPos=&quot;80&quot; arrivalPos=&quot;55&quot;/&gt;
+    &lt;ride busStop=&quot;busStop1&quot; lines=&quot;train0&quot;/&gt;
+    &lt;walk to=&quot;1/4to2/4&quot; arrivalPos=&quot;30&quot;/&gt;
+    &lt;stop lane=&quot;1/4to2/4_0&quot; duration=&quot;20&quot; startPos=&quot;40&quot; actType=&quot;singing&quot;/&gt;
+    &lt;ride from=&quot;1/4to2/4&quot; to=&quot;3/4to4/4&quot; lines=&quot;car0&quot;/&gt;
+&lt;/person&gt;
+</code></pre>
+
+<h1 id="visualization">Visualization<a class="headerlink" href="#visualization" title="Permanent link">#</a></h1>
+<p>Persons are rendered in the GUI with the configured detail-level. When
+assigning a type with attribute <em>imgFile</em>, the person may be rendered
+with an image. By default, the image will not be rotated (suitable for
+abstract icons). However, when setting the types <em>guiShape</em>="pedestrian"
+the image will be rotated according to the persons location and stage.</p>
+<h1 id="person_output">Person Output<a class="headerlink" href="#person_output" title="Permanent link">#</a></h1>
+<p>Most of the <a href="../Simulation/Output.html">Simulation outputs</a> are
+tailored for vehicles. Only a small number of output formats support
+persons:</p>
+<ul>
+<li><a href="../Simulation/Output/TripInfo.html">tripinfo-output</a></li>
+<li><a href="../Simulation/Output/VehRoutes.html">vehroute-output</a></li>
+<li><a href="../Simulation/Output/FCDOutput.html">fcd-output</a></li>
+<li><a href="../Simulation/Output/RawDump.html">netstate-dump</a></li>
+<li><a href="../Simulation/Output.html#aggregated_traffic_measures">aggregated simulation
+  statistics</a></li>
+</ul>
+<h1 id="planned_features">Planned features<a class="headerlink" href="#planned_features" title="Permanent link">#</a></h1>
+<p>The following features are not yet implemented.</p>
+<ul>
+<li>state saving and loading, see <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/2792" title="GitHub Issue eclipse/sumo #2792">#2792</a></li>
+<li><a href="../Demand/Automatic_Routing.html">Simulation routing for
+  persons</a>
+  (person-device.rerouting)</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 17 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

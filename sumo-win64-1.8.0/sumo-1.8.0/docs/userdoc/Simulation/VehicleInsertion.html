@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/VehicleInsertion.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/VehicleInsertion - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/VehicleInsertion.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#loading">Loading</a></li>
+            <li class="nav-item main"><a href="#insertion_departure">Insertion (Departure)</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#delayed_departure" class="nav-link">• Delayed Departure</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#investigating_insertion_delay" class="nav-link">• Investigating insertion delay</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#effect_of_simulation_step-length" class="nav-link">• Effect of simulation step-length</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#forcing_insertion_avoiding_depart_delay" class="nav-link">• Forcing Insertion / Avoiding depart delay</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#global_options_that_affect_departure" class="nav-link">• Global options that affect Departure</a>
+                </li>
+            <li class="nav-item main"><a href="#miscellaneous">Miscellaneous</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/VehicleInsertion<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="loading">Loading<a class="headerlink" href="#loading" title="Permanent link">#</a></h1>
+<p>Vehicles are either loaded <a href="../index.html#demand_modelling">from XML
+inputs</a> or <a href="../TraCI.html">added
+at runtime via TraCI</a>. When loading from XML, not all
+vehicles are loaded at once. Instead, vehicles are loaded in chunks, the
+size of which can be configured with the option <strong>--route-steps</strong>. This is done to
+conserve memory when performing long simulations.</p>
+<p>Once vehicles are loaded they can be accessed and manipulated via TraCI
+(to some degree). Using the functions 'move to' or 'move to XY' they can
+even be forcefully inserted into the network.</p>
+<h1 id="insertion_departure">Insertion (Departure)<a class="headerlink" href="#insertion_departure" title="Permanent link">#</a></h1>
+<p>In order for a vehicle to be inserted into the road network, some
+necessary constraints must be fulfilled:</p>
+<ul>
+<li>The vehicle (from its rear to its front position + <em>minGap</em>) must
+  not intersect with other vehicles (including their <em>minGap</em></li>
+<li>The vehicle must be at a safe distance to any leader vehicles
+  according to its <em>carFollowModel</em></li>
+<li>Any follower vehicles must be at a safe distance according to their
+  <em>carFollowModel</em></li>
+<li>The vehicle must be able to brake for any upcoming non-prioritized
+  intersections along its route</li>
+<li>The vehicle must be able to brake for any scheduled stops along its
+  route</li>
+</ul>
+<p>If a vehicle cannot be inserted due to any of the above reasons it's
+insertion is delayed (see below). This <em>departDelay</em> is recorded in the
+<a href="Output/TripInfo.html">tripinfo-output</a> and can also be
+inspected in <a href="../sumo-gui.html">sumo-gui</a> via the vehicle parameter
+dialog.</p>
+<p>The precise nature of insertion in regard to position, speed and depart
+time depend on <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicles_and_routes">many
+parameters</a>
+as well as on the current state of the road network.</p>
+<h2 id="delayed_departure">Delayed Departure<a class="headerlink" href="#delayed_departure" title="Permanent link">#</a></h2>
+<p>If there is insufficient space for inserting the vehicle at it's
+designated departure time, that vehicle is put into an insertion queue
+and insertion is repeatedly attempted in subsequent simulation steps. If
+the option <strong>--max-depart-delay</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> is used, vehicles are discarded if they could not be
+inserted after the specified <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> in seconds.</p>
+<p>There are two methods for inserting vehicles into the simulation:</p>
+<ol>
+<li>try to insert every vehicle in every simulation step</li>
+<li>for every edge with vehicles to insert, abort trying to insert
+    vehicles after one of the vehicles could not be inserted</li>
+</ol>
+<p>In an uncongested networks these methods behave similar but in a
+congested network with lots of vehicles which cannot be inserted variant
+2) is much faster. In older version of sumo 1) was the default and one
+could switch to 2) using the option <strong>--sloppy-insert</strong> Since version 0.18.0, variant 2) is
+the default and one may switch to 1) using the option <strong>--eager-insert</strong>.</p>
+<h2 id="investigating_insertion_delay">Investigating insertion delay<a class="headerlink" href="#investigating_insertion_delay" title="Permanent link">#</a></h2>
+<p>Using <a href="../sumo-gui.html">sumo-gui</a> several options exist for showing
+insertion delay:</p>
+<ul>
+<li>Color vehicles <em>by insertion delay</em></li>
+<li>Color Streets <em>by insertion backlog</em></li>
+<li>Opening Vehicle statistics lists the number of <em>insertion-backloged
+  vehicles</em> for the whole network.</li>
+<li>The parameter Dialog for individual vehicles lists <em>desired depart</em>
+  and <em>depart delay</em></li>
+</ul>
+<h2 id="effect_of_simulation_step-length">Effect of simulation step-length<a class="headerlink" href="#effect_of_simulation_step-length" title="Permanent link">#</a></h2>
+<p>Insertion attemps can only happen in every simulation step. This may cause artifacts in insertion spacing because at the default step-length of 1s is (usually) too short for vehicles to be inserted in successive steps on the same depart location.
+By default, the next attempt happens 2 seconds after the first vehicle has departed and this gap may be much larger then mandated by the carFollowModel. There are multiple ways to avoid this effect:</p>
+<ul>
+<li>the step-length can be reduced</li>
+<li>the insertion location must be modified by any of the following methods<ul>
+<li>specifying a specific departPos</li>
+<li>using <code>departPos="last"</code></li>
+<li>setting option <strong>--extrapolate-departpos</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="forcing_insertion_avoiding_depart_delay">Forcing Insertion / Avoiding depart delay<a class="headerlink" href="#forcing_insertion_avoiding_depart_delay" title="Permanent link">#</a></h2>
+<ul>
+<li>Make sure that all lanes are used for insertion i.e. by setting <code>departLane="random"</code> (or <code>free</code> or <code>best</code>)</li>
+<li>Insert with <code>departSpeed="max"</code>: vehicle speeds at insertion will be adjusted to the
+  maximum safe speed that allows insertion at the specified time to
+  succeed</li>
+<li>Insert with <code>departPos="last"</code>: vehicle position will be adjusted to the maximum
+  position behind the leader vehicle that allows driving with the
+  given speed (or maximum allowed speed when using <code>departSpeed="max"</code>)</li>
+<li>insert with a fixed departSpeed (numerical value) and set option <strong>--ignore-route-errors</strong>.
+  Vehicles will be inserted with unsafe speeds at the specified time
+  if emergency-braking would still allow collision-free dynamics</li>
+<li>use
+  <a href="../TraCI/Change_Vehicle_State.html#move_to_0x5c">traci.vehicle.moveTo</a>
+  or
+  <a href="../TraCI/Change_Vehicle_State.html#move_to_xy_0xb4">traci.vehicle.moveToXY</a>
+  to force the vehicle into the network at the specified time and
+  place.</li>
+</ul>
+<h2 id="global_options_that_affect_departure">Global options that affect Departure<a class="headerlink" href="#global_options_that_affect_departure" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>--random-depart-offset</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>: randomly delays departure time for all vehicles</li>
+<li><strong>--max-num-vehicles</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>: limits the total amount of vehicles that may exist in the network.
+  Setting this may cause delayed insertion</li>
+<li><strong>--max-depart-delay</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>: removes vehicles from the insertion queue after a set amount of
+  time</li>
+<li><strong>--eager-insert</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a>: tries to insert all vehicles that are insertion-delayed on each
+  edge. By default, insertion on an edge stops after the first failure
+  in each time step</li>
+<li><strong>--step-length</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a>: the frequency of insertion attempts can be raised and also the number of possible headways (for a fixed departPos) is increased by setting a lower step-length.</li>
+<li><strong>--extrapolate-departpos</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a>: Moves the default depart position of a vehicle downstream if it's departure time is a fraction of the simulation step-length. The offset in depart position is proportional to the depart delay from step-length discretization.</li>
+</ul>
+<h1 id="miscellaneous">Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permanent link">#</a></h1>
+<ul>
+<li>For tips on how to achieve high insertion flows see <a href="../FAQ.html#how_do_i_get_high_flowsvehicle_densities">the
+  FAQ</a></li>
+<li>Vehicles can also be inserted through the use of
+  <a href="Calibrator.html">calibrators</a></li>
+<li>Vehicle rerouting may be triggered even before departure <a href="../Demand/Automatic_Routing.html">when using
+  device.rerouting</a></li>
+<li>The departure edge can be determined at run-time when using <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#traffic_assignement_zones_taz">Traffic
+  Assignment Zones
+  (TAZ)</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

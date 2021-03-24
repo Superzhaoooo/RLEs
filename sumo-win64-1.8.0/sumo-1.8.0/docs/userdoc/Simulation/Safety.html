@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Safety.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Simulation/Safety - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Safety.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#collisions">Collisions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#deliberately_causing_collisions" class="nav-link">• Deliberately causing collisions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#collisions_during_car-following" class="nav-link">&rarr; Collisions during car-following</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#collisions_related_to_lane-changing" class="nav-link">&rarr; Collisions related to lane-changing</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#collisions_at_intersections" class="nav-link">&rarr; Collisions at Intersections</a>
+                </li>
+            <li class="nav-item main"><a href="#reaction_times">Reaction Times</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#simulation_step_length" class="nav-link">• Simulation Step Length</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#action_step_length" class="nav-link">• Action Step Length</a>
+                </li>
+            <li class="nav-item main"><a href="#safety-related_parameters">Safety-related parameters</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#car-following_model" class="nav-link">• car-following model</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lane-changing_model" class="nav-link">• Lane-Changing Model</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#junction_model" class="nav-link">• Junction Model</a>
+                </li>
+            <li class="nav-item main"><a href="#safety-related_outputs">Safety-Related Outputs</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Safety<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="collisions">Collisions<a class="headerlink" href="#collisions" title="Permanent link">#</a></h1>
+<p><a href="../sumo.html">sumo</a> tracks gaps between vehicles that are on the
+same edge either fully or partially. By default, whenever these gaps are
+reduced to below a vehicles <em>minGap</em> a collision is registered (default
+2.5m). This (potentially) surprising behavior is used to detect issues
+with the default car-following model that is supposed to never reduce
+the gap below the minGap. By setting the option <strong>--collision.mingap-factor</strong> this threshold can be
+reduced. When setting <strong>--collision.mingap-factor 0</strong>, only <em>physical collisions</em> (i.e. front and back
+bumper meet or overlap) are registered.</p>
+<p>When setting the option <strong>--collisions.check-junctions</strong>, collisions between vehicles on the same
+intersection are also checked by detecting overlap of the vehicles
+shapes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Junction collisions are never registered on junctions of type <em>unregulated</em>.</p>
+</div>
+<p>The consequence of a collision is configured using the option <strong>--collision.action</strong> using one
+of the following keywords:</p>
+<ul>
+<li><strong>teleport</strong>: (the default): the follower vehicle is moved
+  (teleported) to the next edge on its route</li>
+<li><strong>warn</strong>: a warning is issued</li>
+<li><strong>none</strong>: no action is taken</li>
+<li><strong>remove</strong>: both vehicles are removed from the simulation</li>
+</ul>
+<p>Additionally there is the possibility of stopping vehicles for a fixed
+time before the <em>collision action</em> takes place. This allows for pile-ups
+and traffic disturbance. To enable stopping, the option <strong>--collision.stoptime</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a> must be set
+with the stopping time in seconds.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The pedestrian model <em>striping</em> detects collisions between pedestrians. This only serves to detect issues with the model.</p>
+</div>
+<h2 id="deliberately_causing_collisions">Deliberately causing collisions<a class="headerlink" href="#deliberately_causing_collisions" title="Permanent link">#</a></h2>
+<p>To force collisions at a set time, TraCI must be used. Besides setting
+the speed, it is also necessary to disable safety checks using <a href="../TraCI/Change_Vehicle_State.html">the
+commands speedMode and
+laneChangeMode</a>.</p>
+<h3 id="collisions_during_car-following">Collisions during car-following<a class="headerlink" href="#collisions_during_car-following" title="Permanent link">#</a></h3>
+<p>Rear-end collisiosn during normal driving may be caused by any of the following:</p>
+<ul>
+<li>vehicles with a value of <em>tau</em> that is lower than the simulation step
+size (default 1s) when using the default Krauss model.</li>
+<li>vehicles with a value of <em>tau</em> that is lower than their <em>actionStepLength</em></li>
+<li>vehicles with an <em>apparentDecel</em> parameter that is lower than their <em>decel</em> parameter (causing other drivers to misjudge their deceleration capabilities)</li>
+<li><a href="../Driver_State.html">driver imperfection modelled with the
+  <em>driverstate</em>-device</a></li>
+</ul>
+<h3 id="collisions_related_to_lane-changing">Collisions related to lane-changing<a class="headerlink" href="#collisions_related_to_lane-changing" title="Permanent link">#</a></h3>
+<p>Collisions from lane-changing can be caused by unsafe lateral movements (side collisions) and by changing lanes in a way that creates unsafe following situations (rear-end collisions).</p>
+<p>Side collosions can be caused by
+- configuring lateral imperfection with vType parameter <em>lcSigma</em>
+- allowing lateral encroachment with vType parameter <em>lcPushy</em> (but this parameter itself will not cause collisions, only reduce lateral gaps in some situations, requires the sublane model)
+- <em>lcImpatience</em> (growing impatience permits lower lateral gaps when using the sublane model)</p>
+<p>Unsafe changing can be caused by configuringlower gap acceptance with parameter
+- <em>lcAssertive</em> (the acceptable gap is computed by dividing the safe gap by lcAssertive)</p>
+<h3 id="collisions_at_intersections">Collisions at Intersections<a class="headerlink" href="#collisions_at_intersections" title="Permanent link">#</a></h3>
+<p>Collisions at intersections may be caused by any of the following:</p>
+<ul>
+<li>Unsafe <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#junction_model_parameters">junction model
+parameters</a><ul>
+<li><em>jmDriveAfterRedTime</em> > 0 (ignoring a red light)</li>
+<li><em>jmIgnoreFoeProb</em> and <em>jmIgnoreFoeSpeed</em> (ignore foes below the
+  given speed with the given probability)</li>
+<li><em>jmTimegapMinor</em> &lt; 1 (safety time gap when passing an
+  intersection without priority)</li>
+</ul>
+</li>
+<li>yellow phases which are too short in relation to the vehicle speed
+(giving insufficient time to come to a stop). By default this causes
+strong braking (<em>Warning: emergency braking</em>) potentially followed
+by rear-end collisions</li>
+<li>Green phases that allow conflicting streams to drive at the same
+time. Collision beyond the intersection due to this are always
+detected but collisions on the intersection are only registered when
+setting the option <strong>--collision.check-junctions</strong>.</li>
+<li>If all <a href="../Networks/PlainXML.html#multiple_connections_from_the_same_edge_to_the_same_target_lane">Double
+connections</a>
+at an edge are configured with <code>pass="true"</code></li>
+<li>If connections from the minor road of a priority junction are
+configured with <code>pass="true"</code></li>
+<li><a href="../Driver_State.html">Imperfect driver behavior</a></li>
+</ul>
+<p>To simulate the <strong>effects</strong> of an accident see
+<a href="../FAQ.html#how_to_simulate_an_accident">FAQ#How_to_simulate_an_accident</a>.</p>
+<h1 id="reaction_times">Reaction Times<a class="headerlink" href="#reaction_times" title="Permanent link">#</a></h1>
+<p>In Reality, drivers take actions with some delay in regard to the
+evolving traffic situation. This reaction time is modelled in the
+simulation in various ways. Reaction time should not be confused with
+the <strong>tau</strong> parameter as this models the <em>desired</em> time headway. Keeping
+sufficient headway is necessary for safe driving with delayed reaction.
+However, this headway can be set independently of the actual reaction
+time.</p>
+<h2 id="simulation_step_length">Simulation Step Length<a class="headerlink" href="#simulation_step_length" title="Permanent link">#</a></h2>
+<p>All simulation vehicles select their speed simultaneously with regard to
+the traffic state from the previous simulation step. This means, there
+is at least a reaction time of the simulation step-length.</p>
+<p>In contrast, lane-changing within an edge happens sequentially (in the
+upstream direction) within each step . Consequently, two vehicles that
+are driving almost parallel on a 3-lane road may both change their lanes
+in parallel within a single simulation step because the vehicle further
+behind already takes into account the lateral movement of the vehicle
+ahead.</p>
+<h2 id="action_step_length">Action Step Length<a class="headerlink" href="#action_step_length" title="Permanent link">#</a></h2>
+<p>By default, vehicles recompute their speed and lane-changing decisions
+every simulation step. When running with sub-second time resolution (i.e.
+<strong>--step-length 0.1</strong>), this also gives very low effective reaction times.</p>
+<p>To decouple the decision interval from the simulation step length, the
+vehicle <em>action-step-length</em> can be defined as the duration between
+subsequent vehicle decisions. Decision-making starts directly after
+insertion which means vehicles inserted at different times may take
+decisions during different simulation steps. During simulation steps
+without decision-making, vehicle positions are updated according to the
+previously computed acceleration. Lateral dynamics (when using the
+sublane model) use a dynamic acceleration curve that to complete the
+current lateral driving manoeuvre.</p>
+<p>The action step length can be defined in any of the following ways:</p>
+<ul>
+<li>setting the option <strong>default.action-step-length</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> which sets the default action step length for
+  all vehicles</li>
+<li>setting the <code>&lt;vType&gt;</code> attribute <em>actionStepLength</em></li>
+<li>
+<p>calling <em>traci.vehicle.setActionStepLength</em></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the action step length must be a multiple of the simulation step length.</p>
+</div>
+</li>
+</ul>
+<h1 id="safety-related_parameters">Safety-related parameters<a class="headerlink" href="#safety-related_parameters" title="Permanent link">#</a></h1>
+<p>Simulation of unsafe behavior is a developing subject. Expect model
+additions and extensions. The following <a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types">vehicle type
+parameters</a>
+are safety related:</p>
+<h2 id="car-following_model">car-following model<a class="headerlink" href="#car-following_model" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>speedFactor</strong>: higher value causes speeding (driving above the
+  speed limit)</li>
+<li><strong>accel</strong>, <strong>decel</strong>: higher values lead to abrupt speed changes</li>
+<li><strong>tau</strong>: lower values lead to reduced gaps to the leader vehicle.
+  When setting tau lower than the simulation <strong>--step-length</strong> parameter (default 1s),
+  resp. the vehicle's action step length (<strong>--default.action-step-length</strong> or vehicle parameter
+  <code>actionStepLength</code>), collisions may occur</li>
+<li><strong>emergencyDecel</strong>: this is the maximum deceleration a vehicle can
+  take to avoid an accident. By default this takes the same value as
+  <strong>decel</strong></li>
+<li><strong>apparentDecel</strong>: this is the deceleration value that will be
+  assumed by other vehicles of the configured vehicle. By default this
+  takes the same value as <strong>decel</strong></li>
+<li><a href="../Driver_State.html">driver imperfection modelled with the
+  <em>driverstate</em>-device</a></li>
+</ul>
+<h2 id="lane-changing_model">Lane-Changing Model<a class="headerlink" href="#lane-changing_model" title="Permanent link">#</a></h2>
+<ul>
+<li>lcCooperative: lower values cause less cooperation during lane
+  changing</li>
+<li>lcSpeedGain: higher values cause more overtaking for speed</li>
+<li>lcKeepRight: lower values cause less driving on the right</li>
+<li>lcPushy: setting this to values between 0 and 1 causes aggressive
+  lateral encroachment (only when using the <a href="SublaneModel.html">Sublane
+  Model</a>)</li>
+<li>lcImpatience: Repeated failure to change lanes causes lower lateral gaps to be accepted when using the sublane model</li>
+<li>lcAssertive: setting this values above 1 cause acceptance of smaller
+  longitudinal gaps in proportion to driver impatience(only when using
+  the <a href="SublaneModel.html">Sublane Model</a>)</li>
+<li>lcSigma: models random lateral variations (lane keeping imperfection)</li>
+</ul>
+<h2 id="junction_model">Junction Model<a class="headerlink" href="#junction_model" title="Permanent link">#</a></h2>
+<p>There are further parameters which affect safety-related junction
+behavior. For a description see
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#junction_model_parameters">Definition_of_Vehicles,_Vehicle_Types,_and_Routes#Junction_Model_Parameters</a>.</p>
+<ul>
+<li>impatience: higher values lead to acceptance of smaller time gaps at
+  intersections. These are still safe in the sense of collision
+  avoidance.</li>
+<li>jmCrossingGap: lower values lead to more aggressive driving at
+  pedestrian intersections (safe)</li>
+<li>jmDriveAfterRedTime: Violate red lights some time after the switch
+  (safety decreases with growing values)</li>
+<li>jmDriveRedSpeed: Speed when violating red lights (higher values
+  decrease safety)</li>
+<li>jmIgnoreFoeProb: Probability to ignore foes with right-of-way
+  (higher values decrease safety)</li>
+<li>jmIgnoreFoeSpeed: Foe speed threshold which prevents fast vehicles
+  from being ignored (Higher values decrease safety)</li>
+<li>jmSigmaMinor: When planning to pass a minor link, optimum
+  acceleration is assumed. (higher values cause reduced acceleration
+  and thus decrease time gaps and safety)</li>
+<li>jmTimegapMinor: Minimum time gap when passing a minor link ahead of
+  a prioritzed vehicle (lower values decrease safety)</li>
+</ul>
+<h1 id="safety-related_outputs">Safety-Related Outputs<a class="headerlink" href="#safety-related_outputs" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="Output/SSM_Device.html">Surrogate Safety Measures (SSM)</a>
+  (headway, brake rates, time to collision etc.)</li>
+<li>The <a href="Output/Instantaneous_Induction_Loops_Detectors.html">Instant Induction
+  Loop</a>
+  output records the <em>gap</em> attribute which gives the time gap between
+  successive vehicles with sub-second precision.</li>
+<li>The <a href="Output/Lanechange.html">Lanechange output</a>
+  generates a record of all lane-changes that take place in the
+  simulation. It includes the longitudinal gap to the leader and
+  follower vehicle on the target lane (both the actual gap and the one
+  that would have been required to ensure stringent deceleration
+  bounds under all circumstances). When using the <a href="SublaneModel.html">sublane
+  model</a>, the attribute <em>latGap</em>
+  records the lateral gap to the neighboring vehicle in the direction
+  of the change if such a vehicle exists.</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 01 December 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

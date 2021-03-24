@@ -1,0 +1,17 @@
+%description:
+test scheduleAt(): what if message is already scheduled
+
+%activity:
+wait(1);
+
+cMessage *msg = new cMessage("one");
+
+scheduleAt(2,msg);
+scheduleAt(3,msg);
+
+%exitcode: 1
+
+%subst: /omnetpp:://
+%contains-regex: stderr
+scheduleAt\(\): Message \(cMessage\)one is currently scheduled
+

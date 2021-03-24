@@ -1,0 +1,13 @@
+# Package Information for pkg-config
+
+prefix=/mingw64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: freexl
+Description: a simple library extracting data from .xls (Excel BIFF) files
+Version: 1.0.2
+Libs: -L${libdir} -lfreexl -lm
+Libs.private: -liconv
+Cflags: -I${includedir} 

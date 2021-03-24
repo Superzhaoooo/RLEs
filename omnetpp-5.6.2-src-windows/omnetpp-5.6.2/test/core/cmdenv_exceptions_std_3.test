@@ -1,0 +1,39 @@
+%description:
+Tests that errors in handleMessage() are properly caught and displayed in Cmdenv,
+and finish() doesn't get called.
+
+%module: Module
+
+class Module : public cSimpleModule
+{
+  public:
+    virtual void initialize() override;
+    virtual void handleMessage(cMessage *msg) override;
+    virtual void finish() override;
+};
+
+Define_Module(Module);
+
+void Module::initialize()
+{
+    scheduleAt(1.0, new cMessage("msg"));
+}
+
+void Module::handleMessage(cMessage *msg)
+{
+    throw std::runtime_error("something bad happened");
+}
+
+void Module::finish()
+{
+    EV << "finish called\n";
+}
+
+%exitcode: 1
+
+%contains-regex: stderr
+std::runtime_error: something bad happened
+
+%not-contains: stdout
+finish called
+

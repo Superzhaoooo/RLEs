@@ -1,0 +1,36 @@
+%NAME%
+zip
+
+%VERSION%
+3.0-1
+
+%DESC%
+Creates PKZIP-compatible .zip files
+
+%URL%
+http://www.info-zip.org/Zip.html
+
+%ARCH%
+x86_64
+
+%BUILDDATE%
+1384701488
+
+%INSTALLDATE%
+1470402381
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+465920
+
+%LICENSE%
+BSD
+
+%VALIDATION%
+pgp
+
+%DEPENDS%
+libbz2
+

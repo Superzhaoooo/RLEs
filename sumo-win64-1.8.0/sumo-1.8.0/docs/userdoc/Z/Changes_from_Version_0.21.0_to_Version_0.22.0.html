@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Z/Changes_from_Version_0.21.0_to_Version_0.22.0.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Z/Changes from Version 0.21.0 to Version 0.22.0 - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Z/Changes_from_Version_0.21.0_to_Version_0.22.0.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#version_0220_11112014">Version 0.22.0 (11.11.2014)</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#bugfixes" class="nav-link">• Bugfixes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#enhancements" class="nav-link">• Enhancements</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#other" class="nav-link">• Other</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Z/Changes from Version 0.21.0 to Version 0.22.0<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="version_0220_11112014">Version 0.22.0 (11.11.2014)<a class="headerlink" href="#version_0220_11112014" title="Permanent link">#</a></h2>
+<h3 id="bugfixes">Bugfixes<a class="headerlink" href="#bugfixes" title="Permanent link">#</a></h3>
+<ul>
+<li>Simulation<ul>
+<li>Vehicles with <code>departspeed="max"</code> now properly adapt their speed to vehicles ahead
+      at insertion. This results in higher flows.</li>
+<li>Teleporting vehicles will only be inserted if they fit fully
+      onto the destination lane.</li>
+<li>Fixed some inconsistencies in E3-Detector output (see <a href="../Simulation/Output/Multi-Entry-Exit_Detectors_(E3).html#further_notes">E3 Further_Notes</a>).</li>
+<li>Flows using attribute <code>probability</code> now correctly terminate when attribute <code>end</code> is given.</li>
+<li>Fixed several bugs for traffic lights of type <code>actuated</code>.</li>
+<li>Pedestrians using the model <code>striping</code> now always respect attribute <code>arrivalPos</code></li>
+<li>Fixed crash when computing pedestrians positions on short
+      walkingAreas.</li>
+<li>Fixed crash when using car following model <code>&lt;carFollowing-IDM/&gt;</code></li>
+<li>Fixed bug that was causing collisions at intersections.</li>
+<li>Fixed bug that was causing collisions due to unsafe
+      lane-changing decisions.</li>
+<li>Fixed bug that was causing collisions due to unsafe insertion.</li>
+<li>Fixed bug that was causing collisions due to unsafe re-insertion
+      after teleporting.</li>
+<li>Fixed bug that was causing <em>silent</em> collisions between vehicles
+      on different edges. Previously this type of collision was not
+      reported but visible in the gui.</li>
+<li>Fixed bug that sometimes lead to inferior lane-change decisions
+      in networks with vehicle class restrictions.</li>
+<li>Fixed bugs that sometimes prevented vehicles from being inserted
+      at the earliest opportunity.</li>
+<li>Fixed bug that prevented vehicles from being inserted when their <code>departSpeed</code> was close to their <code>maximumSpeed</code> and using car following model <code>&lt;carFollowing-IDM/&gt;</code>.</li>
+<li>Fixed bug that was causing unnecessary lane changes leading to
+      oscillations.</li>
+<li>Fixed bug that was degrading the cooperation between vehicles
+      during lane changing.</li>
+<li>Flows now always insert at least 1 vehicle for any positive
+      repetition period (if the simulation time reaches the <code>begin</code>-time).</li>
+<li>Fixed position caching which caused wrong positions and angles
+      after lane changes <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/143" title="GitHub Issue eclipse/sumo #143">#143</a></li>
+<li>Fixed Bluetooth reentry see <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1455" title="GitHub Issue eclipse/sumo #1455">#1455</a></li>
+<li>Fixed the usage of different random number generators for route
+      file parsing and vehicle movement</li>
+<li>Fixed rerouting close to junctions</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>sumo-gui<ul>
+<li>Single-stepping the simulation with hotkey (<em>Ctrl-D</em>) is now
+      working as smoothly as intended.</li>
+<li>Changing simulation delay via mousewheel now works when the
+      pointer is on top of the dial.</li>
+<li>Vehicle coloring <em>by acceleration</em>, <em>by time gap</em> and <em>by offset
+      from best lane</em> now correctly visualize negative values</li>
+<li>Persons which are waiting or riding in a a vehicle now face the
+      correct direction.</li>
+<li>Fixed crash related to parking vehicles.</li>
+<li>Corrected angle of parking vehicles.</li>
+<li>Fixed bug where train carriages were drawn incorrectly.</li>
+<li>The drawing size of laneAreaDetectors can now be scaled
+      properly.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>netconvert<ul>
+<li>Street-sign-output now references the correct xsd file.</li>
+<li>warnings are emitted if no proj support is available and
+      projection is needed</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>duarouter<ul>
+<li>Fixed crash when using options <strong>--repair</strong> and <strong>--ignore-errors</strong>.</li>
+<li>Fixed crash when using option <strong>--remove-loops</strong>.</li>
+<li>When using option <strong>--remove-loops</strong> the non-looping parts of the route are now
+      kept unchanged as intended.</li>
+<li>Progress indicator is now only shown if the <strong>--end</strong> option is used.</li>
+<li>Fixed crash when loading <code>&lt;flow&gt;</code> with attribute <code>probability</code>.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>TraCI<ul>
+<li>Fixed crash when retrieving vehicle variable best lanes (id
+      0xb2) while the vehicle is on an internal lane.</li>
+<li>The command induction loop value (<a href="../TraCI/Lane_Area_Detector_Value_Retrieval.html">last step vehicle data Command_0x17</a>))
+      now returns the value <strong>-1</strong> for the <em>leaveTime</em> of a vehicle
+      which has not yet left the detector (instead of returning the
+      current time step as before).</li>
+<li>Fixing connection retries in the python client</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Misc<ul>
+<li>Fixed includes to speed up compilation</li>
+</ul>
+</li>
+</ul>
+<h3 id="enhancements">Enhancements<a class="headerlink" href="#enhancements" title="Permanent link">#</a></h3>
+<ul>
+<li>Simulation<ul>
+<li>Whenever rerouting vehicles, a new route is only recorded when
+      it differs from the previous route.</li>
+<li>tripinfo-output now includes attribute <code>timeLoss</code> which holds the time
+      loss compared to the maximum driving speed.</li>
+<li>Added option <strong>--tripinfo-output.write-unfinished</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a>. When this is set, tripinfo output will
+      additionally be written for all vehicles that did not arrive at
+      the end of the simulation.</li>
+<li>Vehicles with the attribute <code>departLane="free"</code> now consider the free space on all
+      candidate lanes instead of the number of vehicles. This results
+      in higher flow.</li>
+<li>Added a new departLane-value named <code>departLane="first"</code> where vehicles are inserted
+      on the rightmost lane they are allowed to use; this is the new
+      default insertion lane</li>
+<li>Now supports parallel routing by using the option <strong>--device.rerouting.threads</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></li>
+<li>Added new routing algorithms 'astar' and 'CH' which are faster
+      than the default 'dijkstra' algorithm.</li>
+<li><code>flow</code> elements with attributes <code>from</code> and <code>to</code> can now be loaded directly in the
+      simulation and will automatically be routed according to the
+      current traveltimes at <code>begin</code>.</li>
+<li>Invalid stops now generate better error messages, see <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1458" title="GitHub Issue eclipse/sumo #1458">#1458</a></li>
+<li>Added option <strong>--vehroute-output.intended-depart</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;BOOL&gt;</em></a>. This allows to generate vehicle route files which
+      reproduce the original behavior when using one shot routing. <a class="gh-link gh-issue" href="https://github.com/eclipse/sumo/issues/1429" title="GitHub Issue eclipse/sumo #1429">#1429</a></li>
+<li>Added option <strong>--weights.random-factor</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> to disturb edge weights when routing in the
+      simulation. This allows modelling imperfect information, helps
+      to avoid biases when multiple routes have the same length (i.e.
+      in grid networks) and may be used to prevent jams on a single
+      shortest path.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>sumo-gui<ul>
+<li>Now appending <em>.xml</em> suffix when saving viewport, view settings
+      or decals</li>
+<li>Added lane coloring <em>by loaded weights</em>. This colors by whatever
+      attribute was set with option <strong>--weight-attribute</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a>. The weight value is also shown
+      in the parameter dialog.</li>
+<li>Added lane coloring <em>by priority</em>. This uses the edge priorities
+      used during network creation. The priority value is also shown
+      in the parameter dialog.</li>
+<li>Added junction coloring <em>by type</em>.</li>
+<li>Added visualization options for drawing vehicles, persons, POIs,
+      polygons and additional gui objects with constant size when
+      zooming out.</li>
+<li>The dialog for changing visualization settings is now resizable
+      and will remember its size across application runs. All settings
+      are now scrollable to allow work on smaller screens.</li>
+<li>The attributes which can be used to customize lane colors can
+      now also be used to scale their width. This is done in the view
+      customization dialog unter 'Streets' -> 'Scale width'. See
+      <a href="http://sumo-sim.org/blog/wp-content/uploads/2014/08/scaling_by_speed-300x281.png">[1]</a>.</li>
+<li>Vehicle coloring <em>by time since lane change</em> now indicates the
+      direction of the change by its color</li>
+<li>Added new link state 'u' to encode red-yellow phase (shown as
+      orange). Vehicles behave as if 'r' (red) was set. This linkstate
+      may be used to indicates upcoming green phase according to
+      <a href="https://de.wikipedia.org/wiki/Richtlinien_f%C3%BCr_Lichtsignalanlagen">RiLSA</a>.</li>
+<li>Lane coloring by speed now uses more colors (the same as vehicle
+      coloring by speed).</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>netconvert<ul>
+<li>Roundabouts can now be specified via <a href="../Networks/PlainXML.html#roundabouts">plain-xml input</a>.
+      They are also written to the <em>.edg.xml</em>-file when using option <strong>--plain-output-prefix</strong>.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>duarouter<ul>
+<li>Now supports parallel routing by using the option <strong>--routing-threads</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a></li>
+<li>Added new routing algorithms 'astar' and 'CH' which are faster
+      than the default 'dijkstra' algorithm.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>jtrrouter<ul>
+<li>Routes which loop back on themselves are no longer generated by
+      default (can be enabled using option <strong>--allow-loops</strong>).</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>TraCI<ul>
+<li>added method <em>vehicle.setSpeedMode()</em> to the python API
+      (<a href="../TraCI/Change_Vehicle_State.html">Command 0x3b</a>).</li>
+<li>added method <em>areal.getLastVehicleIDs()</em> to the python API
+      (<a href="../TraCI/Lane_Area_Detector_Value_Retrieval.html">Command_0x12</a>).</li>
+<li>added argument <em>extended</em> to method <em>lane.getLinks()</em> in the
+      python API (default <em>False</em>). If it is set to <em>True</em>, the method
+      returns all the information defined for
+      (<a href="../TraCI/Lane_Value_Retrieval.html">Command_0x33</a>)
+      instead of a subset.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Tools<ul>
+<li>Added <a href="../Tools/Trip.html#randomtripspy">randomTrips.py</a>
+      option <strong>--weights-output-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a> to generate weight files which can be used to visualize
+      the edge probabilities for being source/destination/via in
+      <a href="../sumo-gui.html">sumo-gui</a>.</li>
+<li>Added <a href="../Tools/Trip.html#randomtripspy">randomTrips.py</a>
+      option <strong>--weights-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a> which allows loading edge probabilities for being
+      source/destination/via. The file format is the same as for
+      option <strong>--weights-output-prefix</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;STRING&gt;</em></a> with missing edges defaulting to probability 0 and
+      missing files defaulting to normal randomization.</li>
+<li>Added <a href="../Tools/Assign.html#dua-iteratepy">dua-iterate.py</a>
+      option <strong>--zip</strong> to zip old iteration outputs using 7-zip</li>
+<li>Added script <a href="../Tools/Import/OSM.html#serverpy">server.py</a>
+      for "three-click" scenario generation (thanks to Jakob
+      Stigloher)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="../marouter.html">marouter</a><ul>
+<li>Added new router which reads trips and writes routes by computing a macroscopic user assignment.</li>
+</ul>
+</li>
+</ul>
+<h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">#</a></h3>
+<ul>
+<li>Web presence moved to sumo.dlr.de (wiki at sumo.dlr.de/wiki, trac at
+    sumo.dlr.de/trac)</li>
+</ul>
+<ul>
+<li>Documentation<ul>
+<li>Added <a href="../netconvert.html#warnings_during_import">description of generic netconvert warnings</a>.</li>
+<li>Added <a href="../Networks/Import/OpenStreetMap.html#warnings_during_import">description of OSM-specific netconvert warnings</a>.</li>
+<li>Added <a href="../Installing/Windows_Build.html#available_builds">description of Windows build configurations</a>.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>duarouter<ul>
+<li>Now issuing warnings about repaired routes.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>sumo-gui<ul>
+<li>Tweaked right-of-way colors for types <em>stop</em> and <em>allway_stop</em>.
+      <a href="../sumo-gui.html#right_of_way">All colors are now documented.</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Misc<ul>
+<li>The version string for each application now includes the flag
+      'D' for the debug-build and flag 'I' for the internal build</li>
+<li>The traceExporter.py script moved from <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools/bin to <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools</li>
+<li>unittest compilation is automatically enabled when gtest is
+      found (Linux only)</li>
+</ul>
+</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

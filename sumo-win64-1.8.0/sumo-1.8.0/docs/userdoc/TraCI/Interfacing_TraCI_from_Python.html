@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/TraCI/Interfacing_TraCI_from_Python.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>TraCI/Interfacing TraCI from Python - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/TraCI/Interfacing_TraCI_from_Python.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#importing_traci_in_a_script">importing traci in a script</a></li>
+            <li class="nav-item main"><a href="#first_steps">First Steps</a></li>
+            <li class="nav-item main"><a href="#subscriptions">Subscriptions</a></li>
+            <li class="nav-item main"><a href="#context_subscriptions">Context Subscriptions</a></li>
+            <li class="nav-item main"><a href="#context_subscription_filters">Context Subscription Filters</a></li>
+            <li class="nav-item main"><a href="#adding_a_steplistener">Adding a StepListener</a></li>
+            <li class="nav-item main"><a href="#controlling_parallel_simulations_from_the_same_traci_script">Controlling parallel simulations from the same TraCI script</a></li>
+            <li class="nav-item main"><a href="#controlling_the_same_simulation_from_multiple_clients">Controlling the same simulation from multiple clients</a></li>
+            <li class="nav-item main"><a href="#embedded_python">Embedded Python</a></li>
+            <li class="nav-item main"><a href="#additional_functions">Additional Functions</a></li>
+            <li class="nav-item main"><a href="#pitfalls_and_solutions">Pitfalls and Solutions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#determine_the_traci_library_being_loaded" class="nav-link">• Determine the traci library being loaded</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#debugging_a_traci_session_on_linux" class="nav-link">• Debugging a TraCI session on Linux</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#generating_a_log_of_all_traci_commands" class="nav-link">• Generating a log of all traci commands</a>
+                </li>
+            <li class="nav-item main"><a href="#usage_examples">Usage Examples</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#run_a_simulation_until_all_vehicles_have_arrived" class="nav-link">• Run a simulation until all vehicles have arrived</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#add_trips_incomplete_routes_dynamically" class="nav-link">• Add trips (incomplete routes) dynamically</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#coordinate_transformations" class="nav-link">• coordinate transformations</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#retrieve_the_timeloss_for_all_vehicles_currently_in_the_network" class="nav-link">• Retrieve the timeLoss for all vehicles currently in the network</a>
+                </li>
+            <li class="nav-item main"><a href="#further_resources">Further Resources</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>TraCI/Interfacing TraCI from Python<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>The <a href="../TraCI.html#traci_commands">TraCI</a> commands are split into the
+13 domains gui, lane, poi, simulation, trafficlight, vehicletype, edge,
+inductionloop, junction, multientryexit, polygon, route, person and
+vehicle, which correspond to individual modules. For a detailed list of
+available functions see the <a href="https://sumo.dlr.de/pydoc/traci.html">pydoc generated documentation</a>. The source code
+can be found at
+<a href="https://github.com/eclipse/sumo/tree/master/tools/traci">[1]</a></p>
+<h2 id="importing_traci_in_a_script">importing <strong>traci</strong> in a script<a class="headerlink" href="#importing_traci_in_a_script" title="Permanent link">#</a></h2>
+<p>To use the library, the <strong><em>&lt;SUMO_HOME&gt;</em></strong>/tools directory must be on the python load
+path. This is typically done with a stanza like this:</p>
+<pre><code> import os, sys
+ if 'SUMO_HOME' in os.environ:
+     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
+     sys.path.append(tools)
+ else:
+     sys.exit(&quot;please declare environment variable 'SUMO_HOME'&quot;)
+</code></pre>
+
+<p>This assumes that the <a href="../Basics/Basic_Computer_Skills.html#additional_environment_variables">environment variable
+<strong>SUMO_HOME</strong></a>
+is set before running the script. Alternatively, you can declare the
+path to <em>sumo/tools</em> directly as in the line</p>
+<pre><code>sys.path.append(os.path.join('c:', os.sep, 'whatever', 'path', 'to', 'sumo', 'tools'))
+</code></pre>
+
+<h2 id="first_steps">First Steps<a class="headerlink" href="#first_steps" title="Permanent link">#</a></h2>
+<p>In general it is very easy to interface with SUMO from Python (the
+following example is a modification of
+<a href="../Tutorials/TraCI4Traffic_Lights.html">tutorial/traci_tls</a>):</p>
+<p>First you compose the command line to start either
+<a href="../sumo.html">sumo</a> or <a href="../sumo-gui.html">sumo-gui</a> (leaving out
+the option  which was needed before 0.28.0):</p>
+<pre><code>sumoBinary = &quot;/path/to/sumo-gui&quot;
+sumoCmd = [sumoBinary, &quot;-c&quot;, &quot;yourConfiguration.sumocfg&quot;]
+</code></pre>
+
+<p>Then you start the simulation and connect to it with your script:</p>
+<pre><code>import traci
+traci.start(sumoCmd)
+step = 0
+while step &lt; 1000:
+   traci.simulationStep()
+   if traci.inductionloop.getLastStepVehicleNumber(&quot;0&quot;) &gt; 0:
+       traci.trafficlight.setRedYellowGreenState(&quot;0&quot;, &quot;GrGr&quot;)
+   step += 1
+
+traci.close()
+</code></pre>
+
+<p>After connecting to the simulation, you can emit various commands and
+execute simulation steps until you want to finish by closing the
+connection. by default the close command will wait until the sumo
+process really finishes. You can disable this by calling</p>
+<pre><code>traci.close(False)
+</code></pre>
+
+<h2 id="subscriptions">Subscriptions<a class="headerlink" href="#subscriptions" title="Permanent link">#</a></h2>
+<p>Subscriptions can be thought of as a batch mode for retrieving
+variables. Instead of asking for the same variables over and over again,
+you can retrieve the values of interest automatically after each time
+step. TraCI subscriptions are handled on a per module basis. That is you
+can ask the module for the result of all current subscriptions after
+each time step. In order to subscribe for variables you need to know
+their variable ids which can be looked up in the traci/constants.py
+file.</p>
+<pre><code>import traci
+import traci.constants as tc
+
+traci.start([&quot;sumo&quot;, &quot;-c&quot;, &quot;my.sumocfg&quot;])
+traci.vehicle.subscribe(vehID, (tc.VAR_ROAD_ID, tc.VAR_LANEPOSITION))
+print(traci.vehicle.getSubscriptionResults(vehID))
+for step in range(3):
+   print(&quot;step&quot;, step)
+   traci.simulationStep()
+   print(traci.vehicle.getSubscriptionResults(vehID))
+traci.close()
+</code></pre>
+
+<p>The values retrieved are always the ones from the last time step, it is
+not possible to retrieve older values.</p>
+<h2 id="context_subscriptions">Context Subscriptions<a class="headerlink" href="#context_subscriptions" title="Permanent link">#</a></h2>
+<p>Context subscriptions work like subscriptions in that they retrieve a
+list of variables automatically for every simulation stop. However, the
+do so by setting a reference object and a range and then retrieving
+variables for all objects of a given type within range of the reference
+object.</p>
+<p>TraCI context subscriptions are handled on a per module basis. That is
+you can ask the module for the result of all current subscriptions after
+each time step. In order to subscribe for variables you need to the
+domain id of the objects that shall be retrieved and the variable ids
+which can be looked up in the traci/constants.py file. The domain id
+always has the form CMD_GET_&lt;DOMAIN>_VARIABLE. The following code
+retrieves all vehicle speeds and waiting times within range (42m) of a
+junction (the vehicle ids are retrieved implicitly).</p>
+<pre><code>import traci
+import traci.constants as tc
+
+traci.start([&quot;sumo&quot;, &quot;-c&quot;, &quot;my.sumocfg&quot;])
+traci.junction.subscribeContext(junctionID, tc.CMD_GET_VEHICLE_VARIABLE, 42, [tc.VAR_SPEED, tc.VAR_WAITING_TIME])
+print(traci.junction.getContextSubscriptionResults(junctionID))
+for step in range(3):
+   print(&quot;step&quot;, step)
+   traci.simulationStep()
+   print(traci.junction.getContextSubscriptionResults(junctionID))
+traci.close()
+</code></pre>
+
+<p>The values retrieved are always the ones from the last time step, it is
+not possible to retrieve older values.</p>
+<h2 id="context_subscription_filters">Context Subscription Filters<a class="headerlink" href="#context_subscription_filters" title="Permanent link">#</a></h2>
+<p>For vehicle-to-vehicle context subscriptions (i.e., context
+subscriptions, whose reference object is a vehicle and whose requested
+context objects are vehicles as well) it is possible to request
+additional filters to be applied already on the server side. The general
+procedure is to equip a requested context subscription with the filter
+directly after the call to <code>subscribeContext()</code> by a successive call to
+<code>addSubscriptionFilter&lt;FILTER_ID&gt;()</code> as for instance in the following
+snippet:</p>
+<pre><code>traci.vehicle.subscribeContext(&quot;ego&quot;, tc.CMD_GET_VEHICLE_VARIABLE, 0.0, [tc.VAR_SPEED])
+traci.vehicle.addSubscriptionFilterLanes(lanes, noOpposite=True, downstreamDist=100, upstreamDist=50)
+</code></pre>
+
+<p>The first line requests a context subscription for the speed of vehicles
+in the neighborhood of the reference vehicle with the ID <code>"ego"</code>. The
+range of the context subscription (which refers to the radial context
+region of the usual subscription mechanism) can be set equal to <code>0.0</code>,
+since it is be overridden by the selective values of <code>downstreamDist</code>
+and <code>upstreamDist</code>, respectively, given to the call of
+<code>addSubscriptionFilterLanes()</code> in the second line. The call to
+<code>addSubscriptionFilter&lt;FILTER_NAME&gt;()</code> automatically takes effect on
+the last issued context subscription, which has to be of the
+vehicle-to-vehicle form for a successful application.</p>
+<p>The following filter types are available:</p>
+<ul>
+<li>Lanes: Return surrounding vehicles on lanes specified relatively to
+  the reference vehicle</li>
+<li>CFManeuver: Return leader and follower on the reference vehicle's
+  lane</li>
+<li>LCManeuver: Return leader and follower on the reference vehicle's
+  lane and neighboring lane(s)</li>
+<li>Turn: Return conflicting vehicles on upcoming junctions along the
+  vehicle's route</li>
+<li>VType: Only return vehicles of the specified vTypes</li>
+<li>VClass: Only return vehicles of the specified vClasses</li>
+</ul>
+<p>See the <a href="http://sumo.dlr.de/daily/pydoc/traci._vehicle.html#VehicleDomain-addSubscriptionFilterCFManeuver">pydoc
+documentation</a>
+for detailed specifications.</p>
+<h2 id="adding_a_steplistener">Adding a StepListener<a class="headerlink" href="#adding_a_steplistener" title="Permanent link">#</a></h2>
+<p>Often a function needs to be called each time when
+traci.simulationStep() is called, to let this happen automatically
+(always <em>after</em> each call to simulationStep()) it is possible to add a
+StepListener object 'listener' (more precisely an instance of a subclass
+of traci.StepListener) i.e.</p>
+<pre><code> class ExampleListener(traci.StepListener):
+    def step(self, t):
+        # do something after every call to simulationStep
+        print(&quot;ExampleListener called with parameter %s.&quot; % t)
+        # indicate that the step listener should stay active in the next step
+        return True
+       
+ listener = ExampleListener()
+ traci.addStepListener(listener)
+</code></pre>
+
+<p>Please note that the listener is not activated for every simulation step
+but for every call to simulationStep (which may perform multiple steps up to the given time <em>t</em>).
+Furthermore the parameter <em>t</em> is not the current simulation time but exactly
+the (optional) parameter passed to the simulationStep call (which is 0 by default).</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>A TraCI StepListener cannot be used in the case that one TraCI client controls several SUMO-instances.</p>
+</div>
+<h2 id="controlling_parallel_simulations_from_the_same_traci_script">Controlling parallel simulations from the same TraCI script<a class="headerlink" href="#controlling_parallel_simulations_from_the_same_traci_script" title="Permanent link">#</a></h2>
+<p>The TraCI python library can be used to control multiple simulations at
+the same time with a single script. The function <em>traci.start()</em> has an
+optional label argument which allows you to call it multiple times with
+different simulation instances and labels. The function <em>traci.switch()</em>
+can then be used to switch to any of the initialized labels:</p>
+<pre><code> traci.start([&quot;sumo&quot;, &quot;-c&quot;, &quot;sim1.sumocfg&quot;], label=&quot;sim1&quot;)
+ traci.start([&quot;sumo&quot;, &quot;-c&quot;, &quot;sim2.sumocfg&quot;], label=&quot;sim2&quot;)
+ traci.switch(&quot;sim1&quot;)
+ traci.simulationStep() # run 1 step for sim1
+ traci.switch(&quot;sim2&quot;)
+ traci.simulationStep() # run 1 step for sim2
+</code></pre>
+
+<p>If you prefer a more object oriented approach you can also use
+connection objects to communicate with the simulation. They have the
+same interface as the static <em>traci.</em> calls but you will still need to
+start the simulation manually for them:</p>
+<pre><code> traci.start([&quot;sumo&quot;, &quot;-c&quot;, &quot;sim1.sumocfg&quot;], label=&quot;sim1&quot;)
+ traci.start([&quot;sumo&quot;, &quot;-c&quot;, &quot;sim2.sumocfg&quot;], label=&quot;sim2&quot;)
+ conn1 = traci.getConnection(&quot;sim1&quot;)
+ conn2 = traci.getConnection(&quot;sim2&quot;)
+ conn1.simulationStep() # run 1 step for sim1
+ conn2.simulationStep() # run 1 step for sim2
+</code></pre>
+
+<h2 id="controlling_the_same_simulation_from_multiple_clients">Controlling the same simulation from multiple clients<a class="headerlink" href="#controlling_the_same_simulation_from_multiple_clients" title="Permanent link">#</a></h2>
+<p>To connect with multiple clients, the number of clients must be known in
+advance and specified with sumo option <strong>--num-clients</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;INT&gt;</em></a>. Also, the connection port must
+be known to all clients. After deciding on a port it can be made
+available to the clients via arguments or configuration files. A free
+port can be obtained by</p>
+<pre><code>from sumolib.miscutils import getFreeSocketPort
+port = sumolib.miscutils.getFreeSocketPort()
+</code></pre>
+
+<p>One client may use method <em>traci.start()</em> to start the simulation and
+connect to it at the same time while the other client only needs to
+connect. After establishing client order, each client must continuously
+call <em>simulationStep</em> to allow the simulation to advance:</p>
+<pre><code>#client1
+# PORT = int(sys.argv[1]) # example
+traci.start([&quot;sumo&quot;, &quot;-c&quot;, &quot;sim.sumocfg&quot;, &quot;--num-clients&quot;, &quot;2&quot;], port=PORT)
+traci.setOrder(1) # number can be anything
+while traci.simulation.getMinExpectedNumber() &gt; 0:
+   traci.simulationStep()
+   # more traci commands
+traci.close(
+</code></pre>
+
+<pre><code># client2
+# PORT = int(sys.argv[1]) # example
+traci.init(PORT)
+traci.setOrder(2) # number can be anything as long as each client gets its own number
+while traci.simulation.getMinExpectedNumber() &gt; 0:
+   traci.simulationStep()
+   # more traci commands
+traci.close()
+</code></pre>
+
+<h2 id="embedded_python">Embedded Python<a class="headerlink" href="#embedded_python" title="Permanent link">#</a></h2>
+<p>This feature has been removed Please use <a href="../Libsumo.html">libsumo</a> instead.</p>
+<h2 id="additional_functions">Additional Functions<a class="headerlink" href="#additional_functions" title="Permanent link">#</a></h2>
+<p>When using TraCI there are some common tasks which are not covered by
+the traci library such as</p>
+<ul>
+<li>Analyzing the road network</li>
+<li>Parsing simulation outputs</li>
+</ul>
+<p>For this functionality it is recommended to use
+<a href="../Tools/Sumolib.html">Tools/Sumolib</a></p>
+<h2 id="pitfalls_and_solutions">Pitfalls and Solutions<a class="headerlink" href="#pitfalls_and_solutions" title="Permanent link">#</a></h2>
+<ul>
+<li>Note that strings, if exchanged, have to be ASCII-encoded.</li>
+<li>If you start sumo from within your python script using
+  subprocess.Popen, be sure to call wait() on the resulting process
+  object before quitting your script. You might loose output
+  otherwise.</li>
+</ul>
+<h3 id="determine_the_traci_library_being_loaded">Determine the traci library being loaded<a class="headerlink" href="#determine_the_traci_library_being_loaded" title="Permanent link">#</a></h3>
+<p>When working with different sumo versions it may happen that the call <code>import traci</code> loads the wrong library.
+The easiest way to debug this is to add the following lines after the import</p>
+<pre><code>import traci
+print(&quot;LOADPATH:&quot;, '\n'.join(sys.path))                                                                                                                                      
+print(&quot;TRACIPATH:&quot;, traci.__file__) 
+sys.exit()
+</code></pre>
+
+<p>Make sure that the TRACIPATH corresponds to the sumo version that you wish to use. 
+If it does not, then the order of directories in LOADPATH (sys.path) must be changed or the SUMO installation must be removed from any directories that come before the wanted directory.</p>
+<h3 id="debugging_a_traci_session_on_linux">Debugging a TraCI session on Linux<a class="headerlink" href="#debugging_a_traci_session_on_linux" title="Permanent link">#</a></h3>
+<p>Sometimes SUMO may crash while running a simulation with TraCI. The
+below steps make it simple to run sumo with traci in a debugger:</p>
+<p>1) Add the option <em>--save-configuration</em> to your traci script:</p>
+<pre><code>traci.start([sumoBinary, '-c', 'run.sumocfg', '--save-configuration', 'debug.sumocfg'])
+</code></pre>
+
+<p>2) Run your traci script. Instead of starting sumo it will just write
+the configuration with the chosen port but it will still try to connect
+repeatedly.</p>
+<p>3) Run</p>
+<pre><code>gdb --args sumoD -c debug.sumocfg
+</code></pre>
+
+<p>(where sumoD is sumo <a href="../Installing/Linux_Build.html#building_the_sumo_binaries_with_cmake_recommended">compiled in debug
+mode</a>)</p>
+<h3 id="generating_a_log_of_all_traci_commands">Generating a log of all traci commands<a class="headerlink" href="#generating_a_log_of_all_traci_commands" title="Permanent link">#</a></h3>
+<p>To share a traci scenario (i.e. in a bug report) it may be useful to seperate the logic of the traci script from the actual commands.
+For this, the function <code>traci.start</code> accepts the optional arguments <code>traceFile</code> and <code>traceGetters</code>.
+When calling <code>traci.start([&lt;commands&gt;], traceFile=&lt;LOG_FILE_PATH&gt;)</code> all traci commands that were sent to sumo will be written to the given LOG_FILE_PATH.
+This allows re-running the scenario without the original runner script.
+When option <code>traceGetters=False</code> is set, only functions that change the simulation state are included in the log file. Functions that retrieve simulation data are technically not needed to reproduce a scenario but it may be useful to include them if the data retrieval functions are themselves the cause of a bug.</p>
+<h2 id="usage_examples">Usage Examples<a class="headerlink" href="#usage_examples" title="Permanent link">#</a></h2>
+<h3 id="run_a_simulation_until_all_vehicles_have_arrived">Run a simulation until all vehicles have arrived<a class="headerlink" href="#run_a_simulation_until_all_vehicles_have_arrived" title="Permanent link">#</a></h3>
+<pre><code>  while traci.simulation.getMinExpectedNumber() &gt; 0:
+      traci.simulationStep()
+</code></pre>
+
+<h3 id="add_trips_incomplete_routes_dynamically">Add trips (incomplete routes) dynamically<a class="headerlink" href="#add_trips_incomplete_routes_dynamically" title="Permanent link">#</a></h3>
+<p>Define a route that consists of the start and destination edge:</p>
+<pre><code>   traci.route.add(&quot;trip&quot;, [&quot;startEdge&quot;, &quot;endEdge&quot;])
+</code></pre>
+
+<p>Then add the vehicle with that route</p>
+<pre><code>   traci.vehicle.add(&quot;newVeh&quot;, &quot;trip&quot;, typeID=&quot;reroutingType&quot;)
+</code></pre>
+
+<p>This will cause the vehicle to compute a new route from startEdge to
+endEdge according to the estimated travel times in the network at the
+time of departure. For details of this mechanism see
+<a href="../Demand/Automatic_Routing.html">Demand/Automatic_Routing</a>.</p>
+<h3 id="coordinate_transformations">coordinate transformations<a class="headerlink" href="#coordinate_transformations" title="Permanent link">#</a></h3>
+<pre><code> x, y = traci.vehicle.getPosition(vehID)
+ lon, lat = traci.simulation.convertGeo(x, y)
+ x2, y2 = traci.simulation.convertGeo(lon, lat, fromGeo=True)
+</code></pre>
+
+<pre><code> edgeID, lanePosition, laneIndex = traci.simulation.convertRoad(x3, y3)
+ edgeID, lanePosition, laneIndex = traci.simulation.convertRoad(lon2, lat2, True)
+</code></pre>
+
+<h3 id="retrieve_the_timeloss_for_all_vehicles_currently_in_the_network">Retrieve the timeLoss for all vehicles currently in the network<a class="headerlink" href="#retrieve_the_timeloss_for_all_vehicles_currently_in_the_network" title="Permanent link">#</a></h3>
+<p>import traci import traci.constants as tc junctionID = '...'</p>
+<ol>
+<li>subscribe around an aribtrary junction with a sufficiently large
+    radius to retrieve the speeds of all vehicles in every step</li>
+</ol>
+<p>traci.junction.subscribeContext(junctionID,
+tc.CMD_GET_VEHICLE_VARIABLE, 1000000, [tc.VAR_SPEED,
+tc.VAR_ALLOWED_SPEED]) stepLength = traci.simulation.getDeltaT()
+while traci.simulation.getMinExpectedNumber() > 0:</p>
+<pre><code>   traci.simulationStep()
+   scResults = traci.junction.getContextSubscriptionResults(junctionID)
+   halting = 0
+   if scResults:
+       relSpeeds = [d[tc.VAR_SPEED] / d[tc.VAR_ALLOWED_SPEED] for d in scResults.values()]
+       # compute values corresponding to summary-output
+       running = len(relSpeeds)
+       halting = len([1 for d in scResults.values() if d[tc.VAR_SPEED] &lt; 0.1])
+       meanSpeedRelative = sum(relSpeeds) / running
+       timeLoss = (1 - meanSpeedRelative) * running * stepLength
+   print(traci.simulation.getTime(), timeLoss, halting)
+</code></pre>
+
+<p>traci.close()</p>
+<h2 id="further_resources">Further Resources<a class="headerlink" href="#further_resources" title="Permanent link">#</a></h2>
+<ul>
+<li>The module <a href="../Simpla.html">Simpla</a> provides a library for
+  platooning functions that can be integrated with user client
+  scripts.</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 09 October 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

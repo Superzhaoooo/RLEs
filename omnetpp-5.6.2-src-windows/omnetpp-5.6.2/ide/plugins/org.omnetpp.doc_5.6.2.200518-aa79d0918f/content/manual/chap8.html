@@ -1,0 +1,3724 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap7.html">[Prev]</A>&nbsp;<a href="chap9.html">[Next]</A>&nbsp;<a href="toc.html#toc_8.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:graphics"/>8 Graphics and Visualization<a class="headerlink" href="#cha:graphics" title="Permalink to this headline">¶</a></h1>
+
+<p><h2><a name="sec:graphics:overview"/>8.1 Overview<a class="headerlink" href="#sec:graphics:overview" title="Permalink to this headline">¶</a></h2>
+
+<p>OMNeT++ simulations can be run under graphical user interfaces like Qtenv
+that offer visualization and animation in addition to interactive
+execution and other features. This chapter deals with model visualization.
+
+<p>OMNeT++ essentially provides four main tools for defining and enhancing
+model visualization:
+
+<p><ol>
+
+<p>    <li> <i>Display strings</i> is the traditional way. It is a
+    per-component string that encodes how the component (module or channel)
+    will show up in the graphical user interface. Display strings can be
+    specified in NED files, and can also be manipulated programmatically at
+    runtime.
+
+<p>    <li> <i>The canvas.</i> The same user interface area that contains
+    submodules and connections (i.e. the <i>canvas</i>) can also display
+    additional graphical elements that OMNeT++ calls <i>figures</i>. Using
+    figures, one can display lines, curves, polygons, images and text items,
+    and anything that can be built by combining them and applying effects like
+    rotation and scaling. Like display strings, figures can also be specified
+    in NED files, but it is generally more useful to create and manipulate them
+    programmatically. Every module has its own default canvas, and extra canvases 
+    can also be created at runtime.
+
+<p>    <li> <i>3D visualization</i> of the simulation's virtual world is a
+    third possiblity. OMNeT++'s 3D visualization capabilities come from the
+    open-source OpenSceneGraph library and its osgEarth extension. These
+    libraries build on top of OpenGL, and beyond basic graphics functionality 
+    they also offer high-level capabilities, such as reading 3D model files
+    directly from disk, or displaying maps, 3D terrain or Earth as a planet
+    using online map and satellite imagery data sources.
+
+<p>    <li> <i>Support for smooth custom animation</i> allows models to visualize
+    their operation using sophisticated animations. The key idea is that the
+    simulation model is called back from the runtime GUI (Qtenv) repeatedly
+    at a reasonable &#8220;frame rate,&#8221; allowing it to continually update the
+    canvas (2D) and/or the 3D scene to produce fluid animations.
+
+<p></ol>
+
+<p>The following sections will cover the above topics in more detail. But first,
+let us get acquainted with a new <tt><a href="../api/classomnetpp_1_1cModule.html">cModule</a></tt> virtual method that one
+can redefine and place visualization-related code into.
+
+<p>
+<h2><a name="sec:graphics:refreshdisplay"/>8.2 Placement of Visualization Code<a class="headerlink" href="#sec:graphics:refreshdisplay" title="Permalink to this headline">¶</a></h2>
+
+<p>Traditionally, when C++ code was needed to enhance visualization, for
+example to update a displayed status label or to refresh the position of a
+mobile node, it was embedded in <tt>handleMessage()</tt> functions, enclosed
+in <tt>if (ev.isGUI())</tt> blocks. This was less than ideal, because the
+visualization code would run for all events in that module and not just
+before display updates when it was actually needed. In <i>Express</i> mode,
+for example, Qtenv would only refresh the display once every second or so,
+with a large number of events processed between updates, so visualization
+code placed inside <tt>handleMessage()</tt> could potentially waste a
+significant amount of CPU cycles. Also, visualization code embedded in 
+<tt>handleMessage()</tt> is not suitable for creating smooth animations.
+
+<p>
+<h3><a name="sec:graphics:refreshdisplay-usage-and-semantics"/>8.2.1 The refreshDisplay() Method<a class="headerlink" href="#sec:graphics:refreshdisplay-usage-and-semantics" title="Permalink to this headline">¶</a></h3>
+
+<p>Starting from OMNeT++ version 5.0, visualization code can be placed into a
+dedicated method. It is called much more economically, that is, exactly 
+as often as needed.
+
+<p>This method is <tt>refreshDisplay()</tt>, and is declared on
+<tt><a href="../api/classomnetpp_1_1cModule.html">cModule</a></tt> as:
+
+<pre class="cpp">
+virtual void refreshDisplay() const {}
+</pre>
+<p>
+Components that contain visualization-related code are expected to override
+<tt>refreshDisplay()</tt>, and move visualization code such as display string
+manipulation, canvas figure maintenance and OSG scene graph updates into it.
+
+<p>When and how is <tt>refreshDisplay()</tt> invoked? Generally, right before
+the GUI performs a display update. With some additional rules, that boils
+down to the following:
+
+<p><ol>
+<li> It is invoked only under graphical user interfaces, currently Qtenv
+     and Tkenv. It is never invoked under Cmdenv.
+
+<p><li> When invoked, it will be called on <i>all</i> components of the
+      simulation. It does not matter if a module has a graphical inspector
+      open or not. This design decision simplifies the handling
+      of cross-module visualization dependencies. Runtime overhead is
+      still not an issue, because display updates are only done at most
+      a few times per second in <i>Express</i> mode, while in other modes,
+      raw event processing performance is of somewhat lesser importance.
+      <br><ul><font size=-1>[At any rate, only a small portion of components are expected to
+      have (nontrivial) <tt>refreshDisplay()</tt> overrides in complex models.
+      If it still becomes too resource-consuming, local caching of related
+      data and the use of a <i>displayInvalid</i> flag might help.]</font></ul>
+
+<p><li> It is invoked right before display updates. This includes the following:
+      after network setup; in <i>Step</i> and <i>Run</i> modes, before and
+      after every event; in <i>Fast</i> and <i>Express</i> modes, after
+      every "batch" of events; every time a new graphical inspector is opened,
+      zoomed, navigated in, or closed; after model data (<a href="../api/classomnetpp_1_1cPar.html">cPar</a>, <a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a>
+      values, etc.) is edited, and after finalization.
+
+<p><li> If smooth animation is used, it is invoked continuously with a reasonably
+      high frequency in <i>Step</i>, <i>Run</i> and <i>Fast</i> modes.
+      This can mean anything from many times between processing two consecutive
+      events to not even once until after the processing of a couple of events,
+      depending on the current animation speed and event density.
+
+<p></ol>
+
+<p>Here is an example of how one would use it:
+
+<pre class="cpp">
+void FooModule::refreshDisplay() const
+{
+    // refresh statistics
+    char buf[80];
+    sprintf(buf, "Sent:%d  Rcvd:%d", numSent, numReceived);
+    getDisplayString()-&gt;setTagArg("t", 0, buf);
+
+    // update the mobile node's position
+    Point pos = ...  // e.g. invoke a computePosition() method
+    getDisplayString()-&gt;setTagArg("p", 0, pos.x);
+    getDisplayString()-&gt;setTagArg("p", 1, pos.y);
+}
+</pre>
+<p>
+One useful accessory to <tt>refreshDisplay()</tt> is the
+<tt>isExpressMode()</tt> method of <tt><a href="../api/classomnetpp_1_1cEnvir.html">cEnvir</a></tt>. It returns true if the
+simulation is running under a GUI in <i>Express</i> mode. Visualization
+code may check this flag and adapt the visualization accordingly. An example:
+
+<pre class="cpp">
+if (getEnvir()-&gt;isExpressMode()) {
+    // display throughput statistics
+}
+else {
+    // visualize current frame transmission
+}
+</pre>
+<p>
+
+<p><h3><a name="sec:graphics:refreshdisplay-advantages"/>8.2.2 Advantages<a class="headerlink" href="#sec:graphics:refreshdisplay-advantages" title="Permalink to this headline">¶</a></h3>
+
+<p>Overriding <tt>refreshDisplay()</tt> has several advantages over putting the
+simulation code into <tt>handleMessage()</tt>. The first one is clearly
+<i>performance</i>. When running under Cmdenv,
+the runtime cost of visualization code is literally zero, and when running
+in <i>Express</i> mode under Tkenv/Qtenv, it is practically zero because
+the cost of one update is amortized over several hundred thousand or
+million events.
+
+<p>The second advantage is also very practical: <i>consistency</i> of the
+visualization. If the simulation has cross-module dependencies such that
+an event processed by one module affects the information displayed
+by another module, with <tt>handleMessage()</tt>-based visualization
+the model may have inconsistent visualization until the second module
+also processes an event and updates its displayed state. With
+<tt>refreshDisplay()</tt> this does not happen, because all modules
+are refreshed together.
+
+<p>The third advantage is <i>separation of concerns.</i> It is generally
+not a good idea to intermix simulation logic with visualization code,
+and <tt>refreshDisplay()</tt> allows one to completely separate the two.
+
+<p>
+<h3><a name="sec:graphics:refreshdisplay-constness"/>8.2.3 Why is <tt>refreshDisplay()</tt> const?<a class="headerlink" href="#sec:graphics:refreshdisplay-constness" title="Permalink to this headline">¶</a></h3>
+
+<p>Code in <tt>refreshDisplay()</tt> should never alter the state of the
+simulation because that would destroy repeatability, due to the 
+fact that the timing and frequency of <tt>refreshDisplay()</tt>
+calls is completely unpredictable from the simulation model's point of view.
+The fact that the method is declared <tt>const</tt> gently encourages this behavior.
+
+<p>If visualization code makes use of internal caches or maintains some
+other mutable state, such data members can be declared <tt>mutable</tt>
+to allow <tt>refreshDisplay()</tt> to change them.
+
+<p>
+<h2><a name="sec:graphics:smooth-animation"/>8.3 Smooth Animation<a class="headerlink" href="#sec:graphics:smooth-animation" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:graphics:animation-concepts"/>8.3.1 Concepts<a class="headerlink" href="#sec:graphics:animation-concepts" title="Permalink to this headline">¶</a></h3>
+
+<p>Support for smooth custom animation allows models to visualize their operation 
+using sophisticated animations. The key idea is that the simulation model 
+is called back from the runtime GUI (Qtenv) repeatedly at a reasonable 
+&#8220;frame rate,&#8221; allowing it to continually update the canvas (2D) and/or the 
+3D scene to produce fluid animations. Callback means that the 
+<tt>refreshDisplay()</tt> methods of modules and figures are invoked.
+
+<p><tt>refreshDisplay()</tt> knows the animation position from the simulation time
+and the <i>animation time</i>, a variable also made accessible to the model.
+If you think about the animation as a movie, animation time is simply the 
+position in seconds in the movie. By default, the movie is played in Qtenv at normal (1x) 
+speed, and then animation time is simply the number of seconds since the
+start of the movie. The speed control slider in Qtenv's toolbar allows 
+you to play it at higher (2x, 10x, etc.) and lower (0.5x, 0.1x, etc.)
+speeds; so if you play the movie at 2x speed, animation time will
+pass twice as fast as real time.
+
+<p>When smooth animation is turned on (more about that later), simulation 
+time progresses in the model (piecewise) linearly. The speed at which the simulation
+progresses in the movie is called <i>animation speed</i>. Sticking to the
+movie analogy, when the simulation progresses in the movie 100 times
+faster than animation time, animation speed is 100.
+
+<p>Certain actions take zero simulation time, but we still want to animate
+them. Examples of such actions are the sending of a message over a zero-delay link,
+or a visualized C++ method call between two modules. When these animations play
+out, simulation is paused and simulation time stays constant 
+until the animation is over. Such periods are called <i>holds</i>.
+
+<p><h3><a name="sec:graphics:animation-modes"/>8.3.2 Smooth vs. Traditional Animation<a class="headerlink" href="#sec:graphics:animation-modes" title="Permalink to this headline">¶</a></h3>
+
+<p>Smooth animation is a relatively new feature in OMNeT++, and not all simulations
+need it. Smooth and traditonal, &#8220;non-smooth&#8221; animation in Qtenv are
+two distinct modes which operate very differently:
+
+<p><ul>
+  <li> In <b>Traditional animation</b>, simulation events are essentially 
+    processed <i>as fast as possible</i>, and meanwhile, <tt>refreshDisplay()</tt>
+    is called with some policy (e.g. once before/after each event, or at
+    1s intervals real-time) to keep the displayed  graphics up to date.
+  <li> <b>Smooth animation</b> is essentially a <i>scaled realtime simulation</i>,
+    where <tt>refreshDisplay()</tt> is continually called with a reasonably
+    high frame rate.
+</ul>
+
+<p>The factor that decides which operation mode is active is the <i>presence
+of an animation speed</i>. If there is no animation speed, traditional
+animation is performed; if there is one, smooth animation is done.
+
+<p>The Qtenv GUI has a dialog (<i>Animation Parameters</i>) which displays 
+the current animation speed, among other things. This dialog allows the
+user to check at any time which operation mode is currently active.<br><ul><font size=-1>[
+Note that even during traditional animation, some built-in animation effects
+request animation speeds and holds, so there may be periods when smooth animation
+is performed.]</font></ul>
+
+<p><h3><a name="sec:graphics:animation-speed"/>8.3.3 The Choice of Animation Speed<a class="headerlink" href="#sec:graphics:animation-speed" title="Permalink to this headline">¶</a></h3>
+
+<p>Different animation speeds may be appropriate for different animation effects.
+For example, when animating WiFi traffic where various time slots are on the microsecond scale,
+an animation speed on the order of <i>10^-5</i> might be appropriate; when animating the 
+movement of cars or pedestrians, an animation speed of <i>1</i> is a reasonable choice.
+When several animations requiring different animation speeds occur in the same
+scene, one solution is to animate the scene using the lowest animation speed
+so that even the fastest actions can be visually followed by the human viewer.
+ 
+<p>The solution provided by OMNeT++ for the above problem is the following.
+Animation speed cannot be controlled explicitly, only requests may be submitted.
+Several parts of the models may request different animation speeds. 
+The effective animation speed is computed as the minimum of the animation 
+speeds of visible canvases, unless the user interactively overrides it in the UI, 
+for example by imposing a lower or upper limit.
+
+<p>An animation speed requests may be submitted using the <tt>setAnimationSpeed()</tt> 
+method of <tt><a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a></tt>.<br><ul><font size=-1>[The class that represents the canvas for
+2D graphics, see <a href="chap8.html#sec:graphics:creating-accessing-and-viewing-canvases">[8.6.2]</a> for more
+info.]</font></ul> The <tt>setAnimationSpeed()</tt> method takes two arguments: 
+the animation speed value (a <tt>double</tt>) and an object pointer (<tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a>*</tt>)
+that identifies the part of the model that requests it. The second, object parameter
+is used as a key that allows the request to be updated or withdrawn later. 
+Typically, the pointer of the module that makes the request (i.e. <tt>this</tt>) is 
+used for that purpose. Calling <tt>setAnimationSpeed()</tt> with zero animation 
+speed cancels the request.
+
+<p>An example:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a> *canvas = getSystemModule()-&gt;getCanvas(); // toplevel canvas
+canvas-&gt;setAnimationSpeed(2.0, this); // one request
+canvas-&gt;setAnimationSpeed(1e-6, macModule); // another request
+...
+canvas-&gt;setAnimationSpeed(1.0, this); // overwrite first request
+canvas-&gt;setAnimationSpeed(0, macModule); // cancel second request
+</pre>
+<p>
+In practice, built-in animation effects such as message sending animation
+also submit their own animation speed requests internally, so they also 
+affect the effective animation speed chosen by Qtenv.
+
+<p>The current effective animation speed can be obtained from the environment of the
+simulation (<tt><a href="../api/classomnetpp_1_1cEnvir.html">cEnvir</a></tt>, see chapter <a href="chap18.html#cha:embedding">[18]</a> for context): 
+
+<pre class="cpp">
+double animSpeed = getEnvir()-&gt;getAnimationSpeed(); 
+</pre>
+<p>
+Animation time can be accessed like this:
+
+<pre class="cpp">
+double animTime = getEnvir()-&gt;getAnimationTime();
+</pre>
+<p>
+Animation time starts from zero, and monotonically increases with simulation 
+time and also during &#8220;holds&#8221;.
+
+<p>
+<h3><a name="sec:graphics:animation-hold"/>8.3.4 Holds<a class="headerlink" href="#sec:graphics:animation-hold" title="Permalink to this headline">¶</a></h3>
+
+<p>As mentioned earlier, a hold interval is an interval when only animation
+takes place, but simulation time does not progress and no events
+are processed. Hold intervals are intended for animating actions
+that take zero simulation time.
+
+<p>A hold can be requested with the <tt>holdSimulationFor()</tt> method
+of <tt><a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a></tt>, which accepts an animation time delta as parameter.
+If a hold request is issued when there is one already in progress,
+the current hold will be extended as needed to incorporate the
+request. A hold request cannot be cancelled or shrunk.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a> *canvas = getSystemModule()-&gt;getCanvas(); // toplevel canvas
+canvas-&gt;holdSimulationFor(0.5); // request a 0.5s (animation time) hold
+</pre>
+<p>
+When rendering frames in <tt>refreshDisplay()</tt>) during a hold, the code
+can use animation time to determine the position in the animation.
+If the code needs to know the animation time elapsed since the start of
+the hold, it should query and remember the animation time when issuing
+the hold request.
+
+<p>If the code needs to know the animation time remaining until the end
+of the hold, it can use the <tt>getRemainingAnimationHoldTime()</tt> 
+method of <tt><a href="../api/classomnetpp_1_1cEnvir.html">cEnvir</a></tt>. Note that this is not necessarily the
+time remaining from its own hold request, because other parts of the
+simulation might extend the hold.
+
+<p>
+<h3><a name="sec:graphics:disabling-built-in-anims"/>8.3.5 Disabling Built-In Animations<a class="headerlink" href="#sec:graphics:disabling-built-in-anims" title="Permalink to this headline">¶</a></h3>
+
+<p>If a model implements such full-blown animations for a compound module that
+OMNeT++'s default animations (message sending/method call animations) become
+a liability, they can be programmatically turned off for that module with
+<tt><a href="../api/classomnetpp_1_1cModule.html">cModule</a></tt>'s <tt>setBuiltinAnimationsAllowed()</tt> method:
+
+<pre class="cpp">
+// disable animations for the toplevel module
+<a href="../api/classomnetpp_1_1cModule.html">cModule</a> *network = getSimulation()-&gt;getSystemModule();
+network-&gt;setBuiltinAnimationsAllowed(false);
+</pre>
+<p>
+
+<p>
+<h2><a name="sec:graphics:display-strings"/>8.4 Display Strings<a class="headerlink" href="#sec:graphics:display-strings" title="Permalink to this headline">¶</a></h2>
+
+<p>Display strings<!--display strings--> are compact textual descriptions
+that specify the arrangement and appearance of the graphical
+representations of modules and connections in graphical user interfaces
+(currently Tkenv and Qtenv).
+
+<p>Display strings are usually specified in NED's <b><tt>@display</tt></b> property,
+but it is also possible to modify them programmatically at runtime.
+
+<p>Display strings can be used in the following contexts:
+<ul>
+  <li> <i>submodules</i> -- display strings may contain position, arrangement
+        (for module vectors), icon, icon color, auxiliary icon, status text,
+        communication range (as circle or filled circle), tooltip, etc.
+  <li> <i>compound modules, networks</i> -- display strings can specify
+        background color, border color, border width,
+        background image, scaling, grid, unit of measurement, etc.
+  <li> <i>connections</i> -- display strings can specify positioning, color,
+        line width, line style, text and tooltip
+  <li> <i>messages</i> -- display strings can specify icon, icon color, etc.
+</ul>
+
+<p>
+<h3><a name="sec:graphics:displaystring-syntax-and-placement"/>8.4.1 Syntax and Placement<a class="headerlink" href="#sec:graphics:displaystring-syntax-and-placement" title="Permalink to this headline">¶</a></h3>
+
+<p>Display strings are specified in <b><tt>@display</tt></b> properties. The property
+must contain a single string as value. The string should contain a
+semicolon-separated list of tags. Each tag consists of a key, an equal sign
+and a comma-separated list of arguments:
+
+<pre class="ned">
+@display("p=100,100;b=60,10,rect,blue,black,2")
+</pre>
+<p>
+Tag arguments may be omitted both at the end and inside the parameter list.
+If an argument is omitted, a sensible default value is used. In the following
+example, the first and second arguments of the <tt>b</tt> tag are omitted.
+
+<pre class="ned">
+@display("p=100,100;b=,,rect,blue")
+</pre>
+<p>
+Display strings can be placed in the <i>parameters</i> section of module
+and channel type definitions, and in submodules and connections. The
+following NED sample illustrates the placement of display strings in the
+code:
+
+<pre class="ned">
+simple Server
+{
+    parameters:
+        @display("i=device/server");
+    ...
+}
+
+network Example
+{
+    parameters:
+        @display("bgi=maps/europe");
+    submodules:
+        server: Server {
+            @display("p=273,101");
+        }
+        ...
+    connections:
+        client1.out --&gt; { @display("ls=red,3"); } --&gt; server.in++;
+}
+</pre>
+<p>
+
+<p><h3><a name="sec:graphics:displaystring-inheritance"/>8.4.2 Inheritance<a class="headerlink" href="#sec:graphics:displaystring-inheritance" title="Permalink to this headline">¶</a></h3>
+
+<p>At runtime, every module and channel object has one single display string object,
+which controls its appearance in various contexts. The initial value of
+this display string object comes from merging the <b><tt>@display</tt></b>
+properties occurring at various places in NED files.
+This section describes the rules for merging <b><tt>@display</tt></b> properties
+to create the module or channel's display string.
+
+<p><ul>
+  <li> Derived NED types inherit their display string from their base NED type.
+  <li> Submodules inherit their display string from their type.
+  <li> Connections inherit their display string from their channel type.
+</ul>
+
+<p>The base NED type's display string is merged into the current display string
+using the following rules:
+
+<p><ol>
+<li> <b>Inheriting.</b> If a tag or tag argument is present in the base
+    display string but not in the current one, it will be added to the
+    result. Example: <br>
+    <tt>"i=block/sink"</tt> <i>(base)</i> + <tt>"p=20,40;i=,red"</tt> <i>(current)</i> <i>--></i> <tt>"p=20,40;i=block/sink,red"</tt>
+<li> <b>Overwriting.</b> If a tag argument is present both in the base
+    and in the current display string, the tag argument in the current
+    display string will win. Example: <br>
+    <tt>"b=40,20,oval"</tt> + <tt>"b=,30"</tt> <i>--></i> <tt>"b=40,30,oval"</tt>
+<li> <b>Erasing.</b> If the current display string contains a tag argument
+    with the value &#8220;-&#8221; (hyphen), that tag argument will be empty in
+    the result. Example: <br>
+    <tt>"i=block/sink,red"</tt> + <tt>"i=,-"</tt> <i>--></i> <tt>"i=block/sink"</tt>
+</ol>
+
+<p>The result of merging the <b><tt>@display</tt></b> properties will be used to
+initialize the display string object (<tt><a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a></tt>) of the
+module or channel. The display string object can then still be modified
+programmatically at runtime.
+
+<p><ul class="note"><b>NOTE</b><br>
+If a tag argument is empty, the GUI may use a suitable default value. For
+example, if the border color for a rectangle is not specified in the
+display string, the GUI may use black. This default value cannot be
+queried programmatically.
+</ul>
+
+<p>Example of display string inheritance:
+
+<pre class="ned">
+simple Base {
+    @display("i=block/queue"); // use a queue icon in all instances
+}
+
+simple Derived extends Base {
+    @display("i=,red,60");  // ==&gt; "i=block/queue,red,60"
+}
+
+network SimpleQueue {
+    submodules:
+        submod: Derived {
+            @display("i=,yellow,-;p=273,101;r=70");
+                     // ==&gt; "i=block/queue,yellow;p=273,101;r=70"
+        }
+        ...
+}
+</pre>
+<p>
+
+<p><h3><a name="sec:graphics:submodule-displaystring-tags"/>8.4.3 Submodule Tags<a class="headerlink" href="#sec:graphics:submodule-displaystring-tags" title="Permalink to this headline">¶</a></h3>
+
+<p>The following tags of the module display string are in effect in submodule
+context, that is, when the module is displayed as a submodule of another
+module:
+
+<p><ul>
+  <li> <tt>p</tt> -- positioning and layout
+  <li> <tt>b</tt> -- shape (box, oval, etc.)
+  <li> <tt>i</tt> -- icon
+  <li> <tt>is</tt> -- icon size
+  <li> <tt>i2</tt> -- auxiliary or status icon
+  <li> <tt>r</tt> -- range indicator
+  <li> <tt>q</tt> -- queue information text
+  <li> <tt>t</tt> -- text
+  <li> <tt>tt</tt> -- tooltip
+</ul>
+
+<p>The following sections provide an overview and examples for each tag. More
+detailed information, such as what each tag argument means, is available in
+Appendix <a href="chap24.html#cha:display-strings">[24]</a>.
+
+<p><h4><a name="sec:graphics:submodule-icons"/>8.4.3.1 Icons<a class="headerlink" href="#sec:graphics:submodule-icons" title="Permalink to this headline">¶</a></h4>
+
+<p>By default, modules are displayed with a simple default icon, but OMNeT++
+comes with a large set of categorized icons that one can choose from.
+To see what icons are available, look into the <tt>images/</tt> folder
+in the OMNeT++ installation. The stock icons installed with OMNeT++ have
+several size variants. Most of them have very small (vs), small (s),
+large (l) and very large (vl) versions.
+
+<p>One can specify the icon with the <tt>i</tt> tag. The icon name should be
+given with the name of the subfolder under <tt>images/</tt>, but without the
+file name extension. The size may be specified with the icon name suffix
+(<tt>_s</tt> for very small, <tt>_vl</tt> for very large, etc.), or
+in a separate <tt>is</tt> tag.
+
+<p>An example that displays the <i>block/source</i> in large size:
+
+<pre class="ned">
+@display("i=block/source;is=l");
+</pre>
+<p>
+Icons may also be colorized, which can often be useful. Color can indicate
+the status or grouping of the module, or simply serve aesthetic purposes.
+The following example makes the icon 20% red:
+
+<pre class="ned">
+@display("i=block/source,red,20")
+</pre>
+<p>
+<center>
+<img src="graphics-itag.png">
+</center>
+
+<p><h4><a name="sec:graphics:submodule-status-icon"/>8.4.3.2 Status Icon<a class="headerlink" href="#sec:graphics:submodule-status-icon" title="Permalink to this headline">¶</a></h4>
+
+<p>Modules may also display a small auxiliary icon in the top-right corner of
+the main icon. This icon can be useful for displaying the status of the
+module, for example, and can be set with the <tt>i2</tt> tag. Icons suitable
+for use with <tt>i2</tt> are in the <tt>status/</tt> category.
+
+<p>An example:
+
+<pre class="ned">
+@display("i=block/queue;i2=status/busy")
+</pre>
+<p>
+<center>
+<img src="graphics-i2tag.png">
+</center>
+
+<p><h4><a name="sec:graphics:submodule-shapes"/>8.4.3.3 Shapes<a class="headerlink" href="#sec:graphics:submodule-shapes" title="Permalink to this headline">¶</a></h4>
+
+<p>To have a simple but resizable representation for a module, one can use
+the <tt>b</tt> tag to create geometric shapes. Currently, <tt>oval</tt> and
+<tt>rectangle</tt> are supported.
+
+<p>The following example displays an oval shape of the size 70x30 with a 4-pixel
+black border and red fill:
+
+<pre class="ned">
+@display("b=70,30,oval,red,black,4")
+</pre>
+<p>
+<center>
+<img src="graphics-btag.png">
+</center>
+
+<p><h4><a name="sec:graphics:submodule-positioning"/>8.4.3.4 Positioning<a class="headerlink" href="#sec:graphics:submodule-positioning" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt>p</tt> tag allows one to define the position of a submodule or
+otherwise affect its placement.
+
+<p><ul class="note"><b>NOTE</b><br>
+If the <tt>p</tt> tag is missing or doesn't specify the position, OMNeT++ will
+use a layouting algorithm to place the module automatically. The layouting
+algorithm is covered in section <a href="chap8.html#sec:graphics:compound-module-layouting">[8.4.10]</a>.
+</ul>
+
+<p>The following example will place the module at the given position:
+
+<pre class="ned">
+@display("p=50,79");
+</pre>
+<p>
+<ul class="note"><b>NOTE</b><br>
+Coordinates and distances in <tt>p</tt>, <tt>b</tt> or <tt>r</tt> tags need not
+be integers. Fractional numbers make sense because runtime GUIs (Tkenv,
+Qtenv) support zooming.
+</ul>
+
+<p>If the submodule is a module vector, one can also specify in the <tt>p</tt>
+tag how to arrange the elements of the vector. They can be arranged in a
+row, a column, a matrix or a ring. The rest of the arguments in the <tt>p</tt>
+tag depend on the layout type:
+
+<p><ul>
+  <li> <tt>row -- p=100,100,r,<i>deltaX</i></tt> (A row of modules with <i>deltaX</i> units between the modules)
+  <li> <tt>column -- p=100,100,c,<i>deltaY</i></tt> (A column of modules with <i>deltaX</i> units between the modules)
+  <li> <tt>matrix -- p=100,100,m,<i>noOfCols</i>,<i>deltaX</i>,<i>deltaY</i></tt> (A matrix with <i>noOfCols</i> columns.
+            <i>deltaX</i> and <i>deltaY</i> units between rows and columns)
+  <li> <tt>ring -- p=100,100,ri,<i>rx</i>,<i>ry</i></tt> (A ring (oval) with <i>rx</i> and <i>ry</i> as the horizontal and vertical radius.)
+  <li> <tt>exact (default) -- p=100,100,x,<i>deltaX</i>,<i>deltaY</i></tt> (Place each module at <i>(100+deltaX, 100+deltaY)</i>.
+            The coordinates are usually set at runtime.)
+</ul>
+
+<p>A matrix layout for a module vector (note that the first two arguments, <i>x</i>
+and <i>y</i> are omitted, so the submodule matrix as a whole will be placed by
+the layouter algorithm):
+
+<pre class="ned">
+host[20]: Host {
+    @display("p=,,m,4,50,50");
+}
+</pre>
+<p>
+
+<p>  <center>
+    <img src="graphics-ptag.png">
+    <center><div class="caption"><i>Figure: Matrix arrangement using the <i>p</i> tag</i></div></center>
+    <a name="fig:graphics-ptag"></a>
+  </center>
+
+<p>
+<h4><a name="sec:graphics:submodule-wireless-range"/>8.4.3.5 Wireless Range<a class="headerlink" href="#sec:graphics:submodule-wireless-range" title="Permalink to this headline">¶</a></h4>
+
+<p>In wireless simulations, it is often useful to be able to display a circle
+or disc around the module to indicate transmission range, reception range,
+or interference range. This can be done with the <tt>r</tt> tag.
+
+<p>In the following example, the module will have a circle with a 90-unit radius
+around it as a range indicator:
+
+<pre class="ned">
+submodules:
+    ap: AccessPoint {
+        @display("p=50,79;r=90");
+    }
+</pre>
+<p>
+
+<p>  <center>
+    <img src="graphics-rtag.png">
+    <center><div class="caption"><i>Figure: Range indicator using the <i>r</i> tag</i></div></center>
+    <a name="fig:graphics-rtag"></a>
+  </center>
+
+<p>
+<h4><a name="sec:graphics:submodule-queue-length"/>8.4.3.6 Queue Length<a class="headerlink" href="#sec:graphics:submodule-queue-length" title="Permalink to this headline">¶</a></h4>
+
+<p>If a module contains a queue object (<tt><a href="../api/classomnetpp_1_1cQueue.html">cQueue</a></tt>), it is possible to
+let the graphical user interface display the queue length next to the
+module icon. To achieve that, one needs to specify the queue object's name
+(the string set via the <tt>setName()</tt> method) in the <tt>q</tt> display string tag.
+OMNeT++ finds the queue object by traversing the object tree inside
+the module.
+
+<p>The following example displays the length of the queue named <tt>"jobQueue"</tt>:
+
+<pre class="ned">
+@display("q=jobQueue");
+</pre>
+<p>
+<center>
+<img src="graphics-qtag.png">
+</center>
+
+<p><h4><a name="sec:graphics:submdule-text-and-tooltip"/>8.4.3.7 Text and Tooltip<a class="headerlink" href="#sec:graphics:submdule-text-and-tooltip" title="Permalink to this headline">¶</a></h4>
+
+<p>It is possible to have a short text displayed next to or above the module icon
+or shape using the <tt>t</tt> tag. The tag lets one specify the placement (left,
+right, above) and the color of the text. To display text in a tooltip, use
+the <tt>tt</tt> tag.
+
+<p>The following example displays text above the module icon, and also adds
+tooltip text that can be seen by hovering over the module icon with the
+mouse.
+
+<pre class="ned">
+@display("t=Packets sent: 18;tt=Additional tooltip information");
+</pre>
+<p>
+<center>
+<img src="graphics-ttag.png">
+</center>
+
+<p><ul class="note"><b>NOTE</b><br>
+  The <tt>t</tt> and <tt>tt</tt> tags, when set at runtime, can be used to display
+  information about the module's state. The <tt>setTagArg()</tt> method
+  of <tt><a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a></tt> can be used to update the text:
+  <tt>getDisplayString().setTagArg("t", 0, str);</tt>
+</ul>
+
+<p>For a detailed descripton of the display string tags, check
+Appendix <a href="chap24.html#cha:display-strings">[24]</a>.
+
+<p>
+<h3><a name="sec:graphics:background-displaystring-tags"/>8.4.4 Background Tags<a class="headerlink" href="#sec:graphics:background-displaystring-tags" title="Permalink to this headline">¶</a></h3>
+
+<p>The following tags of the module display string are in effect when the
+module itself is opened in a GUI. These tags mostly deal with the visual
+properties of the background rectangle.
+
+<p><ul>
+  <li> <tt>bgb</tt> -- size, color and border of the background rectangle
+  <li> <tt>bgi</tt> -- background image and its display mode
+  <li> <tt>bgtt</tt> -- tooltip above the background
+  <li> <tt>bgg</tt> -- background grid: color, spacing, etc.
+  <li> <tt>bgu</tt> -- measurement unit of coordinates/distances
+</ul>
+
+<p>In the following example, the background area is defined to be 6000x4500
+units, and the map of Europe is used as a background, stretched to fill the
+whole area. A grid is also drawn, with 1000 units between major ticks,
+and 2 minor ticks per major tick.
+
+<pre class="ned">
+network EuropePlayground
+{
+    @display("bgb=6000,4500;bgi=maps/europe,s;bgg=1000,2,grey95;bgu=km");
+</pre>
+<p>
+
+<p>  <center>
+    <img src="graphics-bgtags.png">
+    <center><div class="caption"><i>Figure: Background image and grid</i></div></center>
+    <a name="fig:graphics-bgtags"></a>
+  </center>
+
+<p>
+The <tt>bgu</tt> tag deserves special attention. It does not affect
+the visual appearance, but instead it is a hint for model code
+on how to interpret coordinates and distances in this compound
+module. The above example specifies <tt>bgu=km</tt>, which means
+that if the model attaches physical meaning to coordinates and
+distances, then those numbers should be interpreted as kilometers.
+
+<p>More detailed information, such as what each tag argument means, is
+available in Appendix <a href="chap24.html#cha:display-strings">[24]</a>.
+
+<p>
+<h3><a name="sec:graphics:connection-displaystrings"/>8.4.5 Connection Display Strings<a class="headerlink" href="#sec:graphics:connection-displaystrings" title="Permalink to this headline">¶</a></h3>
+
+<p>Connections may also have display strings. Connections inherit the
+display string property from their channel types, in the same way as
+submodules inherit theirs from module types. The default display
+strings are empty.
+
+<p>Connections support the following tags:
+
+<p><ul>
+  <li> <tt>ls</tt> -- line style and color
+  <li> <tt>t</tt> -- text
+  <li> <tt>tt</tt> -- tooltip
+  <li> <tt>m</tt> -- orientation and positioning
+</ul>
+
+<p>Example of a thick, red connection:
+<pre class="ned">
+source1.out --&gt; { @display("ls=red,3"); } --&gt; queue1.in++;
+</pre>
+
+<p><center>
+<img src="graphics-lstag.png">
+</center>
+
+<p><ul class="note"><b>NOTE</b><br>
+To hide a connection, specify zero line width in the display string:
+<tt>"ls=,0"</tt>.
+</ul>
+
+<p>More detailed information, such as what each tag argument means, is
+available in Appendix <a href="chap24.html#cha:display-strings">[24]</a>.
+
+<p>
+<h3><a name="sec:graphics:message-displaystrings"/>8.4.6 Message Display Strings<a class="headerlink" href="#sec:graphics:message-displaystrings" title="Permalink to this headline">¶</a></h3>
+
+<p>Message display strings affect how messages are shown during animation.
+By default, they are displayed as a small filled circle, in one of
+8 basic colors (the color is determined as <i>message kind modulo 8</i>),
+and with the message class and/or name displayed under it.
+The latter is configurable in the Options dialog of Tkenv and Qtenv,
+and message kind dependent coloring can also be turned off there.
+
+<p><h4><a name="sec:graphics:specifying-message-displaystrings"/>8.4.6.1 How to Specify<a class="headerlink" href="#sec:graphics:specifying-message-displaystrings" title="Permalink to this headline">¶</a></h4>
+
+<p>Message objects do not store a display string by default. Instead,
+<tt><a href="../api/classomnetpp_1_1cMessage.html">cMessage</a></tt> defines a virtual <tt>getDisplayString()</tt> method
+that one can override in subclasses to return an arbitrary string.
+The following example adds a display string to a new message class:
+
+<pre class="cpp">
+class Job : public <a href="../api/classomnetpp_1_1cMessage.html">cMessage</a>
+{
+  public:
+    const char *getDisplayString() const {return "i=msg/packet;is=vs";}
+    //...
+};
+</pre>
+<p>
+Since message classes are often defined in <tt>msg</tt> files (see chapter
+<a href="chap6.html#cha:msg-def">[6]</a>), it is often convenient to let the message compiler
+generate the <tt>getDisplayString()</tt> method. To achieve that, add a
+string field named <tt>displayString</tt> with an initializer to the message
+definition. The message compiler will generate <tt>setDisplayString()</tt>
+and <tt>getDisplayString()</tt> methods into the new class, and also set the
+initial value in the constructor.
+
+<p>An example message file:
+
+<pre class="msg">
+message Job
+{
+    string displayString = "i=msg/package_s,kind";
+    //...
+}
+</pre>
+<p>
+<h4><a name="sec:graphics:message-displaystring-tags"/>8.4.6.2 Tags<a class="headerlink" href="#sec:graphics:message-displaystring-tags" title="Permalink to this headline">¶</a></h4>
+
+<p>The following tags can be used in message display strings:
+
+<p><ul>
+  <li> <tt>b</tt> -- shape, color
+  <li> <tt>i</tt> -- icon
+  <li> <tt>is</tt> -- icon size
+</ul>
+
+<p><ul class="note"><b>NOTE</b><br>
+   In message display strings, <tt>kind</tt> is accepted as a special color name.
+   It will cause the color to be derived from <i>message kind</i> field in the message.
+</ul>
+
+<p>The following example displays a small red box icon:
+
+<pre class="ned">
+@display("i=msg/box,red;is=s");
+</pre>
+<p>
+The next one displays a 15x15 rectangle, with while fill, and with a border
+color dependent on the message kind:
+
+<pre class="ned">
+@display("b=15,15,rect,white,kind,5");
+</pre>
+<p>
+More detailed information, such as what each tag argument means, is
+available in Appendix <a href="chap24.html#cha:display-strings">[24]</a>.
+
+<p>
+<h3><a name="sec:graphics:displaystring-parameter-substitution"/>8.4.7 Parameter Substitution<a class="headerlink" href="#sec:graphics:displaystring-parameter-substitution" title="Permalink to this headline">¶</a></h3>
+
+<p>Parameters of the module or channel containing the
+display string can be substituted into the display string
+with the <tt>$parameterName</tt> notation:
+
+<p>Example:
+
+<pre class="ned">
+simple MobileNode
+{
+    parameters:
+        double xpos;
+        double ypos;
+        string fillColor;
+        // get the values from the module parameters xpos,ypos,fillcolor
+        @display("p=$xpos,$ypos;b=60,10,rect,$fillColor,black,2");
+}
+</pre>
+<p>
+<h3><a name="sec:graphics:displaystring-colors"/>8.4.8 Colors<a class="headerlink" href="#sec:graphics:displaystring-colors" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:graphics:displaystring-color-names"/>8.4.8.1 Color Names<a class="headerlink" href="#sec:graphics:displaystring-color-names" title="Permalink to this headline">¶</a></h4>
+
+<p>A color may be given in several forms. One is English names: <tt>blue</tt>,
+<tt>lightgrey</tt>, <tt>wheat</tt>, etc.; the list includes all standard SVG
+color names.
+
+<p>Another acceptable form is the HTML RGB syntax: <i>#rgb</i> or
+<i>#rrggbb</i>, where <i>r</i>,<i>g</i>,<i>b</i> are hex digits.
+
+<p>It is also possible to specify colors in HSB (hue-saturation-brightness) as
+<i>@hhssbb</i> (with <i>h</i>, <i>s</i>, <i>b</i> being hex digits).
+HSB makes it easier to scale colors e.g. from white to bright red.
+
+<p>One can produce a transparent background by specifying a hyphen (<i>"-"</i>)
+as background color.
+
+<p>In message display strings, <tt>kind</tt> can also be used as a special color
+name. It will map message kind to a color. (See the <tt>getKind()</tt>
+method of <tt><a href="../api/classomnetpp_1_1cMessage.html">cMessage</a></tt>.)
+
+<p><h4><a name="sec:graphics:displaystring-icon-colorization"/>8.4.8.2 Icon Colorization<a class="headerlink" href="#sec:graphics:displaystring-icon-colorization" title="Permalink to this headline">¶</a></h4>
+
+<p>The <tt>"i="</tt> display string tag allows for colorization of icons.
+It accepts a target color and a percentage as the degree of colorization.
+Percentage has no effect if the target color is missing.
+Brightness of the icon is also affected -- to keep the original brightness,
+specify a color with about 50% brightness (e.g. <tt>#808080</tt> mid-grey,
+<tt>#008000</tt> mid-green).
+
+<p>Examples:
+
+<p><ul>
+  <li> <tt>"i=device/server,gold"</tt> creates a gold server icon
+  <li> <tt>"i=misc/globe,#808080,100"</tt> makes the icon greyscale
+  <li> <tt>"i=block/queue,white,100"</tt> yields a "burnt-in" black-and-white icon
+</ul>
+
+<p>Colorization works with both submodule and message icons.
+
+<p>
+<h3><a name="sec:graphics:icon-library"/>8.4.9 Icons<a class="headerlink" href="#sec:graphics:icon-library" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:graphics:image-path"/>8.4.9.1 The Image Path<a class="headerlink" href="#sec:graphics:image-path" title="Permalink to this headline">¶</a></h4>
+
+<p>In the current OMNeT++ version, module icons are PNG or GIF files. The icons shipped
+with OMNeT++ are in the <tt>images/</tt> subdirectory. The IDE, Tkenv and Qtenv all
+need the exact location of this directory to be able to load the icons.
+
+<p>Icons are loaded from all directories in the <i>image path</i>,
+a semicolon-separated list of directories.
+The default image path is compiled into Tkenv and Qtenv with the value
+<tt>"<i>&lt;omnetpp&gt;</i>/images;./images"</tt>. This works fine (unless the
+OMNeT++ installation is moved), and the <tt>./images</tt> part also allows
+icons to be loaded from the <tt>images/</tt> subdirectory of the current
+directory. As users typically run simulation models from the model's
+directory, this practically means that custom icons placed in the
+<tt>images/</tt> subdirectory of the model's directory are automatically
+loaded.
+
+<p>The compiled-in image path can be overridden with the <tt>OMNETPP_IMAGE_PATH</tt>
+environment variable. The way of setting environment variables is system
+specific: in Unix, if one is using the bash shell, adding a line
+
+<pre class="commandline">
+export OMNETPP_IMAGE_PATH="$HOME/omnetpp/images;./images"
+</pre>
+<p>
+to <tt>~/.bashrc</tt> or <tt>~/.bash_profile</tt> will do;
+on Windows, environment variables can be set via the <i>My Computer --&gt; Properties</i> dialog.
+
+<p>One can extend the image path from <tt>omnetpp.ini</tt> with the
+<tt>image-path</tt> option, which is prepended to the environment
+variable's value.
+
+<pre class="inifile">
+[General]
+image-path = "/home/you/model-framework/images;/home/you/extra-images"
+</pre>
+<p>
+
+<p><h4><a name="sec:graphics:categorized-icons"/>8.4.9.2 Categorized Icons<a class="headerlink" href="#sec:graphics:categorized-icons" title="Permalink to this headline">¶</a></h4>
+
+<p>Icons are organized into several categories, represented by folders.
+These categories include:
+
+<p><ul>
+  <li> <tt>abstract/</tt> - symbolic icons for various devices
+  <li> <tt>background/</tt> - images useful as background, such as terrain map
+  <li> <tt>block/</tt> - icons for subcomponents (queues, protocols, etc).
+  <li> <tt>device/</tt> - network device icons: servers, hosts, routers, etc.
+  <li> <tt>misc/</tt> - node, subnet, cloud, building, town, city, etc.
+  <li> <tt>msg/</tt> - icons that can be used for messages
+  <li> <tt>status/</tt> - status icons such as up, down, busy, etc.
+</ul>
+
+<p>Icon names to be used with the <tt>i</tt>, <tt>bgi</tt> and other tags should
+contain the subfolder (category) name but not the file extension. For
+example, <tt>/opt/omnetpp/images/block/sink.png</tt> should be referred to as
+<tt>block/sink</tt>.
+
+<p>
+<h4><a name="sec:graphics:icon-size"/>8.4.9.3 Icon Size<a class="headerlink" href="#sec:graphics:icon-size" title="Permalink to this headline">¶</a></h4>
+
+<p>Icons come in various sizes: normal, large, small, very small, very large.
+Sizes are encoded into the icon name's suffix: <tt>_vl</tt>, <tt>_l</tt>,
+<tt>_s</tt>, <tt>_vs</tt>. In display strings, one can either use the suffix
+(<tt>"i=device/router_l"</tt>), or the <tt>"is</tt>" (<i>icon size</i>)
+display string tag (<tt>"i=device/router;is=l"</tt>), but not both at the same
+time (we recommend using the <tt>is</tt> tag.)
+
+<p>
+<h3><a name="sec:graphics:compound-module-layouting"/>8.4.10 Layouting<a class="headerlink" href="#sec:graphics:compound-module-layouting" title="Permalink to this headline">¶</a></h3>
+
+<p>OMNeT++ implements an automatic layouting feature, using a variation of the
+Spring Embedder algorithm. Modules which have not been assigned explicit
+positions via the <tt>"p="</tt> tag will be automatically placed by the
+algorithm.
+
+<p>Spring Embedder is a graph layouting algorithm based on a physical model.
+Graph nodes (modules) repel each other like electric charges of the same
+sign, and connections act as springs that pull nodes together. There is
+also friction built in, in order to prevent oscillation of the nodes. The
+layouting algorithm simulates this physical system until it reaches
+equilibrium (or times out). The physical rules above have been slightly
+tweaked to achieve better results.
+
+<p>The algorithm doesn't move any module which has fixed coordinates. Modules
+that are part of a predefined arrangement (row, matrix, ring, etc., defined
+via the 3rd and further args of the <tt>"p="</tt> tag) will be moved together,
+to preserve their relative positions.
+
+<p><ul class="note"><b>NOTE</b><br>
+The positions of modules placed by the layouting algorithm are not
+available from simulation models. Think about it: what positions should
+OMNeT++ report if the model is run under Cmdenv, or under Tkenv/Qtenv but
+the compound module was never opened in the GUI? The absence of explicit
+coordinates in the NED file conceptually means that the modeler
+<i>doesn't care</i> about the position of that module.
+</ul>
+
+<p>Caveats:
+
+<p><ul>
+  <li> If the full graph is too big after layouting, it is scaled
+    back so that it fits on the screen, <i>unless it contains
+    any fixed-position module</i>. (For obvious reasons: if there is a module
+    with manually specified position, we don't want to move that one).
+    To prevent rescaling, one can specify a sufficiently large bounding
+    box in the background display string, e.g. <tt>"b=2000,3000"</tt>.
+  <li> Submodule size is ignored by the present layouter, so modules
+    with elongated shapes may not be placed ideally.
+  <li> The algorithm may produce erratic results, especially for small graphs
+    when the number of submodules is small, or when using predefined
+    (matrix, row, ring, etc) layouts. The <i>Relayout</i> toolbar button
+    can then be very useful. Larger networks usually produce
+    satisfactory results.
+  <li> The algorithm starts by placing the nodes randomly, and this initial
+    arrangement greatly affects the end result. The algorithm has its
+    own RNG that starts from a default seed. The <i>Relayout</i> button
+    changes this seed, and this seed is persistently stored so later runs
+    of the model will produce the same layout.
+</ul>
+
+<p>
+<h3><a name="sec:graphics:changing-displaystrings-at-runtime"/>8.4.11 Changing Display Strings at Runtime<a class="headerlink" href="#sec:graphics:changing-displaystrings-at-runtime" title="Permalink to this headline">¶</a></h3>
+
+<p>It is often useful to manipulate the display string at runtime.
+Changing colors, icon, or text may convey status change, and
+changing a module's position is useful when simulating mobile
+networks.
+
+<p>Display strings are stored in <tt><a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a></tt> objects inside
+channels, modules and gates. <tt><a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a></tt> also lets one
+manipulate the string.
+
+<p>As far as <tt><a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a></tt> is concerned, a display string
+(e.g. <tt>"p=100,125;i=cloud"</tt>) is a string that consist of several
+<i>tags</i> separated by semicolons, and each tag has a <i>name</i>
+and after an equal sign, zero or more <i>arguments</i> separated by commas.
+
+<p>The class facilitates tasks such as finding out what tags a display string
+has, adding new tags, adding arguments to existing tags, removing tags or
+replacing arguments. The internal storage method allows very fast
+operation; it will generally be faster than direct string manipulation. The
+class doesn't try to interpret the display string in any way, nor does it
+know the meaning of the different tags; it merely parses the string as data
+elements separated by semicolons, equal signs and commas.
+
+<p>To get a pointer to a <tt><a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a></tt> object, one can call
+the components's <tt>getDisplayString()</tt> method.
+
+<p><ul class="note"><b>NOTE</b><br>
+The connection display string is stored in the channel object, but it
+can also be accessed via the source gate of the connection.
+</ul>
+
+<p>The display string can be overwritten using the <tt>parse()</tt> method.
+Tag arguments can be set with <tt>setTagArg()</tt>, and tags removed
+with <tt>removeTag()</tt>.
+
+<p>The following example sets a module's position, icon and status icon
+in one step:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a>& dispStr = getDisplayString();
+dispStr.parse("p=40,20;i=device/cellphone;i2=status/disconnect");
+</pre>
+<p>
+Setting an outgoing connection's color to red:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a>& connDispStr = gate("out")-&gt;getDisplayString();
+connDispStr.parse("ls=red");
+</pre>
+<p>
+Setting module background and grid with background display string tags:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cDisplayString.html">cDisplayString</a>& parentDispStr = getParentModule()-&gt;getDisplayString();
+parentDispStr.parse("bgi=maps/europe;bgg=100,2");
+</pre>
+<p>
+The following example updates a display string so that it contains
+the <tt>p=40,20</tt> and <tt>i=device/cellphone</tt> tags:
+
+<pre class="cpp">
+dispStr.setTagArg("p", 0, 40);
+dispStr.setTagArg("p", 1, 20);
+dispStr.setTagArg("i", 0, "device/cellphone");
+</pre>
+<p>
+<h2><a name="sec:graphics:bubbles"/>8.5 Bubbles<a class="headerlink" href="#sec:graphics:bubbles" title="Permalink to this headline">¶</a></h2>
+
+<p>Modules can display a transient bubble with a short message (e.g. "Going
+down" or "Connection estalished") by calling the <tt>bubble()</tt> method of
+<tt><a href="../api/classomnetpp_1_1cComponent.html">cComponent</a></tt>. The method takes the string to be displayed as a
+<tt>const char *</tt> pointer.
+
+<p>An example:
+<pre class="cpp">
+bubble("Going down!");
+</pre>
+
+<p><center>
+<img src="graphics-bubble.png">
+</center>
+
+<p>If the module often displays bubbles, it is recommended to make the
+corresponding code conditional on <tt>hasGUI()</tt>. The <tt>hasGUI()</tt>
+method returns <i>false</i> if the simulation is running under Cmdenv.
+
+<pre class="cpp">
+if (hasGUI()) {
+    char text[32];
+    sprintf(text, "Collision! (%s frames)", numCollidingFrames);
+    bubble(text);
+}
+</pre>
+<p>
+
+<p>
+<h2><a name="sec:graphics:canvas"/>8.6 The Canvas<a class="headerlink" href="#sec:graphics:canvas" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:graphics:canvas-overview"/>8.6.1 Overview<a class="headerlink" href="#sec:graphics:canvas-overview" title="Permalink to this headline">¶</a></h3>
+
+<p>The canvas is the 2D drawing API of OMNeT++. Using the canvas, one can
+display lines, curves, polygons, images, text items and their combinations,
+using colors, transparency, geometric transformations, antialiasing and
+more. Drawings created with the canvas API can be viewed when the simulation
+is run under a graphical user interface (Tkenv or Qtenv).
+
+<p>Use cases for the canvas API include displaying textual annotations,
+status information, live statistics in the form of plots, charts, gauges,
+counters, etc. Other types of simulations may call for different types of
+graphical presentation. For example, in mobile and wireless simulations,
+the canvas API can be used to draw the scene including a background (like a
+street map or floor plan), mobile objects (vehicles, people), obstacles
+(trees, buildings, hills), antennas with orientation, and also extra
+information like connectivity graph, movement trails, individual
+transmissions and so on.
+
+<p>An arbitrary number of drawings (canvases) can be created, and every module
+already has one by default. A module's default canvas is the one on which
+the module's submodules and internal connections are also displayed, so the
+canvas API can be used to enrich the default, display string based
+presentation of a compound module.
+
+<p>OMNeT++ calls the items that appear on a canvas <i>figures</i>. The
+corresponding C++ types are <tt><a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a></tt> and <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt>. In fact,
+<tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt> is an abstract base class, and different kinds of figures
+are represented by various subclasses of <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt>.
+
+<p>Figures can be declared statically in NED files using <b><tt>@figure</tt></b>
+properties, and can also be accessed, created and manipulated
+programmatically at runtime.
+
+<p>
+<h3><a name="sec:graphics:creating-accessing-and-viewing-canvases"/>8.6.2 Creating, Accessing and Viewing Canvases<a class="headerlink" href="#sec:graphics:creating-accessing-and-viewing-canvases" title="Permalink to this headline">¶</a></h3>
+
+<p>A canvas is represented by the <tt><a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a></tt> C++ class. A module's
+default canvas can be accessed with the <tt>getCanvas()</tt> method of
+<tt><a href="../api/classomnetpp_1_1cModule.html">cModule</a></tt>. For example, a toplevel submodule can get hold of the
+network's canvas with the following line:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a> *canvas = getParentModule()-&gt;getCanvas();
+</pre>
+<p>
+Using the canvas pointer, it is possible to check what figures it
+contains, add new figures, manipulate existing ones, and so on.
+
+<p>New canvases can be created by simply creating new <tt><a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a></tt>
+objects, like so:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a> *canvas = new <a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a>("liveStatistics"); // arbitrary name string
+</pre>
+<p>
+To view the contents of these additional canvases in Tkenv or Qtenv, one
+needs to navigate to the canvas' owner object (which will usually be the
+module that created the canvas), view the list of objects it contains, and
+double-click the canvas in the list. Giving meaningful names to extra
+canvas objects like in the example above can simplify the process of
+locating them in the Tkenv/Qtenv GUI.
+
+<p>
+<h3><a name="sec:graphics:figure-classes"/>8.6.3 Figure Classes<a class="headerlink" href="#sec:graphics:figure-classes" title="Permalink to this headline">¶</a></h3>
+
+<p>The base class of all figure classes is <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt>. The class hierarchy
+is shown in figure <a href="chap8.html#fig:figure-inheritance">below</a>.
+
+<p>
+  <center>
+    <img src="figure-inheritance.svg">
+    <center><div class="caption"><i>Figure: <a href="../api/classomnetpp_1_1cFigure.html">cFigure</a> class hierarchy</i></div></center>
+    <a name="fig:figure-inheritance"></a>
+  </center>
+
+<p>
+In subsequent sections, we'll first describe features that are common
+to all figures, then we'll briefly cover each figure class. Finally,
+we'll look into how one can define new figure types.
+
+<p><ul class="note"><b>NOTE</b><br>
+Figures are only data storage classes. The real drawing code is inside
+Tkenv/Qtenv; it might involve a parallel data structure, figure renderer
+classes, etc. When the canvas is not viewed, corresponding objects in
+Tkenv/Qtenv do not exist. Therefore, data flow is largely one-directional --
+figures-to-GUI.
+</ul>
+
+<p>
+<h3><a name="sec:graphics:figure-tree"/>8.6.4 The Figure Tree<a class="headerlink" href="#sec:graphics:figure-tree" title="Permalink to this headline">¶</a></h3>
+
+<p>Figures on a canvas are organized into a tree. The canvas has a
+(hidden) <i>root figure</i>, and all toplevel figures are
+children of the root figure. Any figure may contain child figures,
+not only dedicated ones like <tt><a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a></tt>.
+
+<p>Every figure also has a name string, inherited from <tt><a href="../api/classomnetpp_1_1cNamedObject.html">cNamedObject</a></tt>.
+Since figures are in a tree, every figure also has a <i>hierarchical name</i>.
+It consists of the names of figures in the path from the root figure down to the
+the figure, joined with dots. (The name of the root figure itself is omitted.)
+
+<p>Child figures can be added to a figure with the <tt>addFigure()</tt> method, or
+inserted into the child list of a figure relative to a sibling with the
+<tt>insertBefore()</tt> / <tt>insertAfter()</tt> methods.
+<tt>addFigure()</tt> has two flavours: one for appending, and one for inserting
+at a numeric position. Child figures can be accessed by name
+(<tt>getFigure(name)</tt>), or enumerated by index in the child list
+(<tt>getFigure(k)</tt>, <tt>getNumFigures()</tt>). One can obtain the index of a
+child figure using  <tt>findFigure()</tt>. The <tt>removeFromParent()</tt> method
+can be used to remove a figure from its parent.
+
+<p>For convenience, <tt><a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a></tt> also has <tt>addFigure()</tt>,
+<tt>getFigure()</tt>, <tt>getNumFigures()</tt> and other methods for managing
+toplevel figures without the need to go via the root figure.
+
+<p>The following code enumerates the children of a figure named <tt>"group1"</tt>:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a> *parent = canvas-&gt;getFigure("group1");
+ASSERT(parent != nullptr);
+for (int i = 0; i &lt; parent-&gt;getNumFigures(); i++)
+    EV &lt;&lt; parent-&gt;getFigure(i)-&gt;getName() &lt;&lt; endl;
+</pre>
+<p>
+It is also possible to locate a figure by its hierarchical name
+(<tt>getFigureByPath()</tt>), and to find figure by its (non-hierarchical)
+name anywhere in a figure subtree (<tt>findFigureRecursively()</tt>).
+
+<p>The <tt>dup()</tt> method of figure classes only duplicates the very figure
+on which it was called. (The duplicate will not have ay children.) To clone
+a figure including children, use the <tt>dupTree()</tt> method.
+
+<p>
+<h3><a name="sec:graphics:creating-and-manipulating-figures"/>8.6.5 Creating and Manipulating Figures from NED and C++<a class="headerlink" href="#sec:graphics:creating-and-manipulating-figures" title="Permalink to this headline">¶</a></h3>
+
+<p>As mentioned earlier, figures can be defined in the NED file, so they
+don't always need to be created programmatically. This possibility is
+useful for creating static backgrounds or statically defining placeholders
+for dinamically displayed items, among others. Figures defined from NED can
+be accessed and manipulated from C++ code in the same way as dynamically
+created ones.
+
+<p>Figures are defined in NED by adding <b><tt>@figure</tt></b> properties to a module definition.
+The hierarchical name of the figure goes into the property index, that is, in
+square brackets right after <tt>@figure</tt>. The parent of the figure must
+already exist, that is, when defining <tt>foo.bar.baz</tt>, both <tt>foo</tt> and
+<tt>foo.bar</tt> must have already been defined (in NED).
+
+<p>Type and various attributes of the figure go into property body, as
+<i>key-valuelist</i> pairs. <tt>type=line</tt> creates a
+<tt><a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a></tt>, <tt>type=rectangle</tt> creates a
+<tt><a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a></tt>, <tt>type=text</tt> creates a <tt><a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a></tt>,
+and so on; the list of accepted types is given in appendix
+<a href="chap25.html#cha:figure-definitions">[25]</a>. Further attributes largely correspond to
+getters and setters of the C++ class denoted by the <tt>type</tt> attribute.
+
+<p>The following example creates a green rectangle and the text
+<i>"placeholder"</i> in it in NED, and the subsequent C++ code changes
+the same text to <i>"Hello World!"</i>.
+
+<p>NED part:
+
+<pre class="ned">
+module Foo
+{
+    @display("bgb=800,500");
+    @figure[box](type=rectangle; coords=10,50; size=200,100; fillColor=green);
+    @figure[box.label](type=text; coords=20,80; text=placeholder);
+}
+</pre>
+<p>
+And the C++ part:
+
+<pre class="cpp">
+// we assume this code runs in a submodule of the above "Foo" module
+<a href="../api/classomnetpp_1_1cCanvas.html">cCanvas</a> *canvas = getParentModule()-&gt;getCanvas();
+
+// obtain the figure pointer by hierarchical name, and change the text:
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a> *figure = canvas-&gt;getFigureByPath("box.label")
+<a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a> *textFigure = check_and_cast&lt;<a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a> *&gt;(figure);
+textFigure-&gt;setText("Hello World!");
+</pre>
+<p>
+
+<h3><a name="sec:graphics:canvas-stacking-order"/>8.6.6 Stacking Order<a class="headerlink" href="#sec:graphics:canvas-stacking-order" title="Permalink to this headline">¶</a></h3>
+
+<p>The stacking order (a.k.a. Z-order) of figures is jointly determined by the
+child order and the <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt> attribute called Z-index, with
+the latter taking priority. Z-index is not used  directly, but an 
+<i>effective Z-index</i> is computed instead, as the <i>sum</i> 
+of the Z-index values of the figure and all its ancestors up to the root figure.
+
+<p>A figure with a larger effective Z-index will be displayed above figures with
+smaller effective Z-indices, regardless of their positions in the figure tree.
+Among figures whose effective Z-indices are equal, child order determines 
+the stacking order. If two such figures are siblings, the one that occurs
+<i>later</i> in the child list will be drawn above the other.
+For figures that are not siblings, the child order within the first
+common ancestor matters.
+
+
+There are several methods for managing stacking order:
+<tt>setZIndex()</tt>, <tt>getZIndex()</tt>, <tt>getEffectiveZIndex()</tt>,
+<tt>insertAbove()</tt>, <tt>insertBelow()</tt>, 
+<tt>isAbove()</tt>, <tt>isBelow()</tt>, 
+<tt>raiseAbove()</tt>, <tt>lowerBelow()</tt>,
+<tt>raiseToTop()</tt>, <tt>lowerToBottom()</tt>.
+
+<p>
+<h3><a name="sec:graphics:canvas-transforms"/>8.6.7 Transforms<a class="headerlink" href="#sec:graphics:canvas-transforms" title="Permalink to this headline">¶</a></h3>
+
+<p>One of the most powerful features of the Canvas API is being able to assign
+geometric transformations to figures. OMNeT++ uses 2D homogeneous
+transformation matrices, which are able to express affine transforms such
+as translation, scaling, rotation and skew (shearing). The
+transformation matrix used by OMNeT++ has the following format:
+
+
+<center>
+<div>
+<span style="vertical-align: middle;">T&nbsp;=</span>
+<table class="matrix">
+  <tr><td>a</td><td>c</td><td>t<sub>1</sub></td></tr>
+  <tr><td>b</td><td>d</td><td>t<sub>2</sub></td></tr>
+  <tr><td>0</td><td>0</td><td>1</td></tr>
+</table>
+</div>
+</center>
+
+<p>
+
+
+<p>In a nutshell, given a point with its <i>(x, y)</i> coodinates, one can obtain the
+transformed version of it by multiplying the transformation matrix by the
+<i>(x \ y \ 1)</i> column vector (a.k.a. homogeneous coordinates), and dropping the
+third component:
+
+
+<center>
+<div>
+<table class="matrix">
+  <tr><td>x'</td></tr>
+  <tr><td>y'</td></tr>
+  <tr><td>1</td></tr>
+</table>
+<span style="vertical-align: middle;">&nbsp;=&nbsp;</span>
+<table class="matrix">
+  <tr><td>a</td><td>c</td><td>t<sub>1</sub></td></tr>
+  <tr><td>b</td><td>d</td><td>t<sub>2</sub></td></tr>
+  <tr><td>0</td><td>0</td><td>1</td></tr>
+</table>
+<span>&nbsp;</span>
+<table class="matrix">
+  <tr><td>x</td></tr>
+  <tr><td>y</td></tr>
+  <tr><td>1</td></tr>
+</table>
+</div>
+</center>
+
+<p>
+
+
+<p>The result is the point <i>(ax+cy+t<sub>1</sub>, bx+dy+t<sub>2</sub>)</i>. As one can deduce, <i>a</i>,
+<i>b</i>, <i>c</i>, <i>d</i> are responsible for rotation, scaling and skew, and <i>t<sub>1</sub></i> and
+<i>t<sub>2</sub></i> for translation. Also, transforming a point by matrix <i>T<sub>1</sub></i> and then by
+<i>T<sub>2</sub></i> is equivalent to transforming the point by the matrix <i>T<sub>2</sub> T<sub>1</sub></i> due to
+the associativity of matrix multiplication.
+
+<p>
+<h4><a name="sec:graphics:the-transform-class"/>8.6.7.1 The Transform Class<a class="headerlink" href="#sec:graphics:the-transform-class" title="Permalink to this headline">¶</a></h4>
+
+<p>Transformation matrices are represented in OMNeT++ by the <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Transform</tt>
+class.
+
+<p>A <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Transform</tt> transformation matrix can be initialized in
+several ways. First, it is possible to assign its <tt>a</tt>, <tt>b</tt>,
+<tt>c</tt>, <tt>d</tt>, <tt>t1</tt>, <tt>t2</tt> members directly (they are public), or
+via a six-argument constructor. However, it is usually more convenient to
+start from the identity transform (as created by the default constructor), and
+invoke one or more of its several <tt>scale()</tt>, <tt>rotate()</tt>,
+<tt>skewx()</tt>, <tt>skewy()</tt> and <tt>translate()</tt> member functions.
+They update the matrix to (also) perform the given operation (scaling,
+rotation, skewing or translation), as if left-multiplied by a temporary
+matrix that corresponds to the operation.
+
+<p>The <tt>multiply()</tt> method allows one to combine transformations:
+<tt>t1.multiply(t2)</tt> sets <tt>t1</tt> to the product <tt>t2*t1</tt>.
+
+<p>To transform a point (represented by the class <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point</tt>),
+one can use the <tt>applyTo()</tt> method of <tt>Transform</tt>. The
+following code fragment should clarify this:
+
+<pre class="cpp">
+// allow Transform and Point to be referenced without the <a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>:: prefix
+typedef <a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Transform Transform;
+typedef <a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point Point;
+
+// create a matrix that scales by 2, rotates by 45 degrees, and translates by (100,0)
+Transform t = Transform().scale(2.0).rotate(M_PI/4).translate(100,0);
+
+// apply the transform to the point (10, 20)
+Point p(10, 20);
+Point p2 = t.applyTo(p);
+</pre>
+<p>
+
+<p><h4><a name="sec:graphics:figure-transforms"/>8.6.7.2 Figure Transforms<a class="headerlink" href="#sec:graphics:figure-transforms" title="Permalink to this headline">¶</a></h4>
+
+<p>Every figure has an associated transformation matrix, which
+affects how the figure and its figure subtree are displayed.
+In other words, the way a figure displayed is affected by its own
+transformation matrix and the transformation matrices of all of its
+ancestors, up to the root figure of the canvas. The effective transform
+will be the product of those transformation matrices.
+
+<p>A figure's transformation matrix is directly accessible via <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt>'s
+<tt>getTransform()</tt>, <tt>setTransform()</tt> member functions.
+For convenience, <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt> also has several <tt>scale()</tt>, <tt>rotate()</tt>,
+<tt>skewx()</tt>, <tt>skewy()</tt> and <tt>translate()</tt> member functions,
+which directly operate on the internal transformation matrix.
+
+<p>Some figures have visual aspects that are not, or only optionally affected
+by the transform. For example, the size and orientation of the text
+displayed by <tt><a href="../api/classomnetpp_1_1cLabelFigure.html">cLabelFigure</a></tt>, in contrast to that of
+<tt><a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a></tt>, is unaffected by transforms (and of manual zoom as
+well). Only the position is transformed.
+
+<p><h4><a name="sec:graphics:figure-transform-vs-move"/>8.6.7.3 Transform vs move()<a class="headerlink" href="#sec:graphics:figure-transform-vs-move" title="Permalink to this headline">¶</a></h4>
+
+<p>In addition to the <tt>translate()</tt>, <tt>scale()</tt>, <tt>rotate()</tt>,
+etc. functions that update the figure's transformation matrix, figures also
+have a <tt>move()</tt> method. <tt>move()</tt>, like <tt>translate()</tt>,
+also moves the figure by a <i>dx</i>, <i>dy</i> offset. However, <tt>move()</tt> works
+by changing the figure's coordinates, and not by changing the
+transformation matrix.
+
+<p>Since every figure class stores and interprets its position differently,
+<tt>move()</tt> is defined for each figure class independently. For example,
+<tt><a href="../api/classomnetpp_1_1cPolylineFigure.html">cPolylineFigure</a></tt>'s <tt>move()</tt> changes the coordinates of each point.
+
+<p><tt>move()</tt> is recursive, that is, it not only moves the figure on which
+it was called, but also its children. There is also a non-recursive variant,
+called <tt>moveLocal()</tt>.
+
+<p>
+<h3><a name="sec:graphics:showing-hiding-figures"/>8.6.8 Showing/Hiding Figures<a class="headerlink" href="#sec:graphics:showing-hiding-figures" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:graphics:figure-visibility-flag"/>8.6.8.1 Visibility Flag<a class="headerlink" href="#sec:graphics:figure-visibility-flag" title="Permalink to this headline">¶</a></h4>
+
+<p>Figures have a visibility flag that controls whether the figure is
+displayed. Hiding a figure via the flag will hide the whole figure subtree,
+not just the figure itself. The flag can be accessed via the
+<tt>isVisible()</tt>, <tt>setVisible()</tt> member functions of
+<tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt>.
+
+<p><h4><a name="sec:graphics:figure-tags"/>8.6.8.2 Tags<a class="headerlink" href="#sec:graphics:figure-tags" title="Permalink to this headline">¶</a></h4>
+
+<p>Figures can also be assigned a number of textual tags. Tags do not directly
+affect rendering, but graphical user interfaces that display canvas
+content, namely Tkenv and Qtenv, offer functionality to interactively
+show/hide figures based on tags they contain. This GUI figure filter allows
+one to express conditions like <i>"Show only figures that have tag
+<tt>foo</tt> or <tt>bar</tt>, but among them, hide those that also contain
+tag <tt>baz</tt>".</i> Tag-based filtering and the visibility flag are in AND
+relationship -- figures hidden via <tt>setVisible(false)</tt> cannot be
+displayed using tags. Also when a figure is hidden using the tag filter,
+its figure subtree will also be hidden.
+
+<p>The tag list of a figure can be accessed with the <tt>getTags()</tt> and
+<tt>setTags()</tt> <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt> methods. They return/accept a single
+string that contains the tags separated by spaces (a tag itself cannot
+contain a space.)
+
+<p>Tags functionality, when used carefully, allows one to define "layers"
+that can be turned on/off from Tkenv/Qtenv.
+
+<p>
+
+<p><h3><a name="sec:graphics:figure-tooltip-associated-object"/>8.6.9 Figure Tooltip, Associated Object<a class="headerlink" href="#sec:graphics:figure-tooltip-associated-object" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:graphics:figure-tooltip"/>8.6.9.1  Tooltip<a class="headerlink" href="#sec:graphics:figure-tooltip" title="Permalink to this headline">¶</a></h4>
+
+<p>Figures may be assigned a tooltip text using the <tt>setTooltip()</tt> method. 
+The tooltip is shown in the runtime GUI when one hovers with the mouse over the
+figure.
+
+<p><h4><a name="sec:graphics:figure-associated-object"/>8.6.9.2 Associated Object<a class="headerlink" href="#sec:graphics:figure-associated-object" title="Permalink to this headline">¶</a></h4>
+
+<p>In the visualization of many simulations, some figures correspond to
+certain objects in the simulation model. For example, a truck image
+may correspond to a module that represents the mobile node
+in the simulation. Or, an inflating disc that represents a wireless
+signal may correspond to a message (<tt><a href="../api/classomnetpp_1_1cMessage.html">cMessage</a></tt>) in the simulation.
+
+<p>One can set the associated object on a figure using the 
+<tt>setAssociatedObject()</tt> method. The GUI can use this information
+provide a shortcut access to the associated object, for example select the
+object in an inspector when the user clicks the figure, or display
+the object's tooltip over the figure if it does not have its own.
+
+<p><ul class="caution"><b>CAUTION</b><br>
+The object must exist (i.e. must not be deleted) while it is
+associated with the figure. When the object is deleted, the user
+is responsible for letting  the figure forget the pointer,  
+e.g. by a  <tt>setAssociatedObject(nullptr)</tt> call.
+</ul> 
+  
+<p>
+<h3><a name="sec:graphics:figure-positions-colors-fonts-etc"/>8.6.10 Specifying Positions, Colors, Fonts and Other Properties<a class="headerlink" href="#sec:graphics:figure-positions-colors-fonts-etc" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:graphics:canvas-points"/>8.6.10.1 Points<a class="headerlink" href="#sec:graphics:canvas-points" title="Permalink to this headline">¶</a></h4>
+
+<p>Points are represented by the <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point</tt> struct:
+
+<pre class="cpp">
+struct Point {
+    double x, y;
+    ...
+};
+</pre>
+<p>
+In addition to the public <tt>x</tt>, <tt>y</tt> members and a two-argument
+constructor for convenient initialization, the struct provides overloaded
+operators (+,-,*,/) and some utility functions like <tt>translate()</tt>,
+<tt>distanceTo()</tt> and <tt>str()</tt>.
+
+<p><h4><a name="sec:graphics:canvas-rectangles"/>8.6.10.2 Rectangles<a class="headerlink" href="#sec:graphics:canvas-rectangles" title="Permalink to this headline">¶</a></h4>
+
+<p>Rectangles are represented by the <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle</tt> struct:
+
+<pre class="cpp">
+struct Rectangle {
+    double x, y,
+    double width, height;
+    ...
+};
+</pre>
+<p>
+A rectangle is specified with the coordinates of their top-left corner,
+their width and height. The latter two are expected to be nonnegative. In
+addition to the public <tt>x</tt>, <tt>y</tt>, <tt>width</tt>, <tt>height</tt> members
+and a four-argument constructor for convenient initialization, the struct
+also has utility functions like <tt>getCenter()</tt>, <tt>getSize()</tt>,
+<tt>translate()</tt> and <tt>str()</tt>.
+
+<p><h4><a name="sec:graphics:canvas-colors"/>8.6.10.3 Colors<a class="headerlink" href="#sec:graphics:canvas-colors" title="Permalink to this headline">¶</a></h4>
+
+<p>Colors are represented by the <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Color</tt> struct as 24-bit RGB colors:
+
+<pre class="cpp">
+struct Color {
+    uint8_t red, green, blue;
+    ...
+};
+</pre>
+<p>
+In addition to the public <tt>red</tt>, <tt>green</tt>, <tt>blue</tt> members
+and a three-argument constructor for convenient initialization, the struct
+also has a string-based constructor and <tt>str()</tt> function.
+The string form accepts various notations: HTML colors (<tt>#rrggbb</tt>),
+HSB colors in a similar notation (<tt>@hhssbb</tt>), and English color names
+(SVG and X11 color names, to be more precise.)
+
+<p>However, one doesn't need to use <tt>Color</tt> directly.
+There are also predefined constants for the basic colors (<tt>BLACK</tt>,
+<tt>WHITE</tt>, <tt>GREY</tt>, <tt>RED</tt>, <tt>GREEN</tt>, <tt>BLUE</tt>, <tt>YELLOW</tt>,
+<tt>CYAN</tt>, <tt>MAGENTA</tt>), as well as a collection of carefully chosen
+dark and light colors, suitable for e.g. chart drawing, in the arrays
+<tt>GOOD_DARK_COLORS[]</tt> and <tt>GOOD_LIGHT_COLORS[]</tt>; for convenience,
+the number of colors in each are in the <tt>NUM_GOOD_DARK_COLORS</tt>
+and <tt>NUM_GOOD_LIGHT_COLORS</tt> constants).
+
+<p>The following ways of specifying colors are all valid:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::BLACK;
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Color("steelblue");
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Color("#3d7a8f");
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Color("@20ff80");
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::GOOD_DARK_COLORS[2];
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::GOOD_LIGHT_COLORS[intrand(NUM_GOOD_LIGHT_COLORS)];
+</pre>
+<p>
+
+<p><h4><a name="sec:graphics:canvas-fonts"/>8.6.10.4 Fonts<a class="headerlink" href="#sec:graphics:canvas-fonts" title="Permalink to this headline">¶</a></h4>
+
+<p>The requested font for text figures is represented by the <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Font</tt>
+struct. It stores the typeface, font style and font size in one.
+
+<pre class="cpp">
+struct Font {
+    std::string typeface;
+    int pointSize;
+    uint8_t style;
+    ...
+};
+</pre>
+<p>
+The font does not need to be fully specified, there are some defaults. When
+<tt>typeface</tt> is set to the empty string or when <tt>pointSize</tt> is zero
+or a negative value, that means that the default font or the default size
+should be used, respectively.
+
+<p>The <tt>style</tt> field can be either <tt>FONT_NONE</tt>, or the binary OR of
+the following constants: <tt>FONT_BOLD</tt>, <tt>FONT_ITALIC</tt>,
+<tt>FONT_UNDERLINE</tt>.
+
+<p>The struct also has a three-argument constructor for convenient
+initialization, and an <tt>str()</tt> function that returns a human-readable
+text representation of the contents.
+
+<p>Some examples:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Font("Arial");  // default size, normal
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Font("Arial", 12);  // 12pt, normal
+<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Font("Arial", 12, <a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::FONT_BOLD | <a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::FONT_ITALIC);
+</pre>
+<p>
+
+<p><h4><a name="sec:graphics:canvas-line-and-shape-properties"/>8.6.10.5 Other Line and Shape Properties<a class="headerlink" href="#sec:graphics:canvas-line-and-shape-properties" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt> also contains a number of enums as inner types to describe
+various line, shape, text and image properties. Here they are:
+
+<p><b>LineStyle</b>
+
+<p>Values: <tt>LINE_SOLID</tt>, <tt>LINE_DOTTED</tt>, <tt>LINE_DASHED</tt>
+
+<p>This enum (<tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::LineStyle</tt>) is used by line and shape figures
+to determine their line/border style. The precise graphical interpretation,
+e.g. dash lengths for the <i>dashed</i> style, depends on the graphics
+library that the GUI was implemented with.
+
+<p><b>CapStyle</b>
+
+<p>Values: <tt>CAP_BUTT</tt>, <tt>CAP_ROUND</tt>, <tt>CAP_SQUARE</tt>
+
+<p>This enum is used by line and path figures, and it indicates the shape to
+be used at the end of the lines or open subpaths.
+
+<p><center>
+<img src="graphics-linecaps.png">
+</center>
+
+<p><b>JoinStyle</b>
+
+<p>Values: <tt>JOIN_BEVEL</tt>, <tt>JOIN_ROUND</tt>, <tt>JOIN_MITER</tt>
+
+<p>This enum indicates the shape to be used when two line segments are joined,
+in line or shape figures.
+
+<p><center>
+<img src="graphics-linejoins.png">
+</center>
+
+<p><b>FillRule</b>
+
+<p>Values: <tt>FILL_EVENODD</tt>, <tt>FILL_NONZERO</tt>.
+
+<p>This enum determines which regions of a self-intersecting shape
+should be considered to be inside the shape, and thus be filled.
+
+<p><center>
+<img src="graphics-fillrule.png">
+</center>
+
+<p><b>Arrowhead</b>
+
+<p>Values: <tt>ARROW_NONE</tt>, <tt>ARROW_SIMPLE</tt>, <tt>ARROW_TRIANGLE</tt>, <tt>ARROW_BARBED</tt>.
+
+<p>Some figures support displaying arrowheads at one or both ends of a line.
+This enum determines the style of the arrowhead to be used.
+
+<p><center>
+<img src="graphics-arrowheads.png">
+</center>
+
+<p><b>Interpolation</b>
+
+<p>Values: <tt>INTERPOLATION_NONE</tt>, <tt>INTERPOLATION_FAST</tt>, <tt>INTERPOLATION_BEST</tt>.
+
+<p>Interpolation is used for rendering an image when it is not displayed at
+its native resolution. This enum indicates the algorithm to be used for
+interpolation.
+
+<p>The mode <i>none</i> selects the "nearest neighbor" algorithm.
+<i>Fast</i> emphasizes speed, and <i>best</i> emphasizes quality;
+however, the exact choice of algorithm (bilinear, bicubic, quadratic, etc.)
+depends on features of the graphics library that the GUI was implemented with.
+
+<p><b>Anchor</b>
+
+<p>Values:
+<tt>ANCHOR_CENTER</tt>, <tt>ANCHOR_N</tt>, <tt>ANCHOR_E</tt>, <tt>ANCHOR_S</tt>, <tt>ANCHOR_W</tt>,
+<tt>ANCHOR_NW</tt>, <tt>ANCHOR_NE</tt>, <tt>ANCHOR_SE</tt>, <tt>ANCHOR_SW</tt>;
+<tt>ANCHOR_BASELINE_START</tt>, <tt>ANCHOR_BASELINE_MIDDLE</tt>, <br> <tt>ANCHOR_BASELINE_END</tt>.
+
+<p>Some figures like text and image figures are placed by specifying a single
+point (<i>position</i>) plus an anchor mode, a value from this enum. The
+anchor mode indicates which point of the bounding box of the figure should
+be positioned over the specified point. For example, when using
+<tt>ANCHOR_N</tt>, the figure is placed so that its top-middle point falls at
+the specified point.
+
+<p>The last three, <i>baseline</i> constants are only used with text
+figures, and indicate that the start, middle or end of the text's baseline
+is the anchor point.
+
+<p>
+<h3><a name="sec:graphics:primitive-figures"/>8.6.11 Primitive Figures<a class="headerlink" href="#sec:graphics:primitive-figures" title="Permalink to this headline">¶</a></h3>
+
+<p>Now that we know all about figures in general, we can look into the
+specific figure classes provided by OMNeT++.
+
+<p><h4><a name="sec:graphics:abstractlinefigure"/>8.6.11.1 <a href="../api/classomnetpp_1_1cAbstractLineFigure.html">cAbstractLineFigure</a><a class="headerlink" href="#sec:graphics:abstractlinefigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cAbstractLineFigure.html">cAbstractLineFigure</a></tt> is the common base class for various line
+figures, providing line color, style, width, opacity, arrowhead and other
+properties for them.
+
+<p>Line color can be set with <tt>setLineColor()</tt>, and line width with
+<tt>setLineWidth()</tt>. Lines can be solid, dashed, dotted, etc.; line
+style can be set with <tt>setLineStyle()</tt>. The default line color is
+black.
+
+<p>Lines can be partially transparent. This property can be controlled with
+<tt>setLineOpacity()</tt> that takes a <tt>double</tt> between 0 and 1: a zero
+argument means fully transparent, and one means fully opaque.
+
+<p>Lines can have various cap styles: butt, square, round, etc., which can be
+selected with <tt>setCapStyle()</tt>. Join style, which is a related
+property, is not part of <tt><a href="../api/classomnetpp_1_1cAbstractLineFigure.html">cAbstractLineFigure</a></tt> but instead added to
+specific subclasses where it makes sense.
+
+<p>Lines may also be augmented with arrowheads at either or both ends.
+Arrowheads can be selected with <tt>setStartArrowhead()</tt> and
+<tt>setEndArrowhead()</tt>.
+
+<p>Transformations such as scaling or skew do affect the width of the line as it
+is rendered on the canvas. Whether zooming (by the user) should also affect
+it can be controlled by setting a flag (<tt>setZoomLineWidth()</tt>).
+The default is non-zooming lines.
+
+<p>Specifying zero for line width is currently not allowed. To hide the line,
+use <tt>setVisible(false)</tt>.<br><ul><font size=-1>[It would make sense to display
+zero-width lines as hairlines that are always rendered as one pixel wide
+regardless of transforms and zoom level, but that is not possible on all
+platforms.]</font></ul>
+
+<p>
+<h4><a name="sec:graphics:linefigure"/>8.6.11.2 <a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a><a class="headerlink" href="#sec:graphics:linefigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a></tt> displays a single straight line segment. The endpoints
+of the line can be set with the <tt>setStart()</tt>/<tt>setEnd()</tt>
+methods. Other properties such as color and line style are inherited from
+<tt><a href="../api/classomnetpp_1_1cAbstractLineFigure.html">cAbstractLineFigure</a></tt>.
+
+<p>An example that draws an arrow from (0,0) to (100,100):
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a> *line = new <a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a>("line");
+line-&gt;setStart(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(0,0));
+line-&gt;setEnd(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(100,50));
+line-&gt;setLineWidth(2);
+line-&gt;setEndArrowhead(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::ARROW_BARBED);
+</pre>
+<p>
+The result:
+
+<p><center>
+<img src="figure-line.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:arcfigure"/>8.6.11.3 <a href="../api/classomnetpp_1_1cArcFigure.html">cArcFigure</a><a class="headerlink" href="#sec:graphics:arcfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cArcFigure.html">cArcFigure</a></tt> displays an axis-aligned arc. (To display a
+non-axis-aligned arc, apply a transform to <tt><a href="../api/classomnetpp_1_1cArcFigure.html">cArcFigure</a></tt>, or use
+<tt><a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a></tt>.) The arc's geometry is determined by the bounding box
+of the circle or ellipse, and a start and end angle; they can be set with
+the <tt>setBounds()</tt>, <tt>setStartAngle()</tt> and <tt>setEndAngle()</tt>
+methods. Other properties such as color and line style are inherited from
+<tt><a href="../api/classomnetpp_1_1cAbstractLineFigure.html">cAbstractLineFigure</a></tt>.
+
+<p>For angles, zero points east. Angles that go counterclockwise are
+positive, and those that go clockwise are negative.
+
+<p><ul class="note"><b>NOTE</b><br>
+Angles are in radians in the C++ API, but in degrees when the figure is
+defined in the NED file via <b><tt>@figure</tt></b>.
+</ul>
+
+<p>Here is an example that draws a blue arc with an arrowhead that goes
+counter-clockwise from 3 hours to 12 hours on the clock:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cArcFigure.html">cArcFigure</a> *arc = new <a href="../api/classomnetpp_1_1cArcFigure.html">cArcFigure</a>("arc");
+arc-&gt;setBounds(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle(10,10,100,100));
+arc-&gt;setStartAngle(0);
+arc-&gt;setEndAngle(M_PI/2);
+arc-&gt;setLineColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::BLUE);
+arc-&gt;setEndArrowhead(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::ARROW_BARBED);
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-arc.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:polylinefigure"/>8.6.11.4 <a href="../api/classomnetpp_1_1cPolylineFigure.html">cPolylineFigure</a><a class="headerlink" href="#sec:graphics:polylinefigure" title="Permalink to this headline">¶</a></h4>
+
+<p>By default, <tt><a href="../api/classomnetpp_1_1cPolylineFigure.html">cPolylineFigure</a></tt> displays multiple connecting straight
+line segments. The class stores geometry information as a sequence of
+points. The line may be <i>smoothed</i>, so the figure can also display
+complex curves.
+
+<p>The points can be set with <tt>setPoints()</tt> that takes <tt>std::vector&lt;Point&gt;</tt>,
+or added one-by-one using <tt>addPoint()</tt>. Elements in the point list can be
+read and overwritten (<tt>getPoint()</tt>, <tt>setPoint()</tt>). One can also
+insert and remove points (<tt>insertPoint()</tt> and <tt>removePoint()</tt>.
+
+<p>A smoothed line is drawn as a series of Bezier curves, which touch the
+start point of the first line segment, the end point of the last line
+segment, and the midpoints of intermediate line segments, while
+intermediate points serve as control points. Smoothing can be turned on/off
+using <tt>setSmooth()</tt>.
+
+<p>Additional properties such as color and line style are inherited from
+<tt><a href="../api/classomnetpp_1_1cAbstractLineFigure.html">cAbstractLineFigure</a></tt>. Line join style (which is not part of
+<tt><a href="../api/classomnetpp_1_1cAbstractLineFigure.html">cAbstractLineFigure</a></tt>) can be set with <tt>setJoinStyle()</tt>.
+
+<p>Here is an example that uses a smoothed polyline to draw a spiral:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPolylineFigure.html">cPolylineFigure</a> *polyline = new <a href="../api/classomnetpp_1_1cPolylineFigure.html">cPolylineFigure</a>("polyline");
+const double C = 1.1;
+for (int i = 0; i &lt; 10; i++)
+    polyline-&gt;addPoint(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(5*i*cos(C*i), 5*i*sin(C*i)));
+polyline-&gt;move(100, 100);
+polyline-&gt;setSmooth(true);
+</pre>
+<p>
+
+The result, with both <i>smooth=false</i> and <i>smooth=true</i>:
+
+<p><center>
+<img src="figure-polylines.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:abstractshapefigure"/>8.6.11.5 <a href="../api/classomnetpp_1_1cAbstractShapeFigure.html">cAbstractShapeFigure</a><a class="headerlink" href="#sec:graphics:abstractshapefigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cAbstractShapeFigure.html">cAbstractShapeFigure</a></tt> is an abstract base class for various shapes,
+providing line and fill color, line and fill opacity, line style, line
+width, and other properties for them.
+
+<p>Both outline and fill are optional, they can be turned on and off
+independently with the <tt>setOutlined()</tt> and <tt>setFilled()</tt>
+methods. The default is outlined but unfilled shapes.
+
+<p>Similar to <tt><a href="../api/classomnetpp_1_1cAbstractLineFigure.html">cAbstractLineFigure</a></tt>, line color can be set with
+<tt>setLineColor()</tt>, and line width with <tt>setLineWidth()</tt>.
+Lines can be solid, dashed, dotted, etc.; line style can be set with
+<tt>setLineStyle()</tt>. The default line color is black.
+
+<p>Fill color can be set with <tt>setFillColor()</tt>. The default fill color
+is blue (although it is indifferent until one calls <tt>setFilled(true)</tt>).
+
+<p><ul class="note"><b>NOTE</b><br>
+Invoking <tt>setFillColor()</tt> alone does not make the shape filled,
+one also needs to call <tt>setFilled(true)</tt> for that.
+</ul>
+
+<p>Shapes can be partially transparent, and opacity can be set individually
+for the outline and the fill, using <tt>setLineOpacity()</tt> and
+<tt>setFillOpacity()</tt>. These functions accept a <tt>double</tt> between 0
+and 1: a zero argument means fully transparent, and one means fully opaque.
+
+<p>When the outline is drawn with a width larger than one pixel, it will be
+drawn symmetrically, i.e. approximately 50-50% of its width will fall
+inside and outside the shape. (This also means that the fill and a wide
+outline will partially overlap, but that is only apparent if the
+outline is also partially transparent.)
+
+<p>Transformations such as scaling or skew do affect the width of the line as it
+is rendered on the canvas. Whether zooming (by the user) should also affect
+it can be controlled by setting a flag (<tt>setZoomLineWidth()</tt>).
+The default is non-zooming lines.
+
+<p>Specifying zero for line width is currently not allowed. To hide the outline,
+<tt>setOutlined(false)</tt> can be used.
+
+<p>
+<h4><a name="sec:graphics:rectanglefigure"/>8.6.11.6 <a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a><a class="headerlink" href="#sec:graphics:rectanglefigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a></tt> displays an axis-aligned rectangle with
+optionally rounded corners. As with all shape figures, drawing of both the
+outline and the fill are optional. Line and fill color, and several other
+properties are inherited from <tt><a href="../api/classomnetpp_1_1cAbstractShapeFigure.html">cAbstractShapeFigure</a></tt>.
+
+<p>The figure's geometry can be set with the <tt>setBounds()</tt> method that
+takes a <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle</tt>. The radii for the rounded corners can
+be set independently for the <i>x</i> and <i>y</i> direction using
+<tt>setCornerRx()</tt> and <tt>setCornerRy()</tt>, or together with
+<tt>setCornerRadius()</tt>.
+
+<p>The following example draws a rounded rectangle of size 160x100, filled with
+a "good dark color".
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a> *rect = new <a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a>("rect");
+rect-&gt;setBounds(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle(100,100,160,100));
+rect-&gt;setCornerRadius(5);
+rect-&gt;setFilled(true);
+rect-&gt;setFillColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::GOOD_LIGHT_COLORS[0]);
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-rectangle.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:ovalfigure"/>8.6.11.7 <a href="../api/classomnetpp_1_1cOvalFigure.html">cOvalFigure</a><a class="headerlink" href="#sec:graphics:ovalfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cOvalFigure.html">cOvalFigure</a></tt> displays a circle or an axis-aligned ellipse. As with
+all shape figures, drawing of both the outline and the fill are optional.
+Line and fill color, and several other properties are inherited from
+<tt><a href="../api/classomnetpp_1_1cAbstractShapeFigure.html">cAbstractShapeFigure</a></tt>.
+
+<p>The geometry is specified with the bounding box, and it can be set with the
+<tt>setBounds()</tt> method that takes a <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle</tt>.
+
+<p>The following example draws a circle of diameter 120 with a wide dotted line.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cOvalFigure.html">cOvalFigure</a> *circle = new <a href="../api/classomnetpp_1_1cOvalFigure.html">cOvalFigure</a>("circle");
+circle-&gt;setBounds(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle(100,100,120,120));
+circle-&gt;setLineWidth(2);
+circle-&gt;setLineStyle(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::LINE_DOTTED);
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-oval.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:ringfigure"/>8.6.11.8 <a href="../api/classomnetpp_1_1cRingFigure.html">cRingFigure</a><a class="headerlink" href="#sec:graphics:ringfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cRingFigure.html">cRingFigure</a></tt> displays a ring, with explicitly controllable
+inner/outer radii. The inner and outer circles (or ellipses) form the
+outline, and the area between them is filled. As with all shape figures,
+drawing of both the outline and the fill are optional. Line and fill color,
+and several other properties are inherited from
+<tt><a href="../api/classomnetpp_1_1cAbstractShapeFigure.html">cAbstractShapeFigure</a></tt>.
+
+<p>The geometry is determined by the bounding box that defines the outer
+circle, and the <i>x</i> and <i>y</i> radii of the inner oval. They can be set with
+the <tt>setBounds()</tt>, <tt>setInnerRx()</tt> and <tt>setInnerRy()</tt>
+member functions. There is also a utility method for setting both
+inner radii together, named <tt>setInnerRadius()</tt>.
+
+<p>The following example draws a ring with an outer diameter of 50 and
+inner diameter of 20.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cRingFigure.html">cRingFigure</a> *ring = new <a href="../api/classomnetpp_1_1cRingFigure.html">cRingFigure</a>("ring");
+ring-&gt;setBounds(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle(100,100,50,50));
+ring-&gt;setInnerRadius(10);
+ring-&gt;setFilled(true);
+ring-&gt;setFillColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::YELLOW);
+</pre>
+<p>
+
+<center>
+<img src="figure-ring.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:pieslicefigure"/>8.6.11.9 <a href="../api/classomnetpp_1_1cPieSliceFigure.html">cPieSliceFigure</a><a class="headerlink" href="#sec:graphics:pieslicefigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cPieSliceFigure.html">cPieSliceFigure</a></tt> displays a pie slice, that is, a section of an
+axis-aligned disc or filled ellipse.  The outline of the pie slice consists
+of an arc and two radii. As with all shape figures, drawing of both the
+outline and the fill are optional.
+
+<p>Similar to an arc, a pie slice is determined by the bounding box of the
+full disc or ellipse, and a start and an end angle. They can be set with
+the <tt>setBounds()</tt>, <tt>setStartAngle()</tt> and <tt>setEndAngle()</tt>
+methods.
+
+<p>For angles, zero points east. Angles that go counterclockwise are
+positive, and those that go clockwise are negative.
+
+<p><ul class="note"><b>NOTE</b><br>
+Angles are in radians in the C++ API, but in degrees when the figure is
+defined in the NED file via <b><tt>@figure</tt></b>.
+</ul>
+
+<p>Line and fill color, and several other properties are inherited from
+<tt><a href="../api/classomnetpp_1_1cAbstractShapeFigure.html">cAbstractShapeFigure</a></tt>.
+
+<p>The following example draws pie slice that's one third of a whole pie:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPieSliceFigure.html">cPieSliceFigure</a> *pieslice = new <a href="../api/classomnetpp_1_1cPieSliceFigure.html">cPieSliceFigure</a>("pieslice");
+pieslice-&gt;setBounds(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle(100,100,100,100));
+pieslice-&gt;setStartAngle(0);
+pieslice-&gt;setEndAngle(2*M_PI/3);
+pieslice-&gt;setFilled(true);
+pieslice-&gt;setLineColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::BLUE);
+pieslice-&gt;setFillColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::YELLOW);
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-pieslice.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:polygonfigure"/>8.6.11.10 <a href="../api/classomnetpp_1_1cPolygonFigure.html">cPolygonFigure</a><a class="headerlink" href="#sec:graphics:polygonfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cPolygonFigure.html">cPolygonFigure</a></tt> displays a (closed) polygon, determined by a sequence of points.
+The polygon may be <i>smoothed</i>. A smoothed polygon is drawn as a series
+of cubic Bezier curves, where the curves touch the midpoints of the sides,
+and vertices serve as control points. Smoothing can be turned on/off
+using <tt>setSmooth()</tt>.
+
+<p>The points can be set with <tt>setPoints()</tt> that takes <tt>std::vector&lt;Point&gt;</tt>,
+or added one-by-one using <tt>addPoint()</tt>. Elements in the point list can be
+read and overwritten (<tt>getPoint()</tt>, <tt>setPoint()</tt>). One can also
+insert and remove points (<tt>insertPoint()</tt> and <tt>removePoint()</tt>.
+
+<p>As with all shape figures, drawing of both the outline and the fill
+are optional. The drawing of filled self-intersecting polygons is controlled
+by the fill rule, which defaults to even-odd (<tt>FILL_EVENODD</tt>), and
+can be set with <tt>setFillRule()</tt>. Line join style can be set with
+the <tt>setJoinStyle()</tt>.
+
+<p>Line and fill color, and several other properties are inherited from
+<tt><a href="../api/classomnetpp_1_1cAbstractShapeFigure.html">cAbstractShapeFigure</a></tt>.
+
+<p>Here is an example of a smoothed polygon that also demonstrates
+the use of <tt>setPoints()</tt>:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPolygonFigure.html">cPolygonFigure</a> *polygon = new <a href="../api/classomnetpp_1_1cPolygonFigure.html">cPolygonFigure</a>("polygon");
+std::vector&lt;<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point&gt; points;
+points.push_back(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(0, 100));
+points.push_back(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(50, 100));
+points.push_back(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(100, 100));
+points.push_back(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(50, 50));
+polygon-&gt;setPoints(points);
+polygon-&gt;setLineColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::BLUE);
+polygon-&gt;setLineWidth(3);
+polygon-&gt;setSmooth(true);
+</pre>
+<p>
+
+The result, with both <i>smooth=false</i> and <i>smooth=true</i>:
+
+<p><center>
+<img src="figure-polygons.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:pathfigure"/>8.6.11.11 <a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a><a class="headerlink" href="#sec:graphics:pathfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a></tt> displays a "path", a complex shape or line modeled after SVG
+paths. A path may consist of any number of straight line segments, Bezier
+curves and arcs. The path can be disjoint as well. Closed paths may be filled.
+The drawing of filled self-intersecting polygons is controlled by the
+<i>fill rule</i> property. Line and fill color, and several other properties
+are inherited from <tt><a href="../api/classomnetpp_1_1cAbstractShapeFigure.html">cAbstractShapeFigure</a></tt>.
+
+<p>A path, when given as a string, looks like this one that draws a triangle:
+
+<p><i>M 150 0 L 75 200 L 225 200 Z</i>
+
+<p>It consists of a sequence of commands (<i>M</i> for <i>moveto</i>,
+<i>L</i> for <i>lineto</i>, etc.) that are each followed by numeric
+parameters (except <i>Z</i>). All commands can be expressed with
+lowercase letter, too. A capital letter means that the target point is
+given with <i>absolute</i> coordinates, a lowercase letter means they are
+given <i>relative</i> to the target point of the previous command.
+
+<p><tt><a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a></tt> can accept the path in string form (<tt>setPath()</tt>),
+or one can assemble the path with a series of method calls like
+<tt>addMoveTo()</tt>. The path can be cleared with the <tt>clearPath()</tt>
+method.
+
+<p>The commands with argument list and the corresponding <i>add</i> methods:
+
+<p><ul>
+<li> <b>M</b> <i>x y</i>: move; <tt>addMoveTo()</tt>, <tt>addMoveRel()</tt>
+<li> <b>L</b> <i>x y</i>: line; <tt>addLineTo()</tt>, <tt>addLineRel()</tt>
+<li> <b>H</b> <i>x</i>: horizontal line; <tt>addHorizontalLineTo()</tt>, <tt>addHorizontalLineRel()</tt>
+<li> <b>V</b> <i>y</i>: vertical line; <tt>addVerticalLineTo()</tt>, <tt>addVerticalLineRel()</tt>
+<li> <b>A</b> <i>rx ry phi largeArc sweep x y</i>: arc; <tt>addArcTo()</tt>, <tt>addArcRel()</tt>
+<li> <b>Q</b> <i>x1 y1 x y</i>: curve; <tt>addCurveTo()</tt>, <tt>addCurveRel()</tt>
+<li> <b>T</b> <i>x y</i>: smooth curve; <tt>addSmoothCurveTo()</tt>, <tt>addSmoothCurveRel()</tt>
+<li> <b>C</b> <i>x1 y1 x2 y2 x y</i>: cubic Bezier curve; <tt>addCubicBezierCurveTo()</tt>, <tt>addCubicBezierCurveRel()</tt>
+<li> <b>S</b> <i>x1 y1 x y</i>: smooth cubic Bezier curve; <tt>addSmoothCubicBezierCurveTo()</tt>, <tt>addSmoothCubicBezierCurveRel()</tt>
+<li> <b>Z</b>: close path; <tt>addClosePath()</tt>
+</ul>
+
+<p>In the parameter lists, <i>(x,y)</i> are the target points (substitute <i>(dx,dy)</i> for
+the lowercase, relative versions.) For the Bezier curves, <i>x1,y1</i> and
+<i>(x2,y2)</i> are control points. For the arc, <i>rx</i> and <i>ry</i> are the radii of the
+ellipse, <i>phi</i> is a rotation angle in degrees for the ellipse, and
+<i>largeArc</i> and <i>sweep</i> are both booleans (0 or 1) that select which portion
+of the ellipse should be taken.<br><ul><font size=-1>[For more details, consult the SVG
+specification.]</font></ul>
+
+<p>No matter how the path was created, the string form can be obtained with the
+<tt>getPath()</tt> method, and the parsed form with the <tt>getNumPathItems()</tt>,
+<tt>getPathItem(k)</tt> methods. The latter returns pointer to a
+<tt><a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a>::PathItem</tt>, which is a base class with subclasses for every
+item type.
+
+<p>Line join style, cap style (for open subpaths), and fill rule (for closed
+subpaths) can be set with the <tt>setJoinStyle()</tt>,
+<tt>setCapStyle()</tt>, <tt>setFillRule()</tt> methods.
+
+<p><tt><a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a></tt> has one more property, a <i>(dx,dy)</i> offset, which
+exists to simplify the implementation of the <tt>move()</tt> method. Offset
+causes the figure to be translated by the given amount for drawing. For
+other figure types, <tt>move()</tt> directly updates the coordinates, so it
+is effectively a wrapper for <tt>setPosition()</tt> or <tt>setBounds()</tt>.
+For path figures, implementing <tt>move()</tt> so that it updates every path
+item would be cumbersome and potentially also confusing for users. Instead,
+<tt>move()</tt> updates the offset. Offset can be set with
+<tt>setOffset()</tt>,
+
+<p>In the first example, the path is given as a string:
+
+<p>
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a> *path = new <a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a>("path");
+path-&gt;setPath("M 0 150 L 50 50 Q 20 120 100 150 Z");
+path-&gt;setFilled(true);
+path-&gt;setLineColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::BLUE);
+path-&gt;setFillColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::YELLOW);
+</pre>
+
+<p>
+The second example creates the equivalent path programmatically.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a> *path2 = new <a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a>("path");
+path2-&gt;addMoveTo(0,150);
+path2-&gt;addLineTo(50,50);
+path2-&gt;addCurveTo(20,120,100,150);
+path2-&gt;addClosePath();
+path2-&gt;setFilled(true);
+path2-&gt;setLineColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::BLUE);
+path2-&gt;setFillColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::YELLOW);
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-path.svg">
+</center>
+
+<p><h4><a name="sec:graphics:abstracttextfigure"/>8.6.11.12 <a href="../api/classomnetpp_1_1cAbstractTextFigure.html">cAbstractTextFigure</a><a class="headerlink" href="#sec:graphics:abstracttextfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cAbstractTextFigure.html">cAbstractTextFigure</a></tt> is an abstract base class for figures that
+display (potentially multi-line) text.
+
+<p>The location of the text on the canvas is determined jointly by a
+<i>position</i> and an <i>anchor</i>. The anchor tells how to
+place the text relative to the positioning point. For example,
+if anchor is <tt>ANCHOR_CENTER</tt> then the text is centered on the point;
+if anchor is <tt>ANCHOR_N</tt> then the text will be drawn so that its top
+center point is at the positioning point. The values
+<tt>ANCHOR_BASELINE_START</tt>, <tt>ANCHOR_BASELINE_MIDDLE</tt>,
+<tt>ANCHOR_BASELINE_END</tt> refer to the beginning, middle and end of the
+baseline of the (first line of the) text as anchor point. The member
+functions to set the positioning point and the anchor are
+<tt>setPosition()</tt> and <tt>setAnchor()</tt>. Anchor defaults to
+<tt>ANCHOR_CENTER</tt>.
+
+<p>The font can be set with the <tt>setFont()</tt> member function that takes
+<tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Font</tt>, a class that encapsulates typeface, font style and
+size. Color can be set with <tt>setColor()</tt>. The displayed text can
+also be partially transparent. This is controlled with the <tt>setOpacity()</tt>
+member function that accepts an <tt>double</tt> in the <i>[0,1]</i> range, <i>0</i> meaning
+fully transparent (invisible), and <i>1</i> meaning fully opaque. 
+
+<p>It is also possible to have a partially transparent &#8220;halo&#8221; displayed around
+the text. The halo improves readability when the text is displayed over a
+background that has a similar color as the text, or when it overlaps with other
+text items. The halo can be turned on with <tt>setHalo()</tt>. 
+
+<p>
+<h4><a name="sec:graphics:textfigure"/>8.6.11.13 <a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a><a class="headerlink" href="#sec:graphics:textfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a></tt> displays text which is affected by zooming and
+transformations. Font, color, position, anchoring and other properties are
+inherited from <tt><a href="../api/classomnetpp_1_1cAbstractTextFigure.html">cAbstractTextFigure</a></tt>.
+
+<p>The following example displays a text in dark blue 12-point bold Arial
+font.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a> *text = new <a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a>("text");
+text-&gt;setText("This is some text.");
+text-&gt;setPosition(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(100,100));
+text-&gt;setAnchor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::ANCHOR_BASELINE_MIDDLE);
+text-&gt;setColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Color("#000040"));
+text-&gt;setFont(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Font("Arial", 12, <a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::FONT_BOLD));
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-text.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:labelfigure"/>8.6.11.14 <a href="../api/classomnetpp_1_1cLabelFigure.html">cLabelFigure</a><a class="headerlink" href="#sec:graphics:labelfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cLabelFigure.html">cLabelFigure</a></tt> displays text which is unaffected by zooming or
+transformations, except its position. Font, color, position, anchoring and
+other properties are inherited from <tt><a href="../api/classomnetpp_1_1cAbstractTextFigure.html">cAbstractTextFigure</a></tt>.
+The angle of the label can be set with the <tt>setAngle()</tt> method. Zero
+angle means horizontal (unrotated) text. Positive values rotate
+counterclockwise, while negative values rotate clockwise.
+
+<p><ul class="note"><b>NOTE</b><br>
+Angles are in radians in the C++ API, but in degrees when the figure is
+defined in the NED file via <b><tt>@figure</tt></b>.
+</ul>
+
+<p>The following example displays a label in Courier New with the default
+size, slightly transparent.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cLabelFigure.html">cLabelFigure</a> *label = new <a href="../api/classomnetpp_1_1cLabelFigure.html">cLabelFigure</a>("label");
+label-&gt;setText("This is a label.");
+label-&gt;setPosition(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(100,100));
+label-&gt;setAnchor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::ANCHOR_NW);
+label-&gt;setFont(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Font("Courier New"));
+label-&gt;setOpacity(0.9);
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-label.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:abstractimagefigure"/>8.6.11.15 <a href="../api/classomnetpp_1_1cAbstractImageFigure.html">cAbstractImageFigure</a><a class="headerlink" href="#sec:graphics:abstractimagefigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cAbstractImageFigure.html">cAbstractImageFigure</a></tt> is an abstract base class for image figures.
+
+<p>The location of the image on the canvas is determined jointly by a
+<i>position</i> and an <i>anchor</i>. The anchor tells how to
+place the image relative to the positioning point. For example,
+if anchor is <tt>ANCHOR_CENTER</tt> then the image is centered on the point;
+if anchor is <tt>ANCHOR_N</tt> then the image will be drawn so that its top
+center point is at the positioning point. The member functions to set the
+positioning point and the anchor are <tt>setPosition()</tt> and
+<tt>setAnchor()</tt>. Anchor defaults to <tt>ANCHOR_CENTER</tt>.
+
+<p>By default, the figure's width/height will be taken from the image's
+dimensions in pixels. This can be overridden with the<tt>setWidth()</tt> /
+<tt>setHeight()</tt> methods, causing the image to be scaled.
+<tt>setWidth(0)</tt> / <tt>setHeight(0)</tt> reset the default (automatic) width
+and height.
+
+<p>One can choose from several interpolation modes that control how the image
+is rendered when it is not drawn in its natural size. Interpolation mode
+can be set with <tt>setInterpolation()</tt>, and defaults to
+<tt>INTERPOLATION_FAST</tt>.
+
+<p>Images can be tinted; this feature is controlled by a tint color and a tint
+amount, a <i>[0,1]</i> real number. They can be set with the
+<tt>setTintColor()</tt> and <tt>setTintAmount()</tt> methods, respectively.
+
+<p>Images may also be rendered as partially transparent, which is controlled by
+the opacity property, a <i>[0,1]</i> real number. Opacity can be set with the
+<tt>setOpacity()</tt> method. The rendering process will combine this
+property with the transparency information contained within the image, i.e.
+the alpha channel.
+
+<p>
+<h4><a name="sec:graphics:imagefigure"/>8.6.11.16 <a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a><a class="headerlink" href="#sec:graphics:imagefigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a></tt> displays an image, typically an icon or a background
+image, loaded from the OMNeT++ image path. Positioning and other properties
+are inherited from <tt><a href="../api/classomnetpp_1_1cAbstractImageFigure.html">cAbstractImageFigure</a></tt>. Unlike <tt><a href="../api/classomnetpp_1_1cIconFigure.html">cIconFigure</a></tt>,
+<tt><a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a></tt> fully obeys transforms and zoom.
+
+<p>The following example displays a map:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a> *image = new <a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a>("map");
+image-&gt;setPosition(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(0,0));
+image-&gt;setAnchor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::ANCHOR_NW);
+image-&gt;setImageName("maps/europe");
+image-&gt;setWidth(600);
+image-&gt;setHeight(500);
+</pre>
+<p>
+
+
+<p><h4><a name="sec:graphics:iconfigure"/>8.6.11.17 <a href="../api/classomnetpp_1_1cIconFigure.html">cIconFigure</a><a class="headerlink" href="#sec:graphics:iconfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cIconFigure.html">cIconFigure</a></tt> displays a non-zooming image, loaded from the OMNeT++
+image path. Positioning and other properties are inherited from
+<tt><a href="../api/classomnetpp_1_1cAbstractImageFigure.html">cAbstractImageFigure</a></tt>.
+
+<p><tt><a href="../api/classomnetpp_1_1cIconFigure.html">cIconFigure</a></tt> is not affected by transforms or zoom, except its position.
+(It can still be resized, though, via <tt>setWidth()</tt> / <tt>setHeight()</tt>.)
+
+<p>The following example displays an icon similar to the way the
+<tt>"i=block/sink,gold,30"</tt> display string tag would, and makes
+it slightly transparent:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cIconFigure.html">cIconFigure</a> *icon = new <a href="../api/classomnetpp_1_1cIconFigure.html">cIconFigure</a>("icon");
+icon-&gt;setPosition(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(100,100));
+icon-&gt;setImageName("block/sink");
+icon-&gt;setTintColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Color("gold"));
+icon-&gt;setTintAmount(0.6);
+icon-&gt;setOpacity(0.8);
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-icon.png">
+</center>
+
+<p>
+<h4><a name="sec:graphics:pixmapfigure"/>8.6.11.18 <a href="../api/classomnetpp_1_1cPixmapFigure.html">cPixmapFigure</a><a class="headerlink" href="#sec:graphics:pixmapfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cPixmapFigure.html">cPixmapFigure</a></tt> displays a user-defined raster image. A pixmap
+figure may be used to display e.g. a heat map. Support for scaling and
+various interpolation modes are useful here. Positioning and other
+properties are inherited from <tt><a href="../api/classomnetpp_1_1cAbstractImageFigure.html">cAbstractImageFigure</a></tt>.
+
+<p>A pixmap itself is represented by the <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::<a href="../api/classomnetpp_1_1cFigure_1_1Pixmap.html">Pixmap</a></tt> class.
+
+<p><tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::<a href="../api/classomnetpp_1_1cFigure_1_1Pixmap.html">Pixmap</a></tt> stores a rectangular array of 32-bit RGBA pixels,
+and allows pixels to be manipulated directly. The size ($width x
+height$) as well as the default fill can be specified in the constructor.
+The pixmap can be resized (i.e. pixels added/removed at the right and/or bottom)
+using <tt>setSize()</tt>, and it can be filled with a color using <tt>fill()</tt>.
+Pixels can be directly accessed with <tt>pixel(x,y)</tt>.
+
+<p>A pixel is returned as type <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::RGBA</tt>, which is a convenience
+struct that, in addition to having the four public <tt>uint8_t</tt> fields
+(<tt>red</tt>, <tt>green</tt>, <tt>blue</tt>, <tt>alpha</tt>), is augmented with several
+utility methods.
+
+<p>Many <tt><a href="../api/classomnetpp_1_1cFigure_1_1Pixmap.html">Pixmap</a></tt> and <tt>RGBA</tt> methods accept or return
+<tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Color</tt> and opacity, converting between them and
+<tt>RGBA</tt>. (Opacity is a <i>[0,1]</i> real number that is mapped to the
+0..255 alpha channel. <i>0</i> means fully transparent, and <i>1</i> means fully
+opaque.)
+
+<p>One can set up and manipulate the image that <tt><a href="../api/classomnetpp_1_1cPixmapFigure.html">cPixmapFigure</a></tt> displays
+in two ways. First, one can create and fill a <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::<a href="../api/classomnetpp_1_1cFigure_1_1Pixmap.html">Pixmap</a></tt>
+separately, and set it on <tt><a href="../api/classomnetpp_1_1cPixmapFigure.html">cPixmapFigure</a></tt> using <tt>setPixmap()</tt>.
+This will overwrite the figure's internal pixmap instance that it displays.
+The second way is to utilize <tt><a href="../api/classomnetpp_1_1cPixmapFigure.html">cPixmapFigure</a></tt>'s methods such as
+<tt>setPixmapSize()</tt>, <tt>fill()</tt>, <tt>setPixel()</tt>,
+<tt>setPixelColor()</tt>, <tt>setPixelOpacity()</tt>, etc. that delegate to
+the internal pixmap instance.
+
+<p>The following example displays a small heat map by manipulating the
+transparency of the pixels. The 9-by-9 pixel image is stretched to
+100 units each direction on the screen.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cPixmapFigure.html">cPixmapFigure</a> *pixmapFigure = new <a href="../api/classomnetpp_1_1cPixmapFigure.html">cPixmapFigure</a>("pixmap");
+pixmapFigure-&gt;setPosition(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(100,100));
+pixmapFigure-&gt;setSize(100, 100);
+pixmapFigure-&gt;setPixmapSize(9, 9, <a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::BLUE, 1);
+for (int y = 0; y &lt; pixmapFigure-&gt;getPixmapHeight(); y++) {
+    for (int x = 0; x &lt; pixmapFigure-&gt;getPixmapWidth(); x++) {
+        double opacity = 1 - sqrt((x-4)*(x-4) + (y-4)*(y-4))/4;
+        if (opacity &lt; 0) opacity = 0;
+        pixmapFigure-&gt;setPixelOpacity(x, y, opacity);
+    }
+}
+pixmapFigure-&gt;setInterpolation(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::INTERPOLATION_FAST);
+</pre>
+<p>
+
+The result, both with <i>interpolation=NONE</i> and <i>interpolation=FAST</i>:
+
+<p><center>
+<img src="figure-pixmaps.png">
+</center>
+
+<p>
+<h4><a name="sec:graphics:groupfigure"/>8.6.11.19 <a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a><a class="headerlink" href="#sec:graphics:groupfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a></tt> is for the sole purpose of grouping its children. It
+has no visual appearance. The usefulness of a group figure comes from the
+fact that elements of a group can be hidden / shown together, and also
+transformations are inherited from parent to child, thus, children of a
+group can be moved, scaled, rotated, etc. together by updating the group's
+transformation matrix.
+
+<p>The following example creates a group with two subfigures, then moves and
+rotates them as one unit.
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a> *group = new <a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a>("group");
+
+<a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a> *rect = new <a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a>("rect");
+rect-&gt;setBounds(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle(-50,0,100,40));
+rect-&gt;setCornerRadius(5);
+rect-&gt;setFilled(true);
+rect-&gt;setFillColor(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::YELLOW);
+
+<a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a> *line = new <a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a>("line");
+line-&gt;setStart(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(-80,50));
+line-&gt;setEnd(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(80,50));
+line-&gt;setLineWidth(3);
+
+group-&gt;addFigure(rect);
+group-&gt;addFigure(line);
+group-&gt;translate(100, 100);
+group-&gt;rotate(M_PI/6, 100, 100);
+</pre>
+<p>
+
+The result:
+
+<p><center>
+<img src="figure-group.svg">
+</center>
+
+<p>
+<h4><a name="sec:graphics:panelfigure"/>8.6.11.20 <a href="../api/classomnetpp_1_1cPanelFigure.html">cPanelFigure</a><a class="headerlink" href="#sec:graphics:panelfigure" title="Permalink to this headline">¶</a></h4>
+
+<p><tt><a href="../api/classomnetpp_1_1cPanelFigure.html">cPanelFigure</a></tt> is similar to <tt><a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a></tt> in that it is also
+intended for grouping its children and has no visual appearance of its own.
+However, it has a special behavior regarding transformations and especially zooming.
+ 
+<p><tt><a href="../api/classomnetpp_1_1cPanelFigure.html">cPanelFigure</a></tt> sets up an axis-aligned, unscaled coordinate system for
+its children, canceling the effect of any transformation (scaling, rotation,
+etc.) inherited from ancestor figures. This allows for pixel-based positioning
+of children, and makes them immune to zooming.
+
+<p>Unlike <tt><a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a></tt> which itself has position attribute,
+<tt><a href="../api/classomnetpp_1_1cPanelFigure.html">cPanelFigure</a></tt> uses two points for positioning, a <i>position</i> and
+an <i>anchor point</i>. Position is interpreted in the coordinate system of
+the panel figure's parent, while the anchor point is interpreted in the
+coordinate system of the panel figure itself. To place the panel figure on the
+canvas, the panel's anchor point is mapped to <i>position</i> in the
+parent.
+
+<p>Setting a transformation on the panel figure itself allows for rotation,
+scaling, and skewing of its children. The anchor point is also affected by this
+transformation.
+
+<p>The following example demonstrates <tt><a href="../api/classomnetpp_1_1cPanelFigure.html">cPanelFigure</a></tt> behavior. It
+creates a normal group figure as parent for the panel, and sets up a
+skewed coordinate system on it. A reference image is also added to it,
+in order to make the effect of skew visible. The panel figure is also
+added to it as a child. The panel contains an image (showing the same icon
+as the reference image), and a border around it. 
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a> *layer = new <a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a>("parent");
+layer-&gt;skewx(-0.3);
+
+<a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a> *referenceImg = new <a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a>("ref");
+referenceImg-&gt;setImageName("block/broadcast");
+referenceImg-&gt;setPosition(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(200,200));
+referenceImg-&gt;setOpacity(0.3);
+layer-&gt;addFigure(referenceImg);
+
+<a href="../api/classomnetpp_1_1cPanelFigure.html">cPanelFigure</a> *panel = new <a href="../api/classomnetpp_1_1cPanelFigure.html">cPanelFigure</a>("panel");
+
+<a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a> *img = new <a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a>("img");
+img-&gt;setImageName("block/broadcast");
+img-&gt;setPosition(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(0,0));
+panel-&gt;addFigure(img);
+
+<a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a> *border = new <a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a>("border");
+border-&gt;setBounds(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Rectangle(-25,-25,50,50));
+border-&gt;setLineWidth(3);
+panel-&gt;addFigure(border);
+
+layer-&gt;addFigure(panel);
+panel-&gt;setAnchorPoint(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(0,0));
+panel-&gt;setPosition(<a href="../api/classomnetpp_1_1cFigure.html">cFigure</a>::Point(210,200));
+</pre>
+<p>
+
+The screenshot shows the result at an approx. 4x zoom level. The large
+semi-transparent image is the reference image, the smaller one is the image within the panel
+figure. Note that neither the skew nor the zoom has affected the panel figure's children.
+
+<p><center>
+<img src="figure-panel.svg">
+</center>
+
+<p>
+<h3><a name="sec:graphics:compound-figures"/>8.6.12 Compound Figures<a class="headerlink" href="#sec:graphics:compound-figures" title="Permalink to this headline">¶</a></h3>
+
+<p>Any graphics can be built using primitive (i.e. elementary) figures
+alone. However, when the graphical presentation of a simulation
+grows complex, it is often convenient to be able to group certain
+figures and treat them as a single unit. For example, although
+a bar chart can be displayed using several independent rectangle,
+line and text items, there are clearly benefits to being able to
+handle them together as a single bar chart object.
+
+<p><i>Compound figures</i> are <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt> sublasses that
+are themselves composed of several figures, but can be instantiated
+and manipulated as a single figure. Compound figure classes
+can be used from C++ code like normal figures, and can also
+be made to be able to be instatiated from <b><tt>@figure</tt></b> properties.
+
+<p>Compound figure classes usually subclass from <tt><a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a></tt>.
+The class would typically maintain pointers to its subfigures in
+class members, and its methods (getters, setters, etc.) would operate
+on the subfigures.
+
+<p>To be able to use the new C++ class with <b><tt>@figure</tt></b>,
+it needs to be registered using the <tt>Register_Figure()</tt> macro.
+The macro expects two arguments: one is the type name by which the figure
+is known to <b><tt>@figure</tt></b> (the string to be used with the <tt>type</tt> property key),
+and the other is the C++ class name. For example, to be able to instantiate
+a class named <tt>FooFigure</tt> with <tt>@figure[...](type=foo;...)</tt>,
+the following line needs to be added into the C++ source:
+
+<pre class="cpp">
+Register_Figure("foo", FooFigure);
+</pre>
+<p>
+If the figure needs to be able take values from <b><tt>@figure</tt></b> properties,
+the class needs to override the <tt>parse(<a href="../api/classomnetpp_1_1cProperty.html">cProperty</a>*)</tt> method,
+and proably also <tt>getAllowedPropertyKeys()</tt>. We recommend that
+you examine the code of the figure classes built into OMNeT++ for
+implementation hints.
+
+<p>
+
+<p><h3><a name="sec:graphics:self-refreshing-figures"/>8.6.13 Self-Refreshing Figures<a class="headerlink" href="#sec:graphics:self-refreshing-figures" title="Permalink to this headline">¶</a></h3>
+
+<p>Most figures are entirely passive objects. When they need to be moved
+or updated during the course of the simulation, there must be an
+active component in the simulation that does it for them. Usually it is the
+<tt>refreshDisplay()</tt> method of some simple module (or modules) that
+contain the code that updates various properties of the figures.
+
+<p>However, certain figures can benefit from being able to refresh themselves
+during the simulation. Picture, for example, a compound figure (see
+previous section) that displays a line chart which is continually
+updated with new data as the simulation progresses. The <tt>LineChartFigure</tt>
+class may contain an <tt>addDataPoint(x,y)</tt> method which is called
+from other parts of the simulation to add new data to the chart.
+The question is when to update the subfigures that make up the chart: the
+line(s), axis ticks and labels, etc. It is clearly not very efficient
+to do it in every <tt>addDataPoint(x,y)</tt> call, especially when the
+simulation is running in Express mode when the screen is not refreshed
+very often. Luckily, our hypothetical <tt>LineChartFigure</tt> class
+can do better, and only refresh its subfigures when it matters, i.e.
+when the result can actually be seen in the GUI. To do that, the class
+needs to override <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt>'s <tt>refreshDisplay()</tt> method, and
+place the subfigure updating code there.
+
+<p>Figure classes that override <tt>refreshDisplay()</tt> to refresh their
+own contents are called <i>self-refreshing figures</i>. Self-refreshing
+figures as a feature are available since OMNeT++ version 5.1.
+
+<p><tt>refreshDisplay()</tt> is declared on <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt> as:
+
+<pre class="cpp">
+virtual void refreshDisplay();
+</pre>
+<p>
+The default implementation does nothing.
+
+<p>Like <tt><a href="../api/classomnetpp_1_1cModule.html">cModule</a></tt>'s <tt>refreshDisplay()</tt>, <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt>'s
+<tt>refreshDisplay()</tt> is invoked only under graphical user interfaces
+(Qtenv/Tkenv), and right before display updates. However, it is only invoked for
+figures on canvases that are currently displayed. This makes it possible for
+canvases that are never viewed to have zero refresh overhead.
+
+<p>Since <tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt>'s <tt>refreshDisplay()</tt> is only invoked when the
+canvas is visible, it should only be used to update local state, i.e. only
+local members and local subfigures. The code should certainly not access
+other canvases, let alone change the state of the simulation.
+
+<p>
+<h3><a name="sec:graphics:figures-with-custom-renderers"/>8.6.14 Figures with Custom Renderers<a class="headerlink" href="#sec:graphics:figures-with-custom-renderers" title="Permalink to this headline">¶</a></h3>
+
+<p>In rare cases it might be necessary to create figure types where the rendering
+is entirely custom, and not based on already existing figures. The
+difficulty arises from the point that figures are only data storage classes,
+actual drawing takes place in the GUI library such as Tkenv and Qtenv.
+Thus, in addition to writing the new figure class, one also needs to extend
+Tkenv and/or Qtenv with the corresponding rendering code.
+We won't go into full details on how to extend Tkenv/Qtenv here, just give
+you a few pointers in case you need it.
+
+<p>In both Tkenv and Qtenv, rendering is done with the help of figure renderer
+classes that have a class hierarchy roughly parallel to the
+<tt><a href="../api/classomnetpp_1_1cFigure.html">cFigure</a></tt> inheritance tree. The base classes are incidentally called
+<tt>FigureRenderer</tt>. How figure renderers do their job is different in
+Tkenv and Qtenv: in Tkenv, rendering occurs by creating and maintaining
+canvas items on a Tkpath canvas; on Qtenv, they create and manipulate
+<tt>QGraphicsItem</tt>s on a <tt>QGraphicsView</tt>. To be able to render a
+new figure type, one needs to create the appropriate figure renderer
+classes for Tkenv, Qtenv, or both.
+
+<p>The names of the renderer classes are provided by the figures themselves,
+by their <tt>getRendererClassName()</tt> methods. For example,
+<tt><a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a></tt>'s <tt>getRendererClassName()</tt> returns
+<tt>LineFigureRenderer</tt>. Qtenv qualifies that with its own namespace, and
+looks for a registered class named
+<tt>omnetpp::qtenv::LineFigureRenderer</tt>. If such class exists and is a
+Qtenv figure renderer (the appropriate <tt>dynamic_cast</tt> succeeds), an
+instance of that class will be used to render the figure, otherwise an
+error message will be issued. Tkenv does something similar.
+
+<p>
+<h2><a name="sec:graphics:osg"/>8.7 3D Visualization<a class="headerlink" href="#sec:graphics:osg" title="Permalink to this headline">¶</a></h2>
+
+<p><h3><a name="sec:graphics:osg-introduction"/>8.7.1 Introduction<a class="headerlink" href="#sec:graphics:osg-introduction" title="Permalink to this headline">¶</a></h3>
+
+<p>OMNeT++ lets one build advanced 3D visualization for simulation models.
+3D visualization is useful for wide range of simulations, including
+mobile wireless networks, transportation models, factory floorplan
+simulations and more. One can visualize terrain, roads, urban street
+networks, indoor environments, satellites, and more. It is possible to
+augment the 3D scene with various annotations. For wireless network
+simulations, for example, one can create a scene that, in addition to
+the faithful representation of the physical world, also displays the
+transmission range of wireless nodes, their connectivity graph
+and various statistics, indicates individual wireless transmissions
+or traffic intensity, and so on.
+
+<p>In OMNeT++, 3D visualization is completely distinct from display
+string-based and canvas-based visualization. The scene appears on a
+separate GUI area. Visualizing 3D scenes is currently only supported
+in Qtenv (i.e. it is unavailable in Tkenv.)
+
+<p>OMNeT++'s 3D visualization is based on the open-source OpenSceneGraph
+and osgEarth libraries. These libraries offer high-level functionality,
+such as the ability of using 3D model files directly, accessing and
+rendering online map and satellite imagery data sources, and so on.
+
+<p><h4><a name="sec:graphics:osg-and-osgearth"/>8.7.1.1 OpenSceneGraph and osgEarth<a class="headerlink" href="#sec:graphics:osg-and-osgearth" title="Permalink to this headline">¶</a></h4>
+
+<p>OpenSceneGraph (openscenegraph.org), or OSG for short, is the base library.
+It is best to quote their web site:
+
+<p><blockquote>
+&#8220;OpenSceneGraph is an open source high performance 3D graphics toolkit,
+used by application developers in fields such as visual simulation, games,
+virtual reality, scientific visualization and modeling. Written entirely in
+Standard C++ and OpenGL, it runs on all Windows platforms, OS X, GNU/Linux,
+IRIX, Solaris, HP-UX, AIX and FreeBSD operating systems. OpenSceneGraph is
+now well established as the world leading scene graph technology, used
+widely in the vis-sim, space, scientific, oil-gas, games and virtual
+reality industries.&#8221;
+</blockquote>
+
+<p>In turn, osgEarth (osgearth.org) is a geospatial SDK and terrain engine built on top
+of OpenSceneGraph, not quite unlike Google Earth. It has many attractive features:
+
+<p><ul>
+<li> Able to use various street map providers, satellite imaging providers,
+      elevation data sources, both online and offline
+<li> Data from online sources may be exported into a file suitable for offline use
+<li> Scene may be annotated with various types of graphical objects
+<li> Includes conversion between various geographical coordinate systems
+</ul>
+
+<p>In OMNeT++, osgEarth can be very useful for simulations involving maps, terrain,
+or satellites.
+
+<p><h3><a name="sec:graphics:opp-api-for-osg"/>8.7.2 The OMNeT++ API for OpenSceneGraph<a class="headerlink" href="#sec:graphics:opp-api-for-osg" title="Permalink to this headline">¶</a></h3>
+
+<p>For 3D visualization, OMNeT++ basically exposes the OpenSceneGraph API. One
+needs to assemble an OSG scene graph in the model, and give it to OMNeT++
+for display. The scene graph can be updated at runtime, and changes will be
+reflected in the display.
+
+<p><ul class="note"><b>NOTE</b><br>
+<b>What is a scene graph?</b> A scene graph is a tree-like directed graph
+data structure that describes a 3D scene. The root node represents the
+whole virtual world. The world is then broken down into a hierarchy of
+nodes representing either spatial groupings of objects, settings of
+the position of objects, animations of objects, or definitions of
+logical relationships between objects. The leaves of the graph
+represent the physical objects themselves, the drawable geometry and
+their material properties.
+</ul>
+
+<p>When a scene graph has been built by the simulation model, it needs to be
+given to a <tt><a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a></tt> object to let the OMNeT++ GUI know about it.
+<tt><a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a></tt> wraps a scene graph, plus hints for the GUI on how to
+best display the scene, for example the default camera position. In the
+GUI, the user can use the mouse to manipulate the camera to view the scene
+from various angles and distances, look at various parts of the scene,
+and so on.
+
+<p>It is important to note that the simulation model may only
+manipulate the scene graph, but it cannot directly access the viewer
+in the GUI. There is a very specific technical reason for that.
+The viewer may not even exist or may be displaying a different
+scene graph at the time the model tries to access it. The model
+may even be running under a non-GUI user interface (e.g. Cmdenv)
+where a viewer is not even part of the program. The viewer may
+only be influenced in the form of viewer hints in
+<tt><a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a></tt>.
+
+<p>
+<h4><a name="sec:graphics:creating-and-accessing-osgcanvas-objects"/>8.7.2.1 Creating and Accessing <a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a> Objects<a class="headerlink" href="#sec:graphics:creating-and-accessing-osgcanvas-objects" title="Permalink to this headline">¶</a></h4>
+
+<p>Every module has a built-in (default) <tt><a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a></tt>, which can be
+accessed with the <tt>getOsgCanvas()</tt> method of <tt><a href="../api/classomnetpp_1_1cModule.html">cModule</a></tt>.
+For example, a toplevel submodule can get hold of the network's
+OSG canvas with the following line:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a> *osgCanvas = getParentModule()-&gt;getOsgCanvas();
+</pre>
+<p>
+Additional <tt><a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a></tt> instances may be created simply with <tt>new</tt>:
+
+<pre class="cpp">
+<a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a> *osgCanvas = new <a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>("scene2");
+</pre>
+<p>
+<h4><a name="sec:graphics:osgcanvas-and-scene-graphs"/>8.7.2.2 <a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a> and Scene Graphs<a class="headerlink" href="#sec:graphics:osgcanvas-and-scene-graphs" title="Permalink to this headline">¶</a></h4>
+
+<p>Once a scene graph has been assembled, it can be set on <tt><a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a></tt>
+with the <tt>setScene()</tt> method.
+
+<pre class="cpp">
+osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *scene = ...
+osgCanvas-&gt;setScene(scene);
+</pre>
+<p>
+Subsequent changes in the scene graph will be automatically reflected in
+the visualization, there is no need to call <tt>setScene()</tt> again or
+otherwise let OMNeT++ know about the changes.
+
+<p>
+<h4><a name="sec:graphics:osgcanvas-viewer-hints"/>8.7.2.3 Viewer Hints<a class="headerlink" href="#sec:graphics:osgcanvas-viewer-hints" title="Permalink to this headline">¶</a></h4>
+
+<p>There are several hints that the 3D viewer may take into account when displaying
+the scene graph. Note that hints are only hints, so the viewer may choose to
+ignore them, and the user may also be able to override them interactively,
+(using the mouse, via the context menu, hotkeys or by other means).
+
+<p><ul>
+
+<p><li> <b>Viewer style.</b>
+    The viewer style can be set with <tt>setViewerStyle()</tt> and it determines
+    the default hints for a scene. Choices are <tt>STYLE_GENERIC</tt> that should
+    be set for generic (non-osgEarth) scenes (default), and <tt>STYLE_EARTH</tt>
+    for osgEarth scenes. As a rule of thumb, <tt>STYLE_EARTH</tt> should be used
+    only when the model is loading <tt>.earth</tt> files.
+
+<p><li> <b>Camera manipulators.</b>
+    The OSG viewer makes use of camera manipulators that map mouse and keyboard
+    gestures to camera movement. Use <tt>setCameraManipulatorType()</tt> to
+    specify a manipulator. Several camera manipulators are available:
+    <tt>CAM_TERRAIN</tt> is suitable for flying above an object or terrain;
+    <tt>CAM_OVERVIEW</tt> which is similar to the terrain manipulator, but does
+    not allow rolling or looking up (one can only see the object from above);
+    <tt>CAM_TRACKBALL</tt> that allows unrestricted movement centered around an
+    object; and <tt>CAM_EARTH</tt> that should be used when viewing the whole
+    Earth is useful (i.e. modeling satellites). The default setting is to
+    choose the manipulator automatically (<tt>CAM_AUTO</tt>) based on the viewer
+    style (<tt>CAM_OVERVIEW</tt> or <tt>CAM_EARTH</tt>).
+
+<p><li> <b>Scene rendering.</b> One can set the default background color for
+    non-osgEarth scenes using <tt>setClearColor()</tt>. It is also possible
+    to set the distances of the near and far clipping planes
+    (<tt>setZNear()</tt> and <tt>setZFar()</tt>). Everything in the scene will
+    be truncated to fit between these two planes. If you see parts of objects
+    being clipped away from the scene, try to adjust these values.
+    <br><ul><font size=-1>[OSG renders the scene using a <i>Z-buffer</i>. This means
+    that upon drawing, the distance of every pixel of every object from the
+    camera (called its depth) will be compared to the distance of the last
+    drawn pixel in the same position, which is stored in the Z-buffer. The
+    pixel will only be updated with the new color if it is found to be closer
+    than the previous. Using a Z-buffer simplifies the rendering process,
+    but the limited precision of the depth values will cause some pixels to
+    be considered equidistant from the camera even if they are not. In this
+    case, the result of the comparison, and thus the final color of the pixel
+    is undefined, causing visual glitches called <i>Z-fighting</i>
+    (flashing objects). <i>zNear</i> and <i>zFar</i> should be chosen such that no
+    important objects are left out of the rendering, and in the same time
+    Z-fighting is minimized. As a rule of thumb, the <i>zFar/zNear</i>
+    ratio should not exceed about 10,000, regardless of their absolute value.]</font></ul>
+
+<p><li> <b>Viewpoint and field of view.</b>
+    Default viewpoints can be set by <tt>setGenericViewpoint(<a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::Viewpoint&amp;)</tt>
+    by specifying the <i>x</i>, <i>y</i>, <i>z</i> coordinates of the camera, the focal
+    point and the "up" direction. For osgEarth scenarios,
+    <tt>setEarthViewpoint(osgEarth::Viewpoint&amp;)</tt> can be used to set the
+    location of the observer and focal point using geographic coordinates. It
+    is also possible to set the camera's field of view angle, with
+    <tt>setFieldOfViewAngle()</tt>.
+
+<p></ul>
+
+<p>An example code fragment that sets some viewer hints:
+
+<pre class="cpp">
+osgCanvas-&gt;setViewerStyle(<a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::STYLE_GENERIC);
+osgCanvas-&gt;setCameraManipulatorType(<a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::CAM_OVERVIEW);
+osgCanvas-&gt;setClearColor(<a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::Color("skyblue"));
+osgCanvas-&gt;setGenericViewpoint(<a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::Viewpoint(
+        <a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::Vec3d(20, -30, 30), // observer
+        <a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::Vec3d(30, 20, 0),   // focal point
+        <a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::Vec3d(0, 0, 1)));   // UP
+</pre>
+<p>
+
+<p><h4><a name="sec:graphics:making-osg-nodes-selectable"/>8.7.2.4 Making Nodes Selectable<a class="headerlink" href="#sec:graphics:making-osg-nodes-selectable" title="Permalink to this headline">¶</a></h4>
+
+<p>If a 3D object in the scene represents a C++ object in the simulation, it
+would often be very convenient to be able to select that object for
+inspection by clicking it with the mouse.
+
+<p>OMNeT++ provides a wrapper node that associates its children with a particular OMNeT++
+object (<tt><a href="../api/classomnetpp_1_1cObject.html">cObject</a></tt> descendant), making them selectable in the 3D viewer.
+The wrapper class is called <tt><a href="../api/classomnetpp_1_1cObjectOsgNode.html">cObjectOsgNode</a></tt>, and it subclasses
+from <tt>osg::Group</tt>.
+
+<pre class="cpp">
+auto objectNode = new <a href="../api/classomnetpp_1_1cObjectOsgNode.html">cObjectOsgNode</a>(myModule);
+objectNode-&gt;addChild(myNode);
+</pre>
+<p>
+<ul class="note"><b>NOTE</b><br>
+The OMNeT++ object should exist as long as the wrapper node exists. Otherwise,
+clicking child nodes with the mouse is likely to result in a crash.
+</ul>
+
+<p><h4><a name="sec:graphics:finding-resources"/>8.7.2.5 Finding Resources<a class="headerlink" href="#sec:graphics:finding-resources" title="Permalink to this headline">¶</a></h4>
+
+<p>3D visualizations often need to load external resources from disk, for
+example images or 3D models. By default, OSG tries to load these files
+from the current working directory (unless they are given with absolute path).
+However, loading from the folder of the current OMNeT++ module, from the folder
+of the ini file, or from the image path would often be more convenient.
+OMNeT++ contains a function for that purpose.
+
+<p>The <tt>resolveResourcePath()</tt> method of modules and channels accepts a
+file name (or relative path) as input, and looks into a number of convenient
+locations to find the file. The list of the search folders includes
+the current working directory, the folder of the main ini file, and the folder
+of the NED file that defined the module or channel.
+If the resource is found, the function returns the full path; otherwise
+it returns the empty string.
+
+<p>The function also looks into folders on the NED path and the image
+path, i.e. the roots of the NED and image folder trees. These search
+locations allow one to load files by full NED package name (but using
+slashes instead of dots), or access an icon with its full name (e.g.
+<tt>block/sink</tt>).
+
+<p>An example that attempts to load a <tt>car.osgb</tt> model file:
+
+<pre class="cpp">
+std::string fileLoc = resolveResourcePath("car.osgb");
+if (fileLoc == "")
+    throw <a href="../api/classomnetpp_1_1cRuntimeError.html">cRuntimeError</a>("car.osgb not found");
+auto node = osgDB::readNodeFile(fileLoc); // use the resolved path
+</pre>
+<p>
+
+<p><h4><a name="sec:graphics:osg-conditional-compilation"/>8.7.2.6 Conditional Compilation<a class="headerlink" href="#sec:graphics:osg-conditional-compilation" title="Permalink to this headline">¶</a></h4>
+
+<p>OSG and osgEarth are optional in OMNeT++, and may not be available in all
+installations. However, one probably wants simulation models to compile
+even if the particular OMNeT++ installation doesn't contain the OSG and
+osgEarth libraries. This can be achieved by conditional compilation.
+
+<p>OMNeT++ detects the OSG and osgEarth libraries and defines the <tt>WITH_OSG</tt> macro
+if they are present. OSG-specific code needs to be surrounded with <tt>#ifdef WITH_OSG</tt>.
+
+<p>An example:
+
+<pre class="cpp">
+...
+#ifdef WITH_OSG
+#include &lt;osgDB/ReadFile&gt;
+#endif
+
+void DemoModule::initialize()
+{
+#ifdef WITH_OSG
+    <a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a> *osgCanvas = getParentModule()-&gt;getOsgCanvas();
+    osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *scene = ... // assemble scene graph here
+    osgCanvas-&gt;setScene(scene);
+    osgCanvas-&gt;setClearColor(<a href="../api/classomnetpp_1_1cOsgCanvas.html">cOsgCanvas</a>::Color(0,0,64)); // hint
+#endif
+}
+</pre>
+<p>
+<h4><a name="sec:graphics:using-additional-osg-libraries"/>8.7.2.7 Using Additional Libraries<a class="headerlink" href="#sec:graphics:using-additional-osg-libraries" title="Permalink to this headline">¶</a></h4>
+
+<p>OSG and osgEarth are comprised of several libraries. By default, OMNeT++
+links simulations with only a subset of them: <tt>osg</tt>, <tt>osgGA</tt>,
+<tt>osgViewer</tt>, <tt>osgQt</tt>, <tt>osgEarth</tt>, <tt>osgEarthUtil</tt>. When
+additional OSG and osgEarth libraries are needed, one needs to ensure that
+those libraries are linked to the model as well. The best way to achieve that
+is to use the following code fragment in the <tt>makefrag</tt> file of the
+project:
+
+<pre class="filelisting">
+ifneq ($(OSG_LIBS),)
+LIBS += $(OSG_LIBS) -losgDB -losgAnimation ... # additional OSG libs
+endif
+ifneq ($(OSGEARTH_LIBS),)
+LIBS += $(OSGEARTH_LIBS) -losgEarthFeatures -losgEarthSymbology ...
+endif
+</pre>
+<p>
+The <tt>ifneq()</tt> statements ensure that <tt>LIBS</tt> is only updated if OMNeT++ has detected
+the presence of OSG/osgEarth in the first place.
+
+<p>
+<h3><a name="sec:graphics:using-osg"/>8.7.3 Using OSG<a class="headerlink" href="#sec:graphics:using-osg" title="Permalink to this headline">¶</a></h3>
+
+<p>OpenScenegraph is a sizable library with 16+ namespaces and 40+ <tt>osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt>
+subclasses, and we cannot fully document it here due to size constraints. Instead,
+in the next sections we have collected some practical advice and useful code snippets
+to help the reader get started. More information can be found on the openscenegraph.org
+web site, in dedicated OpenSceneGraph books (some of which are freely available),
+and in other online resources. We list some OSG-related resources at the end of this
+chapter.
+
+<p><h4><a name="sec:graphics:osg-loading-models"/>8.7.3.1 Loading Models<a class="headerlink" href="#sec:graphics:osg-loading-models" title="Permalink to this headline">¶</a></h4>
+
+<p>To display a 3D model in the canvas of a compound module, an <tt>osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt> has
+to be provided as the root of the scene.
+
+<p>One method of getting such a <tt><a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt> is to load it from a file containing the
+model. This can be done with the <tt>osgDB::readNodeFile()</tt> method (or with one
+of its variants). This method takes a string as argument, and based on the
+protocol specification and extension(s), finds a suitable loader for it,
+loads it, finally returns with a pointer to the newly created <tt>osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt>
+instance.
+
+<p>This node can now be set on the canvas for display with the <tt>setScene()</tt>
+method, as seen in the osg-intro sample (among others):
+
+<pre class="cpp">
+osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *model = osgDB::readNodeFile("model.osgb");
+getParentModule()-&gt;getOsgCanvas()-&gt;setScene(model);
+</pre>
+<p>
+<ul class="note"><b>NOTE</b><br>
+<b>Where to get model files?</b> While OpenSceneGraph recognizes and can
+load a wide range of formats, many 3D modeling tools can also export the
+edited scene or part of it in OSG's native file format, osgt, with the
+help of exporter plugins. One such plugin for Blender has been used to
+develop some of the OSG demos for OMNeT++, and it was found to be working
+well.
+</ul>
+
+<p>There is support for so-called "pseudo loaders" in OSG, which provide
+additional options for loading models. Those allow for some basic
+operations to be performed on the model after it is loaded. To use them,
+simply append the parameters for the modifier followed by the name of it to
+the end of the file name upon loading the model.
+
+<p>Take this line from the osg-earth sample for example:
+
+<pre class="inifile">
+*.cow[*].modelURL = "cow.osgb.2.scale.0,0,90.rot.0,0,-15e-1.trans"
+</pre>
+<p>
+This string will first scale the original cow model in <tt>cow.osgb</tt> to
+200%, then rotate it 90 degrees around the Z axis and finally translate it
+1.5 units downwards. The floating point numbers have to be represented in
+scientific notation to avoid the usage of decimal points or commas in the
+number as those are already used as operator and parameter separators.
+
+<p>Note that these modifiers operate directly on the model data and are
+independent of any further dynamic transformations applied to the node when
+it is placed in the scene. For further information refer to the OSG
+knowledge base.
+
+<p><h4><a name="sec:graphics:osg-creating-shapes"/>8.7.3.2 Creating Shapes<a class="headerlink" href="#sec:graphics:osg-creating-shapes" title="Permalink to this headline">¶</a></h4>
+
+<p>Shapes can also be built programatically. For that, one needs to use the
+<tt>osg::Geode</tt>, <tt>osg::ShapeDrawable</tt> and <tt>osg::Shape</tt>
+classes.
+
+<p>To create a shape, one first needs to create an <tt>osg::Shape</tt>.
+<tt>osg::Shape</tt> is an abstract class and it has several subclasses, like
+<tt>osg::Box</tt>, <tt>osg::Sphere</tt>, <tt>osg::Cone</tt>,
+<tt>osg::Cylinder</tt> or <tt>osg::Capsule</tt>. That object is only an abstract
+definition of the shape, and cannot be drawn on its own. To make it drawable,
+one needs to create an <tt>osg::ShapeDrawable</tt> for it. However, an
+<tt>osg::ShapeDrawable</tt> still cannot be attached to the scene, as it is still
+not an <tt>osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt>. The <tt>osg::ShapeDrawable</tt> must be added to an
+<tt>osg::Geode</tt> (<i>geometry node</i>) to be able to insert it into the
+scene. This object can then be added to the scene and positioned and oriented
+freely, just like any other <tt>osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt>.
+
+<p>For an example of this see the following snippet from the osg-satellites
+sample. This code creates an <tt>osg::Cone</tt> and adds it to the scene.
+
+<pre class="cpp">
+auto cone = new osg::Cone(osg::Vec3(0, 0, -coneRadius*0.75),
+                          coneHeight, coneRadius);
+auto coneDrawable = new osg::ShapeDrawable(cone);
+auto coneGeode = new osg::Geode;
+coneGeode-&gt;addDrawable(coneDrawable);
+locatorNode-&gt;addChild(coneGeode);
+</pre>
+<p>
+Note that a single <tt>ost::Shape</tt> instance can be used to construct many
+<tt>osg::ShapeDrawable</tt>s, and a single <tt>osg::ShapeDrawable</tt> can be
+added to any number of <tt>osg::Geode</tt>s to make it appear in multiple
+places or sizes in the scene. This can in fact improve rendering performance.
+
+<p><h4><a name="sec:graphics:osg-placing-and-orienting-models"/>8.7.3.3 Placing and Orienting Models in a Scene<a class="headerlink" href="#sec:graphics:osg-placing-and-orienting-models" title="Permalink to this headline">¶</a></h4>
+
+<p>One way to position and orient nodes is by making them children of an
+<tt>osg::PositionAttitudeTransform</tt>. This node provides methods to
+set the position, orientation and scale of its children. Orientation is done
+with quaternions (<tt>osg::Quat</tt>). Quaternions can be constructed from
+an axis of rotation and a rotation angle around the axis.
+
+<p>The following example places a node at the (x, y, z) coordinates and rotates it
+around the Z axis by <tt>heading</tt> radians to make it point in the right
+direction.
+
+<pre class="cpp">
+osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *objectNode = ...;
+auto transformNode = new osg::PositionAttitudeTransform();
+transformNode-&gt;addChild(objectNode);
+transformNode-&gt;setPosition(osg::Vec3d(x, y, z));
+double heading = ...; // (in radians)
+transformNode-&gt;setAttitude(osg::Quat(heading, osg::Vec3d(0, 0, 1)));
+</pre>
+<p>
+<h4><a name="sec:graphics:osg-adding-labels-and-annotations"/>8.7.3.4 Adding Labels and Annotations<a class="headerlink" href="#sec:graphics:osg-adding-labels-and-annotations" title="Permalink to this headline">¶</a></h4>
+
+<p>OSG makes it possible to display text or image labels in the scene. Labels
+are rotated to be always parallel to the screen, and scaled to appear in a
+constant size. In the following we'll show an example where we create
+a label and display it relative to an arbitrary node.
+
+<p>First, the label has to be created:
+
+<pre class="cpp">
+auto label = new osgText::Text();
+label-&gt;setCharacterSize(18);
+label-&gt;setBoundingBoxColor(osg::Vec4(1.0, 1.0, 1.0, 0.5)); // RGBA
+label-&gt;setColor(osg::Vec4(0.0, 0.0, 0.0, 1.0)); // RGBA
+label-&gt;setAlignment(osgText::Text::CENTER_BOTTOM);
+label-&gt;setText("Hello World");
+label-&gt;setDrawMode(osgText::Text::FILLEDBOUNDINGBOX | osgText::Text::TEXT);
+</pre>
+<p>
+Or if desired, a textured rectangle with an image:
+
+<pre class="cpp">
+auto image = osgDB::readImageFile("myicon.png");
+auto texture = new osg::Texture2D();
+texture-&gt;setImage(image);
+auto icon = osg::createTexturedQuadGeometry(osg::Vec3(0.0, 0.0, 0.0),
+    osg::Vec3(image-&gt;s(), 0.0, 0.0), osg::Vec3(0.0, image-&gt;t(), 0.0),
+    0.0, 0.0, 1.0, 1.0);
+icon-&gt;getOrCreateStateSet()-&gt;setTextureAttributeAndModes(0, texture);
+icon-&gt;getOrCreateStateSet()-&gt;setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);
+</pre>
+<p>
+If the image has transparent parts, one also needs the following lines:<br><ul><font size=-1>[These lines
+enable blending, and places <tt>icon</tt> in the <tt>TRANSPARENT_BIN</tt>. Normally there are
+two bins, <i>opaque</i> and <i>transparent</i>. When a scene is rendered, OSG first
+renders the objects in the opaque bin, then the objects in the transparent bin. More bits
+can be created, but that is rarely necessary.]</font></ul>
+
+<pre class="cpp">
+icon-&gt;getOrCreateStateSet()-&gt;setMode(GL_BLEND, osg::StateAttribute::ON);
+icon-&gt;getOrCreateStateSet()-&gt;setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+</pre>
+<p>
+The icon and/or label needs an <tt>osg::Geode</tt> to be placed in the scene.
+Lighting is best disabled for the label.
+
+<pre class="cpp">
+auto geode = new osg::Geode();
+geode-&gt;getOrCreateStateSet()-&gt;setMode(GL_LIGHTING,
+            osg::StateAttribute::OFF | osg::StateAttribute::OVERRIDE);
+double labelSpacing = 2;
+label-&gt;setPosition(osg::Vec3(0.0, labelSpacing, 0.0));
+geode-&gt;addDrawable(label);
+geode-&gt;addDrawable(icon);
+</pre>
+<p>
+This <tt>osg::Geode</tt> should be made a child of an <tt>osg::AutoTransform</tt>
+node, which applies the correct transformations to it for the label-like behaviour
+to happen:
+
+<pre class="cpp">
+auto autoTransform = new osg::AutoTransform();
+autoTransform-&gt;setAutoScaleToScreen(true);
+autoTransform-&gt;setAutoRotateMode(osg::AutoTransform::ROTATE_TO_SCREEN);
+autoTransform-&gt;addChild(geode);
+</pre>
+<p>
+This <tt>autoTransform</tt> can now be made a child of the <tt>modelToTransform</tt>,
+and moved with it.Alternatively, both can be added to a new <tt>osg::Group</tt>,
+as siblings, and handled together using that.
+
+<p>We want the label to appear relative to an object called <tt>modelNode</tt>.
+One way would be to make <tt>autoTransform</tt> the child of <tt>modelNode</tt>,
+but here we rather place both of them under an <tt>osg::Group</tt>. The group should
+be inserted
+
+<pre class="cpp">
+auto modelNode = ... ;
+auto group = new osg::Group();
+group-&gt;addChild(modelNode);
+group-&gt;addChild(autoTransform);
+</pre>
+<p>
+To place the label above the object, we set its position to <i>(0,0,z)</i>, where <i>z</i>
+is the radius of the object's bounding sphere.
+
+<pre class="cpp">
+auto boundingSphere = modelNode-&gt;getBound();
+autoTransform-&gt;setPosition(osg::Vec3d(0.0, 0.0, boundingSphere.radius()));
+</pre>
+<p>
+
+<p>
+<h4><a name="sec:graphics:osg-drawing-lines"/>8.7.3.5 Drawing Lines<a class="headerlink" href="#sec:graphics:osg-drawing-lines" title="Permalink to this headline">¶</a></h4>
+
+<p>To draw a line between two points in the scene, first the two points
+have to be added into an <tt>osg::Vec3Array</tt>. Then an <tt>osg::DrawArrays</tt>
+should be created to specify which part of the array needs to be drawn.
+In this case, it is obviously two points, starting from the one at index 0.
+Finally, an <tt>osg::Geometry</tt> is necessary to join the two together.
+
+<pre class="cpp">
+auto vertices = new osg::Vec3Array();
+vertices-&gt;push_back(osg::Vec3(begin_x, begin_y, begin_z));
+vertices-&gt;push_back(osg::Vec3(end_x, end_y, end_z));
+
+auto drawArrays = new osg::DrawArrays(osg::PrimitiveSet::LINE_STRIP);
+drawArrays-&gt;setFirst(0);
+drawArrays-&gt;setCount(vertices-&gt;size());
+
+auto geometry = new osg::Geometry();
+geometry-&gt;setVertexArray(vertices);
+geometry-&gt;addPrimitiveSet(drawArrays);
+</pre>
+<p>
+The resulting <tt>osg::Geometry</tt> must be added to an <tt>osg::Geode</tt>
+(<i>geometry node</i>), which makes it possible to add it to the scene.
+
+<pre class="cpp">
+auto geode = new osg::Geode();
+geode-&gt;addDrawable(geometry);
+</pre>
+<p>
+To change some visual properties of the line, the <tt>osg::StateSet</tt> of the
+<tt>osg::Geode</tt> has to be modified. The width of the line, for example, is
+controlled by a <tt>osg::StateAttribute</tt> called <tt>osg::LineWidth</tt>.
+
+<pre class="cpp">
+float width = ...;
+auto stateSet = geode-&gt;getOrCreateStateSet();
+auto lineWidth = new osg::LineWidth();
+lineWidth-&gt;setWidth(width);
+stateSet-&gt;setAttributeAndModes(lineWidth, osg::StateAttribute::ON);
+</pre>
+<p>
+Because of how <tt>osg::Geometry</tt> is rendered, the specified line width
+will always be constant on the screen (measured in pixels), and will not vary
+based on the distance from the camera. To achieve that effect, a long and thin
+<tt>osg::Cylinder</tt> could be used instead.
+
+<p>Changing the color of the line can be achieved by setting an appropriate
+<tt>osg::Material</tt> on the <tt>osg::StateSet</tt>. It is recommended to
+disable lighting for the line, otherwise it might appear in a different color,
+depending on where it is viewed from or what was rendered just before
+it.<br><ul><font size=-1>[Since no normals were specified for the vertices upon creation,
+they are undefined (and wouldn't make much sense for a one-dimensional object),
+but still would be used for lighting.]</font></ul>
+
+<pre class="cpp">
+auto material = new osg::Material();
+osg::Vec4 colorVec(red, green, blue, opacity); // all between 0.0 and 1.0
+material-&gt;setAmbient(Material::FRONT_AND_BACK, colorVec);
+material-&gt;setDiffuse(Material::FRONT_AND_BACK, colorVec);
+material-&gt;setAlpha(Material::FRONT_AND_BACK, opacity);
+stateSet-&gt;setAttribute(material);
+stateSet-&gt;setMode(GL_LIGHTING,
+            osg::StateAttribute::OFF | osg::StateAttribute::OVERRIDE);
+</pre>
+<p>
+<h4><a name="sec:graphics:osg-organizing-a-scene"/>8.7.3.6 How to Organize a Scene<a class="headerlink" href="#sec:graphics:osg-organizing-a-scene" title="Permalink to this headline">¶</a></h4>
+
+<p>Independent of how the scene has been constructed, it is always important
+to keep track of how the individual nodes are related to each other in the
+scene graph. This is because every modification of an <tt>osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt> is by
+default propagated to all of its children, let it be a transformation, a
+render state variable, or some other flag.
+
+<p>For really simple scenes it might be enough to have an <tt>osg::Group</tt> as the
+root node, and make every other object a direct child of that. This reduces
+the complications and avoids any strange surprises regarding state
+inheritance. For more complex scenes it is advisable to follow the logical
+hierarchy of the displayed objects in the scene graph.
+
+<p>Once the desired object has been created and added to the scene, it can be easily
+moved and oriented to represent the state of the simulation by making it a
+child of an <tt>osg::PositionAttitudeTransform</tt> node.
+
+<p><h4><a name="sec:graphics:osg-using-animations"/>8.7.3.7 Using Animations<a class="headerlink" href="#sec:graphics:osg-using-animations" title="Permalink to this headline">¶</a></h4>
+
+
+If the node loaded by <tt>readNodeFile()</tt> contains animations (sometimes called
+actions), the <tt>osgAnimation</tt> module is capable of playing them back.
+
+<p>In simple cases, when there is only a single animation, and it is set up to play
+in a loop automatically (like the walking man in the osg-indoor sample simulation),
+there is no need to explicitly control it (provided it is the desired behaviour.)
+
+<p>Otherwise, the individual actions can be controlled by an
+<tt>osgAnimation::AnimationManager</tt>, with methods like <tt>playAnimation()</tt>,
+<tt>stopAnimation()</tt>, <tt>isPlaying()</tt>, etc. Animation managers can be
+found among the descendants of the loaded <tt>osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt>s which are animated,
+for example using a custom <tt>osg::NodeVisitor</tt>:
+
+<pre class="cpp">
+osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a> *objectNode = osgDB::readNodeFile( ... );
+
+struct AnimationManagerFinder : public osg::NodeVisitor {
+    osgAnimation::BasicAnimationManager *result = nullptr;
+    AnimationManagerFinder()
+      : osg::NodeVisitor(osg::NodeVisitor::TRAVERSE_ALL_CHILDREN) {}
+    void apply(osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a>& node) {
+        if (result) return; // already found it
+        if (osgAnimation::AnimationManagerBase* b =
+              dynamic_cast&lt;osgAnimation::AnimationManagerBase*&gt;(
+                node.getUpdateCallback())) {
+            result = new osgAnimation::BasicAnimationManager(*b);
+            return;
+        }
+        traverse(node);
+    }
+} finder;
+
+objectNode-&gt;accept(finder);
+animationManager = finder.result;
+</pre>
+<p>
+This visitor simply finds the first node in the subtree which has an update
+callback of type <tt>osgAnimation::AnimationManagerBase</tt>. Its result is
+a new <tt>osgAnimation::BasicAnimationManager</tt> created from the
+base.
+
+<p>This new <tt>animationManager</tt> now has to be set as an update callback on the
+<tt>objectNode</tt> to be able to actually drive the animations.
+Then any animation in the list returned by <tt>getAnimationList()</tt> can be set
+up as needed and played.
+
+<pre class="cpp">
+objectNode-&gt;setUpdateCallback(animationManager);
+auto animation = animationManager-&gt;getAnimationList().front();
+animation-&gt;setPlayMode(osgAnimation::Animation::STAY);
+animation-&gt;setDuration(2);
+animationManager-&gt;playAnimation(animation);
+</pre>
+<p>
+<h4><a name="sec:graphics:osg-state-sets"/>8.7.3.8 State Sets<a class="headerlink" href="#sec:graphics:osg-state-sets" title="Permalink to this headline">¶</a></h4>
+
+<p>Every <tt>osg::Drawable</tt> can have an <tt>osg::StateSet</tt> attached to it.
+An easy way of accessing it is via the <tt>getOrCreateStateSet()</tt> method of
+the drawable node. An <tt>osg::StateSet</tt> encapsulates a subset of the OpenGL
+state, and can be used to modify various rendering parameters, for example the
+used textures, shader programs and their parameters, color and material,
+face culling, depth and stencil options, and many more
+<tt>osg::StateAttributes</tt>.
+
+<p>The following example enables blending for a node and sets up a
+transparent, colored material to be used for rendering it, through its
+<tt>osg::StateSet</tt>.
+
+<pre class="cpp">
+auto stateSet = node-&gt;getOrCreateStateSet();
+stateSet-&gt;setMode(GL_BLEND, osg::StateAttribute::ON);
+auto matColor = osg::Vec4(red, green, blue, alpha); // all between 0.0 and 1.0
+auto material = new osg::Material;
+material-&gt;setEmission(osg::Material::FRONT, matColor);
+material-&gt;setDiffuse(osg::Material::FRONT, matColor);
+material-&gt;setAmbient(osg::Material::FRONT, matColor);
+material-&gt;setAlpha(osg::Material::FRONT, alpha);
+stateSet-&gt;setAttributeAndModes(material, osg::StateAttribute::OVERRIDE);
+</pre>
+<p>
+To help OSG with the correct rendering of objects with transparency, they
+should be placed in the <tt>TRANSPARENT_BIN</tt> by setting up a rendering hint
+on their <tt>osg::StateSet</tt>. This ensures that they will be drawn after all
+fully opaque objects, and in decreasing order of their distance from the camera.
+When there are multiple transparent objects intersecting each other in the scene
+(like the transmission &#8220;bubbles&#8221; in the BostonPark configuration of the
+osg-earth sample simulation), there is no order in which they would appear correctly. A
+solution for these cases is to disable writing to the depth buffer during their
+rendering using the <tt>osg::Depth</tt> attribute.
+
+<pre class="cpp">
+stateSet-&gt;setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+osg::Depth* depth = new osg::Depth;
+depth-&gt;setWriteMask(false);
+stateSet-&gt;setAttributeAndModes(depth, osg::StateAttribute::ON);
+</pre>
+<p>
+Please note that this still does not guarentee a completely physically accurate
+look, since that is a much harder problem to solve, but at least minimizes the
+obvious visual artifacts. Also, too many transparent objects might decrease
+performance, so wildly overusing them is to be avoided.
+
+<p>
+<h3><a name="sec:graphics:using-osgearth"/>8.7.4 Using osgEarth<a class="headerlink" href="#sec:graphics:using-osgearth" title="Permalink to this headline">¶</a></h3>
+
+<p>osgEarth is a cross-platform terrain and mapping SDK built on top of OpenSceneGraph.
+The most visible feature of osgEarth is that it adds support for loading <tt>.earth</tt>
+files to <tt>osgDB::readNodeFile()</tt>. An <tt>.earth</tt> file specifies contents and
+appearance of the displayed globe. This can be as simple as a single image
+textured over a sphere or as complex as realistic terrain data and
+satellite images complete with street and building information dynamically
+streamed over the internet from a publicly available provider, thanks to
+the flexibility of osgEarth. osgEarth also defines additional APIs
+to help with coordinate conversions and other tasks. Other than that,
+one's OSG knowledge is also applicable when building osgEarth scenes.
+
+<p>The next sections contain some tips and code fragments to help the reader get
+started with osgEarth. As with OSG, there are numerous other sources of
+information, both printed and online, when the info contained herein
+is insufficient.
+
+<p>
+<h4><a name="sec:graphics:earth-files"/>8.7.4.1 Earth Files<a class="headerlink" href="#sec:graphics:earth-files" title="Permalink to this headline">¶</a></h4>
+
+<p>When the osgEarth plugin is used to display a map as the visual environment
+of the simulation, its appearance can be described in a .earth file.
+
+<p>It can be loaded using the <tt>osgDB::readNodeFile()</tt> method, just like any
+other regular model. The resulting <tt>osg::<a href="../api/classomnetpp_1_1cTopology_1_1Node.html">Node</a></tt> will contain a node with a
+type of <tt>osgEarth::MapNode</tt>, which can be easily found using the
+<tt>osgEarth::MapNode::findMapNode()</tt> function. This node serves as the
+data model that contains all the data specified in the <tt>.earth</tt> file.
+
+<pre class="cpp">
+auto earth = osgDB::readNodeFile("example.earth");
+auto mapNode = osgEarth::MapNode::findMapNode(earth);
+</pre>
+<p>
+An .earth file can specify a wide variety of options. The <tt>type</tt> attribute
+of the <tt>map</tt> tag (which is always the root of the document) lets the user
+select whether the terrain should be projected onto a flat plane (<tt>projected</tt>),
+or rendered as a geoid (<tt>geocentric</tt>).
+
+<p>Where the texture of the terrain is acquired from is specified by <tt>image</tt>
+tags. Many different kinds of sources are supported, including local files and
+popular online map sources with open access like MapQuest or OpenStreetMap.
+These can display different kinds of graphics, like satellite imagery, street
+or terrain maps, or other features the given on-line service provides.
+
+<p>The following example .earth file will set up a spherical rendering of Earth
+with textures from openstreetmap.org:
+
+<pre class="filelisting">
+&lt;map name="OpenStreetMap" type="geocentric" version="2" &gt;
+    &lt;image name="osm_mapnik" driver="xyz" &gt;
+        &lt;url&gt;http://[abc].tile.openstreetmap.org/{z}/{x}/{y}.png&lt;/url&gt;
+    &lt;/image&gt;
+&lt;/map&gt;
+</pre>
+<p>
+Elevation data can also be acquired in a similarly simple fashion using the
+<tt>elevation</tt> tag. The next snippet demonstrates this:
+
+<pre class="filelisting">
+&lt;map name="readymap.org" type="geocentric" version="2" &gt;
+    &lt;image name="readymap_imagery" driver="tms" &gt;
+        &lt;url&gt;http://readymap.org/readymap/tiles/1.0.0/7/&lt;/url&gt;
+    &lt;/image&gt;
+    &lt;elevation name="readymap_elevation" driver="tms" &gt;
+        &lt;url&gt;http://readymap.org/readymap/tiles/1.0.0/9/&lt;/url&gt;
+    &lt;/elevation&gt;
+&lt;/map&gt;
+</pre>
+<p>
+For a detailed description of the available image and elevation source drivers,
+refer to the online references of osgEarth, or use one of the sample .earth
+files shipped with it.
+
+<p>The following partial .earth file places a label over Los Angeles, an extruded
+ellipse (a hollow cylinder) next to it, and a big red flag nearby.
+
+<pre class="filelisting">
+&lt;map ... &gt;
+    ...
+    &lt;external&gt;
+        &lt;annotations&gt;
+            &lt;label text="Los Angeles" &gt;
+                &lt;position lat="34.051" long="-117.974" alt="100" mode="relative"/&gt;
+            &lt;/label&gt;
+
+            &lt;ellipse name="ellipse extruded" &gt;
+                &lt;position lat="32.73" long="-119.0"/&gt;
+                &lt;radius_major value="50" units="km"/&gt;
+                &lt;radius_minor value="20" units="km"/&gt;
+                &lt;style type="text/css" &gt;
+                    fill:             #ff7f007f;
+                    stroke:           #ff0000ff;
+                    extrusion-height: 5000;
+                &lt;/style&gt;
+            &lt;/ellipse&gt;
+
+            &lt;model name="flag model" &gt;
+                &lt;url&gt;flag.osg.18000.scale&lt;/url&gt;
+                &lt;position lat="33" long="-117.75" hat="0"/&gt;
+            &lt;/model&gt;
+        &lt;/annotations&gt;
+    &lt;/external&gt;
+&lt;/map&gt;
+</pre>
+<p>
+
+<p><h4><a name="sec:graphics:offline-tiles"/>8.7.4.2 Creating Offline Tile Packages<a class="headerlink" href="#sec:graphics:offline-tiles" title="Permalink to this headline">¶</a></h4>
+
+<p>Being able to use online map providers is very convenient, but it is
+often more desirable to use an offline map resource. Doing so not only makes
+the simulation usable without internet access, but also speeds up map
+loading and insulates the simulation against changes in the online environment
+(availablity, content and configuration changes of map servers). 
+
+<p>There are two ways map data may come from the local disk: caching, and 
+using a self-contained offline map package. In this section we'll cover the
+latter, and show how you can create an offline map package from online sources,
+using the command line tool called <tt>osgearth_package</tt>. The resulting
+package, unlike map cache, will also be redistributable.
+
+<p>Given the right arguments, <tt>osgearth_package</tt> will download the tiles
+that make up the map, and arrange them in a fairly standardized, self-contained
+package. It will also create a corresponding <tt>.earth</tt> file that can be later
+used just like any other. 
+
+<p>For example, the osg-earth sample simulation uses a tile package which has been
+created with a command similar to this one:
+
+<pre class="commandline">
+$ osgearth_package --tms boston.earth --out offline-tiles \
+    --bounds -71.0705566406 42.350425122434 -71.05957031 42.358543917497 \
+    --max-level 18 --out-earth boston_offline.earth --mt --concurrency 8
+</pre>
+<p>
+The <tt>--tms boston.earth</tt> arguments mean that we want to create a package
+in TMS format from the input file boston.earth. The <tt>--out offline-tiles</tt>
+argument specifies the output directory.
+
+<p>The <tt>--bounds</tt> argument specifies the rectangle of the map we want to include
+in the package, in the order <i>xmin ymin xmax ymax</i> order, as standard WGS84
+datum (longitude/latitude). These example coordinates include the Boston Common
+area, used in some samples. The size of this rectangle obviously has a big impact
+on the size of the resulting package.
+
+<p>The <tt>--max-level 18</tt> argument is the maximum level of detail to be saved. This
+is a simple way of adjusting the tradeoff between quality and required disk space.
+Values between 15 and 20 are generally suitable, depending on the size of the
+target area and the available storage capacity.
+
+<p>The <tt>--out-earth boston_offline.earth</tt> option tells the utility to generate
+an .earth file with the given name in the output directory that references the
+prepared tile package as image source.
+
+<p>The <tt>--mt --concurrency 8</tt> arguments will make the process run in multithreaded
+mode, using 8 threads, potentially speeding it up.
+
+<p>The tool has a few more options for controlling the image format and compression
+mode among others. Consult the documentation for details, or the short usage help
+accessible with the <tt>-h</tt> switch.
+
+<p><ul class="hint"><b>HINT</b><br>
+There is also a GUI front-end for <tt>osgearth_package</tt>, called 
+<tt>osgearth_package_qt</tt>. This tool provides an easy way to select
+the bounding rectangle on the actual map using the mouse, lets the user
+choose the input and output files and the export options, and performs the
+exporting, all without having to resort to a command line interface.
+</ul>
+
+<p>
+<h4><a name="sec:graphics:osgearth-placing-objects"/>8.7.4.3 Placing Objects on a Map<a class="headerlink" href="#sec:graphics:osgearth-placing-objects" title="Permalink to this headline">¶</a></h4>
+
+<p>To easily position a part of the scene together on a given geographical
+location, an <tt>osgEarth::GeoTransform</tt> is of great help. It takes
+geographical coordinates (longitude/latitude/altitude), and creates a simple
+Cartesian coordinate system centered on the given location, in which all of
+its children can be positioned painlessly, without having to worry about
+further coordinate transformations between Cartesian and geographic systems.
+To move and orient the children within this local system,
+<tt>osg::PositionAttitudeTransform</tt> can be used.
+
+<pre class="cpp">
+osgEarth::GeoTransform *geoTransform = new osgEarth::GeoTransform();
+osg::PositionAttitudeTransform *localTransform = new osg::PositionAttitudeTransform();
+
+mapNode-&gt;getModelLayerGroup()-&gt;addChild(geoTransform);
+geoTransform-&gt;addChild(localTransform);
+localTransform-&gt;addChild(objectNode);
+
+geoTransform-&gt;setPosition(osgEarth::GeoPoint(mapNode-&gt;getMapSRS(), longitude, latitude, altitude));
+localTransform-&gt;setAttitude(osg::Quat(heading, osg::Vec3d(0, 0, 1)));
+</pre>
+<p>
+<h4><a name="sec:graphics:osgearth-adding-annotations"/>8.7.4.4 Adding Annotations on a Map<a class="headerlink" href="#sec:graphics:osgearth-adding-annotations" title="Permalink to this headline">¶</a></h4>
+
+<p>To display additional information on top of the terrain, annotations can be
+used. These are special objects that can adapt to the shape of the surface.
+Annotations can be of many kinds, for example simple geometric shapes like circles,
+ellipses, rectangles, lines, polygons (which can be extruded upwards to make
+solids); texts or labels, arbitrary 3D models, or images projected onto the
+surface.
+
+<p>All the annotations that can be created declaratively from an .earth file,
+can also be programatically generated at runtime.
+
+<p>This example shows how the circular transmission ranges of the cows in the
+osg-earth sample are created in the form of a
+<tt>osgEarth::Annotation::CircleNode</tt> annotation. Some basic styling is
+applied to it using an <tt>osgEarth::Style</tt>, and the rendering technique to
+be used is specified.
+
+<pre class="cpp">
+auto scene = ...;
+auto mapNode = osgEarth::MapNode::findMapNode(scene);
+auto geoSRS = mapNode-&gt;getMapSRS()-&gt;getGeographicSRS();
+osgEarth::Style rangeStyle;
+rangeStyle.getOrCreate&lt;PolygonSymbol&gt;()-&gt;fill()-&gt;color() =
+                                        osgEarth::Color(rangeColor);
+rangeStyle.getOrCreate&lt;AltitudeSymbol&gt;()-&gt;clamping() =
+                                        AltitudeSymbol::CLAMP_TO_TERRAIN;
+rangeStyle.getOrCreate&lt;AltitudeSymbol&gt;()-&gt;technique() =
+                                        AltitudeSymbol::TECHNIQUE_DRAPE;
+rangeNode = new osgEarth::Annotation::CircleNode(mapNode.get(),
+    osgEarth::GeoPoint:(geoSRS, longitude, latitude),
+    osgEarth::Linear(radius, osgEarth::Units::METERS), rangeStyle);
+mapNode-&gt;getModelLayerGroup()-&gt;addChild(rangeNode);
+</pre>
+<p>
+
+<p><h3><a name="sec:graphics:osg-osgearth-programming-resources"/>8.7.5 OpenSceneGraph/osgEarth Programming Resources<a class="headerlink" href="#sec:graphics:osg-osgearth-programming-resources" title="Permalink to this headline">¶</a></h3>
+
+<p><h4><a name="sec:graphics:osg-osgearth-online-resources"/>8.7.5.1 Online resources<a class="headerlink" href="#sec:graphics:osg-osgearth-online-resources" title="Permalink to this headline">¶</a></h4>
+
+<p>Loading and manipulating OSG models:
+<ul>
+<li> http://trac.openscenegraph.org/projects/osg/wiki/Support/UserGuides/Plugins
+<li> http://trac.openscenegraph.org/projects/osg/wiki/Support/Tutorials/FileLoadingAndTransforms
+<li> http://trac.openscenegraph.org/projects/osg/wiki/Support/KnowledgeBase/PseudoLoader
+</ul>
+
+<p>Creating 3D models for OpenSceneGraph using Blender:
+<ul>
+<li> https://github.com/cedricpinson/osgexport
+</ul>
+
+<p>osgEarth online documentation:
+<ul>
+<li> http://docs.osgearth.org/en/latest/references/earthfile.html
+<li> http://docs.osgearth.org/en/latest/index.html
+</ul>
+
+<p><h4><a name="sec:graphics:osg-osgearth-samples"/>8.7.5.2 Sample code<a class="headerlink" href="#sec:graphics:osg-osgearth-samples" title="Permalink to this headline">¶</a></h4>
+
+<p>Be sure to check the samples coming with the OpenSceneGraph installation, as
+they contain invaluable information.
+<ul>
+<li> https://github.com/openscenegraph/osg/tree/master/examples
+<li> https://github.com/openscenegraph/osg-data
+</ul>
+
+<p><h4><a name="sec:graphics:osg-osgearth-books"/>8.7.5.3 Books<a class="headerlink" href="#sec:graphics:osg-osgearth-books" title="Permalink to this headline">¶</a></h4>
+
+<p>The following books can be useful for more complex visualization tasks:
+
+<p><ul>
+<li> <i>OpenSceneGraph Quick Start Guide</i>, by Paul Martz.
+
+<p>This book is a concise introduction to the OpenSceneGraph API. It can be
+purchased from http://www.osgbooks.com, and it is also available as
+a free pdf download.
+
+<p><li> <i>OpenSceneGraph 3.0: Beginners Guide</i>, by Wang Rui. Packt Publishing, 2010.
+
+<p>This book is a concise introduction to the main features of OpenSceneGraph
+which then leads the reader into the fundamentals of developing virtual reality
+applications. Practical instructions and explanations accompany every step.
+
+<p><li> <i>OpenSceneGraph 3.0 Cookbook</i>, by Wang Rui and Qian Xuelei. Packt Publishing, 2010.
+
+<p>This book contains 100 recipes in 9 chapters, focusing on different
+fields including the installation, nodes, geometries, camera manipulation,
+animations, effects, terrain building, data management, GUI integration.
+
+<p></ul>
+
+<p>
+<hr class='pgbr'><p><hr><b><a href="chap7.html">[Prev]</A>&nbsp;<a href="chap9.html">[Next]</A>&nbsp;<a href="toc.html#toc_8.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+%description:
+Tests parsimPack/parsimUnpack for generated classes
+
+%file: test.msg
+
+namespace @TESTNAME@;
+
+cplusplus {{
+typedef std::vector<int> IntVector;
+typedef std::list<int> IntList;
+typedef std::set<int> IntSet;
+typedef std::map<int,double> IntDoubleMap;
+typedef std::list<std::vector<int>> IntVectorList;
+typedef std::vector<std::list<int>> IntListVector;
+}}
+
+class IntVector {@existingClass;@opaque;}
+class IntList {@existingClass;@opaque;}
+class IntSet {@existingClass;@opaque;}
+class IntDoubleMap {@existingClass;@opaque;}
+class IntVectorList {@existingClass;@opaque;}
+class IntListVector {@existingClass;@opaque;}
+
+message TestMessage {
+    IntVector v;
+    IntList l;
+    IntSet s;
+    IntDoubleMap m;
+    IntVectorList vl;
+    IntListVector lv;
+}
+
+
+%includes:
+#include <string.h>
+#include <sim/parsim/cfilecommbuffer.h> // from src/sim/parsim
+#include <envir/objectprinter.h>   // from src/envir
+#include "test_m.h"
+
+%activity:
+
+#define PRINT(X)  EV << #X << ":" << (X) << endl
+
+TestMessage msg("msg");
+
+msg.getVForUpdate().push_back(1);
+msg.getVForUpdate().push_back(5);
+
+msg.getLForUpdate().push_back(99);
+msg.getLForUpdate().push_back(54);
+msg.getLForUpdate().push_back(63);
+
+msg.getSForUpdate().insert(888);
+msg.getSForUpdate().insert(123);
+
+msg.getMForUpdate()[3] = 3.14;
+msg.getMForUpdate()[2] = 2.71;
+
+std::vector<int> v;
+v.push_back(5);
+v.push_back(7);
+std::list<std::vector<int> > vl;
+vl.push_back(v);
+msg.setVl(vl);
+
+std::list<int> l;
+l.push_back(5);
+l.push_back(7);
+std::vector<std::list<int> > lv;
+lv.push_back(l);
+msg.setLv(lv);
+
+
+cFileCommBuffer *buffer = new cFileCommBuffer();
+msg.parsimPack(buffer);
+
+TestMessage msg2("tmp");
+msg2.parsimUnpack(buffer);
+EV << "isBufferEmpty:" << buffer->isBufferEmpty() << endl;
+
+EV << "v:";
+for (IntVector::const_iterator it=msg2.getV().begin(); it!=msg2.getV().end(); it++)
+    EV << " " << *it;
+EV << "\n";
+
+EV << "l:";
+for (IntList::const_iterator it=msg2.getL().begin(); it!=msg2.getL().end(); it++)
+    EV << " " << *it;
+EV << "\n";
+
+EV << "s:";
+for (IntSet::const_iterator it=msg2.getS().begin(); it!=msg2.getS().end(); it++)
+    EV << " " << *it;
+EV << "\n";
+
+EV << "m:";
+for (IntDoubleMap::const_iterator it=msg2.getM().begin(); it!=msg2.getM().end(); it++)
+    EV << " " << it->first << ":" << it->second;
+EV << "\n";
+
+EV << "vl:";
+for (IntVectorList::const_iterator it=msg2.getVl().begin(); it!=msg2.getVl().end(); it++) {
+    EV << " [";
+    for (IntVector::const_iterator it2=it->begin(); it2!=it->end(); it2++)
+        EV << " " << *it2;
+    EV << " ]";
+}
+EV << "\n";
+
+EV << "lv:";
+for (IntListVector::const_iterator it=msg2.getLv().begin(); it!=msg2.getLv().end(); it++) {
+    EV << " [";
+    for (IntList::const_iterator it2=it->begin(); it2!=it->end(); it2++)
+        EV << " " << *it2;
+    EV << " ]";
+}
+EV << "\n";
+
+
+
+
+%contains: stdout
+isBufferEmpty:1
+v: 1 5
+l: 99 54 63
+s: 123 888
+m: 2:2.71 3:3.14
+vl: [ 5 7 ]
+lv: [ 5 7 ]
+

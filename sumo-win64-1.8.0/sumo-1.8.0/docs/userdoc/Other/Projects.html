@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Other/Projects.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Other/Projects - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Other/Projects.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#at_the_dlr">At the DLR</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#current_projects" class="nav-link">• Current Projects</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#past_projects" class="nav-link">• Past Projects</a>
+                </li>
+            <li class="nav-item main"><a href="#at_other_institutions">At other Institutions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#current_projects_1" class="nav-link">• Current Projects</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#past_projects_1" class="nav-link">• Past Projects</a>
+                </li>
+            <li class="nav-item main"><a href="#code_repositories_with_sumo_related_stuff">Code repositories with SUMO related stuff</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#visualization_related" class="nav-link">• Visualization related</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Other/Projects<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h2 id="at_the_dlr">At the DLR<a class="headerlink" href="#at_the_dlr" title="Permanent link">#</a></h2>
+<h3 id="current_projects">Current Projects<a class="headerlink" href="#current_projects" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="http://www.maven-its.eu/">MAVEN</a> Managing Automated Vehicles
+  Enhances Network</li>
+<li><a href="https://ec.europa.eu/inea/en/horizon-2020/projects/H2020-Transport/Automated-Road-Transport/TransAID">TransAID</a>
+  new hierarchical traffic management procedures to allow the smooth
+  integration of automated vehicles in traffic systems</li>
+<li><a href="http://www.dlr.de/fs/en/desktopdefault.aspx/tabid-10496/18188_read-42579/">VITAL</a>:
+  innovative traffic light control with V2X Communication.</li>
+<li><a href="http://www.dlr.de/vabene/en/">VABENE</a>. SUMO simulates and predicts
+  large-scale traffic for disaster and public event management</li>
+<li><a href="http://verkehrsforschung.dlr.de/de/projekte/imove">I.MoVe</a>
+  developing additional car following models</li>
+<li><a href="http://www.urmo.info/">Urban Mobility</a> Intermodal routing and
+  modeling of transfer between vehicles in SUMO</li>
+<li><a href="http://www.mobilityinside.de/">Mobility Inside</a> Using SUMO's
+  intermodal routing engine</li>
+<li><a href="http://komob.de/projekte/hub-chain/">HubChain (german)</a> simulating
+  autonomous public transport in rural areas</li>
+<li><a href="http://mendel-projekt.de/en/home-2/">MENDEL</a> modeling electric
+  buses and optimizing charging with respect to grid load</li>
+</ul>
+<h3 id="past_projects">Past Projects<a class="headerlink" href="#past_projects" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="http://www.dlr.de/VEU/en/">VEU</a>. In this project, SUMO is used to
+  simulated the traffic of Berlin</li>
+<li><a href="http://www.colombo-fp7.eu/">COLOMBO</a> Cooperative Self-Organizing
+  System for low Carbon Mobility at low Penetration Rates</li>
+<li><a href="http://www.amitran.eu/">AMITRAN</a></li>
+<li><a href="http://modum-project.eu/">MODUM</a></li>
+<li><a href="http://www.ict-itetris.eu/">iTetris</a> An Integrated Wireless and
+  Traffic Platform for Real-Time Road Traffic Management Solutions</li>
+<li>Delphi: country-wide traffic analysis and prognosis for Germany</li>
+<li><a href="http://www.orinoko.info/">ORINOKO</a>: improvements on mobility in the
+  city of Nürnberg</li>
+<li>TrafficOnline: traffic flow estimation using cellular phones</li>
+<li><a href="http://www.dlr.de/desktopdefault.aspx/tabid-1296/">Soccer2006</a>:
+  Traffic prognosis during the FIFA-WorldCup 2006</li>
+<li>Weltjugendtag2005: Traffic prognosis during the world youth day 2005</li>
+<li><a href="http://www.traffic-tower.de/vf/forschung/leitprojekte/traffic_tower">TrafficTower</a>:
+  A virtual traffic management centre</li>
+<li><a href="http://www.invent-online.de/">INVENT</a>: Evaluation of modern traffic
+  management approaches</li>
+<li><a href="http://www.dlr.de/vf/forschung/projekte/ois">OIS</a>: Verification of
+  using optical sensors for optimization of traffic lights</li>
+<li><a href="http://www.citymobil.org/">CityMobil</a> Automatic urban
+  transportation. A <a href="../Tutorials/CityMobil.html">simulation for a parking lot</a> inspired by the Rome
+  demonstrator is included with SUMO.</li>
+<li><a href="http://www.drive-c2x.eu/project">DRIVE C2X</a> Driving implementation
+  and evaluation of C2X communication technology</li>
+</ul>
+<h2 id="at_other_institutions">At other Institutions<a class="headerlink" href="#at_other_institutions" title="Permanent link">#</a></h2>
+<h3 id="current_projects_1">Current Projects<a class="headerlink" href="#current_projects_1" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://github.com/k0emt/macts">MultiAgent Control of Traffic
+  Signals</a></li>
+<li><a href="http://maniam.github.io/VENTOS/">VENTOS</a> a VEhicular NeTwork Open
+  Simulator</li>
+<li><a href="https://www.cyberbotics.com/">Webots</a> a 3D physics robot simulator
+  connected to SUMO</li>
+<li><a href="http://eworld.sourceforge.net/">eWorld</a> - an application that
+  allows to convert and enrich roads networks; interaction is done via
+  the <a href="../TraCI.html">TraCI</a>-protocol</li>
+<li><a href="http://www.ibr.cs.tu-bs.de/projects/emma/index.xml?lang=en">Environmental Monitoring in/of Metropolitan Areas</a>
+  by Sven Lahde, Michael Doering, Wolf-Bastian Pöttner, Moritz Rosin,
+  Gerrit Lammert and Lars Wolf from the University of Braunschweig,
+  Germany</li>
+<li><a href="http://www.auto-nomos.de">AutoNomos - A Distributed and Self-Regulating Approach for Organizing a Large System of Mobile Objects.</a> Axel Wegener, Horst Hellbrück
+  and Stefan Fischer from the University of Luebeck, Germany in
+  cooperation with Sándor Fekete from Braunschweig Technical
+  University, Germany</li>
+<li><a href="http://trans.epfl.ch"><font color="#0174DF">Tra</font><font color="#FF0000">NS</font> -
+  <strong>Tra</strong>ffic and <strong>N</strong>etwork
+  <strong>S</strong>imulation environment for design, implementation
+  and realistic evaluation of VANET
+  applications</a>
+  by Michal Piorkowski, Maxim Raya, Ada Lezama Lugo and Jean-Pierre
+  Hubaux from <a href="http://lcawww.epfl.ch">Laboratory for Computer Communications and Applications
+  (LCA)</a>, <a href="http://www.epfl.ch">EPFL</a>,
+  Switzerland
+  TraNS is the first open-source project providing a full-blown
+  application-centric evaluation framework for VANETs. It has a unique
+  set of features necessary to build VANET applications and evaluate
+  them in realistic conditions. It comes with a set of ready to use
+  examples.
+  publications: <a href="../Publications.html#piorkowskirayalugopapadimitratosgrossglauserhubaux2007">Piorkowski, Raya, Lugo, Papadimitratos, Grossglauser,
+  Hubaux
+  2007</a></li>
+<li><a href="http://www7.informatik.uni-erlangen.de/veins/">Veins - "Vehicles in Network Simulation"</a>
+  by Christoph Sommer from the Department of Computer Science,
+  University of Erlangen, Germany
+  publications: <a href="../Publications.html#sommeryaogermandressler2008">Sommer, Yao, German, Dressler, 2008</a>, <a href="../Publications.html#sommeryaogermandressler2008_2">Sommer,
+  Yao, German, Dressler, 2008
+  (2)</a></li>
+<li>"Assessment of traffic regulation policies for the minimization of
+  pollutants emissions"
+  by Mauro Bianchi at <a href="http://www.cefriel.it/">CEFRIEL</a>, Italy.
+  This project uses SUMO in combination with EMEP/CORINAIR methodology
+  for evaluating the impact of different traffic regulation strategies
+  on pollutants emissions. Traffic simulations are performed offline
+  for identifying some optimal regulation policies for different local
+  traffic conditions, using a simple evolutionary algorithm. We
+  hypothesize an online regulation system with a network of sensors
+  that is used to recognize the current traffic situations and deploy
+  the optimal traffic regulation policies.</li>
+<li><a href="http://www.ldv.ei.tum.de/fidens/">Fidens – Trust between Cooperative Systems in Application to VANETs</a>
+  This project investigates trust in vehicular networks (VANETs).
+  Besides the trust research, it features a simulation environment for
+  large scale vehicular network applications. Our typical scenario
+  involves about 13000 vehicles per day over 26 weeks. We build on top
+  of SUMO and the network simulator Shawn.
+  <a href="http://shawn.sourceforge.net">Shawn</a> aims on investigating an
+  algorithm in a network while the underlying layers are kept well
+  controlled. To do so, it simulates the effects of the underlying
+  layers, not their protocols in detail. This makes it especially fast
+  and suitable for application developers.</li>
+</ul>
+<h3 id="past_projects_1">Past Projects<a class="headerlink" href="#past_projects_1" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="http://www.cl.cam.ac.uk/Research/DTG/research/sentient/vehicles.php">Congestion-Aware Vehicular Traffic Routing Using WiFi Hotspots</a>
+  by David N. Cottingham, Jonathan J. Davies, &amp; Alastair R. Beresford
+  from the University of Cambridge, UK
+  publications: <a href="../Publications.html#cottinghamdaviesberesford2005">Cottingham, Davies, Beresford,
+  2005</a></li>
+<li><a href="http://ls5-www.cs.uni-dortmund.de/~edelkamp/gpsroute/">GPS-Route</a>
+  by Stefan Edelkamp, Shahidd Jabar and Tilman Mehrer (supervisors)
+  from the University of Dortmund, Germany
+  many thanks go to students who have extendended SUMO: Maik
+  Drozdzynski, Andreas Gaubatz and Miguel Liebe
+  publications: <a href="../Publications.html#edelkampjabarmehrer2005">Edelkamp, Jabar, Mehrer, 2005</a></li>
+<li><a href="http://www.cse.unsw.edu.au/~klan/move/">Rapid Generation of Realistic Simulation for VANET</a>
+  by Feliz Karnadi, Zhi Hai Mo, and Kun Chan Lan from the University
+  of New South Wales, Sydney, Australia
+  many thanks for extending SUMO!
+  publications: <a href="../Publications.html#karnadimolan2005">Karnadi, Mo, Lan,
+  2005</a></li>
+<li><a href="https://www.cs.tcd.ie/publications/tech-reports/reports.07/TCD-CS-2007-56.pdf">"iTranSIM - Simulation-based Vehicle
+  Location"</a>
+  by Tino Morenz; Master thesis; 2008</li>
+<li><a href="http://sumo.sf.net/docs/Analyse_Verkettbarkeit.pdf">"Analyse und Simulation von Verkettbarkeitsmaßen in pseudonymer,
+  mobiler
+  Kommunikation"</a>
+  by Clemens Honomichl; Diploma thesis; 2008</li>
+<li><a href="http://www.verkehr-bs.de/unternehmen/forschungsprojekt-emil.html">emil - Elektrobusse mit induktiver Ladetechnik (german only)</a></li>
+<li><a href="https://tech.d-itlab.co.jp/author/osamumasutani/">Metro Traffic Simulator</a></li>
+</ul>
+<h2 id="code_repositories_with_sumo_related_stuff">Code repositories with SUMO related stuff<a class="headerlink" href="#code_repositories_with_sumo_related_stuff" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="https://github.com/maslab-ufrgs/net-populate">NetPopulate</a> Demand generation for SUMO</li>
+<li><a href="https://github.com/CodingConnected/CodingConnected.Traci">C# and ANSI C TraCI interface</a></li>
+<li><a href="https://github.com/nitindesh/IFMS">Integrated Framework for Mathematical Simulations (IFMS)</a></li>
+<li><a href="https://github.com/sommer/veins">Veins</a></li>
+<li><a href="https://github.com/kratz00/bcx18_secureCycle">Secure Cycle project established during the BCX 2018</a></li>
+<li><a href="https://github.com/MartijnHarmenzon/openTLC">An open source traffic light control program</a></li>
+<li><a href="https://github.com/lcodeca/PyPML">PyPML - Python Parking Monitoring Library</a></li>
+<li><a href="https://github.com/lcodeca/SUMOActivityGen">SAGA</a> - An Activity-based Multi-modal Mobility Scenario Generator for SUMO.</li>
+<li><a href="https://github.com/lcodeca/rllibsumoutils">RLLIB+SUMO Utils</a> is a connector between the RLLIB library and SUMO that uses TraCI. It can be tested using <a href="https://github.com/lcodeca/rllibsumodocker">RLLIB+SUMO Docker</a> based on a GPU-enabled official TensorFlow image.</li>
+</ul>
+<h3 id="visualization_related">Visualization related<a class="headerlink" href="#visualization_related" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://github.com/sidewalklabs/sumo-web3d">Web-based 3D visualization of SUMO microsimulations using TraCI and three.js</a></li>
+<li><a href="https://github.com/DarraghMac97/Real-time-Traffic-Simulation-with-3D-Visualisation">Unity based 3D driving simulator</a></li>
+<li><a href="https://github.com/danielbuechele/SumoVizUnity">Unity visualization of pedestrian trajectories</a> based on a <a href="https://github.com/danielbuechele/SumoViz3D">WebGL project</a></li>
+<li><a href="https://github.com/SvenMertin/SUMO3d">SUMO3d - A partial unity 3D project for coupling SUMO and Unity3D</a></li>
+<li><a href="https://github.com/Andrew-Stebel/Unity-SUMO">Unity frontend for SUMO</a></li>
+<li><a href="https://github.com/BMEAutomatedDrive/SUMO-Unity3D-connection">https://github.com/BMEAutomatedDrive/SUMO-Unity3D-connection</a></li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 19 October 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

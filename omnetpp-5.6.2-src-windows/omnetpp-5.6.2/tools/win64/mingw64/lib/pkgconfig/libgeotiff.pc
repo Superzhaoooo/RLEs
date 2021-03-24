@@ -1,0 +1,10 @@
+prefix=/mingw64
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: libgeotiff
+Description: GeoTIFF file format library
+Version: 1.4.2
+Libs: -L${libdir} -lgeotiff
+Cflags: -I${includedir}

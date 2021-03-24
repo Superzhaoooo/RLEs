@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Libraries_Licenses.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Libraries Licenses - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Libraries_Licenses.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#code_in_the_repository">Code in the repository</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#tcpip_-_tcpip_socket_class_to_communicate_with_other_programs" class="nav-link">• tcpip - TCP/IP Socket Class to communicate with other programs</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#font_stash_-_text_rendering_in_opengl" class="nav-link">• Font Stash - Text rendering in openGL</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#rtree_-_improved_tiling_for_the_drawing_area" class="nav-link">• RTree - Improved tiling for the drawing area</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#odrspiral_-_approximating_curves" class="nav-link">• odrSpiral - Approximating curves</a>
+                </li>
+            <li class="nav-item main"><a href="#referenced_libraries">Referenced Libraries</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#mandatory_and_highly_recommended" class="nav-link">• Mandatory and highly recommended</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#microsoft_visual_c_redistributable_-_visual_c_runtime_components_windows_only" class="nav-link">&rarr; Microsoft Visual C++ Redistributable - Visual C++ Runtime Components (Windows only)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#xerces-c_-_xml_parser" class="nav-link">&rarr; Xerces-C++ - XML Parser</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#fox_toolkit_-_gui_widget_toolkit" class="nav-link">&rarr; FOX toolkit - GUI Widget Toolkit</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#proj4_-_cartographic_projections_library" class="nav-link">&rarr; PROJ.4 - Cartographic Projections Library</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#optional" class="nav-link">• Optional</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#gdal_-_geospatial_data_abstraction_library" class="nav-link">&rarr; GDAL - Geospatial Data Abstraction Library</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#gl2ps_-_printing_screenshots_as_ps_or_pdf_files" class="nav-link">&rarr; gl2ps - Printing screenshots as ps or pdf files</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#open_scene_graph_-_3d_graphics_toolkit" class="nav-link">&rarr; Open Scene Graph - 3D Graphics Toolkit</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#ffmpeg_-_multimedia_library" class="nav-link">&rarr; FFmpeg - Multimedia Library</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#google_test_-_c_unit_test_framework" class="nav-link">&rarr; Google Test - C++ Unit Test Framework</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#data_and_documentation" class="nav-link">• Data and Documentation</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#3d_models" class="nav-link">&rarr; 3D models</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#openstreetmap_data" class="nav-link">&rarr; OpenStreetMap data</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#fonts" class="nav-link">&rarr; Fonts</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Libraries Licenses<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This page lists all licenses of code SUMO depends on directly for
+compiling. There may be secondary references (like the C++ standard
+library or a particular OpenGL implementation) which are not mentioned
+here except for the cases where we deliver binaries for that code.</p>
+<h2 id="code_in_the_repository">Code in the repository<a class="headerlink" href="#code_in_the_repository" title="Permanent link">#</a></h2>
+<p>All the code which can be found under &lt;SUMO>/src and &lt;SUMO>/tools except
+for &lt;SUMO>/src/foreign and &lt;SUMO>/tools/contributed is since 03.10.2017
+(revision 26300) licensed under <a href="https://eclipse.org/legal/epl-v20.html">EPL
+V2</a>. All earlier versions were
+licensed under <a href="https://gnu.org/licenses/gpl.html">GPL V3+</a>. The code in
+&lt;SUMO>/src/foreign and &lt;SUMO>/tools/contributed should have separate
+license files but we strive to list them here as well:</p>
+<h3 id="tcpip_-_tcpip_socket_class_to_communicate_with_other_programs"><a href="https://github.com/itm/shawn/tree/master/src/apps/tcpip">tcpip</a> - TCP/IP Socket Class to communicate with other programs<a class="headerlink" href="#tcpip_-_tcpip_socket_class_to_communicate_with_other_programs" title="Permanent link">#</a></h3>
+<ul>
+<li>Version: <a href="https://github.com/itm/shawn/tree/master/src/apps/tcpip">https://github.com/itm/shawn/tree/master/src/apps/tcpip</a>
+  from 2012-09-28</li>
+<li>Modifications: fixed invalid buffer length calculation, fixed
+  compiler warnings, removed "using namespace std"</li>
+<li>License: <a href="https://github.com/itm/shawn/blob/master/shawn-licence.txt">based on BSD
+  License</a></li>
+</ul>
+<h3 id="font_stash_-_text_rendering_in_opengl"><a href="https://github.com/memononen/fontstash">Font Stash</a> - Text rendering in openGL<a class="headerlink" href="#font_stash_-_text_rendering_in_opengl" title="Permanent link">#</a></h3>
+<ul>
+<li>Version: <a href="https://github.com/memononen/fontstash">https://github.com/memononen/fontstash</a> branch master from
+  2017-09-23</li>
+<li>Modifications: only included necessary files fontstash.h,
+  glfontstash.h, stb_truetype.h</li>
+<li>License: <a href="https://github.com/memononen/fontstash/blob/master/LICENSE.txt">zlib
+  License</a>,
+  includes std_truetype which is in the public domain</li>
+</ul>
+<h3 id="rtree_-_improved_tiling_for_the_drawing_area"><a href="http://www.superliminal.com/sources/RTreeTemplate.zip">RTree</a> - Improved tiling for the drawing area<a class="headerlink" href="#rtree_-_improved_tiling_for_the_drawing_area" title="Permanent link">#</a></h3>
+<ul>
+<li>Version: unknown (2003)</li>
+<li>Modifications: syntactic sugar for gcc compilation; different
+  footprint for "Search" due to a different callback, tests removed
+  because they did not compile</li>
+<li>License: public domain (see
+  <a href="https://github.com/DLR-TS/sumo/blob/master/src/foreign/rtree/README.TXT">README.TXT</a>)</li>
+</ul>
+<h3 id="odrspiral_-_approximating_curves"><a href="https://github.com/DLR-TS/odrSpiral">odrSpiral</a> - Approximating curves<a class="headerlink" href="#odrspiral_-_approximating_curves" title="Permanent link">#</a></h3>
+<ul>
+<li>Used version: <a href="https://github.com/DLR-TS/odrSpiral">https://github.com/DLR-TS/odrSpiral</a> branch master
+  from 2017-05-03</li>
+<li>Modifications: includes and constants;</li>
+<li>License: Apache License 2.0, see <a href="https://github.com/DLR-TS/sumo/blob/master/src/foreign/eulerspiral/LICENSE.TXT">license
+  file</a></li>
+</ul>
+<h1 id="referenced_libraries">Referenced Libraries<a class="headerlink" href="#referenced_libraries" title="Permanent link">#</a></h1>
+<h2 id="mandatory_and_highly_recommended">Mandatory and highly recommended<a class="headerlink" href="#mandatory_and_highly_recommended" title="Permanent link">#</a></h2>
+<h3 id="microsoft_visual_c_redistributable_-_visual_c_runtime_components_windows_only"><a href="https://www.google.com/url?q=https://support.microsoft.com/en-us/kb/2977003">Microsoft Visual C++ Redistributable</a> - Visual C++ Runtime Components (Windows only)<a class="headerlink" href="#microsoft_visual_c_redistributable_-_visual_c_runtime_components_windows_only" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://www.visualstudio.com/en-us/mt171551.aspx">Microsoft Software
+  License</a></li>
+</ul>
+<h3 id="xerces-c_-_xml_parser"><a href="http://xerces.apache.org/xerces-c/">Xerces-C++</a> - XML Parser<a class="headerlink" href="#xerces-c_-_xml_parser" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache Software License
+  version 2.0</a></li>
+</ul>
+<h3 id="fox_toolkit_-_gui_widget_toolkit"><a href="http://fox-toolkit.org/">FOX toolkit</a> - GUI Widget Toolkit<a class="headerlink" href="#fox_toolkit_-_gui_widget_toolkit" title="Permanent link">#</a></h3>
+<p>can be omitted, but <a href="sumo-gui.html">sumo-gui</a>,
+<a href="netedit.html">netedit</a> and multithreading won't work</p>
+<ul>
+<li><a href="https://www.gnu.org/copyleft/lesser.html">GNU Lesser General Public
+  License</a> with static
+  relinking exemption<ul>
+<li>zlib - <a href="https://www.zlib.net/zlib_license.html">self made license, free also for commercial use and
+  binary distribution</a></li>
+<li>libpng - <a href="http://www.libpng.org/pub/png/src/libpng-LICENSE.txt">self made license, comparable to
+  zlib</a></li>
+<li>libjpeg - <a href="https://github.com/winlibs/libjpeg/blob/master/README">self made license, free also for commercial use and
+  binary
+  distribution</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="proj4_-_cartographic_projections_library"><a href="http://proj.osgeo.org">PROJ.4</a> - Cartographic Projections Library<a class="headerlink" href="#proj4_-_cartographic_projections_library" title="Permanent link">#</a></h3>
+<p>can be omitted, but import of geo referenced networks like OpenStreetMap
+won't work</p>
+<ul>
+<li><a href="https://proj4.org/about.html#license">MIT derived license</a></li>
+</ul>
+<h2 id="optional">Optional<a class="headerlink" href="#optional" title="Permanent link">#</a></h2>
+<h3 id="gdal_-_geospatial_data_abstraction_library"><a href="http://www.gdal.org/">GDAL</a> - Geospatial Data Abstraction Library<a class="headerlink" href="#gdal_-_geospatial_data_abstraction_library" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="http://svn.osgeo.org/gdal/trunk/gdal/LICENSE.TXT">​X11/​MIT
+  License</a></li>
+</ul>
+<h3 id="gl2ps_-_printing_screenshots_as_ps_or_pdf_files"><a href="http://www.geuz.org/gl2ps/">gl2ps</a> - Printing screenshots as ps or pdf files<a class="headerlink" href="#gl2ps_-_printing_screenshots_as_ps_or_pdf_files" title="Permanent link">#</a></h3>
+<ul>
+<li>Used version: 1.3.9</li>
+<li>License: <a href="http://www.geuz.org/gl2ps/COPYING.LGPL">GNU Library General Public
+  License</a> or <a href="http://www.geuz.org/gl2ps/COPYING.GL2PS">GL2PS
+  License</a></li>
+</ul>
+<h3 id="open_scene_graph_-_3d_graphics_toolkit"><a href="http://www.openscenegraph.org/">Open Scene Graph</a> - 3D Graphics Toolkit<a class="headerlink" href="#open_scene_graph_-_3d_graphics_toolkit" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="http://www.openscenegraph.org/images/LICENSE.txt">OpenSceneGraph Public
+  License</a></li>
+</ul>
+<h3 id="ffmpeg_-_multimedia_library"><a href="http://ffmpeg.org/">FFmpeg</a> - Multimedia Library<a class="headerlink" href="#ffmpeg_-_multimedia_library" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">GNU Lesser General Public
+  License</a></li>
+</ul>
+<h3 id="google_test_-_c_unit_test_framework"><a href="https://github.com/google/googletest">Google Test</a> - C++ Unit Test Framework<a class="headerlink" href="#google_test_-_c_unit_test_framework" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://opensource.org/licenses/bsd-license.php">BSD License</a></li>
+</ul>
+<h2 id="data_and_documentation">Data and Documentation<a class="headerlink" href="#data_and_documentation" title="Permanent link">#</a></h2>
+<p>Unless otherwise noted all documentation (including this wiki) and data
+files are</p>
+<p style="border:1px solid #909090; padding:1px 4px 3px 4px"><img src="images/CC-BY-SA-small.png" alt="Creative Commons License">
+This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>. The authors are listed in the history.</p>
+
+<h3 id="3d_models">3D models<a class="headerlink" href="#3d_models" title="Permanent link">#</a></h3>
+<p>All models in the data/3D directory originate from
+<a href="http://opengameart.org/content/vehicles-assets-pt1">http://opengameart.org/content/vehicles-assets-pt1</a> and are in the
+public domain</p>
+<p style="border: 1px solid #909090; padding: 1px 4px"><img src="images/CC-CC0-small.png" alt="CC0"> This work is licensed under a <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC0 1.0 Universal license</a>. To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.</p>
+
+<h3 id="openstreetmap_data">OpenStreetMap data<a class="headerlink" href="#openstreetmap_data" title="Permanent link">#</a></h3>
+<p>All test inputs which build upon OpenStreetMap data (mainly the osm.xml
+files in <a href="https://github.com/eclipse/sumo/blob/master/tests/netconvert/import"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/netconvert/import</a>) are under the <a href="https://opendatacommons.org/licenses/odbl/">Open Database
+License</a>.</p>
+<h3 id="fonts">Fonts<a class="headerlink" href="#fonts" title="Permanent link">#</a></h3>
+<p>Currently the <a href="https://fonts.google.com/specimen/Roboto">Google Roboto</a>
+font is included which is available under an <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+License</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

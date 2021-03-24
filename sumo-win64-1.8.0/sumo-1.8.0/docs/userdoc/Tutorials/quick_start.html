@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tutorials/quick_start.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tutorials/quick start - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tutorials/quick_start.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#example_description">Example description</a></li>
+            <li class="nav-item main"><a href="#data_preparation">Data Preparation</a></li>
+            <li class="nav-item main"><a href="#network_editing_with_netedit">Network Editing with netedit</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traffic_demand" class="nav-link">• Traffic demand</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#vehicle_types" class="nav-link">&rarr; Vehicle Types</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traffic_routes" class="nav-link">&rarr; Traffic routes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traffic_demand_1" class="nav-link">&rarr; Traffic demand</a>
+                </li>
+            <li class="nav-item main"><a href="#simulation">Simulation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#command_line" class="nav-link">• Command line</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#sumo-gui" class="nav-link">• sumo-gui</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tutorials/quick start<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This tutorial covers a basic application and essential functions of SUMO
+for traffic analysis using an example network.</p>
+<p>All files mentioned here can also be found in the
+<strong><em>&lt;SUMO_HOME&gt;</em></strong>/docs/tutorial/quickstart directory. The most recent version can be
+found in the repository at <a href="https://github.com/eclipse/sumo/blob/master/tests/complex/tutorial/quickstart/data"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/complex/tutorial/quickstart/data</a>.</p>
+<h2 id="example_description">Example description<a class="headerlink" href="#example_description" title="Permanent link">#</a></h2>
+<p>In this example, the traffic state will be analyzed with the application
+of SUMO. The example network includes four origins, four destinations as
+well as two unsignalized intersections. In the investigated area, each
+road for outbound traffic has three lanes and the allowed traffic
+movements on each lane are restricted. U-turn behaviors are prohibited
+at all intersections. Moreover, a higher priority has been given to the
+eastbound and westbound traffic. The corresponding network layout is
+shown in Figure 1.1.</p>
+<p><img alt="model-names.PNG" src="../images/Model-names.PNG" title="model-names.PNG" /></p>
+<p><strong>Figure 1.1. Network layout</strong></p>
+<h2 id="data_preparation">Data Preparation<a class="headerlink" href="#data_preparation" title="Permanent link">#</a></h2>
+<p>Before conducting the traffic analysis in SUMO, the example network in
+Figure 1.1 should be first built with the information listed in Table
+1.2. (Please note! Fig. 1.1 is not true to scale with the
+specifications given in Table 1.2!)</p>
+<p><strong>Table 1.2. Coordinate data of the example network</strong></p>
+<table>
+<thead>
+<tr>
+<th>node name</th>
+<th>x-coordinate</th>
+<th>y-coordinate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>91</td>
+<td>-1000.0</td>
+<td>+1000.0</td>
+</tr>
+<tr>
+<td>92</td>
+<td>-1000.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>93</td>
+<td>+3000.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>94</td>
+<td>+3000.0</td>
+<td>+1000.0</td>
+</tr>
+<tr>
+<td>911</td>
+<td>-500.0</td>
+<td>+1000.0</td>
+</tr>
+<tr>
+<td>912</td>
+<td>-500.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>913</td>
+<td>+2500.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>914</td>
+<td>+2500.0</td>
+<td>+1000.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.0</td>
+<td>+1000.0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>+1000.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>+2000.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>+2000.0</td>
+<td>+1000.0</td>
+</tr>
+<tr>
+<td>6</td>
+<td>+1000.0</td>
+<td>+1000.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="network_editing_with_netedit">Network Editing with netedit<a class="headerlink" href="#network_editing_with_netedit" title="Permanent link">#</a></h2>
+<p>Based on the coordinate data in Table 1.2 and the node-link-based
+network layout in Figure 1.1, the intersections, origins, and
+destinations are coded, respectively, as nodes 1-6 and nodes 91-94 by
+giving the respective x- and y-coordinates with the program netedit.
+Open netedit, which you can find in the bin directory of the
+SUMO-package. First, create a new network ("File" -> "New Network...").</p>
+<ul>
+<li>Then choose the Edit mode, which is possible in two ways:</li>
+</ul>
+<p><img alt="First.png" src="../images/First.png" title="First.png" /></p>
+<ul>
+<li>Or you can use shortcuts to switch between modes, which you can see
+  in the dropdown menu of the edit button:</li>
+</ul>
+<p><img alt="Menue.png" src="../images/Menue.png" title="Menue.png" /></p>
+<ul>
+<li>First of all, you create one node and then a second one by clicking
+  on the canvas. Both will be connected automatically and you will get
+  your first edge.</li>
+</ul>
+<p><img alt="Second.png" src="../images/Second.png" title="Second.png" /> 
+<img alt="Third.png" src="../images/Third.png" title="Third.png" /></p>
+<ul>
+<li>Next step is to switch to the Inspection mode and replace the name
+  and the position of the nodes as defined in Table 1.2 above. Roads
+  are represented as links in SUMO like in other traffic simulation
+  software. To define link characteristics, the identification
+  (<strong>id</strong>) of each link has to be defined first either with numbers,
+  word strings, or both. To edit these values, click on the red circle representing the junction using the left mouse button.</li>
+</ul>
+<p><img alt="Fourth.png" src="../images/Fourth.png" title="Fourth.png" /> 
+<img alt="Fifth.png" src="../images/Fifth.png" title="Fifth.png" /></p>
+<p>If you press Enter, you will get the new positions.</p>
+<p>Now it is time to save your network: You are able to find a selection in
+the dropdown menu of <strong>File</strong>. For our purpose here, the <strong><em>Save Network
+As...</em></strong> is adequate. Please choose a suitable name for your network,
+for instance quickstart.net.xml. You will use this name later on when
+referring to the network from your configuration.</p>
+<ul>
+<li>As you can see in the given example, there are streets in both
+  directions. To give your edge this information, you can either
+  right-click on your created edge and choose <strong><em>Add reverse
+  direction</em></strong> or select the option <strong><em>two-way</em></strong> during the creation
+  process of an edge.</li>
+</ul>
+<p><img alt="sixth.png" src="../images/Sixth.png" title="sixth.png" /> 
+<img alt="Seventh.png" src="../images/Seventh.png" title="Seventh.png" /></p>
+<ul>
+<li>Furthermore, one attribute must be changed to get a similar output
+  as in the example description: the number of lanes. You can change
+  the number of lanes easily if you are in the Inspect Mode and click
+  on the relevant edge and change it directly.</li>
+</ul>
+<p><img alt="Eighth.png" src="../images/Eighth.png" title="Eighth.png" /></p>
+<p>Now you should be able to create the rest of the given nodes and edges
+in this example and change the names, the number of lanes, and reset the
+positions. Don't forget to save your work from time to time. The Dummy
+nodes 911-914 are needed for analyzing the traffic performance on the
+incoming and outgoing links in the network. More dummy nodes can be
+applied if needed (such as for accurate geometric alignment or for the
+specification of detector locations).</p>
+<ul>
+<li>Next step would be to define the connections between the edges. To
+  see which connections are already build automatically, please select
+  the box <strong><em>show connections</em></strong>.</li>
+</ul>
+<p>The default in SUMO is based on the given geometric design of all
+possible and logical traffic movements. U-turns are allowed if there is
+no corresponding specification. The default setting is that the
+right-most lane of each link is aligned to the right-most lane of the
+respective downstream link. In our example, the following connections
+are expected:</p>
+<p><strong>Table 1.3. The connections between the edges</strong></p>
+<table>
+<thead>
+<tr>
+<th>edge ID from</th>
+<th>edge ID to</th>
+<th>fromLane</th>
+<th>toLane</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L2</td>
+<td>L12</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>L12</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>L12</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>L14</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>L14</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>L14</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L9</td>
+<td>L11</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L9</td>
+<td>L11</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L9</td>
+<td>L11</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L9</td>
+<td>L15</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L9</td>
+<td>L15</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L16</td>
+<td>L10</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L16</td>
+<td>L10</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L16</td>
+<td>L10</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L16</td>
+<td>L11</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L12</td>
+<td>L15</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L12</td>
+<td>L15</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L12</td>
+<td>L10</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L12</td>
+<td>L10</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L12</td>
+<td>L10</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L14</td>
+<td>L16</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L14</td>
+<td>L16</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L14</td>
+<td>L16</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L14</td>
+<td>L18</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L14</td>
+<td>L18</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L14</td>
+<td>L18</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L17</td>
+<td>L16</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L17</td>
+<td>L16</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L17</td>
+<td>L16</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>L17</td>
+<td>L13</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L17</td>
+<td>L13</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>L17</td>
+<td>L13</td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>With the meaning of each attribute as follows:</p>
+<ul>
+<li>(a) <strong>from</strong>: ID of the link for which the traffic movements will be
+  specified.</li>
+<li>(b) <strong>to</strong>: ID of the downstream link of the above defined link.</li>
+<li>(c) <strong>fromLane</strong>/<strong>toLane</strong>: lane number of the defined link in (a)
+  and the lane number of the link in (b), which are connected.</li>
+</ul>
+<p>If you change to the Connection Mode, you are able to specify new
+connections or change existing connections. This is possible by clicking
+on the chosen edge. As you can see on the left side of the following
+picture, the different meanings of the dyed edges are shown in the
+Legend. <img alt="con1.png" src="../images/Con1.png" title="con1.png" />
+For further information and a deeper sight, please go to
+<a href="../netedit.html">netedit</a>.</p>
+<p>- Another topic is the priority of each edge. In our example, the
+    priority is 1 by default. To change the priority, please select the
+    edges you want to modify (see picture below). Switch to the Inspect
+    mode. Then you are able to change the priority information of all
+    selected edges by clicking on one of the selected edges. The
+    eastbound and westbound roads in the example with 3 lanes and 2
+    lanes should have priority 3 and the northbound (L16) and southbound
+    (L15) roads the (lower) priority 2.</p>
+<p><img alt="prio1.png" src="../images/Prio1.png" title="prio1.png" /> 
+<img alt="prio2.png" src="../images/Prio2.png" title="prio2.png" /></p>
+<h3 id="traffic_demand">Traffic demand<a class="headerlink" href="#traffic_demand" title="Permanent link">#</a></h3>
+<p>For traffic demand, there are four vehicle types (Cars A, B, C, and D)
+in the example network. All drivers are 50% perfect in driving. The
+corresponding information is listed in Table 1.1. One vehicle per
+vehicle type is going to leave from each origin to each destination
+every 30 seconds in the period under investigation from 15:00 to 15:15.</p>
+<p><strong>Table 1.1. Vehicle types and vehicular characteristics in the example
+network</strong></p>
+<table>
+<thead>
+<tr>
+<th>Vehicle type</th>
+<th>Max. acceleration(m/s)</th>
+<th>Max. deceleration(m/s)</th>
+<th>Length(m)</th>
+<th>Max. speed(m/s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Car A</td>
+<td>3.0</td>
+<td>6.0</td>
+<td>5.0</td>
+<td>50.0</td>
+</tr>
+<tr>
+<td>Car B</td>
+<td>2.0</td>
+<td>6.0</td>
+<td>7.5</td>
+<td>50.0</td>
+</tr>
+<tr>
+<td>Car C</td>
+<td>1.0</td>
+<td>5.0</td>
+<td>5.0</td>
+<td>40.0</td>
+</tr>
+<tr>
+<td>Car D</td>
+<td>1.0</td>
+<td>5.0</td>
+<td>7.5</td>
+<td>30.0</td>
+</tr>
+</tbody>
+</table>
+<p>Traffic demand and route data is defined together with vehicle type data
+in a file with the extension <em>.rou.xml</em>. The corresponding format for
+the example network is shown in Listing 1.5.</p>
+<h4 id="vehicle_types">Vehicle Types<a class="headerlink" href="#vehicle_types" title="Permanent link">#</a></h4>
+<p>Listing 1.5 shows that all vehicle types are first defined according to
+the information in Table 1.1. The related attributes include:</p>
+<ul>
+<li>(a) id: ID of the vehicle type, defined by users with numbers, word
+    strings, or both;</li>
+<li>(b) accel: maximum acceleration of the respective vehicle type (in
+    m/s2);</li>
+<li>(c) decel: maximum deceleration of the respective vehicle type (in
+    m/s2);</li>
+<li>(d) sigma: drivers’ imperfection in driving (between 0 and 1);</li>
+<li>(e) length: vehicle length (in meters);</li>
+<li>(f) maxSpeed: maximum vehicular velocity (in m/s);</li>
+<li>(g) color: color of the vehicle type. It is defined with 3 numbers
+    (between 0 and 1) for red, green, and blue, respectively. Values are
+    separated by comma and in quotes with no space between the values.
+    For example, <em>1,0,0</em> represents the color red, <em>0,1,0</em> represents
+    green, and <em>0,0,1</em> represents blue.</li>
+</ul>
+<p>The sequence of the attributes can be changed. The attribute <em>sigma</em> is
+assigned as 0.5 for all vehicle types.</p>
+<p><strong>Listing 1.5. Traffic demand and route data (quickstart.rou.xml)</strong></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;routes&gt;
+  &lt;vType accel=&quot;3.0&quot; decel=&quot;6.0&quot; id=&quot;CarA&quot; length=&quot;5.0&quot; minGap=&quot;2.5&quot; maxSpeed=&quot;50.0&quot; sigma=&quot;0.5&quot; /&gt;
+  &lt;vType accel=&quot;2.0&quot; decel=&quot;6.0&quot; id=&quot;CarB&quot; length=&quot;7.5&quot; minGap=&quot;2.5&quot; maxSpeed=&quot;50.0&quot; sigma=&quot;0.5&quot; /&gt;
+  &lt;vType accel=&quot;1.0&quot; decel=&quot;5.0&quot; id=&quot;CarC&quot; length=&quot;5.0&quot; minGap=&quot;2.5&quot; maxSpeed=&quot;40.0&quot; sigma=&quot;0.5&quot; /&gt;
+  &lt;vType accel=&quot;1.0&quot; decel=&quot;5.0&quot; id=&quot;CarD&quot; length=&quot;7.5&quot; minGap=&quot;2.5&quot; maxSpeed=&quot;30.0&quot; sigma=&quot;0.5&quot; /&gt;
+  &lt;route id=&quot;route01&quot; edges=&quot;D2 L2 L12 L10 L7 D7&quot;/&gt;
+  &lt;route id=&quot;route02&quot; edges=&quot;D2 L2 L12 L15 L18 L5 D5&quot;/&gt;
+  &lt;route id=&quot;route03&quot; edges=&quot;D2 L2 L12 L15 L13 L3 D3&quot;/&gt;
+  &lt;route id=&quot;route04&quot; edges=&quot;D4 L4 L14 L18 L5 D5&quot;/&gt;
+  &lt;route id=&quot;route05&quot; edges=&quot;D4 L4 L14 L16 L10 L7 D7&quot;/&gt;
+  &lt;route id=&quot;route06&quot; edges=&quot;D4 L4 L14 L16 L11 L1 D1&quot;/&gt;
+  &lt;route id=&quot;route07&quot; edges=&quot;D6 L6 L17 L13 L3 D3&quot;/&gt;
+  &lt;route id=&quot;route08&quot; edges=&quot;D6 L6 L17 L16 L11 L1 D1&quot;/&gt;
+  &lt;route id=&quot;route09&quot; edges=&quot;D6 L6 L17 L16 L10 L7 D7&quot;/&gt;
+  &lt;route id=&quot;route10&quot; edges=&quot;D8 L8 L9 L11 L1 D1&quot;/&gt;
+  &lt;route id=&quot;route11&quot; edges=&quot;D8 L8 L9 L15 L13 L3 D3&quot;/&gt;
+  &lt;route id=&quot;route12&quot; edges=&quot;D8 L8 L9 L15 L18 L5 D5&quot;/&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh0&quot; route=&quot;route01&quot; type=&quot;CarA&quot; color=&quot;1,0,0&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh1&quot; route=&quot;route02&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh2&quot; route=&quot;route03&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh3&quot; route=&quot;route04&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh4&quot; route=&quot;route05&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh5&quot; route=&quot;route06&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh6&quot; route=&quot;route07&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh7&quot; route=&quot;route08&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh8&quot; route=&quot;route09&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh9&quot; route=&quot;route10&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh10&quot; route=&quot;route11&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh11&quot; route=&quot;route12&quot; type=&quot;CarA&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh12&quot; route=&quot;route01&quot; type=&quot;CarB&quot; color=&quot;1,0,0&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh13&quot; route=&quot;route02&quot; type=&quot;CarB&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh14&quot; route=&quot;route03&quot; type=&quot;CarB&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh15&quot; route=&quot;route04&quot; type=&quot;CarB&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh16&quot; route=&quot;route05&quot; type=&quot;CarB&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh17&quot; route=&quot;route06&quot; type=&quot;CarB&quot; /&gt;
+  &lt;vehicle depart=&quot;54000&quot; id=&quot;veh18&quot; route=&quot;route07&quot; type=&quot;CarB&quot; /&gt;
+...
+&lt;/routes&gt;
+</code></pre>
+
+<h4 id="traffic_routes">Traffic routes<a class="headerlink" href="#traffic_routes" title="Permanent link">#</a></h4>
+<p>Following the vehicle type information, traffic route data needs to be
+defined, as well. The input attributes include:</p>
+<ul>
+<li>(a) <strong>id</strong>: ID of a certain route and defined by users with numbers,
+    word strings, or both.</li>
+<li>(b) <strong>edges</strong>: The sequence of the names of the links, composing the
+    defined route.</li>
+</ul>
+<h4 id="traffic_demand_1">Traffic demand<a class="headerlink" href="#traffic_demand_1" title="Permanent link">#</a></h4>
+<p>Traffic demand data are defined with four attributes:</p>
+<ul>
+<li>(a) <strong>depart</strong>: departure time of a certain vehicle.</li>
+<li>(b) <strong>id</strong>: ID of a certain vehicle and defined by users with
+    numbers, word strings, or both.</li>
+<li>(c) <strong>route</strong>: the route used by the defined vehicle.</li>
+<li>(d) <strong>type</strong>: ID of the defined vehicle type.</li>
+</ul>
+<h2 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">#</a></h2>
+<p>Traffic simulation in SUMO can be conducted in two ways as described
+below. The overview of the simulation process is given in Figure 1.8.</p>
+<p>All file names in brackets are the file names used in the example.</p>
+<p><img alt="Image:image008.gif" src="../images/Image008.gif" title="Image:image008.gif" /></p>
+<p><strong>Figure 1.8. Overview of traffic simulation process</strong></p>
+<h3 id="command_line">Command line<a class="headerlink" href="#command_line" title="Permanent link">#</a></h3>
+<p>An efficient traffic simulation execution can be achieved with the use
+of the command line, especially when dealing with large and
+sophisticated traffic networks. To simplify the execution process, it is
+recommended that all the required execution actions, e.g. the path and
+the name of the input files, the output types, the output directory, and
+the simulation time period is specified in a configuration file.</p>
+<p><strong>Listing 1.7. Configuration file for the traffic simulation of the
+example network (quickstart.sumocfg)</strong></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;
+&lt;configuration xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:noNamespaceSchemaLocation=&quot;http://sumo.dlr.de/xsd/sumoConfiguration.xsd&quot;&gt;
+    &lt;input&gt;
+        &lt;net-file value=&quot;quickstart.net.xml&quot;/&gt;
+        &lt;route-files value=&quot;quickstart.rou.xml&quot;/&gt;
+    &lt;/input&gt;
+    &lt;time&gt;
+        &lt;begin value=&quot;54000&quot;/&gt;
+        &lt;end value=&quot;54900&quot;/&gt;
+    &lt;/time&gt;
+    &lt;time-to-teleport value=&quot;-1&quot;/&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<p>We use the <code>&lt;time-to-teleport value="-1"/&gt;</code> option here to disable the automatic removal of vehicles which wait too
+long in front of an intersection.</p>
+<p>For the example network, the respective configuration file is shown in
+Listing 1.7 and the traffic simulation can then be carried out with the
+use of the following command:</p>
+<pre><code>sumo –c quickstart.sumocfg
+</code></pre>
+
+<h3 id="sumo-gui">sumo-gui<a class="headerlink" href="#sumo-gui" title="Permanent link">#</a></h3>
+<p>The application of <a href="../sumo-gui.html">sumo-gui</a> is the other way to
+execute the traffic simulation with SUMO. During the execution, each
+vehicular movement and the traffic progression can be observed and the
+possible bottlenecks can be visually identified. A configuration file
+for all execution actions, e.g. the one in Listing 1.7, is required for
+<a href="../sumo-gui.html">sumo-gui</a>. Double-click on the Program
+<em>sumo-gui.exe</em> and a <a href="../sumo-gui.html">sumo-gui</a> work window will
+automatically open. The investigated network can be activated by opening
+the corresponding configuration file under the File-Menu of the menu
+bar. Traffic simulation can then be performed by pressing the green
+triangle button in the main tool bar. The simulation can be stopped any
+time when the user presses the red squared button. A stopped simulation
+can be resumed by pressing green triangle if the simulation time is not
+up. An illustration example is given in Figure 1.9.</p>
+<p><img alt="Image:image009.jpg" src="../images/Image009.jpg" title="Image:image009.jpg" /></p>
+<p><strong>Figure 1.9. Illustration of the example network in sumo-gui</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you start the tutorial with <a href="../sumo-gui.html">sumo-gui</a>, the whole network is visible at first but no vehicles can be seen because the view is zoomed out very far. You need to zoom in by holding the right mouse button and moving the mouse to be able to see any vehicles. Furthermore, you need not set the delay value to something greater than 0. Otherwise, the simulation may be over very quickly and you do not get to see vehicle movements.</p>
+</div>
+<p>Back to <a href="../Tutorials.html">Tutorials</a></p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

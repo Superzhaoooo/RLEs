@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta name="copyright" content="OpenSim Ltd.">
+  <meta NAME="Author" CONTENT="Andras Varga">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="STYLESHEET" href="../book.css"  type="text/css">
+  <title>OMNeT++ - Simulation Manual</title>
+</head>
+<style type="text/css">
+  hr.pgbr { color: #f5f5f5; margin-top: 40px; margin-bottom: 10px; }
+  ul.dl { padding-left: 30px; text-indent: -30px; list-style: none; }
+  pre { margin: 4px 8px 4px 2px; padding: 8px 10px; background:#fffff4; border: 1px solid #dddddd; }
+  pre.ned { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.msg { background:#f5fff5; border-left: 4px solid #ccffcc; }
+  pre.cpp { background:#f5f5f5; border-left: 4px solid #ccccff; }
+  pre.inifile { background:#fffff0; border-left: 4px solid #e5e533; }
+  pre.filelisting { background:#f0f0f0; border-left: 4px solid #d9d9d9; }
+  pre.commandline { background:#fffff0; border-left: 4px solid #606060; }
+  td,th { text-align:left; vertical-align:top; border:1px solid; padding:3pt; border-color:#000000; }
+  div.caption { margin-top: 10px; }
+  a[href] { color: #202080; text-decoration: none; }
+  a:visited { text-decoration: none; }
+  # a:hover { text-decoration: underline; }
+
+  table.matrix { display:inline-block; vertical-align: middle; position: relative; border: 0px; background:#ffffff; margin-left:8pt; margin-right:8pt; }
+  table.matrix:before, table.matrix:after { content: ""; position: absolute; top: 0; border: 1px solid #000; width: 6px; height: 100%; }
+  table.matrix:before { left: -6px; border-right: 0px; }
+  table.matrix:after { right: -6px; border-left: 0px; }
+  table.matrix td { padding: 5px; text-align: center; border: 0px; }
+
+  a.headerlink { visibility: hidden; }
+</style>
+<body>
+
+<p><hr><b><a href="chap24.html">[Prev]</A>&nbsp;<a href="chap26.html">[Next]</A>&nbsp;<a href="toc.html#toc_25.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p><h1><a name="cha:figure-definitions"/>25 Appendix G&#58; Figure Definitions<a class="headerlink" href="#cha:figure-definitions" title="Permalink to this headline">¶</a></h1>
+
+<p>This appendix provides a reference to defining figures in NED files.
+
+<p><h2><a name="sec:figure-definitions:figure-types"/>25.1 Built-in Figure Types<a class="headerlink" href="#sec:figure-definitions:figure-types" title="Permalink to this headline">¶</a></h2>
+
+<p>The following table lists the figure types supported by OMNeT++.
+
+<p><table border>
+<TR> <TD align=left>
+
+<p><b>@figure type</b> </TD> <TD align=left> <b>C++ class</b>            </TD></TR>
+<TR> <TD align=left> <b>line</b>         </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cLineFigure.html">cLineFigure</a></tt>       </TD></TR>
+<TR> <TD align=left> <b>arc</b>          </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cArcFigure.html">cArcFigure</a></tt>        </TD></TR>
+<TR> <TD align=left> <b>polyline</b>     </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cPolylineFigure.html">cPolylineFigure</a></tt>   </TD></TR>
+<TR> <TD align=left> <b>rectangle</b>    </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cRectangleFigure.html">cRectangleFigure</a></tt>  </TD></TR>
+<TR> <TD align=left> <b>oval</b>         </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cOvalFigure.html">cOvalFigure</a></tt>       </TD></TR>
+<TR> <TD align=left> <b>ring</b>         </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cRingFigure.html">cRingFigure</a></tt>       </TD></TR>
+<TR> <TD align=left> <b>pieslice</b>     </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cPieSliceFigure.html">cPieSliceFigure</a></tt>   </TD></TR>
+<TR> <TD align=left> <b>polygon</b>      </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cPolygonFigure.html">cPolygonFigure</a></tt>    </TD></TR>
+<TR> <TD align=left> <b>path</b>         </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cPathFigure.html">cPathFigure</a></tt>       </TD></TR>
+<TR> <TD align=left> <b>text</b>         </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cTextFigure.html">cTextFigure</a></tt>       </TD></TR>
+<TR> <TD align=left> <b>label</b>        </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cLabelFigure.html">cLabelFigure</a></tt>      </TD></TR>
+<TR> <TD align=left> <b>image</b>        </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cImageFigure.html">cImageFigure</a></tt>      </TD></TR>
+<TR> <TD align=left> <b>icon</b>         </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cIconFigure.html">cIconFigure</a></tt>       </TD></TR>
+<TR> <TD align=left> <b>pixmap</b>       </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cPixmapFigure.html">cPixmapFigure</a></tt>     </TD></TR>
+<TR> <TD align=left> <b>group</b>        </TD> <TD align=left> <tt><a href="../api/classomnetpp_1_1cGroupFigure.html">cGroupFigure</a></tt>      </TD></TR>
+</table>
+
+<p>Additional figure types can be defined with the
+<tt>custom:<i>&lt;type&gt;</i></tt> syntax; see <i>FigureType</i> below.
+
+<p><h2><a name="sec:figure-definitions:attribute-types"/>25.2 Attribute Types<a class="headerlink" href="#sec:figure-definitions:attribute-types" title="Permalink to this headline">¶</a></h2>
+
+<p>This section lists what attribute types exist and their value syntaxes.
+
+<p><ul class="dl">
+
+<p><li><b>bool</b> : <br>
+<tt>true</tt> or <tt>false</tt>.
+
+<p><li><b>int</b> : <br>
+An integer.
+
+<p><li><b>double</b> : <br>
+A real number.
+
+<p><li><b>double01</b> : <br>
+A real number in the [0,1] interval.
+
+<p><li><b>degrees</b> : <br>
+A real number that will be interpreted as degrees.
+
+<p><li><b>string</b> : <br>
+A string. It only needs to be enclosed in quotes if it contains comma,
+semicolon, unmatched close parenthesis or other character that prevents
+it from being parsed properly as a property value.
+
+<p><li><b>Anchor</b> : <br>
+<tt>c</tt>, <tt>center</tt>, <tt>n</tt>, <tt>e</tt>, <tt>s</tt>, <tt>w</tt>, <tt>nw</tt>,
+<tt>ne</tt>, <tt>se</tt>, <tt>sw</tt>, <tt>start</tt>, <tt>middle</tt>, or <tt>end</tt>.
+The last three are only valid for text figures.
+
+<p><li><b>Arrowhead</b> : <br>
+<tt>none</tt>, <tt>simple</tt>, <tt>triangle</tt>, or <tt>barbed</tt>.
+
+<p><li><b>CapStyle</b> : <br>
+<tt>butt</tt>, <tt>square</tt>, or <tt>round</tt>.
+
+<p><li><b>Color</b> : <br>
+A color in HTML format (<i>#rrggbb</i>), a color in
+HSB format (<i>@hhssbb</i>), or a valid SVG color name.
+
+<p><li><b>Dimensions</b> : <i>width, height</i> <br>
+Size given as width and height.
+
+<p><li><b>FigureType</b> : <br>
+One of the built-in figure types (e.g. <tt>line</tt> or <tt>arc</tt>, see
+<a href="chap25.html#sec:figure-definitions:figure-types">[25.1]</a>), or a figure type registered
+with <tt>Register_Figure()</tt>.
+
+<p><li><b>FillRule</b> : <br>
+<tt>evenodd</tt> or <tt>nonzero</tt>.
+
+<p><li><b>Font</b> : <i>typeface, size, style</i> <br>
+All three items are optional. <i>size</i> is the font size in points.
+<i>style</i> is space-sparated list of zero or more of the following
+words: <tt>normal</tt>, <tt>bold</tt>, <tt>italic</tt>, <tt>underline</tt>.
+
+<p><li><b>ImageName</b> : <br>
+The name of an image.
+
+<p><li><b>Interpolation</b> : <br>
+<tt>none</tt>, <tt>fast</tt>, or <tt>best</tt>.
+
+<p><li><b>JoinStyle</b> : <br>
+<tt>bevel</tt>, <tt>miter</tt>, or <tt>round</tt>.
+
+<p><li><b>LineStyle</b> : <br>
+<tt>solid</tt>, <tt>dotted</tt>, or <tt>dashed</tt>.
+
+<p><li><b>Point</b> : <i>x, y</i> <br>
+A point with <i>(x,y)</i> coordinates.
+
+<p><li><b>Point2</b> : <i>x1, y1, x2, y2</i> <br>
+Two points: <i>(x1,y1)</i> and <i>(x2,y2)</i>.
+
+<p><li><b>PointList</b> : <i>x1, y1, x2, y2, x3, y3...</i> <br>
+A list of the <i>(x1,y1)</i>, <i>(x2,y2)</i>, <i>(x3,y3)</i>, etc. points.
+
+<p><li><b>Rectangle</b> : <i>x, y, width, height</i> <br>
+A rectangle given with its top-left corner and dimensions.
+
+<p><li><b>TagList</b> : <i>tag1, tag2, tag3...</i> <br>
+A list of string tags.
+
+<p><li><b>Tint</b> : <i>Color, double01</i> <br>
+Specifies tint color and the amount of tinting for images.
+
+<p><li><b>Transform</b> : <br>
+One or more transform steps. A step is one of: <br>
+<tt>translate(<i>x</i>, <i>y</i>)</tt>, <br>
+<tt>rotate(<i>deg</i>)</tt>, <br>
+<tt>rotate(<i>deg</i>, <i>centerx</i>, <i>centery</i>)</tt>, <br>
+<tt>scale(<i>s</i>)</tt>, <tt>scale(<i>sx</i>, <i>sy</i>)</tt>, <br>
+<tt>scale(<i>s</i>, <i>centerx</i>, <i>centery</i>)</tt>, <br>
+<tt>scale(<i>sx</i>, <i>sy</i>, <i>centerx</i>, <i>centery</i>)</tt>, <br>
+<tt>skewx(<i>coeff</i>)</tt>, <br>
+<tt>skewx(<i>coeff</i>, <i>centery</i>)</tt>, <br>
+<tt>skewy(<i>coeff</i>)</tt>, <br>
+<tt>skewy(<i>coeff</i>, <i>centerx</i>)</tt>, <br>
+<tt>matrix(<i>a</i>, <i>b</i>, <i>c</i>, <i>d</i>, <i>t1</i>, <i>t2</i>)</tt>
+
+<p></ul>
+
+<p>
+
+<p><h2><a name="sec:figure-definitions:figure-attributes"/>25.3 Figure Attributes<a class="headerlink" href="#sec:figure-definitions:figure-attributes" title="Permalink to this headline">¶</a></h2>
+
+<p>This section lists what attributes are accepted by individual figure types.
+Types enclosed in parentheses are abstract types which cannot be used
+directly; their sole purpose is to provide a base for more specialized
+types.
+
+<p>
+<ul class="dl">
+
+<p><li><b>(figure)</b> : <br>
+    <tt>type</tt>=<i>&lt;FigureType&gt;</i>;
+    <tt>visible</tt>=<i>&lt;bool&gt;</i>;
+    <tt>tags</tt>=<i>&lt;TagList&gt;</i>;
+    <tt>childZ</tt>=<i>&lt;int&gt;</i>;
+    <tt>transform</tt>=<i>&lt;Transform&gt;</i>;
+
+<p><li><b>(abstractLine)</b> : figure <br>
+    <tt>lineColor</tt>=<i>&lt;Color&gt;</i>;
+    <tt>lineStyle</tt>=<i>&lt;LineStyle&gt;</i>;
+    <tt>lineWidth</tt>=<i>&lt;double&gt;</i>;
+    <tt>lineOpacity</tt>=<i>&lt;double&gt;</i>;
+    <tt>capStyle</tt>=<i>&lt;CapStyle&gt;</i>;
+    <tt>startArrowhead</tt>=<i>&lt;Arrowhead&gt;</i>;
+    <tt>endArrowhead</tt>=<i>&lt;Arrowhead&gt;</i>;
+    <tt>zoomLineWidth</tt>=<i>&lt;bool&gt;</i>;
+
+<p><li><b>line</b> : abstractLine <br>
+    <tt>points</tt>=<i>&lt;Point2&gt;</i>
+
+<p><li><b>arc</b> : abstractLine <br>
+    <tt>bounds</tt>=<i>&lt;Rectangle&gt;</i>
+    <tt>pos</tt>=<i>&lt;Point&gt;</i>;
+    <tt>size</tt>=<i>&lt;Dimensions&gt;</i>;
+    <tt>anchor</tt>=<i>&lt;Anchor&gt;</i>;
+    <tt>startAngle</tt>=<i>&lt;degrees&gt;</i>;
+    <tt>endAngle</tt>=<i>&lt;degrees&gt;</i>
+
+<p><li><b>polyline</b> : abstractLine <br>
+    <tt>points</tt>=<i>&lt;PointList&gt;</i>;
+    <tt>smooth</tt>=<i>&lt;bool&gt;</i>;
+    <tt>joinstyle</tt>=<i>&lt;JoinStyle&gt;</i>
+
+<p><li><b>(abstractShape)</b> : figure <br>
+    <tt>lineColor</tt>=<i>&lt;Color&gt;</i>;
+    <tt>fillColor</tt>=<i>&lt;Color&gt;</i>;
+    <tt>lineStyle</tt>=<i>&lt;LineStyle&gt;</i>;
+    <tt>lineWidth</tt>=<i>&lt;double&gt;</i>;
+    <tt>lineOpacity</tt>=<i>&lt;double01&gt;</i>;
+    <tt>fillOpacity</tt>=<i>&lt;double01&gt;</i>;
+    <tt>zoomLineWidth</tt>=<i>&lt;bool&gt;</i>
+
+<p><li><b>rectangle</b> : abstractShape <br>
+    <tt>bounds</tt>=<i>&lt;Rectangle&gt;</i>
+    <tt>pos</tt>=<i>&lt;Point&gt;</i>;
+    <tt>size</tt>=<i>&lt;Dimensions&gt;</i>;
+    <tt>anchor</tt>=<i>&lt;Anchor&gt;</i>;
+    <tt>cornerRadius</tt>=<i>&lt;double&gt;|&lt;Dimensions&gt;</i>
+
+<p><li><b>oval</b> : abstractShape <br>
+    <tt>bounds</tt>=<i>&lt;Rectangle&gt;</i>
+    <tt>pos</tt>=<i>&lt;Point&gt;</i>;
+    <tt>size</tt>=<i>&lt;Dimensions&gt;</i>;
+    <tt>anchor</tt>=<i>&lt;Anchor&gt;</i>
+
+<p><li><b>ring</b> : abstractShape <br>
+    <tt>bounds</tt>=<i>&lt;Rectangle&gt;</i>
+    <tt>pos</tt>=<i>&lt;Point&gt;</i>;
+    <tt>size</tt>=<i>&lt;Dimensions&gt;</i>;
+    <tt>anchor</tt>=<i>&lt;Anchor&gt;</i>;
+    <tt>innerSize</tt>=<i>&lt;Dimensions&gt;</i>
+
+<p><li><b>pieslice</b> : abstractShape <br>
+    <tt>bounds</tt>=<i>&lt;Rectangle&gt;</i>
+    <tt>pos</tt>=<i>&lt;Point&gt;</i>;
+    <tt>size</tt>=<i>&lt;Dimensions&gt;</i>;
+    <tt>anchor</tt>=<i>&lt;Anchor&gt;</i>;
+    <tt>startAngle</tt>=<i>&lt;degrees&gt;</i>;
+    <tt>endAngle</tt>=<i>&lt;degrees&gt;</i>
+
+<p><li><b>polygon</b> : abstractShape <br>
+    <tt>points</tt>=<i>&lt;PointList&gt;</i>;
+    <tt>smooth</tt>=<i>&lt;bool&gt;</i>;
+    <tt>joinStyle</tt>=<i>&lt;JoinStyle&gt;</i>;
+    <tt>fillRule</tt>=<i>&lt;FillRule&gt;</i>
+
+<p><li><b>path</b> : abstractShape <br>
+    <tt>path</tt>=<i>&lt;string&gt;</i>;
+    <tt>offset</tt>=<i>&lt;Point&gt;</i>;
+    <tt>joinStyle</tt>=<i>&lt;JoinStyle&gt;</i>;
+    <tt>capStyle</tt>=<i>&lt;CapStyle&gt;</i>;
+    <tt>fillRule</tt>=<i>&lt;FillRule&gt;</i>
+
+<p><li><b>(abstractText)</b> : figure <br>
+    <tt>pos</tt>=<i>&lt;Point&gt;</i>;
+    <tt>anchor</tt>=<i>&lt;Anchor&gt;</i>
+    <tt>text</tt>=<i>&lt;string&gt;</i>;
+    <tt>font</tt>=<i>&lt;Font&gt;</i>;
+    <tt>opacity</tt>=<i>&lt;double01&gt;</i>;
+    <tt>color</tt>=<i>&lt;Color&gt;</i>;
+
+<p><li><b>label</b> : abstractText <br>
+    <tt>angle</tt>=<i>&lt;degrees&gt;</i>;
+
+<p><li><b>text</b> : abstractText
+
+<p><li><b>(abstractImage)</b> : figure <br>
+    <tt>bounds</tt>=<i>&lt;Rectangle&gt;</i>
+    <tt>pos</tt>=<i>&lt;Point&gt;</i>;
+    <tt>size</tt>=<i>&lt;Dimensions&gt;</i>;
+    <tt>anchor</tt>=<i>&lt;Anchor&gt;</i>;
+    <tt>interpolation</tt>=<i>&lt;Interpolation&gt;</i>;
+    <tt>opacity</tt>=<i>&lt;double01&gt;</i>;
+    <tt>tint</tt>=<i>&lt;Tint&gt;</i>
+
+<p><li><b>image</b> : abstractImage <br>
+    <tt>image</tt>=<i>&lt;ImageName&gt;</i>
+
+<p><li><b>icon</b> : abstractImage <br>
+    <tt>image</tt>=<i>&lt;ImageName&gt;</i>
+
+<p><li><b>pixmap</b> : abstractImage <br>
+    <tt>resolution</tt>=<i>&lt;Dimensions&gt;</i>
+
+<p></ul>
+
+<p>
+
+
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p>
+
+<p><hr class='pgbr'><p><hr><b><a href="chap24.html">[Prev]</A>&nbsp;<a href="chap26.html">[Next]</A>&nbsp;<a href="toc.html#toc_25.">[TOC]</a>&nbsp;<a href="usman.html">[Chapters]</a></b><hr></p>
+
+</body>
+</html>

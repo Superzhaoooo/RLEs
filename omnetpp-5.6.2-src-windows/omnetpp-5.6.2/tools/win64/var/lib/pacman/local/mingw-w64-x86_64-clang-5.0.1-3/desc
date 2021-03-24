@@ -1,0 +1,41 @@
+%NAME%
+mingw-w64-x86_64-clang
+
+%VERSION%
+5.0.1-3
+
+%BASE%
+mingw-w64-clang
+
+%DESC%
+C language family frontend for LLVM (mingw-w64)
+
+%URL%
+https://clang.llvm.org/
+
+%ARCH%
+any
+
+%BUILDDATE%
+1517467048
+
+%INSTALLDATE%
+1519816991
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+291023872
+
+%LICENSE%
+custom:University of Illinois/NCSA Open Source License
+
+%VALIDATION%
+pgp
+
+%DEPENDS%
+mingw-w64-x86_64-llvm=5.0.1-3
+mingw-w64-x86_64-gcc
+mingw-w64-x86_64-z3
+

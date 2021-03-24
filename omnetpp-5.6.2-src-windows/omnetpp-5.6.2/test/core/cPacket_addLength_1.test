@@ -1,0 +1,35 @@
+%description:
+Tests cPacket.addBitLength().
+
+%activity:
+cPacket pkt("pkt");
+
+EV << pkt.getBitLength() << endl;
+
+pkt.addBitLength(100);
+EV << pkt.getBitLength() << endl;
+
+pkt.addBitLength(50);
+EV << pkt.getBitLength() << endl;
+
+pkt.addBitLength(-10);
+EV << pkt.getBitLength() << endl;
+
+pkt.addBitLength(-300);
+EV << pkt.getBitLength() << endl;
+
+%extraargs: -m
+
+%exitcode: 1
+
+%contains: stdout
+0
+100
+150
+140
+
+<!> Error: (omnetpp::cPacket)pkt: addBitLength(): Length became negative (-160) after adding -300
+
+
+
+

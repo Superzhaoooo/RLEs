@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Specification.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Specification - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Specification.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#vehicles">Vehicles</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#flows_repeated_insertion" class="nav-link">• Flows (repeated insertion)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#types" class="nav-link">• Types</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#type_distributions" class="nav-link">• Type distributions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#categories" class="nav-link">• Categories</a>
+                </li>
+            <li class="nav-item main"><a href="#junctions">Junctions</a></li>
+            <li class="nav-item main"><a href="#streets">Streets</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lanes" class="nav-link">• Lanes</a>
+                </li>
+            <li class="nav-item main"><a href="#routes">Routes</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#route_distributions" class="nav-link">• Route distributions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#stops" class="nav-link">• Stops</a>
+                </li>
+            <li class="nav-item main"><a href="#how_the_vehicle_drives">How the vehicle drives</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#before_start" class="nav-link">• Before start</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#departure" class="nav-link">• Departure</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#driving" class="nav-link">• Driving</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#stops_1" class="nav-link">• Stops</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#end" class="nav-link">• End</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Specification<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This document focuses on the main parts of a traffic simulation, that is
+streets (edges) including lanes, junctions (nodes), and vehicles with
+their routes. It contains nothing about traffic lights, detectors,
+visualization or stuff like that. On the other hand this document aims
+at a precise description which serves as a template for implementation
+as well as for an xml schema for the input files. Therefore there is a
+table for all allowed attributes together with their type (and possibly
+unit). If the attribute is not mandatory, a default value is defined as
+well. The names of all elements and attributes consist of letters
+(lowercase or camelCaps) and underscores only. Keep in mind that the
+values of attributes which are ids should consist of letters, numbers,
+and underscores, hyphens, points and colons only, starting with a letter
+or an underscore (this is called "valid XML id" in the following). There
+are "follow-ups" to this document on the <a href="Specification/Persons.html">simulation of persons and
+multi-modality</a>,
+<a href="Specification/Containers.html">containers</a> and on
+<a href="Specification/Duarouter.html">routing</a>.</p>
+<h2 id="vehicles">Vehicles<a class="headerlink" href="#vehicles" title="Permanent link">#</a></h2>
+<p>A single vehicle is not modeled, it is always the vehicle on a journey,
+that means once a vehicle has reached its destination it is deleted from
+the system and cannot be referenced any longer. The physical parameters
+of the vehicle are defined with its type, which also defines its
+membership in some vehicle categories. A vehicle is defined by the
+combination of its type and its route, together with parameters
+specifying the start and end behavior. Additional parameters such as
+color only serve visualization purposes. A vehicle can have routes and
+stops as child elements.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>valid XML ids</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>route</td>
+<td>string</td>
+<td>route or routedist id</td>
+<td>-</td>
+<td>either this id or a route child element are mandatory</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>vType or vTypeDistribution id</td>
+<td>default type</td>
+<td></td>
+</tr>
+<tr>
+<td>depart</td>
+<td>float(s)/string</td>
+<td>≥0;"triggered"</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>departLane</td>
+<td>int/string</td>
+<td>≥0,"random","free"</td>
+<td>0</td>
+<td>"free" is the least occupied lane (by sum of the vehicle lengths)</td>
+</tr>
+<tr>
+<td>departPos</td>
+<td>float(m)/string</td>
+<td>≥0<sup>(2)</sup>,"random","free","random_free","base"</td>
+<td>"base"</td>
+<td>"free" means the point closest to the start of the depart lane where it is possible to insert the vehicle. "random_free" tries forcefully to find a free random position and if that fails, places the vehicle at the next "free" position. "base" sets the vehicle's depart position to the vehicle's length + eps (eps=.1m), this means the vehicle is completely at the begin of the depart lane.</td>
+</tr>
+<tr>
+<td>departSpeed</td>
+<td>float(m/s)/string</td>
+<td>≥0,"random","max"</td>
+<td>0</td>
+<td>"max" refers to the maximum velocity the vehicle can achieve when being inserted</td>
+</tr>
+<tr>
+<td>arrivalLane</td>
+<td>int/string</td>
+<td>≥0,"current"</td>
+<td>"current"</td>
+<td></td>
+</tr>
+<tr>
+<td>arrivalPos</td>
+<td>float(m)/string</td>
+<td>≥0<sup>(2)</sup>,"random","max"</td>
+<td>"max"</td>
+<td></td>
+</tr>
+<tr>
+<td>arrivalSpeed</td>
+<td>float(m/s)/string</td>
+<td>≥0,"current"</td>
+<td>"current"</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>(2): in fact, negative positions are currently allowed, too. In this
+case, this value is added to the lane's length. This means, the
+position is counted from the end of the lane. Values lying beyond
+the edge borders (positive and negative) are silently moved to the
+closest edge border.</li>
+</ul>
+<h3 id="flows_repeated_insertion">Flows (repeated insertion)<a class="headerlink" href="#flows_repeated_insertion" title="Permanent link">#</a></h3>
+<p>A repeated vehicle insertion has the same attributes and child elements
+as a single vehicle except for depart. The following additional
+attributes are known:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>begin</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>simulation begin</td>
+<td></td>
+</tr>
+<tr>
+<td>end</td>
+<td>float(s)</td>
+<td>≥begin</td>
+<td>simulation end</td>
+<td></td>
+</tr>
+<tr>
+<td>vehsPerHour</td>
+<td>float(#/h)</td>
+<td>>0</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>period</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>number</td>
+<td>int(#)</td>
+<td>>0</td>
+<td>-</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>At most one of "vehsPerHour" and "period" has to be given. If one of
+them is given it is not allowed to define "period" and "end". The
+vehicles are equally distributed in the time interval. The number of
+inserted vehicles (if "no" is not given) is equal to
+("end"-"begin")/"period" rounded to the nearest integer, thus if
+"period" is small enough, there might be no vehicle at all. Furthermore
+"period"=3600/"vehsPerHour". The first vehicle (if any) is always
+created at time "begin". The id of the created vehicles is
+"flowId.runningNumber".</p>
+<h3 id="types">Types<a class="headerlink" href="#types" title="Permanent link">#</a></h3>
+<p>Types define physical parameters such as length, acceleration,
+deceleration and maximum speed and give a list of categories cars of
+this type belong to. All theses parameters are identical among all
+vehicles of a type.</p>
+<table>
+<thead>
+<tr class="header">
+<th><p>Attribute</p></th>
+<th><p>Type</p></th>
+<th><p>Range</p></th>
+<th><p>Default</p></th>
+<th><p>Remark</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>id</p></td>
+<td><p>string</p></td>
+<td><p>valid XML ids</p></td>
+<td><p>-</p></td>
+<td><p>This attribute is mandatory.</p></td>
+</tr>
+<tr class="even">
+<td><p>vClass</p></td>
+<td><p>string</p></td>
+<td><p>list of category ids</p></td>
+<td><p>empty list</p></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><p>accel</p></td>
+<td><p>float(m/s<sup>2</sup>)</p></td>
+<td><p>≥0</p></td>
+<td><p>2.6</p></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><p>decel</p></td>
+<td><p>float(m/s<sup>2</sup>)</p></td>
+<td><p>≥0</p></td>
+<td><p>4.5</p></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><p>sigma</p></td>
+<td><p>float</p></td>
+<td><p>0≤sigma≤1</p></td>
+<td><p>0.5</p></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><p>length</p></td>
+<td><p>float(m)</p></td>
+<td><p>&gt;0</p></td>
+<td><p>5</p></td>
+<td><p>The physical length of the vehicle</p></td>
+</tr>
+<tr class="odd">
+<td><p>minGap</p></td>
+<td><p>float(m)</p></td>
+<td><p>&gt;0</p></td>
+<td><p>2.5</p></td>
+<td><p>The minimum gap between this vehicle and the vehicle before it</p></td>
+</tr>
+<tr class="even">
+<td><p>maxSpeed</p></td>
+<td><p>float(m/s)</p></td>
+<td><p>&gt;0</p></td>
+<td><p>70</p></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><p>color</p></td>
+<td>&lt;COLOR&gt;</td>
+<td></td>
+<td></td>
+<td><p>the color to use for vehicles of this type.</p></td>
+</tr>
+<tr class="even">
+<td><p>tau</p></td>
+<td><p>float</p></td>
+<td><p>&gt;0</p></td>
+<td><p>1</p></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td style="background:red;"><p>carFollowModel</p></td>
+<td><p>string</p></td>
+<td></td>
+<td></td>
+<td style="background:red;"><p>not yet implemented (see #663")</p></td>
+</tr>
+<tr class="even">
+<td><p>laneChangeModel</p></td>
+<td><p>string</p></td>
+<td><p>"DK2008", "LC2013", "JE2013"</p></td>
+<td><p>"LC2013"</p></td>
+<td><p>model used for lane changing behavior</p></td>
+</tr>
+<tr class="odd">
+<td><p>speedFactor</p></td>
+<td><p>float/distribution</p></td>
+<td><p>&gt;0</p></td>
+<td><p>1</p></td>
+<td><p>the factor by which the driver multiplies the speed read from street signs to estimate "real" maximum allowed speed</p></td>
+</tr>
+<tr class="even">
+<td><p>speedDev</p></td>
+<td><p>float</p></td>
+<td><p>≥0</p></td>
+<td><p>0</p></td>
+<td><p>the standard deviation of the speed factor (deprecated in favor of a real distribution).</p></td>
+</tr>
+<tr class="odd">
+<td><p>emissionClass</p></td>
+<td><p>string</p></td>
+<td></td>
+<td><p>P_7_7</p></td>
+<td><p>the emission class, see <a href="Models/Emissions.html" title="wikilink">Models/Emissions</a>.</p></td>
+</tr>
+<tr class="even">
+<td><p>probability</p></td>
+<td><p>float</p></td>
+<td><p>&gt;0</p></td>
+<td><p>1</p></td>
+<td><p>this is only useful in distributions</p></td>
+</tr>
+<tr class="odd">
+<td><p>guiShape</p></td>
+<td><p>string (enum)</p></td>
+<td></td>
+<td><p>"unknown"</p></td>
+<td><p>How this vehicle is rendered</p></td>
+</tr>
+<tr class="even">
+<td><p>width</p></td>
+<td><p>float</p></td>
+<td><p>&gt;0</p></td>
+<td><p>2.0</p></td>
+<td><p>The vehicle's width [m] (only used for drawing);</p></td>
+</tr>
+<tr class="odd">
+<td><p>imgFile</p></td>
+<td><p>string</p></td>
+<td></td>
+<td></td>
+<td><p>Image file for rendering vehicles of this type (should be grayscale to allow functional coloring);</p></td>
+</tr>
+<tr class="even">
+<td style="background:yellow;"><p>osgFile</p></td>
+<td><p>string</p></td>
+<td></td>
+<td></td>
+<td><p>3D-Model file rendering vehicles of this type - internal experimental branch;</p></td>
+</tr>
+<tr class="odd">
+<td><p>personCapacity</p></td>
+<td><p>int</p></td>
+<td><p>≥0</p></td>
+<td><p>4</p></td>
+<td><p>the number of persons (excluding an autonomous driver) the vehicle can transport</p></td>
+</tr>
+<tr class="even">
+<td><p>containerCapacity</p></td>
+<td><p>int</p></td>
+<td><p>≥0</p></td>
+<td><p>0</p></td>
+<td><p>the number of containers the vehicle can transport</p></td>
+</tr>
+<tr class="odd">
+<td><p>boardingDuration</p></td>
+<td><p>float</p></td>
+<td><p>≥0</p></td>
+<td><p>0.5</p></td>
+<td><p>the time required by a person to board the vehicle</p></td>
+</tr>
+<tr class="even">
+<td><p>loadingDuration</p></td>
+<td><p>float</p></td>
+<td><p>≥0</p></td>
+<td><p>30.0</p></td>
+<td><p>the time required to load a container onto the vehicle</p></td>
+</tr>
+</tbody>
+</table>
+
+<p>There is a default type defined with the id "DEFAULT_VEHTYPE", having
+all the default parameters above, which may be redefined once but only
+if it was not used beforehand (either by a vehicle or as a refId).
+Redefining the default type does not change the defaults if defining a
+new type, that means <code>&lt;vType refId="DEFAULT_VEHTYPE"/&gt;</code> may be different
+from <code>&lt;vType/&gt;</code>.</p>
+<p>The distribution for a speedFactor can currently only be given as
+"norm(mean, dev)" or "normc(mean, dev, min, max)" which result in the
+value for the vehicle being drawn from a standard normal distribution
+with the given mean and standard deviation (first case) with optional
+cutoff values (second case). In case of cutoff values the value will
+still be drawn from the given normal distribution but if it is not in
+the given range, the draw will be repeated (Attention: This may result
+in long execution time for very narrow intervals).</p>
+<h3 id="type_distributions">Type distributions<a class="headerlink" href="#type_distributions" title="Permanent link">#</a></h3>
+<p>Type distributions define probability distributions of vehicle types.
+They should have at least two vType childs, although defining only one
+child is valid as well. All vehicle type childs maybe referenced outside
+the distribution as well. The sum of the probabilities of the childs
+should be larger than zero.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>valid XML ids</td>
+<td>-</td>
+<td>This attribute is mandatory</td>
+</tr>
+</tbody>
+</table>
+<h3 id="categories">Categories<a class="headerlink" href="#categories" title="Permanent link">#</a></h3>
+<p>Categories define vehicle classes such as cars, trucks, busses, but also
+height, width and weight categories might (to some extent) be modeled
+here. The sole purpose of the category is to determine whether a car is
+allowed to (or prefers to) drive on a certain street or lane.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>valid XML ids</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>description of the category</td>
+<td>-</td>
+<td>serves only documentation and visualization purposes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="junctions">Junctions<a class="headerlink" href="#junctions" title="Permanent link">#</a></h2>
+<p>Strictly speaking, junctions or nodes need a unique id, which makes them
+referenceable by streets which start or end there. Since our network is
+always embedded into the plane, they also need x- and y-coordinates. A
+type may be given if the one determined by
+<a href="netconvert.html">netconvert</a> is not correct.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>valid XML ids</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>x</td>
+<td>float(m)</td>
+<td>-10^6&lt;x&lt;10^6</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>y</td>
+<td>float(m)</td>
+<td>-10^6&lt;y&lt;10^6</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>priority, right_before_left, traffic_light</td>
+<td>-</td>
+<td>if no value is given, <a href="netconvert.html">netconvert</a> tries to determine the type heuristically</td>
+</tr>
+</tbody>
+</table>
+<h2 id="streets">Streets<a class="headerlink" href="#streets" title="Permanent link">#</a></h2>
+<p>Streets need a unique id, a starting node and an ending node. Since the
+nodes are embedded into the plane, the length is optional and (if not
+given) is calculated as the euclidean distance between starting node and
+end node. There may be further points in the plane (no junctions) given
+to describe the shape of the street respectively calculating its length
+as the cumulative distance. The length has to be strictly positive (not
+zero). This means that if starting node and end node are identical, the
+length has either to be given explicitly or there needs to be at least
+one shape node at a position different from the start/end node.
+Optionally a number of lanes may be given (defaulting to 1, respectively
+to the number of lane elements in the definition of the street). If the
+number of lanes given as an attribute is smaller than the number of lane
+child elements this is an error. All parameters which can be given to
+lanes can also be given to the street and serve as a default for the
+corresponding lane parameter. The maximum speed allowed on the edge is
+given in m/s.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>valid XML ids</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>refId</td>
+<td>string</td>
+<td>another edge id</td>
+<td>-</td>
+<td>all attributes and childs are copied from the given edge and maybe overwritten</td>
+</tr>
+<tr>
+<td>from</td>
+<td>string</td>
+<td>node id</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>to</td>
+<td>string</td>
+<td>node id</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>function</td>
+<td>string</td>
+<td>normal,internal,ramp</td>
+<td>normal</td>
+<td>cannot be given as input, appears only in generated nets</td>
+</tr>
+<tr>
+<td>length</td>
+<td>float(m)</td>
+<td>≥0</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>numLanes</td>
+<td>int</td>
+<td>>0</td>
+<td>-</td>
+<td>either this one or lane child elements are mandatory</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>float(m/s)</td>
+<td>>0</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>departLane</td>
+<td>int</td>
+<td>0≤departLane&lt;numLanes</td>
+<td>0</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="lanes">Lanes<a class="headerlink" href="#lanes" title="Permanent link">#</a></h3>
+<p>Lanes have a maximum allowed speed, and lists of allowed, disallowed and
+preferred vehicle categories. The allowed list defaults to all vehicle
+categories and the disallowed list to none. A vehicle is allowed to
+drive on a lane if its category list contains no member of the
+disallowed list and contains some member of the allowed list.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index</td>
+<td>int</td>
+<td>0≤index&lt;edge.numLanes</td>
+<td>smallest non-explicit index</td>
+<td></td>
+</tr>
+<tr>
+<td>speed</td>
+<td>float(m/s)</td>
+<td>≥0</td>
+<td>13.9</td>
+<td></td>
+</tr>
+<tr>
+<td>allow</td>
+<td>string</td>
+<td>list of category ids,all</td>
+<td>all</td>
+<td></td>
+</tr>
+<tr>
+<td>disallow</td>
+<td>string</td>
+<td>list of category ids</td>
+<td>empty list</td>
+<td></td>
+</tr>
+<tr>
+<td>prefer</td>
+<td>string</td>
+<td>list of category ids</td>
+<td>empty list</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="routes">Routes<a class="headerlink" href="#routes" title="Permanent link">#</a></h2>
+<p>Routes give a description of the path a vehicle will follow, that is
+they merely consist of a non-empty list of streets which are
+consecutive. Optionally they can have a list of stops as child elements.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>valid XML ids</td>
+<td>-</td>
+<td>The attribute is disallowed for routes defined inside a vehicle or a route distribution.</td>
+</tr>
+<tr>
+<td>refId</td>
+<td>string</td>
+<td>another route id</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>edges</td>
+<td>string</td>
+<td>list of edge ids</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>frequency</td>
+<td>float</td>
+<td>>0</td>
+<td>1</td>
+<td>This only useful in connection with route distributions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="route_distributions">Route distributions<a class="headerlink" href="#route_distributions" title="Permanent link">#</a></h3>
+<p>Route distributions define probability distributions of routes. They
+should have at least two route childs.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>valid XML ids</td>
+<td>-</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="stops">Stops<a class="headerlink" href="#stops" title="Permanent link">#</a></h3>
+<p>Stops can be childs of vehicles, routes or persons.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Range</th>
+<th>Default</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>busStop</td>
+<td>string</td>
+<td>valid <a href="Simulation/Public_Transport.html">bus stop</a> ids</td>
+<td>-</td>
+<td>if given, edge, lane, startPos and endPos are not allowed</td>
+</tr>
+<tr>
+<td>containerStop</td>
+<td>string</td>
+<td>valid <a href="Specification/Logistics.html#container_stops">container stop</a> ids</td>
+<td>-</td>
+<td>if given, edge, lane, startPos and endPos are not allowed</td>
+</tr>
+<tr>
+<td>lane</td>
+<td>string</td>
+<td>lane id</td>
+<td>-</td>
+<td>the lane id takes the form &lt;edge_id>_&lt;lane_index>. the edge has to be part of the corresponding route</td>
+</tr>
+<tr>
+<td>endPos</td>
+<td>float(m)</td>
+<td>ε≤endPos≤edge.length</td>
+<td>edge.length</td>
+<td></td>
+</tr>
+<tr>
+<td>startPos</td>
+<td>float(m)</td>
+<td>0≤startPos≤endPos-ε</td>
+<td>endPos-ε</td>
+<td></td>
+</tr>
+<tr>
+<td>friendlyPos</td>
+<td>bool</td>
+<td>true,false</td>
+<td>false</td>
+<td>whether invalid stop positions should be corrected automatically</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>until</td>
+<td>float(s)</td>
+<td>≥0</td>
+<td>-</td>
+<td>the time step at which the route continues</td>
+</tr>
+<tr>
+<td>index</td>
+<td>int, "end", "fit"</td>
+<td>0≤index≤number of stops in the route</td>
+<td>"end"</td>
+<td>where to insert the stop in the vehicle's list of stops</td>
+</tr>
+<tr>
+<td>triggered</td>
+<td>string</td>
+<td>person,container,join,true,false or combinations thereof</td>
+<td>false</td>
+<td>whether a person / container / joining train may end the stop</td>
+</tr>
+<tr>
+<td>containerTriggered</td>
+<td>bool</td>
+<td>true,false</td>
+<td>false</td>
+<td>whether a container may end the stop (<em>deprecated, use triggered instead</em>)</td>
+</tr>
+<tr>
+<td>parking</td>
+<td>bool</td>
+<td>true,false</td>
+<td>value of triggered</td>
+<td>whether the vehicle stops on the road or beside</td>
+</tr>
+<tr>
+<td>actType</td>
+<td>string</td>
+<td>arbitrary</td>
+<td>'waiting'</td>
+<td>activity displayed for stopped person in GUI and output files (only applies to person simulation)</td>
+</tr>
+</tbody>
+</table>
+<p>If "duration" <em>and</em> "until" are given, the vehicle will stop for at
+least "duration" seconds. If "duration" is 0 the vehicle will decelerate
+such that it may in principle reach velocity 0 but instead of braking to
+full stop it will start to accelerate again. If "until" is given and
+"duration" is not and the vehicle arrives at the stop at or after the
+time step defined by "until" it will not even decelerate. If until is
+defined in the context of a repeated vehicle insertion (flow) it will be
+incremented by the difference of vehicle creation time and "begin" of
+the flow. If neither "duration" nor "until" are given, "triggered"
+defaults to true. If "triggered" is set to false explicitly the vehicle
+will stop forever.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If <em>triggered</em> is true then <em>parking</em> will also be set to true by default. If you then set <em>parking</em> to false you may create deadlocks which prevent the simulation from terminating</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bus stops must have a length of at least 10</p>
+</div>
+<h2 id="how_the_vehicle_drives">How the vehicle drives<a class="headerlink" href="#how_the_vehicle_drives" title="Permanent link">#</a></h2>
+<h3 id="before_start">Before start<a class="headerlink" href="#before_start" title="Permanent link">#</a></h3>
+<p>On route loading (which is not necessarily the same as application
+startup) SUMO checks the route for connectivity and for proper placement
+of stops. If speed deviation and/or speed factor are set, it calculates
+a speed factor for the vehicle by drawing from a gaussian distribution.
+There are some cutoffs applied to the finally chosen speed factor to
+have it in a sensible range. It cannot be larger than speedFactor + two
+standard deviations and not smaller 0.2 * speedFactor. If the chosen
+factor does not work with the chosen departure speed it is recalculated.</p>
+<p>On vehicle loading SUMO also checks whether the vehicle is allowed to
+drive on all edges of its route and whether all other parameters are in
+the allowed ranges. If any violation of parameter ranges occurs, the
+simulation stops immediately with an error message. (It is still in
+discussion whether it should be possible to disable some of the checks
+via a command-line option, resulting in a vehicle which stops at the end
+of the last "valid" edge.)</p>
+<h3 id="departure">Departure<a class="headerlink" href="#departure" title="Permanent link">#</a></h3>
+<p>At the given departure time the simulation tries to insert the vehicle
+with the given parameters. If this is not possible because it would
+result in a collision, the simulation retries in the next simulation
+step. If "free" or "random" are specified for startpos and/or startlane,
+they are recalculated for the next try. The parameters are evaluated in
+the following order:</p>
+<ol>
+<li>Determination of the lane</li>
+<li>Determination of the position (even if lane and position are both
+    set to "free", we <em>do not</em> choose a different lane if we cannot find
+    a free position on the lane chosen)</li>
+<li>Determination of the start speed (if position is "free" and speed is
+    "max" we <em>do not</em> choose the position where we can reach the highest
+    speed but choose the highest speed we can use at the position chosen
+    before).</li>
+</ol>
+<p>When determining the maximum speed and the possibility of insertion the
+next vehicle(s) upstream and the next vehicle(s) downstream have to be
+respected even if they are located on the next road section. Thus it may
+be necessary to take all road sections into account which lead into or
+follow the current section.</p>
+<p>For filling the simulation as fast as possible with vehicles, use the
+following parameters for the vehicle: <code>depart="0" departSpeed="0"
+departLane="free" departPos="random_free" period="0" number="100"</code>.
+Thus, 101 vehicles will be inserted at timestep 0 on the first edge of
+the given route.</p>
+<h3 id="driving">Driving<a class="headerlink" href="#driving" title="Permanent link">#</a></h3>
+<p>At each step the model calculates a new target speed and accelerates
+(decelerates) the vehicle accordingly. The acceleration is constant for
+the step such that a car which is at position s with speed v and gets
+during the step an acceleration of a has after a timestep of length t
+the new position s' = s + v*t + a*t^2/2 and v' = v + a*t.</p>
+<h3 id="stops_1">Stops<a class="headerlink" href="#stops_1" title="Permanent link">#</a></h3>
+<p>A vehicle tries to reach the most downstream position of a stop area
+before it actually stops. It can only be forced to stop earlier by other
+vehicles blocking the rest of the stop area. The duration of the stop
+starts counting with the first step in which the vehicle's position is
+in the stop area and its speed is 0. That means if a vehicle stops at
+timestep 10 (reaches the area and speed 0) and has a stop duration of 2,
+it stays there for step 11 and 12 and has a new speed and position in
+step 13 (provided no other blocking occurs).</p>
+<h3 id="end">End<a class="headerlink" href="#end" title="Permanent link">#</a></h3>
+<p>If the vehicle reaches the point of final destination it is removed from
+the simulation. That means if the s' as calculated above is larger or
+equal to the destination point, the vehicle gets removed in this step.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 11 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

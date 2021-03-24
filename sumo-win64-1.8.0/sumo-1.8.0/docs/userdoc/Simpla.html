@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simpla.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>Simpla - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simpla.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#intro">Intro</a></li>
+            <li class="nav-item main"><a href="#configuration">Configuration</a></li>
+            <li class="nav-item main"><a href="#integrating_simpla_into_your_traci_script">Integrating simpla into your traci script</a></li>
+            <li class="nav-item main"><a href="#utility_functions">Utility Functions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#opengap" class="nav-link">• openGap()</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simpla<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>simpla is written for SUMO versions &gt; 0.30.0. We strongly recommend regularly updating to the newest SUMO version if possible. <a href="Downloads.html#nightly_snapshots">Nightly snapshots can be found here</a>.
+<br><br>
+As simpla uses TraCI's <a href="TraCI/Interfacing_TraCI_from_Python.html#adding_a_steplistener">StepListener</a> interface, it cannot be combined with controlling several sumo instances from the same client. </p>
+</div>
+<h1 id="intro">Intro<a class="headerlink" href="#intro" title="Permanent link">#</a></h1>
+<p>simpla is a configurable, platooning plugin for the <a href="TraCI/Interfacing_TraCI_from_Python.html">TraCI
+Python client</a>. It
+manages the spontaneous formation of vehicle platoons and allows you to
+define specific behavior for vehicles that travel inside a platoon.</p>
+<p>This is achieved by defining additional <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types">vehicle
+types</a>
+which represent platooning modes, and by providing information, which
+type (mode) to use for normal, solitary travel, and which one to use
+when platooning is activated. Further, 'catch-up' modes may be
+specified, which are used when a potential platooning partner is farther
+ahead downstream.</p>
+<p>For platooning up to four operational modes may be specified apart from
+the normal traveling mode (see section
+<a href="#configuration">Configuration</a> for the details):</p>
+<ul>
+<li>Platoon leader mode (parametrization of a vehicle driving at the
+  front of a platoon)</li>
+<li>Platoon follower mode (parametrization of a vehicle driving behind
+  another vehicle within a platoon)</li>
+<li>Platoon catch-up mode (parametrization of a vehicle in range of a
+  platoon, which is feasible for joining)</li>
+<li>Platoon catch-up follower mode (parametrization of a vehicle
+  traveling in a platoon, with a platoon leader in catchup mode)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The corresponding vTypes have to be known by SUMO at startup. This means, they should be placed at the beginning of the <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">demand definitions</a>. When using <a href="duarouter.html">duarouter</a> for route generation, please use the option <strong>--vtype-output</strong> to generate a seperate file containing the vTypes, which can be loaded upfront.</p>
+</div>
+<p>It suffices to specify the platoon leader mode to use simpla. The
+behavior in situations corresponding to the follower mode will use the
+leader mode if the follower mode is not specified. The situations
+corresponding to the catch-up mode will use the solitary mode if no
+separate catch-up mode is specified. The situations corresponding to the
+catch-up follower mode will use the follower mode if no separate
+catch-up follower mode is specified.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Simpla currently does not support lane-changing to join a platoon. Vehicles that are already in a platoon will try to change their lane if the platoon leader changes it's lane though.</p>
+</div>
+<h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h1>
+<p>The configuration of simpla is done by providing an xml-file containing
+obligatory and optional parameters for the application. It has a root
+element <code>configuration</code> with children tagged by the parameter name and holding
+attributes corresponding to the different parameter values. All possible
+attributes are listed in the attribute table below. A very simple
+configuration file could look like this (a more complete example, which
+serves as a template can be found in the installation directory
+<code>&lt;SUMO_HOME&gt;/tools/simpla</code>):</p>
+<pre><code>&lt;configuration&gt;
+    &lt;vehicleSelector value=&quot;pkw&quot; /&gt;
+    &lt;vTypeMap original=&quot;simple_pkw&quot; leader=&quot;simple_pkw_as_platoon_leader&quot;  follower=&quot;simple_pkw_as_platoon_follower&quot;/&gt;
+    ...
+&lt;/configuration&gt;
+</code></pre>
+
+<p>The following table summarizes all admissible configuration parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>vehicleSelectors</strong></td>
+<td>string</td>
+<td>A vehicle is controlled by simpla if its vehicle type id has a given vehicle selector string as a substring. The given value may be a comma-separated list of selectors. Defaults to an empty string, which selects all vehicles for control.</td>
+</tr>
+<tr>
+<td><strong>controlRate</strong></td>
+<td>float</td>
+<td>The number of the updates (per seconds) for the platoon management logic. Defaults to 1.0 sec. <br><strong>Note:</strong> The rate cannot be increased beyond 1/timestep.</td>
+</tr>
+<tr>
+<td><strong>maxPlatoonGap</strong></td>
+<td>float</td>
+<td>Gap (in m.) below which vehicles are considered as a platoon (if their vType parameters allow safe traveling for the actual situation). Defaults to 15 m.</td>
+</tr>
+<tr>
+<td><strong>platoonSplitTime</strong></td>
+<td>float</td>
+<td>Time (in secs.) until a vehicle which maintains a distance larger than <strong>maxPlatoonGap</strong> from its leader within the platoon (or travels on a different lane or behind a vehicle not belonging to its platoon) is split off. Defaults to 3.0 secs.</td>
+</tr>
+<tr>
+<td><strong>catchupDist</strong></td>
+<td>float</td>
+<td>If a catch-up mode was defined, vehicles switch their type to the corresponding catch-up vehicle type as soon as a platoon is ahead closer than the given value (in m.). Defaults to 50.0 m.</td>
+</tr>
+<tr>
+<td><strong>switchImpatienceFactor</strong></td>
+<td>float</td>
+<td>The switch impatience factor determines the magnitude of the effect that an increasing waiting time for a mode switch (due to safety constraints) has on the active speed factor of a vehicle. The active speed factor is calculated as <code>activeSpeedFactor = modeSpecificSpeedFactor/(1+impatienceFactor*waitingTime)</code>. The default value for the switch impatience factor is 0.1. Providing values &lt;= 0 will deactivate the impatience mechanism.</td>
+</tr>
+<tr>
+<td><strong>lcMode</strong></td>
+<td>integers (binary code) {original, leader, follower, catchup, catchupFollower}</td>
+<td>Specifies the <a href="TraCI/Change_Vehicle_State.html#lane_change_mode_0xb6">lane-change modes</a> to be used during the corresponding operation modes (e.g. <code>&lt;lcMode leader=597 follower=514 .../&gt;</code>). The modes <em>leader</em> and <em>original</em> default to 594 and <em>follower</em> and <em>catch-up</em> modes default to 514.</td>
+</tr>
+<tr>
+<td><strong>speedFactor</strong></td>
+<td>floats {original, leader, follower, catchup, catchupFollower}</td>
+<td>Specifies the <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#speed_distributions">speed factors</a> to be used during the corresponding operation modes (e.g. <code>&lt;speedFactor follower="1.1" catchup="1.2" .../&gt;</code>). All modes default to 1.0.</td>
+</tr>
+<tr>
+<td><strong>vTypeMap</strong></td>
+<td>strings {original, leader, follower, catchup, catchupFollower}</td>
+<td>Specifies the <a href="Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_types">vehicle types</a> to be used during the corresponding operation modes (e.g. <code>&lt;vTypeMap original="type1" leader="leader_type1" .../&gt;</code>).</td>
+</tr>
+<tr>
+<td><strong>vTypeMapFile</strong></td>
+<td>string</td>
+<td>Specifies the name of a file containing the specification of vehicle type mappings. The referenced file should contain lines of the form <code>origTypeID:leaderTypeID:followerTypeID:catchupTypeID:catchupFollowerTypeID</code>. The given vehicle type IDs can be empty strings leading to the default behavior as described above.<br><strong>Note:</strong> Mappings specified in such a file override mappings given as xml-elements of type <code>vTypeMap</code>.</td>
+</tr>
+<tr>
+<td><strong>verbosity</strong></td>
+<td>int</td>
+<td>Specifies the level of output during the simulation.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="integrating_simpla_into_your_traci_script">Integrating simpla into your traci script<a class="headerlink" href="#integrating_simpla_into_your_traci_script" title="Permanent link">#</a></h1>
+<p>First of all you should ensure that the directory <code>&lt;SUMO_HOME&gt;/tools</code> is in your
+<code>PYTHONPATH</code> (<a href="TraCI/Interfacing_TraCI_from_Python.html#importing_traci_in_a_script">See here for further
+explanations</a>).
+To use simpla with your python script further requires the provision of
+a configuration file <a href="#configuration">as described
+above</a>. Assuming such a file named
+<code>simpla.cfg</code> is located in your working directory, all you have to do is
+importing simpla as a python module:</p>
+<pre><code>import simpla
+</code></pre>
+
+<p>and, after <a href="TraCI/Interfacing_TraCI_from_Python.html#first_steps">establishing a
+TraCI-connection</a>
+to SUMO, load your configuration.</p>
+<pre><code>traci.start(...)
+...
+simpla.load(&quot;simpla.cfg&quot;)
+</code></pre>
+
+<p>The call to <code>simpla.load</code> automatically installs a
+<a href="TraCI/Interfacing_TraCI_from_Python.html#adding_a_steplistener">TraCI-stepListener</a>
+and the platoon management is executed at the end of each call to
+<code>traci.simulationStep()</code>.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>(1) simpla changes the vehicle types, speedfactors, and lane changemodes of all connected vehicles. If your application does so as well, this might have unintended consequences.</p>
+<p>(2) Currently, steps of lengths other than DeltaT are not supported (i.e. if traci.simulationStep() is called with argument when simpla is running this may yield undesired behaviour). </p>
+<p>(3) simpla adds subscriptions to VAR_SPEED, VAR_ROAD_ID, VAR_LANE_ID, and VAR_LANE_INDEX and removes them when stopped (per <code>simpla.stop()</code>).</p>
+<p>(4) If you start several simulation runs from the same python script, be sure to call traci.close() or simpla.stop() in between to reset simpla's state.</p>
+</div>
+<h1 id="utility_functions">Utility Functions<a class="headerlink" href="#utility_functions" title="Permanent link">#</a></h1>
+<p>It is planned to add utility functions for vehicle control in simpla.
+They can be referenced by <code>simpla.&lt;function_name&gt;</code> Currently, only one
+is implemented.</p>
+<h2 id="opengap">openGap()<a class="headerlink" href="#opengap" title="Permanent link">#</a></h2>
+<p>The function has the following syntax:</p>
+<p><code>openGap(vehID, desiredGap, desiredSpeedDiff, maximumDecel, duration)</code></p>
+<p>The arguments are:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>vehID</strong></td>
+<td>string</td>
+<td>The ID of the vehicle to be controlled.</td>
+</tr>
+<tr>
+<td><strong>desiredGap</strong></td>
+<td>float>0</td>
+<td>The gap that shall be established.</td>
+</tr>
+<tr>
+<td><strong>desiredSpeedDiff</strong></td>
+<td>float>0</td>
+<td>The rate at which the gap is open if possible.</td>
+</tr>
+<tr>
+<td><strong>maximumDecel</strong></td>
+<td>float>0</td>
+<td>The maximal deceleration at which the desiredSpeedDiff is tried to be approximated.</td>
+</tr>
+<tr>
+<td><strong>duration</strong></td>
+<td>float>0</td>
+<td>The period for which the gap control should be active.</td>
+</tr>
+</tbody>
+</table>
+<p>The methods adds a controller for the opening of a gap in front of the
+given vehicle, which stays active for a period of the given duration. If
+a leader is closer than the desiredGap, the controller tries to
+establish the desiredGap by inducing the given speedDifference, while
+not braking harder than maximumDecel. Internally, an object of the class
+GapCreator is created to manage the vehicle state and is added to traci
+as a
+<a href="TraCI/Interfacing_TraCI_from_Python.html#adding_a_steplistener">stepListener</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 03 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+21:29:54 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+
+21:29:56 Build Failed. 3 errors, 1 warnings. (took 1s.332ms)
+

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Installing/Linux_Build_Libraries.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Installing/Linux Build Libraries - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Installing/Linux_Build_Libraries.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#manual_installation">Manual installation</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_tools" class="nav-link">• The tools</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#the_libraries" class="nav-link">• The Libraries</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#concluding_remarks" class="nav-link">• Concluding Remarks</a>
+                </li>
+            <li class="nav-item main"><a href="#distribution-specific_instructions">Distribution-specific instructions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#ubuntu_1204_tested_with_sumo_0220" class="nav-link">• Ubuntu 12.04 (tested with SUMO 0.22.0)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#ubuntu_1404_trusty_tahr_tested_with_sumo_0220" class="nav-link">• Ubuntu 14.04 "Trusty Tahr" (tested with SUMO 0.22.0)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#ubuntu_1804_tested_with_sumo_0320" class="nav-link">• Ubuntu 18.04 (tested with SUMO 0.32.0)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#cygwin" class="nav-link">• Cygwin</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Installing/Linux Build Libraries<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The documentation here is probably outdated and refers to old library versions!</p>
+</div>
+<p>This document contains instructions for two basic ways of installing
+tools and libraries.</p>
+<ul>
+<li>Either install them manually for the current user (no root
+  privileges required)</li>
+<li>Or let your distribution install them system-wide (root privileges
+  required)</li>
+</ul>
+<p>You can follow either way.</p>
+<h3 id="manual_installation">Manual installation<a class="headerlink" href="#manual_installation" title="Permanent link">#</a></h3>
+<p>This document describes how to build and install (higher level)
+libraries SUMO depends on from scratch under Linux. There is no need for
+package management (RPM or such) or root access. All you need is a
+working GCC (version 3.3 and up should suffice) and probably some basic
+libraries Fox depends on.</p>
+<p>It has been tested successfully on several SuSE Linux installations and
+with a recent <a href="http://www.cygwin.org">cygwin</a>. Everything that needs
+extra work on cygwin is described in the <a href="#cygwin">cygwin
+section</a>.</p>
+<ul>
+<li>First check whether your Linux distribution comes with a Xerces-C
+  package and install it together with the header files (for SuSE
+  users this is the -devel package). Version 3.1 is known to work with
+  the current repository version. You should also check whether Proj,
+  GDAL and Fox already come with your distribution and (if so) install
+  them together with the header files (devel packages). Every package
+  installed this way you will not need to build by yourself.</li>
+<li>Second download the sources of Proj, GDAL, Fox (if you want a GUI),
+  and Xerces-C (if it does not come with your distribution).</li>
+<li>If you are building a fresh repository checkout and don't need
+  precise geocoordinates you can leave out Proj and GDAL.</li>
+</ul>
+<h4 id="the_tools">The tools<a class="headerlink" href="#the_tools" title="Permanent link">#</a></h4>
+<p>We use the GNU autotools for generating configure and Makefiles for
+Unix-like environments. Documentation can be found in the</p>
+<ul>
+<li><a href="http://www.gnu.org/software/autoconf/">GNU autoconf pages</a>,</li>
+<li><a href="http://www.gnu.org/software/autoconf/manual/">Manual for autoconf</a>,</li>
+<li><a href="https://www.gnu.org/software/automake/">Manual for
+  automake</a>,</li>
+<li><a href="https://www.gnu.org/software/libtool/manual/libtool.html">Manual for
+  libtool</a>, and</li>
+<li>the
+  <a href="http://sources.redhat.com/autobook/autobook/autobook_toc.html">Autobook</a>.</li>
+</ul>
+<h4 id="the_libraries">The Libraries<a class="headerlink" href="#the_libraries" title="Permanent link">#</a></h4>
+<ul>
+<li>Build and install the libraries (if you don't have root access
+  choose a different target for the libs and includes such as $HOME).
+  For GDAL, Fox and Proj this is more or less straightforward:</li>
+</ul>
+<pre><code>tar xzf fox-1.6.36.tar.gz
+cd fox-1.6.36
+./configure --prefix=$HOME &amp;&amp; make install
+cd ..
+tar xzf gdal-1.5.1.tar.gz
+cd gdal-1.5.1
+./configure --prefix=$HOME &amp;&amp; make install
+cd ..
+tar xzf proj-4.6.0.tar.gz
+cd proj-4.6.0
+./configure --prefix=$HOME &amp;&amp; make install
+</code></pre>
+
+<ul>
+<li>Note: The "make install" for GDAL may fail due to the Python
+  bindings which it wants to install into some only-root-writable
+  directory. You can safely ignore this.</li>
+<li>It is strongly recommended to use a user writable installation
+  directory and do "make install" instead of trying to specify
+  directories inside the directory trees of GDAL, Proj and Fox when
+  building SUMO later on.</li>
+<li>Note: It seems like some distributions of Fox are built with
+  disabled openGl-support. If you get unresolved references to methods
+  such as "glColor...", "glVertex3f...", etc. during compilation of
+  <a href="../sumo-gui.html">sumo-gui</a> you have to enable openGL-support
+  before compiling the FOX-library using "./configure
+  --with-opengl=yes --prefix=$HOME &amp;&amp; make install"; Still, this is
+  the default normally.</li>
+</ul>
+<!-- end list -->
+
+<ul>
+<li>In contrast to the other libraries, it is very likely that Xerces-C
+  also comes with your Linux distribution (at least it does with a
+  recent SuSE). If so, please first try to install it from there and
+  do not forget to install the developer package as well.</li>
+<li>The <a href="http://xerces.apache.org/xerces-c/build-3.html">Xerces
+  build</a> is
+  somewhat more involved:</li>
+</ul>
+<pre><code>tar xzf xerces-c-current.tar.gz
+export XERCESCROOT=${HOME}/xerces-c-src_3_0_1
+cd $XERCESCROOT/src/xercesc
+autoconf
+./runConfigure -plinux -cgcc -xg++ -minmem -nsocket -tnative -rpthread -P$HOME
+make
+make install
+</code></pre>
+
+<h4 id="concluding_remarks">Concluding Remarks<a class="headerlink" href="#concluding_remarks" title="Permanent link">#</a></h4>
+<p>After installing all of the required libraries and tools in this
+fashion, note that, when building SUMO, the following parameters will be
+required for the "./configure" run:</p>
+<pre><code>./configure --with-fox-config=$HOME/bin/fox-config --with-proj-gdal=$HOME --with-xerces=$HOME
+</code></pre>
+
+<h3 id="distribution-specific_instructions">Distribution-specific instructions<a class="headerlink" href="#distribution-specific_instructions" title="Permanent link">#</a></h3>
+<p>If you want to build and optionally install SUMO on Ubuntu systems, you
+may want to follow the instructions below.</p>
+<h4 id="ubuntu_1204_tested_with_sumo_0220">Ubuntu 12.04 (tested with SUMO 0.22.0)<a class="headerlink" href="#ubuntu_1204_tested_with_sumo_0220" title="Permanent link">#</a></h4>
+<pre><code>sudo apt-get install autoconf
+sudo apt-get install proj  libtool libgdal1-dev libxerces-c2-dev libfox-1.6-0 libfox-1.6-dev
+cd /usr/lib; sudo ln -s libgdal1.7.0.so libgdal.so cd /usr/local/src/sumo-0.22.0
+tar xzf sumo-src-0.22.0.tar.gz
+sudo mv -v sumo-0.22.0 /usr/local/src
+cd /usr/local/src/sumo-0.22.0
+./configure --with-fox-includes=/usr/include/fox-1.6 --with-gdal-includes=/usr/include/gdal --with-proj-libraries=/usr --with-gdal-libraries=/usr --with-proj-gdal
+make
+cd bin
+sudo mv activitygen emissionsDrivingCycle netconvert polyconvert TraCITestClient dfrouter emissionsMap netgenerate  sumo duarouter jtrrouter od2trips sumo-gui /usr/local/bin
+</code></pre>
+
+<h4 id="ubuntu_1404_trusty_tahr_tested_with_sumo_0220">Ubuntu 14.04 "Trusty Tahr" (tested with SUMO 0.22.0)<a class="headerlink" href="#ubuntu_1404_trusty_tahr_tested_with_sumo_0220" title="Permanent link">#</a></h4>
+<pre><code>sudo apt-get install autoconf
+sudo apt-get install libproj-dev proj-bin proj-data  libtool libgdal1-dev libxerces-c3-dev libfox-1.6-0 libfox-1.6-dev
+cd /usr/lib;
+</code></pre>
+
+<p>create this link ...if it complains that it exists, even better</p>
+<pre><code>sudo ln -s libgdal1.7.0.so libgdal.so
+sudo ln -s libproj.so.0.7.0 proj-lib.so
+</code></pre>
+
+<pre><code>cd sumo-0.22.0
+tar xzf sumo-src-0.22.0.tar.gz
+open file &quot;configure&quot; and  change: am__api_version='1.13' to am__api_version='1.14'
+cd ..
+sudo mv -v sumo-0.22.0 /usr/local/src
+cd /usr/local/src/sumo-0.22.0
+sudo aclocal
+sudo automake --add-missing
+sudo ./configure --with-fox-includes=/usr/include/fox-1.6 --with-gdal-includes=/usr/include/gdal --with-proj-libraries=/usr/lib --with-gdal-libraries=/usr --with-proj-gdal
+sudo make
+cd bin
+sudo mv activitygen emissionsDrivingCycle netconvert polyconvert TraCITestClient dfrouter emissionsMap netgenerate  sumo duarouter jtrrouter od2trips sumo-gui /usr/local/bin
+cd /usr/local/share
+sudo mkdir sumo-0.22.0
+sudo mv /usr/local/src/sumo-0.22.0/tools /usr/local/share/sumo-0.22.0/
+sudo mv  /usr/local/src/sumo-0.22.0/data /usr/local/share/sumo-0.22.0/
+</code></pre>
+
+<p>if exist...</p>
+<pre><code>sudo mv  /usr/local/src/sumo-0.22.0/doc /usr/local/share/sumo-0.22.0/
+</code></pre>
+
+<h4 id="ubuntu_1804_tested_with_sumo_0320">Ubuntu 18.04 (tested with SUMO 0.32.0)<a class="headerlink" href="#ubuntu_1804_tested_with_sumo_0320" title="Permanent link">#</a></h4>
+<p>The required libraries are libxerces-c-dev, libgdal-dev, libproj-dev and
+libfox-1.6-dev.</p>
+<h4 id="cygwin">Cygwin<a class="headerlink" href="#cygwin" title="Permanent link">#</a></h4>
+<p>Cygwin comes with a quite old xerces-c (version 2.5). After installing
+it you need to make a symbolic link in /usr/lib such that the linker
+finds the correct library:</p>
+<pre><code>cd /usr/lib; ln -s /usr/lib/libxerces-c25.dll.a /usr/lib/libxerces-c.dll.a
+</code></pre>
+
+<p>Now everything (but the GUI) should build fine.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 30 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

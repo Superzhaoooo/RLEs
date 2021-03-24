@@ -1,0 +1,162 @@
+%description:
+We used to have weird compilation errors when adding the "inet" namespace
+to the INET Framework, caused by the generic templated operator<<.
+
+%file: types.h
+#include <vector>
+
+// *** global namespace ***
+
+// class with operator<<
+class IPAddress { };
+inline std::ostream& operator<<(std::ostream& out, const IPAddress& addr) {out << "<IPAddress>"; return out;}
+
+// class without operator<<
+class Opaque { };
+
+// vectors with elements that have operator<<
+typedef std::vector<int> IntVector;
+typedef std::vector<IPAddress> IPAddrvector;
+
+// *** inet namespace ***
+
+namespace inet {
+// class with operator<<
+class IPAddress { };
+inline std::ostream& operator<<(std::ostream& out, const IPAddress& addr) {out << "<inet::IPAddress>"; return out;}
+
+// class without operator<<
+class Opaque { };
+
+// vectors with elements that have operator<<
+typedef std::vector<int> IntVector;
+typedef std::vector<IPAddress> IPAddrvector;
+}
+
+// *** foreign namespace ***
+
+namespace foreign {
+// class with operator<<
+class IPAddress { };
+inline std::ostream& operator<<(std::ostream& out, const IPAddress& addr) {out << "<foreign::IPAddress>"; return out;}
+
+// class without operator<<
+class Opaque { };
+
+// vectors with elements that have operator<<
+typedef std::vector<int> IntVector;
+typedef std::vector<IPAddress> IPAddrvector;
+}
+
+%file: options.msg
+class Options {
+    int a;
+    string b;
+}
+
+%file: inetOptions.msg
+namespace inet;
+class Options {
+    int a;
+    string b;
+}
+
+%file: foreignOptions.msg
+namespace foreign;
+class Options {
+    int a;
+    string b;
+}
+
+%file: test.msg
+import options;
+import inetOptions;
+import foreignOptions;
+
+cplusplus {{
+#include "types.h"
+}}
+
+class IPAddress {@existingClass;@opaque;}
+class Opaque {@existingClass;@opaque;}
+class IntVector {@existingClass;@opaque;}
+class IPAddrvector {@existingClass;@opaque;}
+
+class inet::IPAddress {@existingClass;@opaque;}
+class inet::Opaque {@existingClass;@opaque;}
+class inet::IntVector {@existingClass;@opaque;}
+class inet::IPAddrvector {@existingClass;@opaque;}
+
+class foreign::IPAddress {@existingClass;@opaque;}
+class foreign::Opaque {@existingClass;@opaque;}
+class foreign::IntVector {@existingClass;@opaque;}
+class foreign::IPAddrvector {@existingClass;@opaque;}
+
+namespace inet;
+
+class Dummy extends cObject {
+    string s = "Hello";
+
+    ::IPAddress address;
+    ::Opaque opaque;
+    ::IntVector intvec;
+    ::IPAddrvector addrvec;
+    ::Options options;
+
+    inet::IPAddress inetAddress;
+    inet::Opaque inetOpaque;
+    inet::IntVector inetIntvec;
+    inet::IPAddrvector inetAddrvec;
+    inet::Options inetOptions;
+
+    foreign::IPAddress foreignAddress;
+    foreign::Opaque foreignOpaque;
+    foreign::IntVector foreignIntvec;
+    foreign::IPAddrvector foreignAddrvec;
+    foreign::Options foreignOptions;
+}
+
+%includes:
+#include "test_m.h"
+
+%activity:
+inet::Dummy *dummy = new inet::Dummy();
+
+dummy->setAddress(::IPAddress());
+dummy->getIntvecForUpdate().push_back(13);
+dummy->getAddrvecForUpdate().push_back(::IPAddress());
+
+dummy->setInetAddress(inet::IPAddress());
+dummy->getInetIntvecForUpdate().push_back(42);
+dummy->getInetAddrvecForUpdate().push_back(inet::IPAddress());
+
+dummy->setForeignAddress(foreign::IPAddress());
+dummy->getForeignIntvecForUpdate().push_back(60);
+dummy->getForeignAddrvecForUpdate().push_back(foreign::IPAddress());
+
+cClassDescriptor *desc = dummy->getDescriptor();
+for (int i = 0; i < desc->getFieldCount(); i++)
+    EV << desc->getFieldName(i) << "=\"" << desc->getFieldValueAsString(dummy, i, 0) << "\"\n";
+
+%subst: /omnetpp:://
+%contains: stdout
+className="inet::Dummy"
+fullName=""
+fullPath=""
+info=""
+s="Hello"
+address="<IPAddress>"
+opaque=""
+intvec="{13} (size=1)"
+addrvec="{<IPAddress>} (size=1)"
+options=""
+inetAddress="<inet::IPAddress>"
+inetOpaque=""
+inetIntvec="{42} (size=1)"
+inetAddrvec="{<inet::IPAddress>} (size=1)"
+inetOptions=""
+foreignAddress="<foreign::IPAddress>"
+foreignOpaque=""
+foreignIntvec="{60} (size=1)"
+foreignAddrvec="{<foreign::IPAddress>} (size=1)"
+foreignOptions=""

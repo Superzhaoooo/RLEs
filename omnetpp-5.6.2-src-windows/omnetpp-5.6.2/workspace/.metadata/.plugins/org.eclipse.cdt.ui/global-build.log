@@ -1,0 +1,2023 @@
+16:47:33 **** Build of configuration gcc-debug for project veins ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+MSGC: veins/base/messages/AirFrame.msg
+MSGC: veins/base/messages/BorderMsg.msg
+MSGC: veins/base/messages/MacPkt.msg
+MSGC: veins/modules/application/traci/TraCIDemo11pMessage.msg
+MSGC: veins/modules/messages/AckTimeOutMessage.msg
+MSGC: veins/modules/messages/AirFrame11p.msg
+MSGC: veins/modules/messages/BaseFrame1609_4.msg
+MSGC: veins/modules/messages/DemoSafetyMessage.msg
+MSGC: veins/modules/messages/DemoServiceAdvertisement.msg
+MSGC: veins/modules/messages/Mac80211Ack.msg
+MSGC: veins/modules/messages/Mac80211Pkt.msg
+MSGC: veins/modules/messages/PhyControlMessage.msg
+MSGC: veins/modules/messages/TraCITrafficLightMessage.msg
+veins/base/connectionManager/BaseConnectionManager.cc
+veins/base/connectionManager/ChannelAccess.cc
+veins/base/connectionManager/ConnectionManager.cc
+veins/base/connectionManager/NicEntryDebug.cc
+veins/base/connectionManager/NicEntryDirect.cc
+veins/base/modules/BaseApplLayer.cc
+veins/base/modules/BaseBattery.cc
+veins/base/modules/BaseLayer.cc
+veins/base/modules/BaseMacLayer.cc
+veins/base/modules/BaseMobility.cc
+veins/base/modules/BaseModule.cc
+veins/base/modules/BaseWorldUtility.cc
+veins/base/modules/BatteryAccess.cc
+veins/base/phyLayer/Antenna.cc
+veins/base/phyLayer/BaseDecider.cc
+veins/base/phyLayer/BasePhyLayer.cc
+veins/base/phyLayer/ChannelInfo.cc
+veins/base/phyLayer/Decider.cc
+veins/base/phyLayer/PhyUtils.cc
+veins/base/toolbox/Signal.cc
+veins/base/toolbox/SignalUtils.cc
+veins/base/toolbox/Spectrum.cc
+veins/base/utils/Coord.cc
+veins/base/utils/Heading.cc
+veins/base/utils/NetwToMacControlInfo.cc
+veins/base/utils/SimpleAddress.cc
+veins/base/utils/winsupport.cc
+veins/modules/analogueModel/BreakpointPathlossModel.cc
+veins/modules/analogueModel/NakagamiFading.cc
+veins/modules/analogueModel/PERModel.cc
+veins/modules/analogueModel/SimpleObstacleShadowing.cc
+veins/modules/analogueModel/SimplePathlossModel.cc
+veins/modules/analogueModel/TwoRayInterferenceModel.cc
+veins/modules/analogueModel/VehicleObstacleShadowing.cc
+veins/modules/application/ieee80211p/DemoBaseApplLayer.cc
+veins/modules/application/traci/MyVeinsApp.cc
+veins/modules/application/traci/TraCIDemo11p.cc
+veins/modules/application/traci/TraCIDemoRSU11p.cc
+veins/modules/mac/ieee80211p/Mac1609_4.cc
+veins/modules/mobility/LinearMobility.cc
+veins/modules/mobility/traci/TraCIBuffer.cc
+veins/modules/mobility/traci/TraCIColor.cc
+veins/modules/mobility/traci/TraCICommandInterface.cc
+veins/modules/mobility/traci/TraCIConnection.cc
+veins/modules/mobility/traci/TraCIConnection.cc:123:20: warning: comparison of unsigned expression < 0 is always false [-Wtautological-compare]
+    if (*socketPtr < 0) throw cRuntimeError("Could not create socket to connect to TraCI server");
+        ~~~~~~~~~~ ^ ~
+1 warning generated.
+veins/modules/mobility/traci/TraCICoordinateTransformation.cc
+veins/modules/mobility/traci/TraCILauncher.cc
+veins/modules/mobility/traci/TraCIMobility.cc
+veins/modules/mobility/traci/TraCIRegionOfInterest.cc
+veins/modules/mobility/traci/TraCIScenarioManager.cc
+veins/modules/mobility/traci/TraCIScenarioManagerForker.cc
+veins/modules/mobility/traci/TraCIScenarioManagerForker.cc:130:14: warning: comparison of unsigned expression < 0 is always false [-Wtautological-compare]
+    if (sock < 0) {
+        ~~~~ ^ ~
+1 warning generated.
+veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.cc
+veins/modules/mobility/traci/TraCIScreenRecorder.cc
+veins/modules/mobility/traci/TraCIVehicleInserter.cc
+veins/modules/obstacle/MobileHostObstacle.cc
+veins/modules/obstacle/Obstacle.cc
+veins/modules/obstacle/ObstacleControl.cc
+veins/modules/obstacle/VehicleObstacleControl.cc
+veins/modules/phy/Decider80211p.cc
+veins/modules/phy/NistErrorRate.cc
+veins/modules/phy/PhyLayer80211p.cc
+veins/modules/phy/SampledAntenna1D.cc
+veins/modules/utility/BBoxLookup.cc
+veins/modules/utility/HasLogProxy.cc
+veins/modules/utility/TimerManager.cc
+veins/modules/world/annotations/AnnotationDummy.cc
+veins/modules/world/annotations/AnnotationManager.cc
+veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.cc
+veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.cc
+veins/modules/world/traci/trafficLight/logics/TraCITrafficLightAbstractLogic.cc
+veins/modules/world/traci/trafficLight/logics/TraCITrafficLightSimpleLogic.cc
+veins/visualizer/roads/RoadsCanvasVisualizer.cc
+veins/visualizer/roads/RoadsOsgVisualizer.cc
+In file included from veins/visualizer/roads/RoadsOsgVisualizer.cc:30:
+In file included from .\veins/visualizer/roads/RoadsOsgVisualizer.h:29:
+In file included from .\veins/veins.h:34:
+In file included from C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/include\omnetpp.h:134:
+In file included from C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/include/omnetpp/platdep/timeutil.h:41:
+C:\Users\jwj\Desktop\omnetpp-5.6.2-src-windows\omnetpp-5.6.2\tools\win64\mingw64\x86_64-w64-mingw32\include\winsock2.h:15:2: warning: Please include winsock2.h before windows.h [-W#warnings]
+#warning Please include winsock2.h before windows.h
+ ^
+1 warning generated.
+veins/base/messages/AirFrame_m.cc
+veins/base/messages/BorderMsg_m.cc
+veins/base/messages/MacPkt_m.cc
+veins/modules/application/traci/TraCIDemo11pMessage_m.cc
+veins/modules/messages/AckTimeOutMessage_m.cc
+veins/modules/messages/AirFrame11p_m.cc
+veins/modules/messages/BaseFrame1609_4_m.cc
+veins/modules/messages/DemoSafetyMessage_m.cc
+veins/modules/messages/DemoServiceAdvertisement_m.cc
+veins/modules/messages/Mac80211Ack_m.cc
+veins/modules/messages/Mac80211Pkt_m.cc
+veins/modules/messages/PhyControlMessage_m.cc
+veins/modules/messages/TraCITrafficLightMessage_m.cc
+Creating shared library: ../out/clang-debug/src/libveins_dbg.dll
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:49:28 **** Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+AntennaPosition.cc
+In file included from AntennaPosition.cc:25:
+In file included from ../../veins/src\veins/base/utils/AntennaPosition.h:27:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+Coord.cc
+In file included from Coord.cc:25:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+Heading.cc
+In file included from Heading.cc:25:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+helloworld.cc
+SampledAntenna1D.cc
+In file included from SampledAntenna1D.cc:25:
+In file included from ../../veins/src\veins/modules/phy/SampledAntenna1D.h:26:
+In file included from ../../veins/src\veins/base/phyLayer/Antenna.h:25:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+SignalRepresentation.cc
+In file included from SignalRepresentation.cc:27:
+In file included from ../../veins/src\veins/base/toolbox/Signal.h:27:
+In file included from ../../veins/src\veins/base/utils/POA.h:28:
+In file included from ../../veins/src\veins/base/phyLayer/Antenna.h:25:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+SimplePathlossModel.cc
+In file included from SimplePathlossModel.cc:25:
+In file included from ../../veins/src\veins/modules/analogueModel/SimplePathlossModel.h:31:
+In file included from ../../veins/src\veins/base/phyLayer/AnalogueModel.h:32:
+In file included from ../../veins/src\veins/base/utils/AntennaPosition.h:27:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+TwoRayInterferenceModel.cc
+In file included from TwoRayInterferenceModel.cc:25:
+In file included from ../../veins/src\veins/modules/analogueModel/TwoRayInterferenceModel.h:25:
+In file included from ../../veins/src\veins/base/phyLayer/AnalogueModel.h:32:
+In file included from ../../veins/src\veins/base/utils/AntennaPosition.h:27:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+VehicleObstacleControl.cc
+In file included from VehicleObstacleControl.cc:25:
+In file included from ../../veins/src\veins/modules/obstacle/VehicleObstacleControl.h:29:
+In file included from ../../veins/src\veins/base/utils/AntennaPosition.h:27:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_catch.cc
+traci/TraCICoordinateTransformation.cc
+In file included from traci/TraCICoordinateTransformation.cc:25:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCICoordinateTransformation.h:26:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+traci/VehicleSignal.cc
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10): undefined reference to `typeinfo for veins::AnalogueModel'
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:49:57 **** Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:49:57 **** Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManager.cc
+In file included from veins_inet/VeinsInetManager.cc:23:
+In file included from .\veins_inet/VeinsInetManager.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:50:00 **** Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+veins_testsims/traci/TraCITestApp.cc
+In file included from veins_testsims/traci/TraCITestApp.cc:25:
+In file included from .\veins_testsims/traci/TraCITestApp.h:31:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIMobility.h:30:
+In file included from ../../veins/src\veins/base/modules/BaseMobility.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_testsims/traci/TraCITrafficLightApp.cc
+In file included from veins_testsims/traci/TraCITrafficLightApp.cc:23:
+In file included from .\veins_testsims/traci/TraCITrafficLightApp.h:27:
+In file included from ../../veins/src\veins/modules/application/ieee80211p/DemoBaseApplLayer.h:30:
+In file included from ../../veins/src\veins/modules/messages/DemoServiceAdvertisement_m.h:31:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_testsims/traci/TraCITrafficLightTestLogic.cc
+In file included from veins_testsims/traci/TraCITrafficLightTestLogic.cc:24:
+In file included from .\veins_testsims/traci/TraCITrafficLightTestLogic.h:28:
+In file included from ../../veins/src\veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_testsims/utils/asserts.cc
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10): undefined reference to `typeinfo for veins::BatteryAccess'
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10): undefined reference to `typeinfo for veins::BatteryAccess'
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748): undefined reference to `non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)'
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:55:56 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+veins/base/connectionManager/BaseConnectionManager.cc
+veins/base/connectionManager/ChannelAccess.cc
+veins/base/connectionManager/ConnectionManager.cc
+veins/base/connectionManager/NicEntryDebug.cc
+veins/base/connectionManager/NicEntryDirect.cc
+veins/base/modules/BaseApplLayer.cc
+veins/base/modules/BaseBattery.cc
+veins/base/modules/BaseLayer.cc
+veins/base/modules/BaseMacLayer.cc
+veins/base/modules/BaseMobility.cc
+veins/base/modules/BaseModule.cc
+veins/base/modules/BaseWorldUtility.cc
+veins/base/modules/BatteryAccess.cc
+veins/base/phyLayer/Antenna.cc
+veins/base/phyLayer/BaseDecider.cc
+veins/base/phyLayer/BasePhyLayer.cc
+veins/base/phyLayer/ChannelInfo.cc
+veins/base/phyLayer/Decider.cc
+veins/base/phyLayer/PhyUtils.cc
+veins/base/toolbox/Signal.cc
+veins/base/toolbox/SignalUtils.cc
+veins/base/toolbox/Spectrum.cc
+veins/base/utils/Coord.cc
+veins/base/utils/Heading.cc
+veins/base/utils/NetwToMacControlInfo.cc
+veins/base/utils/SimpleAddress.cc
+veins/base/utils/winsupport.cc
+veins/modules/analogueModel/BreakpointPathlossModel.cc
+veins/modules/analogueModel/NakagamiFading.cc
+veins/modules/analogueModel/PERModel.cc
+veins/modules/analogueModel/SimpleObstacleShadowing.cc
+veins/modules/analogueModel/SimplePathlossModel.cc
+veins/modules/analogueModel/TwoRayInterferenceModel.cc
+veins/modules/analogueModel/VehicleObstacleShadowing.cc
+veins/modules/application/ieee80211p/DemoBaseApplLayer.cc
+veins/modules/application/traci/MyVeinsApp.cc
+veins/modules/application/traci/TraCIDemo11p.cc
+veins/modules/application/traci/TraCIDemoRSU11p.cc
+veins/modules/mac/ieee80211p/Mac1609_4.cc
+veins/modules/mobility/LinearMobility.cc
+veins/modules/mobility/traci/TraCIBuffer.cc
+veins/modules/mobility/traci/TraCIColor.cc
+veins/modules/mobility/traci/TraCICommandInterface.cc
+veins/modules/mobility/traci/TraCIConnection.cc
+veins/modules/mobility/traci/TraCIConnection.cc:123:20: warning: comparison of unsigned expression < 0 is always false [-Wtautological-compare]
+    if (*socketPtr < 0) throw cRuntimeError("Could not create socket to connect to TraCI server");
+        ~~~~~~~~~~ ^ ~
+1 warning generated.
+veins/modules/mobility/traci/TraCICoordinateTransformation.cc
+veins/modules/mobility/traci/TraCILauncher.cc
+veins/modules/mobility/traci/TraCIMobility.cc
+veins/modules/mobility/traci/TraCIRegionOfInterest.cc
+veins/modules/mobility/traci/TraCIScenarioManager.cc
+veins/modules/mobility/traci/TraCIScenarioManagerForker.cc
+veins/modules/mobility/traci/TraCIScenarioManagerForker.cc:130:14: warning: comparison of unsigned expression < 0 is always false [-Wtautological-compare]
+    if (sock < 0) {
+        ~~~~ ^ ~
+1 warning generated.
+veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.cc
+veins/modules/mobility/traci/TraCIScreenRecorder.cc
+veins/modules/mobility/traci/TraCIVehicleInserter.cc
+veins/modules/obstacle/MobileHostObstacle.cc
+veins/modules/obstacle/Obstacle.cc
+veins/modules/obstacle/ObstacleControl.cc
+veins/modules/obstacle/VehicleObstacleControl.cc
+veins/modules/phy/Decider80211p.cc
+veins/modules/phy/NistErrorRate.cc
+veins/modules/phy/PhyLayer80211p.cc
+veins/modules/phy/SampledAntenna1D.cc
+veins/modules/utility/BBoxLookup.cc
+veins/modules/utility/HasLogProxy.cc
+veins/modules/utility/TimerManager.cc
+veins/modules/world/annotations/AnnotationDummy.cc
+veins/modules/world/annotations/AnnotationManager.cc
+veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.cc
+veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.cc
+veins/modules/world/traci/trafficLight/logics/TraCITrafficLightAbstractLogic.cc
+veins/modules/world/traci/trafficLight/logics/TraCITrafficLightSimpleLogic.cc
+veins/visualizer/roads/RoadsCanvasVisualizer.cc
+veins/visualizer/roads/RoadsOsgVisualizer.cc
+In file included from veins/visualizer/roads/RoadsOsgVisualizer.cc:30:
+In file included from .\veins/visualizer/roads/RoadsOsgVisualizer.h:29:
+In file included from .\veins/veins.h:34:
+In file included from C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/include\omnetpp.h:134:
+In file included from C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/include/omnetpp/platdep/timeutil.h:41:
+C:\Users\jwj\Desktop\omnetpp-5.6.2-src-windows\omnetpp-5.6.2\tools\win64\mingw64\x86_64-w64-mingw32\include\winsock2.h:15:2: warning: Please include winsock2.h before windows.h [-W#warnings]
+#warning Please include winsock2.h before windows.h
+ ^
+1 warning generated.
+veins/base/messages/AirFrame_m.cc
+veins/base/messages/BorderMsg_m.cc
+veins/base/messages/MacPkt_m.cc
+veins/modules/application/traci/TraCIDemo11pMessage_m.cc
+veins/modules/messages/AckTimeOutMessage_m.cc
+veins/modules/messages/AirFrame11p_m.cc
+veins/modules/messages/BaseFrame1609_4_m.cc
+veins/modules/messages/DemoSafetyMessage_m.cc
+veins/modules/messages/DemoServiceAdvertisement_m.cc
+veins/modules/messages/Mac80211Ack_m.cc
+veins/modules/messages/Mac80211Pkt_m.cc
+veins/modules/messages/PhyControlMessage_m.cc
+veins/modules/messages/TraCITrafficLightMessage_m.cc
+Creating shared library: ../out/clang-release/src/libveins.dll
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+Command canceled
+17:02:26 **** Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:26:30 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:27:33 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:27:56 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:29:39 **** Build of configuration release for project sockets ****
+make MODE=release all 
+Cloud.cc
+ExtHttpClient.cc
+ExtTelnetClient.cc
+HttpClient.cc
+HttpServer.cc
+QueueBase.cc
+SocketRTScheduler.cc
+TelnetClient.cc
+TelnetServer.cc
+HttpMsg_m.cc
+NetPkt_m.cc
+TelnetPkt_m.cc
+Creating executable: out/clang-release//sockets.exe
+17:29:53 **** Build of configuration debug for project study ****
+make MODE=debug all 
+txc1.cc
+Creating executable: out/clang-debug//study_dbg.exe
+17:29:54 **** Build of configuration release for project tictoc ****
+make MODE=release all 
+txc1.cc
+txc10.cc
+txc11.cc
+txc12.cc
+txc13.cc
+txc14.cc
+txc15.cc
+txc16.cc
+txc17.cc
+txc18.cc
+txc2.cc
+txc3.cc
+txc4.cc
+txc5.cc
+txc6.cc
+txc7.cc
+txc8.cc
+txc9.cc
+tictoc13_m.cc
+tictoc14_m.cc
+tictoc15_m.cc
+tictoc16_m.cc
+tictoc17_m.cc
+tictoc18_m.cc
+Creating executable: out/clang-release//tictoc.exe
+17:30:18 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:30:19 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10): undefined reference to `typeinfo for veins::AnalogueModel'
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+17:30:31 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+17:30:31 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+17:30:33 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10): undefined reference to `typeinfo for veins::BatteryAccess'
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10): undefined reference to `typeinfo for veins::BatteryAccess'
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748): undefined reference to `non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)'
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+17:33:05 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+txc1.cc
+Creating executable: out/clang-release//study.exe
+17:33:34 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+17:41:15 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+17:49:58 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:50:38 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:50:52 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:52:13 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:52:29 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:55:53 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+12:52:00 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+13:13:51 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+13:14:27 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+13:20:36 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:30:05 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:32:25 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:32:26 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:32:26 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:32:27 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:32:27 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10): undefined reference to `typeinfo for veins::AnalogueModel'
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:32:40 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:32:41 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:32:46 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10): undefined reference to `typeinfo for veins::BatteryAccess'
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10): undefined reference to `typeinfo for veins::BatteryAccess'
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748): undefined reference to `non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)'
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:32:58 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:34:37 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:36:17 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:41:00 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:41:00 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:41:01 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:41:01 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:41:03 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10): undefined reference to `typeinfo for veins::AnalogueModel'
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:41:15 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:41:15 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:41:17 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10): undefined reference to `typeinfo for veins::BatteryAccess'
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10): undefined reference to `typeinfo for veins::BatteryAccess'
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748): undefined reference to `non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)'
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:41:53 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:45:11 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+veins/base/connectionManager/BaseConnectionManager.cc
+veins/base/connectionManager/ChannelAccess.cc
+veins/base/connectionManager/ConnectionManager.cc
+veins/base/connectionManager/NicEntryDebug.cc
+veins/base/connectionManager/NicEntryDirect.cc
+veins/base/modules/BaseApplLayer.cc
+veins/base/modules/BaseBattery.cc
+veins/base/modules/BaseLayer.cc
+veins/base/modules/BaseMacLayer.cc
+veins/base/modules/BaseMobility.cc
+veins/base/modules/BaseModule.cc
+veins/base/modules/BaseWorldUtility.cc
+veins/base/modules/BatteryAccess.cc
+veins/base/phyLayer/Antenna.cc
+veins/base/phyLayer/BaseDecider.cc
+veins/base/phyLayer/BasePhyLayer.cc
+veins/base/phyLayer/ChannelInfo.cc
+veins/base/phyLayer/Decider.cc
+veins/base/phyLayer/PhyUtils.cc
+veins/base/toolbox/Signal.cc
+veins/base/toolbox/SignalUtils.cc
+veins/base/toolbox/Spectrum.cc
+veins/base/utils/Coord.cc
+veins/base/utils/Heading.cc
+veins/base/utils/NetwToMacControlInfo.cc
+veins/base/utils/SimpleAddress.cc
+veins/base/utils/winsupport.cc
+veins/modules/analogueModel/BreakpointPathlossModel.cc
+veins/modules/analogueModel/NakagamiFading.cc
+veins/modules/analogueModel/PERModel.cc
+veins/modules/analogueModel/SimpleObstacleShadowing.cc
+veins/modules/analogueModel/SimplePathlossModel.cc
+veins/modules/analogueModel/TwoRayInterferenceModel.cc
+veins/modules/analogueModel/VehicleObstacleShadowing.cc
+veins/modules/application/ieee80211p/DemoBaseApplLayer.cc
+veins/modules/application/traci/MyVeinsApp.cc
+veins/modules/application/traci/TraCIDemo11p.cc
+veins/modules/application/traci/TraCIDemoRSU11p.cc
+veins/modules/mac/ieee80211p/Mac1609_4.cc
+veins/modules/mobility/LinearMobility.cc
+veins/modules/mobility/traci/TraCIBuffer.cc
+veins/modules/mobility/traci/TraCIColor.cc
+veins/modules/mobility/traci/TraCICommandInterface.cc
+veins/modules/mobility/traci/TraCIConnection.cc
+veins/modules/mobility/traci/TraCIConnection.cc:123:20: warning: comparison of unsigned expression < 0 is always false [-Wtautological-compare]
+    if (*socketPtr < 0) throw cRuntimeError("Could not create socket to connect to TraCI server");
+        ~~~~~~~~~~ ^ ~
+1 warning generated.
+veins/modules/mobility/traci/TraCICoordinateTransformation.cc
+veins/modules/mobility/traci/TraCILauncher.cc
+veins/modules/mobility/traci/TraCIMobility.cc
+veins/modules/mobility/traci/TraCIRegionOfInterest.cc
+veins/modules/mobility/traci/TraCIScenarioManager.cc
+veins/modules/mobility/traci/TraCIScenarioManagerForker.cc
+veins/modules/mobility/traci/TraCIScenarioManagerForker.cc:130:14: warning: comparison of unsigned expression < 0 is always false [-Wtautological-compare]
+    if (sock < 0) {
+        ~~~~ ^ ~
+1 warning generated.
+veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.cc
+veins/modules/mobility/traci/TraCIScreenRecorder.cc
+veins/modules/mobility/traci/TraCIVehicleInserter.cc
+veins/modules/obstacle/MobileHostObstacle.cc
+veins/modules/obstacle/Obstacle.cc
+veins/modules/obstacle/ObstacleControl.cc
+veins/modules/obstacle/VehicleObstacleControl.cc
+veins/modules/phy/Decider80211p.cc
+veins/modules/phy/NistErrorRate.cc
+veins/modules/phy/PhyLayer80211p.cc
+veins/modules/phy/SampledAntenna1D.cc
+veins/modules/utility/BBoxLookup.cc
+veins/modules/utility/HasLogProxy.cc
+veins/modules/utility/TimerManager.cc
+veins/modules/world/annotations/AnnotationDummy.cc
+veins/modules/world/annotations/AnnotationManager.cc
+veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.cc
+veins/modules/world/traci/trafficLight/TraCITrafficLightProgram.cc
+veins/modules/world/traci/trafficLight/logics/TraCITrafficLightAbstractLogic.cc
+veins/modules/world/traci/trafficLight/logics/TraCITrafficLightSimpleLogic.cc
+veins/visualizer/roads/RoadsCanvasVisualizer.cc
+veins/visualizer/roads/RoadsOsgVisualizer.cc
+In file included from veins/visualizer/roads/RoadsOsgVisualizer.cc:30:
+In file included from .\veins/visualizer/roads/RoadsOsgVisualizer.h:29:
+In file included from .\veins/veins.h:34:
+In file included from C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/include\omnetpp.h:134:
+In file included from C:/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/include/omnetpp/platdep/timeutil.h:41:
+C:\Users\jwj\Desktop\omnetpp-5.6.2-src-windows\omnetpp-5.6.2\tools\win64\mingw64\x86_64-w64-mingw32\include\winsock2.h:15:2: warning: Please include winsock2.h before windows.h [-W#warnings]
+#warning Please include winsock2.h before windows.h
+ ^
+1 warning generated.
+veins/base/messages/AirFrame_m.cc
+veins/base/messages/BorderMsg_m.cc
+veins/base/messages/MacPkt_m.cc
+veins/modules/application/traci/TraCIDemo11pMessage_m.cc
+veins/modules/messages/AckTimeOutMessage_m.cc
+veins/modules/messages/AirFrame11p_m.cc
+veins/modules/messages/BaseFrame1609_4_m.cc
+veins/modules/messages/DemoSafetyMessage_m.cc
+veins/modules/messages/DemoServiceAdvertisement_m.cc
+veins/modules/messages/Mac80211Ack_m.cc
+veins/modules/messages/Mac80211Pkt_m.cc
+veins/modules/messages/PhyControlMessage_m.cc
+veins/modules/messages/TraCITrafficLightMessage_m.cc
+Creating shared library: ../out/clang-release/src/libveins.dll
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:48:30 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+Cloud.cc
+ExtHttpClient.cc
+ExtTelnetClient.cc
+HttpClient.cc
+HttpServer.cc
+QueueBase.cc
+SocketRTScheduler.cc
+TelnetClient.cc
+TelnetServer.cc
+HttpMsg_m.cc
+NetPkt_m.cc
+TelnetPkt_m.cc
+Creating executable: out/clang-release//sockets.exe
+21:48:43 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+txc1.cc
+Creating executable: out/clang-release//study.exe
+21:48:45 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+txc1.cc
+txc10.cc
+txc11.cc
+txc12.cc
+txc13.cc
+txc14.cc
+txc15.cc
+txc16.cc
+txc17.cc
+txc18.cc
+txc2.cc
+txc3.cc
+txc4.cc
+txc5.cc
+txc6.cc
+txc7.cc
+txc8.cc
+txc9.cc
+tictoc13_m.cc
+tictoc14_m.cc
+tictoc15_m.cc
+tictoc16_m.cc
+tictoc17_m.cc
+tictoc18_m.cc
+Creating executable: out/clang-release//tictoc.exe
+21:49:10 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:49:10 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+AntennaPosition.cc
+In file included from AntennaPosition.cc:25:
+In file included from ../../veins/src\veins/base/utils/AntennaPosition.h:27:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+Coord.cc
+In file included from Coord.cc:25:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+Heading.cc
+In file included from Heading.cc:25:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+helloworld.cc
+SampledAntenna1D.cc
+In file included from SampledAntenna1D.cc:25:
+In file included from ../../veins/src\veins/modules/phy/SampledAntenna1D.h:26:
+In file included from ../../veins/src\veins/base/phyLayer/Antenna.h:25:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+SignalRepresentation.cc
+In file included from SignalRepresentation.cc:27:
+In file included from ../../veins/src\veins/base/toolbox/Signal.h:27:
+In file included from ../../veins/src\veins/base/utils/POA.h:28:
+In file included from ../../veins/src\veins/base/phyLayer/Antenna.h:25:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+SimplePathlossModel.cc
+In file included from SimplePathlossModel.cc:25:
+In file included from ../../veins/src\veins/modules/analogueModel/SimplePathlossModel.h:31:
+In file included from ../../veins/src\veins/base/phyLayer/AnalogueModel.h:32:
+In file included from ../../veins/src\veins/base/utils/AntennaPosition.h:27:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+TwoRayInterferenceModel.cc
+In file included from TwoRayInterferenceModel.cc:25:
+In file included from ../../veins/src\veins/modules/analogueModel/TwoRayInterferenceModel.h:25:
+In file included from ../../veins/src\veins/base/phyLayer/AnalogueModel.h:32:
+In file included from ../../veins/src\veins/base/utils/AntennaPosition.h:27:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+VehicleObstacleControl.cc
+In file included from VehicleObstacleControl.cc:25:
+In file included from ../../veins/src\veins/modules/obstacle/VehicleObstacleControl.h:29:
+In file included from ../../veins/src\veins/base/utils/AntennaPosition.h:27:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_catch.cc
+traci/TraCICoordinateTransformation.cc
+In file included from traci/TraCICoordinateTransformation.cc:25:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCICoordinateTransformation.h:26:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+traci/VehicleSignal.cc
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:49:40 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:49:40 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManager.cc
+In file included from veins_inet/VeinsInetManager.cc:23:
+In file included from .\veins_inet/VeinsInetManager.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:49:43 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+veins_testsims/traci/TraCITestApp.cc
+In file included from veins_testsims/traci/TraCITestApp.cc:25:
+In file included from .\veins_testsims/traci/TraCITestApp.h:31:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIMobility.h:30:
+In file included from ../../veins/src\veins/base/modules/BaseMobility.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_testsims/traci/TraCITrafficLightApp.cc
+In file included from veins_testsims/traci/TraCITrafficLightApp.cc:23:
+In file included from .\veins_testsims/traci/TraCITrafficLightApp.h:27:
+In file included from ../../veins/src\veins/modules/application/ieee80211p/DemoBaseApplLayer.h:30:
+In file included from ../../veins/src\veins/modules/messages/DemoServiceAdvertisement_m.h:31:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_testsims/traci/TraCITrafficLightTestLogic.cc
+In file included from veins_testsims/traci/TraCITrafficLightTestLogic.cc:24:
+In file included from .\veins_testsims/traci/TraCITrafficLightTestLogic.h:28:
+In file included from ../../veins/src\veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+1 warning generated.
+veins_testsims/utils/asserts.cc
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:50:05 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:52:25 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:52:26 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:52:26 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:52:27 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:52:28 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:52:39 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:52:40 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:52:41 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:53:07 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:56:09 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:56:09 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:56:09 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:56:10 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:56:10 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:56:22 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:56:23 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:56:24 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+22:09:56 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+22:34:11 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+22:35:54 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+22:38:57 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:27:45 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:28:45 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:29:25 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:32:39 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:49:35 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:51:35 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:02:52 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:17:53 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:19:10 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:20:35 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:23:40 **** Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:23:41 **** Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:23:41 **** Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:23:43 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:23:47 **** Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:24:06 **** Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:24:07 **** Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:24:21 **** Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:33:13 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:33:14 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:33:14 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:33:16 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:33:16 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:33:30 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:33:30 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:33:32 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:36:13 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:41:50 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:44:59 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:45:12 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:45:12 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:45:13 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:45:13 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:45:14 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:45:26 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:45:27 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:45:28 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:45:33 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:46:11 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:47:14 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:53:28 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:57:03 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:58:11 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:58:12 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:58:12 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+16:58:12 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+16:58:13 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:58:26 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:58:26 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+16:58:27 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+17:00:36 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:02:25 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:02:53 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:04:53 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:10:14 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:10:47 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:18:30 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:19:22 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:19:52 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:22:43 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:24:30 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:25:04 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:27:34 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:28:53 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:30:58 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:32:03 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:36:11 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:37:18 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:38:29 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:40:24 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:40:42 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:45:10 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:47:07 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+17:50:32 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:00:59 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:03:10 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:05:01 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:07:46 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:08:43 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:10:38 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:13:06 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:13:37 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:14:05 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:14:47 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:15:09 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:16:14 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:16:53 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:18:27 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:20:20 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:20:41 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:25:05 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+19:26:05 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+20:08:55 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:14:26 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:15:58 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:16:55 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:19:25 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:19:53 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:20:23 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:20:52 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:21:34 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:22:54 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:24:15 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:25:29 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:27:13 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:29:37 **** Incremental Build of configuration release for project sockets ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:29:38 **** Incremental Build of configuration release for project study ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:29:39 **** Incremental Build of configuration release for project tictoc ****
+make MODE=release all 
+make: Nothing to be done for 'all'.
+21:29:40 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:29:41 **** Incremental Build of configuration debug for project veins_catch ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+Creating shared library: ../out/clang-debug/src/libveins_catch_dbg.dll
+../out/clang-debug/src/SignalRepresentation.o:(.rdata[_ZTIN5veins18DummyAnalogueModelE]+0x10)：对‘typeinfo for veins::AnalogueModel’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_catch/src'
+make[1]: *** [Makefile:145: ../out/clang-debug/src/libveins_catch_dbg.dll] Error 1
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:29:54 **** Incremental Build of configuration gcc-debug for project veins_inet ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+MSGC: veins_inet/VeinsInetSampleMessage.msg
+veins_inet/VeinsInetSampleMessage.msg:27: Error: cannot resolve import 'inet.common.INETDefs'
+veins_inet/VeinsInetSampleMessage.msg:28: Error: cannot resolve import 'inet.common.packet.chunk.Chunk'
+veins_inet/VeinsInetSampleMessage.msg:34: Error: 'VeinsInetSampleMessage': unknown base class 'inet::FieldsChunk'
+make[1]: *** [Makefile:149: veins_inet/VeinsInetSampleMessage_m.h] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:29:54 **** Incremental Build of configuration gcc-debug for project veins_inet3 ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+veins_inet/VeinsInetManagerBase.cc
+In file included from veins_inet/VeinsInetManagerBase.cc:23:
+In file included from .\veins_inet/VeinsInetManagerBase.h:27:
+In file included from ../../veins/src\veins/modules/mobility/traci/TraCIScenarioManager.h:32:
+../../veins/src\veins/base/utils/Coord.h:337:27: warning: 'veins::Coord::info' redeclared inline; 'dllimport' attribute ignored [-Wignored-attributes]
+inline std::string Coord::info() const
+                          ^
+In file included from veins_inet/VeinsInetManagerBase.cc:26:
+.\veins_inet/VeinsInetMobility.h:31:10: fatal error: 'inet/common/ModuleAccess.h' file not found
+#include "inet/common/ModuleAccess.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make[1]: *** [Makefile:138: ../out/clang-debug/src/veins_inet/VeinsInetManagerBase.o] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_inet3/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:29:56 **** Incremental Build of configuration debug for project veins_testsims ****
+make MODE=debug all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+Creating shared library: ../out/clang-debug/src/libveins_testsims_dbg.dll
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins9BaseLayerE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITestApp.o:(.rdata[_ZTIN5veins12BaseMobilityE]+0x10)：对‘typeinfo for veins::BatteryAccess’未定义的引用
+../out/clang-debug/src/veins_testsims/traci/TraCITrafficLightApp.o:(.rdata+0x748)：对‘non-virtual thunk to veins::DemoBaseApplLayer::receiveSignal(omnetpp::cComponent*, int, omnetpp::cObject*, omnetpp::cObject*)’未定义的引用
+clang++.exe: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:95: ../out/clang-debug/src/libveins_testsims_dbg.dll] Error 1
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins_testsims/src'
+make: *** [Makefile:36: all] Error 2
+"make MODE=debug all" terminated with exit code 2. Build might be incomplete.
+21:30:05 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:32:38 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:32:59 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:35:21 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:35:52 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:36:44 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:37:24 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:38:01 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:38:20 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:39:46 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:40:25 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:42:19 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:42:53 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:43:31 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:44:06 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:46:10 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:47:10 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:47:32 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:48:55 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:51:59 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:55:50 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+21:59:24 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+22:01:52 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+22:02:41 **** Incremental Build of configuration gcc-release for project veins ****
+make MODE=release all 
+make[1]: Entering directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/c/Users/jwj/Desktop/omnetpp-5.6.2-src-windows/omnetpp-5.6.2/workspace/veins/src'

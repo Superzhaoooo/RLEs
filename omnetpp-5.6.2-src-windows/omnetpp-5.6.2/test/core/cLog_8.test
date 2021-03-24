@@ -1,0 +1,23 @@
+%description:
+
+Test conditional compilation of log statement arguments.
+
+%inifile: test.ini
+[General]
+cmdenv-log-prefix = "[%l]%9"
+**.cmdenv-log-level = trace
+
+%activity:
+
+cLog::logLevel = LOGLEVEL_TRACE;
+#undef COMPILETIME_LOGLEVEL
+#define COMPILETIME_LOGLEVEL LOGLEVEL_FATAL
+
+EV_FATAL << printf("Hello") << endl;
+EV_ERROR << printf("Omitted") << endl;
+
+%contains: stdout
+Hello
+
+%not-contains: stdout
+Omitted

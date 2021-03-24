@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tutorials/ScenarioGuide.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tutorials/ScenarioGuide - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tutorials/ScenarioGuide.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#introduction">Introduction</a></li>
+            <li class="nav-item main"><a href="#build_the_road_network">Build the road network</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#if_you_already_have_some_network_data" class="nav-link">• If you already have some network data</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#if_you_do_not_yet_have_any_network_data" class="nav-link">• If you do not yet have any network data</a>
+                </li>
+            <li class="nav-item main"><a href="#generate_the_traffic">Generate the traffic</a></li>
+            <li class="nav-item main"><a href="#improve_your_scenario">Improve your Scenario</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#modifying_the_network" class="nav-link">• Modifying the Network</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#example_patching_the_type_of_a_node" class="nav-link">&rarr; Example: Patching the type of a node</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#modifying_an_imported_network_via_plainxml" class="nav-link">&rarr; Modifying an imported network via plain.xml</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#modifying_node_positions_with_the_help_of_sumolib" class="nav-link">&rarr; Modifying node positions with the help of sumolib</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#traffic_light_programs" class="nav-link">• Traffic Light Programs</a>
+                </li>
+            <li class="nav-item main"><a href="#manage_scenarios">Manage Scenarios</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tutorials/ScenarioGuide<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<p>This Tutorial is meant to serve as a high-level guide for building a
+<a href="../sumo.html">sumo</a> scenario. It provides an outline of the typical
+steps when building a scenario and lists the recommended wiki pages for
+each step.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial assumes familiarity with <a href="Hello_SUMO.html">Tutorials/Hello SUMO</a>, <a href="quick_start.html">Tutorials/quick start</a> or <a href="Quick_Start_old_style.html">Tutorials/Quick Start old style</a>.</p>
+</div>
+<h1 id="build_the_road_network">Build the road network<a class="headerlink" href="#build_the_road_network" title="Permanent link">#</a></h1>
+<p>Every simulation requires a road network. The application
+<a href="../netconvert.html">netconvert</a> is used to create a network which
+can be used by the simulation <a href="../sumo.html">sumo</a>. It is also
+possible to build/modify a simulation network by hand with use of
+<a href="../netedit.html">netedit</a>, which provides a graphical user
+interface.</p>
+<h2 id="if_you_already_have_some_network_data">If you already have some network data<a class="headerlink" href="#if_you_already_have_some_network_data" title="Permanent link">#</a></h2>
+<p>Check whether a direct import is possible:
+<a href="../Networks/Import.html">Networks/Import</a>. Otherwise you will need
+to convert the data to a simple XML-format which can be read by
+<a href="../netconvert.html">netconvert</a>. Read this page:
+<a href="../Networks/Import.html">Networks/Import</a>.</p>
+<h2 id="if_you_do_not_yet_have_any_network_data">If you do not yet have any network data<a class="headerlink" href="#if_you_do_not_yet_have_any_network_data" title="Permanent link">#</a></h2>
+<p>Use publicly available network data from
+<a href="http://www.openstreetmap.org/">OpenStreetMap</a> as described here:
+<a href="../Networks/Import/OpenStreetMapDownload.html">Networks/Import/OpenStreetMapDownload</a>.
+Then import the network as described here:
+<a href="../Networks/Import/OpenStreetMap.html">Networks/Import/OpenStreetMap</a>.</p>
+<h1 id="generate_the_traffic">Generate the traffic<a class="headerlink" href="#generate_the_traffic" title="Permanent link">#</a></h1>
+<p>First you should understand the basics of vehicle modelling:
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html">Definition_of_Vehicles,_Vehicle_Types,_and_Routes</a>.
+You have various ways to insert vehicles into the map. Your choice
+basically depends on what kind of information about the traffic you
+have:
+<a href="../Demand/Introduction_to_demand_modelling_in_SUMO.html">Demand/Introduction_to_demand_modelling_in_SUMO</a>.</p>
+<h1 id="improve_your_scenario">Improve your Scenario<a class="headerlink" href="#improve_your_scenario" title="Permanent link">#</a></h1>
+<p>Most methods for network import leave some aspect of deficient network
+quality. Very often this manifests as unexpected/unrealistic traffic
+jams and teleporting vehicle errors.</p>
+<h2 id="modifying_the_network">Modifying the Network<a class="headerlink" href="#modifying_the_network" title="Permanent link">#</a></h2>
+<p>You will have to patch your network data to add missing roads, prohibit
+some turns, correct the number of lanes and add/remove some traffic
+lights. The recommended ways to perform the necessary changes include:</p>
+<ol>
+<li>Encode the changes in <em>plain-xml</em> files as described in
+    <a href="../Networks/PlainXML.html">Networks/Building_Networks_from_own_XML-descriptions</a>.
+    Most XML-attributes are optional so you only need to set the values
+    you would like to change.</li>
+<li>patch your network using <a href="../netconvert.html">netconvert</a> by
+    loading the net.xml along with the plain-xml files. You can even use
+    this during the initial import (i.e. load an OSM-file along with
+    your plain-xml files)</li>
+<li>directly adjust your network with GUI: after opening the program
+    <a href="../netedit.html">netedit</a> you load the network file
+    (*.net.xml)that needs to be modified. Then you choose the
+    respective functions in netedit to modify e.g. the number of lanes,
+    road shapes, traffic signal plans, intersection geometries, and to
+    combine intersections or edges.</li>
+</ol>
+<h3 id="example_patching_the_type_of_a_node">Example: Patching the type of a node<a class="headerlink" href="#example_patching_the_type_of_a_node" title="Permanent link">#</a></h3>
+<p>prepare a file like this:</p>
+<p>patch.nod.xml :</p>
+<pre><code>&lt;nodes&gt;
+    &lt;node id=&quot;id_of_the_node_you_want_to_modify&quot; type=&quot;right_before_left&quot;/&gt;
+&lt;nodes&gt;
+</code></pre>
+
+<p>and patch the network like this:</p>
+<pre><code>netconvert --sumo-net-file your.net.xml --node-files patch.nod.xml -o yourpatched.net.xml
+</code></pre>
+
+<p>or perform the patch during the initial import:</p>
+<pre><code>netconvert --osm-file yourOSMfile.xml --node-files patch.nod.xml ...&lt;other options&gt;
+</code></pre>
+
+<h3 id="modifying_an_imported_network_via_plainxml">Modifying an imported network via plain.xml<a class="headerlink" href="#modifying_an_imported_network_via_plainxml" title="Permanent link">#</a></h3>
+<p>Instead of patching individual elements you can also convert your
+network to plain.xml and modify the plain file and then re-assemble the
+network like this:</p>
+<pre><code>netconvert --sumo-net-file your.net.xml --plain-output-prefix yourplain
+</code></pre>
+
+<p>or during import:</p>
+<pre><code>netconvert --osm-files yourOSMinput.xml --plain-output-prefix yourplain ... &lt;your other options&gt;
+</code></pre>
+
+<p>This will give you the files:</p>
+<pre><code>yourplain.edg.xml
+yourplain.nod.xml
+yourplain.con.xml
+yourplain.tll.xml
+</code></pre>
+
+<p>You can edit these files and then reassamble the network by loading
+some or all of them:</p>
+<pre><code>netconvert --edge-files yourplain.edg.xml --node-files yourplain.nod.xml -o new.net.xml
+</code></pre>
+
+<p>or</p>
+<pre><code>netconvert --edge-files yourplain.edg.xml --node-files yourplain.nod.xml --connection-files yourplain.con.xml -o new.net.xml
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When working with networks based on OSM input, the .edg.xml file will contain information on the OSM-type of an edge (i.e. <em>highway.residential</em>. When loading such an .edg.xml file with <a href="../netconvert.html">netconvert</a> you need to supply the option <strong>--ignore-errors.edge-type</strong> or load a type-file to prevent errors of the form <em>Type ... not defined</em>.</p>
+</div>
+<h3 id="modifying_node_positions_with_the_help_of_sumolib">Modifying node positions with the help of <em>sumolib</em><a class="headerlink" href="#modifying_node_positions_with_the_help_of_sumolib" title="Permanent link">#</a></h3>
+<p><a href="../Tools/Sumolib.html">Sumolib</a> is a python library for working with
+SUMO files. The file <a href="https://github.com/eclipse/sumo/blob/master/tests/tools/sumolib/patch_network/runner.py"><strong><em>&lt;SUMO_HOME&gt;</em></strong>/tests/tools/sumolib/patch_network/runner.py</a> provides an example for randomly changing all node
+positions with a few lines of python code.</p>
+<h2 id="traffic_light_programs">Traffic Light Programs<a class="headerlink" href="#traffic_light_programs" title="Permanent link">#</a></h2>
+<p>In almost all cases the traffic light programs will have been guessed by
+<a href="../netconvert.html">netconvert</a> and turn out different from the real
+traffic lights. A simple way to improve traffic lights programs is
+making them start their program cycle at a different time. Experiment
+with the option <strong>--tls.half-offset</strong> and all the other <strong>--tls.*</strong> options of
+<a href="../netconvert.html">netconvert</a>.</p>
+<p>A more practical and efficient way to improve your traffic lights is to
+<a href="../Networks/PlainXML.html#traffic_light_program_definition">give the program explicitly with a <em>tls.xml</em>
+file</a>.</p>
+<p>At this time <a href="../netconvert.html">netconvert</a> only supports the
+creation of static traffic light programs. For dynamic traffic lights
+see
+<a href="TraCI4Traffic_Lights.html">Tutorials/TraCI4Traffic_Lights</a>.
+Furthermore, actuated traffic control can also be set, either based on
+time gaps or time loss. More information about actuated traffic control
+and settings can be found at
+<a href="../Simulation/Traffic_Lights.html#actuated_traffic_lights">Simulation/Traffic_Lights#Actuated_Traffic_Lights</a>).</p>
+<h1 id="manage_scenarios">Manage Scenarios<a class="headerlink" href="#manage_scenarios" title="Permanent link">#</a></h1>
+<p>If you have two networks <em>A.net.xml</em> and <em>B.net.xml</em> you may wish to
+find out how they differ. This can be accomplished using the tool
+<strong><em>&lt;SUMO_HOME&gt;</em></strong><em>/tools/net/netdiff.py</em>. Running this tool will give you a set of
+plain-XML difference files. They only contain the differences grouped by
+<em>deleted</em>, <em>created</em> and <em>changed</em> elements. It is even possible to load
+these files along with <em>A.net.xml</em> to recreate <em>B.net.xml</em>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

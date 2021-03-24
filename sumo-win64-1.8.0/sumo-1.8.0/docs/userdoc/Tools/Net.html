@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tools/Net.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tools/Net - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tools/Net.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#netdiffpy">netdiff.py</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#patching_on_import" class="nav-link">• patching on import</a>
+                </li>
+            <li class="nav-item main"><a href="#createroundaboutconnectionspy">createRoundaboutConnections.py</a></li>
+            <li class="nav-item main"><a href="#netcheckpy">netcheck.py</a></li>
+            <li class="nav-item main"><a href="#netextractpy">netextract.py</a></li>
+            <li class="nav-item main"><a href="#xmledges_applyoffsetpy_and_xmlnodes_applyoffsetpy">xmledges_applyOffset.py and xmlnodes_applyOffset.py</a></li>
+            <li class="nav-item main"><a href="#xmlconnections_mapedgespy">xmlconnections_mapEdges.py</a></li>
+            <li class="nav-item main"><a href="#net2kmlpy">net2kml.py</a></li>
+            <li class="nav-item main"><a href="#net2geojsonpy">net2geojson.py</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tools/Net<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="netdiffpy">netdiff.py<a class="headerlink" href="#netdiffpy" title="Permanent link">#</a></h1>
+<p>This script compares two <em>.net.xml</em> files. The call</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/net/netdiff.py A.net.xml B.net.xml diff
+</code></pre>
+
+<p>will produce 4 <a href="../Networks/PlainXML.html">plain-XML network</a> files</p>
+<ul>
+<li>diff.nod.xml</li>
+<li>diff.edg.xml</li>
+<li>diff.con.xml</li>
+<li>diff.tll.xml</li>
+</ul>
+<p>These files contain groups of xml elements (i.e. nodes) that have been
+delete, created or modified and can be used to investigate differences
+between the two networks <em>A</em> and <em>B</em>. Furthermore these files be used to
+maintain change-sets for making repeatable modifications:</p>
+<pre><code>netconvert --sumo-net-file A.net.xml -n diff.nod.xml -e diff.edg.xml -x diff.con.xml -i diff.tll.xml -o B.net.xml
+</code></pre>
+
+<p>The above call can be used to recreate network <em>B</em> based on <em>A</em> and the
+recorded change-set. Note, that for any modified elements (i.e. modified
+speed limit for an edge) the file <em>diff.edg.xml</em> only contains to
+modified attributes.</p>
+<p>A typical use case for <em>netdiff.py</em> is this:</p>
+<ol>
+<li><a href="../Networks/Import/OpenStreetMap.html">Import a network from
+    OSM</a> (call this
+    <em>A.net.xml</em>)</li>
+<li>make some modifications with <a href="../netedit.html">netedit</a> (save
+    this under the new name <em>B.net.xml</em>)</li>
+<li>use <em>netdiff.py</em> to create the <em>diff</em>-files</li>
+<li>At a later date, re-import the OSM network (with a newer OSM file, a
+    new version of <a href="../netconvert.html">netconvert</a> or different
+    options)</li>
+<li>re-apply the <em>diff</em>-files to avoid repeating manual corrections with
+    <a href="../netedit.html">netedit</a></li>
+</ol>
+<p><img alt="" src="../images/mergeA.png" />
+<img alt="" src="../images/mergeB.png" />
+<img alt="" src="../images/mergeAB.png" /></p>
+<h2 id="patching_on_import">patching on import<a class="headerlink" href="#patching_on_import" title="Permanent link">#</a></h2>
+<p>If the patch file is to be applied during the initial network import
+(e.g. from OSM), the netdiff option <strong>-i</strong> must be set. Due to the way
+connections are guessed during network import, all connections for an
+edge must be included in the patch file if any of them was changed. This
+is accomplished by setting <strong>-i</strong> (<strong>--patch-on-import</strong>).</p>
+<h1 id="createroundaboutconnectionspy">createRoundaboutConnections.py<a class="headerlink" href="#createroundaboutconnectionspy" title="Permanent link">#</a></h1>
+<p>This script generates additional connections for roundabouts from a
+given network. The following connections are added:</p>
+<ul>
+<li>vehicles can stay inside of the roundabout on every lane.</li>
+<li>vehicles can leave a roundabout even if they are driving on an inner
+  lane if there are enough outgoing lanes.</li>
+</ul>
+<h1 id="netcheckpy">netcheck.py<a class="headerlink" href="#netcheckpy" title="Permanent link">#</a></h1>
+<p>This tool checks the network (first parameter) for weak connectivity
+(whether there is a route from every node to every other node,
+regardless of edge direction) and prints the connected components if
+not.</p>
+<p>Additionally you may run this script to discover which edges are
+reachable from a particular edge</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/net/netcheck.py &lt;your.net.xml&gt; --source &lt;edge_id&gt; --selection-output selection.txt
+</code></pre>
+
+<p>This will create a file called <em>selection.txt</em> which can be loaded in
+<a href="../sumo-gui.html">sumo-gui</a> to visualize the portion of the network
+reachable from &lt;edge_id>. To visualize the selection you must load the
+file using the menus <strong>Edit->Edit chosen</strong>. Then you need to enable
+edge coloring by selection status in the view settings dialog
+<strong>Street->Color by: selection</strong>. The reachable portion of the network
+will be colored differently from the unreachable portion which is
+usually sufficient to figure out network modelling errors.</p>
+<p>The options can be shortened to <strong>-s &lt;edge_id></strong> for source edges and <strong>-o &lt;filename></strong> for selection
+output.</p>
+<p>Using option <strong>--destination &lt;edge_id></strong>, or <strong>-d &lt;edge_id></strong>, lists edges which can reach the given edge. By
+adding the option <strong>--vclass &lt;vClass></strong>, or <strong>-l &lt;vClass></strong>, the check becomes
+<a href="../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#abstract_vehicle_class">vClass</a>
+aware.</p>
+<p>The option <strong>--component-output &lt;filename></strong>, or <strong>-c &lt;filename></strong>, writes all the identified components and their
+constituent edges to the specified file. The option <strong>--results-output &lt;filename></strong>, or <strong>-r &lt;filename></strong>, writes the
+whole network summary of largest component percentage coverage and
+component edge count distribution to the specified file.</p>
+<p>The <strong>--component-output</strong> and <strong>--results-output</strong> options are not compatible with the <strong>--destination</strong> or <strong>--source options</strong>.</p>
+<p>Use the option <strong>--help</strong> for the latest version information.</p>
+<h1 id="netextractpy">netextract.py<a class="headerlink" href="#netextractpy" title="Permanent link">#</a></h1>
+<p>This tool extracts nodes and edges from a given network for their reuse
+in netconvert.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>netconvert is able to import <em>.net.xml</em> files and export <a href="../Networks/PlainXML.html">plain xml files</a> which makes this tool obsolete. It is retained for educational purposes as it demonstrates working with a sumo network from python.</p>
+</div>
+<h1 id="xmledges_applyoffsetpy_and_xmlnodes_applyoffsetpy">xmledges_applyOffset.py and xmlnodes_applyOffset.py<a class="headerlink" href="#xmledges_applyoffsetpy_and_xmlnodes_applyoffsetpy" title="Permanent link">#</a></h1>
+<p>Both tools apply the given offset to the geometrical information of
+edges or nodes given in the input file. The results are written into
+&lt;XMLEDGES>.mod.xml or &lt;XMLNODES>.mod.xml, respectively.</p>
+<pre><code>xmledges_applyOffset.py &lt;XMLEDGES&gt; &lt;X-OFFSET&gt; &lt;Y-OFFSET&gt;
+xmlnodes_applyOffset.py &lt;XMLNODES&gt; &lt;X-OFFSET&gt; &lt;Y-OFFSET&gt;
+</code></pre>
+
+<ul>
+<li>&lt;XMLEDGES>/&lt;XMLNODES>: The edges/nodes file which content shall be
+  shited</li>
+<li>&lt;X-OFFSET>: The x-offset to apply</li>
+<li>&lt;Y-OFFSET>: The x-offset to apply</li>
+</ul>
+<h1 id="xmlconnections_mapedgespy">xmlconnections_mapEdges.py<a class="headerlink" href="#xmlconnections_mapedgespy" title="Permanent link">#</a></h1>
+<p>Reads edge id replacements from "edgemap.txt"; the format of this file
+is</p>
+<pre><code>&lt;OLD_EDGE_ID&gt;-&gt;&lt;NEW_EDGE_ID&gt;
+</code></pre>
+
+<p>Reads the given connections file &lt;CONNECTIONS> and replaces old edge
+names by new. The result is written to &lt;CONNECTIONS>.mod.xml</p>
+<pre><code>xmlconnections_mapEdges.py &lt;CONNECTIONS&gt;
+</code></pre>
+
+<ul>
+<li>&lt;OLD_EDGE_ID>: Id of an edge as used within &lt;CONNECTIONS></li>
+<li>&lt;NEW_EDGE_ID>: Id of the edge as to use instead</li>
+<li>&lt;CONNECTIONS>: The connections file to change</li>
+</ul>
+<h1 id="net2kmlpy">net2kml.py<a class="headerlink" href="#net2kmlpy" title="Permanent link">#</a></h1>
+<p>converts '.net.xml' road geometries to <a href="https://en.wikipedia.org/wiki/Keyhole_Markup_Language">KML</a> format.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/net/net2kml.py -n your.net.xml -o output.kml
+</code></pre>
+
+<p>By default, normal edge geometries will be exported. This can be changed with options
+- <strong>--lanes</strong>: write lane geometries
+- <strong>--internal</strong>: write junction-internal edges or lanes</p>
+<h1 id="net2geojsonpy">net2geojson.py<a class="headerlink" href="#net2geojsonpy" title="Permanent link">#</a></h1>
+<p>converts '.net.xml' road geometries to <a href="https://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a> format.</p>
+<pre><code>&lt;SUMO_HOME&gt;/tools/net/net2geojson.py -n your.net.xml -o output.geojson
+</code></pre>
+
+<p>By default, normal edge geometries will be exported. This can be changed with options
+- <strong>--lanes</strong>: write lane geometries
+- <strong>--internal</strong>: write junction-internal edges or lanes</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

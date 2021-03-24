@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/How_To/Net_Importer.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Developer/How To/Net Importer - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/How_To/Net_Importer.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#building_a_reader">Building a Reader</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#initial_considerations" class="nav-link">• Initial Considerations</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#calling_the_reader" class="nav-link">• Calling the Reader</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#import_order" class="nav-link">• Import Order</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#starting_to_parse" class="nav-link">• Starting to Parse</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#error_handling" class="nav-link">• Error Handling</a>
+                </li>
+            <li class="nav-item main"><a href="#adding_read_values_to_the_netbuilding_containers">Adding read Values to the netbuilding Containers</a></li>
+            <li class="nav-item main"><a href="#tests">Tests</a></li>
+            <li class="nav-item main"><a href="#submitting_the_code">Submitting the Code</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/How To/Net Importer<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>In the following, advices on implementing a new network importer are
+given-</p>
+<p>Implementing an own network import module is very easy. The following
+steps are necessary:</p>
+<ul>
+<li>write methods which read and parse the information from the original
+  file</li>
+<li>insert parsed values into the netbuilding containers</li>
+<li>make the network importer know and use your code</li>
+<li>submit your code</li>
+</ul>
+<p>Yes, that's all. Still, the three steps are described more detailed in
+the following sections.</p>
+<h1 id="building_a_reader">Building a Reader<a class="headerlink" href="#building_a_reader" title="Permanent link">#</a></h1>
+<h2 id="initial_considerations">Initial Considerations<a class="headerlink" href="#initial_considerations" title="Permanent link">#</a></h2>
+<p>There are some conventions on network importers we try to follow. They
+are not mandatory, but they are assumed to assure the code's
+extendibility and to force a higher quality of the code.</p>
+<p>When starting to write your own importer, you should consider to base it
+on an existing one. NIImporter_OpenStreetMap.*, NIXML...Handler.* are
+examples of reading network descriptions form XML files.
+NIImporter_VISUM.* and NIImporter_DlrNavteq.* read plain text files,
+formatted in different ways. All these modules are located in
+<strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/netimport and of course, your import should be placed here, too.</p>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>network importer code is located in <strong><em>&lt;SUMO_HOME&gt;</em></strong>/src/netimport/</p>
+</div>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>network importer should be named NIImporter_&lt;FORMAT_NAME></p>
+</div>
+<h2 id="calling_the_reader">Calling the Reader<a class="headerlink" href="#calling_the_reader" title="Permanent link">#</a></h2>
+<p>Before adding a call to the init-function of your network importer, you
+have to add according options; otherwise the first call will end with an
+error due to accessing an unknown option. The options have to be added
+to void NIFrame::fillOptions().</p>
+<p>Then, you can make the importing facility know your parser by including
+the .h-file of your parser to NILoader.cpp and add a call to his
+loadNetwork-method within void NILoader::load(OptionsCont &amp;oc).</p>
+<h2 id="import_order">Import Order<a class="headerlink" href="#import_order" title="Permanent link">#</a></h2>
+<p>In most cases, edges, nodes, traffic lights, connections between edges,
+and other road network attributes are given explicitly and separated.
+The information <strong>must</strong> be imported in the correct order. The following
+order is right:</p>
+<ul>
+<li>nodes</li>
+<li>edges (need references to origin and to destination nodes)</li>
+<li>connections between edges (need usually references to edges)</li>
+<li>traffic lights (need references to nodes)</li>
+</ul>
+<p>Some more outrageous programmers may try to optimise the order a bit if
+the original data is aligned different. This may be possible in some
+cases.</p>
+<p>In the case nodes, edges, and other information are parsed from several
+files, the import order must be considered. Of course, it is also
+possible to store data in temporary containers. Still, this should be
+avoided as it increases memory consumption, and yes, memory consumption
+is one of the major problems for the network building process. In the
+case temporary containers are used, they must of course be cleared
+before returning from importing.</p>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>try to avoid static containers</p>
+</div>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>clean static containers if used</p>
+</div>
+<h2 id="starting_to_parse">Starting to Parse<a class="headerlink" href="#starting_to_parse" title="Permanent link">#</a></h2>
+<p>All importers have a static method named "loadNetwork" which starts the
+parsing. This method is responsible for starting the import if the
+according options are set and to assure the read values are stored for
+further processing within the according netbuilding containers. For this
+purpose, it is necessary to have the options and the netbuilding
+structure be given to the importer, making the call have the following
+fingerprint:</p>
+<pre><code>static void loadNetwork(const OptionsCont &amp;oc, NBNetBuilder &amp;nb);
+</code></pre>
+
+<p>At first, this method asks whether the option which makes
+<a href="../../netconvert.html">netconvert</a> read a file of the according format
+is set and whether the set value is right. By now, this means only that
+a check whether the given file(s) really exist(s) is made, not whether
+it is well formatted or valid in any means. The method
+FileHelpers::exists(&lt;FILE>) returns whether a given file is existing.</p>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>all importer have a static member which checks whether the according option is set with a valid value</p>
+</div>
+<p>After the file has been checked for being existent, a parser is built
+and started.</p>
+<p>You may have noticed, that some of the import parsers allow to give more
+than one file, divided by ','. This is of a great help sometimes, still
+it is not mandatory. It is up to you to decide whether your importer
+should be able to handle several files or not.</p>
+<h2 id="error_handling">Error Handling<a class="headerlink" href="#error_handling" title="Permanent link">#</a></h2>
+<p>Different formats have different sources for being erroneous. In some
+cases, heuristics may have to be applied during the parsing. In all
+cases something is strange - and it is not strange each time a network
+from the given format is imported - a warning should be generated. This
+is done by calling the macro</p>
+<pre><code>WRITE_WARNING(&lt;TEXT&gt;);
+</code></pre>
+
+<p>If the odd behavior completely disallows further processing of the
+imported file, or in the case a read value is not in the right format (a
+string is read, though a floating point number was awaited, for
+example), a ProcessError should be thrown. The exception must have an
+information about the error, for example:</p>
+<pre><code>throw ProcessError(&quot;Number of lanes is &lt;0&quot;);
+</code></pre>
+
+<p>Yes, the decision whether a strange value is an error or a warning is
+sometimes difficult.</p>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>throw a ProcessError in the case of errors</p>
+</div>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>warn on strange behavior</p>
+</div>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>both, a warning and an error exception must have an explanation about the reason supplied</p>
+</div>
+<h1 id="adding_read_values_to_the_netbuilding_containers">Adding read Values to the netbuilding Containers<a class="headerlink" href="#adding_read_values_to_the_netbuilding_containers" title="Permanent link">#</a></h1>
+<p>After the definition of a node, an edge, or anything else has been
+parsed, the according structure must be built and inserted into the
+according netbuilding container.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Road element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NBNode</td>
+<td>A node (intersection, junction)</td>
+</tr>
+<tr>
+<td>NBEdge</td>
+<td>An edge (road, street)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The following table shows which definitions are stored into which
+containers:</p>
+<p>In most cases, these methods return whether the addition was successful.
+If it was not, there probably is already an object with the same name.
+Normally, the imported networks we have dealt with so far did not
+contain duplicates - with the exception of edges which may
+bidirectional. In the case the object could not been added, you have to
+delete it explicitly. In the case your format is known to contain
+duplicates, you should ask whether a duplicate was already built and
+only if not, build the instance.</p>
+<div class="admonition convention">
+<p class="admonition-title">Convention</p>
+<p>try to avoid building and deleting of duplicates</p>
+</div>
+<h1 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">#</a></h1>
+<h1 id="submitting_the_code">Submitting the Code<a class="headerlink" href="#submitting_the_code" title="Permanent link">#</a></h1>
+<p>In the case you do not have a write access to the repository, we would
+be very happy if you could issue a pull request or send a patch against
+a recent version to <a href="../../Contact.html">the sumo-dev mailing list</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

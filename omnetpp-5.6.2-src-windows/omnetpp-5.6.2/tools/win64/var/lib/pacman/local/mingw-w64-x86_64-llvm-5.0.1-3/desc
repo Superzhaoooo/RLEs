@@ -1,0 +1,40 @@
+%NAME%
+mingw-w64-x86_64-llvm
+
+%VERSION%
+5.0.1-3
+
+%BASE%
+mingw-w64-clang
+
+%DESC%
+Low Level Virtual Machine (mingw-w64)
+
+%URL%
+https://llvm.org/
+
+%ARCH%
+any
+
+%BUILDDATE%
+1517468693
+
+%INSTALLDATE%
+1518797478
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+170146816
+
+%LICENSE%
+custom:University of Illinois/NCSA Open Source License
+
+%VALIDATION%
+pgp
+
+%DEPENDS%
+mingw-w64-x86_64-libffi
+mingw-w64-x86_64-gcc-libs
+

@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Created-By: Apache Maven 3.5.2
+Built-By: root
+Build-Jdk: 10.0.1
+Bundle-ManifestVersion: 2
+Bundle-Name: OMNeT++ Linux.x86 64bit native library fragment
+Bundle-SymbolicName: org.omnetpp.ide.nativelibs.linux.x86_64
+Bundle-Version: 5.6.2.200518-aa79d0918f
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: OpenSim Ltd.
+Fragment-Host: org.omnetpp.ide.nativelibs;bundle-version="[5.1.0,6.0.0
+ )"
+Eclipse-PlatformFilter: (& (osgi.os=linux) (osgi.arch=x86_64))
+Eclipse-BundleShape: dir
+

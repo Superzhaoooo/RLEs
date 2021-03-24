@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Z/Changes_from_version_0.9.3_to_version_0.9.4.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Z/Changes from version 0.9.3 to version 0.9.4 - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Z/Changes_from_version_0.9.3_to_version_0.9.4.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Z/Changes from version 0.9.3 to version 0.9.4<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This release is rather a snapshot. Many things have changed and some
+will require some further revalidation. There are three major
+changes/extensions:</p>
+<p><strong>1.</strong> The TLS-subsystem now allows having more than a single logic
+for a traffic light. One can describe the switch times and switch
+between them on the GUI. The user-description on this may be found under <a href="http://sumo.sourceforge.net/docs/gen/user_chp06.shtml#user_chp06-trigger-traffic_lights">Traffic Lights</a>. There is no developer documentation on this, yet.
+If you are parsing the networks by your own, you will see that traffic
+lights definitions have changed slightly. Instead of the sgmltag
+"logicno" a tag named "subkey" is used by now. Also, "inclanes" has been
+removed.</p>
+<p><strong>2.</strong> A full support to import networks with positions encoded in
+geocoordinates. This makes the usage of two further libraries necessary,
+PROJ.4 and GDAL. The new building process is described <a href="http://sumo.sourceforge.net/docs/gen/sumo_howto_building.shtml">here</a>.
+A description about how to import geocoordinated files (despite of
+ArcView-files) can be found <a href="http://sumo.sourceforge.net/docs/gen/user_chp04.shtml#user_chp04-further_options-geocoordinates">here</a>.</p>
+<p>Together with this extension, the import of ArcView-files has been
+rechecked and now allows to import networks stored in other schemes than
+the one NavTeq uses. The new options are described <a href="http://sumo.sourceforge.net/docs/gen/user_chp04.shtml#user_chp04-other_input-arcview">here</a>.</p>
+<p>Some further comments on importing ArcView-files are available <a href="http://sumo.sourceforge.net/docs/gen/sumo_moreon_arcview.shtml">here</a>. By now, they include only some comments on importing an open-source network of Osnabrück. You can take a look at this <a href="http://sumo.sourceforge.net/screens/frida.shtml">here</a> and also download it from (dead).</p>
+<p><strong>3.</strong> The developer documentation has been split into several parts.
+It seems to be unmanageable to write a complete developer documentation.
+Due to this, we now offer some additional documentation on certain
+topics. Topics that were previously a part of the developer
+documentation may be now found within the <a href="http://sumo.sourceforge.net/docs/moredocs.shtml">More Docs</a> section.</p>
+<p><br></p>
+<p>There are also some further changes which do not yet show their
+potentials, but are quite promising:</p>
+<p><strong>1.</strong> The routing interface has been made abstract. This allows to
+use routing algorithms in both the simulation as in the routing
+applications and will hopefully yield implementations of some further
+routing algorithms - by now Dijkstra and a turning ration algorithm are
+available.</p>
+<p><strong>2.</strong> Some first steps towards making SUMO be aware of vehicle types
+have been done. It is now possible to allow/disallow vehicles by class
+to use certain lanes. This is now implemented in the netconvert
+application and within duarouter, but not yet in the simulation itself
+and due to this not yet documented. But, as you can see, we are working
+towards making SUMO multi-modal...</p>
+<p>The complete list of changes:</p>
+<ul>
+<li>Multimodality<ul>
+<li>made lanes storing vehicle classes (additional XML-definition
+    for lanes, Router is aware of vehicle classes) (undocumented)</li>
+</ul>
+</li>
+<li>Routing Interface<ul>
+<li>Router have been made abstract</li>
+</ul>
+</li>
+<li>GUI<ul>
+<li>the Grid now handles networks with negative positions</li>
+<li>debugging the visualization grid (unfinished)</li>
+<li>glu is now used to draw polygons in order to allo concave
+  polygons</li>
+<li>pois may now be added and moved (using shift)</li>
+<li>Emitter may show their routes</li>
+<li>added option to change the exaggeratioln of POIs</li>
+</ul>
+</li>
+<li>Simulation<ul>
+<li>detector position may now be "friendly" (see
+  <a href="http://sumo.sourceforge.net/docs/gen/user_chp06.shtml#user_chp06-output-detectors-e1">E1-Detectors (Induct Loops)</a>)</li>
+<li>documentation on variable speed signs added (see <a href="http://sumo.sourceforge.net/docs/gen/user_chp06.shtml#user_chp06-management-vss">Variable Speed Signs (VSS)</a>)</li>
+</ul>
+</li>
+<li>netconvert<ul>
+<li>Improved ArcView-import</li>
+<li>Additional option for importing NavTeq-networks (using
+  ArcView/Elmar/Elmar2): new navteq lane number information may be
+  now only used if not differing too much from the previous !!!</li>
+<li>ramp-guessing improved: no lanes are appended if there are
+  enough</li>
+<li>Vision import added (see <a href="http://sumo.sourceforge.net/docs/gen/user_chp04.shtml#user_chp04-other_input-visum">Importing VISUM-networks</a>)</li>
+<li>Positions of guessed TLS may now be saved as POIs (undocumented, yet)</li>
+<li>The edge function can be given (undocumented, yet)</li>
+</ul>
+</li>
+<li>jtrrouter<ul>
+<li>default-percentages may now contain more than three items</li>
+<li>Examples added</li>
+<li>renamed "percentage" to probability</li>
+<li>Documentation updated (see <a href="http://sumo.sourceforge.net/docs/gen/user_chp05.shtml#user_chp05-own_routes-jtr">Using the Junction Turning Ratio - Router</a>)</li>
+</ul>
+</li>
+<li>All</li>
+<li>documentation on meta information added (see <a href="http://sumo.sourceforge.net/docs/gen/user_chp03.shtml#user_chp03-sumo-meta">Available Meta-Information</a>)</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 08 July 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

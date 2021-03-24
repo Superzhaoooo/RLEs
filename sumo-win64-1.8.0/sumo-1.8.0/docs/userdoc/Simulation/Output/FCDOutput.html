@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Output/FCDOutput.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Simulation/Output/FCDOutput - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Output/FCDOutput.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#instantiating_within_the_simulation">Instantiating within the Simulation</a></li>
+            <li class="nav-item main"><a href="#generated_output">Generated Output</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#precision" class="nav-link">• Precision</a>
+                </li>
+            <li class="nav-item main"><a href="#person_and_container_output">Person and Container Output</a></li>
+            <li class="nav-item main"><a href="#filtering_restricting_output">Filtering / Restricting Output</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#restricting_the_set_of_vehicles_that_generate_output" class="nav-link">• Restricting the set of vehicles that generate output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#restricting_the_locations" class="nav-link">• Restricting the locations</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#restricting_output_by_sensor_range" class="nav-link">• Restricting output by sensor range</a>
+                </li>
+            <li class="nav-item main"><a href="#further_options">Further Options</a></li>
+            <li class="nav-item main"><a href="#notes">NOTES</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Output/FCDOutput<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>The FCD (floating car data) export contains location and speed along
+with other information for every vehicle in the network at every time
+step. The output behaves somewhat like a super-accurate high-frequency
+GPS device for each vehicle. The outputs can be processed further using
+the <a href="../../Tools/TraceExporter.html">TraceExporter tool</a> for adapting
+frequency, equipment rates, accuracy and data format.</p>
+<h2 id="instantiating_within_the_simulation">Instantiating within the Simulation<a class="headerlink" href="#instantiating_within_the_simulation" title="Permanent link">#</a></h2>
+<p>The simulation generates this output when setting the option <strong>--fcd-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>. <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> is the
+name of the file the output will be written to. Any other file with this
+name will be overwritten, the destination folder must exist.</p>
+<p>By default, fcd-output is enabled for all vehicles and persons in the
+simulation with output in each simulation step. Using <a href="../../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#devices">device assignment
+options or
+parameters</a>
+(i.e. <strong>--device.fcd.probability 0.25</strong>) the set of vehicles which generate fcd output can be reduced.
+The output period can be set by using option <strong>--device.fcd.period</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;TIME&gt;</em></a>.</p>
+<h2 id="generated_output">Generated Output<a class="headerlink" href="#generated_output" title="Permanent link">#</a></h2>
+<p>The generated XML file looks like this:</p>
+<pre><code>&lt;fcd-export&gt;
+
+  &lt;timestep time=&quot;&lt;TIME_STEP&gt;&quot;&gt;
+      &lt;vehicle id=&quot;&lt;VEHICLE_ID&gt;&quot; x=&quot;&lt;VEHICLE_POS_X&gt;&quot; y=&quot;&lt;VEHICLE_POS_Y&gt;&quot; angle=&quot;&lt;VEHICLE_ANGLE&gt;&quot; type=&quot;&lt;VEHICLE_TYPE&gt;&quot;
+      speed=&quot;&lt;VEHICLE_SPEED&gt;&quot;/&gt;
+
+      ... more vehicles ...
+
+  &lt;/timestep&gt;
+
+  ... next timestep ...
+
+&lt;/fcd-export&gt;
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>timestep</td>
+<td>(simulation) seconds</td>
+<td>The time step described by the values within this timestep-element</td>
+</tr>
+<tr>
+<td>id</td>
+<td>id</td>
+<td>The id of the vehicle</td>
+</tr>
+<tr>
+<td>type</td>
+<td>id</td>
+<td>The name of the vehicle type</td>
+</tr>
+<tr>
+<td>speed</td>
+<td>m/s</td>
+<td>The speed of the vehicle</td>
+</tr>
+<tr>
+<td>angle</td>
+<td>degree</td>
+<td>The angle of the vehicle in navigational standard (0-360 degrees, going clockwise with 0 at the 12'o clock position)</td>
+</tr>
+<tr>
+<td>x</td>
+<td>m or longitude</td>
+<td>The absolute X coordinate of the vehicle (center of front bumper). The value depends on the given geographic projection</td>
+</tr>
+<tr>
+<td>y</td>
+<td>m or latitude</td>
+<td>The absolute Y coordinate of the vehicle (center of front bumper). The value depends on the given geographic projection</td>
+</tr>
+<tr>
+<td>z</td>
+<td>m</td>
+<td>The z value of the vehicle (center of front bumper).<br><br><strong>Note:</strong> This value is only present if the network contains elevation data</td>
+</tr>
+<tr>
+<td>pos</td>
+<td>m</td>
+<td>The running position of the vehicle measured from the start of the current lane.</td>
+</tr>
+<tr>
+<td>lane</td>
+<td>id</td>
+<td>The id of the current lane.</td>
+</tr>
+<tr>
+<td>slope</td>
+<td>degree</td>
+<td>The slope of the vehicle in degrees (equals the slope of the road at the current position)</td>
+</tr>
+<tr>
+<td>signals</td>
+<td>bitset</td>
+<td>The <a href="../../TraCI/Vehicle_Signalling.html">signal state information</a> (blinkers, etc). Only present when option <strong>--fcd-output.signals</strong> is set.</td>
+</tr>
+</tbody>
+</table>
+<p>When the option <strong>--fcd-output.geo</strong> is set, the written (x,y)-coordinates will be the
+lon/lat geo-coordinates.</p>
+<h3 id="precision">Precision<a class="headerlink" href="#precision" title="Permanent link">#</a></h3>
+<p>By default fcd-output returns location values in meter with a precision
+of 1cm. (changeable by setting option <strong>--precision</strong>) If you set option
+--fcd-output.geo the values are lon,lat as decimal values with a
+precision of 6 decimal places (changeable by setting option <strong>--precision.geo</strong>)</p>
+<h2 id="person_and_container_output">Person and Container Output<a class="headerlink" href="#person_and_container_output" title="Permanent link">#</a></h2>
+<p>Any persons or container in the simulation will cause output of he
+following form:</p>
+<pre><code>&lt;fcd-export&gt;
+
+  &lt;timestep time=&quot;&lt;TIME_STEP&gt;&quot;&gt;
+      &lt;vehicle .../&gt;
+      ...
+      &lt;person id=&quot;...&quot; x=&quot;...&quot; y=&quot;...&quot; angle=&quot;...&quot; type=&quot;...&quot; speed=&quot;...&quot; edge=&quot;...&quot; slope=&quot;...&quot;/&gt;
+      ...
+      &lt;container id=&quot;...&quot; x=&quot;...&quot; y=&quot;...&quot; angle=&quot;...&quot; type=&quot;...&quot; speed=&quot;...&quot; edge=&quot;...&quot; slope=&quot;...&quot;/&gt;
+      ...
+  &lt;/timestep&gt;
+
+  ... next timestep ...
+
+&lt;/fcd-export&gt;
+</code></pre>
+
+<p>If persons or containers are transported within a vehicle, their
+respective <code>&lt;person&gt;</code> and <code>&lt;container&gt;</code> elements will be written as child elements of that
+vehicle.</p>
+<h2 id="filtering_restricting_output">Filtering / Restricting Output<a class="headerlink" href="#filtering_restricting_output" title="Permanent link">#</a></h2>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The generated output files can become quite large. To write <a href="https://en.wikipedia.org/wiki/Gzip">gzipped</a> output files, simply name the output file with an <code>.gz</code> extension.</p>
+</div>
+<h3 id="restricting_the_set_of_vehicles_that_generate_output">Restricting the set of vehicles that generate output<a class="headerlink" href="#restricting_the_set_of_vehicles_that_generate_output" title="Permanent link">#</a></h3>
+<p>Output can be restricted to specific vehicle types or vehicle ids by <a href="../../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#devices">controlling the set of vehicles that are equipped</a>   with the <strong>fcd</strong>-device. The following example restricts output to a
+  single vehicle called <em>ego</em>:</p>
+<pre><code>--device.fcd.explicit ego
+</code></pre>
+
+<h3 id="restricting_the_locations">Restricting the locations<a class="headerlink" href="#restricting_the_locations" title="Permanent link">#</a></h3>
+<p>Output can be restricted to a specific set of edges by loading a list of edges from a file with option <strong>--fcd-output.filter-edges.input-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>. The file format for
+this is the same as the one when saving selections in  <a href="../../netedit.html">netedit</a>:</p>
+<pre><code>edge:id1
+edge:id2
+...
+</code></pre>
+
+<h3 id="restricting_output_by_sensor_range">Restricting output by sensor range<a class="headerlink" href="#restricting_output_by_sensor_range" title="Permanent link">#</a></h3>
+<p>When not all vehicles are equipped with an <strong>fcd</strong>-device, other ehicles and persons in a radius around the equipped vehicles can be included in the output by setting option <strong>--device.fcd.radius</strong> to the desired range in m.</p>
+<h2 id="further_options">Further Options<a class="headerlink" href="#further_options" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>--fcd-output.geo</strong> will toggle output coordinates to WGS84 (for
+  geo-referenced networks)</li>
+<li><strong>--fcd-output.signals</strong> will add <a href="../../TraCI/Vehicle_Signalling.html">signal state
+  information</a> to the output</li>
+<li><strong>--fcd-output.distance</strong> will add <a href="../Railways.html#kilometrage-mileage-chainage">kilometrage</a> information to the output</li>
+<li><strong>--fcd-output.acceleration</strong> will add acceleration data to the output (also lateral acceleration when using the <a href="../SublaneModel.html">sublane model</a></li>
+<li><strong>--fcd-output.max-leader-distance FLOAT</strong> will add attributes leaderGap, leaderSpeed, leaderID whenever a vehicle has a leader within the given distance</li>
+<li><strong>--fcd-output.params KEY1,KEY2,...</strong> adds <a href="Simulation/GenericParameters.md">generic parameters</a> to the output (supports device and carfollowmodel parameters)</li>
+</ul>
+<h2 id="notes">NOTES<a class="headerlink" href="#notes" title="Permanent link">#</a></h2>
+<p>In combination with the given geometry of the vehicles (shapes) you can
+build some nice animations, e.g <a href="http://worldwind.arc.nasa.gov/java/">NASA
+WorldWind</a> or <a href="http://earth.google.com">Google
+Earth</a>.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 01 December 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

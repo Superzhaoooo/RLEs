@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/netedit.html">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <title>netedit - SUMO Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/netedit.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="index.html" style="display: inline-block; margin-top: 5px;"><img src="images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#from_30000_feet">From 30.000 feet</a></li>
+            <li class="nav-item main"><a href="#usage_description">Usage Description</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#input" class="nav-link">• Input</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#output" class="nav-link">• Output</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#hotkeys" class="nav-link">• Hotkeys</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#processing_menu_options" class="nav-link">• Processing Menu Options</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#customizing_visualization" class="nav-link">• Customizing Visualization</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#background_grid" class="nav-link">&rarr; Background Grid</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#terminology" class="nav-link">• Terminology</a>
+                </li>
+            <li class="nav-item main"><a href="#edit_modes">Edit Modes</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#common_modes" class="nav-link">• Common modes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#inspect" class="nav-link">&rarr; Inspect</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#delete" class="nav-link">&rarr; Delete</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#select" class="nav-link">&rarr; Select</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#move" class="nav-link">&rarr; Move</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#network_specific_modes" class="nav-link">• Network specific modes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#create_edges" class="nav-link">&rarr; Create Edges</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#edit_connections" class="nav-link">&rarr; Edit connections</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#prohibitions" class="nav-link">&rarr; Prohibitions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traffic_lights" class="nav-link">&rarr; Traffic Lights</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#additionals" class="nav-link">&rarr; Additionals</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#crossings" class="nav-link">&rarr; Crossings</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#taz_traffic_analysis_zones" class="nav-link">&rarr; TAZ (Traffic Analysis Zones)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#shapes" class="nav-link">&rarr; Shapes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#demand_specific_modes" class="nav-link">• Demand specific modes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#route_mode" class="nav-link">&rarr; Route mode</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#vehicle_mode" class="nav-link">&rarr; Vehicle mode</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#vehicle_type_mode" class="nav-link">&rarr; Vehicle Type mode</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#stops_mode" class="nav-link">&rarr; Stops mode</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#person_type_mode" class="nav-link">&rarr; Person Type mode</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#person_mode" class="nav-link">&rarr; Person mode</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#person_plan_mode" class="nav-link">&rarr; Person plan mode</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#data_specific_modes" class="nav-link">• Data specific modes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#edge_data_mode" class="nav-link">&rarr; Edge data mode</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#edge_rel_data_mode" class="nav-link">&rarr; Edge rel data mode</a>
+                </li>
+            <li class="nav-item main"><a href="#netedit_elements">netedit elements</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#network_elements" class="nav-link">• Network Elements</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#junctions" class="nav-link">&rarr; Junctions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#edges" class="nav-link">&rarr; Edges</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#lanes" class="nav-link">&rarr; Lanes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#connections" class="nav-link">&rarr; Connections</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#traffic_lights_1" class="nav-link">&rarr; Traffic Lights</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#additional_elements" class="nav-link">• Additional elements</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#move_and_references" class="nav-link">&rarr; Move and references</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#parameters" class="nav-link">&rarr; Parameters</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#additional_sets" class="nav-link">&rarr; Additional sets</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#help_dialogs" class="nav-link">&rarr; Help dialogs</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#additional_types" class="nav-link">&rarr; Additional types</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#route_elements" class="nav-link">• Route elements</a>
+                </li>
+            <li class="nav-item main"><a href="#popup-menu_functions">Popup-Menu Functions</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#edge_and_lane" class="nav-link">• Edge and Lane</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#restricted_lanes" class="nav-link">&rarr; Restricted lanes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#junction" class="nav-link">• Junction</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#connection" class="nav-link">• Connection</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#crossing" class="nav-link">• Crossing</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#modifiable_poly" class="nav-link">• Modifiable Poly</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#additionals_1" class="nav-link">• Additionals</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#route" class="nav-link">• Route</a>
+                </li>
+            <li class="nav-item main"><a href="#usage_examples">Usage Examples</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#reducing_the_extent_of_the_network" class="nav-link">• Reducing the extent of the network</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#adapting_additional_objects_to_a_reduced_network" class="nav-link">&rarr; Adapting additional objects to a reduced network</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#specifying_the_complete_geometry_of_an_edge_including_endpoints" class="nav-link">• Specifying the complete geometry of an edge including endpoints</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#using_set_geometry_endpoint" class="nav-link">&rarr; Using 'Set geometry endpoint'</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#entering_the_position_manually" class="nav-link">&rarr; Entering the Position manually</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#using_join_selected_junctions" class="nav-link">&rarr; Using 'Join Selected Junctions'</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#setting_connection_attributes" class="nav-link">• Setting connection attributes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#converting_an_intersection_into_a_roundabout" class="nav-link">• Converting an intersection into a roundabout</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#converting_an_intersection_into_a_roundabout_old_manual_method" class="nav-link">• Converting an intersection into a roundabout (old manual method)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#correcting_road_access_permissions" class="nav-link">• Correcting road access permissions</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#changing_all_traffic_lights_to_right_on_red" class="nav-link">• Changing all traffic lights to right_on_red</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#creating_joined_traffic_lights" class="nav-link">• Creating joined traffic lights</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#adapting_visualization_settings_to_help_editing_complicated_intersections" class="nav-link">• Adapting Visualization Settings to help editing complicated intersections</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#defining_a_linear_referencing_scheme_kilometrage_mileage_chainage" class="nav-link">• Defining a linear referencing scheme (kilometrage / mileage/ chainage)</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#creating_bidirectional_railway_tracks" class="nav-link">• Creating bidirectional railway tracks</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#make_an_existing_track_bidirectional" class="nav-link">&rarr; Make an existing track bidirectional</a>
+                </li>
+                <li class="nav-item" style="text-indent: 25px;">
+                    <a href="#creating_bidirectional_tracks_from_scratch" class="nav-link">&rarr; Creating bidirectional tracks from scratch</a>
+                </li>
+            <li class="nav-item main"><a href="#planned_features">Planned Features</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>netedit<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="from_30000_feet">From 30.000 feet<a class="headerlink" href="#from_30000_feet" title="Permanent link">#</a></h1>
+<p><strong>netedit</strong> is a graphical network editor for SUMO.</p>
+<ul>
+<li><strong>Purpose:</strong> create and modify SUMO networks</li>
+<li><strong>System:</strong> portable (Linux/Windows is tested); opens a window</li>
+<li><strong>Input (optional):</strong> road network definitions to import</li>
+<li><strong>Output:</strong> A generated SUMO-road network; optionally also other outputs</li>
+<li><strong>Programming Language:</strong> c++</li>
+</ul>
+<h1 id="usage_description">Usage Description<a class="headerlink" href="#usage_description" title="Permanent link">#</a></h1>
+<p><strong>netedit</strong> is a visual network editor. It can be used
+to create networks from scratch and to modify all aspects of existing
+networks. With a powerful selection and highlighting interface it can
+also be used to debug network attributes. <strong>netedit</strong>
+is built on top of <a href="netconvert.html">netconvert</a>. As a general
+rule of thumb, anything <a href="netconvert.html">netconvert</a> can do,
+<strong>netedit</strong> can do as well.
+<strong>netedit</strong> has unlimited undo/redo capabilities and
+thus allows editing mistakes to be quickly corrected. Editing commands
+are generally issued with a left-click (according to the current <a href="#edit_modes">edit
+mode</a>). The user interface closely
+follows that of
+<a href="sumo-gui.html#interaction_with_the_view">sumo-gui</a>. Additional
+keyboard hotkeys are documented in the <em>Help</em> menu.</p>
+<h2 id="input">Input<a class="headerlink" href="#input" title="Permanent link">#</a></h2>
+<p><strong>netedit</strong> is a GUI-Application and inputs are chosen
+via menus. The following input formats are supported:</p>
+<ul>
+<li>SUMO-net files</li>
+<li>OSM-files</li>
+<li><a href="netconvert.html">netconvert</a>-configuration files</li>
+</ul>
+<h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">#</a></h2>
+<ul>
+<li>SUMO-net files</li>
+<li>plain-xml files</li>
+</ul>
+<h2 id="hotkeys">Hotkeys<a class="headerlink" href="#hotkeys" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>File shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New Network</td>
+<td>Ctrl + N</td>
+<td>Create a new network</td>
+</tr>
+<tr>
+<td>Open Network</td>
+<td>Ctrl + O</td>
+<td>Open an existing network</td>
+</tr>
+<tr>
+<td>Open configuration</td>
+<td>Ctrl + T</td>
+<td>Open an existing SUMO configuration</td>
+</tr>
+<tr>
+<td>Import foreign network</td>
+<td>Ctrl + F</td>
+<td>Import a foreign network</td>
+</tr>
+<tr>
+<td>Reload</td>
+<td>Ctrl + R</td>
+<td>Reload network</td>
+</tr>
+<tr>
+<td>Save network</td>
+<td>Ctrl + S</td>
+<td>Save network</td>
+</tr>
+<tr>
+<td>Save network as</td>
+<td>Ctrl + Shift + S</td>
+<td>Save network in another file</td>
+</tr>
+<tr>
+<td>Save plain XML</td>
+<td>Ctrl + L</td>
+<td>Save network as plain XML</td>
+</tr>
+<tr>
+<td>Save joined junctions</td>
+<td>Ctrl + J</td>
+<td>Save joined junctions of network</td>
+</tr>
+<tr>
+<td>Load additionals and shapes</td>
+<td>Ctrl + A</td>
+<td>Load a file with additionals</td>
+</tr>
+<tr>
+<td>Save additionals and shapes</td>
+<td>Ctrl + Shift + A</td>
+<td>Save additionals in a file</td>
+</tr>
+<tr>
+<td>Load demand elements</td>
+<td>Ctrl + D</td>
+<td>Load a file with shapes</td>
+</tr>
+<tr>
+<td>Save demand elements</td>
+<td>Ctrl + Shift + D</td>
+<td>Save demand elements in a file</td>
+</tr>
+<tr>
+<td>Load TLS Programs</td>
+<td>Ctrl + K</td>
+<td>Load a file with shapes</td>
+</tr>
+<tr>
+<td>Save TLS Programs</td>
+<td>Ctrl + Shift + K</td>
+<td>Save Point Of Interest in a file</td>
+</tr>
+<tr>
+<td>Close</td>
+<td>Ctrl + W</td>
+<td>Close network</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Edit shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Undo</td>
+<td>Ctrl + Z</td>
+<td>Undo the last change</td>
+</tr>
+<tr>
+<td>Redo</td>
+<td>Ctrl + Y</td>
+<td>Redo the last change</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Supermodes shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Network</td>
+<td>F2</td>
+<td>Change to supermode Network (default )</td>
+</tr>
+<tr>
+<td>Demand</td>
+<td>F3</td>
+<td>Change to supermode Demand (implies recomputing)</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>F4</td>
+<td>Change to supermode Data (implies recomputing)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Common modes shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delete</td>
+<td>D</td>
+<td>Change to mode "Delete"</td>
+</tr>
+<tr>
+<td>Inspect</td>
+<td>I</td>
+<td>Change to mode "Inspect"</td>
+</tr>
+<tr>
+<td>Select</td>
+<td>S</td>
+<td>Change to mode "Select"</td>
+</tr>
+<tr>
+<td>Move</td>
+<td>M</td>
+<td>Change to mode "Move"</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Network mode shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create Edge</td>
+<td>E</td>
+<td>Change to mode "Create Edge"</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>C</td>
+<td>Change to mode "Connection"</td>
+</tr>
+<tr>
+<td>Prohibition</td>
+<td>W</td>
+<td>Change to mode "Prohibition"</td>
+</tr>
+<tr>
+<td>Traffic light</td>
+<td>T</td>
+<td>Change to mode "Traffic light"</td>
+</tr>
+<tr>
+<td>Additional</td>
+<td>A</td>
+<td>Change to mode "Additional"</td>
+</tr>
+<tr>
+<td>Crossing</td>
+<td>R</td>
+<td>Change to mode "Crossing"</td>
+</tr>
+<tr>
+<td>POI-Poly</td>
+<td>P</td>
+<td>Change to mode "POI-Poly"</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Demand mode shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create Route</td>
+<td>R</td>
+<td>Change to mode "Create Routes"</td>
+</tr>
+<tr>
+<td>Create Vehicle</td>
+<td>V</td>
+<td>Change to mode "Create Vehicles"</td>
+</tr>
+<tr>
+<td>Create Vehicle Type</td>
+<td>T</td>
+<td>Change to mode "Create Vehicle Type"</td>
+</tr>
+<tr>
+<td>Create Stop</td>
+<td>A</td>
+<td>Change to mode "Create Stops"</td>
+</tr>
+<tr>
+<td>Create person types</td>
+<td>W</td>
+<td>Change to mode "Create Person Types"</td>
+</tr>
+<tr>
+<td>Create persons</td>
+<td>P</td>
+<td>Change to mode "Create Persons"</td>
+</tr>
+<tr>
+<td>Create person plans</td>
+<td>C</td>
+<td>Change to mode "Create Person Plans"</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Data mode shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edge data</td>
+<td>E</td>
+<td>Change to mode "Create Edge Datas"</td>
+</tr>
+<tr>
+<td>Edge relation data</td>
+<td>E</td>
+<td>Change to mode "Create Edge Relation datas"</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Processing shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compute Junction</td>
+<td>F5</td>
+<td>Compute junctions of the network</td>
+</tr>
+<tr>
+<td>Clean Junction</td>
+<td>F6</td>
+<td>Clean junctions of the network</td>
+</tr>
+<tr>
+<td>Join selected Junctions</td>
+<td>F7</td>
+<td>Join selected junctions of the network</td>
+</tr>
+<tr>
+<td>Options</td>
+<td>F10</td>
+<td>Open options dialog</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Locate shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Locate Junctions</td>
+<td>Shift + j</td>
+<td>Open dialog to locate junctions</td>
+</tr>
+<tr>
+<td>Locate Edges</td>
+<td>Shift + e</td>
+<td>Open dialog to locate edges</td>
+</tr>
+<tr>
+<td>Locate TLS</td>
+<td>Shift + t</td>
+<td>Open dialog to locate Traffic Lights</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Help shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Online documentation</td>
+<td>F1</td>
+<td>Open the online documentation in the web browser</td>
+</tr>
+<tr>
+<td>About</td>
+<td>F12</td>
+<td>Open the about dialog</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Text edition shortcuts</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cut</td>
+<td>Ctrl + X</td>
+<td>Cut selected text of a text field</td>
+</tr>
+<tr>
+<td>Copy</td>
+<td>Ctrl + C</td>
+<td>Copy selected text of a text field</td>
+</tr>
+<tr>
+<td>Paste</td>
+<td>Ctrl + V</td>
+<td>Paste previously cut/copied text in a text field</td>
+</tr>
+<tr>
+<td>Select all text</td>
+<td>Ctrl + A</td>
+<td>Select all text in a text field</td>
+</tr>
+</tbody>
+</table>
+<p>In addition to these hotkeys, <a href="sumo-gui.html#keyboard_shortcuts">all hotkeys for moving and zooming in
+sumo-gui</a> are supported.</p>
+<ul>
+<li>&lt;Button-Left>: Execute mode specific action</li>
+<li>&lt;Button-Right>: Open context-menu</li>
+<li>&lt;Button-Right-Drag>: Change zoom</li>
+<li>&lt;Button-Left-Drag>: Move the view around (<em>panning</em>)<ul>
+<li>in 'Move'-mode pointing at an edge: move or create geometry
+  points</li>
+<li>in 'Move'-mode pointing at a junction: move the junction</li>
+<li>in 'Move'-mode pointing at a selected object: move all selected
+  junctions and edges including geometry. If both junctions of an
+  edge are selected, move the whole geometry. Otherwise, move only
+  the geometry near the cursor</li>
+</ul>
+</li>
+<li>&lt;ESC><ul>
+<li>in 'Create Edge'-mode: clear the currently selected source
+  junction</li>
+<li>in 'Select'-mode: clear the current selection; cancel rectangle
+  selection</li>
+<li>in 'Connect'-mode: deselect current lane and cancel all changes</li>
+<li>in 'Traffic Light'-mode: revert changes to current traffic light</li>
+<li>when editing a junction shape: abort editing the current
+  junction shape</li>
+</ul>
+</li>
+<li>&lt;DELETE>: delete all currently selected items</li>
+<li>&lt;SHIFT>:<ul>
+<li>in 'Select'-mode: hold &lt;SHIFT> and drag the mouse for rectangle
+  selection</li>
+<li>in 'Select'-mode: &lt;SHIFT>-left-click selects lanes instead of
+  edges</li>
+<li>in 'Inspect'-mode: &lt;SHIFT>-left-click inspects lanes instead of
+  edges</li>
+<li>in 'Delete'-mode: &lt;SHIFT>-left-click deletes lanes instead of
+  edges</li>
+</ul>
+</li>
+<li>&lt;CTRL>:<ul>
+<li>in 'Create Edge'-mode, allow moving the view without defining
+  junctions</li>
+<li>in 'Create Additional'-mode, allow moving the view without
+  adding additionals</li>
+<li>in 'POI-Poly'-mode, allow moving the view without adding POIs</li>
+</ul>
+</li>
+<li>&lt;Enter><ul>
+<li>in 'Inspect'-mode: confirm attribute changes</li>
+<li>in 'Connect'-mode: deselect current lane and save all changes</li>
+<li>in 'Traffic Light'-mode: save changes to current traffic light</li>
+<li>in 'TAZ'-mode: save changes to current traffic light</li>
+<li>when editing a junction shape: save the current junction shape</li>
+</ul>
+</li>
+</ul>
+<h2 id="processing_menu_options">Processing Menu Options<a class="headerlink" href="#processing_menu_options" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Compute Junctions</strong> (F5): recomputes the geometry and logic of all
+  junctions. This is triggered automatically when entering modes which
+  require this information (Connect, Traffic Lights).</li>
+<li><strong>Clean Junctions</strong> (F6): removes all junctions that do not have any
+  adjacent edges (These junctions are not included when saving the
+  network. They are kept in the editor until cleaned for potential
+  reuse).</li>
+<li><strong>Join Selected Junctions</strong> (F7): joins the selected junctions into
+  a single junction (See <a href="Networks/PlainXML.html#joining_nodes">joining
+  junctions</a>).</li>
+<li><strong>Options</strong> (F10): inspect and set all options. These are the same
+  options that <a href="netconvert.html">netconvert</a> accepts on the
+  commandline or in a configuration.</li>
+</ul>
+<h2 id="customizing_visualization">Customizing Visualization<a class="headerlink" href="#customizing_visualization" title="Permanent link">#</a></h2>
+<p>Most of the visualization options that are available in
+<a href="sumo-gui.html#changing_the_appearancevisualisation_of_the_simulation">sumo-gui</a>
+can also be set in netedit. This includes the facilities for <a href="sumo-gui.html#using_decals_within_sumo-gui">loading
+background images</a>.</p>
+<p>It is also possible to load <a href="Simulation/Shapes.html">POIs and
+Polygons</a> using the menu <em>File->Load
+Shapes</em>.</p>
+<h3 id="background_grid">Background Grid<a class="headerlink" href="#background_grid" title="Permanent link">#</a></h3>
+<p>When activating the background grid via the visualization settings
+dialog <img alt="![](images/colorwheel.gif" src="images/Colorwheel.gif" title="![](images/colorwheel.gif" /> or
+via the <em>show grid</em> option in <a href="#create_edges">Create Edge
+Mode</a>, all clicks that create or move objects
+will snap to the nearest grid point. The resolution of the grid can be
+customized in the <em>Background</em>-Tab of the visualization settings dialog.</p>
+<p>By using hotkey <strong>Ctrl-PageUp</strong> the grid spacing is doubled and with <strong>Ctrl-PageDown</strong> the grid size is reduce by a factor of 2.</p>
+<h2 id="terminology">Terminology<a class="headerlink" href="#terminology" title="Permanent link">#</a></h2>
+<p>The main network elements that are used to represent a road network in
+SUMO are <a href="Networks/SUMO_Road_Networks.html">edges, lanes, junctions, connections, traffic
+lights</a>. <a href="#additional_elements">Additional
+infrastructure elements</a> such as bus
+stops, detectors and variable speed signs are kept in separate files and
+loaded at the start of the simulation.</p>
+<p>In SUMO the terms <strong>node</strong> and <strong>junction</strong> and <strong>intersection</strong> are
+used interchangeably (in netedit the term junction is used throughout).</p>
+<h1 id="edit_modes">Edit Modes<a class="headerlink" href="#edit_modes" title="Permanent link">#</a></h1>
+<p><strong>netedit</strong> is controlled via various editing modes.
+This serves to reduce the number of clicks. For example, in <strong>Delete
+mode</strong> a click on any object deletes it. Edit modes are divided into two
+large sets (Supermodes), but with certain common modes. Supermode
+Network is specific to create and edit elements related to
+infrastructure, and Supermode Demand is specific to create and edit
+elements related to road traffic. Between both modes can be toggled
+either using the F3 and F4 keys or through the buttons located at the
+top of the window.</p>
+<p><img alt="" src="images/neteditsupermodes.png" />Supermodes buttons.</p>
+<h2 id="common_modes">Common modes<a class="headerlink" href="#common_modes" title="Permanent link">#</a></h2>
+<h3 id="inspect">Inspect<a class="headerlink" href="#inspect" title="Permanent link">#</a></h3>
+<p>Inspect and modify attributes of edges, lanes, junctions, connections
+and additional network items (i.e. bus stops). Modifications have to be
+confirmed by hitting &lt;Enter> (except for Boolean attributes). If the
+entered value is not appropriate for the modified attribute, the value
+will turn red to indicate the problem.</p>
+<p>When inspecting an element that is <a href="#select">selected</a> along
+with multiple elements of the same type this mode behaves differently:</p>
+<ul>
+<li>Only non-unique attributes are listed (i.e. lane-width but not
+  lane-ID)</li>
+<li>If the elements differ in their attributes, the whole range of
+  occurring values is shown</li>
+<li>All selected elements of the same type are modified at the same time
+  when setting a new value</li>
+</ul>
+<p><img alt="" src="images/InspectMode1.png" />Changing the number of lanes of an edge.
+<img alt="" src="images/InspectMode2.png" />Number of lanes of the edge changed</p>
+<p><img alt="" src="images/InspectMode3.png" />Changing the width of a lane. Note that option
+"select edges" is disabled. </p>
+<p><img alt="" src="images/InspectMode4.png" />Width of lane changed
+(gaps will disappear upon triggering recomputation with <strong>F5</strong>)</p>
+<h4 id="generic_parameters">Generic Parameters<a class="headerlink" href="#generic_parameters" title="Permanent link">#</a></h4>
+<p>Most simulation objects support <a href="Simulation/GenericParameters.html">Generic Parameters</a> to express custom user data and supplemental configurations. They can be edited with the 'Edit parameters' dialog which is accessible with the 'Edit parameters' button. </p>
+<p>In inspect mode, a serialized form of the parameters is also given. In this form, all parameters are concatenated using the '=' sign between key and value and by using the '|' sign between parameters. Serialization of key value pars that use these separating characters in their key or value is currently not supported by netedit (though permitted by SUMO). 
+The serialized form is useful in select mode when selecting objects with a particular parameter.</p>
+<h4 id="edge_template">Edge template<a class="headerlink" href="#edge_template" title="Permanent link">#</a></h4>
+<p>When inspecting an edge, the extra buttons <em>set Edge ... as Template</em>
+and <em>Copy ... into edge ...</em> appear in the inspection frame. These can
+be used to set default attributes for
+<a href="#create_edges">#Create_Edges</a> and to copy attributes
+between edges.</p>
+<p>The following (non-unique) attributes are set/copied:</p>
+<ul>
+<li>speed</li>
+<li>priority</li>
+<li>numLanes</li>
+<li>allow/disallow</li>
+<li>type</li>
+<li>spreadType</li>
+<li>width</li>
+</ul>
+<p>When copying attributes from one edge to another, lane-specific
+attributes will be copied as well.</p>
+<h3 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link">#</a></h3>
+<p>The Delete mode is used to remove an element of your network. The
+following is possible:</p>
+<ul>
+<li>Delete junctions (and all adjoining edges)</li>
+<li>Delete edges</li>
+<li>Delete geometry points of an edge</li>
+<li>Delete a lane (when option <em>selection edges</em> is disabled)</li>
+<li>Delete connections (available, when <em>show connections</em> is enabled)</li>
+<li>Delete crossings</li>
+<li>Delete additionals</li>
+</ul>
+<p>The delete frame own a list of elements that is filled automatically
+with the childs of the current element under the cursor. This list of
+child elements can be marked using Control + left-Click, and every child
+can be centered, inspected or removed individually with a right click
+over an element.</p>
+<p><img alt="" src="images/GNEDeleteFrame1.png" />General view of the delete frame</p>
+<p>Additionally, the delete frame has a list of options to avoid
+undesirable deletes:</p>
+<ul>
+<li>Force deletion of additionals: Used to avoid undesirable deletion of
+  additionals.</li>
+</ul>
+<p><img alt="" src="images/GNEDeleteFrame5.png" />If the user tries to remove an element with
+additional childs and 'Force deletion of additionals' is disabled,
+netedit shows a warning dialog and the element isn't deleted.</p>
+<ul>
+<li>Delete only geometry points: Used to remove only geometry points</li>
+</ul>
+<p><img alt="" src="images/GNEDeleteFrame6.png" />Only Geometry points can be deleted</p>
+<h3 id="select">Select<a class="headerlink" href="#select" title="Permanent link">#</a></h3>
+<p>Select network objects according to various criteria. Selected objects
+can be moved or deleted together. It is also possible to set attributes
+for all selected junctions (or all edges) at the same time using
+<strong>inspect mode</strong>.</p>
+<p><img alt="" src="images/ModeSelect1.png" />The left frame shows information about the current
+selected elements. </p>
+<p><img alt="" src="images/ModeSelect2.png" />Selected elements are painted
+with a different color.</p>
+<h4 id="methods_for_selecting">Methods for selecting<a class="headerlink" href="#methods_for_selecting" title="Permanent link">#</a></h4>
+<ul>
+<li>the selection status of objects is toggled by left-clicking. When
+  the <em>select edges</em> check-box is unset, lanes, rather than edges will
+  be selected/deselected.</li>
+<li>by rectangle-selection via shift+leftClick+drag (When the checkbox
+  <em>auto-select junctions</em> is enabled, junctions of selected edges will
+  be selected automatically)</li>
+<li>by matching object attributes <a href="#match_attribute">(see
+  below)</a></li>
+<li>by loading a saved selection</li>
+<li>by inverting an existing selection</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Junctions and lanes can also be selected by &lt;ctrl>+&lt;left click> regardless of editing mode</p>
+</div>
+<h4 id="modification_mode">Modification Mode<a class="headerlink" href="#modification_mode" title="Permanent link">#</a></h4>
+<p>The <em>Modification Mode</em> changes how a new group selection is applied to
+the existing selection. A new group selection can be:</p>
+<ul>
+<li>a loaded selection</li>
+<li>a rectangle selection</li>
+<li>a <a href="#match_attribute">match-attribute</a>-selection</li>
+</ul>
+<p>The modification modes have the following functions</p>
+<ul>
+<li><strong>add</strong>: both selections are added together (in set theory this
+  would be called <em>union</em>)</li>
+<li><strong>remove</strong>: all elements from the new selection are removed from the
+  old selection. (in set-theory <em>subtraction</em>)</li>
+<li><strong>keep</strong>: only elements common to both selections are kept. (in set
+  theory <em>intersection</em>)</li>
+<li><strong>replace</strong>: the existing selection is replaced by the new selection</li>
+</ul>
+<h4 id="match_attribute">Match Attribute<a class="headerlink" href="#match_attribute" title="Permanent link">#</a></h4>
+<p>The 'Match Attribute' controls allow to specify a set of objects by
+matching their attributes agains a given expression. When combining this
+set with the current selection, the <em>Modificatiton Mode</em> is also
+applied.</p>
+<ol>
+<li>Select an object type from the first input box</li>
+<li>Select an attribute from the second input box</li>
+<li>Enter a 'match expression' in the third input box and press &lt;return></li>
+</ol>
+<h5 id="matching_rules">Matching rules<a class="headerlink" href="#matching_rules" title="Permanent link">#</a></h5>
+<ul>
+<li>The empty expression matches all objects</li>
+<li>For numerical attributes the match expression must consist of a
+comparison operator ('&lt;', '>', '=') and a number.<ul>
+<li>the attribute matches if the comparison between its attribute
+  and the given number by the given operator evaluates to 'true'</li>
+</ul>
+</li>
+<li>For string attributes the match expression must consist of a
+comparison operator ('', '=', '!', '^') and a string.<ul>
+<li><em>(no operator) matches if string is a substring of that
+  object's attribute.</em></li>
+<li>'=' matches if string is an exact match.</li>
+<li>'!' matches if string is not a substring.</li>
+<li>'^' matches if string is not an exact match.</li>
+</ul>
+</li>
+</ul>
+<h4 id="special_cases">Special Cases<a class="headerlink" href="#special_cases" title="Permanent link">#</a></h4>
+<ul>
+<li>For attributes <em>allow</em> and <em>disallow</em>, the attribute value <strong>all</strong>
+  is shown in <a href="#inspect">#Inspect</a>-mode when all classes
+  are allowed (or disallowed). In this case an edge (or lane) will
+  also be selected when using any vClass as match string (and edge
+  with attribute <code>disallow="all"</code> will also match when filtering for disallow with
+  string <strong>passenger</strong>). However, for technical reasons the match
+  string <strong>=all</strong> will not match this edge (<strong>all</strong> is expanded to
+  <strong>all private emergency passenger bus ... custom1 custom2</strong>).</li>
+</ul>
+<h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h4>
+<p><img alt="" src="images/ModeSelect3.png" />We want to select the most external lane of every
+edge (i.e. lanes which contains _0 in their id)</p>
+<p><img alt="" src="images/ModeSelect4.png" />We can do it selecting lane as type of element,
+and using the match over the attribute "id".</p>
+<p><img alt="" src="images/ModeSelect3.png" />We want now to select the second lane of every
+edge (i.e. lanes which contains _1 in their id)</p>
+<p><img alt="" src="images/ModeSelect5.png" />Only two lanes are selected because the rest of
+edges only have one lane.</p>
+<p><img alt="" src="images/ModeSelect5.png" />We can select all lanes of our net using the
+previous selection and the operator "add". </p>
+<p><img alt="" src="images/ModeSelect6.png" />All
+lanes of the net are selected using selection of lanes which contains
+_0 in their id with the "add" operator</p>
+<p><img alt="" src="images/ModeSelect6.png" />With the previous element and the operator invert,
+we can select all junctions of the network. </p>
+<p><img alt="" src="images/ModeSelect7.png" />Invert
+operation select all elements of the net and subtract the current
+selected elements</p>
+<p><img alt="" src="images/ModeSelect3.png" />If we have a empty selection, we can select easy
+all elements of net . </p>
+<p><img alt="" src="images/ModeSelect8.png" />With the invert button, we
+select all elements of net.</p>
+<h3 id="move">Move<a class="headerlink" href="#move" title="Permanent link">#</a></h3>
+<p>Move junctions by dragging with the left mouse button. Dragging edges
+creates or moves geometry points. Dragging a junction on top of another
+junction joins them into a single junction.</p>
+<p>By default, the junction shape is updated while moving. However the
+final shape after saving or activating full recomputation (F5) may be
+slightly different.</p>
+<p><img alt="" src="images/CreateEdge7.png" />By setting the option "show junctions as bubbles",
+circles are drawn instead of detailed junction shapes which can improve
+visibility.</p>
+<h4 id="changing_elevation">Changing Elevation<a class="headerlink" href="#changing_elevation" title="Permanent link">#</a></h4>
+<p>When checking the 'Elevation' checkbox, elevation of junctions and existing geometry points can be modified by dragging the with the mouse (with their x,y coordinates remaining unchanged). 
+At the same time, the numerical elevation value will be displayed for every junction and geometry point. 
+It is useful to combine this with <a href="Networks/Elevation.html#visualizing_elevation_data">elevation or sloope coloring</a>.</p>
+<h4 id="moving_object_selections">Moving Object Selections<a class="headerlink" href="#moving_object_selections" title="Permanent link">#</a></h4>
+<ul>
+<li>When selecting neighboring edges and dragging one of them, the
+neighboring edge will receive the same shape modifications</li>
+<li>When selecting an edge and its junctions and dragging any part of
+the selection, all parts including edge geometry will be moved in
+parallel</li>
+<li>When selecting an edge an one if its junctions:<ul>
+<li>When dragging the junction, only the junction will move</li>
+<li>When dragging the edge, the edge will move locally and the
+  junction will move in parallel</li>
+</ul>
+</li>
+</ul>
+<h4 id="moving_polygons_and_tazs">Moving Polygons and TAZs<a class="headerlink" href="#moving_polygons_and_tazs" title="Permanent link">#</a></h4>
+<ul>
+<li>When clicking over an Polygon/TAZ edge or vertex, contour will be moved</li>
+<li>If Polygon/TAZ is inspected an option "block shape" is enabled, then entire shape will be moved</li>
+</ul>
+<h2 id="network_specific_modes">Network specific modes<a class="headerlink" href="#network_specific_modes" title="Permanent link">#</a></h2>
+<h3 id="create_edges">Create Edges<a class="headerlink" href="#create_edges" title="Permanent link">#</a></h3>
+<p>This mode creates edges (lanes) and implicitly junctions. The edge
+attributes will be taken from the current
+<a href="#edge_template">#Edge_template</a>. If no template is set,
+default options such as <strong>default.lanenumber</strong> will be used.</p>
+<p><img alt="" src="images/CreateEdge1.png" />In "Create Edge" mode, click over a empty area of
+the view to create the junction </p>
+<p><img alt="" src="images/CreateEdge2.png" />Then click in
+another empty area to create another junction. An edge with one lane
+between both junctions will be created.</p>
+<p><img alt="" src="images/CreateEdge3.png" />To connect two already created edges, click over
+the first junction. </p>
+<p><img alt="" src="images/CreateEdge4.png" />Click over the second junction
+to create an edge between both.</p>
+<h4 id="creating_a_chain_of_edges">Creating a chain of edges<a class="headerlink" href="#creating_a_chain_of_edges" title="Permanent link">#</a></h4>
+<p><img alt="" src="images/CreateEdge5.png" />A list of connected junctions can be quickly
+created by enabling the option <em>chain</em>.</p>
+<h4 id="creating_two-way_roads">Creating two-way roads<a class="headerlink" href="#creating_two-way_roads" title="Permanent link">#</a></h4>
+<p><img alt="" src="images/CreateEdge6.png" />When setting the option <em>two-way</em>, the reverse
+direction for an edge will be created automatically (otherwise further
+clicks are needed to create the reverse direction manually).</p>
+<h3 id="edit_connections">Edit connections<a class="headerlink" href="#edit_connections" title="Permanent link">#</a></h3>
+<p>Connections establish the possible directions that can be taken by a
+vehicle when it arrives at a junction.</p>
+<p><img alt="" src="images/GNEConnections1.png" />Connections in a Junction with six edges and
+eighteen lanes</p>
+<p>Connection shapes depend of the Junction shapes. If a Junction shape is
+too small, the Junction takes a bubble as shape and the connections take
+a line as shape</p>
+<p><img alt="" src="images/GNEConnections2.png" />Connections in a Junction with a bubble as
+shape. </p>
+<p><img alt="" src="images/GNEConnections3.png" />Connections in a Junction without a
+bubble as shape.</p>
+<h4 id="inspecting_connections">Inspecting connections<a class="headerlink" href="#inspecting_connections" title="Permanent link">#</a></h4>
+<p>As the rest of elements of netedit, connections can be inspected and
+modified using inspected mode. Note that the option <em>show connections</em>
+must be enabled. All parameters can be modified excepting <em>From</em>, <em>To</em>,
+<em>fromLane</em> and <em>toLane</em>.</p>
+<p>The connection coloring is done as <a href="sumo-gui.html#right_of_way">in
+sumo-gui</a> with the exception of
+traffic-light connections which are brown in inspect-mode.</p>
+<p><img alt="" src="images/GNEConnections4.png" />Inspecting a connection. Note that check box
+"Show connections" is enabled. </p>
+<p><img alt="" src="images/GNEConnections4b.png" />Connections
+can be inspected through inspection of their <strong>from</strong> lane or it's
+corresponding edge.</p>
+<h4 id="changing_connections">Changing connections<a class="headerlink" href="#changing_connections" title="Permanent link">#</a></h4>
+<p>When a new junction is created, or their edges are modified, a set of
+new connections is automatically created. But netedit allows also to
+customize the connections of a lane using the connection mode. When a
+source lane is selected in connection mode all outgoing lanes at the
+junction are colored according the the categories below:</p>
+<table>
+<thead>
+<tr>
+<th>Legend</th>
+<th>Meaning</th>
+<th>Result of left-click</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style="background:#00FFFF">Source</span></td>
+<td>The source lane for editing connections</td>
+<td>Nothing</td>
+</tr>
+<tr>
+<td><span style="background:#00FF00">Target</span></td>
+<td>The lane is already connected from the source lane.</td>
+<td>Remove connection</td>
+</tr>
+<tr>
+<td><span style="background:#008800">Possible Target</span></td>
+<td>The lane is not yet connected.</td>
+<td>Add connection (with shift-click, set <code>pass="true"</code>)</td>
+</tr>
+<tr>
+<td><span style="background:#FF00FF">Target (pass)</span></td>
+<td>The lane already connected and this connection is forcibly set to have priority (attribute <code>pass="true"</code>)</td>
+<td>Remove connection</td>
+</tr>
+<tr>
+<td><span style="background:#FFFF00">Conflict</span></td>
+<td>The lane is not yet connected. Adding a connection would be unusual for some reason (see below)</td>
+<td>Print reason for conflict in status bar. (with ctrl-click add connection, with ctr+shift+click create connection with <code>pass="true"</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>To deselect the source edge or cancel the declared connections press
+<strong>&lt;ESC></strong> or click the <em>Cancel</em>-Button. To confirm the change press
+<strong>&lt;ENTER></strong> or click the <em>OK</em>-Button.</p>
+<h6 id="conflict_reasons">Conflict reasons<a class="headerlink" href="#conflict_reasons" title="Permanent link">#</a></h6>
+<ul>
+<li><a href="Networks/PlainXML.html#multiple_connections_from_the_same_edge_to_the_same_target_lane">double
+  connection</a>.
+  Usually each lane only has one predecessor from the same edge. A
+  counter-example would be a <a href="Networks/PlainXML.html#node_types">zipper
+  node</a>.
+  May also be useful to model bus bays.</li>
+<li>Incompatible permissions: The source and target lanes have no
+  <a href="Simulation/VehiclePermissions.html">allowed vehicle class</a> in
+  common</li>
+<li>Connection from sidewalk: Lane-to-lane connections for pedestrians
+  are usually not defined by the user. Instead, the connectivity is
+  modeled with <a href="Simulation/Pedestrians.html#generating_a_network_with_crossings_and_walkingareas">pedestrian
+  crossings</a>.</li>
+</ul>
+<p><img alt="" src="images/GNEConnections5.png" />Colors of the possible objective lanes change.
+In this example, the objective lanes are divided into <strong>Target
+Connected</strong>, <strong>Possible Target</strong> and <strong>Target Conflicted</strong>.</p>
+<p><img alt="" src="images/GNEConnections6.png" />Creating two more connections.</p>
+<p><img alt="" src="images/GNEConnections7.png" />Removing all connections.</p>
+<h3 id="prohibitions">Prohibitions<a class="headerlink" href="#prohibitions" title="Permanent link">#</a></h3>
+<p>This mode shows right of way-rules for any selected connection using a
+color code. To select another connection, cancel the current one with
+&lt;ESC>.</p>
+<h3 id="traffic_lights">Traffic Lights<a class="headerlink" href="#traffic_lights" title="Permanent link">#</a></h3>
+<p>Set junctions to be controlled or uncontrolled by a traffic light. Edit
+all aspects of static or actuated signal plans. Visualizes a signal
+phase by coloring the controlled lane-to-lane connections according to
+the signal state. </p>
+<p>When entering this mode, each traffic light controlled junction is indicated with a traffic light icon.
+- Click on an uncontrolled junction to add a traffic light
+- Click on a controlled junction to make it uncontrolled, add a program (copy) or change a program.</p>
+<p>Editing signal states can be accomplished in either of
+the following ways:</p>
+<ul>
+<li>right-clicking on any controlled lane and picking a new state
+  (color).</li>
+<li>right-clicking on any of the incoming lanes to change all controlled
+  connections from that edge</li>
+<li>If the lane is currently selected, all connections from selected
+  lanes incoming to the traffic light will be changed as well</li>
+<li>If the edge is currently selected, all connections from selected
+  edges incoming to the traffic light will be changed as well</li>
+<li>If the check-box <em>apply change to all phases</em> is activated, all
+  phases of the current plan will be affected</li>
+</ul>
+<p>You can also change the state by editing the phase table directly.</p>
+<h4 id="joined_traffic_lights">Joined Traffic Lights<a class="headerlink" href="#joined_traffic_lights" title="Permanent link">#</a></h4>
+<p>To edit the program of a joined traffic light, any of its junctions can be clicked in traffic light mode.
+This will cause connections from all controlled junctions to be highlighted.</p>
+<p>To create a joined traffic light you need to use inspect mode:</p>
+<ul>
+<li>make all junctions controlled by a traffic light</li>
+<li>set their 'tl' attribute (traffic light id) to the same value</li>
+</ul>
+<p><img alt="" src="images/GNETLS.png" />General view of the TLS frame</p>
+<h3 id="additionals">Additionals<a class="headerlink" href="#additionals" title="Permanent link">#</a></h3>
+<p>Add additional elements to the net. Additionals can be placed over a
+lane or in an empty place of the map. See
+<a href="#additional_elements">#Additional_elements</a> for more
+information. They are saved to a separate file (<a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a>) and are loaded
+separately when running the simulation</p>
+<h3 id="crossings">Crossings<a class="headerlink" href="#crossings" title="Permanent link">#</a></h3>
+<p>Add <a href="Networks/PlainXML.html#pedestrian_crossings">pedestrian
+crossings</a>
+for use with <a href="Simulation/Pedestrians.html">pedestrian simulation</a>.
+Crossings are define relative a junction and edges at this junction.
+Their width can be customized and they can either be configured as
+priotized (zebra stripes) or unprioritzed (vehicles have right of way).</p>
+<p>Crossings are added using the following steps:</p>
+<ol>
+<li>activate crossing mode (R)</li>
+<li>select a junction</li>
+<li>select edges that shall be crossed</li>
+<li>click <em>Create Crossing</em></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For crossings to be visible in <strong>netedit</strong>, the <em>Compute Junctions (F5)</em> functionality must be triggered at once.</p>
+</div>
+<p><img alt="" src="images/GNECrossingFrame1.png" />In crossing mode, first a junction must be
+selected. </p>
+<p><img alt="" src="images/GNECrossingFrame2.png" />Click over junction's edges to
+select the edges of crossing.</p>
+<p><img alt="" src="images/GNECrossingFrame3.png" />After click over "Create crossing" and
+recomputing (F5) the new crossing is visible.</p>
+<p><img alt="" src="images/GNECrossingFrame4.png" />Crossing can be inspected as other elements.</p>
+<p>Internally, crossing works as edges, and therefore they appear in the
+<em>net.xml</em> as edges with different functions (crossing or walkingarea)</p>
+<pre><code>... previous element of net.xml ...
+    &lt;edge id=&quot;:0_c0&quot; function=&quot;'''crossing'''&quot; crossingEdges=&quot;3 7&quot;&gt;
+        &lt;lane id=&quot;:0_c0_0&quot; index=&quot;0&quot; allow=&quot;pedestrian&quot; speed=&quot;1.00&quot; length=&quot;13.10&quot; width=&quot;3.00&quot;
+        shape=&quot;43.45,56.55 43.45,43.45&quot;/&gt;
+    &lt;/edge&gt;
+... ...
+    &lt;edge id=&quot;:0_w1&quot; function=&quot;walkingarea&quot;&gt;
+        &lt;lane id=&quot;:0_w1_0&quot; index=&quot;0&quot; allow=&quot;pedestrian&quot; speed=&quot;1.00&quot; length=&quot;13.10&quot; width=&quot;3.00&quot;
+        shape=&quot;44.95,43.45 41.95,43.45 41.95,56.55 44.95,56.55&quot;/&gt;
+    &lt;/edge&gt;
+... further elements of net.xml...
+</code></pre>
+
+<h3 id="taz_traffic_analysis_zones">TAZ (Traffic Analysis Zones)<a class="headerlink" href="#taz_traffic_analysis_zones" title="Permanent link">#</a></h3>
+<p>This mode allows creating and editing
+<a href="Demand/Importing_O/D_Matrices.html#describing_the_taz">TAZ</a>.
+(Shortcut Z). TAZs are composed of a closed polygon and a list of edges
+associated with certain weights for the inputs (Sources) and outputs
+(Sinks) (Similar to a <a href="https://en.wikipedia.org/wiki/Flow_network">Flow
+Network</a>).</p>
+<p>The creation of TAZs require two steps:</p>
+<p>1) <strong>Creation of the polygon (similar to a polygon shape):</strong> Press
+<em>Start drawing</em> button (or alternatively press ENTER key) and click over
+the view with the mouse left button to add vertices. Press Shift + mouse
+left button to remove the last created vertex. To finish creating
+polygon, press <em>Stop drawing</em> button (or alternatively press ENTER key
+again). To abort the creation of the polygon press <em>Abort drawing</em>
+button (or alternatively press ESC key)</p>
+<p><img alt="" src="images/TAZMode1.png" />Basic view of TAZ creation controls</p>
+<p><img alt="" src="images/TAZMode2.png" />Creating a TAZ</p>
+<p>2) <strong>Definition of Edges and its inputs (sources) and outputs
+(sinks)</strong>: A single click over a TAZ open the editing fields for
+TAZEdges in side menu. If the checkbox <em>Membership</em> is enabled (Toogle)
+box, a click over an edge will add it to the list of edges vinculated to
+the TAZ, (Or will be removed from the list if it was previously
+selected). Edge will will be added to the list with the input/output
+values given in the <em>New source</em>/<em>New sink</em> text fields. (note: A TAZ
+Edge always has a Source and a Sink).</p>
+<p><img alt="" src="images/TAZMode3.png" />Controls after clicking over a TAZ
+<img alt="" src="images/TAZMode4.png" />Creating two TAZEdges</p>
+<p><strong>Selecting and editing TAZ Edges:</strong> If checkbox <em>membership</em> is changed
+to "keep", then TAZ Edges can be selected individually and their values
+changed. A multiple selection using a rectangle is possible with shift +
+right. Statistics of selected TAZEdges can be observed in "Selection
+Statistics"</p>
+<p><img alt="" src="images/TAZMode5.png" />TAZ Edge selected (Pink) </p>
+<p><img alt="" src="images/TAZMode6.png" />Selecting using rectangle</p>
+<p><strong>Saving and discarding changes:</strong> All changes in TAZEdges has to be
+saved using button "Save Changes", or in the same way can be also
+discarded using "cancel changes" button.</p>
+<h3 id="shapes">Shapes<a class="headerlink" href="#shapes" title="Permanent link">#</a></h3>
+<p>This mode allows the creation of
+<a href="Simulation/Shapes.html#polygon_definitions">Polygons</a> and <a href="Simulation/Shapes.html#poi_point_of_interest_definitions">POIs
+(Points of
+Interest)</a>
+through Polygon mode (hotkey ‘P’). These objects are used for
+visualization and can also be accessed via TraCI. In the polygon frame
+you can select the type of shape to edit (Polygons or Point Of
+Interest), and the corresponding parameters for each one.</p>
+<p><img alt="" src="images/ModePolygon1GeneralView.png" />General view of the shape frame.
+<img alt="" src="images/ModePolygon2SelectingColor.png" />Color can be edited clicking over
+button "color".</p>
+<p>One polygon is composed of mainly an exterior line called “shape”. In
+order to create a shape, you have to click on the button “start drawing”
+(or enter key), and click on the View above each of the points that will
+form the shape. To end the edition, you have to click on “stop drawing”.
+A right click on View will remove the last point created and the button
+“abort drawing” (or ESC key) will cancel the process of the creation
+of the shape. If you want to create a closed shape, you have to activate
+the option “closed shape” before starting to draw. The shape of the
+polygon can be opened or closed with the contextual menu or through the
+Inspector mode.</p>
+<p><img alt="" src="images/ModePolygon3CreatingPolygon.png" />Creation of polygon.
+<img alt="" src="images/ModePolygon4ClosingShape.png" />Polygon with shape closed.</p>
+<p>The points of a shape can be edited in the Move mode by clicking on the
+outline to create a new point or above an already existing one in order
+to modify its position. If a point moves to the same position of an
+adjacent point, they fuse together, and if the final point moves to the
+position of the initial point, the polygon gets closed. If the polygon
+has the option “block shape” activated, it won’t be editable, but only
+moved as a set.</p>
+<p><img alt="" src="images/ModePolygon5MovingVertex.png" />Moving Polygon's shape point.
+<img alt="" src="images/ModePolygon6BlockedShape.png" />Polygons with shape blocked.</p>
+<p>Besides, the contextual menu offers several options, like the
+aforementioned open or close shape, simplify the shape, erase a vertex
+of the shape and establish a vertex of the shape as the initial one.</p>
+<p><img alt="" src="images/ModePolygon7SimplifingShape.png" />Contextual menu of polygon. Left
+click over verte show more options.</p>
+<p>The Points Of Interest (POIs) are the locations in the map used to mark
+several elements relevant to the simulation, which don’t interact with
+the rest of elements (monuments, special buildings, etc.). As default,
+they are represented as a colored point, but can also be depicted using
+an image.</p>
+<p><img alt="" src="images/ModePolygon8POIs.png" />Example of POIs with and without imgFile</p>
+<h2 id="demand_specific_modes">Demand specific modes<a class="headerlink" href="#demand_specific_modes" title="Permanent link">#</a></h2>
+<h3 id="route_mode">Route mode<a class="headerlink" href="#route_mode" title="Permanent link">#</a></h3>
+<p>New route over the current infrastructure can be created using this
+mode. Routes are created clicking over consecutive edges (marked with
+different colors) and pressing "create route" button or Enter key. Route
+creation can be aborted using "abort creation" button or pressing ESC
+key. Note that Routes can be created between edges that aren't connected
+thought a connection.</p>
+<p><img alt="" src="images/neteditRouteMode1.png" />General view of Route Mode
+<img alt="" src="images/neteditRouteMode2.png" />Creating a new route. Current selected edges
+and candidate edges are marked with different colors</p>
+<p><img alt="" src="images/neteditRouteMode3.png" />Created route.
+<img alt="" src="images/neteditRouteMode4.png" />Inspecting route.</p>
+<h3 id="vehicle_mode">Vehicle mode<a class="headerlink" href="#vehicle_mode" title="Permanent link">#</a></h3>
+<p>Vehicles, flows and trips can be created using this mode. The term
+"vehicle" includes three different elements: Vehicles, flows (both
+placed over a Route) and Trips (placed over a "from" edge). Also every
+vehicle need to be a "Vehicle Type", therefore both parameters has to be
+selected in both list of left frame.</p>
+<p><img alt="" src="images/neteditVehicleMode1.png" />General view of vehicle mode, highlighting
+the list of vehicles and vehicle types
+<img alt="" src="images/neteditVehicleMode2.png" />Creating a single vehicle clicking over
+route</p>
+<p><img alt="" src="images/neteditVehicleMode3.png" />Creating a flow. It's similar to a
+vehicle, but with extra parameters, and note that certain are disjoint
+parameters. 
+<img alt="" src="images/neteditVehicleMode4.png" />Creating a trip. In this case
+we need to specify a "from" and "to" edge, therefore we need to click
+over two edges. After clicking over edges, press "finish route creation"
+or Enter Key to create a trip. If more than two edges are clicked, it
+will be interpreted as "via" edges</p>
+<p><img alt="" src="images/neteditVehicleMode5.png" />Inspecting a flow. Note the disjoint
+parameters 
+<img alt="" src="images/neteditVehicleMode6.png" />Inspecting a trip. In this case
+the route is highlighted. Note that a change in the infrastructure can
+be change the route trip.</p>
+<h3 id="vehicle_type_mode">Vehicle Type mode<a class="headerlink" href="#vehicle_type_mode" title="Permanent link">#</a></h3>
+<p>Vehicle types can be created and edited using Vehicle Type mode. A
+vehicle Type isn't a visual element that can be observed in the view,
+but is an "abstract" element that have a big influence in other elements
+(for example, vehicles). Every simulation has always two default
+vehicle types for Vehicles and Bikes. This default vehicle
+type can be edited but not deleted, and only is written in XML if one of
+their default value is modified. Due a Vehicle Type has a big number of
+parameters, only the most relevant parameters can be edited in left
+frame. To edit advanced parameters, use the Vehicle Type Dialog opened
+thought "Open attribute editor" button.</p>
+<p><img alt="" src="images/neteditVehicleTypeMode1.png" />General view of Vehicle type Mode
+<img alt="" src="images/neteditVehicleTypeMode2.png" />Creating a new vehicle type. Note that
+non-default vehicle types can be deleted using "Delete Vehicle Type"</p>
+<p><img alt="" src="images/neteditVehicleTypeMode3.png" />Editing values of a default vehicle
+type (Length and Color). Note that this changes has influence in the
+existing vehicles 
+<img alt="" src="images/neteditVehicleTypeMode4.png" />Opening Vehicle Type
+attribute editor. Default values are shown in gray color</p>
+<p><img alt="" src="images/neteditVehicleTypeMode5.png" />Editing values of a vehicle type using
+attribute editor.</p>
+<h3 id="stops_mode">Stops mode<a class="headerlink" href="#stops_mode" title="Permanent link">#</a></h3>
+<p>Stops used by all type of vehicles (Vehicles, Flows and Trips) can be
+created using StopFrame. Stops is an special type of demand elements,
+because it always depend of either a route or a vehicle (i.e. It can be
+writted in XML within the definition of either a route or a vehicle).
+Before creating a new Stop, their demand element parent has to be
+selected and the stop type (placed over a Lane or over a stopping
+Place). To create it, simply click over a lane or over a stopping place.</p>
+<p><img alt="" src="images/neteditStopMode1.png" />General view of Stop Mode. Route and stop
+type can be selected in frame. </p>
+<p><img alt="" src="images/neteditStopMode2.png" />Created stop
+within the blue route placed over a lane.</p>
+<p><img alt="" src="images/neteditStopMode3.png" />Created stop within the blue route placed
+over a busStop. If geometry of BusStop is changed, geometry of Stop will
+be also changed. 
+<img alt="" src="images/neteditStopMode4.png" />Inspecting a Stop placed
+over a lane.</p>
+<p><img alt="" src="images/neteditStopMode5.png" />Inspecting a Stop placed over a busStop.</p>
+<h3 id="person_type_mode">Person Type mode<a class="headerlink" href="#person_type_mode" title="Permanent link">#</a></h3>
+<p>Vehicle types can be created and edited using Person Type mode. A person Type isn't a visual element that can be observed in the view, but is an "abstract". Every simulation has always a basic default pedestrian type. This default pedestrian type can be edited but not deleted, and only is written in XML if one of their default value is modified.</p>
+<p><img alt="" src="images/ChangePersonPlans.png" />Person Type frame</p>
+<h3 id="person_mode">Person mode<a class="headerlink" href="#person_mode" title="Permanent link">#</a></h3>
+<p>Persons and personFlows are elements that always requires an auxiliary element called "person plan" to exist. There are four basic types (Trips, Rides, Walks and Stops), and within each several subtypes (Using edges, lanes, routes ...). Therefore, to create a person,their first "Person plan" has to be created at the same time. The person plan frame has two parts: One dedicated to the creation of the person, and another to the creation of the first person plan.</p>
+<p><img alt="" src="images/PersonFrame1.png" />Person Plan frame.</p>
+<p><img alt="" src="images/PersonFrame2.png" />Creating person trip clicking over edges</p>
+<p><img alt="" src="images/PersonFrame3.png" />Created persons.</p>
+<p><img alt="" src="images/PersonFrame4.png" />Clicking over a person highlights their person plan</p>
+<p><img alt="" src="images/PersonFrame5.png" />Person plans have different subtypes (in this case, a walk that ends in a busStop)</p>
+<p><img alt="" src="images/PersonFrame6.png" />Creating a walk that ends in a busStop</p>
+<p><img alt="" src="images/PersonFrame7.png" />Created walk</p>
+<p>Person plans can be sorted clicking over person plan in hierarchy. </p>
+<p><img alt="" src="images/ChangePersonPlans.png" />Sorting person plans.</p>
+<h3 id="person_plan_mode">Person plan mode<a class="headerlink" href="#person_plan_mode" title="Permanent link">#</a></h3>
+<p>Person plans can be extended using the PersonPlan frame. Once the Person plan frame is opened, a person or a personFlow has to be chosen. Then the last edge of the plan will be marked, and the new created person plans will start from there.</p>
+<p><img alt="" src="images/PersonPlanCreator1.png" />Person_0 has only a trip, and the last edge of person's trip is marked (green)</p>
+<p><img alt="" src="images/PersonPlanCreator2.png" />Multiple person plans can be added continuously</p>
+<h2 id="data_specific_modes">Data specific modes<a class="headerlink" href="#data_specific_modes" title="Permanent link">#</a></h2>
+<p>EdgeData are elements associated with one or several edges, used for multiple purposes (especially Demand). They have their own mode, selectable through the top button or by pressing F4.</p>
+<p><img alt="" src="images/DataMode1.png" />Data mode overview</p>
+<p>Edge datas are defined within a general set (DataSet), and within a certain time interval</p>
+<p><img alt="" src="images/DataMode2.png" />Defining a new data set</p>
+<p><img alt="" src="images/DataMode3.png" />Defining a data interval</p>
+<p><img alt="" src="images/DataMode4.png" />Defining parameters </p>
+<h3 id="edge_data_mode">Edge data mode<a class="headerlink" href="#edge_data_mode" title="Permanent link">#</a></h3>
+<p>EdgeData are created over a single edge.</p>
+<p><img alt="" src="images/DataMode5.png" />Click over an edge to create a edgeData</p>
+<p><img alt="" src="images/DataMode6.png" />Inspecting an edge data</p>
+<h3 id="edge_rel_data_mode">Edge rel data mode<a class="headerlink" href="#edge_rel_data_mode" title="Permanent link">#</a></h3>
+<p>EdgeRelDatas are created over two edges</p>
+<p><img alt="" src="images/DataMode7.png" />Click over first edge</p>
+<p><img alt="" src="images/DataMode8.png" />Click over second edge to create path</p>
+<p><img alt="" src="images/DataMode9.png" />Press enter to create edge rel data</p>
+<h1 id="netedit_elements">netedit elements<a class="headerlink" href="#netedit_elements" title="Permanent link">#</a></h1>
+<p>This elements comprise the road network and can be created and modified
+with <strong>netedit</strong>.</p>
+<h2 id="network_elements">Network Elements<a class="headerlink" href="#network_elements" title="Permanent link">#</a></h2>
+<h3 id="junctions">Junctions<a class="headerlink" href="#junctions" title="Permanent link">#</a></h3>
+<p><a href="Networks/PlainXML.html#node_descriptions">Junctions</a>,
+(also referred to as <em>Nodes</em>), represent intersections. A SUMO junction
+is equivalent to a Vertex in graph theory.</p>
+<p><img alt="" src="images/GNEJunction.png" />Example of different junctions</p>
+<h3 id="edges">Edges<a class="headerlink" href="#edges" title="Permanent link">#</a></h3>
+<p>In the SUMO-context,
+<a href="Networks/PlainXML.html#edge_descriptions">edges</a>
+represent roads or streets. Note that edges are unidirectional. It's
+equivalent to a edge in a graph theory.</p>
+<p><img alt="" src="images/GNEEdge.png" />Example of edge. Note that the box "select edge" is
+<strong>checked</strong></p>
+<h3 id="lanes">Lanes<a class="headerlink" href="#lanes" title="Permanent link">#</a></h3>
+<p>Each SUMO edge is composed of a set of
+<a href="Networks/PlainXML.html#lane-specific_definitions">lanes</a>
+(At least one).</p>
+<p><img alt="" src="images/GNELane.png" />Example of lane. Note that the box "select edge" is
+<strong>unchecked</strong></p>
+<h3 id="connections">Connections<a class="headerlink" href="#connections" title="Permanent link">#</a></h3>
+<p><a href="Networks/PlainXML.html#connection_descriptions">Connections</a>
+describe how incoming and outgoing edges of junctions are connected (for
+example to prohibit left-turns at some junctions).</p>
+<p><img alt="" src="images/GNEConnection.png" />Example of connection between a source lane and
+a target lane</p>
+<h3 id="traffic_lights_1">Traffic Lights<a class="headerlink" href="#traffic_lights_1" title="Permanent link">#</a></h3>
+<p>A <a href="Networks/PlainXML.html#traffic_light_program_definition">traffic light
+program</a>
+defines the phases of a traffic light.</p>
+<p><img alt="" src="images/GNETLS.png" />Example of Traffic light</p>
+<h2 id="additional_elements">Additional elements<a class="headerlink" href="#additional_elements" title="Permanent link">#</a></h2>
+<p><em>Additionals</em> are elements which do not belong to the network, but may
+be used to influence the simulation or generate specific outputs.
+Additionals are defined in an <a href="/docs/sumo.html#format_of_additional_files"><em>additional-file</em></a> and can be loaded in
+<strong>netedit</strong>. Additionals are created in the
+<em>Additionals</em> editing mode (shortcut key: a). Once this mode is
+selected, the first step is to choose what kind of additional should be
+created in the comboBox "additional element". Once selected and if
+required, the parameters of the additional can be changed. Finally, with
+a click over a Lane/junction/edge (If the additional should be set over
+an element of the network), or over an empty area (if the item is
+independent of the network) the additional will be created.</p>
+<p><img alt="" src="images/GNELoadAdditionals.png" />Menu for loading additionals
+<img alt="" src="images/GNEFrame.png" />Frame to insert additionals</p>
+<h3 id="move_and_references">Move and references<a class="headerlink" href="#move_and_references" title="Permanent link">#</a></h3>
+<p>Additionals can be moved, but the freedom of movement depends of their
+relation with the network. Additionals that must be located over a lane
+can only move along the lane, and additionals that are located on a map
+can be moved in any direction. The movement also depends if the item is
+locked or not (symbolized by a lock icon on the item). The movement can
+be blocked during the creation of the element. The corresponding
+parameter can be changed within the <em>inspector</em> mode. Certain
+additionals have a length contingent to the length of the lane. To
+create a bus stop by choosing a reference point, which marks the initial
+position of this additional element, three types of references for the
+length can be selected. E.g. for a bus stop with the length 20 in the
+point 50 of the lane it will be the following:</p>
+<ul>
+<li>Reference left will create a new bus stop with startPos = 30 and
+  endPos = 50.</li>
+<li>Reference right will create a new bus stop with startPos = 50 and
+  endPos = 70.</li>
+<li>Reference center will create a new bus stop with startPos = 40 and
+  endPos = 60.</li>
+</ul>
+<p><img alt="" src="images/GNEMove.png" />Movement of different additionals
+<img alt="" src="images/GNELock.png" />Additional locked and unlocked</p>
+<p>Some additional types cannot be moved, therefore show a different icon:</p>
+<p><img alt="" src="images/GNENotMove.png" />
+Example of additional that cannot be moved</p>
+<h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">#</a></h3>
+<p>There are two types of parameters for each additional:
+User-defined-parameters and <strong>netedit</strong>-parameters.
+The first mentioned parameters can be of type <em>int</em>, <em>float</em>, <em>bool</em>
+<em>string</em>, or <em>list</em> and each has a default value. In the case of type
+<em>list</em> the user can add or remove values using the <em>add</em> or <em>remove</em>
+<em>row</em> buttons. In the case of the characteristic parameters of
+<strong>netedit</strong>, this is the option to block the movement
+of an element, and in the case of the elements have a length, the user
+is allowed to change the length and reference.</p>
+<p><img alt="" src="images/GNEParameterlist.png" />Adding a list of bus stop lines
+<img alt="" src="images/GNEReferences.png" />Adding additional with different references</p>
+<h3 id="additional_sets">Additional sets<a class="headerlink" href="#additional_sets" title="Permanent link">#</a></h3>
+<p>Additional sets are additionals that comprise or contain another
+additionals (called childs) (For example, <em>detectorE3</em> contains a list
+of <em>detEntry</em> and <em>detExit</em>). Additional sets are inserted in the same
+way as an Additional, but the insertion of an additional child is
+different. Before the insertion of an additional child in the map, the
+ID of the <em>additionalSet</em> parent must be selected in the list of IDs
+placed on the left frame. In this list the IDs of the additional sets
+only appear when they can be parents of the additional child (Referring
+to the given example: if the user wants to insert a <em>detEntry</em>, than
+only IDs of <em>detectorE3</em> will appear in the list on the left frame).
+Additional sets and their childs are graphically connected by a yellow
+line.</p>
+<p><img alt="" src="images/GNEAdditionalSet.png" />Insertion of an additional Set</p>
+<h3 id="help_dialogs">Help dialogs<a class="headerlink" href="#help_dialogs" title="Permanent link">#</a></h3>
+<p>With the help buttons placed in the left frame, users can obtain
+information about additional and editor parameters (Full name, type and
+description).</p>
+<p><img alt="" src="images/GNEHelpParameters.png" />Help window for parameters
+<img alt="" src="images/GNEHelpReferences.png" />Help window for editor parameter</p>
+<h3 id="additional_types">Additional types<a class="headerlink" href="#additional_types" title="Permanent link">#</a></h3>
+<p>This section describes the different types of additional objects which
+are supported</p>
+<h4 id="stopping_places">Stopping Places<a class="headerlink" href="#stopping_places" title="Permanent link">#</a></h4>
+<p>Stopping places are sections of lanes, in which vehicles can stop during
+a certain time defined by the user.</p>
+<h5 id="bus_stop">Bus stop<a class="headerlink" href="#bus_stop" title="Permanent link">#</a></h5>
+<p><a href="Simulation/Public_Transport.html">Bus stops</a> are positions of a
+lane in which vehicles ("busses") stop for a pre-given time. Every Bus
+stop has an unique ID assigned automatically by
+<strong>netedit</strong>, a length and a list of bus lines defined
+by the user.</p>
+<p><img alt="" src="images/GNEBusStop.png" />Bus stop</p>
+<h5 id="container_stops">Container stops<a class="headerlink" href="#container_stops" title="Permanent link">#</a></h5>
+<p><a href="Specification/Logistics.html">Container stops</a> are similar to
+BusStops, but they are oriented towards <a href="Specification/Logistics.html">logistics
+simulation</a>.</p>
+<p><img alt="" src="images/GNEContainerStop.png" />Container stop</p>
+<h5 id="charging_station">Charging station<a class="headerlink" href="#charging_station" title="Permanent link">#</a></h5>
+<p><a href="Models/Electric.html#charging_stations">Charging stations</a> define
+a surface over a lane in which the vehicles equipped with a battery are
+charged. Charging stations own an unique-ID generated by
+<strong>netedit</strong>, a length, a charging power defined in W,
+a charging efficiency, a switch for enable or disable charge in transit,
+and a charge delay.</p>
+<p><img alt="" src="images/GNEChargingStation.png" />Charging station</p>
+<h5 id="parking_areas">Parking Areas<a class="headerlink" href="#parking_areas" title="Permanent link">#</a></h5>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Incomplete.</p>
+</div>
+<h5 id="parking_spaces">Parking Spaces<a class="headerlink" href="#parking_spaces" title="Permanent link">#</a></h5>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Incomplete.</p>
+</div>
+<h4 id="detectors">Detectors<a class="headerlink" href="#detectors" title="Permanent link">#</a></h4>
+<p>Detectors are additionals which save information about vehicles that
+passed over a certain position on the lane.</p>
+<h5 id="induction_loops_detectors_e1">Induction Loops Detectors (E1)<a class="headerlink" href="#induction_loops_detectors_e1" title="Permanent link">#</a></h5>
+<p>A <a href="Simulation/Output/Induction_Loops_Detectors_(E1).html">E1
+detector</a>
+owns a ID parameter generated by <strong>netedit</strong>, a
+position at a certain lane, a <em>freq</em> attribute which describes the
+period over which collected values shall be aggregated, a list of
+<em>VTypes</em> that will be detected, and a <em>file</em> attribute which tells the
+simulation to which file the detector shall write his results to.</p>
+<p><img alt="" src="images/GNEE1.png" />Detector E1</p>
+<h5 id="lane_area_detectors_e2">Lane Area Detectors (E2)<a class="headerlink" href="#lane_area_detectors_e2" title="Permanent link">#</a></h5>
+<p>Most of the <a href="Simulation/Output/Lanearea_Detectors_(E2).html">E2
+detectors</a>'
+attributes have the same meaning as for <a href="Simulation/Output/Induction_Loops_Detectors_(E1).html">E1 induction
+loops</a>,
+including automatic ID and position at a certain lane. As a real
+detector has a certain length, "length" must be supplied as a further
+parameter. It may be a negative number which let the detector be
+extended, upstream to the given start position. The optional parameter
+"cont" lets the detector continue over the current lane onto this lane's
+predecessors when the detector's length plus his position is larger than
+the place available on the lane.</p>
+<p><img alt="" src="images/GNEE2.png" />Detector E2</p>
+<h5 id="multi-entry_multi-exit_detectors_e3">Multi-Entry Multi-Exit Detectors (E3)<a class="headerlink" href="#multi-entry_multi-exit_detectors_e3" title="Permanent link">#</a></h5>
+<p>A <a href="Simulation/Output/Multi-Entry-Exit_Detectors_(E3).html">Detector
+E3</a>
+is an AdditionalSet with the same attributes as <a href="Simulation/Output/Induction_Loops_Detectors_(E1).html">Induction Loop Detector
+E1</a>. The
+difference is that detectors E3 have as childs the Entry/Exit detectors.</p>
+<p><img alt="" src="images/GNEE3.png" />Detector E3</p>
+<h5 id="detentrydetexit">DetEntry/DetExit<a class="headerlink" href="#detentrydetexit" title="Permanent link">#</a></h5>
+<p>Childs of an AdditionalSet <a href="Simulation/Output/Multi-Entry-Exit_Detectors_(E3).html">Multi-Entry Multi-Exit Detectors
+E3</a>.
+These additionals have only the attributes ID of a lane in which it is
+placed and positioned over a lane.</p>
+<p><img alt="" src="images/GNEEntry.png" />Detector entry </p>
+<p><img alt="" src="images/GNEExit.png" />Detector exit</p>
+<h5 id="instant_induction_loops_detectors_e1instant">Instant Induction Loops Detectors (E1Instant)<a class="headerlink" href="#instant_induction_loops_detectors_e1instant" title="Permanent link">#</a></h5>
+<p>A <a href="Simulation/Output/Induction_Loops_Detectors_(E1).html">E1
+detector</a>
+owns a ID parameter generated by <strong>netedit</strong>, a
+position at a certain lane, a <em>freq</em> attribute which describes the
+period over which collected values shall be aggregated, a list of
+<em>VTypes</em> that will be detected and a <em>file</em> attribute which tells the
+simulation to which file the detector shall write his results to.</p>
+<p><img alt="" src="images/GNEE1Instant.png" />Detector E1 Instant</p>
+<h4 id="route_probe">Route Probe<a class="headerlink" href="#route_probe" title="Permanent link">#</a></h4>
+<p><a href="Simulation/Output/RouteProbe.html">RouteProbe detectors</a> are
+meant to determine the route distribution for all vehicles that passed
+an edge in a given interval. Their real-world equivalent would be a
+police stop with questionnaire or a look into the database of navigation
+providers such as TomTom.</p>
+<p><img alt="" src="images/GNERouteProbe.png" />Route Probe</p>
+<h4 id="calibrator">Calibrator<a class="headerlink" href="#calibrator" title="Permanent link">#</a></h4>
+<p>A <a href="Simulation/Calibrator.html">calibrator</a> generates a flow of
+vehicles during a certain time, and allows dynamic adaption of traffic
+flows and speeds. A calibrator can be used to modify a simulation
+scenario based on induction loop measurements. It will remove vehicles
+in excess of the specified flow and will insert new vehicles if the
+normal traffic demand of the simulation does not reach the specified
+number of vehsPerHour. Furthermore, the defined edge speed will be
+adjusted to the specified speed similar of the operation of a variable
+speed sign. Calibrators will also remove vehicles if the traffic on
+their lane is jammed beyond the specified flow and speed. This ensures
+that invalid jams do not grow upstream past a calibrator. A double click
+over the calibrator icon opens the values editor.</p>
+<p><img alt="" src="images/GNECalibrator.png" />Calibrator </p>
+<p><img alt="" src="images/GNECalibratorDialog.png" />Editing
+calibrator's values</p>
+<h4 id="rerouter">Rerouter<a class="headerlink" href="#rerouter" title="Permanent link">#</a></h4>
+<p>A <a href="Simulation/Rerouter.html">rerouter</a> changes the route of a
+vehicle as soon as the vehicle moves onto a specified edge.</p>
+<p><img alt="" src="images/GNERerouter.png" />Rerouter is placed off the net.</p>
+<p>A double click over the rerouter icon opens the values editor.
+Rerouter's values are divided in intervals, and every interval contains
+a list of <a href="Simulation/Rerouter.html#closing_a_street">closing
+streets</a>, <a href="Simulation/Rerouter.html#closing_a_lane">closing
+lanes</a>, <a href="Simulation/Rerouter.html#assigning_a_new_destination">assignations of
+new
+destinations</a>
+and <a href="Simulation/Rerouter.html#assigning_a_new_route">assignations of new
+routes</a>:</p>
+<p><img alt="" src="images/GNERerouterDialog1.png" />Double click open rerouter dialog. One
+click over '+' button open a dialog for adding a new interval.
+<img alt="" src="images/GNERerouterDialog2.png" />In interval dialog can be specified the
+four types of actions, as well as the begin and end of interval.</p>
+<p><img alt="" src="images/GNERerouterDialog3.png" />If values of actions are invalid, a warning
+icon appears in every row. This can be applicable in begin and end of
+interval. <img alt="" src="images/GNERerouterDialog4.png" />A click over begin or end of
+interval opens the Rerouter interval dialog. In the same way, a click
+over "x" button removes the interval.</p>
+<h4 id="vaporizer">Vaporizer<a class="headerlink" href="#vaporizer" title="Permanent link">#</a></h4>
+<p><a href="Simulation/Vaporizer.html">vaporizers</a> remove all vehicles as
+soon as they move onto a specified edge.</p>
+<p><img alt="" src="images/GNEVaporizer.png" />Vaporizer placed over edge. Its placed always at
+the begins of edge.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Vaporizers are deprecated</p>
+</div>
+<h4 id="variable_speed_signs">Variable Speed Signs<a class="headerlink" href="#variable_speed_signs" title="Permanent link">#</a></h4>
+<p>A <a href="Simulation/Variable_Speed_Signs.html">Variable Speed Signal</a>
+modifies the speed of a set of lanes during a certain time defined by
+user. A double click over the Variable Speed Signal icon opens the
+values editor.</p>
+<p><img alt="" src="images/GNEVariableSpeedSignal.png" />Variable Speed Sign
+<img alt="" src="images/GNEVariableSpeedSignalDialog.png" />Variable Speed Signal Sign</p>
+<h2 id="route_elements">Route elements<a class="headerlink" href="#route_elements" title="Permanent link">#</a></h2>
+<div class="admonition missing">
+<p class="admonition-title">Missing</p>
+<p>Route elements aren't implemented yet</p>
+</div>
+<h1 id="popup-menu_functions">Popup-Menu Functions<a class="headerlink" href="#popup-menu_functions" title="Permanent link">#</a></h1>
+<div class="admonition missing">
+<p class="admonition-title">Missing</p>
+<p>Not all menu options have been documented yet</p>
+</div>
+<h2 id="edge_and_lane">Edge and Lane<a class="headerlink" href="#edge_and_lane" title="Permanent link">#</a></h2>
+<ul>
+<li><em>Split edge here</em>: Split an edge into two different edges
+  connected with a junction.</li>
+</ul>
+<p><img alt="" src="images/neteditSplit1.png" />Edge is splitted in the mouse cursor position
+<img alt="" src="images/neteditSplit2.png" />New edges are connected by a new junction</p>
+<ul>
+<li><em>Split edge in both directions here</em>: Is similar to <em>Split edge
+  here</em>, but generate splitted edges in both directions.</li>
+<li><em>Reverse edge</em>: Reverse the direction of an edge. If the ID of the
+  start and end junctions of edge are respectively A and B, after this
+  operation start and end junction will be B and A.</li>
+<li><em>Add reverse direction</em>: If don't exist, add a revere edge between
+  two junctions</li>
+</ul>
+<p><img alt="" src="images/neteditReversedirection1.png" />In this case, a direction from right
+to left will be created <img alt="" src="images/neteditReversedirection2.png" />New edge is
+parallel to their reverse edge</p>
+<ul>
+<li><em>Set geometry endpoint here</em>: Create an geometry end point. It's
+  useful to mark the start and the end of an road</li>
+</ul>
+<p><img alt="" src="images/neteditEndpoint1.png" />Geometry endpoint will be created in the
+mouse cursor position <img alt="" src="images/neteditEndpoint2.png" />There isn't an visual
+connection between end point and their end junction</p>
+<ul>
+<li><em>Restore geometry endpoint</em>: Restore a geometry endpoint to a normal
+  edge</li>
+<li><em>Straighten edge</em>: Allow to restore the visual shape of an edge</li>
+</ul>
+<p><img alt="" src="images/neteditStraighten1.png" />With the operation move visual shape of an
+edge can be modificed <img alt="" src="images/neteditStraighten2.png" />Straighten edge
+restore the original shape of an edge</p>
+<ul>
+<li><em>Duplicate lane</em>: duplicate a lane of an edge</li>
+</ul>
+<h3 id="restricted_lanes">Restricted lanes<a class="headerlink" href="#restricted_lanes" title="Permanent link">#</a></h3>
+<p>Restricted lanes for particulars vehicle class (VClass) can be easily
+added in inspect mode. Currently netedit supports sidewalks (where only
+vehicles with <em>VClass="pedestrian"</em> are allowed), bike lanes (where only
+vehicles with <em>VClass="bike"</em> are allowed), and bus lanes (where only
+vehicle with <em>VClass="bus"</em> are allowed). Note that only one type of
+restricted lane is allowed in every edge (For example, an edge can own
+two restricted lane, one for buses and another for bikes, but not two or
+more different restricted lanes for buses.</p>
+<p><img alt="" src="images/RestrictedLane1.png" />Example of edge with three restricted lanes</p>
+<p>There are two ways to add a restricted lane, either transforming a
+existent lane or adding a new restricted lane</p>
+<p><img alt="" src="images/RestrictedLane2.png" />Adding a sidewalk using "add restricted lane"
+<img alt="" src="images/RestrictedLane3.png" />Sidewalk added</p>
+<p><img alt="" src="images/RestrictedLane4.png" />Adding a sidewalk using "transform to special
+lane" <img alt="" src="images/RestrictedLane5.png" />Lane transformed to a sidewalk</p>
+<p>A restricted lane can be transformed in a normal lane with the option
+<em>revert transformation</em>, or can be removed with the option <em>Remove
+restricted lane</em></p>
+<h2 id="junction">Junction<a class="headerlink" href="#junction" title="Permanent link">#</a></h2>
+<ul>
+<li><em>Split Junction</em>: Undo a prior join (i.e. one that was computed with option <strong>--junctions.join</strong>)</li>
+<li><em>Set custom shape</em>: Allows drawing a custom junction shape via a
+  <a href="#modifiable_poly">#Modifiable Poly</a> (see below). The
+  junction shape determines where the incoming edges end and the
+  outgoing edges start. If the automatic generation of shapes does not
+  give a satisfying result it often helps to draw a custom shape
+  instead. The shape is a polygon defined by a sequence of (x,y,z)
+  geometry points.</li>
+</ul>
+<p><img alt="" src="images/CustomShape1.png" />Editing junction shape
+<img alt="" src="images/CustomShape2.png" />Junction after editing shape</p>
+<h2 id="connection">Connection<a class="headerlink" href="#connection" title="Permanent link">#</a></h2>
+<ul>
+<li><em>Set custom shape</em>: Allows drawing a custom connection shape via a
+  <a href="#modifiable_poly">#Modifiable Poly</a> (see below). The
+  shape is confirmed with <em>&lt;Enter></em>.</li>
+</ul>
+<h2 id="crossing">Crossing<a class="headerlink" href="#crossing" title="Permanent link">#</a></h2>
+<ul>
+<li><em>Set custom shape</em>: Allows drawing a custom crossing shape via a
+  <a href="#modifiable_poly">#Modifiable Poly</a> (see below). The
+  shape is confirmed with <em>&lt;Enter></em>.</li>
+</ul>
+<p><img alt="" src="images/CustomShape3.png" />Editing crossing shape
+<img alt="" src="images/CustomShape4.png" />Crossing after editing their shape</p>
+<h2 id="modifiable_poly">Modifiable Poly<a class="headerlink" href="#modifiable_poly" title="Permanent link">#</a></h2>
+<ul>
+<li><em>Set custom shape</em>: Apply this shape to the current junction</li>
+<li><em>Discard custom shape</em>: Abort editing the current junction shape</li>
+<li><em>Simplify shape</em>: Replace the current shape by a rectangle</li>
+<li><em>Remove geometry point</em>: Remove the closest geometry point from the
+  shape</li>
+<li>The new shape is confirmed with the <em>&lt;Enter></em> key and discarded with
+  <em>&lt;Esc></em>.</li>
+</ul>
+<p>The green polygon outline allows adding and moving geometry points by
+left-clicking anywhere on the outline and dragging. Shift-clicking a geometry point deletes it.</p>
+<h2 id="additionals_1">Additionals<a class="headerlink" href="#additionals_1" title="Permanent link">#</a></h2>
+<ul>
+<li><em>inner/lane position</em>: Additionals that are placed over an edge or
+  lane haven two different mouse position. Inner position is the
+  position of the mouse with respect to the length of the additional,
+  and lane position if the position of the mouse with respect to the
+  length of lane</li>
+</ul>
+<p><img alt="" src="images/neteditPositions.png" />Position's parameter of Charging Station</p>
+<ul>
+<li><em>Position in view and number of childs</em>: shows the number of childs
+  that own an Additionals, and their position in view</li>
+</ul>
+<p><img alt="" src="images/neteditChilds.png" />Position and childs of a E3 Detector</p>
+<ul>
+<li><em>show parameters</em>: show all parameters of additional.</li>
+</ul>
+<p><img alt="" src="images/neteditShowParameters.png" />Showing of parameters of charging
+Stations</p>
+<h2 id="route">Route<a class="headerlink" href="#route" title="Permanent link">#</a></h2>
+<ul>
+<li><em>Apply distance along route</em>: Sets the 'distance' attribute of all edges along the route for linear referencing. The distance attribute value of the first edge in the route is take as the start and the remaining edges are assigned a distance value that is counting upwards along the route. If the distance value should decrease along the route, the first edge must have a negative distance value.</li>
+</ul>
+<h1 id="usage_examples">Usage Examples<a class="headerlink" href="#usage_examples" title="Permanent link">#</a></h1>
+<h2 id="reducing_the_extent_of_the_network">Reducing the extent of the network<a class="headerlink" href="#reducing_the_extent_of_the_network" title="Permanent link">#</a></h2>
+<ol>
+<li>switch to <a href="#select">selection mode</a></li>
+<li>enable the <em>auto-select junctions</em> checkbox in the top menu bar</li>
+<li>select the portion of the network you wish to keep (i.e. by holding
+    <em>&lt;SHIFT></em> and performing a rectangle-selection)</li>
+<li>invert the selection with the <em>Invert</em> button</li>
+<li>delete the inverted selection using the <em>&lt;DELETE></em> key</li>
+</ol>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If the checkbox <em>auto-select junctions</em> is not set, and connections are not visible during the rectangle selection, all connections will be removed during the <em>invert+delete</em> steps.</p>
+</div>
+<h3 id="adapting_additional_objects_to_a_reduced_network">Adapting additional objects to a reduced network<a class="headerlink" href="#adapting_additional_objects_to_a_reduced_network" title="Permanent link">#</a></h3>
+<p>Either</p>
+<ul>
+<li>load the additional file when cutting and then save the reduced
+  additional file or</li>
+<li>open the reduced network and load the original additional file. All
+  objects outside the reduced network will be discarded with a
+  warning.</li>
+</ul>
+<h2 id="specifying_the_complete_geometry_of_an_edge_including_endpoints">Specifying the complete geometry of an edge including endpoints<a class="headerlink" href="#specifying_the_complete_geometry_of_an_edge_including_endpoints" title="Permanent link">#</a></h2>
+<p>By default, the geometry of an edge starts with the position of the
+source junction and ends at the position of the destination junction.
+However, this sometimes leads to undesired junction shapes when dealing
+with roads that have a large green median strip or when modeling edges
+that meet at a sharp angle such as highway ramps. Also, when edges in
+opposite directions have unequal number of lanes (i.e. due to added
+left-turn lanes) and the road shapes do not line up. The solution is to
+define an edge geometry with custom endpoints. Below are three
+alternative methods of accomplishing this.</p>
+<h3 id="using_set_geometry_endpoint">Using 'Set geometry endpoint'<a class="headerlink" href="#using_set_geometry_endpoint" title="Permanent link">#</a></h3>
+<ol>
+<li>switch to <a href="#move">move mode</a></li>
+<li>shift-click near the start or the end of the edge to create/remove a
+    custom geometry endpoint (marked with 'S' at the start and 'E' and
+    the end).</li>
+<li>once create these special geometry points can be moved around like
+    normal geometry points</li>
+</ol>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When right-clicking the geometry point the click must be within the edge shape for this too work.</p>
+</div>
+<p>Afterwards, you will have to recompute the junction shape to see how it
+looks (F5). If you want to modify the edge and it's reverse edge at once
+this works almost the same way:</p>
+<ol>
+<li>switch to <a href="#select">select mode</a></li>
+<li>select both edges</li>
+<li>switch to <a href="#move">move mode</a></li>
+<li>create/move geometry points for that edge</li>
+<li>create new geometry points where the endpoints of the edge should be</li>
+<li>switch to <a href="#select">select mode</a></li>
+<li>deselect both edges</li>
+<li>right-click on the new endpoints and select Set geometry endpoint
+    here twice (once for each edge)</li>
+</ol>
+<h3 id="entering_the_position_manually">Entering the Position manually<a class="headerlink" href="#entering_the_position_manually" title="Permanent link">#</a></h3>
+<ol>
+<li>switch to <a href="#inspect">inspect mode</a></li>
+<li>click on the edge that shall be modified</li>
+<li>enter new values for attributes <em>shapeStart</em> or <em>shapeEnd</em></li>
+</ol>
+<h3 id="using_join_selected_junctions">Using 'Join Selected Junctions'<a class="headerlink" href="#using_join_selected_junctions" title="Permanent link">#</a></h3>
+<ol>
+<li>create new junctions where the endpoints of the edge should be<ul>
+<li>Either split an existing edge (right-click and select <em>Split
+  edge here</em>)</li>
+<li>Or <a href="netedit.html#create_edges">create a new edge with new junctions in create-edge
+  mode</a></li>
+</ul>
+</li>
+<li>switch to <a href="#select">select mode</a></li>
+<li>select the original junction and the new junction near it</li>
+<li>Menu <em>Processing->Join Selected Junctions (F7)</em></li>
+</ol>
+<p>This will create a single joined junction but keep the endpoints at the
+original junction positions.</p>
+<h2 id="setting_connection_attributes">Setting connection attributes<a class="headerlink" href="#setting_connection_attributes" title="Permanent link">#</a></h2>
+<ol>
+<li>after opening the network press F5 to compute connection objects</li>
+<li>in inspect-mode enable the <em>Show Connections</em> checkbox in the menu
+    bar</li>
+<li>click on a connection to inspect it and edit its attributes</li>
+</ol>
+<h2 id="converting_an_intersection_into_a_roundabout">Converting an intersection into a roundabout<a class="headerlink" href="#converting_an_intersection_into_a_roundabout" title="Permanent link">#</a></h2>
+<ol>
+<li>set junction attribute 'radius' to the desired roundabout radius</li>
+<li>right-click on junction and select 'Convert to roundabout'</li>
+</ol>
+<h2 id="converting_an_intersection_into_a_roundabout_old_manual_method">Converting an intersection into a roundabout (old manual method)<a class="headerlink" href="#converting_an_intersection_into_a_roundabout_old_manual_method" title="Permanent link">#</a></h2>
+<ol>
+<li>For each of the 'legs' of the intersection do a right click and
+    select 'split edges in both directions' at some distance from the
+    intersection (this will be the radius of the roundabout)</li>
+<li>Delete the central intersection</li>
+<li>Connect the new intersections with one-way roads going in a circle</li>
+<li>Tweak the geometry of the roundabout by creating additional geometry
+    points in <a href="#move">move mode</a> to make it more rounded. 
+    You can also use the function 'smooth edge' from the edge context menu.</li>
+<li>Check for correct right of way (the inside edge should have priority over the entering edges).
+    This should work by default but may fail if the shape of the roundabout is not 'round' enough.
+    Either correct the geometry or assign a higher priority value to the roundabout roads
+    (compared to the adjoining roads)</li>
+</ol>
+<p>Assuming you have a regular intersection</p>
+<ul>
+<li><strong>Visual example</strong></li>
+</ul>
+<p><img alt="" src="images/RoundAbout1.png" />We have a intersection (Junction) with four edges.
+<img alt="" src="images/RoundAbout2.png" />Split edges in both direction in every edge to
+create new junctions.</p>
+<p><img alt="" src="images/RoundAbout3.png" />Intersection with the new junctions.
+<img alt="" src="images/RoundAbout4.png" />Remove central Junction.</p>
+<p><img alt="" src="images/RoundAbout5.png" />Connect new junctions circularly.
+<img alt="" src="images/RoundAbout6.png" />Move shape of new edges to obtain a circular
+shape.</p>
+<p><img alt="" src="images/RoundAbout7.png" />Roundabout in Simulator.</p>
+<h2 id="correcting_road_access_permissions">Correcting <a href="Simulation/VehiclePermissions.html">road access permissions</a><a class="headerlink" href="#correcting_road_access_permissions" title="Permanent link">#</a></h2>
+<p>In this example we wish to modify a multi-modal road network (i.e.
+imported from <a href="Networks/Import/OpenStreetMap.html">OpenStreetMap</a>)
+in the following way: <strong>All dedicated bus lanes should allow bicycle
+access</strong>.</p>
+<ol>
+<li>in <em>select-mode</em>, use the Match Attribute panel to select all
+    <strong>Lanes</strong> with attribute <strong>allow</strong> that match the string <strong>=bus</strong>
+    (the '=' forces exact matches). All dedicated bus lanes are now
+    selected</li>
+<li>in <em>inspect-mode</em>, click on one of the selected lanes and modify the
+    allow attribute from <em>bus</em> to <em>bus bicycle</em></li>
+</ol>
+<h2 id="changing_all_traffic_lights_to_right_on_red">Changing all traffic lights to <em>right_on_red</em><a class="headerlink" href="#changing_all_traffic_lights_to_right_on_red" title="Permanent link">#</a></h2>
+<ol>
+<li>in <em>select-mode</em>, use the Match Attribute panel to select all
+    <strong>Junctions</strong> with attribute <strong>type</strong> that match the string
+    <strong>traffic_light</strong></li>
+<li>in <em>inspect-mode</em>, click on one of the selected junctions and set
+    the type attribute to <em>right_on_red</em></li>
+</ol>
+<h2 id="creating_joined_traffic_lights">Creating joined traffic lights<a class="headerlink" href="#creating_joined_traffic_lights" title="Permanent link">#</a></h2>
+<ol>
+<li>make sure all junctions that shall be jointly controlled are of type <em>traffic_light</em></li>
+<li>(optionally) select all of the above junctions</li>
+<li>use inspect mode to set the same value for the 'tl' attribute of all junctions that shall be jointly controlled (if the junctions are selected, you can set the 'tl' value for all of them at the same time, otherwise you must set the value individually)</li>
+</ol>
+<h2 id="adapting_visualization_settings_to_help_editing_complicated_intersections">Adapting Visualization Settings to help editing complicated intersections<a class="headerlink" href="#adapting_visualization_settings_to_help_editing_complicated_intersections" title="Permanent link">#</a></h2>
+<p>Editing complex intersection clusters with many short edges can be
+difficult with the default visualization settings. The following
+settings may help</p>
+<ul>
+<li>Junction settings<ul>
+<li>lower value for <em>exaggerate by</em> (junction shapes drawn with
+  reduced size)</li>
+<li>deactivate <em>draw junction shapes</em> (alternatively to reduced
+  size, do not draw junction shapes at all)</li>
+<li>color <em>by selection</em></li>
+</ul>
+</li>
+<li>Streets<ul>
+<li>lower value for <em>exaggerate by</em> (draw thin edges)</li>
+<li>deactivate <em>show right of way rules</em> (to avoid hiding short
+  edges)</li>
+<li>color <em>by selection</em></li>
+</ul>
+</li>
+</ul>
+<p>When setting coloring to <em>by selection</em> it may also help to modify
+transparency for selected or unselected edges.</p>
+<h2 id="defining_a_linear_referencing_scheme_kilometrage_mileage_chainage">Defining a linear referencing scheme <a href="Simulation/Railways.html#kilometrage_mileage_chainage">(kilometrage / mileage/ chainage)</a><a class="headerlink" href="#defining_a_linear_referencing_scheme_kilometrage_mileage_chainage" title="Permanent link">#</a></h2>
+<ol>
+<li><a href="#route_mode">Define a route</a> through your network along which you want to define kilometrage (in forward direction)</li>
+<li>(optional) Use inspect mode to et the initial distance value of the first edge of the route (default 0)
+3) Right click the route element (in demand mode) and select 'Apply distance along route'</li>
+</ol>
+<h2 id="creating_bidirectional_railway_tracks">Creating <a href="Simulation/Railways.html">bidirectional railway tracks</a><a class="headerlink" href="#creating_bidirectional_railway_tracks" title="Permanent link">#</a></h2>
+<h3 id="make_an_existing_track_bidirectional">Make an existing track bidirectional<a class="headerlink" href="#make_an_existing_track_bidirectional" title="Permanent link">#</a></h3>
+<p>Using <a href="Simulation/Railways.html#working_with_bidirectional_tracks_in_netedit">visualization options or attribute
+selection</a>
+you can check whether an existing railway track can be used in both
+directions.</p>
+<p>To make a unidirectional track usable in both directions,</p>
+<ol>
+<li>set the edge attribute <em>spreadType</em> to the value <em>center</em> (in many
+    cases this value is already set as it is the default value when
+    importing tracks).</li>
+<li>right-click the edge and select <em>edge operations->add reverse
+    direction for edge</em></li>
+</ol>
+<h3 id="creating_bidirectional_tracks_from_scratch">Creating bidirectional tracks from scratch<a class="headerlink" href="#creating_bidirectional_tracks_from_scratch" title="Permanent link">#</a></h3>
+<ol>
+<li>use <a href="#create_edges">#Create_Edges</a> to create an edge</li>
+<li>use <a href="#inspect">#Inspect</a> to set the edge attribute
+    <em>allow</em> to <em>rail</em> (or a combination of one or more railway vehicle
+    classes)</li>
+<li>set edge attribute <em>spreadType</em> to <em>center</em></li>
+<li>set the new edge as <a href="#edge_template">#Edge_template</a></li>
+<li>make the edge bidirectional as explained above in
+    <a href="#make_an_existing_track_bidirectional">#Make_an_existing_track_bidirectional</a></li>
+<li>in <a href="#create_edges">#Create_Edges</a>, set the checkbox to
+    <em>Two-way</em> and optionally to <em>Chain</em></li>
+<li>continue to created edges. Each click will create bidirectional
+    track</li>
+</ol>
+<h1 id="planned_features">Planned Features<a class="headerlink" href="#planned_features" title="Permanent link">#</a></h1>
+<ul>
+<li>
+<p>Support for editing features already supported by
+<a href="netconvert.html">netconvert</a></p>
+<ul>
+<li>
+<p>Editing <code>&lt;neigh&gt;</code> information for
+  <a href="Simulation/OppositeDirectionDriving.html">Simulation/OppositeDirectionDriving</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, you may either switching on <strong>--opposites.guess</strong> via the <a href="#processing_menu_options">F10-menu</a> or set lane attribute 'oppositeID'.</p>
+</div>
+</li>
+</ul>
+<ul>
+<li>Editing <a href="Networks/PlainXML.html#walking_areas">walkingarea
+  shapes</a></li>
+<li>Integration of <a href="netgenerate.html">netgenerate</a></li>
+<li>Integration of <a href="Tools/Net.html#netdiffpy">netdiff</a></li>
+<li>Adding / merging of sub-networks to the existing network</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 01 December 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = ".",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

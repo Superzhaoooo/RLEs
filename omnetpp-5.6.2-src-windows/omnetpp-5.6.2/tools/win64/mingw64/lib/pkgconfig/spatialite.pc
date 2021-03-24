@@ -1,0 +1,13 @@
+# Package Information for pkg-config
+
+prefix=/mingw64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: spatialite
+Description: Spatial SQL database engine based on SQLite
+Version: 4.3.0a
+Libs: -L${libdir} -lspatialite
+Libs.private: -liconv -lz -lm
+Cflags: -I${includedir}

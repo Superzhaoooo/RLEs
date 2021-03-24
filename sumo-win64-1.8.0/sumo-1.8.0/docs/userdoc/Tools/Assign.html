@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Tools/Assign.html">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        <title>Tools/Assign - SUMO Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Tools/Assign.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../index.html" style="display: inline-block; margin-top: 5px;"><img src="../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#assignment_tools">Assignment Tools</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#dua-iteratepy" class="nav-link">• dua-iterate.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#one-shotpy" class="nav-link">• one-shot.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#assignmentpy" class="nav-link">• Assignment.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#networkstatisticspy" class="nav-link">• networkStatistics.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#matrixdailytohourlypy" class="nav-link">• matrixDailyToHourly.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#costfunctioncheckerpy" class="nav-link">• costFunctionChecker.py</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#addtazpy" class="nav-link">• addTaz.py</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Tools/Assign<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<h1 id="assignment_tools">Assignment Tools<a class="headerlink" href="#assignment_tools" title="Permanent link">#</a></h1>
+<h2 id="dua-iteratepy">dua-iterate.py<a class="headerlink" href="#dua-iteratepy" title="Permanent link">#</a></h2>
+<p>"dua-iterate.py" helps you to perform the computation of a dynamic user
+assignment (DUA). It works by alternatingly running the simulation to
+discover travel times and then assigning alternative routes to some of
+the vehicles according to these travel times. This is repeated for a
+defined number of iteration steps. At least two files have to be given
+as input the script: a SUMO-network and a set of trip definitions. A
+stochastic user-equilibrium (UE)traffic state is not guaranteed after
+the assignment. Increasing the number of iteration steps increases the
+likelyhood of convergence to equilibrium.</p>
+<p>Within each iteration step, the script generates a configuration file
+for the <a href="../duarouter.html">duarouter</a> application and starts it with
+this configuration file. Then, a configuration file for
+<a href="../sumo.html">sumo</a> is built and <a href="../sumo.html">sumo</a> is started.
+Both configuration files are completely defined within the script itself.
+As default, for each time step, SUMO will generate three dump files with
+edge-dumps aggregated over 150, 300, and 900s, a summary information as
+well as a trip information output. The names of these outputs are
+numbered according to the iteration step. If you want to change the
+outputs, you also have to take a look into the script, but you should
+not disable the edge-based dump for aggregation over 900s, because this
+is read by the <a href="../duarouter.html">duarouter</a> in the next iteration
+steps in order to compute the DUA.</p>
+<p>For further options to the script look either at the source code or
+start it with the "--help" option.</p>
+<pre><code>dua-iterate.py -n &lt;PATH_TO_SUMO_NET&gt; -t &lt;PATH_TO_TRIPS&gt;
+</code></pre>
+
+<p>Furthermore a calibrator option is available in the script to call the
+Cadyts calibration tool, developed by Gunnar Flötteröd at EPFL,
+Switzerland. With this option, route choices will be adjusted according
+to given link counts. The validation work of the calibration between
+SUMO and Cadyts is work in progress.</p>
+<h2 id="one-shotpy">one-shot.py<a class="headerlink" href="#one-shotpy" title="Permanent link">#</a></h2>
+<p>The one-shot.py provides a variant of the dynamic user assignment. The
+assignment method is the same one which SUMO and the dua-iterate.py use.
+Given trips will be assigned to respective fastest routes according to
+their departure times and a given travel-time updating interval.
+Different travel-time updating intervals can be defined by users, such
+as 900, i.e. link travel times will be updated every 900 sec. If the
+travel-time updating interval is set to -1, link travel times will not
+updated and link trave times at free-flow speeds are used for all trips.</p>
+<p>A stochastic user-equilibrium traffic state will not achieved with the
+use of this script.</p>
+<p>An exemplary execution command is shown below.</p>
+<pre><code> one-shot.py -f &lt;travel-time updating interval&gt; -n &lt;network file&gt; -t &lt;trip file&gt;
+
+ where -f travel-time updating interval (sec); -1 means no travel-time updating (default: -1,1800,300,15)
+       -n network file name and the respective path
+       -t trip file name and the respective path
+</code></pre>
+
+<p>Additional setting, such as outputs of summary and trip-information as
+well as begin time, could be made by adding respective options which can
+be found in the script.</p>
+<h2 id="assignmentpy">Assignment.py<a class="headerlink" href="#assignmentpy" title="Permanent link">#</a></h2>
+<p>In comparison to the dua-iterate.py and the one-shot.py the
+Assignment.py is applied to execute a macroscopic traffic assignment.
+Three types of macroscopic traffic assignments are available here: an
+incremental assignment, a stochastic user equilibrium assignment (SUE)
+based on the c-logit model by Cacessta (1996) and a logit- based SUE
+model based on the utility function by Lohse. The c-logit model is set
+as default. In addition, a k-shortest-paths algorithm has also been
+implemented in these two SUE models with a default value of 8.</p>
+<p>Furthermore the applied route searching algorithms are based on
+Dijkstra. Three variants are available:</p>
+<ul>
+<li><em>Dijkstra plain</em>: travel time penalties for turning movements are
+  <strong>not</strong> considered.</li>
+<li><em>Dijkstra extend</em>: travel time penalties for turning movements are
+  considered.</li>
+<li><em>Dijkstra boost</em>: it is used to speed up route searching and travel
+  time penalties for turning movements are considered here.</li>
+</ul>
+<p>In oder to use this script the other scripts are required, i.e.
+elements.py, network.py, dijkstra.py, inputs.py, outputs.py, assign.py
+as well as tables.py. These scripts should locate in the same directory
+with the Assignment.py. Each of these scripts is briefly described
+below.</p>
+<p><strong>elements.py</strong></p>
+<p>This script is to define the classes and functions for</p>
+<ul>
+<li>reading network geometric,</li>
+<li>calculating link characteristics, such as capacity, travel time and
+  link cost function,</li>
+<li>recording vehicular and path information, and</li>
+<li>conducting statistic tests.</li>
+</ul>
+<p><strong>network.py</strong></p>
+<p>This script is to retrieve the network data, the district data and the
+vehicle data, generated by SUMO, from the respective XML files. Besides,
+the class 'Net' is also defined here.</p>
+<p><strong>dijkstra.py</strong></p>
+<p>The Dijkstra algorithm is used for searching the respective shortest
+paths and is based on the script from David Eppstein, UC Irvine.
+Moreover, this script is to find the shortest path from the given origin
+'start' to the other nodes in the investigated network. The link
+information about the shortest paths and the corresponding travel times
+will be stored in the lists P and D respectively. Three variants are
+available: Dijkstra plain, Dijkstra extend as well as Dijkstra boost.</p>
+<p><strong>inputs.py</strong></p>
+<p>This script is to retrieve the given incremental assignment parameters,
+OD districts and the defined matrix from input files. Moreover, the link
+travel time for district connectors will be estimated.</p>
+<p><strong>outputs.py</strong></p>
+<p>This script is for generating the outputs from the choosed traffic
+assignment.</p>
+<p><strong>assign.py</strong></p>
+<p>This script is for executing traffic assignment according to the
+user-defined assignment model. The above-mentioned incremental
+assignment model, the C-Logit assignment model and the logit assignment
+model based on the utility function by Lohse are included in this
+script.</p>
+<p><strong>tables.py</strong></p>
+<p>This file defines global tables used to:</p>
+<ul>
+<li>define the parameters in link cost BPR-functions, proposed by the
+  Bureau of Public Roads (BPR). Link travel times are then calculated
+  based the defined functions.</li>
+<li>define the capacity and the respective cost function for each link</li>
+<li>conduct significance tests</li>
+</ul>
+<p>The following exemplary command is to show how to execute an assignment
+with the use of the Assignment.py:</p>
+<pre><code>Assignment.py -e &lt;assignment method&gt; -i 10 -d &lt;districts file&gt; -m &lt;matrix file&gt; -n &lt;network file&gt; -s &lt;traffic singal files&gt; -+ &lt;Dijkstra type&gt;
+
+where: -e: the assignemnt method: incremental, lohse, clogit (default: clogit)
+       -i: the number of maximal iterations for the SUE assignments; the number of iterations for an incremental assignment (default: 20)
+       -d: district file name and the respective path
+       -m: matrix file name and the respective path
+       -n: network file name and the respective path
+       -s: additional traffic signal timing files (optional)
+       -+: the used Dijkstra-method: plain, extend, boost (default: boost)
+
+
+Changes of parameters setting regarding convergence criteria are possible with the use of respective options in the script.
+</code></pre>
+
+<p>In addition, the script <strong>run.py</strong> is to run assignment tests with
+different assignment methods.</p>
+<h2 id="networkstatisticspy">networkStatistics.py<a class="headerlink" href="#networkstatisticspy" title="Permanent link">#</a></h2>
+<p>This script is to calculate the global performance indices according to
+<strong>SUMO-based</strong> simulation results. The calculation functions are
+directly defined in this script. Basis statistics are delivered, such
+as:</p>
+<ul>
+<li>average travel time (s)</li>
+<li>average travel length (m)</li>
+<li>average travel speed (m/s)</li>
+<li>average departure delay (s)</li>
+<li>average waiting time (s)</li>
+</ul>
+<p>Besides, this script is also to execute a significance test for
+evaluating the results from different assignment methods. The t test and
+the Kruskal-Wallis test are available in this script. If not specified,
+the Kruskal-Wallis test will be applied with the assumption that data
+are not normally distributed.</p>
+<p>In order to execute this script, the other two scripts, i.e.
+statisticsElements.py and tables.py, are required. They all should be in
+the same directory.</p>
+<p>In the statisticsElements.py, classes regarding vehicles, their
+performance measures, t values, H values as well as functions for
+outputs are defined. The chi-square table and the t table are defined in
+the tables.py.</p>
+<p>An exemplary command is shown below.</p>
+<pre><code>networkStatistics.py -t &lt;tripinfo files&gt; -o &lt;output file&gt; -e
+
+where -t: name of output files containing vehicle information, generated by SUMO
+      -0: define the output file name
+      -e: set true for applying the t test (default: false)
+      -k: set true for applying the Kruskal-Wallis test (default: false)
+</code></pre>
+
+<h2 id="matrixdailytohourlypy">matrixDailyToHourly.py<a class="headerlink" href="#matrixdailytohourlypy" title="Permanent link">#</a></h2>
+<p>This script is to generate hourly matrices from a VISUM daily matrix.
+The traffic demand of the traffic zones, which have the same connection
+links, will be integrated. The exemplary command is indicated below.</p>
+<pre><code>matrixDailyToHourly.py -m &lt;matrix file&gt; -z &lt;district file&gt; -t &lt;flow time-series file&gt; -o 
+
+&lt;output directory&gt;
+
+where -m: matrix file name
+      -z: district file name
+      -t: name of the file containing traffic flow time series (optional); If not specified, the defined 
+          daily matrix will be regularly divided into 24 hours.
+      -o: output directoy name and the respective path
+</code></pre>
+
+<h2 id="costfunctioncheckerpy">costFunctionChecker.py<a class="headerlink" href="#costfunctioncheckerpy" title="Permanent link">#</a></h2>
+<p>Run duarouter repeatedly and simulate weight changes via a cost
+function. (to be continued)</p>
+<p>Still under construction!</p>
+<h2 id="addtazpy">addTaz.py<a class="headerlink" href="#addtazpy" title="Permanent link">#</a></h2>
+<p>This script is to add the information of traffic analysis zones, i.e.
+origin and destination zone, in a given route file. Such information is
+required in a given route file when applying the calibrator option in
+the script dua-iterate.py. A trip file, containing traffic zones
+information, is required when executing this script.</p>
+<p>With the use of the following command, required traffic zones
+information can be added in a given route file.</p>
+<pre><code>addTaz.py -r &lt;route file&gt; -t &lt;trip file&gt;
+</code></pre>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+%NAME%
+mingw-w64-x86_64-qtbinpatcher
+
+%VERSION%
+2.2.0-1
+
+%DESC%
+Patcher for Qt libraries (mingw-w64)
+
+%URL%
+http://tver-soft.org
+
+%ARCH%
+any
+
+%BUILDDATE%
+1436190006
+
+%INSTALLDATE%
+1470402182
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+970752
+
+%REASON%
+1
+
+%LICENSE%
+GPL
+
+%VALIDATION%
+pgp
+

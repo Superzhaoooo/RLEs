@@ -1,0 +1,25 @@
+%description:
+Testing opp_feature with a clean project: exists .oppfeatures and .nedfolders only
+Lists features
+
+%prerun-command: ../../lib/createSrcFolders
+%prerun-command: cp ../../.nedfolders ../../.oppfeatures .
+%prerun-command: rm -f .oppfeaturestate .nedexclusions
+
+%testprog: opp_featuretool isenabled F_UNKNOWN
+
+%ignore-exitcode: 1
+
+%postrun-command: ../../lib/fileExistingCheck
+
+%contains: postrun-command(1).out
+'.oppfeatures' found.
+'.oppfeaturestate' not found.
+'.nedfolders' found.
+'.nedexclusions' not found.
+
+%contains: stderr
+opp_featuretool: Error: Unknown feature(s): F_UNKNOWN.
+
+%not-contains-regex: stdout
+[a-zA-Z0-9]

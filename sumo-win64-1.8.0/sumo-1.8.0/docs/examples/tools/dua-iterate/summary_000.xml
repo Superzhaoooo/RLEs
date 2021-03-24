@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 03/15/21 14:01:31 by Eclipse SUMO GUI Version 1.8.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\input_net.net.xml"/>
+        <route-files value="C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\input_trips_000.rou.xml"/>
+        <additional-files value="C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\dua_dump_000.add.xml"/>
+    </input>
+
+    <output>
+        <summary-output value="C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\summary_000.xml"/>
+        <tripinfo-output value="C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\tripinfo_000.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+    </time>
+
+    <processing>
+        <route-steps value="200"/>
+        <no-internal-links value="false"/>
+        <time-to-teleport value="300"/>
+        <time-to-teleport.highways value="0"/>
+        <eager-insert value="false"/>
+    </processing>
+
+    <report>
+        <verbose value="true"/>
+        <no-warnings value="false"/>
+        <log value="C:\Users\jwj\Desktop\sumo-win64-1.8.0\sumo-1.8.0\docs\examples\tools\dua-iterate\iteration_000.sumo.log"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <random_number>
+        <random value="false"/>
+    </random_number>
+
+</configuration>
+-->
+
+<summary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/summary_file.xsd">
+</summary>

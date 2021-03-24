@@ -1,0 +1,263 @@
+2020-01-06  ------ omnetpp-5.6 released ------
+
+2019-08-26  Attila Torok
+
+	* BasicGraphLayouterEnvironment: added restartTimeout()
+
+2019-05-15  ------ omnetpp-5.5 released ------
+
+2019-03-11  Andras Varga
+
+	* Fix broken dependencies in Makefiles
+
+2018-06-25  ------ omnetpp-5.4.1 released ------
+
+2018-06-11  ------ omnetpp-5.4 released ------
+
+2018-06-06  Attila Torok
+
+	* Fix "Advanced" layouter not doing anything with only anchored
+	nodes.
+
+	In one example network, the samples/routing/RandomMesh, there are only
+	anchored "nodes" (submodules) - no fixed and no independently movable
+	nodes - since the whole network is one matrix with undefined position. In
+	this network, when the "Advanced" layouter way selected, none of the
+	submodules got a position after layouting. This was most likely never
+	tested because the auto selection chooses the simple layouter in this
+	simulation.
+
+2018-04-11  ------ omnetpp-5.3 released ------
+
+2017-12-08  ------ omnetpp-5.2.1 released ------
+
+2017-09-18  ------ omnetpp-5.2 released ------
+
+2017-04-06  Andras Varga
+
+	* Modernizing: use C++11's range-based for loops where applicable, using
+	clang-tidy's modernize-loop-convert.
+
+	* Modernizing: replace INT64_PRINTF_FORMAT and LL with C++11's PRId64.
+	Note: PRId64 includes the "d" that was not part of INT64_PRINTF_FORMAT
+	alias LL.
+
+2017-05-25  Rudolf Hornig
+
+	* Updated makefiles for speeding up the build:
+	- generated files are created only once, even when using parallel build
+	- binaries are copied to their final destination using proper makefile
+	  targets
+
+2017-05-19  Attila Torok
+
+	* Fix memory leak in ForceDirectedGraphLayouter. (Destructor was missing.)
+
+2017-05-08  ------ omnetpp-5.1.1 released ------
+
+2017-03-31  ------ omnetpp-5.1 released ------
+
+2017-02-06  ------ omnetpp-5.1pre3 released ------
+
+2016-12-23  ------ omnetpp-5.1pre2 released ------
+
+2016-11-30  Rudolf Hornig
+
+	* build: Makefile refactored. Added clang-c2 support and optimized
+	the build process.
+
+	* build: removed Makefile.vc, as Visual C++ builds are now handled
+	by the standard Makefiles.
+
+2016-11-29  Attila Torok
+
+	* ForceDirectedGraphLayouter: Layout scaling fix.
+
+	In rare cases, during the prelayouting phase of the advanced layouter,
+	when scaling the layout to make it fill the given bounding box, if a node
+	had a size equivalent to the bounding box in any dimension, a division by
+	zero caused unwanted NaN values, which later triggered the failure of an
+	assertion which required the distance between two nodes to be greater
+	than zero (but it would be NaN in this case). Discovered by the EnvirApi
+	test.
+
+2016-06-23  Rudolf Hornig
+
+	* The makefile now uses compiler-generated dependency files.
+
+2016-04-13  ------ omnetpp-5.0 released ------
+
+2016-03-10  ------ omnetpp-5.0rc released ------
+
+2015-12-07  ------ omnetpp-5.0b3 released ------
+
+2015-10-16  Andras Varga
+
+	* omnetpp namespace made permanent (cannot be turned off):
+	- removed configure option and preprocessor symbol USE_NAMESPACE
+	- removed related macros: NAMESPACE_BEGIN, NAMESPACE_END,
+	  USING_NAMESPACE, OPP, OPP_STR, OPP_PREFIX etc.
+
+2015-07-20  ------ omnetpp-5.0b2 released ------
+
+2015-06-16  Andras Varga
+
+	* Cleanup: prefer ++it to it++ (less copying)
+
+2015-06-08  Andras Varga
+
+	* Cleanup: longer header guards
+
+2015-06-08  Andras Varga
+
+	* Cleanup: code formatting
+
+2015-05-15  Andras Varga
+
+	* Cleanup: use per-folder nested namespaces: omnetpp::envir, omnetpp::tkenv,
+	omnetpp::layout, omnetpp::common, omnetpp::eventlog, etc.
+
+2015-05-22  Andras Varga
+
+	* Modernizing: added the 'override' keyword (C++11) to overridden methods;
+	it becomes blank when using with an older compiler.
+
+2015-05-21  Rudolf Hornig
+
+	* Modernizing: replaced NULLs by 'nullptr' (C++11); it is defined as 0
+	when using an older compiler.
+
+2015-04-20  Andras Varga
+
+	* Cleanup: use C++ names of C headers (e.g. <cstdio> instead of <stdio.h>)
+
+2015-04-12  Andras Varga
+
+	* Cleanup: copyright years updated
+
+2015-04-08  Andras Varga
+
+	* Modernizing:
+
+	- Use a fixed include path (-Iinclude -Isrc) for all source folders
+	  under src/, and qualify cross-folder #includes with the folder
+	  name (e.g. change #include "stringutil.h" to #include "common/stringutil.h").
+	  This increases readbility and reduces the chance of including a wrong
+	  header.
+
+	- In source files, sort #include statements by folder.
+
+2015-03-04  ------ omnetpp-5.0b1 released ------
+
+2014-11-27  ------ omnetpp-4.6 released ------
+
+2014-06-30  ------ omnetpp-4.5 released ------
+
+2014-02-13  ------ omnetpp-4.4.1 released ------
+
+2013-12-20  ------ omnetpp-4.4 released ------
+
+2013-09-12  ------ omnetpp-4.3.1 released ------
+
+2013-04-02  ------ omnetpp-4.3 released ------
+
+2013-02-08  ------ omnetpp-4.3rc1 released ------
+
+2012-03-13  ------ omnetpp-4.2.2 released ------
+
+2012-01-17  ------ omnetpp-4.2.1 released ------
+
+2011-10-28  ------ omnetpp-4.2 released ------
+
+2011-09-11  ------ omnetpp-4.2rc1 released ------
+
+2011-05-05  ------ omnetpp-4.2b2 released ------
+
+2011-02-23  ------ omnetpp-4.2b1 released ------
+
+2011-02-18  Andras Varga
+
+	* in the layouter external interface (GraphLayouter), changed cModule*
+	pointers to int nodeId as a means of identifying nodes, because
+	using cModule* was not very convenient with the SWIG JNI wrapper
+	(nativelibs library).
+
+	* added BasicGraphLayouterEnvironment, for use from the IDE
+
+	* BasicSpringEmbedderLayout: findNode() is no longer linear search
+
+2011-02-15  Andras Varga
+
+	* In the external interface of layouters (GraphLayouter class),
+	changed "int" to "double" for coordinates and distances. Internally
+	they all already calculated everything in floating point.
+
+2010-06-11  ------ omnetpp-4.1 released ------
+
+2010-05-31  ------ omnetpp-4.1rc2 released ------
+
+2010-05-15  Andras Varga
+
+	* Improvements on the "classic" layouting algorithm:
+
+	- Correctly take into account the bounding box of anchored nodes when
+	  clipping anchor positions to background boundaries. See new fields
+	  x1off, y1off, x2off, y2off fields of Node.
+
+	- Subgraphs that are not connected to any fixed node are now allowed
+	  to stretch to negative coordinates during layouting, and will get
+	  shifted back to positive coordinates afterwards. This is only done
+	  if there is no background size given, otherwise there was no
+	  guarantee that the layouted subgraph would fit into the background
+	  area. See new field connectedToFixed of Node.
+
+	- Initial random distribution of nodes: area is now basically
+	  proportional to the number of nodes (i.e. one side is proportional
+	  to the square root of #nodes), instead of being fixed 600x400.
+	  We take the union of that area and the area already occupied by
+	  fixed nodes, and there is also a minimum size.
+
+	- Fix: addEdge(): module size was taken into account incorrectly
+
+	- Refactoring: bounding box calculation, creating the initial random
+	  distribution, etc. factored out to separate methods.
+
+2010-04-29  Andras Varga
+
+	* Bugfixes and cleanup of "classic" layouting algorithm:
+	- fix: dynamically created modules in Tkenv often ended up outside
+	  the compound module rectangle (see test/anim/dynamic2 test)
+	- initial random placement to use the area already occupied by fixed
+	  nodes (but minimum 600x400)
+	- removed scalingMode, setConfineToArea(), setScaleToArea(); related
+	  functionality is now internal to the layouter class
+	- removed several tweaks and nonlinearities from layouting code
+	- removed unused CONTRACTING_BOX code
+	- renaming of variables ("from"/"to" to "src"/"target", etc)
+
+2010-04-20  ------ omnetpp-4.1b4 released ------
+
+2010-03-14  ------ omnetpp-4.1b3 released ------
+
+2009-03-12  ------ omnetpp-4.0 released ------
+
+2009-02-27  ------ omnetpp-4.0rc2 released ------
+
+2008-12-12  ------ omnetpp-4.0rc1 released ------
+
+2008-11-26  Andras Varga
+
+	* library renamed to opplayout
+
+2008-04-19  Andras Varga
+
+	* basicspringembedderlayout: changed initial rect to 1000x1000 (was 100x100)
+
+2008-02-23  Andras Varga
+
+	* Started the ChangeLog. The Layout library was added in omnetpp-4.0.
+	It implements graph layouting algorithms, used for rendering networks
+	and compound modules in the IDE (graphical NED editor, NED documentation
+	generator), and in the runtime environment (Tkenv). BasicSpringEmbedderLayout
+	was taken from 3.x Tkenv; the other, more advanced algorithms were
+	implemented by Levente Meszaros.

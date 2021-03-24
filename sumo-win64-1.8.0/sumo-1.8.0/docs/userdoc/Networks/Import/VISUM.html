@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Networks/Import/VISUM.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Networks/Import/VISUM - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Networks/Import/VISUM.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#import_coverage">Import Coverage</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#lane_number" class="nav-link">• Lane Number</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#dealing_with_connectors" class="nav-link">• Dealing with Connectors</a>
+                </li>
+            <li class="nav-item main"><a href="#see_also">See also</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#importing_other_data_from_visum" class="nav-link">• Importing other data from VISUM</a>
+                </li>
+            <li class="nav-item main"><a href="#references">References</a></li>
+            <li class="nav-item main"><a href="#missing">Missing</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Networks/Import/VISUM<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p><a href="../../netconvert.html">netconvert</a> can import native
+<a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a>-network files.
+Their extension is ".net". If you do not have a file with this
+extension, but a ".ver"-file only, you have to generate the ".net"-file
+using <a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> by exporting
+it from the loaded version description (".ver"-file).</p>
+<p>The option to load a
+<a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> ".net"-file into
+<a href="../../netconvert.html">netconvert</a> in order to convert it into a
+SUMO-network is named <strong>--visum-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> or <strong>--visum</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> for short. So, the following call to
+<a href="../../netconvert.html">netconvert</a> imports the road network stored in
+"my_visum_net.net" and stores the SUMO-network generated from this
+data into "my_sumo_net.net.xml":</p>
+<pre><code>netconvert --visum my_visum_net.net -o my_sumo_net.net.xml
+</code></pre>
+
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If your network contains geo-coordiantes (lon/lat) you must add option <strong>--proj.utm</strong> in order to project your network into the cartesian plane</p>
+</div>
+<h1 id="import_coverage">Import Coverage<a class="headerlink" href="#import_coverage" title="Permanent link">#</a></h1>
+<p>The following table shows which information is parsed from a given VISUM
+network.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The keywords within a VISUM file are localized. By default netconvert assumes LANGUAGE <strong>DEU</strong>. You can use option <strong>--visum.language-file</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> to read a language mapping from DEU into another language.</p>
+</div>
+<p><strong>Information <a href="../../netconvert.html">netconvert</a> reads from VISUM
+networks</strong></p>
+<table>
+<thead>
+<tr>
+<th>Table name</th>
+<th>Imported attributes</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VSYS</td>
+<td>VSysCode (CODE)<br>VSysMode (TYP)</td>
+<td>Traffic modes</td>
+</tr>
+<tr>
+<td>STRECKENTYP</td>
+<td>Nr<br>v0-IV (V0IV)<br>Rang<br>Kap-IV (KAPIV)</td>
+<td>Edge types</td>
+</tr>
+<tr>
+<td>KNOTEN</td>
+<td>Nr<br>XKoord<br>YKoord</td>
+<td>Nodes</td>
+</tr>
+<tr>
+<td>BEZIRK</td>
+<td>Nr<br>NAME (unused later)<br>Proz_Q<br>Proz_Z<br>XKoord<br>YKoord</td>
+<td>Districts</td>
+</tr>
+<tr>
+<td>STRECKE (STRECKEN)</td>
+<td>Nr<br>VonKnot (VonKnotNr)<br>NachKnot (NachKnotNr)<br>Typ (TypNr)<br>Einbahn</td>
+<td>Edges</td>
+</tr>
+<tr>
+<td>ANBINDUNG</td>
+<td>BezNr<br>KnotNr<br>Proz<br>t0-IV<br>Typ<br>Richtung</td>
+<td>District connections</td>
+</tr>
+<tr>
+<td>ABBIEGEBEZIEHUNG (ABBIEGER)</td>
+<td>VonKnot (VonKnotNr)<br>UeberKnot (UeberKnotNr)<br>NachKnot (NachKnotNr)<br>VSysCode (VSYSSET)</td>
+<td>Edge Connections</td>
+</tr>
+<tr>
+<td>STRECKENPOLY</td>
+<td>VonKnot (VonKnotNr)<br>NachKnot (NachKnotNr)<br>INDEX<br>XKoord<br>YKoord</td>
+<td>Edge geometries</td>
+</tr>
+<tr>
+<td>FAHRSTREIFEN</td>
+<td>KNOTNR<br>STRNR<br>FSNR<br>RICHTTYP<br>LAENGE</td>
+<td>Lane descriptions</td>
+</tr>
+<tr>
+<td>LSA (SIGNALANLAGE)</td>
+<td>Nr<br>Umlaufzeit (UMLZEIT)<br>StdZwischenzeit (STDZWZEIT)<br>PhasenBasiert</td>
+<td>Traffic lights</td>
+</tr>
+<tr>
+<td>KNOTENZULSA (SIGNALANLAGEZUKNOTEN)</td>
+<td>KnotNr<br>LsaNr</td>
+<td>Nodes-&gt;TLS</td>
+</tr>
+<tr>
+<td>LSASIGNALGRUPPE (SIGNALGRUPPE)</td>
+<td>Nr<br>LsaNr<br>GzStart (GRUENANF)<br>GzEnd (GRUENENDE)<br>GELB</td>
+<td>Signal groups</td>
+</tr>
+<tr>
+<td>ABBZULSASIGNALGRUPPE<br>(SIGNALGRUPPEZUABBIEGER)</td>
+<td>SGNR (SIGNALGRUPPENNR)<br>LsaNr<br>VonKnot / VONSTRNR<br>NachKnot / NACHSTRNR<br>UeberKnot (UeberKnotNr)<br>LsaNr</td>
+<td>Edge connections-&gt;TLS</td>
+</tr>
+<tr>
+<td>LSAPHASE (PHASE)</td>
+<td>Nr<br>LsaNr<br>GzStart (GRUENANF)<br>GzEnd (GRUENENDE)</td>
+<td>Signal phases</td>
+</tr>
+<tr>
+<td>LSASIGNALGRUPPEZULSAPHASE</td>
+<td>PsNr<br>LsaNr<br>SGNR</td>
+<td>Signal groups-&gt;phases</td>
+</tr>
+<tr>
+<td>FAHRSTREIFENABBIEGER</td>
+<td>KNOT (KNOTNR)<br>VONSTR (VONSTRNR)<br>NACHSTR (NACHSTRNR)<br>VONFSNR<br>NACHFSNR</td>
+<td>Lane-to-lane descriptions</td>
+</tr>
+</tbody>
+</table>
+<p>Well, basically that's all for network import, isn't it? Well, actually
+not. In the following, the basic possibilities and further advices and
+tricks for working with these is described.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>"Rang" from "Streckentypen" is used as edge priority information. As streets with a lower "Rang" are normally higher priorised, an edge type's priority is computed as 100-Rang</p>
+</div>
+<h2 id="lane_number">Lane Number<a class="headerlink" href="#lane_number" title="Permanent link">#</a></h2>
+<p><a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> does not work with
+the lane numbers of streets, instead, the streets' capacities are used.
+This means that under circumstances the information about the edges' lane
+numbers are missing. Still, one can try to obtain the lane number from
+the given edges' capacities. An approximation is:</p>
+<pre><code>LANE_NUMBER = MAXIMUM_FLOW / CAPACITY_NORM
+</code></pre>
+
+<p>The value of CAPACITY_NORM is controlled via the option <strong>--capacity-norm</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FLOAT&gt;</em></a> (default:
+1800).</p>
+<p>In the case the "<em>ANZFAHRSTREIFEN</em>" (lane numbers) field within the
+net's "<em>STRECKEN</em>" (edges)-table is empty, and also the types do not
+hold any information about the according edges' lane numbers, this
+conversion is done automatically. Still, we also had
+<a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> nets in our hands,
+where a capacity was given, but the lane number field was set to 1 for
+all edges. In this case, one has to force
+<a href="../../netconvert.html">netconvert</a> to ignore the lane number attribute
+and use the capacity. This is done by using the option
+<strong>--visum.recompute-laneno</strong>.</p>
+<h2 id="dealing_with_connectors">Dealing with Connectors<a class="headerlink" href="#dealing_with_connectors" title="Permanent link">#</a></h2>
+<p><a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> as a macroscopic
+tool, does not regard single vehicles. As one consequence,
+<a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> uses "connections"
+through which traffic is fed from the districts into the network.</p>
+<p>The effects on using such connectors within a microscopic simulations
+should be described at a different
+page. Here, we want to show the
+possibilities to change the connector attributes using
+<a href="../../netconvert.html">netconvert</a>.</p>
+<h1 id="see_also">See also<a class="headerlink" href="#see_also" title="Permanent link">#</a></h1>
+<p><a href="../../netconvert.html">netconvert</a> is able to guess some information
+which is sometimes missing in imported networks. Below, you may find
+links to further information of interest.</p>
+<ul>
+<li>Most <a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> networks
+  do not contain definitions of traffic lights positions; Still,
+  <a href="../../netconvert.html">netconvert</a> is able to <a href="../../netconvert.html#guessingtlspositions">guess tls
+  positions</a> and to <a href="../../netconvert.html#guessingtlsprograms">guess
+  tls programs</a>.</li>
+<li>Also, we have not seen a
+  <a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> network where
+  on- and off-ramps where available for highways.
+  <a href="../../netconvert.html">netconvert</a> is able to <a href="../../netconvert.html#guessingramps">guess on- and
+  off-ramps</a>.</li>
+<li>In addition to the network, further descriptions of <a href="../../netconvert.html#settingconnections">lane-to-lane or
+  edge-to-edge connections</a>
+  may be read.</li>
+</ul>
+<p>Other possibilities of <a href="../../netconvert.html">netconvert</a>, such as
+projection of geo-coordinates, should not apply when working with
+<a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> networks.</p>
+<h2 id="importing_other_data_from_visum">Importing other data from VISUM<a class="headerlink" href="#importing_other_data_from_visum" title="Permanent link">#</a></h2>
+<p><a href="http://www.ptvag.com/traffic/software/visum/">VISUM</a> uses O/D-matrices
+as a demand descriptions. There is some further information on
+<a href="../../Demand/Importing_O/D_Matrices.html">Demand/Importing O/D
+Matrices</a>.</p>
+<h1 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h1>
+<ul>
+<li><a href="http://www.ptvag.com/software/transportation-planning-traffic-engineering/software-system-solutions/visum/visum/">PTV AG's
+  VISUM-page</a>
+  (06.09.2011)</li>
+</ul>
+<h1 id="missing">Missing<a class="headerlink" href="#missing" title="Permanent link">#</a></h1>
+<ul>
+<li>Attributes of connectors</li>
+<li>Importing POIs/Shapes</li>
+<li>what is exactly imported (how edge attributes are determined)</li>
+<li>other traffic modes</li>
+<li>Network quality</li>
+</ul>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Simulation/Output/VehRoutes.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Simulation/Output/VehRoutes - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Developer/Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Simulation/Output/VehRoutes.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#instantiating_within_the_simulation">Instantiating within the Simulation</a></li>
+            <li class="nav-item main"><a href="#generated_output">Generated Output</a></li>
+            <li class="nav-item main"><a href="#output_only_for_selected_vehicles_or_vehicle_types">Output only for selected vehicles or vehicle types</a></li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Simulation/Output/VehRoutes<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>The vehicle routes output contains information about which route a
+vehicle took and if his route was replaced at any time by a new one,
+each of the previous routes together with the edge at the time their
+replacement took place is reported. Furthermore, the times the vehicle
+has entered and has left the network are stored herein.</p>
+<p>In normal conditions, when all vehicles use predefined routes, the
+output does not contain any information that could not be retrieved from
+the routes and the tripinfo output. But as soon as you reroute your
+vehicles within the simulation, f.e. using rerouters, it will contain
+new information.</p>
+<h2 id="instantiating_within_the_simulation">Instantiating within the Simulation<a class="headerlink" href="#instantiating_within_the_simulation" title="Permanent link">#</a></h2>
+<p>This output is enabled for a simulation using the option <strong>--vehroute-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> or <strong>--vehroutes</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a>. Further
+options affecting this output are listed at
+<a href="../../sumo.html#output">SUMO#Output</a>.</p>
+<h2 id="generated_output">Generated Output<a class="headerlink" href="#generated_output" title="Permanent link">#</a></h2>
+<p>The generated file look like this:</p>
+<pre><code>&lt;routes&gt;
+    &lt;vehicle id=&quot;&lt;VEHICLE_ID&gt;&quot; [type=&quot;&lt;TYPE_ID&gt;&quot;] depart=&quot;&lt;INSERTION_TIME&gt;&quot; arrival=&quot;&lt;ARRIVAL_TIME&gt;&quot; [routeLength=&quot;&lt;LENGTH&gt;&quot;]&gt;
+        &lt;routeDistribution&gt;
+            &lt;route replacedOnEdge=&quot;&lt;EDGE_ID&gt;&quot; replacedAtTime=&quot;&lt;TIME&gt;&quot; probability=&quot;0&quot; edges=&quot;&lt;PREVIOUS_ROUTE&gt;&quot;/&gt;
+
+            ... further replaced routes ...
+
+            &lt;route edges=&quot;&lt;LAST_ROUTE&gt;&quot; [exitTimes=&quot;&lt;EXIT_TIMES&gt;&quot;]/&gt;
+        &lt;routeDistribution&gt;
+    &lt;/vehicle&gt;
+
+    &lt;person id=&quot;&lt;PERSON_ID&gt;&quot; depart=&quot;&lt;INSERTION_TIME&gt;&quot; arrival=&quot;&lt;ARRIVAL_TIME&gt;&quot;&gt;
+        &lt;ride from=&quot;...&quot; to=&quot;...&quot; lines=&quot;...&quot;/&gt;
+        &lt;walk edges=&quot;...&quot; speed=&quot;...&quot;/&gt;
+    &lt;/person&gt;
+
+    ... information about further vehicles and persons ...
+
+&lt;/routes&gt;
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>(vehicle) id</td>
+<td>The id of the vehicle this entry describes</td>
+</tr>
+<tr>
+<td>type</td>
+<td>vehicle type id</td>
+<td>The id of the vehicle type if different from the default</td>
+</tr>
+<tr>
+<td>depart</td>
+<td>s</td>
+<td>The time the vehicle was emitted into the network</td>
+</tr>
+<tr>
+<td>arrival</td>
+<td>s</td>
+<td>The time the vehicle was removed from the simulation (due to arriving at the route end)</td>
+</tr>
+<tr>
+<td>routeLength</td>
+<td>m</td>
+<td>The total length of the vehicle's route (if activated by the vehroutes.route-length option)</td>
+</tr>
+<tr>
+<td>replacedOnEdge</td>
+<td>(edge) id</td>
+<td>The edge the vehicle was on when the described route was replaced</td>
+</tr>
+<tr>
+<td>replacedAtTime</td>
+<td>s</td>
+<td>The time step of this replacement</td>
+</tr>
+<tr>
+<td>&lt;PREVIOUS_ROUTE></td>
+<td>[(edge) id]+</td>
+<td>The replaced route</td>
+</tr>
+<tr>
+<td>&lt;LAST_ROUTE></td>
+<td>[(edge) id]+</td>
+<td>The final vehicle route</td>
+</tr>
+<tr>
+<td>&lt;EXIT_TIMES></td>
+<td>[time in s]+</td>
+<td>The leave time for every edge in the route, if enabled with the option <strong>--vehroute-output.exit-times</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Additional attributes of the vehicle are also included if they were set.</p>
+</div>
+<p>Both the previous and the final routes are complete, that means that
+they contain all the edges the vehicle was meant to pass as long as the
+route was not replaced, yet. The information replacedOnEdge and
+replacedAtTime are available only for routes which were replaced. The
+probability field is only given to make the file directly usable as
+input to the simulation which lets the vehicle travel its final route.
+For proper simulation input the file should be also sorted by departure
+time. This can be accomplished by also setting option <strong>--vehroute-output.sorted</strong>.</p>
+<h2 id="output_only_for_selected_vehicles_or_vehicle_types">Output only for selected vehicles or vehicle types<a class="headerlink" href="#output_only_for_selected_vehicles_or_vehicle_types" title="Permanent link">#</a></h2>
+<p>By default all vehicles will generate vehroute-output. By <a href="../../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#assignment_by_generic_parameters">assigning a vehroute device</a> to selected vehicles or vehicle types, this can be changed.
+As an example, the following definition enables the device for the vehicle type <strong>t1</strong>:</p>
+<pre><code>&lt;vType id=&quot;t1&quot;&gt;
+  &lt;param key=&quot;has.vehroute.device&quot; value=&quot;true&quot;/&gt;
+&lt;/vType&gt;
+</code></pre>
+
+<p>Alternatively, you can use the SUMO option <strong>--device.vehroute.probability</strong> to set the probability for a vehicle to generate the vehroute-output.
+For example, setting the option <strong>--device.vehroute.probability 0.25</strong> will equip about a quarter of the vehicles with a vehroute device (each vehicle determines this randomly with 25% probability).</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 26 November 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

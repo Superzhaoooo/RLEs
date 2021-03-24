@@ -1,0 +1,166 @@
+<html><head><link rel="STYLESHEET" href="../book.css"  type="text/css"/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Project Features</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="index.html" title="OMNeT&#8288;+&#8288;+ User Guide"><link rel="up" href="ch05.html" title="Chapter 5. C&#8288;+&#8288;+ Development"><link rel="prev" href="ch05s06.html" title="Configuring the Project"><link rel="next" href="ch05s08.html" title="Project Files"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Project Features</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s06.html">Prev</a> </td><th width="60%" align="center">Chapter 5. C&#8288;+&#8288;+ Development</th><td width="20%" align="right"> <a accesskey="n" href="ch05s08.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idm1304"></a>Project Features</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm1306"></a>Motivation</h3></div></div></div><p>
+        Long compile times are often an inconvenience when working with large
+        OMNeT&#8288;+&#8288;+-based model frameworks like the INET Framework. The IDE feature
+        named <span class="emphasis"><em>Project Features</em></span> lets you reduce build times by excluding or
+        disabling parts of the model framework that you do not use for your
+        simulation study. For example, when you are working on mobile ad-hoc simulations in INET,
+        you can disable the compilation of Ethernet, IPv6/MIPv6, MPLS, and other
+        unrelated protocol models. The word <span class="emphasis"><em>feature</em></span> refers to a piece of
+        the project codebase that can be turned off as a whole.
+      </p><p>
+        Additional benefits of project features include a less cluttered model palette
+        in the NED editor, being able to exclude code that does not compile on your system,
+        and enforcing cleaner separation of unrelated parts in the model framework.
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+        A similar effect could also achieved via breaking up the model framework (e.g. INET)
+        into several smaller projects, but that would cause other kinds of inconveniences for
+        model developers and users alike.
+      </div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm1313"></a>What is a Project Feature</h3></div></div></div><p>
+        Features can be defined per project. As already mentioned, a feature is a piece of the
+        project codebase that can be turned off as a whole, that is, excluded from the C&#8288;+&#8288;+ sources
+        (and thus from the build) and also from NED. Feature definitions are typically written
+        and distributed by the author of the project; end users are only presented with the
+        option of enabling/disabling those features. A feature definition contains:
+      </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><span class="emphasis"><em>ID</em></span>, which is a unique identifier inside the feature definition file.
+        </li><li class="listitem"><span class="emphasis"><em>Feature name,</em></span> for example <code class="literal">"UDP"</code> or <code class="literal">"Mobility examples"</code>.
+        </li><li class="listitem"><span class="emphasis"><em>Feature description.</em></span> This is a few sentences of text describing what the feature
+          is or does; for example <code class="literal">"Implementation of the UDP protocol"</code>.
+        </li><li class="listitem"><span class="emphasis"><em>Labels.</em></span> This is list of labels or keywords that facilitate grouping or finding features.
+        </li><li class="listitem"><span class="emphasis"><em>Initially enabled.</em></span> This is a boolean flag that determines the initial enablement
+          of the feature.
+        </li><li class="listitem"><span class="emphasis"><em>Required features.</em></span> Some features may be built on top of others; for example, a HMIPv6
+          protocol implementation relies on MIPv6, which in turn relies on IPv6. Thus, HMIPv6 can
+          only be enabled if MIPv6 and IPv6 are enabled as well. This is a space-separated list of
+          feaure IDs.
+        </li><li class="listitem"><span class="emphasis"><em>NED packages.</em></span> This is a space-separated list of NED package names that identify the
+          code that implements the feature. When you disable the feature, NED types defined in those
+          packages and their subpackages will be excluded; also, C&#8288;+&#8288;+ code in the folders that correspond
+          to the packages (i.e. in the same folders as excluded NED files) will also be excluded.
+        </li><li class="listitem"><span class="emphasis"><em>Extra C&#8288;+&#8288;+ source folders.</em></span> If the feature contains C&#8288;+&#8288;+ code that lives outside NED source
+          folders (nontypical), those folders are listed here.
+        </li><li class="listitem"><span class="emphasis"><em>Compile options,</em></span> for example <code class="literal">-DWITH_IPv6</code>. When the feature is enabled, the compiler
+          options listed here are either added to the compiler command line of all C&#8288;+&#8288;+ files
+          or they can be used to generate a header file containing all these defines
+          so that header file can be included in all C&#8288;+&#8288;+ files. A typical use of this field is
+          defining symbols (<code class="literal">WITH_xxx</code>] that allows you to write conditional code
+          that only compiles when a given feature is enabled. Currently only the <code class="literal">-D</code> option
+          (<span class="emphasis"><em>define symbol</em></span>) is supported here.
+        </li><li class="listitem"><span class="emphasis"><em>Linker options.</em></span> When the feature is enabled, the linker options listed here are added
+          to the linker command line. A typical use of this field is linking with additional
+          libraries that the feature's code requires, for example libavcodec.
+          Currently only the <code class="literal">-l</code> option (<span class="emphasis"><em>link with library</em></span>) is supported here.
+        </li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm1346"></a>The Project Features Dialog</h3></div></div></div><p>
+        Features can be viewed, enabled and disabled on the <span class="emphasis"><em>Project Features</em></span> page of the
+        <span class="emphasis"><em>Project Properties</em></span> dialog. The <span class="emphasis"><em>Project | Project Features...</em></span> menu item
+        is a direct shortcut to this property page.
+      </p><div class="figure"><a name="pictures/CPP-Features.png"></a><p class="title"><b>Figure 5.19. The Project Features page</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/CPP-Features.png" align="middle" alt="The Project Features page"></div></div></div></div><br class="figure-break"><p>
+        The central area of the dialog page lists the features defined for the project.
+        Hovering the mouse over a list item will show the description and other fields
+        of the feature in a tooltip window. Check an item to enable the feature, and uncheck
+        to disable.
+      </p><p>
+        When you enable a feature that requires other features to work, the dialog
+        will ask for permission to enable the required features as well. Also, if you disable
+        a feature that others depend on, they will be disabled, too.
+      </p><p>
+        The <span class="emphasis"><em>Apply</em></span>, <span class="emphasis"><em>OK</em></span> and <span class="emphasis"><em>Cancel</em></span> buttons work as expected. <span class="emphasis"><em>Restore Defaults</em></span>
+        restores the features to their initial state (see the <span class="emphasis"><em>Initially enabled</em></span> attribute above).
+      </p><p>
+        Above the list there is a notification area in the dialog. If the IDE detects that
+        your project's configuration is inconsistent with the feature enablements, it will display
+        a warning there, and offer a way to automatically fix the problems. Fixing means that
+        the IDE will adjust the project's NED and C&#8288;+&#8288;+ settings to make them consistent
+        with the feature enablements. Such check is also performed just before build.
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm1369"></a>What Happens When You Enable/Disable a Feature</h3></div></div></div><p>
+        When you enable or disable a feature on the <span class="emphasis"><em>Project Features</em></span> page, a number of project
+        settings will be modified:
+      </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          NED package exclusions. This corresponds to the contents of the <span class="emphasis"><em>Excluded package subtrees</em></span>
+          list on the <span class="emphasis"><em>NED Source Folders</em></span> property page. When a feature is disabled,
+          its NED packages will be excluded (added to the list), and vice versa.
+        </li><li class="listitem">
+          C&#8288;+&#8288;+ folder exclusions. This can be viewed/edited on the <span class="emphasis"><em>Makemake</em></span> property page, and
+          also on the <span class="emphasis"><em>Source Location</em></span> tab of the <span class="emphasis"><em>C/C&#8288;+&#8288;+ General &gt; Paths and Symbols</em></span>
+          property page.
+        </li><li class="listitem">
+          Compile options. For example, if the feature defines preprocessor symbols (<code class="literal">-DWITH_xxx</code>),
+          they can be used to generate a header file that contains the enabled macro definitions and
+          that file can be included in all C&#8288;+&#8288;+ files.
+        </li><li class="listitem">
+          Linker options. For example, if the feature defines additional libraries to link with,
+          they will be displayed on the <span class="emphasis"><em>Libraries</em></span> tab of the <span class="emphasis"><em>C/C&#8288;+&#8288;+ General &gt; Paths and Symbols</em></span>
+          property page.
+        </li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+        Feature enablements are saved to the <code class="literal">.oppfeaturestate</code> file in the project root.
+      </div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm1388"></a>Using Features from Command Line</h3></div></div></div><p>
+        <span class="emphasis"><em>Project Features</em></span> can be easily configured from the IDE, but command line tools
+        (<code class="literal">opp_makemake</code>, etc.) can also use them with the help of the <code class="literal">opp_featuretool</code>
+        command.
+      </p><p>
+        If you want to build the project from the command line with the same feature
+        combination the IDE is using, you need to generate the makefiles with the same <code class="literal">opp_makemake</code>
+        options that the IDE uses in that feature combination. The <code class="literal">opp_featuretool makemakeargs</code>
+        command (executed in the project's root directory) will show all the required
+        arguments that you need to specify for the  <code class="literal">opp_makemake</code> command to
+        build the same output as the IDE. This allows you to keep the same
+        features enabled no matter how you build your project.
+      </p><p>
+        Alternatively, you can choose <span class="emphasis"><em>Export</em></span> on the <span class="emphasis"><em>Makemake</em></span> page, and copy/paste the
+        options from the generated <code class="literal">makemakefiles</code> file. This method is
+        not recommended, because you must redo it manually each time after changing
+        the enablement state of a feature.
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm1402"></a>The <code class="literal">.oppfeatures</code> File</h3></div></div></div><p>
+        Project features are defined in the <code class="literal">.oppfeatures</code> file in your project's
+        root directory. This is an XML file, and it currently has to be written by hand
+        (there is no specialized editor for it).
+      </p><p>
+        The root element is <code class="literal">&lt;features&gt;</code>, and it may have several <code class="literal">&lt;feature&gt;</code>
+        child elements, each defining a project feature. Attributes of the <code class="literal">&lt;features&gt;</code>
+        element define the root(s) of the source folder(s) (<code class="literal">cppSourceRoots</code>) and the name of a
+        generated header file that contains all defines specified by the <code class="literal">compilerFlags</code>
+        attribute in the enabled features. The fields of a feature
+        are represented with XML attributes; attribute names are <code class="literal">id</code>, <code class="literal">name</code>,
+        <code class="literal">description</code>, <code class="literal">initiallyEnabled</code>, <code class="literal">requires</code>, <code class="literal">labels</code>, <code class="literal">nedPackages</code>,
+        <code class="literal">extraSourceFolders</code>, <code class="literal">compileFlags</code> and <code class="literal">linkerFlags</code>. Items within attributes
+        that represent lists (<code class="literal">requires</code>, <code class="literal">labels</code>, etc.) are separated by spaces.
+      </p><p>
+        Here is an example feature from the INET Framework:
+      </p><pre class="screen">
+&lt;features cppSourceRoots="src" definesFile="src/inet/features.h"&gt;
+    &lt;feature
+        id="TCP_common"
+        name="TCP Common"
+        description = "The common part of TCP implementations"
+        initiallyEnabled = "true"
+        requires = ""
+        labels = ""
+        nedPackages = "
+                       inet.transport.tcp_common
+                       inet.applications.tcpapp
+                       inet.util.headerserializers.tcp
+                      "
+        extraSourceFolders = ""
+        compileFlags = "-DWITH_TCP_COMMON"
+        linkerFlags = ""
+    /&gt;
+</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm1427"></a>How to Introduce a Project Feature</h3></div></div></div><p>
+        If you plan to introduce a project feature in your project, here's what you'll need
+        to do:
+      </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Isolate the code that implements the feature into a separate source directory
+          (or several directories). This is because only whole folders can be
+          declared as part of a feature, individual source files cannot.
+        </li><li class="listitem">
+          Check the remainder of the project. If you find source lines that reference
+          code from the new feature, use conditional compilation (<code class="literal">#ifdef WITH_YOURFEATURE</code>)
+          to make sure that code compiles (and either works sensibly or throws an error)
+          when the new feature is disabled. (Your feature should define the <code class="literal">WITH_YOURFEATURE</code>
+          symbol, i.e. <code class="literal">-DWITH_YOURFEATURE</code> will need to be added to the feature compile flags.)
+        </li><li class="listitem">
+          Add the feature description into the <code class="literal">.oppfeatures</code> file of your project
+          including the required feature dependencies.
+        </li><li class="listitem">
+          Test. At the minimum, test that your project compiles at all, both with the
+          new feature enabled and disabled. More thorough, automated tests can be built using
+          <code class="literal">opp_featuretool</code>.
+        </li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s06.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch05s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Configuring the Project </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Project Files</td></tr></table></div></body></html>

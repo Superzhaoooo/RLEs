@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:image" content="../../images/image-facebook.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1080">
+        <meta property="og:image:height" content="1080">
+
+        
+        
+        <link rel="canonical" href="https://sumo.dlr.de/docs/Developer/How_To/Device.html">
+        <link rel="shortcut icon" href="../../favicon.ico">
+        
+        <title>Developer/How To/Device - SUMO Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+
+      <script>
+        // DARK MODE
+        function detectColorScheme(){
+          var theme="light";
+
+          if(localStorage.getItem("sumo-docs-theme")){
+              if(localStorage.getItem("sumo-docs-theme") == "dark"){
+                  var theme = "dark";
+              }
+          } else if(!window.matchMedia) {
+              return false;
+          } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              var theme = "dark";
+          }
+
+          if (theme=="dark") {
+              document.documentElement.setAttribute("data-theme", "dark");
+          }
+        }
+        detectColorScheme();
+      </script>
+
+    </head>
+
+    <body>
+
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary text-center">
+            <div class="container-fluid">
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../index.html" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Tutorials.html" class="nav-link">Tutorials</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../FAQ.html" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Downloads.html" class="nav-link">Downloads</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../Publications.html" class="nav-link">Publications</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Main.html" class="nav-link">Developer</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../ChangeLog.html" class="nav-link">ChangeLog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://github.com/eclipse/sumo/commits/master/docs/web" class="nav-link">Recent Changes</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="https://eclipse.org/sumo/contact/" class="nav-link">Contact</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> <u>S</u>earch
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="edit" href="https://github.com/eclipse/sumo/edit/master/docs/web/docs/Developer/How_To/Device.md" class="nav-link"><i class="fa fa-github"></i> <u>E</u>dit on GitHub</a>
+                            </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More <i class="fa fa-chevron-circle-down"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item no-arrow-link" href="https://github.com/eclipse/sumo/issues">Report a Bug / Issue / Typo</a>
+                            <a class="dropdown-item" href="../../Editing_Articles.html">Help on editing articles</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mkdocs_keyboard_modal">Keyboard Shortcuts</a>
+                            <a class="dropdown-item no-arrow-link" href="https://sumo.dlr.de/sumo_documentation.zip">Download the Documentation</a>
+                            <span class="dropdown-item" id="dark-mode-div">Dark mode <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+                              <input type="checkbox" id="checkbox_theme">
+                          </label></span>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-md-3">
+                  <div class="text-center"><a href="../../index.html" style="display: inline-block; margin-top: 5px;"><img src="../../images/sumo-logo.png" class="sumoLogo" alt="SUMO Logo" width="120px"></a></div>
+                  
+<div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary toc-scroll toc">
+        <ul class="nav flex-column bs-sidenav">
+            <p style="margin-top:5px; color:#777777;" class="text-center">Contents</p>
+            <li class="nav-item main"><a href="#what_is_a_device_good_for">What is a device good for?</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#msdevice_tripinfo" class="nav-link">• MSDevice_Tripinfo</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#msdevice_vehroutes" class="nav-link">• MSDevice_Vehroutes</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#msdevice_routing" class="nav-link">• MSDevice_Routing</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#msdevice_person" class="nav-link">• MSDevice_Person</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#msdevice_hbefa" class="nav-link">• MSDevice_HBEFA</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#msdevice_battery" class="nav-link">• MSDevice_Battery</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#msdevice_ssm" class="nav-link">• MSDevice_SSM</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#msdevice_example" class="nav-link">• MSDevice_Example</a>
+                </li>
+            <li class="nav-item main"><a href="#steps_for_implementing_a_new_device">Steps for implementing a new device</a></li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#copy_example_device" class="nav-link">• Copy Example Device</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#assign_device_to_vehicles" class="nav-link">• Assign Device to Vehicles</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#adding_your_own_functionality" class="nav-link">• Adding your own functionality</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#testing_your_code" class="nav-link">• Testing your code</a>
+                </li>
+                <li class="nav-item" style="text-indent: 5px;">
+                    <a href="#show_your_work" class="nav-link">• Show your work</a>
+                </li>
+        </ul>
+    </div>
+
+    <div class="admonition conference" style="position: sticky; margin-top: 20px; margin-bottom:10px;">
+        <p>visit <a href="https://eclipse.org/sumo">eclipse.org/sumo</a></p>
+        </div>
+
+</div>
+                  
+                </div>
+                <div class="col-md-9 main-area" role="main">
+                  
+                  <hTitles>Developer/How To/Device<hr style="border: 0.5px solid #338033; margin-top: 5px !important;"></hTitles>
+                  
+                  
+
+<p>This Page describes how to implement a new device.</p>
+<h2 id="what_is_a_device_good_for">What is a device good for?<a class="headerlink" href="#what_is_a_device_good_for" title="Permanent link">#</a></h2>
+<p>A device is a container for data and functionality which resides in
+individual vehicles. Devices are notified about all vehicle movements
+and may interact with the vehicle or with other devices. An important
+aspect of devices is, that it is possible to equip only a fraction of
+the simulated vehicles. Usually devices support some kind of output. The
+following is a list of available devices and their functionality</p>
+<h3 id="msdevice_tripinfo">MSDevice_Tripinfo<a class="headerlink" href="#msdevice_tripinfo" title="Permanent link">#</a></h3>
+<p>Records start and arrival of a vehicle as well as aggregate measures
+about a completed trip such as average speed and waiting time. This
+device is also used for expressing aggregate results from other devices
+such as emissions (<a href="#msdevice_hbefa">MSDevice_HBEFA</a>). This
+devices is activated using the option <strong>--tripinfo-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and is then active for all
+vehicles.</p>
+<h3 id="msdevice_vehroutes">MSDevice_Vehroutes<a class="headerlink" href="#msdevice_vehroutes" title="Permanent link">#</a></h3>
+<p>Records the edges traveled by a vehicle and optionally the times at
+which each edge was left. It can also record dynamic route changes. This
+device is also used for expressing aggregate results from other devices
+such as emissions (<a href="#msdevice_hbefa">MSDevice_HBEFA</a>). This
+devices is activated using the option <strong>--vehroute-output</strong> <a href="/docs/Basics/Notation.html#referenced_data_types"><em>&lt;FILE&gt;</em></a> and is then active for all
+vehicles.</p>
+<h3 id="msdevice_routing">MSDevice_Routing<a class="headerlink" href="#msdevice_routing" title="Permanent link">#</a></h3>
+<p>Triggers periodic rerouting of equipped vehicles. This devices is
+activated using the options <strong>--vehroute-output.*</strong> and is then active for selected vehicles.
+It is possible to equip specific vehicles or a fraction of the vehicle
+fleet.</p>
+<h3 id="msdevice_person">MSDevice_Person<a class="headerlink" href="#msdevice_person" title="Permanent link">#</a></h3>
+<p>This device is automatically created if a person rides in a vehicle. It
+is used when managing boarding and alighting</p>
+<h3 id="msdevice_hbefa">MSDevice_HBEFA<a class="headerlink" href="#msdevice_hbefa" title="Permanent link">#</a></h3>
+<p>Computes emissions of a vehicle as described in
+<a href="../../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#vehicle_emission_classes">Definition_of_Vehicles,_Vehicle_Types,_and_Routes#Vehicle_Emission_Classes</a>.
+This devices is activated using the options <strong>--device.hbefa.*</strong> and is then active for
+selected vehicles. It is possible to equip specific vehicles or a
+fraction of the vehicle fleet.</p>
+<h3 id="msdevice_battery">MSDevice_Battery<a class="headerlink" href="#msdevice_battery" title="Permanent link">#</a></h3>
+<p>This device is used for modelling energy use and battery capacity of
+electric vehicles.</p>
+<h3 id="msdevice_ssm">MSDevice_SSM<a class="headerlink" href="#msdevice_ssm" title="Permanent link">#</a></h3>
+<p>This device logs surrogate safety measures for equipped vehicles, see
+<a href="../../Simulation/Output/SSM_Device.html">Simulation/Output/SSM_Device</a>.</p>
+<h3 id="msdevice_example">MSDevice_Example<a class="headerlink" href="#msdevice_example" title="Permanent link">#</a></h3>
+<p>This device serves as an implementation example for custom devices.</p>
+<h2 id="steps_for_implementing_a_new_device">Steps for implementing a new device<a class="headerlink" href="#steps_for_implementing_a_new_device" title="Permanent link">#</a></h2>
+<h3 id="copy_example_device">Copy Example Device<a class="headerlink" href="#copy_example_device" title="Permanent link">#</a></h3>
+<p>The suggested way for creating a new device is to create a new class by
+copying the files <em>src/microsim/devices/MSDevice_Example.{h,cpp}</em>.</p>
+<p>In order to compile the new class it must be added to
+<strong>src/microsim/devices/Makefile.am</strong> (on Linux) or added to project
+<strong>z_libmicrosim_devices</strong> (on Windows).</p>
+<p>In order to be available for use, the device must also be added in
+<em>src/microsim/devices/MSDevice.cpp</em> to the functions <em>insertOptions</em> and
+<em>buildVehicleDevices</em>.</p>
+<h3 id="assign_device_to_vehicles">Assign Device to Vehicles<a class="headerlink" href="#assign_device_to_vehicles" title="Permanent link">#</a></h3>
+<p>Devices are assigned by global options for equipping all or a fraction
+of the vehicle fleet. Alternatively, they can be defined by setting <code>&lt;vehicle&gt;</code> or
+<code>&lt;vType&gt;</code>-<a href="../../Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#devices">generic
+parameters</a>.
+The new assignment options are generated automatically by calling the
+function <em>MSDevice::insertDefaultAssignmentsOptions</em>. The test whether a
+specific vehicle should be equipped with the device is done by calling
+<em>MSDevice::equippedByDefaultAssignmentOptions</em>. The usage of these
+methods is demonstrated in <em>MSDevice_Example</em>.</p>
+<h3 id="adding_your_own_functionality">Adding your own functionality<a class="headerlink" href="#adding_your_own_functionality" title="Permanent link">#</a></h3>
+<p>Devices work by updating their state periodically (i.e.
+<em>MSDevice_Routing</em>) or everytime the vehicle moves (i.e.
+<em>MSDevice_Battery</em>). Many devices perform some kind of output either
+periodically (<em>MSDevice_Routing</em>) in response to computed events
+(<em>MSDevice_BTreceiver</em>) or at the time the vehicle leaves the
+simulation (<em>MSDevice_Vehroutes</em>). Before the vehicle is removed the
+method <em>generateOutput</em> is called for each device.</p>
+<h3 id="testing_your_code">Testing your code<a class="headerlink" href="#testing_your_code" title="Permanent link">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is important to test new code and suggestions for how to do so can be found in <em>tests/sumo/extended/device_example/</em>.</p>
+</div>
+<h3 id="show_your_work">Show your work<a class="headerlink" href="#show_your_work" title="Permanent link">#</a></h3>
+<p>If you have implemented a new device and you think it may be useful to
+other users of SUMO, please contribute to our community and tell us
+about your work. We would be happy to help you in getting your device
+into the main development tree.</p>
+                </div>
+          </div>
+          <button onclick="goTopFunction()" id="goToTop" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+
+        <footer class="col-md-12">
+          
+            <br><small><i>This page was last edited on: 12 August 2020</i></small>
+          
+          <hr>
+            <p>Copyright &copy; 2001 - 2020 German Aerospace Center (DLR) and others.</p>
+          <p>Follow us on <a class="no-arrow-link" href="https://www.twitter.com/eclipsesumo/"><i class="fa fa-twitter"></i></a> <a class="no-arrow-link" href="https://www.facebook.com/simulationofurbanmobility/"><i class="fa fa-facebook-square"></i></a> <a class="no-arrow-link" href="https://www.instagram.com/eclipse.sumo/"><i class="fa fa-instagram"></i></a>
+          | Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a></p>
+        </footer>
+
+      <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" style="color: #495057 !important;">
+                <p>Enter your search terms:</p>
+                <script async src="https://cse.google.com/cse.js?cx=004302551366764109984:1kpgtzrm6kv"></script>
+                <div class="gcse-search"></div>
+            </div>
+            <div class="modal-footer" style="color: #495057 !important;">
+                or search the sumo-user mailing list archive&nbsp;<a class="no-arrow-link" href="http://sumo-user.90755.n8.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=">here</a>
+            </div>
+        </div>
+    </div>
+</div>
+      <script>
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("goToTop").style.display = "block";
+          } else {
+            document.getElementById("goToTop").style.display = "none";
+          }
+        }
+    
+        function goTopFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+
+        var base_url = "../..",
+            shortcuts = {"help": 191, "search": 83, "edit": 69};
+        </script>
+        <script src="../../js/base.js" defer></script>
+
+        <script>
+          const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+  
+          function switchTheme(e) {
+              if (e.target.checked) {
+                  localStorage.setItem('sumo-docs-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  toggleSwitch.checked = true;
+              } else {
+                  localStorage.setItem('sumo-docs-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  toggleSwitch.checked = false;
+              }    
+          }
+  
+          toggleSwitch.addEventListener('change', switchTheme, false);
+  
+          if (document.documentElement.getAttribute("data-theme") == "dark"){
+              toggleSwitch.checked = true;
+          }
+          </script>
+
+      <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Key</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style="color: #495057 !important;">
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help dialog</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search the Documentation</td>
+                  </tr>
+                  <tr>
+                    <td class="edit shortcut"><kbd>e</kbd></td>
+                    <td>Edit current page on GitHub</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+</html>

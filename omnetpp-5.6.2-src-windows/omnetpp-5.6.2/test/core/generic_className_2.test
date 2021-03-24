@@ -1,0 +1,22 @@
+%description:
+Test that NED-generated simple modules have the right getClassName() methods.
+Note: the test module is in a namespace, and that should also be part of the returned class name
+
+%module: SomeModule
+
+class SomeModule : public cSimpleModule
+{
+  public:
+    SomeModule() : cSimpleModule(16384) { }
+    virtual void activity() override;
+};
+
+Define_Module(SomeModule);
+
+void SomeModule::activity()
+{
+    EV << "'" << getClassName() << "'" << endl;
+}
+
+%contains: stdout
+'@TESTNAME@::SomeModule'

@@ -1,0 +1,123 @@
+<html><head><link rel="STYLESHEET" href="../book.css"  type="text/css"/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Parts of the Qtenv UI</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="home" href="index.html" title="OMNeT&#8288;+&#8288;+ User Guide"><link rel="up" href="ch07.html" title="Chapter 7. The Qtenv Graphical Runtime Environment"><link rel="prev" href="ch07s04.html" title="Using Qtenv with a Debugger"><link rel="next" href="ch07s06.html" title="Inspecting Objects"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Parts of the Qtenv UI</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s04.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The Qtenv Graphical Runtime Environment</th><td width="20%" align="right"> <a accesskey="n" href="ch07s06.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="idm2078"></a>Parts of the Qtenv UI</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2080"></a>The Status Bars</h3></div></div></div><p> The status bars show the simulation's progress. There is one row at the top
+        of the main window, and one at the bottom. The top one can be hidden using
+        the <span class="emphasis"><em>View | Status Details</em></span> menu item.
+      </p><div class="figure"><a name="pictures/Qtenv-statusbar.png"></a><p class="title"><b>Figure 7.8. The top status bar</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="400"><tr><td align="center"><img src="pictures/Qtenv-statusbar.png" align="middle" width="400" alt="The top status bar"></td></tr></table></div></div></div></div><br class="figure-break"><p> When the simulation is paused or runs with animation, the top row displays
+       the next expected simulation event. Note the word <span class="emphasis"><em>expected</em></span>: certain schedulers may
+       insert new events before the displayed event in the last moment. Some schedulers
+       that tend to do that are those that accept input from outside sources:
+       real-time scheduler, hybrid or hardware-in-the-loop schedulers, parallel
+       simulation schedulers, etc. Contents of the top row:
+      </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">Name, C&#8288;+&#8288;+ class and ID of the next message (event) object</li><li class="listitem">The module where the next event will occur (i.e. the module where
+          the message will be delivered)
+        </li><li class="listitem">The simulation time of the next (expected) simulation event</li><li class="listitem">Time of the next event, and delta from the current simulation time</li></ol></div><p> When the simulation is running in <span class="emphasis"><em>Fast</em></span> or <span class="emphasis"><em>Express</em></span> mode, displaying
+        the next event becomes useless, so the contents of the top row are replaced by
+        the following performance gauges:
+      </p><div class="figure"><a name="pictures/Qtenv-statusbar-running.png"></a><p class="title"><b>Figure 7.9. The top status bar during Fast or Express run</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="400"><tr><td align="center"><img src="pictures/Qtenv-statusbar-running.png" align="middle" width="400" alt="The top status bar during Fast or Express run"></td></tr></table></div></div></div></div><br class="figure-break"><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">Simulation speed: number of events processed per real second</li><li class="listitem">Relative speed of the simulation (compared to real-time)</li><li class="listitem">Event density: the number of events per simulated seconds</li></ol></div><p> The bottom row contains the following items:</p><div class="figure"><a name="pictures/Qtenv-statusbar-bottom.png"></a><p class="title"><b>Figure 7.10. The bottom status bar</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="400"><tr><td align="center"><img src="pictures/Qtenv-statusbar-bottom.png" align="middle" width="400" alt="The bottom status bar"></td></tr></table></div></div></div></div><br class="figure-break"><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">Ini config name, run number, and the name of the network</li><li class="listitem">Message statistics: the number of messages currently scheduled (i.e. in the FES);
+          the number of message objects that currently exists in the simulation; and the
+          number of message objects that have been created this far, including the
+          already deleted ones. Out of the three, probably the middle one is the most useful:
+          if it is steadily growing without apparent reason, the simulation model is probably
+          missing some <code class="literal">delete msg</code> statements, and needs to be debugged.
+        </li></ol></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2127"></a>The Timeline</h3></div></div></div><div class="figure"><a name="pictures/Qtenv-timeline.png"></a><p class="title"><b>Figure 7.11. The timeline</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="400"><tr><td align="center"><img src="pictures/Qtenv-timeline.png" align="middle" width="400" alt="The timeline"></td></tr></table></div></div></div></div><br class="figure-break"><p> The timeline displays the contents of the Future Events Set on a logarithmic time scale.
+        Each dot represents a message (event). Messages to be delivered in the current simulation
+        time are grouped into a separate section on the left between brackets.
+      </p><p> Clicking an event will focus it in the <span class="emphasis"><em>Object Inspector</em></span>, and double-clicking
+        will open a floating inspector window. Right-clicking will bring up a context menu
+        with further actions.
+      </p><p> The timeline is often crowded, limiting its usefulness. To overcome this, you can hide
+        uninteresting events from the timeline: right-click the event, and choose
+        <span class="emphasis"><em>Exclude Messages Like 'x' From Animation</em></span> from the context menu. This will
+        hide events with similar name and the same C&#8288;+&#8288;+ class name from the timeline, and also
+        skip the animation when such messages are sent from one module to another.
+        You can view and edit the list of excluded messages on the <span class="emphasis"><em>Filtering</em></span> page of the
+        <span class="emphasis"><em>Preferences</em></span> dialog. (Tip: the timeline context menu provides a shortcut to that dialog).
+      </p><p> The whole timeline can be hidden (and revealed again) using the <span class="emphasis"><em>View | Timeline</em></span> menu item, by
+        pressing a button on the toolbar, or simply by dragging the handle of the separator under it all the way up.
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2146"></a>The Object Navigator</h3></div></div></div><div class="figure"><a name="pictures/Qtenv-objtree.png"></a><p class="title"><b>Figure 7.12. The object tree</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-objtree.png" align="middle" alt="The object tree"></div></div></div></div><br class="figure-break"><p> The <span class="emphasis"><em>Object Navigator</em></span> displays inspectable objects reachable from two
+        root objects (the network module and the FES) in a tree form.
+      </p><p> Clicking an object will focus it in the <span class="emphasis"><em>Object Inspector</em></span>, and double-clicking
+        will open a floating inspector window. Right-clicking will bring up a context menu
+        with further actions.
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2160"></a>The Object Inspector</h3></div></div></div><p> The <span class="emphasis"><em>Object Inspector</em></span> is located below the <span class="emphasis"><em>Object Navigator</em></span>, and lets
+        you examine the contents of objects in detail. The <span class="emphasis"><em>Object Inspector</em></span> always
+        focuses on the object last clicked (or otherwise selected) on the Qtenv UI.
+        It can be directly navigated as well, via the <span class="emphasis"><em>Back</em></span>, <span class="emphasis"><em>Forward</em></span>, and <span class="emphasis"><em>Go to Parent</em></span>
+        buttons, and also by double-clicking objects shown inside the inspector's area.
+      </p><div class="informaltable"><table class="informaltable" border="0"><colgroup><col><col></colgroup><tbody><tr><td>
+                <div class="figure"><a name="pictures/Qtenv-inspector-grouped.png"></a><p class="title"><b>Figure 7.13. The object inspector in Grouped mode</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-inspector-grouped.png" align="middle" alt="The object inspector in Grouped mode"></div></div></div></div><br class="figure-break">
+              </td><td>
+                <div class="figure"><a name="pictures/Qtenv-inspector-flat.png"></a><p class="title"><b>Figure 7.14. The object inspector in Flat mode</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-inspector-flat.png" align="middle" alt="The object inspector in Flat mode"></div></div></div></div><br class="figure-break">
+              </td></tr></tbody></table></div><p> The inspector has four display modes: <span class="emphasis"><em>Grouped</em></span>, <span class="emphasis"><em>Flat</em></span>, <span class="emphasis"><em>Children</em></span> and <span class="emphasis"><em>Inheritance</em></span>.
+        You can switch between these modes using the buttons on the inspector's toolbar.
+      </p><p> In <span class="emphasis"><em>Grouped</em></span>, <span class="emphasis"><em>Flat</em></span> and <span class="emphasis"><em>Inheritance</em></span> modes, the tree shows the fields (or data
+        members) of the object. It uses meta-information generated by the message compiler to obtain
+        the list of fields and their values. (This is true even for the built-in classes --
+        the simulation kernel contains their description of msg format.)
+      </p><p> The only difference between these three modes is the way the fields are arranged.
+        In <span class="emphasis"><em>Grouped</em></span> mode, they are organized in categories, in <span class="emphasis"><em>Flat</em></span> mode
+        they form a simple alphabetical list, and in <span class="emphasis"><em>Inheritance</em></span> mode they are
+        organized based on which superclass they are inherited from.
+      </p><div class="informaltable"><table class="informaltable" border="0"><colgroup><col><col></colgroup><tbody><tr><td>
+                <div class="figure"><a name="pictures/Qtenv-inspector-children.png"></a><p class="title"><b>Figure 7.15. The object inspector in Children mode</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-inspector-children.png" align="middle" alt="The object inspector in Children mode"></div></div></div></div><br class="figure-break">
+              </td><td>
+                <div class="figure"><a name="pictures/Qtenv-inspector-inheritance.png"></a><p class="title"><b>Figure 7.16. The object inspector in Inheritance mode</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-inspector-inheritance.png" align="middle" alt="The object inspector in Inheritance mode"></div></div></div></div><br class="figure-break">
+              </td></tr></tbody></table></div><p> In <span class="emphasis"><em>Children</em></span> mode, the tree shows the child objects of the currently inspected object.
+        The child list is obtained via the <code class="literal">forEachChild()</code> method of the object.
+        This is very similar to how the <span class="emphasis"><em>Object Navigator</em></span> works, but this can have an arbitrary root.
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2230"></a>The Network Display</h3></div></div></div><p> The network view provides a graphical view of the network and in general, modules.
+        Graphical representation is based on display strings (<code class="literal">@display</code> properties in the
+        NED file). You can go into any compound module by double-clicking its icon.
+      </p><p> Message sending, method calls and certain other events are animated in the graphical view.
+        You can customize animation in the <span class="emphasis"><em>Animation</em></span> page of the <span class="emphasis"><em>Preferences</em></span> dialog.
+      </p><div class="figure"><a name="pictures/Qtenv-network.png"></a><p class="title"><b>Figure 7.17. The network display</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-network.png" align="middle" alt="The network display"></div></div></div></div><br class="figure-break"><p> The built-in <code class="literal">cCanvas</code> of the inspected object is also rendered in this view together
+        with the module contents to allow for overlaying custom annotations and animations.
+        This canvas contains the figures declared by the @figure properties in the NED source of the module.
+      </p><p>
+        By choosing the <span class="emphasis"><em>Show/Hide Canvas Layers</em></span> item in the context menu of the inspected module,
+        the displayed figures can be filtered based on the tags set on them.
+      </p><div class="figure"><a name="pictures/Qtenv-figure-filter.png"></a><p class="title"><b>Figure 7.18. Figure filtering dialog</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-figure-filter.png" align="middle" alt="Figure filtering dialog"></div></div></div></div><br class="figure-break"><p>
+        Since any figure can have any number of tags, a two-step filtering mechanism is applied to give
+        sufficient control. The left side is a whitelist, while the right side is a blacklist. The
+        example above would only let all the figures with the "oval" tag appear, except those that also
+        have the "green" tag on them.
+      </p><p> If the inspected module has a built-in <code class="literal">cOsgCanvas</code> (and Qtenv is built with OSG support enabled),
+        this inspector can also be switched into a 3D display mode with the globe icon on its toolbar. In this
+        case, the 2D network and canvas display is replaced by the scene encapsulated by the <code class="literal">cOsgCanvas</code>.
+      </p><div class="figure"><a name="pictures/Qtenv-osg.png"></a><p class="title"><b>Figure 7.19. The network display in 3D mode</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-osg.png" align="middle" alt="The network display in 3D mode"></div></div></div></div><br class="figure-break"><p> The context menu of submodules makes further actions available (see below).
+      </p><div class="figure"><a name="pictures/Qtenv-submod-contextmenu.png"></a><p class="title"><b>Figure 7.20. Submodule context menu</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-submod-contextmenu.png" align="middle" alt="Submodule context menu"></div></div></div></div><br class="figure-break"><div class="figure"><a name="pictures/Qtenv-submod-utilities.png"></a><p class="title"><b>Figure 7.21. The Utilities submenu</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-submod-utilities.png" align="middle" alt="The Utilities submenu"></div></div></div></div><br class="figure-break"><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="idm2286"></a>Zooming and Panning</h4></div></div></div><p>
+          There are several ways for zooming the canvas, both using the mouse and the keyboard:
+        </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>To zoom in around a point, double-click the canvas; use <span class="keycap"><strong>Shift</strong></span> +
+            double-click to zoom out, or scroll while holding down <span class="keycap"><strong>Ctrl</strong></span>.</p>
+            You can also zoom around the center of the viewport with the looking glass buttons on the canvas toolbar.
+          </li><li class="listitem"><p>For marquee zoom, drag out a rectangle with the left mouse button while
+            holding down <span class="keycap"><strong>Ctrl</strong></span>; you can cancel the operation with the right
+            mouse button.</p></li><li class="listitem"><p>Panning: moving the mouse while holding down the left mouse button will
+            move the canvas; this is often a more comfortable way to navigate the canvas
+            than using the scroll bars. You can of course scroll in any direction with
+            simply the mouse wheel, or the similar functionality of many touchpads.</p></li></ul></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="idm2299"></a>The Log Viewer</h3></div></div></div><p> When you run the simulation, Qtenv will remember the output from logging statements
+        (<code class="literal">EV &lt;&lt; "Hello World\n";</code>) and the messages sent between modules, and can present
+        it to you in a meaningful manner. Only the output from the last N events is preserved
+        (N being configurable in the <span class="emphasis"><em>Preferences</em></span> dialog), and only in Step, Run and Fast Run
+        modes. (Express mode can be so fast because such overhead is turned off while it's active.)
+      </p><p> The <span class="emphasis"><em>Log Viewer</em></span> shows log related to one compound module and its subtree. It has two
+        modes: <span class="emphasis"><em>Messages</em></span> and <span class="emphasis"><em>Log</em></span> mode, the default being <span class="emphasis"><em>Messages</em></span>. You can switch between
+        the two modes with tool icons on the inspector's local toolbar.
+      </p><p> In <span class="emphasis"><em>Messages</em></span> mode, the window displays messages sent between the (immediate) submodules
+        of the inspected compound module, and messages sent out of, or into the compound module. The
+        embedded <span class="emphasis"><em>Log Viewer</em></span> shows content related to the module inspected in the <span class="emphasis"><em>Network Display</em></span>
+        above it at any time. You can view details about any message in the <span class="emphasis"><em>Object Inspector</em></span> by
+        clicking on it, and access additional functions in its context menu.
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3> In <span class="emphasis"><em>Messages</em></span> mode, the <span class="emphasis"><em>Info</em></span> column can be customized by writing and registering
+       a custom <code class="literal">cMessagePrinter</code> class. This string is split at the tab characters (<code class="literal">'\t'</code>)
+       into parts that are aligned in additional columns.
+      </div><div class="figure"><a name="pictures/Qtenv-log-msgs.png"></a><p class="title"><b>Figure 7.22. The log viewer showing message traffic</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-log-msgs.png" align="middle" alt="The log viewer showing message traffic"></div></div></div></div><br class="figure-break"><p> In <span class="emphasis"><em>Log</em></span> mode, the window displays log lines that belong to submodules
+        under the inspected compound module (i.e. the whole module subtree.)
+      </p><div class="figure"><a name="pictures/Qtenv-log-textual.png"></a><p class="title"><b>Figure 7.23. The log viewer showing module log</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-log-textual.png" align="middle" alt="The log viewer showing module log"></div></div></div></div><br class="figure-break"><p> You can filter the content of the window to only include messages from specific
+        modules. Open the log window's context menu and select <span class="emphasis"><em>Filter Window Contents</em></span>.
+      </p><div class="figure"><a name="pictures/Qtenv-log-filter.png"></a><p class="title"><b>Figure 7.24. The log filter dialog</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject" align="center"><img src="pictures/Qtenv-log-filter.png" align="middle" alt="The log filter dialog"></div></div></div></div><br class="figure-break"><p> General logging behavior, such as the prefix format, can be controlled in the <span class="emphasis"><em>Preferences</em></span>
+        dialog. The log level of each module (and its descendants) can be set in its context menu.
+      </p><p> It is also possible to open separate log windows for individual modules.
+        A log window for a compound module displays the log from all of its submodule tree.
+        To open a log window, find the module in the module tree or the network display,
+        right-click it and choose <span class="emphasis"><em>Open Component Log</em></span> from the context menu.
+      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch07s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Using Qtenv with a Debugger </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Inspecting Objects</td></tr></table></div></body></html>
